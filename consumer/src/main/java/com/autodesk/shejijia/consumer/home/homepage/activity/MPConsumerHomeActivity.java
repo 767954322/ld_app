@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.ConsumerPersonalCenterFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerPersonalCenterFragment;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -99,6 +100,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
     {
         super.initAndAddFragments(index);
 
+        if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
+            mUserHomeFragment = new UserHomeFragment();
+            loadMainFragment(mUserHomeFragment);
+        }
+
         if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
             mBidHallFragment = new BidHallFragment();
             loadMainFragment(mBidHallFragment);
@@ -141,7 +147,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
             else
                 f = mConsumerPersonalCenterFragment;
         }
-
+        else if (id == getDesignerMainRadioBtnId())
+        {
+            f = mUserHomeFragment;
+        }
         return f;
     }
 
@@ -213,6 +222,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
 
     private RadioButton mDesignerPersonCenterRadioBtn;
     private RadioButton mDesignerIndentListBtn;
+
+    private UserHomeFragment mUserHomeFragment;
 
     private BidHallFragment mBidHallFragment;
     private DesignerPersonalCenterFragment mDesignerPersonalCenterFragment;

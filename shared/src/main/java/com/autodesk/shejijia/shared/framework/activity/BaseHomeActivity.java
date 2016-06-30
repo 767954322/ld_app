@@ -126,12 +126,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     protected void initAndAddFragments(int index)
     {
 
-        //TODO REFACTORING
-//        if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
-//            mUserHomeFragment = new UserHomeFragment();
-//            loadMainFragment(mUserHomeFragment);
-//        }
-
         if (mMPThreadListFragment == null && index == getDesignerSessionRadioBtnId()) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             mMPThreadListFragment = new MPThreadListFragment();
@@ -153,12 +147,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected Fragment getFragmentByButtonId(int id) {
         Fragment f = null;
-        if (id == getDesignerMainRadioBtnId())
-        {
-            //TODO REFACTORING
-//            f = mUserHomeFragment;
-        }
-         else if (id == getDesignerSessionRadioBtnId())
+         if (id == getDesignerSessionRadioBtnId())
             f = mMPThreadListFragment;
 
         return f;
@@ -383,10 +372,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     private TextView mTvMsgNumber;
 
     private boolean isDestroyed = false;
-
-    //TODO REFACTORING
-//    private UserHomeFragment mUserHomeFragment;
-
 
     private MPThreadListFragment mMPThreadListFragment;
 

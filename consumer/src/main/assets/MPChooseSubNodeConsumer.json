@@ -1,0 +1,446 @@
+{
+  "Root": [
+    {
+      "wk_cur_sub_node_id": "11",
+      "wk_cur_sub_name": "确认量房",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "12",
+      "wk_cur_sub_name": "支付量房费",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "13",
+      "wk_cur_sub_name": "已拒绝量房",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "21",
+      "wk_cur_sub_name": "接收设计合同",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "22",
+      "wk_cur_sub_name": "接收设计合同",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "31",
+      "wk_cur_sub_name": "支付设计首款",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "33",
+      "wk_cur_sub_name": "接收量房交付物",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "41",
+      "wk_cur_sub_name": "支付设计尾款",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "42",
+      "wk_cur_sub_name": "支付设计尾款",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "51",
+      "wk_cur_sub_name": "接收设计交付物",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "52",
+      "wk_cur_sub_name": "接收设计交付物",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "61",
+      "wk_cur_sub_name": "已接收设计交付物",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    },
+    {
+      "wk_cur_sub_node_id": "62",
+      "wk_cur_sub_name": "已接收设计交付物",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
+    }
+  ]
+}
