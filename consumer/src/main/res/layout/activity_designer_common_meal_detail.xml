@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginTop="@dimen/size_50"
+        android:background="@color/bg_d5" />
+
+    <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_51">
+
+        <cn.finalteam.loadingviewfinal.ListViewFinal
+            android:id="@+id/lv_designer_meal_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            app:loadMoreMode="scroll" />
+
+    </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
+
+</RelativeLayout>

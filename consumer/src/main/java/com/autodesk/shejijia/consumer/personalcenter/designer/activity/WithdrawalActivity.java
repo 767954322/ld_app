@@ -1,0 +1,415 @@
+package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.ResultHashMap;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
+import com.socks.library.KLog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author DongXueQue .
+ * @version 1.0 .
+ * @date 16-6-7
+ * @file WithdrawalActivity.java  .
+ * @brief 我的提现页面  .
+ */
+public class WithdrawalActivity extends NavigationBarActivity implements View.OnClickListener {
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_withdrawal;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        tv_withdrawal_account_balance = (TextView) findViewById(R.id.tv_withdrawal_account_balance);
+        tv_withdrawal_account = (TextView) findViewById(R.id.tv_withdrawal_account);
+        tv_withdrawal_cardholder_name = (TextView) findViewById(R.id.tv_withdrawal_cardholder_name);
+        et_withdrawal_cardholder_name = (EditText) findViewById(R.id.et_withdrawal_cardholder_name);
+        tv_withdrawal_open_account_bank = (TextView) findViewById(R.id.tv_withdrawal_open_account_bank);
+        tv_withdrawal_bank_card_number = (TextView) findViewById(R.id.tv_withdrawal_bank_card_number);
+        ll_withdrawal_open_account_bank = (LinearLayout) findViewById(R.id.ll_withdrawal_open_account_bank);
+        et_withdrawal_bank_card_number = (EditText) findViewById(R.id.et_withdrawal_bank_card_number);
+        tv_withdrawal_branch_bank = (TextView) findViewById(R.id.tv_withdrawal_branch_bank);
+        et_withdrawal_branch_bank = (EditText) findViewById(R.id.et_withdrawal_branch_bank);
+        btn_withdrawal_true = (Button) findViewById(R.id.btn_withdrawal_true);
+        ll_withdrawal_replace_bank_card = (LinearLayout) findViewById(R.id.ll_withdrawal_replace_bank_card);
+    }
+
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        myPropertyBean = (MyPropertyBean) getIntent().getSerializableExtra(Constant.DesignerMyPropertyKey.MY_PROPERTY_BEAN);
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+        mBankName = filledData(getResources().getStringArray(R.array.mBank));
+        setTitleForNavbar(UIUtils.getString(R.string.my_property_withdrawal));
+        setBackName();
+        showState();
+    }
+
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        btn_withdrawal_true.setOnClickListener(this);
+        ll_withdrawal_open_account_bank.setOnClickListener(this);
+        ll_withdrawal_replace_bank_card.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_withdrawal_open_account_bank:
+                pvBankNameOptions.show();
+                bank_name = item_back_name;
+                break;
+            case R.id.ll_withdrawal_replace_bank_card:
+
+                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
+                tv_withdrawal_cardholder_name.setVisibility(View.GONE);
+                tv_withdrawal_branch_bank.setVisibility(View.GONE);
+                tv_withdrawal_bank_card_number.setVisibility(View.GONE);
+                et_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
+                et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
+                et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
+
+                break;
+            case R.id.btn_withdrawal_true:
+
+                String tv_user_name = getText(tv_withdrawal_cardholder_name);
+                account_user_name = (tv_user_name == null) ? getText(et_withdrawal_cardholder_name) : tv_user_name;
+                bank_name = getText(tv_withdrawal_open_account_bank);
+                String tv_branch_bank_ = getText(tv_withdrawal_branch_bank);
+                branch_bank_name = (tv_branch_bank_ == null) ? getText(et_withdrawal_branch_bank) : tv_branch_bank_;
+                String tv_card_number = getText(tv_withdrawal_bank_card_number);
+                deposit_card = (tv_card_number == null) ? getText(et_withdrawal_bank_card_number) : tv_card_number;
+
+                boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
+
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
+                if (flag && null != memberEntity) {
+                    designer_id = Long.parseLong(memberEntity.getAcs_member_id());
+                    getWithdrawareBalanceData(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * @param isNumber
+     * @return
+     * @brief 验证银行卡号 .
+     */
+    private String isValidateNumber(String isNumber) {
+        KLog.d(TAG, isNumber);
+        if (!StringUtils.isNonNumeric(isNumber)) {
+            isNumber = "0000000000000000000";
+        }
+        return isNumber;
+    }
+
+    private List<String> filledData(String[] date) {
+        List<String> mSortList = new ArrayList<>();
+        for (String str : date) {
+            mSortList.add(str);
+        }
+        return mSortList;
+    }
+
+    /**
+     * @param account_user_name
+     * @param branch_bank_name
+     * @param deposit_card
+     * @return
+     * @brief 验证数据得合法性 .
+     */
+    private boolean validateEditText(String account_user_name, String branch_bank_name, String deposit_card) {
+        if (account_user_name == null || "".equals(account_user_name)) {
+            String content = UIUtils.getString(R.string.tip_content_one);
+            openAlertView(content);
+
+            return false;
+        }
+
+        if (branch_bank_name == null || "".equals(branch_bank_name)) {
+            String content = UIUtils.getString(R.string.tip_content_two);
+            openAlertView(content);
+            return false;
+        }
+
+        if (deposit_card == null || "".equals(deposit_card)) {
+            String content = UIUtils.getString(R.string.tip_content_three);
+            openAlertView(content);
+            return false;
+        }
+        return true;
+    }
+
+    private void openAlertView(String content) {
+        new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                AlertView.Style.Alert, null).show();
+    }
+
+    private String getText(View view) {
+        int key = view.getVisibility();
+        String textString = null;
+
+        switch (key) {
+            case 0:
+                if (view instanceof TextView) {
+                    TextView textView = (TextView) view;
+                    textString = textView.getText().toString();
+                } else if (view instanceof EditText) {
+                    EditText editText = (EditText) view;
+                    textString = editText.getText().toString();
+                }
+                break;
+            default:
+                break;
+        }
+        return textString;
+
+    }
+
+    /**
+     * @param designer_id
+     * @param account_user_name
+     * @param bank_name
+     * @param branch_bank_name
+     * @param deposit_card
+     * @brief 获取提现数据 .
+     */
+    public void getWithdrawareBalanceData(long designer_id, String account_user_name, String bank_name, String branch_bank_name, String deposit_card) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_ACCOUNT_USER_NAME, account_user_name);
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_BANK_NAME, bank_name);
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_BRANCH_BANK_NAME, branch_bank_name);
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_DEPOSIT_CARD, isValidateNumber(deposit_card));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    String jsonString = GsonUtil.jsonToString(jsonObject);
+                    ResultHashMap resultHashMap = GsonUtil.jsonToBean(jsonString, ResultHashMap.class);
+                    KLog.json(TAG, jsonString);
+                    updateViewFromData(resultHashMap);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.application_failure), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }
+        };
+        MPServerHttpManager.getInstance().getWithDrawBalanceData(designer_id, jsonObject, callback);
+    }
+
+    /**
+     * house type
+     */
+    private void setBackName() {
+        pvBankNameOptions = new OptionsPickerView(this);
+        for (String item : mBankName) {
+            bankNameItems.add(item);
+        }
+        pvBankNameOptions.setPicker(bankNameItems);
+        pvBankNameOptions.setSelectOptions(0);
+        pvBankNameOptions.setCyclic(false);
+        pvBankNameOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                item_back_name = bankNameItems.get(options1);
+                tv_withdrawal_open_account_bank.setText(item_back_name);
+            }
+        });
+    }
+
+    //控件，内容，状态判断
+    private void showState() {
+
+        if (null == myPropertyBean || myPropertyBean.equals("")) {
+
+            return;
+        } else {
+
+            tv_withdrawal_account_balance.setText("¥" + myPropertyBean.getAmount() + "");
+            tv_withdrawal_account.setText("¥" + myPropertyBean.getAmount());
+            account_user_name = myPropertyBean.getAccount_user_name();
+            bank_name = myPropertyBean.getBank_name();
+            deposit_card = myPropertyBean.getDeposit_card();
+            branch_bank_name = myPropertyBean.getBranch_bank_name();
+            if (null == bank_name || bank_name.equals("")) {
+                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
+            } else {
+                ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE);
+            }
+
+            if (null == account_user_name || account_user_name.equals("")) {
+                et_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
+            } else {
+                tv_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
+                tv_withdrawal_cardholder_name.setText(account_user_name);
+            }
+            tv_withdrawal_open_account_bank.setText(bank_name);
+
+            if (null == branch_bank_name || branch_bank_name.equals("")) {
+                et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
+            } else {
+                tv_withdrawal_branch_bank.setVisibility(View.VISIBLE);
+                tv_withdrawal_branch_bank.setText(branch_bank_name);
+            }
+            if (null == deposit_card || deposit_card.equals("")) {
+                et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
+                deposit_card = et_withdrawal_bank_card_number.getText().toString();
+            } else {
+
+                tv_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
+                tv_withdrawal_bank_card_number.setText(deposit_card);
+            }
+        }
+
+        et_withdrawal_branch_bank.setText(branch_bank_name);
+        et_withdrawal_cardholder_name.setText(account_user_name);
+        et_withdrawal_bank_card_number.setText(deposit_card);
+    }
+
+    //获取数据后操作
+    private void updateViewFromData(ResultHashMap resultHashMap) {
+
+        String value = resultHashMap.getResult();
+        if (value.equals("success")) {
+            new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                    AlertView.Style.Alert, new OnItemClickListener() {
+                @Override
+                public void onItemClick(Object o, int position) {
+                    if (position != AlertView.CANCELPOSITION) {
+                        Intent intent = new Intent();
+                        intent.putExtra(Constant.DesignerWithDraw.AMOUNT, "0.00");
+                        intent.putExtra(Constant.DesignerWithDraw.IS_SUCCESS, true);
+                        WithdrawalActivity.this.setResult(Activity.RESULT_OK, intent);
+                        WithdrawalActivity.this.finish();
+                    }
+                }
+            }).show();
+        } else {
+            new AlertView(UIUtils.getString(R.string.application_failure), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                    AlertView.Style.Alert, null).show();
+        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
+    }
+
+    public boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = {0, 0};
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
+        }
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    /// 控件.
+    private TextView tv_withdrawal_account_balance;
+    private TextView tv_withdrawal_account;
+    private TextView tv_withdrawal_branch_bank;
+    private TextView tv_withdrawal_cardholder_name;
+    private TextView tv_withdrawal_open_account_bank;
+    private TextView tv_withdrawal_bank_card_number;
+    private Button btn_withdrawal_true;
+    private EditText et_withdrawal_cardholder_name;
+    private EditText et_withdrawal_branch_bank;
+    private EditText et_withdrawal_bank_card_number;
+    private LinearLayout ll_withdrawal_open_account_bank;
+    private OptionsPickerView pvBankNameOptions;
+    private LinearLayout ll_withdrawal_replace_bank_card;
+
+    /// 变量.
+    private String bank_name;
+    private String deposit_card;
+    private String account_user_name;
+    private String branch_bank_name;
+    private String item_back_name;
+    private long designer_id;
+
+
+    /// 集合，类.
+    private List<String> mBankName;
+    private MyPropertyBean myPropertyBean;
+    private ArrayList<String> bankNameItems = new ArrayList<>();
+}
