@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+    <com.autodesk.shejijia.shared.components.common.uielements.PinnedHeaderExpandableListView
+        android:id="@+id/explistview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_exist_measure_order"
+        android:layout_marginLeft="0.0dip"
+        android:layout_marginTop="@dimen/size_50"
+        android:cacheColorHint="#00000000"
+        android:childDivider="@color/bg_ff"
+        android:choiceMode="singleChoice"
+        android:dividerHeight="@dimen/size_5"
+        android:drawSelectorOnTop="false"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="true"
+        android:groupIndicator="@null"
+        android:scrollbars="vertical"
+        android:scrollingCache="true" />
+
+    <LinearLayout
+        android:id="@+id/ll_exist_measure_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_exsit_measure_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/bg_ff"
+            android:padding="@dimen/size_10">
+
+            <TextView
+                android:id="@+id/tv_exsit_measure_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/measure_room_time" />
+
+            <TextView
+                android:id="@+id/tv_exsit_measure_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_exsit_measure_time"
+                android:text="@string/please_select_time" />
+
+            <ImageView
+                android:id="@+id/tv_exsit_measure_detail_unfold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/size_10"
+                android:background="@drawable/icon_unfold_normal"
+                android:gravity="right" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/designer_measure_fee" />
+
+            <TextView
+                android:id="@+id/tv_exsit_measure_measurement_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_exist_measure_order_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginRight="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@drawable/bg_common_btn_blue"
+            android:text="@string/send"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

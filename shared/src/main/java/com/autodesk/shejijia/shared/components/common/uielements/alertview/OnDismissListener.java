@@ -1,0 +1,12 @@
+package com.autodesk.shejijia.shared.components.common.uielements.alertview;
+
+/**
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-6-20 .
+ * @file OnDismissListener.java .
+ * @brief 点击AlertView之外的处理事件
+ */
+public interface OnDismissListener {
+    public void onDismiss(Object o);
+}

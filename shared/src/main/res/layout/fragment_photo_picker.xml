@@ -1,0 +1,51 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.autodesk.shejijia.shared.components.im.fragment.MPPhotoPickerFragment">
+
+    <GridView
+        android:id="@+id/photopicker_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:visibility="visible"/>
+
+    <ProgressBar
+        android:id="@+id/photopicker_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        style="?android:attr/progressBarStyleLarge"
+        android:visibility="invisible"
+        android:indeterminate="true"/>
+
+    <RelativeLayout
+        android:id="@+id/photopicker_cloud_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/photopicker_cloud_placeholder_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="160dp"
+            android:src="@drawable/cloud_album_placeholder" />
+
+        <TextView
+            android:id="@+id/photopicker_cloud_placeholder_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/photopicker_cloud_placeholder_image"
+            android:layout_centerHorizontal="true"
+            android:lines="2"
+            android:text="@string/photopicker_cloud_placeholder_label"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

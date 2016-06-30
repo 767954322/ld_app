@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+    <WebView
+        android:id="@+id/web_view_version_introduced"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"></WebView>
+
+    <TextView
+        android:id="@+id/tv_introduced_version"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40"
+        android:gravity="center" />
+</LinearLayout>

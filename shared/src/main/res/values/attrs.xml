@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--风格-->
+    <string-array name="style">
+        <item>日式</item>
+        <item>韩式</item>
+        <item>混搭</item>
+        <item>欧式</item>
+        <item>中式</item>
+        <item>新古典</item>
+        <item>东南亚</item>
+        <item>美式</item>
+        <item>田园</item>
+        <item>现代</item>
+        <item>地中海</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="all">
+        <item>全部</item>
+    </string-array>
+
+    <string-array name="mlivingroom">
+        <item>一室</item>
+        <item>两室</item>
+        <item>三室</item>
+        <item>四室</item>
+        <item>五室</item>
+        <item>LOFT</item>
+        <item>复式</item>
+        <item>别墅</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="hall">
+        <item>一厅</item>
+        <item>两厅</item>
+        <item>三厅</item>
+        <item>四厅</item>
+        <item>五厅</item>
+    </string-array>
+
+    <string-array name="toilet">
+        <item>一卫</item>
+        <item>两卫</item>
+        <item>三卫</item>
+        <item>四卫</item>
+        <item>五卫</item>
+    </string-array>
+
+    <string-array name="area">
+        <item>60㎡以下</item>
+        <item>60-80㎡</item>
+        <item>80-120㎡</item>
+        <item>120㎡以上</item>
+    </string-array>
+
+    <string-array name="design_budget">
+        <item>3000以下</item>
+        <item>3000-6000</item>
+        <item>6000-10000</item>
+        <item>10000-50000</item>
+        <item>50000以上</item>
+    </string-array>
+
+    <string-array name="decoration_budget">
+        <item>5万以下</item>
+        <item>5万-10万</item>
+        <item>10万-20万</item>
+        <item>15万-20万</item>
+        <item>20万以上</item>
+    </string-array>
+
+    <!--房屋类型-->
+    <string-array name="hType">
+        <item>住宅空间</item>
+        <item>餐饮空间</item>
+        <item>办公空间</item>
+        <item>酒店空间</item>
+        <item>商业展示</item>
+        <item>娱乐空间</item>
+        <item>休闲场所</item>
+        <item>文化空间</item>
+        <item>医疗机构</item>
+        <item>售楼中心</item>
+        <item>金融场所</item>
+        <item>运动场所</item>
+        <item>教育机构</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="mBank">
+        <item>中国银行</item>
+        <item>中国工商银行</item>
+        <item>中国农业银行</item>
+        <item>中国建设银行</item>
+        <item>交通银行</item>
+        <item>中国邮政储蓄银行</item>
+        <item>中信银行</item>
+        <item>中国光大银行</item>
+        <item>华夏银行</item>
+        <item>中国民生银行</item>
+        <item>广发银行</item>
+        <item>招商银行</item>
+        <item>兴业银行</item>
+        <item>上海浦东发展银行</item>
+        <item>汇丰银行</item>
+        <item>北京银行</item>
+        <item>平安银行</item>
+    </string-array>
+    <!-- floating-action-button styleable -->
+    <declare-styleable name="FloatingActionButton">
+        <attr name="fab_colorPressed" format="color"/>
+        <attr name="fab_colorDisabled" format="color"/>
+        <attr name="fab_colorNormal" format="color"/>
+        <attr name="fab_icon" format="reference"/>
+
+        <attr name="fab_size" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="mini" value="1"/>
+        </attr>
+        <attr name="fab_title" format="string"/>
+        <attr name="fab_stroke_visible" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="AddFloatingActionButton">
+        <attr name="fab_plusIconColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="FloatingActionsMenu">
+        <attr name="fab_addButtonColorPressed" format="color"/>
+        <attr name="fab_addButtonColorNormal" format="color"/>
+
+        <attr name="fab_addButtonSize" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="mini" value="1"/>
+        </attr>
+        <attr name="fab_addButtonPlusIconColor" format="color"/>
+        <attr name="fab_addButtonStrokeVisible" format="boolean"/>
+        <attr name="fab_labelStyle" format="reference"/>
+
+        <attr name="fab_labelsPosition" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+        </attr>
+
+        <attr name="fab_expandDirection" format="enum">
+            <enum name="up" value="0"/>
+            <enum name="down" value="1"/>
+            <enum name="left" value="2"/>
+            <enum name="right" value="3"/>
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="CircleButton">
+        <attr name="cb_color" format="color"/>
+        <attr name="cb_pressedRingWidth" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircularImage">
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+    </declare-styleable>
+
+    <!-- 带有数字进度条的attrs -->
+    <declare-styleable name="NumberProgressBar">
+        <attr name="progress" format="integer"/>
+        <attr name="max" format="integer"/>
+        <attr name="progress_unreached_color" format="color"/>
+        <attr name="progress_reached_color" format="color"/>
+        <attr name="progress_reached_bar_height" format="dimension"/>
+        <attr name="progress_unreached_bar_height" format="dimension"/>
+        <attr name="progress_text_size" format="dimension"/>
+        <attr name="progress_text_color" format="color"/>
+        <attr name="progress_text_offset" format="dimension"/>
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0"/>
+            <enum name="invisible" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="horizontalSpacing" format="dimension"/>
+        <attr name="verticalSpacing" format="dimension"/>
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="debugDraw" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_LayoutParams">
+        <attr name="layout_newLine" format="boolean"/>
+        <attr name="layout_horizontalSpacing" format="dimension"/>
+        <attr name="layout_verticalSpacing" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="TwoTextView">
+        <attr name="ttLeftText" format="string|reference"/>
+        <attr name="ttRightText" format="string|reference"/>
+        <attr name="ttLeftTextSize" format="dimension"/>
+        <attr name="ttRightTextSize" format="dimension"/>
+        <attr name="ttLeftTextColor" format="reference"/>
+        <attr name="ttRightTextColor" format="reference"/>
+    </declare-styleable>
+
+    <!-- Head graphical tools -->
+    <declare-styleable name="PolygonImageView">
+        <attr name="poly_vertices" format="integer"/>
+        <attr name="poly_rotation_angle" format="float"/>
+        <attr name="poly_corner_radius" format="float"/>
+        <attr name="poly_border" format="boolean"/>
+        <attr name="poly_border_color" format="color"/>
+        <attr name="poly_border_width" format="dimension"/>
+        <attr name="poly_shadow" format="boolean"/>
+        <attr name="poly_shadow_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="PolygonImageViewTheme">
+        <attr name="polygonImageViewStyle" format="reference"/>
+    </declare-styleable>
+
+    <!-- Load Animation -->
+    <declare-styleable name="Dialog">
+        <attr name="DialogTitleAppearance" format="reference"/>
+        <attr name="DialogTitleText" format="reference|string"/>
+        <attr name="DialogSpotColor" format="reference|color"/>
+        <attr name="DialogSpotCount" format="integer"/>
+    </declare-styleable>
+
+    <!--
+        max                 最大进度
+        startAngle             进度从圆环的哪个角度开始走
+        backColor             圆环内部的填充色
+        roundColor             圆环的颜色
+        roundProgressColor  圆环进度的颜色
+        roundWidth             圆环宽度
+        textColor             中心文字的颜色
+        textSize             中心文字的大小
+        textIsDisplayable     中心文字是否显示
+        style = 0/1          进度的风格，实心或者空心
+     -->
+    <declare-styleable name="RoundProgressBar">
+        <attr name="max_round" format="integer"></attr>
+        <attr name="startAngle" format="integer"></attr>
+        <attr name="roundColor" format="color"/>
+        <attr name="roundProgressColor" format="color"/>
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="backColor_round" format="color"/>
+        <attr name="textColor_round" format="color"/>
+        <attr name="textSize_round" format="dimension"/>
+        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+    </declare-styleable>
+
+<!--自定义复用滚轮-->
+    <declare-styleable name="wheelview">
+        <attr name="gravity">
+            <enum name="center" value="17"/>
+            <enum name="left" value="3"/>
+            <enum name="right" value="5"/>
+        </attr>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColorOut" format="color"/>
+        <attr name="textColorCenter" format="color"/>
+        <attr name="dividerColor" format="color"/>
+    </declare-styleable>
+
+</resources>

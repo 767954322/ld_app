@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scrollView_decoration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_consumer_decoration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_parting_line"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <ImageView
+                android:id="@+id/iv_consumer_decoration_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_position_normal"/>
+
+            <TextView
+                android:id="@+id/tv_consumer_decoration_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="居然大厦"
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_16"/>
+
+            <TextView
+                android:id="@+id/tv_consumer_decoration_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上传设计交付物"
+                android:textColor="@color/bg_0d74bc"
+                android:textSize="@dimen/font_14"/>
+        </LinearLayout>
+
+
+        <include layout="@layout/view_parting_line"></include>
+
+
+        <LinearLayout
+            android:id="@+id/ll_decoration_open_viewstub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:textColor="@color/black">
+
+            <!--项目编号-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/common_order_project_number"
+                    android:textColor="@color/bg_9E"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_consumer_decoration_needs_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/bg_9E"
+                    android:textSize="@dimen/font_15"/>
+            </LinearLayout>
+
+            <!--房屋地址-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_consumer_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_common_order_house"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/consumer_decoration_address"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <ImageButton
+                    android:id="@+id/ibn_decoration_modify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_amend"/>
+            </LinearLayout>
+
+            <!--房屋类型-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/demand_project_types"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_consumer_decoration_house_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+            </LinearLayout>
+
+            <!--应标人数-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_paper_order_house"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/bid_num"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_decoration_designer_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_paper_order_house"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <ImageButton
+                    android:id="@+id/ibn_decoration_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:src="@drawable/icon_unfold"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <include layout="@layout/view_parting_line"></include>
+
+        <include layout="@layout/view_viewstub_consumer_decoration"></include>
+
+        <com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView
+            android:id="@+id/lv_decoration_bid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chat_tool_parentlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/im_edittext_shape"
+    android:visibility="visible">
+
+    <ImageView
+        android:id="@+id/chat_selectphoto"
+        android:layout_width="@dimen/chat_toolview_button_side"
+        android:layout_height="@dimen/chat_toolview_button_side"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/chat_toolview_button_sidemargin"
+        android:layout_marginTop="@dimen/chat_toolview_button_verticalmargin"
+        android:layout_marginBottom="@dimen/chat_toolview_button_verticalmargin"
+        android:scaleType="centerInside"
+        android:src="@drawable/im_photo" />
+
+    <ImageView
+        android:id="@+id/chat_takephoto"
+        android:layout_width="@dimen/chat_toolview_button_side"
+        android:layout_height="@dimen/chat_toolview_button_side"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/chat_toolview_button_verticalmargin"
+        android:layout_marginBottom="@dimen/chat_toolview_button_verticalmargin"
+        android:scaleType="centerInside"
+        android:src="@drawable/im_camera" />
+
+    <ImageView
+        android:id="@+id/chat_custom_button"
+        android:layout_width="@dimen/chat_toolview_button_side"
+        android:layout_height="@dimen/chat_toolview_button_side"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/chat_toolview_button_sidemargin"
+        android:layout_marginTop="@dimen/chat_toolview_button_verticalmargin"
+        android:layout_marginBottom="@dimen/chat_toolview_button_verticalmargin"
+        android:scaleType="centerInside"
+        android:visibility="gone"/>
+
+</RelativeLayout>
+

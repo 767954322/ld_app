@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_ef"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_10"
+        android:text="@string/flow_basic_info" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flow_contract_num" />
+
+        <TextView
+            android:id="@+id/tv_flow_last_design_contract_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name_space" />
+
+        <TextView
+            android:id="@+id/tv_flow_last_design_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/telephone_space" />
+
+        <TextView
+            android:id="@+id/tv_flow_last_design_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/size_10"
+        android:text="@string/flow_particular_cost" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flow_aggregate_amount" />
+
+        <TextView
+            android:id="@+id/tv_flow_last_design_aggregate_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flow_first_design_cost" />
+
+        <TextView
+            android:id="@+id/tv_flow_last_design_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flow_last_design_cost" />
+
+        <TextView
+            android:id="@+id/tv_flow_last_design_last"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flow_pay_way" />
+
+        <ImageView
+            android:id="@+id/img_flow_last_design_pay_way"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_18"
+            android:src="@drawable/icon_alipay_normal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flow_should_last" />
+
+        <TextView
+            android:id="@+id/tv_flow_last_design_should_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_flow_last_design_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_flow_last_design_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_common_btn_blue"
+            android:text="@string/zhifushejiket"
+            android:textColor="@color/bg_ff" />
+    </LinearLayout>
+
+</LinearLayout>

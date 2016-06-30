@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="id_style">
+        <item>身份证</item>
+        <item>军官证</item>
+        <item>护照</item>
+    </string-array>
+
+    <string-array name="id_adress_province">
+        <item>省</item>
+        <item>北京</item>
+        <item>安徽</item>
+
+    </string-array>
+    <string-array name="id_adress_city">
+        <item>市</item>
+        <item>北京</item>
+        <item>合肥</item>
+    </string-array>
+    <string-array name="id_adress_area">
+        <item>区</item>
+        <item>朝阳</item>
+    </string-array>
+    <string-array name="id_working_experience">
+        <item>请选择年限</item>
+        <item>3年以下</item>
+        <item>4-5年</item>
+        <item>6-10年</item>
+        <item>11-15年</item>
+        <item>16年</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>保密</item>
+        <item>女</item>
+        <item>男</item>
+    </string-array>
+
+    <string-array name="storehouse">
+        <item>0,35,12,42,</item>
+        <item>12,42,24,35,</item>
+        <item>24,35,12,28,</item>
+        <item>0,35,12,28,</item>
+        <item>0,21,12,28,</item>
+        <item>12,28,24,21,</item>
+        <item>24,35,24,21,</item>
+        <item>24,21,12,14,</item>
+        <item>0,21,12,14,</item>
+        <item>0,21,0,7,</item>
+        <item>12,14,0,7,</item>
+        <item>12,14,24,7,</item>
+        <item>24,7,12,0,</item>
+        <item>0,7,12,0,</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f3"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_10"
+        android:background="@color/bg_ff"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_my_bid_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size_5"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/icon_position_normal"
+                android:drawablePadding="@dimen/size_10"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="居然大厦"
+                android:textColor="@color/bg_00"
+                android:textSize="@dimen/font_15"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size_5"
+                android:text="@string/my_bid_budget"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_13"/>
+
+            <TextView
+                android:id="@+id/tv_my_bid_all_budget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/size_10"
+                android:textColor="@color/bg_00"
+                android:textSize="@dimen/font_15"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/line_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/size_280"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/consumer_decoration_project_id"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_my_bid_all_project_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/font_13"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_5">
+
+                    <TextView
+                        android:id="@+id/tv_my_bid_all_project_address_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/project_address"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_my_bid_all_project_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_13"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/size_5">
+
+                    <TextView
+                        android:id="@+id/tv_my_bid_all_type_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bidding_room_shape"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_my_bid_all_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:text="@string/bidding_room_space"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_13"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/size_5">
+
+                    <TextView
+                        android:id="@+id/tv_my_bid_all_style_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_bid_details_style"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_13"/>
+
+                    <TextView
+                        android:id="@+id/tv_my_bid_all_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:text="@string/designer_order_style_detail"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_13"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/size_5">
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_my_bid_all_demand_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:background="@drawable/icon_unfold_normal"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/line_color"/>
+
+        <LinearLayout
+            android:id="@+id/ll_my_bid_all"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size_5"
+                android:text="@string/bid_num"
+                android:textColor="@color/bg_00"
+                android:textSize="@dimen/font_13"/>
+
+            <TextView
+                android:id="@+id/tv_my_bid_all_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_13"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_times_ormal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size_5"
+                android:text="@string/my_bid_time"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_13"/>
+
+            <TextView
+                android:id="@+id/tv_my_bid_all_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/bg_00"
+                android:textSize="@dimen/font_13"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/size_10"
+                android:text="@string/day_much"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_13"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_my_bid_all_check"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginLeft="@dimen/size_10"
+            android:gravity="center"
+            android:textColor="@color/bg_00"
+            android:textSize="@dimen/font_15"
+            android:visibility="gone"/>
+    </LinearLayout>
+</LinearLayout>

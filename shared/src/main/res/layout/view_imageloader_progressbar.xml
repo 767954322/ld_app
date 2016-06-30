@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              xmlns:android_custom="http://schemas.android.com/apk/res-auto">
+
+    <com.autodesk.shejijia.shared.components.common.uielements.RoundProgressBar
+        android:id="@+id/roundProgressBar"
+        android:layout_width="@dimen/size_120"
+        android:layout_height="@dimen/size_120"
+        android:layout_centerInParent="true"
+
+        android_custom:backColor_round="#323a45"
+        android_custom:startAngle="-90"
+        android_custom:roundProgressColor="#14b9d6"
+        android_custom:roundWidth="@dimen/size_50"
+        android_custom:textColor_round="#ffffff"
+        android_custom:textSize_round="@dimen/font_13" />
+
+</LinearLayout>

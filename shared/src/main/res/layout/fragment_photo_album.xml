@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.autodesk.shejijia.shared.components.im.fragment.MPPhotoAlbumFragment"
+             android:clickable="true"
+             android:orientation="vertical">
+
+    <View
+        android:id="@+id/photoalbum_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:clickable="true"
+        android:alpha="0.0"
+        android:visibility="visible"/>
+
+    <ListView
+        android:id="@+id/photoalbum_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/photoalbum_spacer"
+        android:background="@color/white"
+        android:divider="@color/bgColor_overlay"/>
+
+    <ProgressBar
+        android:id="@+id/photoalbum_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        style="?android:attr/progressBarStyleLarge"
+        android:visibility="invisible"
+        android:indeterminate="true"/>
+</RelativeLayout>

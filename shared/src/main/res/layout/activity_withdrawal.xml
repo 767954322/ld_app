@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/bg_ff"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/withdrawal_account_balance" />
+
+                <TextView
+                    android:id="@+id/tv_withdrawal_account_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:text="0.00" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/demand_color"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/withdrawal_account" />
+
+                <TextView
+                    android:id="@+id/tv_withdrawal_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:text="0.00" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/bg_ff"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/withdrawal_cardholder_name" />
+
+                <TextView
+                    android:id="@+id/tv_withdrawal_cardholder_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:text="12"
+                    android:visibility="gone" />
+
+                <com.autodesk.shejijia.shared.components.common.uielements.ClearEditText
+                    android:id="@+id/et_withdrawal_cardholder_name"
+                    android:layout_width="@dimen/size_180"
+                    android:layout_height="@dimen/size_30"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:background="@drawable/bg_edit_text_shape"
+                    android:singleLine="true"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/demand_color"></View>
+
+            <LinearLayout
+                android:id="@+id/ll_withdrawal_open_account_bank"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/withdrawal_open_account_bank" />
+
+                <TextView
+                    android:id="@+id/tv_withdrawal_open_account_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_weight="1" />
+
+                <!--<EditText-->
+                <!--android:id="@+id/et_withdrawal_open_account_bank"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/size_30"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginLeft="@dimen/size_10"-->
+                <!--android:layout_marginRight="@dimen/size_40"-->
+                <!--android:layout_weight="1"-->
+                <!--android:background="@drawable/bg_edit_text_shape"-->
+                <!--android:visibility="gone" />-->
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/size_10"
+                    android:background="@drawable/icon_unfold_normal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/demand_color"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/withdrawal_branch_name" />
+
+                <TextView
+                    android:id="@+id/tv_withdrawal_branch_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:visibility="gone" />
+
+                <com.autodesk.shejijia.shared.components.common.uielements.ClearEditText
+                    android:id="@+id/et_withdrawal_branch_bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_30"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginRight="@dimen/size_40"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text_shape"
+                    android:singleLine="true"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/demand_color"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginLeft="@dimen/size_10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/withdrawal_bank_card_number" />
+
+                <TextView
+                    android:id="@+id/tv_withdrawal_bank_card_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:visibility="gone" />
+
+                <com.autodesk.shejijia.shared.components.common.uielements.ClearEditText
+                    android:id="@+id/et_withdrawal_bank_card_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_30"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginRight="@dimen/size_30"
+                    android:background="@drawable/bg_edit_text_shape"
+                    android:inputType="number"
+                    android:maxLength="19"
+                    android:singleLine="true"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_10">
+
+            <LinearLayout
+                android:id="@+id/ll_withdrawal_replace_bank_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/icon_credit_card_normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/replace_rank_card"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_withdrawal_true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_marginRight="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_50"
+        android:background="@drawable/bg_common_btn_blue"
+        android:text="@string/confirm_and_submit"
+        android:textColor="@color/bg_ff"></Button>
+</LinearLayout>

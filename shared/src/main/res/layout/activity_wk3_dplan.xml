@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".personalcenter.workflow.activity.Wk3DPlanActivity">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+
+    <GridView
+        android:id="@+id/gridView_3dplan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/common_navbar"
+        android:horizontalSpacing="@dimen/size_3"
+        android:numColumns="4"
+        android:verticalSpacing="@dimen/size_2"></GridView>
+
+    <Button
+        android:id="@+id/btn_submit_3dplan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/size_20"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_marginRight="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_30"
+        android:background="@drawable/bg_common_btn_pressed"
+        android:text="@string/autonym_confirm"
+        android:textColor="@color/bg_ff"
+        android:textSize="@dimen/font_20"/>
+</RelativeLayout>

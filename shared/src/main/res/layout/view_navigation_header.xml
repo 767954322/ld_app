@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rl_navr_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/bg_f9"
+                android:gravity="center_vertical">
+
+    <RelativeLayout
+        android:id="@+id/backButton_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/nav_left_imageButton"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/transparent"
+            android:src="@drawable/icon_back_normal_z"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/nav_left_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/font_17"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/nav_title_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:maxEms="6"
+        android:singleLine="true"
+        android:textSize="@dimen/font_16"/>
+
+    <ImageButton
+        android:id="@+id/nav_secondary_imageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/transparent"
+        android:src="@drawable/icon_project_material"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/rightButton_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true">
+
+        <ImageButton
+            android:id="@+id/nav_right_imageButton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/transparent"
+            android:src="@drawable/msg_file"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/nav_badge_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/redsharp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/nav_right_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textSize="15sp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+</RelativeLayout>

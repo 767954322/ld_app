@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- designer case_library-->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="mcolor">#FF00FF</color>
+    <color name="popup_main_background">#b0000000</color>
+    <color name="black">#000000</color>
+    <color name="choose_eara_item_press_color">#f4f4f4</color>
+    <color name="white">#ffffff</color>
+    <color name="search_title">#333333</color>
+    <color name="font_gray">#999999</color>
+    <color name="no_color">#00000000</color>
+    <color name="comment_black">#1A1A1A</color>
+    <color name="comment_write">#F0F0F0</color>
+    <color name="comment_gray">#88878D</color>
+    <color name="designer_detail_background">#252531</color>
+    <color name="blue">#5AB5EE</color>
+    <color name="search_text_color">#027BFF</color>
+    <color name="comment_red">#CF7375</color>
+    <color name="bg_impression">#F0F0F0</color>
+    <color name="trans">#00000000</color>
+    <color name="public_title">#191919</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="comment_blue">#0069B7</color>
+    <color name="chat_list_item_background_color">#FFFFFF</color>
+    <color name="endColor">#0F000000</color>
+    <color name="startColor">#0F000000</color>
+    <color name="start">#FFFFFF</color>
+    <color name="end">#FFFFFF</color>
+    <color name="demand_color">#F0F0F0</color>
+    <color name="line_color">#D8D8D8</color>
+    <color name="main_color">#666</color>
+    <color name="case_library_item_background">#F0F0F0</color>
+    <color name="search_hint">#ffcccccc</color>
+    <color name="collection_color">#E4961C</color>
+    <color name="collection_text_color">#EA9B1F</color>
+    <color name="btn_gray_normal">#c0c0c0</color>
+    <!-- action bar background black -->
+    <color name="actionbar_black">#1A1A1A</color>
+    <!-- designer selector-->
+    <color name="designer_order_pressed">#037BFF</color>
+    <color name="designer_order">#FFFFFF</color>
+
+    <!-- floating-action-button colors -->
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="floating_white">#fafafa</color>
+    <color name="floating_white_pressed">#f1f1f1</color>
+    <color name="half_black">#808080</color>
+    <color name="shade_back_color">#90000000</color>
+
+    <!-- designer-designer-home colors -->
+    <color name="text_green">#007100</color>
+    <color name="grey_white">#F7F7F7</color>
+    <!-- chat colors -->
+    <color name="color_blue_0888ff">#0888ff</color>
+    <color name="action_bar_tittle_color_555555">#555555</color>
+    <color name="color_gray_d9d9d9">#d9d9d9</color>
+
+    <!-- zxing -->
+    <color name="bg_color">#EDEDED</color>
+    <color name="txt_008000">#008000</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="help_button_view">#ffcccccc</color>
+    <color name="help_view">#ff404040</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_image_border">#ffffffff</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c000ff00</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="overlay">#11000000</color>
+    <color name="sbc_header_text">#ff808080</color>
+    <color name="sbc_header_view">#ffffffff</color>
+    <color name="sbc_list_item">#fffff0e0</color>
+    <color name="sbc_layout_view">#ffffffff</color>
+    <color name="sbc_page_number_text">#ff000000</color>
+    <color name="sbc_snippet_text">#ff4b4b4b</color>
+    <color name="share_text">#ff000000</color>
+    <color name="share_view">#ffffffff</color>
+    <color name="status_view">#50000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="header">#58567D</color>
+    <color name="grgray">#686868</color>
+
+    <!-- Common color management -->
+    <color name="bg_00">#000000</color>
+    <color name="bg_22">#222222</color>
+    <color name="bg_33">#333333</color>
+    <color name="bg_40">#404040</color>
+    <color name="bg_4A">#4A4A4A</color>
+    <color name="bg_4E">#4E4E4E</color>
+    <color name="bg_51">#515151</color>
+    <color name="bg_61">#616161</color>
+    <color name="bg_66">#666666</color>
+    <color name="bg_80">#808080</color>
+    <color name="bg_85">#858585</color>
+    <color name="bg_99">#999999</color>
+    <color name="bg_9E">#9E9E9E</color>
+    <color name="bg_a0">#A0A0A0</color>
+    <color name="bg_b0">#B0B0B0</color>
+    <color name="bg_be">#BEBEBE</color>
+    <color name="bg_c3">#C3C3C3</color>
+    <color name="bg_c4">#C4C4C4</color>
+    <color name="bg_cc">#CCCCCC</color>
+    <color name="bg_d1">#D1D1D1</color>
+    <color name="bg_d4">#D4D4D4</color>
+    <color name="bg_d5">#D5D5D5</color>
+    <color name="bg_d7">#D7D7D7</color>
+    <color name="bg_df">#DFDFDF</color>
+    <color name="bg_e7">#E7E7E7</color>
+    <color name="bg_eb">#EBEBEB</color>
+    <color name="bg_ed">#EDEDED</color>
+    <color name="bg_ef">#EFEFEF</color>
+    <color name="bg_e4">#E4E4E4</color>
+    <color name="bg_f0">#F0F0F0</color>
+    <color name="bg_f1">#F1F1F1</color>
+    <color name="bg_f2">#F2F2F2</color>
+    <color name="bg_f3">#F3F3F3</color>
+    <color name="bg_f9">#F9F9F9</color>
+    <color name="bg_ff">#FFFFFF</color>
+    <color name="bg_0000">#00000000</color>
+    <color name="bg_f000">#ff000000</color>
+    <color name="bg_e000">#e0000000</color>
+    <color name="bg_f09c">#FF0099CC</color>
+    <color name="bg_0d74bc">#0D74BC</color>
+    <color name="bg_3B85D1">#3B85D1</color>
+    <color name="bg_edf1f4">#EDF1F4</color>
+    <color name="bg_336dad">#336DAB</color>
+    <color name="bg_0084ff">#0084FF</color>
+    <color name="bg_eef1f4">#EEF1F4</color>
+    <color name="bg_f1f6fb">#F1F6FB</color>
+    <color name="zxing_title">#181314</color>
+    <color name="zxing_corner">#0084FF</color>
+    <color name="zxing_consumer">#55000000</color>
+    <color name="bg_5f6062">#5F6062</color>
+    <color name="bg_ed8e00">#ED8E00</color>
+    <color name="bg_tab_pressed">#FBFBFB</color>
+    <color name="bg_tab_normal">#9096A0</color>
+    <color name="bg_tab_sharp">#ED2424</color>
+    <color name="bg_ee">#EEEEEE</color>
+    <color name="province_line_border">#C7C7C7</color>
+    <color name="red">#FFC93437</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="green">#FF34A350</color>
+    <color name="gray">#aaaaaa</color>
+    <color name="light_blue">#6593cb</color>
+    <color name="bg_77_00">#77000000</color>
+
+    <color name="listview_refresh_head_title">#787878</color>
+    <color name="listview_refresh_head_update_time">#787878</color>
+
+    <!--自定义滚轮颜色设置-->
+    <color name="pickerview_timebtn_nor">#057dff</color>
+    <color name="pickerview_timebtn_pre">#c2daf5</color>
+    <color name="pickerview_bg_topbar">#f5f5f5</color>
+    <color name="pickerview_topbar_title">#000000</color>
+    <color name="pickerview_wheelview_textcolor_out">#a8a8a8</color>
+    <color name="pickerview_wheelview_textcolor_center">#2a2a2a</color>
+    <color name="pickerview_wheelview_textcolor_divider">#d5d5d5</color>
+    <color name="pickerview_surebutton_textcolor">#DCDCDC</color>
+    <!--覆盖颜色-->
+    <color name="bgColor_overlay">#60000000</color>
+    <!-- IM colours -->
+    <color name="chat_room_background">#EEF1F4</color>
+    <color name="chat_room_cell_datelabel_textcolor">#FFFFFF</color>
+    <color name="chat_room_cell_message_textcolor">#424242</color>
+    <color name="chat_room_cell_messagetime_textcolor">#D9D9D9</color>
+    <color name="chat_room_commandcell_button_textcolor">#FF4C86FF</color>
+    <color name="chat_list_common_message_textcolor">#FF797979</color>
+    <color name="chat_list_common_messagetime_textcolor">#D9D9D9</color>
+
+    <!--覆盖颜色-->
+    <color name="bgColor_alertview_alert">#f8f8f8</color>
+    <color name="bgColor_alertview_alert_start">#f0f0f0</color><!--标题颜色-->
+    <color name="textColor_alert_title">#000000</color>
+    <color name="textColor_actionsheet_title">#8f8f8f</color><!--消息颜色-->
+    <color name="textColor_alert_msg">#000000</color>
+    <color name="textColor_actionsheet_msg">#8f8f8f</color><!--线条颜色-->
+    <color name="bgColor_divier">#d7d7db</color><!--取消按钮颜色-->
+    <color name="textColor_alert_button_cancel">#007aff</color><!--高亮按钮颜色-->
+    <color name="textColor_alert_button_destructive">#ff3b30</color><!--普通按钮文字颜色-->
+    <color name="textColor_alert_button_others">#007aff</color><!--点击颜色-->
+    <color name="bgColor_alert_button_press">#EAEAEA</color><!--actionsheet模式的取消按钮背景颜色-->
+    <color name="bgColor_actionsheet_cancel_nor">#ffffff</color>
+
+</resources>

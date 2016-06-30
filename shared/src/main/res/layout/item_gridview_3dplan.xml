@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/size_2"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_show_3dplan"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_100"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:id="@+id/tv_3dplan_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_show_3dplan"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text="@string/three_plan_name"
+        android:textColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/iv_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:alpha="0.5"
+        android:clickable="false"
+        android:visibility="gone"/>
+</RelativeLayout>
+

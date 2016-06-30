@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools/sjj"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/listview_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/shejijia_logo" />
+
+        <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
+            android:id="@+id/ptr_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <cn.finalteam.loadingviewfinal.ListViewFinal
+                android:id="@+id/lv_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:scrollbars="none"
+                app:loadMoreMode="scroll" />
+
+        </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
+    </RelativeLayout>
+
+    <com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu
+        android:id="@+id/add_menu_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/size_16"
+        android:layout_marginRight="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_16"
+        fab:fab_addButtonColorNormal="@android:color/holo_blue_dark"
+        fab:fab_addButtonColorPressed="@color/floating_white_pressed"
+        fab:fab_addButtonSize="normal"
+        fab:fab_expandDirection="up"
+        fab:fab_labelStyle="@style/Floating_action_button_style">
+
+    </com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu>
+
+</RelativeLayout>

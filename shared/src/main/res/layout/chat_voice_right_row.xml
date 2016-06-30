@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="@dimen/chat_room_cell_datelabel_width"
+        android:layout_height="@dimen/chat_room_cell_datelabel_height"
+        android:layout_marginTop="@dimen/chat_room_cell_datelabel_margintop"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="today"
+        android:textSize="@dimen/chat_room_cell_datelabel_fontsize"
+        android:background="@drawable/rounded_corners"
+        android:textColor="@color/chat_room_cell_datelabel_textcolor"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/chat_room_audiocell_content_margin"
+        android:layout_marginLeft="@dimen/chat_room_audiocell_content_margin"
+        android:layout_marginBottom="@dimen/chat_room_audiocell_content_margin"
+        android:paddingTop="@dimen/chat_room_audiocell_content_paddingtop">
+
+        <com.autodesk.shejijia.shared.components.common.uielements.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/chat_room_cell_avatar_side"
+            android:layout_height="@dimen/chat_room_cell_avatar_side"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_useravatar"/>
+
+        <RelativeLayout
+            android:id="@+id/audio_cell_parent_layout"
+            android:layout_width="@dimen/chat_room_audiocell_content_inner_width"
+            android:layout_height="@dimen/chat_room_audiocell_content_inner_height"
+            android:layout_marginTop="@dimen/chat_room_audiocell_content_inner_margintop"
+            android:layout_toLeftOf="@id/user_avatar"
+            android:padding="@dimen/chat_room_audiocell_content_inner_padding"
+            android:background="@drawable/images"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/audio"
+                android:layout_width="@dimen/chat_room_audiocell_audioimage_width"
+                android:layout_height="@dimen/chat_room_audiocell_audioimage_height"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/chat_room_audiocell_audioimage_sidemargin"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/audio"
+                android:background="@drawable/audio_animation_list_left"/>
+
+            <TextView
+                android:id="@+id/send_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/chat_room_audiocell_messagetime_marginbottom"
+                android:layout_marginLeft="@dimen/chat_room_audiocell_messagetime_sidemargin"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="14:19"
+                android:textColor="@color/chat_room_cell_messagetime_textcolor"
+                android:textSize="@dimen/chat_room_cell_messagetime_fontsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/chat_room_audiocell_content_inner_height"
+            android:layout_toLeftOf="@id/audio_cell_parent_layout"
+            android:layout_alignTop="@id/audio_cell_parent_layout"
+            android:layout_marginRight="@dimen/chat_room_audiocell_sidecontent_sidemargin">
+
+            <TextView
+                android:id="@+id/voice_durationtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:visibility="gone"/>
+
+            <ProgressBar
+                android:id="@+id/audio_cell_progressbar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

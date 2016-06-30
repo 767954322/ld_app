@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/chat_list_common_title_margintop"
+        android:gravity="center"
+        android:textSize="@dimen/chat_list_common_title_fontsize"
+        android:textColor="@color/black"
+        android:text="@string/xiao_wu" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/chat_list_common_message_margintop"
+        android:layout_marginBottom="@dimen/chat_list_common_message_marginbottom"
+        android:paddingRight="@dimen/chat_list_common_message_paddingright"
+        android:gravity="center_vertical|left"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textColor="@color/chat_list_common_message_textcolor"
+        android:text="@string/hello" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/chat_list_common_messagetime_marginright"
+        android:layout_marginTop="@dimen/chat_list_common_messagetime_margintop"
+        android:gravity="center"
+        android:textColor="@color/chat_list_common_messagetime_textcolor"
+        android:textSize="@dimen/chat_list_common_messagetime_fontsize"
+        android:text="@string/time_hour" />
+
+</RelativeLayout>

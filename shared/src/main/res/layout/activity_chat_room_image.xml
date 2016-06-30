@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_parent_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/chat_room_background"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header"/>
+
+
+    <RelativeLayout
+        android:id="@+id/mainImageViewframe"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/chat_imageroom_image_height">
+
+        <ImageView
+            android:id="@+id/mainImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageView
+            android:id="@+id/hotspotImageView"
+            android:layout_width="@dimen/chat_imageroom_hotspot_side"
+            android:layout_height="@dimen/chat_imageroom_hotspot_side"
+            android:alpha="0"
+            android:src="@drawable/hot_icon"
+            android:visibility="visible"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+        <ListView
+            android:id="@+id/message_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@android:color/transparent">
+
+        </ListView>
+
+        <RelativeLayout
+            android:id="@+id/audio_recording_parent_view"
+            android:layout_width="@dimen/chat_room_audio_recording_image_side"
+            android:layout_height="@dimen/chat_room_audio_recording_image_side"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/send_voice"
+                android:scaleType="centerCrop"/>
+        </RelativeLayout>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/chat_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

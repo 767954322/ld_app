@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ed" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_f1f6fb"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:id="@+id/tv_property_guaranteedbank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="浦发银行"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_17" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ed" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash_state"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_cash_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="处理中"
+            android:textColor="@color/bg_0084ff"
+            android:textSize="@dimen/font_16" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ed" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash_amount"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_cash_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥200.00"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_16" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ed" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cash_stream_number"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_cash_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="154567845"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_16" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ed" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/takeout_record_bill_time"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_cash_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2016-02-27 12:06"
+
+            android:textSize="@dimen/font_16" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_takeout_cash_remark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10">
+
+        <TextView
+            android:id="@+id/tv_cash_remark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_25"
+            android:layout_marginRight="@dimen/size_25"
+            android:background="@drawable/textview_border"
+            android:lines="4"
+            android:padding="@dimen/size_8"
+            android:text="@string/cash_remark" />
+    </LinearLayout>
+
+</LinearLayout>

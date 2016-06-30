@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <include android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header"/>
+
+    <FrameLayout
+        android:id="@+id/photopicker_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/photopicker_albumbar"
+        android:layout_below="@id/common_navbar">
+    </FrameLayout>
+
+    <View
+        android:id="@+id/photopicker_blur_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/photopicker_albumbar"
+        android:layout_alignParentTop="true"
+        android:background="#2A2C2B"
+        android:visibility="invisible"
+        android:alpha="0.7">
+    </View>
+
+    <FrameLayout
+        android:id="@+id/photopicker_album_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/photopicker_albumbar"
+        android:layout_alignParentTop="true">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/photopicker_albumbar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/photopicker_source_button"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/photopicker_source_text"
+                android:id="@+id/photopicker_source_textview"
+                android:layout_gravity="center"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/photopicker_source_img"
+                android:src="@drawable/photopicker_stub"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/photoactivity_fullblur_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="#2A2C2B"
+        android:visibility="invisible"
+        android:alpha="0.7">
+    </View>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photoactivity_progressbar"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

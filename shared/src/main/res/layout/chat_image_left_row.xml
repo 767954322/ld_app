@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="@dimen/chat_room_cell_datelabel_width"
+        android:layout_height="@dimen/chat_room_cell_datelabel_height"
+        android:layout_marginTop="@dimen/chat_room_cell_datelabel_margintop"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="today"
+        android:textSize="@dimen/chat_room_cell_datelabel_fontsize"
+        android:background="@drawable/rounded_corners"
+        android:textColor="@color/chat_room_cell_datelabel_textcolor"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="@dimen/chat_room_imagecell_content_minheight"
+        android:orientation="horizontal">
+
+        <com.autodesk.shejijia.shared.components.common.uielements.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/chat_room_cell_avatar_side"
+            android:layout_height="@dimen/chat_room_cell_avatar_side"
+            android:layout_marginLeft="@dimen/chat_room_imagecell_avatar_sidemargin"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_useravatar"/>
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/chat_room_imagecell_image_margintop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/message_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/chat_room_imagecell_image_verticalpadding"
+                android:paddingBottom="@dimen/chat_room_imagecell_image_verticalpadding"
+                android:paddingRight="@dimen/chat_room_imagecell_image_sidepadding"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:id="@+id/unread_file_count"
+                android:layout_width="@dimen/chat_room_imagecell_unread_side"
+                android:layout_height="@dimen/chat_room_imagecell_unread_side"
+                android:layout_alignTop="@+id/message_image_view"
+                android:layout_alignRight="@+id/message_image_view"
+                android:background="@drawable/circle_shape"
+                android:text="12"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/chat_room_imagecell_unread_fontsize"/>
+
+            <TextView
+                android:id="@+id/send_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/message_image_view"
+                android:layout_alignRight="@id/message_image_view"
+                android:layout_marginBottom="@dimen/chat_room_imagecell_messagetime_marginbottom"
+                android:layout_marginRight="@dimen/chat_room_imagecell_messagetime_sidemargin"
+                android:text="12:50"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="@dimen/chat_room_imagecell_messagetime_fontsize"/>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imagecell_progress_bar"
+                android:layout_marginLeft="@dimen/chat_room_imagecell_progressbar_sidemargin"
+                android:layout_marginTop="@dimen/chat_room_imagecell_progressbar_margintop"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>

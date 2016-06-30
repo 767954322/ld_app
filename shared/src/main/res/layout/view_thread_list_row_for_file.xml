@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/chat_list_parent_height"
+                android:minHeight="@dimen/chat_list_parent_minheight">
+
+    <RelativeLayout
+        android:id="@+id/head_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/head_ico"
+            android:layout_width="@dimen/chat_list_filelist_avatar_side"
+            android:layout_height="@dimen/chat_list_filelist_avatar_side"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/chat_list_avatar_marginleft"
+            android:layout_marginTop="@dimen/chat_list_filelist_avatar_verticalmargin"
+            android:layout_marginBottom="@dimen/chat_list_filelist_avatar_verticalmargin"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/tv_unread_message_count"
+            android:layout_width="@dimen/chat_list_unread_side"
+            android:layout_height="@dimen/chat_list_unread_side"
+            android:layout_alignTop="@id/head_ico"
+            android:layout_alignRight="@id/head_ico"
+            android:background="@drawable/circle_shape"
+            android:gravity="center"
+            android:text="11"
+            android:textColor="@color/white"
+            android:textSize="@dimen/chat_list_unread_fontsize" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_thread_list_common_content"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/chat_list_common_height"
+             android:minHeight="@dimen/chat_list_common_minheight"
+             android:layout_centerVertical="true"
+             android:layout_marginLeft="@dimen/chat_list_common_sidemargin"
+             android:layout_marginRight="@dimen/chat_list_common_sidemargin"
+             android:layout_toRightOf="@id/head_parent" />
+
+</RelativeLayout>

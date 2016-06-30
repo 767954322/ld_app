@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RadioGroup
+        android:id="@+id/consumer_main_radio_group"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/size_55"
+        android:background="@color/bg_22"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/consumer_main_radio_btn"
+            style="@style/main_tab_bottom"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_home"
+            android:text="@string/tab_home" />
+
+        <RadioButton
+            android:id="@+id/consumer_session_radio_btn"
+            style="@style/main_tab_bottom"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_chat"
+            android:text="@string/tab_im" />
+
+
+        <RadioButton
+            android:id="@+id/consumer_person_center_radio_btn"
+            style="@style/main_tab_bottom"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_personal"
+            android:text="@string/tab_personalcenter" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="" />
+
+    <TextView
+        android:background="@drawable/redsharp"
+        android:id="@+id/tv_msg_number"
+        android:layout_width="@dimen/size_20"
+        android:layout_height="@dimen/size_20"
+        android:layout_marginLeft="@dimen/size_6"
+        android:layout_toRightOf="@+id/textView1"
+        android:text=""
+        android:visibility="invisible" />
+
+</RelativeLayout>

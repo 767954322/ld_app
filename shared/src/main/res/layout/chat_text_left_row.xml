@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/chat_room_textcell_sidemargin"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_width="@dimen/chat_room_cell_datelabel_width"
+        android:layout_height="@dimen/chat_room_cell_datelabel_height"
+        android:layout_marginTop="@dimen/chat_room_cell_datelabel_margintop"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="today"
+        android:textSize="@dimen/chat_room_cell_datelabel_fontsize"
+        android:background="@drawable/rounded_corners"
+        android:textColor="@color/chat_room_cell_datelabel_textcolor"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/chat_room_textcell_content_margin"
+        android:layout_marginLeft="@dimen/chat_room_textcell_content_margin"
+        android:layout_marginBottom="@dimen/chat_room_textcell_content_margin"
+        android:orientation="horizontal">
+
+        <com.autodesk.shejijia.shared.components.common.uielements.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/chat_room_cell_avatar_side"
+            android:layout_height="@dimen/chat_room_cell_avatar_side"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_useravatar"
+            android:layout_alignParentLeft="true"/>
+
+        <LinearLayout
+            android:id="@+id/message_parent_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/chat_room_textcell_message_margintop"
+            android:background="@drawable/image_worlds"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/user_avatar">
+
+            <TextView
+                android:id="@+id/chat_message"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:minWidth="@dimen/chat_room_textcell_message_minwidth"
+                android:paddingLeft="@dimen/chat_room_textcell_message_sidepadding"
+                android:paddingRight="@dimen/chat_room_textcell_message_sidepadding"
+                android:paddingTop="@dimen/chat_room_textcell_message_paddingtop"
+                android:text="@string/nice_to_meet_you"
+                android:textAlignment="textStart"
+                android:textColor="@color/chat_room_cell_message_textcolor"
+                android:textSize="@dimen/chat_room_cell_message_fontsize" />
+
+            <TextView
+                android:id="@+id/send_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/chat_room_textcell_messagetime_margintop"
+                android:layout_marginBottom="@dimen/chat_room_textcell_messagetime_marginbottom"
+                android:layout_marginRight="@dimen/chat_room_textcell_messagetime_marginright"
+                android:text="14:19"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:textColor="@color/chat_room_cell_messagetime_textcolor"
+                android:textSize="@dimen/chat_room_cell_messagetime_fontsize" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

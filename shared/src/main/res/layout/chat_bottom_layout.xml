@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/chat_parent_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/grey_white"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/chat_bottombar_minheight">
+
+        <ImageView
+            android:id="@+id/voice_imageview"
+            android:layout_width="@dimen/chat_bottombar_button_side"
+            android:layout_height="@dimen/chat_bottombar_button_side"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/chat_bottombar_button_sidemargin"
+            android:layout_centerVertical="true"
+            android:src="@drawable/voice_ico"/>
+
+        <EditText
+            android:id="@+id/chat_editextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/chat_bottombar_textfield_minheight"
+            android:layout_centerInParent="true"
+            android:background="@drawable/im_edittext_shape"
+            android:maxLines="4"
+            android:textSize="@dimen/chat_bottombar_textfield_fontsize"
+            android:layout_toRightOf="@id/voice_imageview"
+            android:layout_marginLeft="@dimen/chat_bottombar_button_sidemargin"
+            android:layout_marginRight="@dimen/chat_bottombar_textfield_marginright"
+            android:layout_marginTop="@dimen/chat_bottombar_button_verticalmargin"
+            android:layout_marginBottom="@dimen/chat_bottombar_button_verticalmargin"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/chat_voice_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/chat_bottombar_textfield_minheight"
+            android:layout_centerInParent="true"
+            android:text="@string/hold_down_the_talk"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="@dimen/chat_bottombar_hinttext_fontsize"
+            android:layout_toRightOf="@id/voice_imageview"
+            android:layout_marginLeft="@dimen/chat_bottombar_button_sidemargin"
+            android:layout_marginRight="@dimen/chat_bottombar_textfield_marginright"
+            android:layout_marginTop="@dimen/chat_bottombar_button_verticalmargin"
+            android:layout_marginBottom="@dimen/chat_bottombar_button_verticalmargin"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/chat_otherfeature_imageview"
+            android:layout_width="@dimen/chat_bottombar_button_side"
+            android:layout_height="@dimen/chat_bottombar_button_side"
+            android:src="@drawable/im_add_ico"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/chat_bottombar_toolview_marginright"
+            android:layout_alignParentRight="true"/>
+
+         <Button
+            android:id="@+id/chat_send_message_button"
+            android:layout_width="@dimen/chat_bottombar_sendbutton_width"
+            android:layout_height="@dimen/chat_bottombar_sendbutton_height"
+            android:background="@drawable/chat_sendbutton_background"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="@string/send"
+            android:textSize="@dimen/chat_bottombar_textfield_fontsize"
+            android:layout_marginRight="@dimen/chat_bottombar_sendbutton_marginright"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+

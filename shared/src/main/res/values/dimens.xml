@@ -1,0 +1,321 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="height_top_bar">48dp</dimen>
+    <dimen name="padding_search_bar">5dp</dimen>
+    <dimen name="height_row_weixin">59dp</dimen>
+    <dimen name="size_avatar">50dp</dimen>
+    <dimen name="margin_chat_activity">5dp</dimen>
+    <dimen name="field_textsize">14sp</dimen>
+    <dimen name="field_margin_right">5dp</dimen>
+    <dimen name="call_button_padding_vertical">10dp</dimen>
+    <dimen name="call_button_padding_left">25dp</dimen>
+    <dimen name="call_button_padding_right">25dp</dimen>
+    <dimen name="sidebar_text_size">10dp</dimen>
+    <dimen name="image_thumbnail_size">100dp</dimen>
+    <dimen name="image_thumbnail_spacing">1dp</dimen>
+    <dimen name="listview_refresh_head_title">16sp</dimen>
+    <dimen name="listview_refresh_head_update_time">10sp</dimen>
+
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="slidingmenu_offset">180dp</dimen>
+    <dimen name="list_padding">10dp</dimen>
+    <dimen name="shadow_width">5dp</dimen>
+    <dimen name="bottom_tab_padding_drawable">2.0dip</dimen>
+    <dimen name="bottom_tab_padding_up">2.0dip</dimen>
+    <dimen name="bottom_tab_font_size">14.0sp</dimen>
+    <dimen name="button_text_size">14sp</dimen>
+    <dimen name="expand_tab_item_height">45dp</dimen>
+    <dimen name="expand_tab_eara_height">380dp</dimen>
+    <dimen name="head_bar_height">45dp</dimen>
+    <dimen name="size_0">0dp</dimen>
+    <dimen name="size_0.5">0.5dp</dimen>
+    <dimen name="size_1">1dp</dimen>
+    <dimen name="size_1.5">1.5dp</dimen>
+    <dimen name="size_2">2dp</dimen>
+    <dimen name="size_3">3dp</dimen>
+    <dimen name="size_4">4dp</dimen>
+    <dimen name="size_4.5">4.5dp</dimen>
+    <dimen name="size_5">5dp</dimen>
+    <dimen name="size_6">6dp</dimen>
+    <dimen name="size_6.5">6.5dp</dimen>
+    <dimen name="size_7">7dp</dimen>
+    <dimen name="size_7.5">7.5dp</dimen>
+    <dimen name="size_8">8dp</dimen>
+    <dimen name="size_8.5">8.5dp</dimen>
+    <dimen name="size_9">9dp</dimen>
+    <dimen name="size_10">10dp</dimen>
+    <dimen name="size_11">11dp</dimen>
+    <dimen name="size_12">12dp</dimen>
+    <dimen name="size_12.5">12.5dp</dimen>
+    <dimen name="size_13">13dp</dimen>
+    <dimen name="size_14">14dp</dimen>
+    <dimen name="size_15">15dp</dimen>
+    <dimen name="size_16">16dp</dimen>
+    <dimen name="size_17">17dp</dimen>
+    <dimen name="size_18">18dp</dimen>
+    <dimen name="size_19">19dp</dimen>
+    <dimen name="size_20">20dp</dimen>
+    <dimen name="size_21">21dp</dimen>
+    <dimen name="size_22">22dp</dimen>
+    <dimen name="size_23">23dp</dimen>
+    <dimen name="size_24">24dp</dimen>
+    <dimen name="size_25">25dp</dimen>
+    <dimen name="size_26">26dp</dimen>
+    <dimen name="size_27">27dp</dimen>
+    <dimen name="size_28">28dp</dimen>
+    <dimen name="size_29">29dp</dimen>
+    <dimen name="size_30">30dp</dimen>
+    <dimen name="size_32">32dp</dimen>
+    <dimen name="size_33">33dp</dimen>
+    <dimen name="size_34">34dp</dimen>
+    <dimen name="size_35">35dp</dimen>
+    <dimen name="size_36">36dp</dimen>
+    <dimen name="size_37">37dp</dimen>
+    <dimen name="size_38">38dp</dimen>
+    <dimen name="size_39">39dp</dimen>
+    <dimen name="size_40">40dp</dimen>
+    <dimen name="size_44">44dp</dimen>
+    <dimen name="size_45">45dp</dimen>
+    <dimen name="size_48">48dp</dimen>
+    <dimen name="size_49">49dp</dimen>
+    <dimen name="size_50">50dp</dimen>
+    <dimen name="size_52">52dp</dimen>
+    <dimen name="size_53">53dp</dimen>
+    <dimen name="size_54">54dp</dimen>
+    <dimen name="size_55">55dp</dimen>
+    <dimen name="size_57">57dp</dimen>
+    <dimen name="size_58">58dp</dimen>
+    <dimen name="size_59">59dp</dimen>
+    <dimen name="size_60">60dp</dimen>
+    <dimen name="size_62">62dp</dimen>
+    <dimen name="size_63">63dp</dimen>
+    <dimen name="size_65">65dp</dimen>
+    <dimen name="size_67">67dp</dimen>
+    <dimen name="size_68">68dp</dimen>
+    <dimen name="size_69">69dp</dimen>
+    <dimen name="size_70">70dp</dimen>
+    <dimen name="size_71">71dp</dimen>
+    <dimen name="size_75">75dp</dimen>
+    <dimen name="size_97">97dp</dimen>
+    <dimen name="size_80">80dp</dimen>
+    <dimen name="size_82">82dp</dimen>
+    <dimen name="size_83">83dp</dimen>
+    <dimen name="size_85">85dp</dimen>
+    <dimen name="size_90">90dp</dimen>
+    <dimen name="size_95">95dp</dimen>
+    <dimen name="size_96">96dp</dimen>
+    <dimen name="size_100">100dp</dimen>
+    <dimen name="size_102">102dp</dimen>
+    <dimen name="size_110">110dp</dimen>
+    <dimen name="size_115">115dp</dimen>
+    <dimen name="size_118">118dp</dimen>
+    <dimen name="size_120">120dp</dimen>
+    <dimen name="size_123">123dp</dimen>
+    <dimen name="size_124">124dp</dimen>
+    <dimen name="size_125">125dp</dimen>
+    <dimen name="size_128">128dp</dimen>
+    <dimen name="size_130">130dp</dimen>
+    <dimen name="size_140">140dp</dimen>
+    <dimen name="size_150">150dp</dimen>
+    <dimen name="size_152">152dp</dimen>
+    <dimen name="size_156">156dp</dimen>
+    <dimen name="size_159">159dp</dimen>
+    <dimen name="size_165">165dp</dimen>
+    <dimen name="size_167.5">167.5dp</dimen>
+    <dimen name="size_180">180dp</dimen>
+    <dimen name="size_195">195dp</dimen>
+    <dimen name="size_200">200dp</dimen>
+    <dimen name="size_211">211dp</dimen>
+    <dimen name="size_215">215dp</dimen>
+    <dimen name="size_218">218dp</dimen>
+    <dimen name="size_220">220dp</dimen>
+    <dimen name="size_225">225dp</dimen>
+    <dimen name="size_235">235dp</dimen>
+    <dimen name="size_240">240dp</dimen>
+    <dimen name="size_245">245dp</dimen>
+    <dimen name="size_250">250dp</dimen>
+    <dimen name="size_260">260dp</dimen>
+    <dimen name="size_269">269dp</dimen>
+    <dimen name="size_280">280dp</dimen>
+    <dimen name="size_300">300dp</dimen>
+    <dimen name="size_321">321dp</dimen>
+    <dimen name="size_323">323dp</dimen>
+    <dimen name="size_330">330dp</dimen>
+
+    <dimen name="text_size_9">9sp</dimen>
+    <dimen name="text_size_11">11sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="font_small1">10sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_small2">14sp</dimen>
+    <dimen name="font_normal">15sp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="font_larger">22sp</dimen>
+    <dimen name="font_huge">26sp</dimen>
+    <dimen name="dim56dp">56dp</dimen>
+    <dimen name="dim78dp">78dp</dimen>
+
+
+    <!-- floating-action-button sizes -->
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="fab_icon_size">24dp</dimen>
+    <dimen name="fab_plus_icon_size">14dp</dimen>
+    <dimen name="fab_plus_icon_stroke">2dp</dimen>
+    <dimen name="fab_shadow_offset">3dp</dimen>
+    <dimen name="fab_shadow_radius">9dp</dimen>
+    <dimen name="fab_stroke_width">1dp</dimen>
+    <dimen name="fab_actions_spacing">16dp</dimen>
+    <dimen name="fab_labels_margin">8dp</dimen>
+
+    <dimen name="order_designer_face_size">50dp</dimen>
+    <dimen name="order_designer_name_text_size">14sp</dimen>
+    <dimen name="order_info_btn_size">40dp</dimen>
+    <dimen name="main_action_bar_height">55dp</dimen>
+
+    <!-- chat view sizes -->
+    <dimen name="chat_select_img_strip_height">50dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <!--自定义滚轮-->
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+    <!-- 顶部按钮paddingLeft -->
+    <dimen name="pickerview_topbar_paddingleft">10dp</dimen>
+    <!-- 顶部按钮paddingRight -->
+    <dimen name="pickerview_topbar_paddingright">30dp</dimen>
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">20sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">21sp</dimen>
+    <!-- 选项文字大小 需要配合 bools.xml 的 pickerview_customTextSize 为 true 才有效果-->
+    <dimen name="pickerview_textsize">20sp</dimen>
+    <!-- IM dimensions -->
+    <dimen name="chat_room_audio_recording_image_side">140dp</dimen>
+    <dimen name="chat_imageroom_image_height">50dp</dimen>
+    <dimen name="chat_imageroom_hotspot_side">42dp</dimen>
+
+    <dimen name="chat_bottombar_minheight">50dp</dimen>
+    <dimen name="chat_bottombar_button_side">30dp</dimen>
+    <dimen name="chat_bottombar_button_sidemargin">10dp</dimen>
+    <dimen name="chat_bottombar_button_verticalmargin">3dp</dimen>
+    <dimen name="chat_bottombar_textfield_minheight">34dp</dimen>
+    <dimen name="chat_bottombar_textfield_fontsize">14sp</dimen>
+    <dimen name="chat_bottombar_textfield_marginright">60dp</dimen>
+    <dimen name="chat_bottombar_hinttext_fontsize">16sp</dimen>
+    <dimen name="chat_bottombar_toolview_marginright">15dp</dimen>
+    <dimen name="chat_bottombar_sendbutton_height">30dp</dimen>
+    <dimen name="chat_bottombar_sendbutton_width">45dp</dimen>
+    <dimen name="chat_bottombar_sendbutton_marginright">7dp</dimen>
+
+    <dimen name="chat_toolview_button_side">40dp</dimen>
+    <dimen name="chat_toolview_button_verticalmargin">5dp</dimen>
+    <dimen name="chat_toolview_button_sidemargin">40dp</dimen>
+
+    <dimen name="chat_room_cell_datelabel_width">60dp</dimen>
+    <dimen name="chat_room_cell_datelabel_height">25dp</dimen>
+    <dimen name="chat_room_cell_datelabel_margintop">10dp</dimen>
+    <dimen name="chat_room_cell_datelabel_fontsize">14sp</dimen>
+    <dimen name="chat_room_cell_avatar_side">60dp</dimen>
+    <dimen name="chat_room_cell_message_fontsize">15sp</dimen>
+    <dimen name="chat_room_cell_messagetime_fontsize">12sp</dimen>
+
+    <dimen name="chat_room_textcell_sidemargin">2dp</dimen>
+    <dimen name="chat_room_textcell_content_margin">10dp</dimen>
+    <dimen name="chat_room_textcell_message_margintop">30dp</dimen>
+    <dimen name="chat_room_textcell_message_minwidth">100dp</dimen>
+    <dimen name="chat_room_textcell_message_sidepadding">8dp</dimen>
+    <dimen name="chat_room_textcell_message_paddingtop">3dp</dimen>
+    <dimen name="chat_room_textcell_messagetime_margintop">3dp</dimen>
+    <dimen name="chat_room_textcell_messagetime_marginbottom">5dp</dimen>
+    <dimen name="chat_room_textcell_messagetime_marginright">10dp</dimen>
+
+    <dimen name="chat_room_imagecell_content_minheight">210dp</dimen>
+    <dimen name="chat_room_imagecell_avatar_sidemargin">5dp</dimen>
+    <dimen name="chat_room_imagecell_image_margintop">25dp</dimen>
+    <dimen name="chat_room_imagecell_image_verticalpadding">10dp</dimen>
+    <dimen name="chat_room_imagecell_image_sidepadding">10dp</dimen>
+    <dimen name="chat_room_imagecell_messagetime_marginbottom">15dp</dimen>
+    <dimen name="chat_room_imagecell_messagetime_sidemargin">15dp</dimen>
+    <dimen name="chat_room_imagecell_messagetime_fontsize">14sp</dimen>
+    <dimen name="chat_room_imagecell_unread_side">18dp</dimen>
+    <dimen name="chat_room_imagecell_unread_fontsize">12sp</dimen>
+    <dimen name="chat_room_imagecell_progressbar_sidemargin">80dp</dimen>
+    <dimen name="chat_room_imagecell_progressbar_margintop">80dp</dimen>
+
+    <dimen name="chat_room_audiocell_content_margin">10dp</dimen>
+    <dimen name="chat_room_audiocell_content_paddingtop">13dp</dimen>
+    <dimen name="chat_room_audiocell_content_inner_width">125dp</dimen>
+    <dimen name="chat_room_audiocell_content_inner_height">55dp</dimen>
+    <dimen name="chat_room_audiocell_content_inner_margintop">30dp</dimen>
+    <dimen name="chat_room_audiocell_content_inner_padding">4dp</dimen>
+    <dimen name="chat_room_audiocell_audioimage_width">25dp</dimen>
+    <dimen name="chat_room_audiocell_audioimage_height">34dp</dimen>
+    <dimen name="chat_room_audiocell_audioimage_sidemargin">20dp</dimen>
+    <dimen name="chat_room_audiocell_messagetime_marginbottom">5dp</dimen>
+    <dimen name="chat_room_audiocell_messagetime_sidemargin">9dp</dimen>
+    <dimen name="chat_room_audiocell_sidecontent_sidemargin">8dp</dimen>
+
+    <dimen name="chat_room_commandcell_avatarparent_margin">9dp</dimen>
+    <dimen name="chat_room_commandcell_avatar_margintop">10dp</dimen>
+    <dimen name="chat_room_commandcell_avatar_marginleft">10dp</dimen>
+    <dimen name="chat_room_commandcell_content_marginleft">30dp</dimen>
+    <dimen name="chat_room_commandcell_content_marginright">20dp</dimen>
+    <dimen name="chat_room_commandcell_text_margintop">20dp</dimen>
+    <dimen name="chat_room_commandcell_text_marginright">9dp</dimen>
+    <dimen name="chat_room_commandcell_button_width">100dp</dimen>
+    <dimen name="chat_room_commandcell_button_height">45dp</dimen>
+    <dimen name="chat_room_commandcell_button_margintop">20dp</dimen>
+    <dimen name="chat_room_commandcell_button_fontsize">14sp</dimen>
+    <dimen name="chat_room_commandcell_messagetime_marginbottom">9dp</dimen>
+    <dimen name="chat_room_commandcell_messagetime_fontsize">14sp</dimen>
+
+    <dimen name="chat_list_parent_height">80dp</dimen>
+    <dimen name="chat_list_parent_minheight">80dp</dimen>
+    <dimen name="chat_list_avatar_marginleft">15dp</dimen>
+    <dimen name="chat_list_unread_side">20dp</dimen>
+    <dimen name="chat_list_unread_fontsize">14sp</dimen>
+
+    <dimen name="chat_list_common_height">80dp</dimen>
+    <dimen name="chat_list_common_minheight">80dp</dimen>
+    <dimen name="chat_list_common_sidemargin">10dp</dimen>
+    <dimen name="chat_list_common_title_margintop">20dp</dimen>
+    <dimen name="chat_list_common_title_fontsize">15sp</dimen>
+    <dimen name="chat_list_common_message_margintop">4dp</dimen>
+    <dimen name="chat_list_common_message_marginbottom">10dp</dimen>
+    <dimen name="chat_list_common_message_paddingright">15dp</dimen>
+    <dimen name="chat_list_common_messagetime_marginright">5dp</dimen>
+    <dimen name="chat_list_common_messagetime_margintop">18dp</dimen>
+    <dimen name="chat_list_common_messagetime_fontsize">14sp</dimen>
+
+    <dimen name="chat_list_threadlist_avatar_side">67dp</dimen>
+    <dimen name="chat_list_threadlist_unread_margintop">8dp</dimen>
+    <dimen name="chat_list_threadlist_unread_marginright">2dp</dimen>
+
+    <dimen name="chat_list_filelist_avatar_side">70dp</dimen>
+    <dimen name="chat_list_filelist_avatar_verticalmargin">5dp</dimen>
+
+    <!--标题文字大小-->
+    <dimen name="textSize_alert_title">22sp</dimen>
+    <dimen name="textSize_actionsheet_title">14sp</dimen><!--标题文字高度-->
+    <dimen name="height_alert_title">60dp</dimen>
+    <dimen name="height_actionsheet_title">40dp</dimen><!--消息文字大小-->
+    <dimen name="textSize_alert_msg">15sp</dimen>
+    <dimen name="textSize_actionsheet_msg">14sp</dimen><!--消息距离底部间距-->
+    <dimen name="marginBottom_alert_msg">25dp</dimen>
+    <dimen name="marginBottom_actionsheet_msg">14dp</dimen><!--窗口模式左右两边到屏幕的间距-->
+    <dimen name="margin_alert_left_right">40dp</dimen>
+    <dimen name="margin_actionsheet_left_right">10dp</dimen><!--线条粗细-->
+    <dimen name="size_divier">1dp</dimen><!--按钮的高度-->
+    <dimen name="height_alert_button">48dp</dimen><!--按钮文字大小-->
+    <dimen name="textSize_alert_button">18sp</dimen><!--圆角-->
+    <dimen name="radius_alertview">15px</dimen>
+
+</resources>

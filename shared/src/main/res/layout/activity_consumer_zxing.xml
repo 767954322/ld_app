@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_consumer_qr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/zxing_consumer">
+
+
+    <ImageView
+        android:id="@+id/iv_consume_qr_ref"
+        android:layout_width="@dimen/size_180"
+        android:layout_height="@dimen/size_180"
+        android:layout_centerInParent="true"
+        android:background="@color/white"></ImageView>
+
+    <ImageView
+        android:id="@+id/iv_consumer_qr"
+        android:layout_width="@dimen/size_220"
+        android:layout_height="@dimen/size_220"
+        android:layout_centerInParent="true" />
+
+    <ImageButton
+        android:id="@+id/ibn_consumer_qr_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/iv_consume_qr_ref"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/size_5"
+        android:layout_toRightOf="@id/iv_consume_qr_ref"
+        android:background="@drawable/transparent"
+        android:src="@drawable/icon_qr_cancel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_consume_qr_ref"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_5"
+        android:text="@string/consumer_zxing_describe"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

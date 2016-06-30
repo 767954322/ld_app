@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_e7"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+    <TextView
+        android:id="@+id/tv_community_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:padding="@dimen/size_10"
+        android:singleLine="true" />
+
+    <LinearLayout
+        android:id="@+id/ll_3d_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/size_5"
+        android:paddingLeft="@dimen/size_10"
+        android:paddingRight="@dimen/size_10"
+        android:paddingTop="@dimen/size_5"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_3d_plan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_flow_3d" />
+
+        <TextView
+            android:id="@+id/tv_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/icon_unfold_normal"
+            android:text="@string/three_plan" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_design_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/size_5"
+        android:paddingLeft="@dimen/size_10"
+        android:paddingRight="@dimen/size_10"
+        android:paddingTop="@dimen/size_5"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_design_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_flow_rendering" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/icon_unfold_normal"
+            android:text="@string/flow_rendering_design" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_design_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/size_5"
+        android:paddingLeft="@dimen/size_10"
+        android:paddingRight="@dimen/size_10"
+        android:paddingTop="@dimen/size_5"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_design_pager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_flow_drawing" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/icon_unfold_normal"
+            android:text="@string/flow_design_blueprint" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_material_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/size_5"
+        android:paddingLeft="@dimen/size_10"
+        android:paddingRight="@dimen/size_10"
+        android:paddingTop="@dimen/size_5"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_material_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_flow_inventory" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/icon_unfold_normal"
+            android:text="@string/flow_bill_of_materials" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btn_upload_submit_3dplan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_30"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_marginRight="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_50"
+        android:background="@drawable/bg_common_btn_pressed"
+        android:text="@string/flow_send"
+        android:textColor="@color/bg_ff"
+        android:visibility="gone" />
+    <!--android:background="@drawable/bg_common_btn_blue"-->
+
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity">
+
+    <LinearLayout
+        android:id="@+id/ll_webview_indictor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:background="#F9F9F9"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_webview_backup"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_public_click_style"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_back_normal_z" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_finish_webview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/finish_cur_pager"
+            android:textColor="@color/color_blue_0888ff" />
+
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/webview_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_webview_indictor" />
+
+
+</RelativeLayout>

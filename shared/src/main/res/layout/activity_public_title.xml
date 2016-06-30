@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/ll_public_root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/size_50"
+              android:background="#F9F9F9"
+              android:gravity="center_vertical"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/fl_public_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_public_back"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_public_click_style"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_back_normal_z"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/bg_33">
+
+            <TextView
+                android:layout_width="@dimen/size_1"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_public_title"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="5"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_18"/>
+
+            <TextView
+                android:layout_width="@dimen/size_1"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_public_add"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_gravity="right"
+            android:background="@drawable/bg_public_click_style"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_title_add"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_time_restrict"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_gravity="right"
+            android:background="@drawable/bg_public_click_style"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_time_normal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_title_filtrate"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/size_50"
+            android:background="@drawable/bg_public_click_style"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:background="@drawable/icon_filtrate_normal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_title_search"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_gravity="right"
+            android:background="@drawable/bg_public_click_style"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:background="@drawable/icon_search"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_flow_project_material"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_gravity="right"
+            android:background="@drawable/bg_public_click_style"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:background="@drawable/icon_project_material"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_info_save"
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:text="@string/save"
+            android:visibility="gone"/>
+    </FrameLayout>
+</LinearLayout>

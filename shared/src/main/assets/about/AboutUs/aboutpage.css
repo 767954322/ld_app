@@ -1,0 +1,13 @@
+/* 
+  webpage.css
+  ContractView
+
+  Created by Franco Liu on 16/2/16.
+  Copyright © 2016年 Franco Liu. All rights reserved.
+*/
+
+body {    font-family: KaiTi; background-color: rgb(235,239,242); font-size: 20px;   }
+h1 {    font-family: KaiTi; background-color: rgb(235,239,242); font-size: 34px;  }
+
+p.title{ font-family: KaiTi; background-color: rgb(235,239,242); font-size: 34px; }
+p.libName{ font-family: KaiTi; background-color: rgb(235,239,242); font-size: 30px; }

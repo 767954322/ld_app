@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_50"
+    android:background="@color/bg_f9"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_back"
+        android:layout_width="@dimen/size_50"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_public_click_style"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_back_normal_z" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_public_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/mychat"
+        android:textSize="@dimen/font_16" />
+
+    <LinearLayout
+        android:id="@+id/ll_project_material"
+        android:layout_width="@dimen/size_50"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/size_50"
+        android:background="@drawable/bg_public_click_style"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_project_material" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ibn_chat_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/size_10"
+        android:layout_toLeftOf="@+id/ibn_public_file"
+        android:background="@drawable/transparent"
+        android:src="@drawable/msg_file"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/ibn_public_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/size_10"
+        android:background="@drawable/transparent"
+        android:src="@drawable/msg_file" />
+
+    <TextView
+        android:id="@+id/tv_un_read"
+        android:layout_width="@dimen/size_22"
+        android:layout_height="@dimen/size_22"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/size_5"
+        android:layout_marginTop="@dimen/size_5"
+        android:background="@drawable/redsharp"
+        android:gravity="center"
+        android:text="99"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_10"
+        android:visibility="gone" />
+
+</RelativeLayout>

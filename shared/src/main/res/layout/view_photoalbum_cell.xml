@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/photoalbum_thumbnail_layout"
+        >
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/photoalbum_cell_thumbnail"
+            android:src="@drawable/photopicker_thumbnail_placeholder"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="9dp"
+            android:layout_marginLeft="25dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="9dp"/>
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="19dp"
+            android:id="@+id/photoalbum_cell_cloudindicator"
+            android:src="@drawable/cloud_album_badge"
+            android:layout_alignLeft="@id/photoalbum_cell_thumbnail"
+            android:layout_marginLeft="-12dp"
+            android:layout_marginTop="0dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:id="@+id/photoalbum_text_layout"
+        android:layout_toRightOf="@id/photoalbum_thumbnail_layout"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/photoalbum_cell_title"
+            android:text="Title"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/photoalbum_cell_subtitle"
+            android:text="Subtitle"
+            android:textSize="12sp"
+            android:layout_marginTop="5dp"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/photoalbum_cell_selectionindicator"
+        android:src="@drawable/photopicker_unchecked"
+        android:layout_gravity="center_vertical|right"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"/>
+</RelativeLayout>
