@@ -185,7 +185,7 @@ public class AdskApplication extends Application {
      *
      * @param entity 登录后的用户信息
      */
-    private void onLoginSuccess(MemberEntity entity) {
+    protected void onLoginSuccess(MemberEntity entity) {
         /// 将获取到底数据设置为全局可以访问.
         AdskApplication.setMemberEntity(entity);
 
@@ -198,7 +198,6 @@ public class AdskApplication extends Application {
 
         Intent loginIntent = new Intent(BroadCastInfo.USER_DID_LOGIN);
         sendBroadcast(loginIntent);
-
     }
 
     /**
@@ -213,39 +212,6 @@ public class AdskApplication extends Application {
 
         SharedPreferencesUtils.clear(AdskApplication.getInstance(), SharedPreferencesUtils.CONFIG);
     }
-
-    /**
-     * 获取聊天需要到的参数
-     *
-     * @param designer_id 用户登录后得到的用户Id
-     */
-    // TODO REFACTORING
-//    private void getLoginThreadId(String designer_id) {
-//        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                try {
-//                    KLog.json(TAG, jsonObject.toString());
-//                    String im_msg_thread_id = jsonObject.getString(IM_MSG_THREAD_ID);
-//                    String inner_sit_msg_thread_id = jsonObject.getString(INNER_SIT_MSG_THREAD_ID);
-//
-//                    SharedPreferencesUtils.writeString(IM_MSG_THREAD_ID, im_msg_thread_id);
-//                    SharedPreferencesUtils.writeString(INNER_SIT_MSG_THREAD_ID, inner_sit_msg_thread_id);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                MPNetworkUtils.logError(TAG, volleyError);
-//            }
-//
-//            private static final String IM_MSG_THREAD_ID = "im_msg_thread_id";
-//            private static final String INNER_SIT_MSG_THREAD_ID = "inner_sit_msg_thread_id";
-//        };
-//        MPServerHttpManager.getInstance().getLoginThreadId(designer_id, okResponseCallback);
-//    }
 
 
     private void registerForPushNotification() {
@@ -340,7 +306,7 @@ public class AdskApplication extends Application {
                     entity.setAcs_member_id(acs_member_id);
                 }
                 KLog.d("APPLICATION", "memberEntity:" + entity);
-                //  getLoginThreadId(acs_member_id);
+
                 onLoginSuccess(entity);
             }
         }

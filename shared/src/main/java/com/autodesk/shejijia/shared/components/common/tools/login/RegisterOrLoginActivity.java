@@ -64,11 +64,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.tv_finish_webview)
-        {//TODO : REFACTORING
-//                startActivity(new Intent(this, MPConsumerHomeActivity.class));
+        {
             CommonUtils.clearCookie(this);
             finish();
-
         }
         else if (i == R.id.ll_webview_backup)
         {
@@ -76,8 +74,6 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             {
                 if (!TextUtils.isEmpty(pagerFinishedUrl) && pagerFinishedUrl.contains(PAGER_FINISHED_TAG))
                 {
-                    //TODO : REFACTORING
-//                        startActivity(new Intent(this, MPConsumerHomeActivity.class));
                     CommonUtils.clearCookie(this);
                     finish();
                 }
@@ -139,11 +135,6 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                 Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
                 intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
                 sendBroadcast(intent);
-
-                /// 登录成功后,跳入首页 .
-                //TODO : REFACTORING
-//                Intent intentLogin = new Intent(RegisterOrLoginActivity.this, MPConsumerHomeActivity.class);
-//                startActivity(intentLogin);
 
                 finish();
             } catch (UnsupportedEncodingException e) {
