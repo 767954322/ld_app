@@ -332,7 +332,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             showFragment(radioBtnId);
         } else {
             AdskApplication.getInstance().doLogin(this);
-            finish();
         }
     }
 
