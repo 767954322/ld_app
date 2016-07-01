@@ -77,16 +77,6 @@ public class AdskApplication extends Application {
         MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(sAdskApplication, Constant.UerInfoKey.USER_INFO);
         if (entity != null) {
             onLoginSuccess(entity);
-        }else
-        {
-            entity = new MemberEntity();
-            entity.setMember_type(Constant.UerInfoKey.DESIGNER_TYPE);
-            entity.setAcs_x_session("6F92FC8E-5182-4F65-8BB6-95A77B19DEB5");
-            entity.setAcs_x_secure_session("28281644B890AA205373205FDE3006E8");
-            entity.setAcs_member_id("20730187");
-            entity.setHs_accesstoken("3f49aba1-d340-4272-8379-9c22d968062d");
-            entity.setAcs_token("kJjepl_MFuNS69UM3q74-LHQTM1eLxyh_1gO9fWW2UzPGYG2");
-            onLoginSuccess(entity);
         }
 
         JPushInterface.setDebugMode(true);    // Enable logging settings, turn off logging when you publish

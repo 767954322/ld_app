@@ -42,11 +42,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     {
         super.initView();
         mTvMsgNumber = (TextView) findViewById(R.id.tv_msg_number);
-        mDesignerMainRadioBtn = (RadioButton) findViewById(getDesignerMainRadioBtnId());
         mDesignerSessionRadioBtn = (RadioButton) findViewById(getDesignerSessionRadioBtnId());
         mRadioGroup = (RadioGroup) findViewById(getRadioGroupId());
 
-        addRadioButtons(mDesignerMainRadioBtn);
         addRadioButtons(mDesignerSessionRadioBtn);
     }
 
@@ -55,7 +53,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     protected void initData(Bundle savedInstanceState)
     {
         super.initData(savedInstanceState);
-        showFragment(getDesignerMainRadioBtnId());
     }
 
 
@@ -108,12 +105,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     protected RadioButton getRadioButtonById(int id)
     {
         RadioButton button = null;
-        if (id == getDesignerMainRadioBtnId())
-        {
-            button = mDesignerMainRadioBtn;
-
-        }
-        else if (id == getDesignerSessionRadioBtnId())
+        if (id == getDesignerSessionRadioBtnId())
         {
             button = mDesignerSessionRadioBtn;
 
@@ -158,9 +150,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
         setRadioButtonChecked(checkedId);
 
-        if (checkedId == getDesignerMainRadioBtnId())
-            showFragment(getDesignerMainRadioBtnId());
-
        if (needLoginOnRadiobuttonTap(checkedId))
            startRegisterOrLoginActivity(checkedId);
     }
@@ -195,20 +184,11 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected void configureNavigationBar(int index) {
         hideAllNavButtons();
-        if (index == getDesignerMainRadioBtnId())
-        {
-            setTitleForNavbar(UIUtils.getString(R.string.app_name));
-
-        }
-        else if (index == getDesignerSessionRadioBtnId())
+        if (index == getDesignerSessionRadioBtnId())
         {
             setTitleForNavbar(UIUtils.getString(R.string.mychat));
             setVisibilityForNavButton(ButtonType.RIGHT, true);
             getFileThreadUnreadCount();
-
-        }
-        else
-        {
         }
     }
 
@@ -223,10 +203,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return (fragment != null && fragment.isVisible());
     }
 
-    protected int getDesignerMainRadioBtnId()
-    {
-        return -1;
-    }
 
     protected int getDesignerSessionRadioBtnId()
     {
@@ -237,7 +213,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     {
         return -1;
     }
-
 
     protected int getMainContentId()
     {
@@ -361,9 +336,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
 
-    private int mDesignerSessionRadioBtnId;
 
-    private RadioButton mDesignerMainRadioBtn;
     private RadioButton mDesignerSessionRadioBtn;
     private List<RadioButton> mRadioButtons = new ArrayList<RadioButton>();
 

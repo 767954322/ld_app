@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
@@ -33,9 +34,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         //hide navigation left button
         setVisibilityForNavButton(ButtonType.LEFT, false);
 
+        mDesignerMainRadioBtn = (RadioButton) findViewById(getDesignerMainRadioBtnId());
+
         mDesignerIndentListBtn = (RadioButton) findViewById(R.id.designer_indent_list_btn);
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
+        addRadioButtons(mDesignerMainRadioBtn);
         addRadioButtons(mDesignerIndentListBtn);
         addRadioButtons(mDesignerPersonCenterRadioBtn);
     }
@@ -45,6 +49,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
 
         showDesignerOrConsumerRadioGroup();
         super.initData(savedInstanceState);
+        showFragment(getDesignerMainRadioBtnId());
     }
 
 
@@ -72,6 +77,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         RadioButton button = super.getRadioButtonById(id);
         switch (id)
         {
+            case R.id.designer_main_radio_btn:
+                button = mDesignerMainRadioBtn;
+                break;
             case R.id.designer_indent_list_btn:
                 button = mDesignerIndentListBtn;
                 break;
@@ -166,6 +174,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         super.configureNavigationBar(index);
 
         switch (index) {
+            case R.id.designer_main_radio_btn:
+                setTitleForNavbar(UIUtils.getString(R.string.app_name));
+                break;
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
                 TextView textView = (TextView) findViewById(R.id.nav_left_textView);
                 textView.setVisibility(View.VISIBLE);
@@ -185,6 +196,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         }
     }
 
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+        if (checkedId == getDesignerMainRadioBtnId())
+            showFragment(getDesignerMainRadioBtnId());
+
+        super.onCheckedChanged(group, checkedId);
+    }
 
     protected int getDesignerMainRadioBtnId()
     {
@@ -208,7 +228,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
     }
 
 
-
     private void showDesignerOrConsumerRadioGroup() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
@@ -220,6 +239,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         }
     }
 
+    private RadioButton mDesignerMainRadioBtn;
     private RadioButton mDesignerPersonCenterRadioBtn;
     private RadioButton mDesignerIndentListBtn;
 
