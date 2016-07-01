@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -32,7 +32,6 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUti
 import com.autodesk.shejijia.shared.components.common.utility.MPCameraUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.google.gson.Gson;
 import com.socks.library.KLog;
 
 import org.json.JSONArray;
@@ -201,14 +200,14 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
         }
         else if (i == R.id.chat_custom_button)
-        {//TODO REFACTORING
-//                onWorkFlow();
-
+        {
+            if (mIWorkflowDelegate != null)
+                mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this,wk_cur_sub_node_idi,mAssetId,mRecieverUserId,mRecieverUserName);
         }
         else if (i == R.id.nav_secondary_imageButton)
-        {//TODO REFACTORING
-            //onClickSecondary();
-
+        {
+            if (mIWorkflowDelegate != null)
+                mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this,mAssetId,mRecieverUserId);
         }
     }
 
@@ -496,8 +495,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     private void isAssetId(String mAssetId, String mAcsMemberId) {
 
         if (!mAssetId.equals("0")) {
-            //TODO REFACTORING
-//            getOrderDetailsInfo(mAssetId + "", mAcsMemberId);
+            getOrderDetailsInfo(mAssetId, mAcsMemberId);
         } else {
             if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) { //消费者
                 mWorkflowButton.setVisibility(View.VISIBLE);
@@ -506,205 +504,54 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         }
     }
 
-//TODO REFACTORING
-//    private void getOrderDetailsInfo(String needs_id, String mAcsMemberId) {
-//        final OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-//            @Override
-//            public void onResponse(final JSONObject jsonObject) {
-//                try {
-//                    String OrderDetailsInfo = new String(jsonObject.toString().getBytes("ISO-8859-1"), "UTF-8");
-//                    WkFlowDetailsBean wkFlowDetailsBean = new Gson().fromJson(OrderDetailsInfo, WkFlowDetailsBean.class);
-//                    if (wkFlowDetailsBean.getRequirement().getIs_beishu().equals("0")) { // 北舒
-//                        //什么都不显示
-//                        secondaryImageButton.setVisibility(View.GONE);
-//                        mWorkflowButton.setVisibility(View.GONE);
-//                    } else {
-//                        String Wk_cur_sub_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_sub_node_id();
-//                        wk_cur_sub_node_idi = Integer.valueOf(Wk_cur_sub_node_id);
-//                        Wk_cur_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_node_id();
-//                        Wk_template_id = wkFlowDetailsBean.getRequirement().getWk_template_id();
-//
-//                        secondaryImageButton.setVisibility(View.VISIBLE);
-//                        //设置图标
-//                        initWorkflowButtonIco();
-//                    }
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                KLog.json("getOrderDetailsInfo", error.toString());
-//            }
-//        };
-//        MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, mAcsMemberId, okResponseCallback);
-//    }
+    private void getOrderDetailsInfo(String needs_id, String mAcsMemberId) {
+        final OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(final JSONObject jsonObject) {
+                try {
+                    String OrderDetailsInfo = new String(jsonObject.toString().getBytes("ISO-8859-1"), "UTF-8");
+                    MPChatProjectInfo projectInfo = MPChatProjectInfo.fromJSONString(OrderDetailsInfo);
 
-    private void initWorkflowButtonIco() {
-        Log.d("test", "Wk_cur_node_id:" + Wk_cur_node_id);
-        if (!Wk_cur_node_id.equals("-1")) {
-            Log.d("test", "Wk_template_id:" + Wk_template_id);
-
-            mWorkflowButton.setVisibility(View.VISIBLE);
-            if (Wk_template_id.equals("1")) {
-                Log.d("test", "wk_cur_sub_node_idi:" + wk_cur_sub_node_idi);
-                switch (wk_cur_sub_node_idi) {
-                    case -1:
-                    case 11: // 量房
-                    case 12: // 消费者拒绝设计师
-                    case 14: // 设计师拒绝量房
-
-                        mWorkflowButton.setBackgroundResource(R.drawable.amount_room_ico);
-                        break;
-                    case 13: // 支付
-                        mWorkflowButton.setBackgroundResource(R.drawable.pay_ico);
-                        break;
-                    case 21: // 合同
-                    case 22: // 打开3D工具
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_contract);
-                        break;
-                    case 31: // 首款
-                        mWorkflowButton.setBackgroundResource(R.drawable.pay_ico);
-                        break;
-                    case 33: // 量房交付物
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_drawings);
-                        break;
-                    case 41: // 支付设计首款
-                    case 42: // 打开3D工具
-                        mWorkflowButton.setBackgroundResource(R.drawable.pay_ico);
-                        break;
-                    case 51: // 支付尾款
-                    case 52: // 打开3D工具
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_drawings);
-                        break;
-                    case 61: // 上传支付交付物
-                    case 62: // 编辑交付物
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_drawings);
-                        break;
-                    default:
+                    //Looks like we should use projectinfo object as it is instead of new model WkFlowDetailsBean
+                    // but there are hell lot of cases on WkFlowDetailsBean model
+                    // so currently keeping previos code as it is
+                    if (projectInfo != null && projectInfo.is_beishu)
+                    {
+                        secondaryImageButton.setVisibility(View.GONE);
                         mWorkflowButton.setVisibility(View.GONE);
-                        break;
+                    }
+                    else
+                    {
+                        secondaryImageButton.setVisibility(View.VISIBLE);
+
+                        if (projectInfo != null)
+                            wk_cur_sub_node_idi = Integer.valueOf(projectInfo.current_subNode);
+
+                        if (mIWorkflowDelegate != null)
+                        {
+                            int imageResId = mIWorkflowDelegate.getImageForProjectInfo(OrderDetailsInfo);
+
+                            if (imageResId > 0)
+                                mWorkflowButton.setBackgroundResource(imageResId);
+                            else if (imageResId == -1) // I am not sure about possible case where 0 is getting return so currently mapping code as it was
+                                mWorkflowButton.setVisibility(View.GONE);
+                        }
+                    }
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
-
-            } else if (Wk_template_id.equals("2")) {
-                switch (wk_cur_sub_node_idi) {
-                    case -1:
-                    case 11: // 量房
-                        mWorkflowButton.setBackgroundResource(R.drawable.amount_room_ico);
-                        break;
-                    case 12: // 消费者同意设计师
-                        mWorkflowButton.setBackgroundResource(R.drawable.pay_ico);
-                        break;
-                    case 13: // 消费者拒绝设计师
-                        mWorkflowButton.setVisibility(View.GONE);
-                        break;
-                    case 21: // 合同
-                    case 22: // 打开3D工具
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_contract);
-                        break;
-                    case 31: // 首款
-                        mWorkflowButton.setBackgroundResource(R.drawable.pay_ico);
-                        break;
-                    case 33: // 量房交付物
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_drawings);
-                        break;
-                    case 41: // 支付设计首款
-                    case 42: // 打开3D工具
-                        mWorkflowButton.setBackgroundResource(R.drawable.pay_ico);
-                        break;
-                    case 51: // 支付尾款
-                    case 52: // 打开3D工具
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_drawings);
-                        break;
-                    case 61: // 上传支付交付物
-                    case 62: // 编辑交付物
-                        mWorkflowButton.setBackgroundResource(R.drawable.icon_design_drawings);
-                        break;
-                    default:
-                        mWorkflowButton.setVisibility(View.GONE);
-                        break;
-                }
-
-            } else if (Wk_template_id.equals("3")) {
-
             }
-        }
 
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                KLog.json("getOrderDetailsInfo", error.toString());
+            }
+        };
 
+        if (mIWorkflowDelegate != null)
+            mIWorkflowDelegate.getProjectInfo(needs_id,mAcsMemberId,okResponseCallback);
     }
-
-    //TODO REFACTORING
-
-//    private void jumpToOtherProcessesThree(Class activity) {
-//
-//        Intent intent = new Intent(this, activity);
-//        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, mAssetId + "");
-//        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, mRecieverUserId);
-//        intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-//        startActivity(intent);
-//    }
-//
-//    private void jumpToOtherProcessesFour(Class activity) {
-//
-//        Intent intent = new Intent(this, activity);
-//        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, mAssetId + "");
-//        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designerId);
-//        intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
-//        intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-//        startActivity(intent);
-//    }
-//
-//    private void onClickSecondary() {
-//
-//
-//
-//        Intent maIntent = new Intent(this, ProjectMaterialActivity.class);
-//        maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-//        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designerId);
-//        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, mAssetId);
-//        startActivity(maIntent);
-//    }
-//
-//    private void onWorkFlow() {
-//
-//        if (wk_cur_sub_node_idi != 0) {
-//            if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == -1) {
-//                jumpToOtherProcessesThree(FlowMeasureFormActivity.class);
-//
-//            } else if (wk_cur_sub_node_idi == 13) {
-//                jumpToOtherProcessesFour(FlowMeasureCostActivity.class);
-//
-//            } else if (wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
-//                jumpToOtherProcessesFour(FlowMeasureFormActivity.class);
-//
-//            } else if (wk_cur_sub_node_idi == 21) {
-//                jumpToOtherProcessesThree(FlowEstablishContractActivity.class);
-//
-//            } else if (wk_cur_sub_node_idi == 31) {
-//                jumpToOtherProcessesFour(FlowFirstDesignActivity.class);
-//
-//            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51) {
-//                jumpToOtherProcessesThree(FlowUploadDeliveryActivity.class);
-//
-//            } else if (wk_cur_sub_node_idi == 41) {
-//                jumpToOtherProcessesFour(FlowLastDesignActivity.class);
-//
-//            }
-//        } else {
-//            String spStr[] = new String[0];
-//            if (mRecieverUserName != null && !mRecieverUserName.equals("")) {
-//                spStr = mRecieverUserName.split("_");
-//            }
-//            Intent intent = new Intent(this, MeasureFormActivity.class);
-//            intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mAssetId + "");
-//            intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
-//            intent.putExtra(Constant.SeekDesignerDetailKey.FLOW_STATE, Constant.WorkFlowStateKey.STEP_IM);
-//            intent.putExtra(Constant.SeekDesignerDetailKey.HS_UID, spStr[1]);
-//            startActivity(intent);
-//
-//        }
-//    }
 
     private String mSnapshotFile;
     private String designerId;
@@ -717,8 +564,6 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     private ImageView mWorkflowButton;
 
     private int wk_cur_sub_node_idi; //全流程标识
-    private String Wk_template_id;
-    private String Wk_cur_node_id;
     private ImageButton secondaryImageButton;
     private ImageButton rightImageButton;
     private TextView rightTextView, leftTextView;

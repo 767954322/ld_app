@@ -17,6 +17,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.im.adapter.ChatRoomAdapter;
@@ -30,6 +31,7 @@ import com.autodesk.shejijia.shared.components.common.utility.MPAudioManager;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONArray;
@@ -101,6 +103,8 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         View rootView = findViewById(R.id.ll_parent_layout);
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
         registerBroadCast();
+
+       mIWorkflowDelegate = AdskApplication.getInstance().getIMWorkflowDelegate();
     }
 
 
@@ -208,54 +212,13 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                     onAudioCellClicked(index);
                     break;
                 case eCOMMAND:
+                    if (mIWorkflowDelegate != null)
+                    {
+                        MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(msg);
+                        mIWorkflowDelegate.onCommandCellClicked(this,info);
+                    }
+                    break;
 
-                    //TODO REFACTORING
-//                    MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(msg);
-//                    int subNodeId = Integer.parseInt(info.sub_node_id);
-//                    switch (subNodeId) {
-//                        case 13:
-//                            jumpToOtherProcessesFour(FlowMeasureCostActivity.class, info);
-//
-//                            break;
-//
-//                        case 11:
-//                        case 12:
-//                        case 14:
-//                            jumpToOtherProcessesThree(FlowMeasureFormActivity.class, info);
-//
-//                            break;
-//
-//                        case 21:
-//                        case 22:
-//                        case 31:
-//                            jumpToOtherProcessesThree(FlowEstablishContractActivity.class, info);
-//
-//                            break;
-//
-//                        case 33:
-//                            jumpToOtherProcessesThree(FlowUploadDeliveryActivity.class, info);
-//
-//                            break;
-//
-//                        case 41:
-//                        case 42:
-//                            jumpToOtherProcessesFour(FlowLastDesignActivity.class, info);
-//
-//                            break;
-//
-//                        case 51:
-//                        case 52:
-//                        case 61:
-//                        case 62:
-//                            jumpToOtherProcessesThree(FlowUploadDeliveryActivity.class, info);
-//
-//                            break;
-//
-//                        default:
-//                            break;
-//                    }
-//
-//                    break;
                 default:
                     break;
             }
@@ -358,27 +321,6 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                 mIsKeyboardVisible = false;
         }
     }
-
-    //TODO REFACTORING
-
-//    public void jumpToOtherProcessesThree(Class activity, MPChatCommandInfo info) {
-//
-//        Intent intent_check_room = new Intent(this, activity);
-//        intent_check_room.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
-//        intent_check_room.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, info.need_id);
-//        intent_check_room.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-//        startActivity(intent_check_room);
-//    }
-//
-//    public void jumpToOtherProcessesFour(Class activity, MPChatCommandInfo info) {
-//
-//        Intent intent_measure_room_cost = new Intent(this, activity);
-//        intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
-//        intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, info.need_id);
-//        intent_measure_room_cost.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-//        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
-//        startActivity(intent_measure_room_cost);
-//    }
 
     protected void showLoadingIndicator() {
         if (mProgressBar != null)
@@ -662,9 +604,8 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
             }
         };
 
-        //TODO REFACTORING
-//        MPServerHttpManager.getInstance().getOrderDetailsInfoData(
-//                mAssetId, designerId, okResponseCallback);
+        if (mIWorkflowDelegate != null)
+            mIWorkflowDelegate.getProjectInfo(mAssetId, designerId,okResponseCallback);
     }
 
     private void setHeaderViewVisibility(boolean visible) {
@@ -694,6 +635,11 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     protected String mReceiverHsUid;
     protected String mRecieverUserName;
     protected MPChatProjectInfo mProjectInfo;
+
+
+    IWorkflowDelegate mIWorkflowDelegate;
+
+
     //mMessageList stores the messages with oldest (at begining) to newest (at last)
     protected ArrayList<MPChatMessage> mMessageList = new ArrayList<MPChatMessage>();
     protected ChatRoomAdapter mMessageAdapter;

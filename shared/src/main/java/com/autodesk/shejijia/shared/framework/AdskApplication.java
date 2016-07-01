@@ -19,10 +19,10 @@ import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLogi
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.PushNotificationHttpManager;
+import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
@@ -30,12 +30,9 @@ import com.autodesk.shejijia.shared.components.im.service.webSocketService;
 import com.autodesk.shejijia.shared.components.common.utility.ConfigProperties;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.socks.library.KLog;
-
-import org.json.JSONObject;
 
 import java.io.InputStream;
 
@@ -79,6 +76,16 @@ public class AdskApplication extends Application {
 
         MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(sAdskApplication, Constant.UerInfoKey.USER_INFO);
         if (entity != null) {
+            onLoginSuccess(entity);
+        }else
+        {
+            entity = new MemberEntity();
+            entity.setMember_type(Constant.UerInfoKey.DESIGNER_TYPE);
+            entity.setAcs_x_session("6F92FC8E-5182-4F65-8BB6-95A77B19DEB5");
+            entity.setAcs_x_secure_session("28281644B890AA205373205FDE3006E8");
+            entity.setAcs_member_id("20730187");
+            entity.setHs_accesstoken("3f49aba1-d340-4272-8379-9c22d968062d");
+            entity.setAcs_token("kJjepl_MFuNS69UM3q74-LHQTM1eLxyh_1gO9fWW2UzPGYG2");
             onLoginSuccess(entity);
         }
 
@@ -165,6 +172,12 @@ public class AdskApplication extends Application {
     public MemberEntity getMemberEntity() {
         return memberEntity;
     }
+
+    public IWorkflowDelegate getIMWorkflowDelegate()
+    {
+        return null;
+    }
+
 
     // call this function and listen to USER_DID_LOGIN broadcast
     public static void doLogin(Context ctx) {

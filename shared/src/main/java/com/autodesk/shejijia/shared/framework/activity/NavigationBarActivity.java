@@ -7,7 +7,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 public class NavigationBarActivity extends BaseActivity {
 
