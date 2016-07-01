@@ -55,7 +55,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
 
     @Override
     protected void onResume() {
-        super.onResume();
         Intent intent = getIntent();
         int id = intent.getIntExtra(Constant.DesignerBeiShuMeal.SKIP_DESIGNER_PERSONAL_CENTER, -1);
         if (id > 0) {
@@ -68,6 +67,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
                     break;
             }
         }
+        else {
+            mDesignerMainRadioBtn.performClick();
+            showDesignerOrConsumerRadioGroup();
+        }
+
+        super.onResume();
     }
 
 
