@@ -21,6 +21,8 @@ public final class UrlConstants {
     public static final String RUNNING_ALPHA = "RUNNING_ALPHA";
     /// 正式(PRODUCTION)环境  .
     public static final String RUNNING_PRODUCTION = "RUNNING_PRODUCTION";
+    /// DEV环境 .
+    public static final String RUNNING_DEV = "RUNNING_DEV";
 
     /**
      * 如需更改环境，需到ApiManager中修改RUNNING_DEVLEOPMENT的值
@@ -48,15 +50,16 @@ public final class UrlConstants {
     /// 登录 .
     public static final String MP_MAIN_LOGIN_PATH = "http://121.69.19.182:8100/SSO_login.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGIN_PATH_UAT = "http://uat331www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    //    public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://dev-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
+        public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGIN_PATH_PRODUCTION = "http://www.shejijia.com/sso/SSO_login.html?caller=shejijia&browser_type=android";
+    public static final String MP_MAIN_LOGIN_PATH_DEV = "http://dev-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
 
     /// 登出 .
     public static final String MP_MAIN_LOGOUT_PATH = "http://121.69.19.182:8100/SSO_logout.html";
     public static final String MP_MAIN_LOGOUT_PATH_UAT = "http://uat331www.gdfcx.net/sso/SSO_logout.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGOUT_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_logout.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGOUT_PATH_PRODUCTION = "http://www.shejijia.com/sso/SSO_login.html?caller=shejijia&browser_type=android";
+    public static final String MP_MAIN_LOGOUT_PATH_DEV = "http://dev-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
 
     /// 安全中心 .
     public static final String DEVELOPMENT_SECURTY = "http://cas.juranzaixian.com.cn/myspace/member/account_security.htm";
@@ -73,7 +76,9 @@ public final class UrlConstants {
 
     /// ALPHA = UAT415环境地址 .
     public static final String ALPHA_MP_MAIN = "http://uat415api.gdfcx.net";
-    //public static final String ALPHA_MP_MAIN = "http://dev-api.gdfcx.net";
+
+    /// dev环境 .
+    public static final String DEV_MP_MAIN = "http://dev-api.gdfcx.net";
 
     /// PRODUCTION .
     public static final String PRODUCTION_MP_MAIN = "http://api.shejijia.com";

@@ -1,7 +1,5 @@
 package com.autodesk.shejijia.shared.components.common.appglobal;
 
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
-
 /**
  * @author he.liu
  * @version v1.0 .
@@ -14,9 +12,9 @@ public class ApiManager {
     /**
      * 控制运行环境
      * 切换为：UrlConstants.*,*为以下可选值
-     * RUNNING_DEVELOP，RUNNING_QA，RUNNING_UAT，RUNNING_ALPHA，RUNNING_PRODUCTION
+     * RUNNING_DEVELOP,RUNNING_QA,RUNNING_UAT,RUNNING_ALPHA,RUNNING_PRODUCTION,RUNNING_DEV
      */
-    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_ALPHA;
+    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DEV;
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
@@ -49,6 +47,10 @@ public class ApiManager {
             case UrlConstants.RUNNING_PRODUCTION:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_PRODUCTION;
                 break;
+
+            case UrlConstants.RUNNING_DEV:
+                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_DEV;
+                break;
         }
         return login_path;
     }
@@ -80,6 +82,9 @@ public class ApiManager {
 
             case UrlConstants.RUNNING_PRODUCTION:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_PRODUCTION;
+                break;
+            case UrlConstants.RUNNING_DEV:
+                logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_DEV;
                 break;
         }
         return logout_path;
@@ -114,6 +119,10 @@ public class ApiManager {
             case UrlConstants.RUNNING_PRODUCTION:
                 main_design = UrlConstants.PRODUCTION_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
+
+            case UrlConstants.RUNNING_DEV:
+                main_design = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
+                break;
         }
         return main_design;
     }
@@ -145,6 +154,10 @@ public class ApiManager {
 
             case UrlConstants.RUNNING_PRODUCTION:
                 main_member = UrlConstants.PRODUCTION_MP_MAIN + UrlConstants.MP_MAIN_MEMBER;
+                break;
+
+            case UrlConstants.RUNNING_DEV:
+                main_member = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_MEMBER;
                 break;
         }
         return main_member;
@@ -178,6 +191,10 @@ public class ApiManager {
             case UrlConstants.RUNNING_PRODUCTION:
                 main_transaction = UrlConstants.PRODUCTION_MP_MAIN + UrlConstants.MP_MAIN_TRANSACTION;
                 break;
+
+            case UrlConstants.RUNNING_DEV:
+                main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_TRANSACTION;
+                break;
         }
         return main_transaction;
     }
@@ -195,11 +212,13 @@ public class ApiManager {
             case UrlConstants.RUNNING_QA:
             case UrlConstants.RUNNING_UAT:
             case UrlConstants.RUNNING_ALPHA:
+            case UrlConstants.RUNNING_DEV:
                 return true;
             case UrlConstants.RUNNING_PRODUCTION:
                 return false;
+            default:
+                return false;
         }
-        return false;
     }
 
     /**
@@ -239,6 +258,7 @@ public class ApiManager {
         String versionPrefix = null;
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
+            case UrlConstants.RUNNING_DEV:
                 versionPrefix = "D";
                 break;
             case UrlConstants.RUNNING_QA:
