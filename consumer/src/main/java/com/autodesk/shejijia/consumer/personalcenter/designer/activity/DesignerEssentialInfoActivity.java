@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,7 +8,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -37,6 +41,13 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,6 +57,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
 
@@ -553,8 +565,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                     Bitmap _bitmap = (Bitmap) object[1];
 
                     File newFile = mImageProcessingUtil.compressFileSize(tempFile);
-                    // TODO REFACTORING
-//                    putFileToServer(newFile);
+                    putFile2Server(newFile);
                     piv_essential_photo.setImageBitmap(_bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -565,9 +576,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                 Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
                 File file = new File(strCameraFilePath);
                 try {
-                    // TODO REFACTORING
-
-//                    putFileToServer(file);
+                    putFile2Server(file);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -616,42 +625,90 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         }
         return uri;
     }
-// TODO REFACTORING
-//    /**
-//     * @param file
-//     * @throws Exception
-//     * @brief Upload the picture file .
-//     */
-//    public void putFileToServer(File file) throws Exception {
-//        if (file.exists() && file.length() > 0) {
-//            AsyncHttpClient client = new AsyncHttpClient();
-//
-//            String xToken = null;
-//            MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-//
-//            if (memberEntity != null)
-//                xToken = memberEntity.getHs_accesstoken();
-//
-//            client.addHeader(Constant.NetBundleKey.X_TOKEN, Constant.NetBundleKey.X_TOKEN_PREFIX + xToken);
-//            RequestParams params = new RequestParams();
-//            params.put("file", file);
-//            client.put(UrlConstants.URL_PUT_AMEND_DESIGNER_INFO_PHOTO, params, new AsyncHttpResponseHandler() {
-//                @Override
-//                public void onSuccess(int i, Header[] headers, byte[] bytes) {
-//                    MyToast.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_successfully));
-//                    CustomProgress.cancelDialog();
-//                }
-//
-//                @Override
-//                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-//                    CustomProgress.cancelDialog();
-//                    MyToast.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_failed));
-//                }
-//            });
-//        } else {
-//            MyToast.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.file_does_not_exist));
-//        }
-//    }
+
+    /**
+     * upload file
+     * @param file 文件
+     * @throws Exception
+     */
+    public void putFile2Server(File file) throws Exception {
+        if (file.exists() && file.length() > 0) {
+            MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+            OkHttpClient okHttpClient = initClient();
+
+            MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+            String xToken = null;
+
+            if (memberEntity != null)
+                xToken = memberEntity.getHs_accesstoken();
+
+            RequestBody fileBody = RequestBody.create(MEDIA_TYPE_PNG, file);
+            MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
+            builder.addFormDataPart("file",file.getName(),fileBody);
+
+            RequestBody reqBody = builder.build();
+            com.squareup.okhttp.Request.Builder reqBuilder = new com.squareup.okhttp.Request.Builder();
+            reqBuilder.url(UrlConstants.URL_PUT_AMEND_DESIGNER_INFO_PHOTO);
+            reqBuilder.header(Constant.NetBundleKey.X_TOKEN, Constant.NetBundleKey.X_TOKEN_PREFIX + xToken);
+            reqBuilder.put(reqBody);
+
+
+            okHttpClient.newCall(reqBuilder.build()).enqueue(new Callback() {
+                @Override
+                public void onFailure(com.squareup.okhttp.Request request, IOException e) {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        public void run() {
+                            dealResult(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_failed));
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+
+                    if (response.isSuccessful()){
+                        dealResult(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_successfully));
+                    }
+                    else{
+                        dealResult(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_failed));
+//                        throw new IOException("Unexpected code " + response);
+                    }
+                }
+            });
+
+        } else {
+            MyToast.show(this,UIUtils.getString(R.string.file_does_not_exist));
+        }
+    }
+
+    /**
+     * init the client
+     * @return
+     */
+    @NonNull
+    private OkHttpClient initClient() {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setConnectTimeout(120, TimeUnit.SECONDS);
+        okHttpClient.setWriteTimeout(120, TimeUnit.SECONDS);
+        okHttpClient.setReadTimeout(120, TimeUnit.SECONDS);
+        return okHttpClient;
+    }
+
+    /**
+     * deal with the result of upload
+     * @param activity
+     * @param string
+     */
+    private void dealResult(final Activity activity, final String string) {
+        CustomProgress.cancelDialog();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            public void run() {
+                MyToast.show(activity, string);
+            }
+        });
+    }
 
     /**
      * @brief To get photos bitmap after taking pictures .
