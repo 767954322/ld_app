@@ -332,7 +332,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
         }
 
-        district_name = TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
+        district_name = TextUtils.isEmpty(district) || "none".equals(district) || TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
         String address = province_name + city_name + district_name;
 
         convertEn2Cn();
