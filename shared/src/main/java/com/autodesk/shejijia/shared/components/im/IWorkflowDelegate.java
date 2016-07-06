@@ -12,5 +12,5 @@ public interface IWorkflowDelegate
     void onCommandCellClicked(Context context, MPChatCommandInfo mpChatCommandInfo);
     int getImageForProjectInfo(String OrderDetailsInfo);
     void onChatRoomSupplementryButtonClicked(Context context,String assetId, String recieverId);
-    void onChatRoomWorkflowButtonClicked(Context context,int wk_cur_sub_node_idi,String assetId, String recieverId,String receiverUserName);
+    void onChatRoomWorkflowButtonClicked(Context context,int wk_cur_sub_node_idi,String assetId, String recieverId,String receiverUserName,String designerId);
 }
