@@ -12,8 +12,7 @@ import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
-public class ConsumerApplication extends AdskApplication
-{
+public class ConsumerApplication extends AdskApplication {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,8 +27,7 @@ public class ConsumerApplication extends AdskApplication
     }
 
     @Override
-    public IWorkflowDelegate getIMWorkflowDelegate()
-    {
+    public IWorkflowDelegate getIMWorkflowDelegate() {
         return mDesignPlatformDelegate;
     }
 
