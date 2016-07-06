@@ -1,6 +1,9 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
@@ -38,6 +42,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionB
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -71,6 +76,11 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
         mListViewRootView = (RelativeLayout) rootView.findViewById(R.id.listview_content);
         initFloatingAction();
+
+        mSignInNotificationReceiver = new SignInNotificationReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+        activity.registerReceiver(mSignInNotificationReceiver, filter);
     }
 
     @Override
@@ -79,12 +89,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mListView.setAdapter(mAdapter);
 
         setSwipeRefreshInfo();
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity == null) {
-            return;
-        }
-        member_id = mMemberEntity.getAcs_member_id();
-        getConsumerInfoData(member_id);
+
     }
 
     @Override
@@ -148,7 +153,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId+"");
+                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
                         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                         intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
                         getActivity().startActivity(intent);
@@ -267,7 +272,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     private void setSwipeRefreshInfo() {
 
 
-
         mRetryAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
@@ -302,7 +306,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mShadeView.setVisibility(View.GONE);
         mFloatingActionsMenu = (FloatingActionsMenu) rootView.findViewById(R.id.add_menu_buttons);
         mShadeView.setTag(MENU_COLLAPSE_TAG);
-         mMemberEntity = AdskApplication.getInstance().getMemberEntity();
 
         /**
          * requirement btn发布设计需求
@@ -315,7 +318,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mFloatingActionsMenu.addButton(requirementButton);
         requirementButton.setOnClickListener(this);
 
-        MemberEntity  mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             /// hide the requirement btn .
             mFloatingActionsMenu.removeButton(requirementButton);
@@ -327,7 +330,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         /**
          * find designer btn设计师
          */
-         findDesignerButton = new FloatingActionButton(activity);
+        findDesignerButton = new FloatingActionButton(activity);
         findDesignerButton.setTitle(UIUtils.getString(R.string.find_designer));
         findDesignerButton.setSize(FloatingActionButton.SIZE_MINI);
         findDesignerButton.setBackgroundResource(R.drawable.icon_find_designer_normal);
@@ -337,7 +340,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         /**
          * case library btn案例库
          */
-         caseLibraryButton = new FloatingActionButton(activity);
+        caseLibraryButton = new FloatingActionButton(activity);
         caseLibraryButton.setTitle(UIUtils.getString(R.string.case_library));
         caseLibraryButton.setSize(FloatingActionButton.SIZE_MINI);
         caseLibraryButton.setBackgroundResource(R.drawable.icon_case_library_normal);
@@ -400,24 +403,42 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     public void onStart() {
         super.onStart();
 
-        if (Constant.UerInfoKey.LOGIN_ONLY_JUST.equals("LOGIN_ONLY_JUST")){
-            MemberEntity  mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-            if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-                /// hide the requirement btn .
-                mFloatingActionsMenu.removeButton(requirementButton);
+    }
 
-            } else {
+    /**
+     * 全局的广播接收者,用于处理登录后数据的操作
+     */
+    private class SignInNotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String action = intent.getAction();
+
+            if (action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)) {
+
+                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+                if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+                    /// hide the requirement btn .
+                    mFloatingActionsMenu.removeButton(requirementButton);
+
+                } else {
+                }
+
+                setSwipeRefreshInfo();
+                member_id = mMemberEntity.getAcs_member_id();
+                getConsumerInfoData(member_id);
             }
-
-            setSwipeRefreshInfo();
-            Constant.UerInfoKey.LOGIN_ONLY_JUST = "";
-
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        if (mSignInNotificationReceiver != null){
+
+            getActivity().unregisterReceiver(mSignInNotificationReceiver);
+        }
     }
 
     private static final String REQUIREMENT_BUTTON_TAG = "requirement_button";
@@ -431,8 +452,8 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     private ListViewFinal mListView;
     private AlertView mRetryAlertView;
     protected View mShadeView;
-    private FloatingActionButton findDesignerButton,caseLibraryButton,requirementButton;
-    private MemberEntity mMemberEntity;
+    private FloatingActionButton findDesignerButton, caseLibraryButton, requirementButton;
+    private SignInNotificationReceiver mSignInNotificationReceiver;
 
     private LinearLayout.LayoutParams mShadeViewLayoutParams;
     private UserHomeCaseAdapter mAdapter;
