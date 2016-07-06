@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -126,7 +128,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
             ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.data_null));
             ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.data_null));
         }
-
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
             ((ViewHolder) holder).mLine.setVisibility(View.GONE);
