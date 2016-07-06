@@ -155,23 +155,18 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 String info = GsonUtil.jsonToString(jsonObject);
                 SeekDesignerDetailHomeBean seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, SeekDesignerDetailHomeBean.class);
                 final String measureFee = seekDesignerDetailHomeBean.getDesigner().getMeasurement_price();
 
-                final Handler handler = new Handler(Looper.getMainLooper());
-                handler.post(new Runnable() {
-                    public void run() {
-                        Intent intent = new Intent(context, MeasureFormActivity.class);
-                        intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, assetId);
-                        intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, recieverId);
-                        intent.putExtra(Constant.SeekDesignerDetailKey.FLOW_STATE, Constant.WorkFlowStateKey.STEP_IM);
-                        intent.putExtra(Constant.SeekDesignerDetailKey.HS_UID, hsUid);
-                        intent.putExtra(Constant.SeekDesignerDetailKey.MEASURE_FREE, measureFee);
-                        context.startActivity(intent);
-
-                    }
-                });
+                Intent intent = new Intent(context, MeasureFormActivity.class);
+                intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, assetId);
+                intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, recieverId);
+                intent.putExtra(Constant.SeekDesignerDetailKey.FLOW_STATE, Constant.WorkFlowStateKey.STEP_IM);
+                intent.putExtra(Constant.SeekDesignerDetailKey.HS_UID, hsUid);
+                intent.putExtra(Constant.SeekDesignerDetailKey.MEASURE_FREE, measureFee);
+                context.startActivity(intent);
 
             }
 
