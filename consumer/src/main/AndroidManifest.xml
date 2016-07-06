@@ -317,7 +317,8 @@
             android:name="com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name="com.autodesk.shejijia.shared.components.im.activity.ImageChatRoomActivity"
             android:alwaysRetainTaskState="true"

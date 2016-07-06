@@ -110,6 +110,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         mRlSex = (RelativeLayout) findViewById(R.id.rl_consume_essential_sex);
         mTvConsumerPhone = (TextView) findViewById(R.id.tv_consumer_phone);
         mTvConsumerName = (TextView) findViewById(R.id.tv_consumer_name);
+
         mConsumeHeadIcon = (PolygonImageView) findViewById(R.id.piv_essential_consumer_photo);
         mTvSex = (TextView) findViewById(R.id.tv_consumer_essential_info_sex);
         mTvEmail = (TextView) findViewById(R.id.tv_designer_essential_info_email);
