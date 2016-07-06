@@ -66,20 +66,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                     break;
             }
         }
-<<<<<<< HEAD
-        else {
-            mDesignerMainRadioBtn.performClick();
-            showDesignerOrConsumerRadioGroup();
-        }
-=======
 //        else {
 //            mDesignerMainRadioBtn.performClick();
 //            showDesignerOrConsumerRadioGroup();
 //        }
-
->>>>>>> bb26a86ac6785e7a959660dd8627c976d5c09d06
         super.onResume();
-
     }
 
 
