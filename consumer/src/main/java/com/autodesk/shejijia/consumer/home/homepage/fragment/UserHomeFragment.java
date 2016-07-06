@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.ConsumerApplication;
+import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
@@ -299,8 +301,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mShadeView.setVisibility(View.GONE);
         mFloatingActionsMenu = (FloatingActionsMenu) rootView.findViewById(R.id.add_menu_buttons);
         mShadeView.setTag(MENU_COLLAPSE_TAG);
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-
+        MemberEntity mMemberEntity = ConsumerApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             /// hide the requirement btn .
         } else {
@@ -386,6 +387,11 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         if (mFloatingActionsMenu != null) {
             mFloatingActionsMenu.collapse();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
