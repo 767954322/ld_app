@@ -20,8 +20,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
 
-public class MPConsumerHomeActivity extends BaseHomeActivity
-{
+public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -67,21 +66,27 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
                     break;
             }
         }
+<<<<<<< HEAD
         else {
             mDesignerMainRadioBtn.performClick();
             showDesignerOrConsumerRadioGroup();
         }
+=======
+//        else {
+//            mDesignerMainRadioBtn.performClick();
+//            showDesignerOrConsumerRadioGroup();
+//        }
 
+>>>>>>> bb26a86ac6785e7a959660dd8627c976d5c09d06
         super.onResume();
+
     }
 
 
     @Override
-    protected RadioButton getRadioButtonById(int id)
-    {
+    protected RadioButton getRadioButtonById(int id) {
         RadioButton button = super.getRadioButtonById(id);
-        switch (id)
-        {
+        switch (id) {
             case R.id.designer_main_radio_btn:
                 button = mDesignerMainRadioBtn;
                 break;
@@ -97,20 +102,18 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
     }
 
     @Override
-    protected boolean needLoginOnRadiobuttonTap(int id)
-    {
+    protected boolean needLoginOnRadiobuttonTap(int id) {
         if ((super.needLoginOnRadiobuttonTap(id)) ||
                 (id == R.id.designer_indent_list_btn) ||
-             (id == R.id.designer_person_center_radio_btn))
-            return  true;
+                (id == R.id.designer_person_center_radio_btn))
+            return true;
         else
             return false;
     }
 
 
     @Override
-    protected void initAndAddFragments(int index)
-    {
+    protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
 
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
@@ -123,22 +126,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
             loadMainFragment(mBidHallFragment);
         }
 
-        if (index == R.id.designer_person_center_radio_btn)
-        {
+        if (index == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
 
-            if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type()))
-            {
-                if (mDesignerPersonalCenterFragment == null)
-                {
+            if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+                if (mDesignerPersonalCenterFragment == null) {
                     mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
                     loadMainFragment(mDesignerPersonalCenterFragment);
                 }
-            }
-            else
-            {
-                if (mConsumerPersonalCenterFragment == null)
-                {
+            } else {
+                if (mConsumerPersonalCenterFragment == null) {
                     mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
                     loadMainFragment(mConsumerPersonalCenterFragment);
                 }
@@ -147,21 +144,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
     }
 
     @Override
-    protected Fragment getFragmentByButtonId(int id)
-    {
-        Fragment f = super.getFragmentByButtonId (id);
+    protected Fragment getFragmentByButtonId(int id) {
+        Fragment f = super.getFragmentByButtonId(id);
         if (id == R.id.designer_indent_list_btn)
             f = mBidHallFragment;
-        else if (id == R.id.designer_person_center_radio_btn)
-        {
+        else if (id == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type()))
                 f = mDesignerPersonalCenterFragment;
             else
                 f = mConsumerPersonalCenterFragment;
-        }
-        else if (id == getDesignerMainRadioBtnId())
-        {
+        } else if (id == getDesignerMainRadioBtnId()) {
             f = mUserHomeFragment;
         }
         return f;
@@ -211,24 +204,20 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         super.onCheckedChanged(group, checkedId);
     }
 
-    protected int getDesignerMainRadioBtnId()
-    {
+    protected int getDesignerMainRadioBtnId() {
         return R.id.designer_main_radio_btn;
     }
 
-    protected int getDesignerSessionRadioBtnId()
-    {
+    protected int getDesignerSessionRadioBtnId() {
         return R.id.designer_session_radio_btn;
     }
 
-    protected int getRadioGroupId()
-    {
+    protected int getRadioGroupId() {
         return R.id.designer_main_radio_group;
     }
 
 
-    protected int getMainContentId()
-    {
+    protected int getMainContentId() {
         return R.id.main_content;
     }
 

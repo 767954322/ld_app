@@ -137,7 +137,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
     /**
      * 我要应标
-     *
      * @param declaration
      * @param user_name
      * @param needs_id

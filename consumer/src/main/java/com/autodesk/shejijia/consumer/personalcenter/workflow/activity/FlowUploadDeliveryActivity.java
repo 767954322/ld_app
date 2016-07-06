@@ -13,23 +13,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.DeliverySelector;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -94,6 +94,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
          */
         CustomProgress.showDefaultProgress(FlowUploadDeliveryActivity.this);
         getDeliveredFile(needs_id, designer_id);
+
+        KLog.d(TAG, "needs_id:" + needs_id + "##designer_id:" + designer_id);
+//        1578860　　20737093
+
     }
 
     @Override
@@ -410,6 +414,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
+
                 Wk3DPlanDelivery wk3DPlanDelivery = GsonUtil.jsonToBean(userInfo, Wk3DPlanDelivery.class);
                 ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> deliveryFiles = (ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity>) wk3DPlanDelivery.getDeliveryFiles();
                 updateViewFromDeliveryFile(deliveryFiles);
@@ -437,6 +442,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
+
+                KLog.json(TAG, userInfo);
+
                 mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
                 updateViewFrom3DPlanList(deliveredFinish, memType, design_asset_id);
             }

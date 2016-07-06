@@ -6,18 +6,18 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
 
@@ -47,7 +47,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initExtraBundle();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        state = (int) intent.getExtras().get(Constant.WorkFlowStateKey.JUMP_FROM_STATE); /// 状态标签，全流程、IM、资料项目 .
+        state = (int) intent.getExtras().get(Constant.WorkFlowStateKey.JUMP_FROM_STATE);                                                    /// 状态标签，全流程、IM、资料项目 .
         if (state == Constant.WorkFlowStateKey.STEP_DECORATION || state == Constant.WorkFlowStateKey.STEP_FLOW) { /// 全流程 .
             designer_id = bundle.getString(Constant.BundleKey.BUNDLE_DESIGNER_ID);
             needs_id = bundle.getString(Constant.BundleKey.BUNDLE_ASSET_NEED_ID);
@@ -55,7 +55,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             designer_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID);
             needs_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID);
         }
-        wk_cur_ActionNode_id = bundle.getInt(Constant.BundleKey.BUNDLE_ACTION_NODE_ID); /// 获取wk_cur_ActionNode_id以此来判断状态 .
+        wk_cur_ActionNode_id = bundle.getInt(Constant.BundleKey.BUNDLE_ACTION_NODE_ID);                                         /// 获取wk_cur_ActionNode_id以此来判断状态 .
     }
 
     @Override
@@ -63,6 +63,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initData(savedInstanceState);
         memberEntity = AdskApplication.getInstance().getMemberEntity();
         getOrderDetailsInfo(needs_id, designer_id);
+
     }
 
     @Override
