@@ -135,7 +135,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                 Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
                 intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
                 sendBroadcast(intent);
-
+                Constant.UerInfoKey.LOGIN_ONLY_JUST = "LOGIN_ONLY_JUST";
                 finish();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

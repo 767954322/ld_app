@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * @author DongXueQiu .
  * @version 1.0 .
- * @date 16-6-7
+ * @date 16-6-8
  * @file BiddingHallDetailActivity.java  .
  * @brief 应标大厅详情.
  */
@@ -137,7 +137,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
     /**
      * 我要应标
-     *
      * @param declaration
      * @param user_name
      * @param needs_id
