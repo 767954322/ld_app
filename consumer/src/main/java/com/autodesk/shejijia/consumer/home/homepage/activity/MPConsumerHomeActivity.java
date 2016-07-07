@@ -1,27 +1,41 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.ConsumerPersonalCenterFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerPersonalCenterFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.datamodel.IMQrEntity;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
 
-public class MPConsumerHomeActivity extends BaseHomeActivity
-{
+public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -50,6 +64,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         showDesignerOrConsumerRadioGroup();
         super.initData(savedInstanceState);
         showFragment(getDesignerMainRadioBtnId());
+
     }
 
 
@@ -66,8 +81,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
                 default:
                     break;
             }
-        }
-        else {
+        } else {
             mDesignerMainRadioBtn.performClick();
             showDesignerOrConsumerRadioGroup();
         }
@@ -77,11 +91,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
 
 
     @Override
-    protected RadioButton getRadioButtonById(int id)
-    {
+    protected RadioButton getRadioButtonById(int id) {
         RadioButton button = super.getRadioButtonById(id);
-        switch (id)
-        {
+        switch (id) {
             case R.id.designer_main_radio_btn:
                 button = mDesignerMainRadioBtn;
                 break;
@@ -97,20 +109,18 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
     }
 
     @Override
-    protected boolean needLoginOnRadiobuttonTap(int id)
-    {
+    protected boolean needLoginOnRadiobuttonTap(int id) {
         if ((super.needLoginOnRadiobuttonTap(id)) ||
                 (id == R.id.designer_indent_list_btn) ||
-             (id == R.id.designer_person_center_radio_btn))
-            return  true;
+                (id == R.id.designer_person_center_radio_btn))
+            return true;
         else
             return false;
     }
 
 
     @Override
-    protected void initAndAddFragments(int index)
-    {
+    protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
 
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
@@ -123,22 +133,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
             loadMainFragment(mBidHallFragment);
         }
 
-        if (index == R.id.designer_person_center_radio_btn)
-        {
+        if (index == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
 
-            if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type()))
-            {
-                if (mDesignerPersonalCenterFragment == null)
-                {
+            if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+                if (mDesignerPersonalCenterFragment == null) {
                     mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
                     loadMainFragment(mDesignerPersonalCenterFragment);
                 }
-            }
-            else
-            {
-                if (mConsumerPersonalCenterFragment == null)
-                {
+            } else {
+                if (mConsumerPersonalCenterFragment == null) {
                     mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
                     loadMainFragment(mConsumerPersonalCenterFragment);
                 }
@@ -147,21 +151,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
     }
 
     @Override
-    protected Fragment getFragmentByButtonId(int id)
-    {
-        Fragment f = super.getFragmentByButtonId (id);
+    protected Fragment getFragmentByButtonId(int id) {
+        Fragment f = super.getFragmentByButtonId(id);
         if (id == R.id.designer_indent_list_btn)
             f = mBidHallFragment;
-        else if (id == R.id.designer_person_center_radio_btn)
-        {
+        else if (id == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type()))
                 f = mDesignerPersonalCenterFragment;
             else
                 f = mConsumerPersonalCenterFragment;
-        }
-        else if (id == getDesignerMainRadioBtnId())
-        {
+        } else if (id == getDesignerMainRadioBtnId()) {
             f = mUserHomeFragment;
         }
         return f;
@@ -196,11 +196,29 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
                 setTitleForNavbar(UIUtils.getString(R.string.designer_personal));
                 break;
 
+            case R.id.designer_session_radio_btn:  /// 会話聊天.
+
+                Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(AdskApplication.getInstance().getMemberEntity().getMember_type());
+                if (ifIsDesiner) {
+                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
+                } else {
+                    setVisibilityForNavButton(ButtonType.SECONDARY, false);
+                }
+
             default:
                 break;
         }
     }
 
+    @Override
+    protected void secondaryNavButtonClicked(View view) {
+        super.secondaryNavButtonClicked(view);
+
+        Intent intent = new Intent(MPConsumerHomeActivity.this, CaptureQrActivity.class);
+        startActivityForResult(intent, CHAT);
+
+    }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -211,24 +229,20 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         super.onCheckedChanged(group, checkedId);
     }
 
-    protected int getDesignerMainRadioBtnId()
-    {
+    protected int getDesignerMainRadioBtnId() {
         return R.id.designer_main_radio_btn;
     }
 
-    protected int getDesignerSessionRadioBtnId()
-    {
+    protected int getDesignerSessionRadioBtnId() {
         return R.id.designer_session_radio_btn;
     }
 
-    protected int getRadioGroupId()
-    {
+    protected int getRadioGroupId() {
         return R.id.designer_main_radio_group;
     }
 
 
-    protected int getMainContentId()
-    {
+    protected int getMainContentId() {
         return R.id.main_content;
     }
 
@@ -244,6 +258,85 @@ public class MPConsumerHomeActivity extends BaseHomeActivity
         }
     }
 
+    //判断是否聊过天，跳转到之前聊天室或新聊天室
+    private void jumpToChatRoom(String scanResult) {
+
+        if (scanResult.contains(Constant.ConsumerDecorationFragment.hs_uid) && scanResult.contains(Constant.DesignerCenterBundleKey.MEMBER)) {
+
+            IMQrEntity consumerQrEntity = GsonUtil.jsonToBean(scanResult, IMQrEntity.class);
+            if (null != consumerQrEntity && !TextUtils.isEmpty(consumerQrEntity.getName())) {
+
+                final String hs_uid = consumerQrEntity.getHs_uid();
+                final String member_id = consumerQrEntity.getMember_id();
+                final String receiver_name = consumerQrEntity.getName();
+                final String designer_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
+                final String mMemberType = AdskApplication.getInstance().getMemberEntity().getMember_type();
+                final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+
+                MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        MPNetworkUtils.logError(TAG, volleyError);
+                    }
+
+                    @Override
+                    public void onResponse(String s) {
+                        MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                        Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
+                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
+                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
+                        intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+
+                        if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+                            MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+                            int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                            intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
+                            intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                        } else {
+                            intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                        }
+
+                        startActivity(intent);
+                    }
+
+                });
+
+            }
+
+        } else {
+
+            new AlertView(UIUtils.getString(com.autodesk.shejijia.shared.R.string.tip)
+                    , UIUtils.getString(com.autodesk.shejijia.shared.R.string.unable_create_beishu_meal)
+                    , null, null, new String[]{UIUtils.getString(com.autodesk.shejijia.shared.R.string.sure)}
+                    , MPConsumerHomeActivity.this
+                    , AlertView.Style.Alert, null).show();
+
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            switch (requestCode) {
+                case CHAT:
+
+                    Bundle bundle = data.getExtras();
+                    String scanResult = bundle.getString(Constant.QrResultKey.SCANNER_RESULT);
+                    jumpToChatRoom(scanResult);
+
+                    break;
+            }
+        }
+
+    }
+
+    private final int CHAT = 0;
     private RadioButton mDesignerMainRadioBtn;
     private RadioButton mDesignerPersonCenterRadioBtn;
     private RadioButton mDesignerIndentListBtn;

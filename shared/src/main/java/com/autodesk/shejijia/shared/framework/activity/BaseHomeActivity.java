@@ -187,31 +187,16 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected void configureNavigationBar(int index) {
         hideAllNavButtons();
+
         if (index == getDesignerSessionRadioBtnId()) {
 
             setTitleForNavbar(UIUtils.getString(R.string.mychat));
             setVisibilityForNavButton(ButtonType.RIGHT, true);
             getFileThreadUnreadCount();
-            if (Constant.UerInfoKey.DESIGNER_TYPE.equals(AdskApplication.getInstance().getMemberEntity().getMember_type())) {
-                setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
-                setVisibilityForNavButton(ButtonType.SECONDARY, true);
-            } else {
-                setVisibilityForNavButton(ButtonType.SECONDARY, false);
-            }
 
-        } else {
-            setVisibilityForNavButton(ButtonType.SECONDARY, false);
         }
     }
 
-    @Override
-    protected void secondaryNavButtonClicked(View view) {
-        super.secondaryNavButtonClicked(view);
-
-        Intent intent = new Intent(BaseHomeActivity.this, CaptureQrActivity.class);
-        startActivityForResult(intent, CHAT);
-
-    }
 
     @Override
     protected void rightNavButtonClicked(View view) {
@@ -352,84 +337,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         };
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
-    }
-
-    //判断是否聊过天，跳转到之前聊天室或新聊天室
-    private void jumpToChatRoom(String scanResult) {
-
-        if (scanResult.contains(Constant.ConsumerDecorationFragment.hs_uid) && scanResult.contains(Constant.DesignerCenterBundleKey.MEMBER)) {
-
-            IMQrEntity consumerQrEntity = GsonUtil.jsonToBean(scanResult, IMQrEntity.class);
-            if (null != consumerQrEntity && !TextUtils.isEmpty(consumerQrEntity.getName())) {
-
-                final String hs_uid = consumerQrEntity.getHs_uid();
-                final String member_id = consumerQrEntity.getMember_id();
-                final String receiver_name = consumerQrEntity.getName();
-                final String designer_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
-                final String mMemberType = AdskApplication.getInstance().getMemberEntity().getMember_type();
-                final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
-
-                MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        MPNetworkUtils.logError(TAG, volleyError);
-                    }
-
-                    @Override
-                    public void onResponse(String s) {
-                        MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                        Intent intent = new Intent(BaseHomeActivity.this, ChatRoomActivity.class);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
-                        intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-
-                        if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-                            MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-                            int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                            intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                            intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        } else {
-                            intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                        }
-
-                        startActivity(intent);
-                    }
-
-                });
-
-            }
-
-        } else {
-
-            new AlertView(UIUtils.getString(R.string.tip)
-                    , UIUtils.getString(R.string.unable_create_beishu_meal)
-                    , null, null, new String[]{UIUtils.getString(R.string.sure)}
-                    , BaseHomeActivity.this
-                    , AlertView.Style.Alert, null).show();
-
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            switch (requestCode) {
-                case CHAT:
-
-                    Bundle bundle = data.getExtras();
-                    String scanResult = bundle.getString(Constant.QrResultKey.SCANNER_RESULT);
-                    jumpToChatRoom(scanResult);
-
-                    break;
-            }
-        }
-
     }
 
     private final int CHAT = 0;
