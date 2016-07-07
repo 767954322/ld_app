@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
@@ -136,7 +137,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     final String designer_id = seekDesignerDetailHomeBean.getDesigner().getAcs_member_id();
                     final String hs_uid = seekDesignerDetailHomeBean.getHs_uid();
                     final String receiver_name = seekDesignerDetailHomeBean.getNick_name();
-                    final String recipient_ids = member_id + "," + designer_id + "," + "20730165";
+                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
 
                     MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                         @Override
@@ -147,30 +148,27 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         @Override
                         public void onResponse(String s) {
                             MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-                            if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
 
+                            Intent intent = new Intent(SeekDesignerDetailActivity.this, ChatRoomActivity.class);
+                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                            intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+
+                            if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
+                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                                 int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                Intent intent = new Intent(SeekDesignerDetailActivity.this, ChatRoomActivity.class);
                                 intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId+"");
-                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-                                startActivity(intent);
+                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
 
                             } else {
 
-                                Intent intent = new Intent(SeekDesignerDetailActivity.this, ChatRoomActivity.class);
                                 intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                                 intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                                startActivity(intent);
+
                             }
+                            startActivity(intent);
                         }
                     });
 
@@ -370,6 +368,13 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mLlChatMeasure.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        showOrHideChatMeasure();
+        getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
     }
 
     /**

@@ -347,7 +347,6 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
-                   // MyToast.show(getActivity(), UIUtils.getString(R.string.functional_development));
                     MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                     String member_id = memberEntity.getAcs_member_id();
                     String memType = memberEntity.getMember_type();
