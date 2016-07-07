@@ -188,11 +188,19 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     protected void configureNavigationBar(int index) {
         hideAllNavButtons();
         if (index == getDesignerSessionRadioBtnId()) {
+
             setTitleForNavbar(UIUtils.getString(R.string.mychat));
             setVisibilityForNavButton(ButtonType.RIGHT, true);
-            setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
-            setVisibilityForNavButton(ButtonType.SECONDARY, true);
             getFileThreadUnreadCount();
+            if (Constant.UerInfoKey.DESIGNER_TYPE.equals(AdskApplication.getInstance().getMemberEntity().getMember_type())) {
+                setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
+                setVisibilityForNavButton(ButtonType.SECONDARY, true);
+            } else {
+                setVisibilityForNavButton(ButtonType.SECONDARY, false);
+            }
+
+        } else {
+            setVisibilityForNavButton(ButtonType.SECONDARY, false);
         }
     }
 
@@ -349,8 +357,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     //判断是否聊过天，跳转到之前聊天室或新聊天室
     private void jumpToChatRoom(String scanResult) {
 
-        if (scanResult.contains(Constant.ConsumerDecorationFragment.hs_uid)
-                && scanResult.contains(Constant.DesignerCenterBundleKey.MEMBER)) {
+        if (scanResult.contains(Constant.ConsumerDecorationFragment.hs_uid) && scanResult.contains(Constant.DesignerCenterBundleKey.MEMBER)) {
 
             IMQrEntity consumerQrEntity = GsonUtil.jsonToBean(scanResult, IMQrEntity.class);
             if (null != consumerQrEntity && !TextUtils.isEmpty(consumerQrEntity.getName())) {
