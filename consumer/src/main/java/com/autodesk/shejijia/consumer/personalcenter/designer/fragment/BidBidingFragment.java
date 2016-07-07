@@ -107,7 +107,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
             if (bidderEntity != null) {
                 status = bidderEntity.getStatus();
                 String isBeiShu = biddingNeedsListEntity.getIs_beishu();
-                if (status.equals(BE_BEING) && isBeiShu.equals(IS_BEISHU)) {
+                if (BE_BEING.equals(status) && IS_BEISHU.equals(isBeiShu)) {
                     beBeingList.add(biddingNeedsListEntity);
                 }
             }
