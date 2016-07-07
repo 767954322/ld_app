@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.shared.framework.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -10,23 +9,12 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.components.im.datamodel.IMQrEntity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -339,7 +327,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
 
-    private final int CHAT = 0;
     private RadioButton mDesignerSessionRadioBtn;
     private List<RadioButton> mRadioButtons = new ArrayList<RadioButton>();
 
