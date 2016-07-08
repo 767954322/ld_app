@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
@@ -148,8 +149,8 @@ public class DecorationBeiShuFragment extends Fragment {
                         final String designer_id = biddersEntity.getDesigner_id();
                         final String hs_uid = biddersEntity.getUid();
                         final String mMemberType = memberEntity.getMember_type();
-                        final String receiver_name =biddersEntity.getUser_name() ;
-                        final String recipient_ids = member_id + "," + designer_id+","+"20730165";
+                        final String receiver_name = biddersEntity.getUser_name();
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
                         final String beishu_thread_id = need.getBeishu_thread_id();
 
 
@@ -161,31 +162,26 @@ public class DecorationBeiShuFragment extends Fragment {
                             @Override
                             public void onResponse(String s) {
                                 MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                                Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+
+
                                 if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
                                     MPChatThread mpChatThread = mpChatThreads.threads.get(0);
 
                                     int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                    Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
                                     intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId+"");
-                                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-
-                                    startActivity(intent);
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
 
                                 } else {
-
-                                    Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
                                     intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-                                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                                    startActivity(intent);
                                 }
+                                startActivity(intent);
                             }
                         });
 

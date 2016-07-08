@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
@@ -42,8 +43,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionB
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.socks.library.KLog;
-
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -90,6 +89,13 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
         setSwipeRefreshInfo();
 
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (mMemberEntity == null) {
+            return;
+        }
+        member_id = mMemberEntity.getAcs_member_id();
+        getConsumerInfoData(member_id);
+
     }
 
     @Override
@@ -134,7 +140,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             final String hs_uid = casesEntities.get(position).getHs_designer_uid();
             final String receiver_name = casesEntities.get(position).getDesigner_info().getNick_name();
             final String mMemberType = mMemberEntity.getMember_type();
-            final String recipient_ids = member_id + "," + designer_id + "," + "20730165";
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
 
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                 @Override
@@ -144,29 +150,29 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
                 @Override
                 public void onResponse(String s) {
-                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
 
+                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                    Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+
+                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
+                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                         int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                        Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-                        getActivity().startActivity(intent);
+
                     } else {
-                        Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-                        intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                        getActivity().startActivity(intent);
+
                     }
+                    getActivity().startActivity(intent);
                 }
             });
         } else {
@@ -271,7 +277,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
      */
     private void setSwipeRefreshInfo() {
 
-
         mRetryAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
@@ -324,7 +329,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             mFloatingActionsMenu.removeButton(requirementButton);
 
         } else {
-
 
         }
         /**
@@ -399,12 +403,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
     /**
      * 全局的广播接收者,用于处理登录后数据的操作
      */
@@ -435,7 +433,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     public void onDestroy() {
         super.onDestroy();
 
-        if (mSignInNotificationReceiver != null){
+        if (mSignInNotificationReceiver != null) {
 
             getActivity().unregisterReceiver(mSignInNotificationReceiver);
         }
