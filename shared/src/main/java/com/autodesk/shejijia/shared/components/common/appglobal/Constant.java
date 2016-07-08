@@ -1,8 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.appglobal;
 
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 /**
  * @author he.liu .
