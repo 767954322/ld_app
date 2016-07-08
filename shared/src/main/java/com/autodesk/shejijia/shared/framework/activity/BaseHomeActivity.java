@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -35,11 +34,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseHomeActivity extends NavigationBarActivity implements RadioGroup.OnCheckedChangeListener
-{
+public class BaseHomeActivity extends NavigationBarActivity implements RadioGroup.OnCheckedChangeListener {
     @Override
-    protected void initView()
-    {
+    protected void initView() {
         super.initView();
         mTvMsgNumber = (TextView) findViewById(R.id.tv_msg_number);
         mDesignerSessionRadioBtn = (RadioButton) findViewById(getDesignerSessionRadioBtnId());
@@ -50,15 +47,13 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
 
     @Override
-    protected void initData(Bundle savedInstanceState)
-    {
+    protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
     }
 
 
     @Override
-    protected void initListener()
-    {
+    protected void initListener() {
         super.initListener();
         mRadioGroup.setOnCheckedChangeListener(this);
         registerBroadcastReceiver();
@@ -97,16 +92,13 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         isDestroyed = true;
     }
 
-    protected void addRadioButtons(RadioButton button)
-    {
+    protected void addRadioButtons(RadioButton button) {
         mRadioButtons.add(button);
     }
 
-    protected RadioButton getRadioButtonById(int id)
-    {
+    protected RadioButton getRadioButtonById(int id) {
         RadioButton button = null;
-        if (id == getDesignerSessionRadioBtnId())
-        {
+        if (id == getDesignerSessionRadioBtnId()) {
             button = mDesignerSessionRadioBtn;
 
         }
@@ -115,8 +107,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
 
-    protected void initAndAddFragments(int index)
-    {
+    protected void initAndAddFragments(int index) {
 
         if (mMPThreadListFragment == null && index == getDesignerSessionRadioBtnId()) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -139,7 +130,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected Fragment getFragmentByButtonId(int id) {
         Fragment f = null;
-         if (id == getDesignerSessionRadioBtnId())
+        if (id == getDesignerSessionRadioBtnId())
             f = mMPThreadListFragment;
 
         return f;
@@ -150,8 +141,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
         setRadioButtonChecked(checkedId);
 
-       if (needLoginOnRadiobuttonTap(checkedId))
-           startRegisterOrLoginActivity(checkedId);
+        if (needLoginOnRadiobuttonTap(checkedId))
+            startRegisterOrLoginActivity(checkedId);
     }
 
 
@@ -184,13 +175,16 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected void configureNavigationBar(int index) {
         hideAllNavButtons();
-        if (index == getDesignerSessionRadioBtnId())
-        {
+
+        if (index == getDesignerSessionRadioBtnId()) {
+
             setTitleForNavbar(UIUtils.getString(R.string.mychat));
             setVisibilityForNavButton(ButtonType.RIGHT, true);
             getFileThreadUnreadCount();
+
         }
     }
+
 
     @Override
     protected void rightNavButtonClicked(View view) {
@@ -204,18 +198,15 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
 
-    protected int getDesignerSessionRadioBtnId()
-    {
+    protected int getDesignerSessionRadioBtnId() {
         return -1;
     }
 
-    protected int getRadioGroupId()
-    {
+    protected int getRadioGroupId() {
         return -1;
     }
 
-    protected int getMainContentId()
-    {
+    protected int getMainContentId() {
         return -1;
     }
 
@@ -335,7 +326,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
-
 
     private RadioButton mDesignerSessionRadioBtn;
     private List<RadioButton> mRadioButtons = new ArrayList<RadioButton>();
