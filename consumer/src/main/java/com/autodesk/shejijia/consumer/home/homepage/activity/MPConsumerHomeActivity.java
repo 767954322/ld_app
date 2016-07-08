@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
@@ -34,8 +35,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         setVisibilityForNavButton(ButtonType.LEFT, false);
 
         mDesignerMainRadioBtn = (RadioButton) findViewById(getDesignerMainRadioBtnId());
-
+        designer_main_radio_group = (RadioGroup) findViewById(R.id.designer_main_radio_group);
+        designer_main_radio_btn = (RadioButton) findViewById(R.id.designer_main_radio_btn);
         mDesignerIndentListBtn = (RadioButton) findViewById(R.id.designer_indent_list_btn);
+        mDesigner_session_radio_btn = (RadioButton) findViewById(R.id.designer_session_radio_btn);
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
         addRadioButtons(mDesignerMainRadioBtn);
@@ -73,6 +76,28 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         super.onResume();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        showDesignerOrConsumerRadioGroup();
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        //登陆设计师时，会进入；
+        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+            designer_main_radio_group.check(index);
+
+        }
+        //登陆消费者时，会进入
+        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
+            designer_main_radio_group.check(index);
+        }
+
+        //未登录状态，会自动进入案例fragment
+        if (mMemberEntity == null) {
+
+            designer_main_radio_btn.setChecked(true);
+
+        }
+    }
 
     @Override
     protected RadioButton getRadioButtonById(int id) {
@@ -106,6 +131,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
+
+
+        this.index = index;
 
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
             mUserHomeFragment = new UserHomeFragment();
@@ -227,6 +255,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     private RadioButton mDesignerMainRadioBtn;
     private RadioButton mDesignerPersonCenterRadioBtn;
     private RadioButton mDesignerIndentListBtn;
+    private RadioButton designer_main_radio_btn;
+    private RadioButton mDesigner_session_radio_btn;
+    private RadioGroup designer_main_radio_group;
+    private int index;//判断所在fragment
+    private int lastIndex;
 
     private UserHomeFragment mUserHomeFragment;
 

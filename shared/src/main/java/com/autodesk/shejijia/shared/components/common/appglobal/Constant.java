@@ -40,8 +40,6 @@ public class Constant {
         /// 用户类型:消费者 .
         public static final String CONSUMER_TYPE = "member";
 
-        //判断登陆时，只刷新一次
-        public static String LOGIN_ONLY_JUST = "";
     }
 
     /**
