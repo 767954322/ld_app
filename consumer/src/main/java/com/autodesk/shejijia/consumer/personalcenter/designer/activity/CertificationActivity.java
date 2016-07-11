@@ -315,7 +315,7 @@ public class CertificationActivity extends NavigationBarActivity implements View
             jsonObject.put(JsonConstants.JSON_REAL_NAME_TRUE_NAME, true_name);
             jsonObject.put(JsonConstants.JSON_REAL_NAME_MOBILE_NUMBER, mobile_number);
             jsonObject.put(JsonConstants.JSON_REAL_NAME_BIRTHDAY, birthday);
-            jsonObject.put(JsonConstants.JSON_REAL_NAME_AUDIT_STATUS, audit_status);
+//            jsonObject.put(JsonConstants.JSON_REAL_NAME_AUDIT_STATUS, audit_status);
             jsonObject.put(JsonConstants.JSON_REAL_NAME_POSITIVE_PHOTO, positive_photo);
             jsonObject.put(JsonConstants.JSON_REAL_NAME_BACK_PHOTO, back_photo);
             jsonObject.put(JsonConstants.JSON_REAL_NAME_HEAD_PHOTO, head_photo);

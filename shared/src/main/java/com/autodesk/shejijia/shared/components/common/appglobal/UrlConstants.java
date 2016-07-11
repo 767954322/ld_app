@@ -50,7 +50,7 @@ public final class UrlConstants {
     /// 登录 .
     public static final String MP_MAIN_LOGIN_PATH = "http://121.69.19.182:8100/SSO_login.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGIN_PATH_UAT = "http://uat331www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-        public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
+    public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGIN_PATH_PRODUCTION = "http://www.shejijia.com/sso/SSO_login.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGIN_PATH_DEV = "http://dev-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
 
@@ -123,7 +123,7 @@ public final class UrlConstants {
     /**
      * 实名认证.
      */
-    public static final String URL_POST_REAL_NAME = MAIN_MEMBER + "/realnames/members/";
+    public static final String URL_POST_REAL_NAME = MAIN_MEMBER + "/designers/";
 
     /**
      * 设计师应标.
@@ -170,7 +170,7 @@ public final class UrlConstants {
     /**
      * 修改上传设计师头像.
      */
-    public static final String URL_PUT_AMEND_DESIGNER_INFO_PHOTO = MAIN_MEMBER + "/members/updateavatar"; //
+    public static final String URL_PUT_AMEND_DESIGNER_INFO_PHOTO = MAIN_MEMBER + "/members/avatars"; //
 
     /**
      * 是否是实名认证.

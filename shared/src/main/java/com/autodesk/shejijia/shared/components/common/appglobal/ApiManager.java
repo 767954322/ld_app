@@ -14,7 +14,7 @@ public class ApiManager {
      * 切换为：UrlConstants.*,*为以下可选值
      * RUNNING_DEVELOP,RUNNING_QA,RUNNING_UAT,RUNNING_ALPHA,RUNNING_PRODUCTION,RUNNING_DEV
      */
-    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_UAT;
+    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_ALPHA;
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);

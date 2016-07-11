@@ -23,7 +23,7 @@ public class ConsumerApplication extends AdskApplication {
 
         super.onLoginSuccess(entity);
 
-        getLoginThreadId(getMemberEntity().getAcs_member_id());
+        //  getLoginThreadId(getMemberEntity().getAcs_member_id());
     }
 
     @Override
