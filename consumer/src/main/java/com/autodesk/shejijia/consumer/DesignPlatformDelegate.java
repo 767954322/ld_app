@@ -216,20 +216,22 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
     private int getWorkflowButtonIco(String OrderDetailsInfo) {
         int wk_cur_sub_node_idi;
-        String Wk_template_id = null;
-        String Wk_cur_node_id = null;
+        String Wk_template_id;
+        String Wk_cur_node_id;
 
         WkFlowDetailsBean wkFlowDetailsBean = new Gson().fromJson(OrderDetailsInfo, WkFlowDetailsBean.class);
+        Log.d("test", "Wk_template_id:" + wkFlowDetailsBean.toString());
         String Wk_cur_sub_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_sub_node_id();
         wk_cur_sub_node_idi = Integer.valueOf(Wk_cur_sub_node_id);
-
+        Wk_template_id = wkFlowDetailsBean.getRequirement().getWk_template_id();
+        Wk_cur_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_node_id();
         Log.d("test", "Wk_cur_node_id:" + Wk_cur_node_id);
 
-        if (!Wk_cur_node_id.equals("-1")) {
-            Log.d("test", "Wk_template_id:" + Wk_template_id);
 
-            if (Wk_template_id.equals("1")) {
-                Log.d("test", "wk_cur_sub_node_idi:" + wk_cur_sub_node_idi);
+        if (Wk_template_id.equals("1")) {
+
+            if (!Wk_cur_node_id.equals("-1")) {
+
                 switch (wk_cur_sub_node_idi) {
                     case -1:
                     case 11: // 量房
@@ -266,53 +268,59 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                     default:
                         return -1;
                 }
-            } else if (Wk_template_id.equals("2")) {
-                switch (wk_cur_sub_node_idi) {
-                    case -1:
-                    case 11: // 量房
-                        return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
-
-                    case 12: // 消费者同意设计师
-                        return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
-
-                    case 13: // 消费者拒绝设计师
-                        return -1;
-
-                    case 21: // 合同
-                    case 22: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
-
-                    case 31: // 首款
-                        return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
-
-
-                    case 33: // 量房交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
-
-                    case 41: // 支付设计首款
-                    case 42: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
-
-                    case 51: // 支付尾款
-                    case 52: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
-
-                    case 61: // 上传支付交付物
-                    case 62: // 编辑交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
-
-                    default:
-                        return -1;
-
-                }
-
-            } else if (Wk_template_id.equals("3")) {
+            } else {
+                return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
 
             }
+
+        } else if (Wk_template_id.equals("2")) {
+            switch (wk_cur_sub_node_idi) {
+                case -1:
+                case 11: // 量房
+                    return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
+
+                case 12: // 消费者同意设计师
+                    return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
+
+                case 13: // 消费者拒绝设计师
+                    return -1;
+
+                case 21: // 合同
+                case 22: // 打开3D工具
+                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+
+                case 31: // 首款
+                    return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
+
+
+                case 33: // 量房交付物
+                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+
+                case 41: // 支付设计首款
+                case 42: // 打开3D工具
+                    return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
+
+                case 51: // 支付尾款
+                case 52: // 打开3D工具
+                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+
+                case 61: // 上传支付交付物
+                case 62: // 编辑交付物
+                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+
+                default:
+                    return -1;
+
+            }
+
+        } else if (Wk_template_id.equals("3")) {
+
         }
+
 
         return 0;
     }
+
 
 
 }
