@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessages;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPAudioManager;
@@ -112,6 +113,9 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     public void onResume() {
         super.onResume();
         refresh();
+
+        if(mRecieverUserName != null)
+            setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName));
     }
 
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -384,6 +385,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                         MPNetworkUtils.logError(TAG, "addConversationToFile Failure");
                         mShouldHideLoadindIndicator = true;
                         hideLoadingIndicator();
+                        enableUserInteraction();
                     }
 
                     @Override
@@ -392,6 +394,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                         MPNetworkUtils.logError(TAG, "addConversationToFile Success");
                         mShouldHideLoadindIndicator = true;
                         hideLoadingIndicator();
+                        enableUserInteraction();
                     }
                 });
 
@@ -401,6 +404,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
     private void initiateAudioMessageSendSequence(final String url, final CallBack errorCallback)
     {
         showLoadingIndicator();
+        disableUserInteraction();
 
         if (mThreadId != null)
         {
@@ -414,6 +418,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                             MPFileUtility.removeFile(url);
                             mShouldHideLoadindIndicator = true;
                             hideLoadingIndicator();
+                            enableUserInteraction();
                         }
 
                         @Override
@@ -424,6 +429,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
                             mShouldHideLoadindIndicator = true;
                             hideLoadingIndicator();
+                            enableUserInteraction();
                         }
                     });
         }
@@ -459,6 +465,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                                 errorCallback.call();
                                 mShouldHideLoadindIndicator = true;
                                 hideLoadingIndicator();
+                                enableUserInteraction();
                             }
                         }
 
@@ -467,6 +474,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                         {
                             MPNetworkUtils.logError(TAG, "initiateAudioMessageSendSequence failure");
                             errorCallback.call();
+                            enableUserInteraction();
                         }
                     }
             );
@@ -507,6 +515,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
                         mShouldHideLoadindIndicator = true;
                         hideLoadingIndicator();
+                        enableUserInteraction();
                     }
                 });
     }
@@ -648,6 +657,47 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
         alertDialog.show();
     }
+
+    private void disableUserInteraction()
+    {
+        setNavButtonEnabled(ButtonType.LEFT, false);
+
+        ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
+
+        if(layout != null)
+            setEnableStateForBottombar(layout,false);
+    }
+
+    private void enableUserInteraction()
+    {
+        setNavButtonEnabled(ButtonType.LEFT, true);
+
+        ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
+
+        if(layout != null)
+            setEnableStateForBottombar(layout,true);
+    }
+
+
+    private void setEnableStateForBottombar(ViewGroup viewGroup, boolean bEnable)
+    {
+        for (int i = 0; i < viewGroup.getChildCount(); i++)
+        {
+            View child = viewGroup.getChildAt(i);
+            child.setEnabled(bEnable);
+            child.setClickable(bEnable);
+            if (child instanceof ViewGroup)
+            {
+                ViewGroup group = (ViewGroup) child;
+                for (int j = 0; j < group.getChildCount(); j++)
+                {
+                    group.getChildAt(j).setEnabled(bEnable);
+                    group.getChildAt(j).setClickable(bEnable);
+                }
+            }
+        }
+    }
+
 
     private RelativeLayout mAudioParentView;
     private RoundProgressBar mAudioProgressBar;
