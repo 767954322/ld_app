@@ -216,7 +216,7 @@ public class OrderCommonFragment extends BaseFragment {
             String livingRoom_Room_Toilet = room_convert + living_room_convert + toilet_convert;
             String address = province_name + city_name + district_name;
             String wk_template_id = orderListEntity.getWk_template_id();
-            List<OrderCommonEntity.OrderListEntity.BiddersEntity> bidders = orderListEntity.getBidders();
+            List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
             if (bidders != null && bidders.size() > 0) {
                 wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
                 holder.setText(R.id.tv_designer_order_state, MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id));
