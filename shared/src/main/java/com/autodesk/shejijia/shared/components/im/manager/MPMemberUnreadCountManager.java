@@ -27,28 +27,12 @@ public class MPMemberUnreadCountManager
     }
 
 
-    public static MPMemberUnreadCountManager getInstance()
-    {
-        if (mInstance == null)
-        {
-            synchronized (MPMemberUnreadCountManager.class)
-            {
-                mInstance = new MPMemberUnreadCountManager();
-            }
-        }
-
-        return mInstance;
-    }
-
-
     public void registerForMessageUpdates(Context context, MPMemberUnreadCountInterface listener)
     {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BroadCastInfo.USER_DID_LOGOUT);
         intentFilter.addAction(BroadCastInfo.USER_DID_LOGIN);
         intentFilter.addAction(BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
-
-        mMessageBroadcastReceiver = new MessageBroadcastReceiver();
 
         context.registerReceiver(mMessageBroadcastReceiver, intentFilter);
 
@@ -71,7 +55,7 @@ public class MPMemberUnreadCountManager
     }
 
 
-    private MPMemberUnreadCountManager()
+    public MPMemberUnreadCountManager()
     {
 
     }
@@ -179,7 +163,7 @@ public class MPMemberUnreadCountManager
 
     private static MPMemberUnreadCountManager mInstance;
 
-    private MessageBroadcastReceiver mMessageBroadcastReceiver;
+    private MessageBroadcastReceiver mMessageBroadcastReceiver = new MessageBroadcastReceiver();;
     private MPMemberUnreadCountInterface mListener;
     private MemberEntity mMemberEntity;
 }

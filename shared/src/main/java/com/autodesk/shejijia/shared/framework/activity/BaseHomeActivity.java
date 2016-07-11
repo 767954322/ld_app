@@ -57,6 +57,16 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.initListener();
         mRadioGroup.setOnCheckedChangeListener(this);
         registerBroadcastReceiver();
+
+        mMemberUnreadCountManager = new MPMemberUnreadCountManager();
+
+        mMemberUnreadCountManager.registerForMessageUpdates(this, new MPMemberUnreadCountManager.MPMemberUnreadCountInterface() {
+            @Override
+            public TextView getUnreadBadgeLabel() {
+                return mTvMsgNumber;
+            }
+        });
+
     }
 
     @Override
@@ -67,29 +77,28 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             getFileThreadUnreadCount();
         }
 
-        MPMemberUnreadCountManager.getInstance().registerForMessageUpdates(this, new MPMemberUnreadCountManager.MPMemberUnreadCountInterface() {
-            @Override
-            public TextView getUnreadBadgeLabel() {
-                return mTvMsgNumber;
-            }
-        });
-        MPMemberUnreadCountManager.getInstance().refreshCount();
+        mMemberUnreadCountManager.refreshCount();
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-        MPMemberUnreadCountManager.getInstance().unregisterForMessageUpdates(this);
+
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
         if (mBroadcastReceiver != null) {
             this.unregisterReceiver(mBroadcastReceiver);
         }
+
+        mMemberUnreadCountManager.unregisterForMessageUpdates(this);
+        mMemberUnreadCountManager = null;
+
         isDestroyed = true;
+        super.onDestroy();
     }
 
     protected void addRadioButtons(RadioButton button) {
@@ -338,4 +347,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     private MPThreadListFragment mMPThreadListFragment;
 
     private List<Fragment> mFragmentArrayList = new ArrayList<>();
+
+    private MPMemberUnreadCountManager mMemberUnreadCountManager;
 }
