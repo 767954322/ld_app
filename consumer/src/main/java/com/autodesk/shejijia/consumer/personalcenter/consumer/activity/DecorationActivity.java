@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,18 +19,18 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.RollFragAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.fragment.DecorationBeiShuFragment;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.fragment.DecorationFragment;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.ZoomOutPageTransformer;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -179,6 +178,8 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
         if (mCount == 0) {
             mRlEmpty.setVisibility(View.VISIBLE);
             return;
+        } else {
+            mRlEmpty.setVisibility(View.GONE);
         }
         mNeedsListEntityArrayList = (ArrayList<DecorationListEntity.NeedsListEntity>) decorationListEntity.getNeeds_list();
         if (mNeedsListEntityArrayList == null || mNeedsListEntityArrayList.size() < 1) {
