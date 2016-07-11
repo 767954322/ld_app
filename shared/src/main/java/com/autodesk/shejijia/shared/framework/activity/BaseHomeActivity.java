@@ -324,7 +324,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
                     int unread_message_count = myJsonObject.getInt("unread_message_count");
                     if (unread_message_count != 0) {
                         String badge = MPChatUtility.getFormattedBadgeString(unread_message_count);
-                        showBadgeOnNavBar(badge);
+
+                        if (isActiveFragment(MPThreadListFragment.class))
+                            showBadgeOnNavBar(badge);
                     } else
                         setVisibilityForNavButton(ButtonType.BADGE, false);
                 } catch (JSONException e) {
