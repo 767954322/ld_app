@@ -82,8 +82,7 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
             MyBidBean.BiddingNeedsListEntity.BidderEntity bidderEntity = biddingNeedsListEntity.getBidder();
             if (bidderEntity != null) {
                 status = bidderEntity.getStatus();
-                String isBeiShu = biddingNeedsListEntity.getIs_beishu();
-                if (status.equals(IS_SUCCESS) && isBeiShu.equals(IS_BEISHU)) {
+                if (status.equals(IS_SUCCESS)) {
                     mBiddingNeedsListEntityArrayList.add(biddingNeedsListEntity);
                 }
             }
@@ -200,7 +199,6 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
 
     ///变量.
     private static final String IS_SUCCESS = "1";
-    private static final String IS_BEISHU = "1";
     private String status;
     private CommonAdapter mCommonAdapter;
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntities;
