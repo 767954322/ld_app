@@ -192,7 +192,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
     protected boolean isActiveFragment(String tag) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_CHAT);
+        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_IM);
         return (fragment != null && fragment.isVisible());
     }
 
@@ -271,9 +271,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
-    
-    protected int mCurrentTabIndex = -1;
-    private boolean isDestroyed = false;
 
     private final static String TAG_IM = "tag_im";
     protected int mCurrentTabIndex = -1;
