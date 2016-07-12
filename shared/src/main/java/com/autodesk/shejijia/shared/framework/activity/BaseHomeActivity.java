@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,13 +27,9 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.im.manager.MPMemberUnreadCountManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BaseHomeActivity extends NavigationBarActivity implements RadioGroup.OnCheckedChangeListener {
     protected final static String TAG_CASES = "tag_cases";
@@ -63,6 +57,16 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.initListener();
         mRadioGroup.setOnCheckedChangeListener(this);
         registerBroadcastReceiver();
+
+        mMemberUnreadCountManager = new MPMemberUnreadCountManager();
+
+        mMemberUnreadCountManager.registerForMessageUpdates(this, new MPMemberUnreadCountManager.MPMemberUnreadCountInterface() {
+            @Override
+            public TextView getUnreadBadgeLabel() {
+                return mTvMsgNumber;
+            }
+        });
+
     }
 
     @Override
@@ -73,29 +77,28 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             getFileThreadUnreadCount();
         }
 
-        MPMemberUnreadCountManager.getInstance().registerForMessageUpdates(this, new MPMemberUnreadCountManager.MPMemberUnreadCountInterface() {
-            @Override
-            public TextView getUnreadBadgeLabel() {
-                return mTvMsgNumber;
-            }
-        });
-        MPMemberUnreadCountManager.getInstance().refreshCount();
+        mMemberUnreadCountManager.refreshCount();
     }
 
 
     @Override
     public void onPause() {
         super.onPause();
-        MPMemberUnreadCountManager.getInstance().unregisterForMessageUpdates(this);
+
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+
         if (mBroadcastReceiver != null) {
             this.unregisterReceiver(mBroadcastReceiver);
         }
+
+        mMemberUnreadCountManager.unregisterForMessageUpdates(this);
+        mMemberUnreadCountManager = null;
+
         isDestroyed = true;
+        super.onDestroy();
     }
 
     protected RadioButton getRadioButtonById(int id) {
@@ -164,12 +167,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         configureNavigationBar(index);
     }
 
-    protected void loadMainFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(getMainContentId(), fragment);
-        fragmentTransaction.commit();
-    }
-
     protected void loadMainFragment(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(getMainContentId(), fragment, tag);
@@ -205,7 +202,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
     protected boolean isActiveFragment(String tag) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_CHAT);
+        Fragment fragment = getFragmentManager().findFragmentByTag(tag);
         return (fragment != null && fragment.isVisible());
     }
 
@@ -271,7 +268,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
                     int unread_message_count = myJsonObject.getInt("unread_message_count");
                     if (unread_message_count != 0) {
                         String badge = MPChatUtility.getFormattedBadgeString(unread_message_count);
-                        showBadgeOnNavBar(badge);
+
+                        if (isActiveFragment(TAG_CHAT))
+                            showBadgeOnNavBar(badge);
                     } else
                         setVisibilityForNavButton(ButtonType.BADGE, false);
                 } catch (JSONException e) {
@@ -282,17 +281,13 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
-    
-    protected int mCurrentTabIndex = -1;
-    private boolean isDestroyed = false;
-
-    protected int mCurrentTabIndex = -1;
-
-    private boolean isDestroyed = false;
 
     private RadioButton mDesignerSessionRadioBtn;
     private RadioGroup mRadioGroup;
     private TextView mTvMsgNumber;
-
     private MPThreadListFragment mMPThreadListFragment;
+
+    protected int mCurrentTabIndex = -1;
+    private boolean isDestroyed = false;
+    private MPMemberUnreadCountManager mMemberUnreadCountManager;
 }
