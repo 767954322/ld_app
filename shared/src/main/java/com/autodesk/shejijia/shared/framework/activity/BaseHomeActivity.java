@@ -30,9 +30,6 @@ import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.im.manager.MPMemberUnreadCountManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,13 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BaseHomeActivity extends NavigationBarActivity implements RadioGroup.OnCheckedChangeListener {
-    enum TAB_TYPE {
-        CASES,
-        BID_HALL,
-        CHAT,
-        PERSONAL_CENTER
-    }
-
     protected final static String TAG_CASES = "tag_cases";
     protected final static String TAG_BID_HALL = "tag_bid_hall";
     protected final static String TAG_CHAT = "tag_chat";
