@@ -408,9 +408,13 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         markThreadAsRead();
         retrieveThreadMessagesWithOffset(mThreadId, 0);
 
-        if (mAssetId != null)
+        if (mAssetId != null) {
             getProjectInfo();
+        } else {
+            changeConsumerUI();
+        }
     }
+
 
 
     protected void setNewThreadId(String response) {
@@ -598,6 +602,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
 
                     mProjectInfo = MPChatProjectInfo.fromJSONString(userInfo);
                     //TODO: Update the UI based on the project info
+                    upDataTheUI(userInfo, mProjectInfo);
                 } catch (Exception e) {
                 }
             }
@@ -622,6 +627,13 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         }
     }
 
+    public void upDataTheUI(String userInfo, MPChatProjectInfo mProjectInfo) {
+
+    }
+
+    public void changeConsumerUI(){
+
+    }
 
     protected boolean mIsNextPageRequestRunning;
     protected ListView mMessageListView;

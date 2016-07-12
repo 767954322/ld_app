@@ -81,8 +81,6 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
             designerId = mRecieverUserId;
         }
 
-        isAssetId(mAssetId, designerId);
-
     }
 
 
@@ -491,66 +489,41 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         alertDialog.show();
     }
 
+    @Override
+    public void changeConsumerUI() {
+        super.changeConsumerUI();
 
-    private void isAssetId(String mAssetId, String mAcsMemberId) {
-
-        if (!mAssetId.equals("0")) {
-            getOrderDetailsInfo(mAssetId, mAcsMemberId);
-        } else {
-            if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) { //消费者
-                mWorkflowButton.setVisibility(View.VISIBLE);
-                mWorkflowButton.setBackgroundResource(R.drawable.amount_room_ico);
-            }
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) { //消费者
+            mWorkflowButton.setVisibility(View.VISIBLE);
+            mWorkflowButton.setBackgroundResource(R.drawable.amount_room_ico);
         }
+
     }
 
-    private void getOrderDetailsInfo(String needs_id, String mAcsMemberId) {
-        final OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(final JSONObject jsonObject) {
-                try {
-                    String OrderDetailsInfo = new String(jsonObject.toString().getBytes("ISO-8859-1"), "UTF-8");
-                    MPChatProjectInfo projectInfo = MPChatProjectInfo.fromJSONString(OrderDetailsInfo);
+    @Override
+    public void upDataTheUI(String userInfo, MPChatProjectInfo projectInfo) {
+        super.upDataTheUI(userInfo, mProjectInfo);
 
-                    //Looks like we should use projectinfo object as it is instead of new model WkFlowDetailsBean
-                    // but there are hell lot of cases on WkFlowDetailsBean model
-                    // so currently keeping previos code as it is
-                    if (projectInfo != null && projectInfo.is_beishu)
-                    {
-                        secondaryImageButton.setVisibility(View.GONE);
-                        mWorkflowButton.setVisibility(View.GONE);
-                    }
-                    else
-                    {
-                        secondaryImageButton.setVisibility(View.VISIBLE);
+        if (projectInfo != null && projectInfo.is_beishu) {
+            secondaryImageButton.setVisibility(View.GONE);
+            mWorkflowButton.setVisibility(View.GONE);
+        } else {
+            secondaryImageButton.setVisibility(View.VISIBLE);
 
-                        if (projectInfo != null)
-                            wk_cur_sub_node_idi = Integer.valueOf(projectInfo.current_subNode);
+            if (projectInfo != null)
+                wk_cur_sub_node_idi = Integer.valueOf(projectInfo.current_subNode);
 
-                        if (mIWorkflowDelegate != null)
-                        {
-                            int imageResId = mIWorkflowDelegate.getImageForProjectInfo(OrderDetailsInfo);
+            if (mIWorkflowDelegate != null) {
+                int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo);
 
-                            if (imageResId > 0)
-                                mWorkflowButton.setBackgroundResource(imageResId);
-                            else if (imageResId == -1) // I am not sure about possible case where 0 is getting return so currently mapping code as it was
-                                mWorkflowButton.setVisibility(View.GONE);
-                        }
-                    }
-
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                if (imageResId > 0) {
+                    mWorkflowButton.setVisibility(View.VISIBLE);
+                    mWorkflowButton.setBackgroundResource(imageResId);
+                } else if (imageResId == -1) {
+                    mWorkflowButton.setVisibility(View.GONE);
                 }
             }
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                KLog.json("getOrderDetailsInfo", error.toString());
-            }
-        };
-
-        if (mIWorkflowDelegate != null)
-            mIWorkflowDelegate.getProjectInfo(needs_id,mAcsMemberId,okResponseCallback);
+        }
     }
 
     private String mSnapshotFile;
