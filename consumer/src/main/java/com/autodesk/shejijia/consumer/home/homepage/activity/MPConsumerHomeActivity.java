@@ -137,36 +137,36 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             return false;
     }
 
-
     @Override
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
-        mUserHomeFragment = (UserHomeFragment) getFragmentManager().findFragmentByTag(TAG_CASES);
-        if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
-            mUserHomeFragment = new UserHomeFragment();
-            loadMainFragment(mUserHomeFragment, TAG_CASES);
-        }
-
-        mBidHallFragment = (BidHallFragment) getFragmentManager().findFragmentByTag(TAG_BID_HALL);
-        if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
-            mBidHallFragment = new BidHallFragment();
-            loadMainFragment(mBidHallFragment, TAG_BID_HALL);
-        }
-
-        if (index == R.id.designer_person_center_radio_btn) {
+        if (index == getDesignerMainRadioBtnId()) {
+            mUserHomeFragment = (UserHomeFragment) getExistFragment(mUserHomeFragment, TAG_CASES);
+            if (mUserHomeFragment == null) {
+                mUserHomeFragment = new UserHomeFragment();
+                loadMainFragment(mUserHomeFragment, TAG_CASES);
+            }
+        } else if (index == R.id.designer_indent_list_btn) {
+            mBidHallFragment = (BidHallFragment) getExistFragment(mBidHallFragment, TAG_BID_HALL);
+            if (mBidHallFragment == null) {
+                mBidHallFragment = new BidHallFragment();
+                loadMainFragment(mBidHallFragment, TAG_BID_HALL);
+            }
+        } else if (index == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-
-            if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
-                mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment) getFragmentManager().findFragmentByTag(TAG_PERSONAL_CENTER);
-                if (mDesignerPersonalCenterFragment == null) {
-                    mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
-                    loadMainFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER);
-                }
-            } else {
-                mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment) getFragmentManager().findFragmentByTag(TAG_PERSONAL_CENTER);
-                if (mConsumerPersonalCenterFragment == null) {
-                    mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
-                    loadMainFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+            if (memberEntity != null) {
+                if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+                    mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment) getExistFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                    if (mDesignerPersonalCenterFragment == null) {
+                        mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
+                        loadMainFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                    }
+                } else {
+                    mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment) getExistFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                    if (mConsumerPersonalCenterFragment == null) {
+                        mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
+                        loadMainFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                    }
                 }
             }
         }
