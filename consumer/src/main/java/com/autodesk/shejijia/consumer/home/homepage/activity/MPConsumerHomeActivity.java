@@ -92,22 +92,20 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     protected void onRestart() {
         super.onRestart();
         showDesignerOrConsumerRadioGroup();
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        //登陆设计师时，会进入；
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            designer_main_radio_group.check(index);
-
-        }
-        //登陆消费者时，会进入
-        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-            designer_main_radio_group.check(index);
-        }
-
-        //未登录状态，会自动进入案例fragment
-        if (mMemberEntity == null) {
-
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (memberEntity == null) {
+            //未登录状态，会自动进入案例fragment
             designer_main_radio_btn.setChecked(true);
-
+        } else {
+            switch (memberEntity.getMember_type()) {
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    designer_main_radio_group.check(mCurrentTabIndex);
+                    break;
+                default:
+                    // TODO other types
+                    break;
+            }
         }
     }
 
@@ -143,10 +141,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
-
-
-        this.index = index;
-
         mUserHomeFragment = (UserHomeFragment) getFragmentManager().findFragmentByTag(TAG_CASES);
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
             mUserHomeFragment = new UserHomeFragment();
@@ -244,7 +238,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         super.secondaryNavButtonClicked(view);
 
         Intent intent = new Intent(MPConsumerHomeActivity.this, CaptureQrActivity.class);
-        startActivityForResult(intent, CHAT);
+        startActivityForResult(intent, REQUEST_CODE_CHAT);
 
     }
 
@@ -352,7 +346,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
         if (resultCode == Activity.RESULT_OK && data != null) {
             switch (requestCode) {
-                case CHAT:
+                case REQUEST_CODE_CHAT:
 
                     Bundle bundle = data.getExtras();
                     String scanResult = bundle.getString(Constant.QrResultKey.SCANNER_RESULT);
@@ -364,18 +358,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
     }
 
-    private final int CHAT = 0;
+    private final int REQUEST_CODE_CHAT = 0;
+
     private RadioButton mDesignerMainRadioBtn;
     private RadioButton mDesignerPersonCenterRadioBtn;
     private RadioButton mDesignerIndentListBtn;
     private RadioButton designer_main_radio_btn;
     private RadioButton mDesigner_session_radio_btn;
     private RadioGroup designer_main_radio_group;
-    private int index;//判断所在fragment
-    private int lastIndex;
 
     private UserHomeFragment mUserHomeFragment;
-
     private BidHallFragment mBidHallFragment;
     private DesignerPersonalCenterFragment mDesignerPersonalCenterFragment;
     private ConsumerPersonalCenterFragment mConsumerPersonalCenterFragment;
