@@ -151,28 +151,32 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
         this.index = index;
 
+        mUserHomeFragment = (UserHomeFragment) getFragmentManager().findFragmentByTag(TAG_CASES);
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
             mUserHomeFragment = new UserHomeFragment();
-            loadMainFragment(mUserHomeFragment);
+            loadMainFragment(mUserHomeFragment, TAG_CASES);
         }
 
+        mBidHallFragment = (BidHallFragment) getFragmentManager().findFragmentByTag(TAG_BID_HALL);
         if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
             mBidHallFragment = new BidHallFragment();
-            loadMainFragment(mBidHallFragment);
+            loadMainFragment(mBidHallFragment, TAG_BID_HALL);
         }
 
         if (index == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
 
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+                mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment) getFragmentManager().findFragmentByTag(TAG_PERSONAL_CENTER);
                 if (mDesignerPersonalCenterFragment == null) {
                     mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
-                    loadMainFragment(mDesignerPersonalCenterFragment);
+                    loadMainFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER);
                 }
             } else {
+                mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment) getFragmentManager().findFragmentByTag(TAG_PERSONAL_CENTER);
                 if (mConsumerPersonalCenterFragment == null) {
                     mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
-                    loadMainFragment(mConsumerPersonalCenterFragment);
+                    loadMainFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER);
                 }
             }
         }
@@ -198,7 +202,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
     @Override
     protected void leftNavButtonClicked(View view) {
-        if (isActiveFragment(BidHallFragment.class))
+        if (isActiveFragment(TAG_BID_HALL))
             mBidHallFragment.handleFilterOption();
     }
 
