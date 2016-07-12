@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
@@ -29,11 +28,9 @@ import com.autodesk.shejijia.shared.components.im.manager.MPMemberUnreadCountMan
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BaseHomeActivity extends NavigationBarActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -174,12 +171,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         fragmentTransaction.commit();
         mCurrentTabIndex = index;
         configureNavigationBar(index);
-    }
-
-    protected void loadMainFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(getMainContentId(), fragment);
-        fragmentTransaction.commit();
     }
 
     protected void loadMainFragment(Fragment fragment, String tag) {
