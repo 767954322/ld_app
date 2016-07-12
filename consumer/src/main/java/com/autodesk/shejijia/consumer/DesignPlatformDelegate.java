@@ -172,6 +172,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                Log.d("test",volleyError.toString());
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hsUid, okResponseCallback);
