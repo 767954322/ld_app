@@ -32,10 +32,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BaseHomeActivity extends NavigationBarActivity implements RadioGroup.OnCheckedChangeListener {
-    protected final static String TAG_CASES = "tag_cases";
-    protected final static String TAG_BID_HALL = "tag_bid_hall";
-    protected final static String TAG_CHAT = "tag_chat";
-    protected final static String TAG_PERSONAL_CENTER = "tag_personal_center";
 
     @Override
     protected void initView() {
@@ -101,6 +97,22 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.onDestroy();
     }
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (needLoginOnRadiobuttonTap(checkedId))
+            startRegisterOrLoginActivity(checkedId);
+    }
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        if (isActiveFragment(TAG_CHAT))
+            openFileThreadActivity();
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     protected RadioButton getRadioButtonById(int id) {
         RadioButton button = null;
         if (id == getDesignerSessionRadioBtnId()) {
@@ -125,17 +137,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             f = mMPThreadListFragment;
 
         return f;
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (needLoginOnRadiobuttonTap(checkedId))
-            startRegisterOrLoginActivity(checkedId);
-    }
-
-
-    public boolean isDestroyed() {
-        return isDestroyed;
     }
 
     protected void initAndAddFragments(int index) {
@@ -173,15 +174,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         fragmentTransaction.commit();
     }
 
-    @Override
-    public Resources getResources() {
-        Resources res = super.getResources();
-        Configuration config = new Configuration();
-        config.setToDefaults();
-        res.updateConfiguration(config, res.getDisplayMetrics());
-        return res;
-    }
-
     protected void configureNavigationBar(int index) {
         hideAllNavButtons();
 
@@ -192,13 +184,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             getFileThreadUnreadCount();
 
         }
-    }
-
-
-    @Override
-    protected void rightNavButtonClicked(View view) {
-        if (isActiveFragment(TAG_CHAT))
-            openFileThreadActivity();
     }
 
     protected boolean isActiveFragment(String tag) {
@@ -282,12 +267,14 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
 
+    private final static String TAG_CHAT = "tag_chat";
+    protected int mCurrentTabIndex = -1;
+
     private RadioButton mDesignerSessionRadioBtn;
     private RadioGroup mRadioGroup;
     private TextView mTvMsgNumber;
     private MPThreadListFragment mMPThreadListFragment;
-
-    protected int mCurrentTabIndex = -1;
+    
     private boolean isDestroyed = false;
     private MPMemberUnreadCountManager mMemberUnreadCountManager;
 }
