@@ -297,6 +297,10 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     protected int mCurrentTabIndex = -1;
     private boolean isDestroyed = false;
 
+    protected int mCurrentTabIndex = -1;
+
+    private boolean isDestroyed = false;
+
     private RadioButton mDesignerSessionRadioBtn;
     private RadioGroup mRadioGroup;
     private TextView mTvMsgNumber;
