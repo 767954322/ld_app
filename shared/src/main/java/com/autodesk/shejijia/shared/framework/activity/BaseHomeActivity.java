@@ -294,7 +294,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     private TextView mTvMsgNumber;
 
     private MPThreadListFragment mMPThreadListFragment;
-    
+
     private boolean isDestroyed = false;
     private MPMemberUnreadCountManager mMemberUnreadCountManager;
 }
