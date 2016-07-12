@@ -149,7 +149,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         }
     }
 
-    private int mCurrentTabIndex = -1;
     protected void showFragment(int index) {
         initAndAddFragments(index);
         Fragment currentFragment = getFragmentByButtonId(mCurrentTabIndex);
@@ -284,11 +283,13 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
 
+    protected int mCurrentTabIndex = -1;
+
+    private boolean isDestroyed = false;
+
     private RadioButton mDesignerSessionRadioBtn;
     private RadioGroup mRadioGroup;
     private TextView mTvMsgNumber;
-
-    private boolean isDestroyed = false;
 
     private MPThreadListFragment mMPThreadListFragment;
 }
