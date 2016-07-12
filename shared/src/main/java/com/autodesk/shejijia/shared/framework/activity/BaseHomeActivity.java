@@ -49,8 +49,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         mTvMsgNumber = (TextView) findViewById(R.id.tv_msg_number);
         mDesignerSessionRadioBtn = (RadioButton) findViewById(getDesignerSessionRadioBtnId());
         mRadioGroup = (RadioGroup) findViewById(getRadioGroupId());
-
-        addRadioButtons(mDesignerSessionRadioBtn);
     }
 
 
@@ -100,10 +98,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         isDestroyed = true;
     }
 
-    protected void addRadioButtons(RadioButton button) {
-        mRadioButtons.add(button);
-    }
-
     protected RadioButton getRadioButtonById(int id) {
         RadioButton button = null;
         if (id == getDesignerSessionRadioBtnId()) {
@@ -132,8 +126,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        setRadioButtonChecked(checkedId);
-
         if (needLoginOnRadiobuttonTap(checkedId))
             startRegisterOrLoginActivity(checkedId);
     }
@@ -239,19 +231,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         startActivity(intent);
     }
 
-
-    private void setRadioButtonChecked(int id) {
-        RadioButton checkedButton = getRadioButtonById(id);
-
-        for (int i = 0; i < mRadioButtons.size(); ++i) {
-            RadioButton button = mRadioButtons.get(i);
-            if (checkedButton == button)
-                button.setTextColor(UIUtils.getColor(R.color.bg_tab_pressed));
-            else
-                button.setTextColor(UIUtils.getColor(R.color.bg_tab_normal));
-        }
-    }
-
     private void registerBroadcastReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
@@ -306,8 +285,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
     private RadioButton mDesignerSessionRadioBtn;
-    private List<RadioButton> mRadioButtons = new ArrayList<RadioButton>();
-
     private RadioGroup mRadioGroup;
     private TextView mTvMsgNumber;
 

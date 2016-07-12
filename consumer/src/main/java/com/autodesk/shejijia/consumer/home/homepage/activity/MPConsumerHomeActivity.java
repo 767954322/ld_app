@@ -54,10 +54,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         mDesignerIndentListBtn = (RadioButton) findViewById(R.id.designer_indent_list_btn);
         mDesigner_session_radio_btn = (RadioButton) findViewById(R.id.designer_session_radio_btn);
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
-
-        addRadioButtons(mDesignerMainRadioBtn);
-        addRadioButtons(mDesignerIndentListBtn);
-        addRadioButtons(mDesignerPersonCenterRadioBtn);
     }
 
     @Override
