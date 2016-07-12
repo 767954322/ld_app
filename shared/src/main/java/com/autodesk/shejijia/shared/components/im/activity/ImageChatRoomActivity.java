@@ -660,8 +660,6 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
     private void disableUserInteraction()
     {
-        setNavButtonEnabled(ButtonType.LEFT, false);
-
         ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
 
         if(layout != null)
@@ -670,8 +668,6 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
     private void enableUserInteraction()
     {
-        setNavButtonEnabled(ButtonType.LEFT, true);
-
         ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
 
         if(layout != null)
