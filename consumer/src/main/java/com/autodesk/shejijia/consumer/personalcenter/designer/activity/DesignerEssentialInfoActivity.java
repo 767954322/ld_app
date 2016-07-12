@@ -652,7 +652,6 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             reqBuilder.header(Constant.NetBundleKey.X_TOKEN, Constant.NetBundleKey.X_TOKEN_PREFIX + xToken);
             reqBuilder.put(reqBody);
 
-
             okHttpClient.newCall(reqBuilder.build()).enqueue(new Callback() {
                 @Override
                 public void onFailure(com.squareup.okhttp.Request request, IOException e) {
@@ -751,7 +750,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
      * @param strDesignerId
      * @param hs_uid
      * @param jsonObject
-     * @brief 更新设计师详情
+     * @brief 更新设计师扩展信息
      */
     public void putAmendDesignerCostData(String strDesignerId, String hs_uid, JSONObject jsonObject) {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
@@ -774,7 +773,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     }
 
     /**
-     * 更新用户基础信息
+     * @brief 更新设计师基础信息
      *
      * @param strDesignerId
      * @brief Modify the designer information .

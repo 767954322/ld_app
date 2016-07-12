@@ -63,7 +63,6 @@ public class MPServerHttpManager {
      * @param limit
      * @param callback
      */
-
     public void getMyDecorationData(final int offset, final int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_MY_DECORATION_LIST + member_id + "/needs?" +
                 "media_type_id=" + 53 +
@@ -207,12 +206,12 @@ public class MPServerHttpManager {
      */
     public void postRealNameData(JSONObject jsonObject, final String hs_uid,
                                  OkJsonRequest.OKResponseCallback Callback) {
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, UrlConstants.URL_POST_REAL_NAME + member_id, jsonObject, Callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, UrlConstants.URL_POST_REAL_NAME + member_id + "/realnames", jsonObject, Callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
+//                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
                 return header;
             }
         };
@@ -228,11 +227,12 @@ public class MPServerHttpManager {
      */
     public void getRealNameAuditStatus(String member_id, final String hs_uid,
                                        OkJsonRequest.OKResponseCallback Callback) {
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, UrlConstants.URL_POST_REAL_NAME + member_id, null, Callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, UrlConstants.URL_POST_REAL_NAME + member_id + "/realnames", null, Callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
+//                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return header;
             }
         };
@@ -273,7 +273,7 @@ public class MPServerHttpManager {
     public void getFindDesignerData(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_FIND_DESIGNER +
                 "?offset=" + offset +
-                "&&sort_order=desc" +
+                "&sort_order=desc" +
                 "&sort_by=date" +
                 "&limit=" + limit;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
@@ -293,8 +293,7 @@ public class MPServerHttpManager {
      * @param hs_uid
      */
     public void getDesignerInfoData(final String designer_id, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_GET_DESIGNER_INFO + designer_id +
-                "/home";
+        String url = UrlConstants.URL_GET_DESIGNER_INFO + designer_id;
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
@@ -356,8 +355,7 @@ public class MPServerHttpManager {
      * @brief Modify the project design .
      */
     public void putAmendDesignerCostData(String designer_id, final String hs_uid, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_PUT_AMEND_DESIGNER_COST + designer_id +
-                "/home";
+        String url = UrlConstants.URL_PUT_AMEND_DESIGNER_COST + designer_id;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -418,8 +416,7 @@ public class MPServerHttpManager {
      * 设计师详情-设计师信息
      */
     public void getSeekDesignerDetailHomeData(String designer_id, final String hsUid, OkJsonRequest.OKResponseCallback callback) {
-        String mUrl = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL_HOME + designer_id +
-                "/home";
+        String mUrl = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL_HOME + designer_id;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, mUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

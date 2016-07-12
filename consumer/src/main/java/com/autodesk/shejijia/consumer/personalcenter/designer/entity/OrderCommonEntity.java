@@ -11,12 +11,28 @@ import java.util.List;
  * @brief .
  */
 public class OrderCommonEntity implements Serializable {
-
-    private int offset;
+    private String _link;
     private int limit;
+    private int offset;
+    private long date;
     private int count;
-
     private List<OrderListEntity> order_list;
+
+    public String get_link() {
+        return _link;
+    }
+
+    public void set_link(String _link) {
+        this._link = _link;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
 
     public int getOffset() {
         return offset;
@@ -26,12 +42,12 @@ public class OrderCommonEntity implements Serializable {
         this.offset = offset;
     }
 
-    public int getLimit() {
-        return limit;
+    public long getDate() {
+        return date;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public int getCount() {
@@ -50,7 +66,7 @@ public class OrderCommonEntity implements Serializable {
         this.order_list = order_list;
     }
 
-    public static class OrderListEntity {
+    public static class OrderListEntity implements Serializable {
         private String city_name;
         private String needs_id;
         private String consumer_mobile;
@@ -60,34 +76,32 @@ public class OrderCommonEntity implements Serializable {
         private int bidder_count;
         private String city;
         private String decoration_style;
-        private String toilet;
         private String house_type;
+        private String toilet;
         private String is_public;
-        private String province;
         private String beishu_thread_id;
         private String after_bidding_status;
-        private String custom_string_status;
+        private String province;
+        private int custom_string_status;
         private String district;
         private String is_beishu;
         private boolean bidding_status;
         private String wk_template_id;
         private String community_name;
         private String decoration_budget;
-        private String contract;
-        private String audit_desc;
+        private String avatar;
         private String province_name;
         private String detail_desc;
         private String publish_time;
         private String district_name;
         private int click_number;
         private String end_day;
-        private Object delivery;
         private String design_budget;
-        private String room;
         private String house_area;
         private String contacts_name;
+        private String room;
 
-        private List<BiddersEntity> bidders;
+        private List<BiddersBean> bidders;
 
         public String getCity_name() {
             return city_name;
@@ -161,20 +175,20 @@ public class OrderCommonEntity implements Serializable {
             this.decoration_style = decoration_style;
         }
 
-        public String getToilet() {
-            return toilet;
-        }
-
-        public void setToilet(String toilet) {
-            this.toilet = toilet;
-        }
-
         public String getHouse_type() {
             return house_type;
         }
 
         public void setHouse_type(String house_type) {
             this.house_type = house_type;
+        }
+
+        public String getToilet() {
+            return toilet;
+        }
+
+        public void setToilet(String toilet) {
+            this.toilet = toilet;
         }
 
         public String getIs_public() {
@@ -185,14 +199,6 @@ public class OrderCommonEntity implements Serializable {
             this.is_public = is_public;
         }
 
-        public String getProvince() {
-            return province;
-        }
-
-        public void setProvince(String province) {
-            this.province = province;
-        }
-
         public Object getBeishu_thread_id() {
             return beishu_thread_id;
         }
@@ -201,7 +207,7 @@ public class OrderCommonEntity implements Serializable {
             this.beishu_thread_id = beishu_thread_id;
         }
 
-        public String getAfter_bidding_status() {
+        public Object getAfter_bidding_status() {
             return after_bidding_status;
         }
 
@@ -209,11 +215,19 @@ public class OrderCommonEntity implements Serializable {
             this.after_bidding_status = after_bidding_status;
         }
 
-        public String getCustom_string_status() {
+        public String getProvince() {
+            return province;
+        }
+
+        public void setProvince(String province) {
+            this.province = province;
+        }
+
+        public int getCustom_string_status() {
             return custom_string_status;
         }
 
-        public void setCustom_string_status(String custom_string_status) {
+        public void setCustom_string_status(int custom_string_status) {
             this.custom_string_status = custom_string_status;
         }
 
@@ -265,20 +279,12 @@ public class OrderCommonEntity implements Serializable {
             this.decoration_budget = decoration_budget;
         }
 
-        public Object getContract() {
-            return contract;
+        public Object getAvatar() {
+            return avatar;
         }
 
-        public void setContract(String contract) {
-            this.contract = contract;
-        }
-
-        public Object getAudit_desc() {
-            return audit_desc;
-        }
-
-        public void setAudit_desc(String audit_desc) {
-            this.audit_desc = audit_desc;
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
         }
 
         public String getProvince_name() {
@@ -329,28 +335,12 @@ public class OrderCommonEntity implements Serializable {
             this.end_day = end_day;
         }
 
-        public Object getDelivery() {
-            return delivery;
-        }
-
-        public void setDelivery(Object delivery) {
-            this.delivery = delivery;
-        }
-
         public String getDesign_budget() {
             return design_budget;
         }
 
         public void setDesign_budget(String design_budget) {
             this.design_budget = design_budget;
-        }
-
-        public String getRoom() {
-            return room;
-        }
-
-        public void setRoom(String room) {
-            this.room = room;
         }
 
         public String getHouse_area() {
@@ -369,54 +359,58 @@ public class OrderCommonEntity implements Serializable {
             this.contacts_name = contacts_name;
         }
 
-        public List<BiddersEntity> getBidders() {
+        public String getRoom() {
+            return room;
+        }
+
+        public void setRoom(String room) {
+            this.room = room;
+        }
+
+        public List<BiddersBean> getBidders() {
             return bidders;
         }
 
-        public void setBidders(List<BiddersEntity> bidders) {
+        public void setBidders(List<BiddersBean> bidders) {
             this.bidders = bidders;
         }
 
-        public static class BiddersEntity implements Serializable {
+        public static class BiddersBean implements Serializable {
             private String uid;
             private String wk_cur_sub_node_id;
+            private String declaration;
+            private PaymentBean payment;
+            private String status;
             private String wk_current_step_id;
             private String design_price_max;
-            private String selected_time;
-            private String refused_time;
-            private String design_thread_id;
-            private String declaration;
-            /**
-             * paid_fee : 0.21000000000000002
-             * measurement_fee : 0.1
-             * unpaid_fee : 0.0
-             * create_date : 2016-04-18 14:15:58
-             * total_fee : 0.21
-             */
-
-            private PaymentEntity payment;
-            private String status;
-            private Object style_names;
-            private String measure_time;
             private String design_price_min;
+            private String style_names;
+            private String measure_time;
             private String avatar;
+            private String selected_time;
             private String wk_id;
             private String user_name;
             private String designer_id;
             private String wk_cur_node_id;
+            private String refused_time;
+
             private String measurement_fee;
             private String join_time;
-            private Object current_actions;
-            /**
-             * id : 52
-             * name : open_3d_design
-             */
+            private String design_thread_id;
+            private Object delivery;
 
-            private List<WkNextPossibleSubNodeIdsEntity> wk_next_possible_sub_node_ids;
-            private List<WkStepsEntity> wk_steps;
-            private List<DesignContractEntity> design_contract;
-            private List<OrdersEntity> orders;
-            private List<?> delivery;
+            private List<?> wk_steps;
+            private List<DesignContractBean> design_contract;
+            private List<OrdersBean> orders;
+            private List<WkNextPossibleSubNodeIdsBean> wk_next_possible_sub_node_ids;
+
+            public List<DesignContractBean> getDesign_contract() {
+                return design_contract;
+            }
+
+            public void setDesign_contracts(List<DesignContractBean> design_contracts) {
+                this.design_contract = design_contracts;
+            }
 
             public String getUid() {
                 return uid;
@@ -434,46 +428,6 @@ public class OrderCommonEntity implements Serializable {
                 this.wk_cur_sub_node_id = wk_cur_sub_node_id;
             }
 
-            public String getWk_current_step_id() {
-                return wk_current_step_id;
-            }
-
-            public void setWk_current_step_id(String wk_current_step_id) {
-                this.wk_current_step_id = wk_current_step_id;
-            }
-
-            public String getDesign_price_max() {
-                return design_price_max;
-            }
-
-            public void setDesign_price_max(String design_price_max) {
-                this.design_price_max = design_price_max;
-            }
-
-            public String getSelected_time() {
-                return selected_time;
-            }
-
-            public void setSelected_time(String selected_time) {
-                this.selected_time = selected_time;
-            }
-
-            public Object getRefused_time() {
-                return refused_time;
-            }
-
-            public void setRefused_time(String refused_time) {
-                this.refused_time = refused_time;
-            }
-
-            public Object getDesign_thread_id() {
-                return design_thread_id;
-            }
-
-            public void setDesign_thread_id(String design_thread_id) {
-                this.design_thread_id = design_thread_id;
-            }
-
             public String getDeclaration() {
                 return declaration;
             }
@@ -482,11 +436,11 @@ public class OrderCommonEntity implements Serializable {
                 this.declaration = declaration;
             }
 
-            public PaymentEntity getPayment() {
+            public PaymentBean getPayment() {
                 return payment;
             }
 
-            public void setPayment(PaymentEntity payment) {
+            public void setPayment(PaymentBean payment) {
                 this.payment = payment;
             }
 
@@ -498,11 +452,35 @@ public class OrderCommonEntity implements Serializable {
                 this.status = status;
             }
 
+            public Object getWk_current_step_id() {
+                return wk_current_step_id;
+            }
+
+            public void setWk_current_step_id(String wk_current_step_id) {
+                this.wk_current_step_id = wk_current_step_id;
+            }
+
+            public Object getDesign_price_max() {
+                return design_price_max;
+            }
+
+            public void setDesign_price_max(String design_price_max) {
+                this.design_price_max = design_price_max;
+            }
+
+            public Object getDesign_price_min() {
+                return design_price_min;
+            }
+
+            public void setDesign_price_min(String design_price_min) {
+                this.design_price_min = design_price_min;
+            }
+
             public Object getStyle_names() {
                 return style_names;
             }
 
-            public void setStyle_names(Object style_names) {
+            public void setStyle_names(String style_names) {
                 this.style_names = style_names;
             }
 
@@ -514,20 +492,20 @@ public class OrderCommonEntity implements Serializable {
                 this.measure_time = measure_time;
             }
 
-            public String getDesign_price_min() {
-                return design_price_min;
-            }
-
-            public void setDesign_price_min(String design_price_min) {
-                this.design_price_min = design_price_min;
-            }
-
-            public String getAvatar() {
+            public Object getAvatar() {
                 return avatar;
             }
 
             public void setAvatar(String avatar) {
                 this.avatar = avatar;
+            }
+
+            public String getSelected_time() {
+                return selected_time;
+            }
+
+            public void setSelected_time(String selected_time) {
+                this.selected_time = selected_time;
             }
 
             public String getWk_id() {
@@ -562,6 +540,14 @@ public class OrderCommonEntity implements Serializable {
                 this.wk_cur_node_id = wk_cur_node_id;
             }
 
+            public String getRefused_time() {
+                return refused_time;
+            }
+
+            public void setRefused_time(String refused_time) {
+                this.refused_time = refused_time;
+            }
+
             public String getMeasurement_fee() {
                 return measurement_fee;
             }
@@ -578,55 +564,47 @@ public class OrderCommonEntity implements Serializable {
                 this.join_time = join_time;
             }
 
-            public Object getCurrent_actions() {
-                return current_actions;
+            public String getDesign_thread_id() {
+                return design_thread_id;
             }
 
-            public void setCurrent_actions(Object current_actions) {
-                this.current_actions = current_actions;
+            public void setDesign_thread_id(String design_thread_id) {
+                this.design_thread_id = design_thread_id;
             }
 
-            public List<WkNextPossibleSubNodeIdsEntity> getWk_next_possible_sub_node_ids() {
-                return wk_next_possible_sub_node_ids;
-            }
-
-            public void setWk_next_possible_sub_node_ids(List<WkNextPossibleSubNodeIdsEntity> wk_next_possible_sub_node_ids) {
-                this.wk_next_possible_sub_node_ids = wk_next_possible_sub_node_ids;
-            }
-
-            public List<WkStepsEntity> getWk_steps() {
-                return wk_steps;
-            }
-
-            public void setWk_steps(List<WkStepsEntity> wk_steps) {
-                this.wk_steps = wk_steps;
-            }
-
-            public List<DesignContractEntity> getDesign_contract() {
-                return design_contract;
-            }
-
-            public void setDesign_contract(List<DesignContractEntity> design_contract) {
-                this.design_contract = design_contract;
-            }
-
-            public List<OrdersEntity> getOrders() {
-                return orders;
-            }
-
-            public void setOrders(List<OrdersEntity> orders) {
-                this.orders = orders;
-            }
-
-            public List<?> getDelivery() {
+            public Object getDelivery() {
                 return delivery;
             }
 
-            public void setDelivery(List<?> delivery) {
+            public void setDelivery(Object delivery) {
                 this.delivery = delivery;
             }
 
-            public static class PaymentEntity implements Serializable {
+            public List<?> getWk_steps() {
+                return wk_steps;
+            }
+
+            public void setWk_steps(List<?> wk_steps) {
+                this.wk_steps = wk_steps;
+            }
+
+            public List<OrdersBean> getOrders() {
+                return orders;
+            }
+
+            public void setOrders(List<OrdersBean> orders) {
+                this.orders = orders;
+            }
+
+            public List<WkNextPossibleSubNodeIdsBean> getWk_next_possible_sub_node_ids() {
+                return wk_next_possible_sub_node_ids;
+            }
+
+            public void setWk_next_possible_sub_node_ids(List<WkNextPossibleSubNodeIdsBean> wk_next_possible_sub_node_ids) {
+                this.wk_next_possible_sub_node_ids = wk_next_possible_sub_node_ids;
+            }
+
+            public static class PaymentBean implements Serializable {
                 private String paid_fee;
                 private String measurement_fee;
                 private String unpaid_fee;
@@ -657,7 +635,7 @@ public class OrderCommonEntity implements Serializable {
                     this.unpaid_fee = unpaid_fee;
                 }
 
-                public String getCreate_date() {
+                public Object getCreate_date() {
                     return create_date;
                 }
 
@@ -674,99 +652,11 @@ public class OrderCommonEntity implements Serializable {
                 }
             }
 
-            public static class WkNextPossibleSubNodeIdsEntity implements Serializable {
-                private int id;
-                private String name;
-
-                public int getId() {
-                    return id;
-                }
-
-                public void setId(int id) {
-                    this.id = id;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-            }
-
-            public static class WkStepsEntity implements Serializable {
-                private String timestam_end;
-                private String files;
-                private String thread_id;
-                private String status;
-                private String wk_step_id;
-                private Object timestamp_start;
-                private Object previous_lastest_msg_id;
-
-                public Object getTimestam_end() {
-                    return timestam_end;
-                }
-
-                public void setTimestam_end(String timestam_end) {
-                    this.timestam_end = timestam_end;
-                }
-
-                public Object getFiles() {
-                    return files;
-                }
-
-                public void setFiles(String files) {
-                    this.files = files;
-                }
-
-                public String getThread_id() {
-                    return thread_id;
-                }
-
-                public void setThread_id(String thread_id) {
-                    this.thread_id = thread_id;
-                }
-
-                public String getStatus() {
-                    return status;
-                }
-
-                public void setStatus(String status) {
-                    this.status = status;
-                }
-
-                public String getWk_step_id() {
-                    return wk_step_id;
-                }
-
-                public void setWk_step_id(String wk_step_id) {
-                    this.wk_step_id = wk_step_id;
-                }
-
-                public Object getTimestamp_start() {
-                    return timestamp_start;
-                }
-
-                public void setTimestamp_start(Object timestamp_start) {
-                    this.timestamp_start = timestamp_start;
-                }
-
-                public Object getPrevious_lastest_msg_id() {
-                    return previous_lastest_msg_id;
-                }
-
-                public void setPrevious_lastest_msg_id(Object previous_lastest_msg_id) {
-                    this.previous_lastest_msg_id = previous_lastest_msg_id;
-                }
-            }
-
-            public static class DesignContractEntity implements Serializable {
+            public static class DesignContractBean implements Serializable {
                 private String contract_first_charge;
-                private String designer_id;
-                private String contract_status;
+                private int contract_status;
                 private String contract_charge;
-                private String contract_type;
+                private int contract_type;
                 private String contract_template_url;
                 private String contract_no;
                 private String contract_data;
@@ -781,19 +671,11 @@ public class OrderCommonEntity implements Serializable {
                     this.contract_first_charge = contract_first_charge;
                 }
 
-                public String getDesigner_id() {
-                    return designer_id;
-                }
-
-                public void setDesigner_id(String designer_id) {
-                    this.designer_id = designer_id;
-                }
-
-                public String getContract_status() {
+                public int getContract_status() {
                     return contract_status;
                 }
 
-                public void setContract_status(String contract_status) {
+                public void setContract_status(int contract_status) {
                     this.contract_status = contract_status;
                 }
 
@@ -805,11 +687,11 @@ public class OrderCommonEntity implements Serializable {
                     this.contract_charge = contract_charge;
                 }
 
-                public String getContract_type() {
+                public int getContract_type() {
                     return contract_type;
                 }
 
-                public void setContract_type(String contract_type) {
+                public void setContract_type(int contract_type) {
                     this.contract_type = contract_type;
                 }
 
@@ -837,7 +719,7 @@ public class OrderCommonEntity implements Serializable {
                     this.contract_data = contract_data;
                 }
 
-                public Object getContract_update_date() {
+                public String getContract_update_date() {
                     return contract_update_date;
                 }
 
@@ -854,9 +736,8 @@ public class OrderCommonEntity implements Serializable {
                 }
             }
 
-            public static class OrdersEntity implements Serializable {
+            public static class OrdersBean implements Serializable {
                 private String order_line_no;
-                private String designer_id;
                 private String order_status;
                 private String order_no;
                 private String order_type;
@@ -867,14 +748,6 @@ public class OrderCommonEntity implements Serializable {
 
                 public void setOrder_line_no(String order_line_no) {
                     this.order_line_no = order_line_no;
-                }
-
-                public String getDesigner_id() {
-                    return designer_id;
-                }
-
-                public void setDesigner_id(String designer_id) {
-                    this.designer_id = designer_id;
                 }
 
                 public String getOrder_status() {
@@ -899,6 +772,27 @@ public class OrderCommonEntity implements Serializable {
 
                 public void setOrder_type(String order_type) {
                     this.order_type = order_type;
+                }
+            }
+
+            public static class WkNextPossibleSubNodeIdsBean implements Serializable {
+                private String name;
+                private int actionId;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public int getActionId() {
+                    return actionId;
+                }
+
+                public void setActionId(int actionId) {
+                    this.actionId = actionId;
                 }
             }
         }

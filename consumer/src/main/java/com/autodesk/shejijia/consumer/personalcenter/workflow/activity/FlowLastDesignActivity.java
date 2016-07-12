@@ -25,6 +25,7 @@ import com.socks.library.KLog;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * @author Malidong .
@@ -71,6 +72,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 
         upDataViewFromData();
     }
+
     /**
      * @param designer_id
      * @param hs_uid
@@ -97,12 +99,18 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 
 
     private void upDataViewFromData() {
-        tv_flow_last_design_contract_no.setText(requirement.getBidders().get(0).getDesign_contract().getContract_no());
-        tv_flow_last_design_aggregate_amount.setText(requirement.getBidders().get(0).getDesign_contract().getContract_charge());
-        tv_flow_last_design_first.setText(requirement.getBidders().get(0).getDesign_contract().getContract_first_charge());
+        List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = requirement.getBidders().get(0).getDesign_contract();
+        if (null == design_contract || design_contract.size() < 1) {
+            return;
+        }
+        WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
 
-        Double totalCost = Double.parseDouble(requirement.getBidders().get(0).getDesign_contract().getContract_charge());
-        Double firstCost = Double.parseDouble(requirement.getBidders().get(0).getDesign_contract().getContract_first_charge());
+        tv_flow_last_design_contract_no.setText(designContractEntity.getContract_no());
+        tv_flow_last_design_aggregate_amount.setText(designContractEntity.getContract_charge());
+        tv_flow_last_design_first.setText(designContractEntity.getContract_first_charge());
+
+        Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
+        Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
         DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
         tv_flow_last_design_last.setText(df.format(totalCost - firstCost)); // 设计尾款
 
@@ -132,8 +140,14 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
         if (!designerInfoList.equals(null)) {
             tv_flow_last_design_name.setText(designerInfoList.getReal_name().getReal_name());
             tv_flow_last_design_phone.setText(designerInfoList.getReal_name().getMobile_number().toString());
-            Double totalCost = Double.parseDouble(requirement.getBidders().get(0).getDesign_contract().getContract_charge());
-            Double firstCost = Double.parseDouble(requirement.getBidders().get(0).getDesign_contract().getContract_first_charge());
+
+            List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = requirement.getBidders().get(0).getDesign_contract();
+            if (null == design_contract || design_contract.size() < 1) {
+                return;
+            }
+            WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
+            Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
+            Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
             tv_flow_last_design_should_first.setText(df.format(totalCost - firstCost)); // 本次应付设计尾款
         }

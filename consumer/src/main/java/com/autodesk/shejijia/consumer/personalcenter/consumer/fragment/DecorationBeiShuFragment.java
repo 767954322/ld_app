@@ -120,16 +120,16 @@ public class DecorationBeiShuFragment extends Fragment {
     /**
      * 创建北舒套餐后，设计师的适配器
      */
-    private class BeiShuAdapter extends CommonAdapter<DecorationListEntity.NeedsListEntity.BiddersEntity> {
+    private class BeiShuAdapter extends CommonAdapter<DecorationListEntity.NeedsListEntity.BiddersBean> {
         private String user_name;
         private String avatarUrl;
 
-        public BeiShuAdapter(Context context, List<DecorationListEntity.NeedsListEntity.BiddersEntity> biddersEntities, int layoutId) {
+        public BeiShuAdapter(Context context, List<DecorationListEntity.NeedsListEntity.BiddersBean> biddersEntities, int layoutId) {
             super(context, biddersEntities, layoutId);
         }
 
         @Override
-        public void convert(final CommonViewHolder holder, final DecorationListEntity.NeedsListEntity.BiddersEntity biddersEntity) {
+        public void convert(final CommonViewHolder holder, final DecorationListEntity.NeedsListEntity.BiddersBean biddersEntity) {
             avatarUrl = biddersEntity.getAvatar();
             user_name = biddersEntity.getUser_name();
             PolygonImageView piv_photo = holder.getView(R.id.ib_personal_b_photo_beishu);
@@ -211,7 +211,7 @@ public class DecorationBeiShuFragment extends Fragment {
     private String beishu_thread_id;
     public String member_id;
 
-    private List<DecorationListEntity.NeedsListEntity.BiddersEntity> bidders;
+    private List<DecorationListEntity.NeedsListEntity.BiddersBean> bidders;
     private DecorationListEntity.NeedsListEntity need;
 }
 
