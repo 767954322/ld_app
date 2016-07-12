@@ -111,6 +111,8 @@ public class DecorationListEntity implements Serializable {
         private String wk_template_id;
         private String contract;
 
+        private List<BiddersBean> bidders;
+
         public String getContract() {
             return contract;
         }
@@ -118,8 +120,6 @@ public class DecorationListEntity implements Serializable {
         public void setContract(String contract) {
             this.contract = contract;
         }
-
-        private List<BiddersBean> bidders;
 
         public String getCity() {
             return city;
@@ -169,7 +169,7 @@ public class DecorationListEntity implements Serializable {
             this.avatar = avatar;
         }
 
-        public Object getAfter_bidding_status() {
+        public String getAfter_bidding_status() {
             return after_bidding_status;
         }
 
@@ -416,15 +416,18 @@ public class DecorationListEntity implements Serializable {
             private String design_price_min;
 
             private PaymentBean payment;
-            private DesignContractBean design_contract;
+            private List<DesignContractBean> design_contract;
             private List<OrdersBean> orders;
-            /**
-             * actionId : 21
-             * name : pay_for_measure
-             */
-
             private List<WkNextPossibleSubNodeIdsBean> wk_next_possible_sub_node_ids;
             private List<?> wk_steps;
+
+            public List<DesignContractBean> getDesign_contract() {
+                return design_contract;
+            }
+
+            public void setDesign_contract(List<DesignContractBean> design_contract) {
+                this.design_contract = design_contract;
+            }
 
             public String getAvatar() {
                 return avatar;
@@ -472,14 +475,6 @@ public class DecorationListEntity implements Serializable {
 
             public void setUid(String uid) {
                 this.uid = uid;
-            }
-
-            public DesignContractBean getDesign_contract() {
-                return design_contract;
-            }
-
-            public void setDesign_contract(DesignContractBean design_contract) {
-                this.design_contract = design_contract;
             }
 
             public String getDesigner_id() {
@@ -759,7 +754,7 @@ public class DecorationListEntity implements Serializable {
                 }
             }
 
-            public static class OrdersBean  implements Serializable {
+            public static class OrdersBean implements Serializable {
                 private String order_line_no;
                 private String order_no;
                 private String order_status;
