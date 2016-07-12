@@ -293,9 +293,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
-
+    
     protected int mCurrentTabIndex = -1;
-
     private boolean isDestroyed = false;
 
     private RadioButton mDesignerSessionRadioBtn;
