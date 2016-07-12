@@ -46,8 +46,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseChatRoomActivity extends NavigationBarActivity implements ChatRoomAdapter.MessagesListInterface,
-                                                                           View.OnClickListener,
-                                                                           ViewTreeObserver.OnGlobalLayoutListener {
+        View.OnClickListener,
+        ViewTreeObserver.OnGlobalLayoutListener {
     public static final String THREAD_ID = "thread_id"; //pass if chat needs to happen on this thread
     public static final String ASSET_ID = "asset_id"; // pass if this chat is related to project
     public static final String MEMBER_TYPE = "member_type";
@@ -105,7 +105,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
         registerBroadCast();
 
-       mIWorkflowDelegate = AdskApplication.getInstance().getIMWorkflowDelegate();
+        mIWorkflowDelegate = AdskApplication.getInstance().getIMWorkflowDelegate();
     }
 
 
@@ -216,10 +216,9 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                     onAudioCellClicked(index);
                     break;
                 case eCOMMAND:
-                    if (mIWorkflowDelegate != null)
-                    {
+                    if (mIWorkflowDelegate != null) {
                         MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(msg);
-                        mIWorkflowDelegate.onCommandCellClicked(this,info);
+                        mIWorkflowDelegate.onCommandCellClicked(this, info);
                     }
                     break;
 
@@ -295,8 +294,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.chat_header)
-        {
+        if (i == R.id.chat_header) {
             retrieveThreadMessagesWithOffset(mThreadId, mMessageList.size());
 
         }
@@ -408,13 +406,12 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         markThreadAsRead();
         retrieveThreadMessagesWithOffset(mThreadId, 0);
 
-        if (mAssetId != null) {
+        if (!mAssetId.equals("0") && mAssetId != null) {
             getProjectInfo();
         } else {
             changeConsumerUI();
         }
     }
-
 
 
     protected void setNewThreadId(String response) {
@@ -457,14 +454,11 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     }
 
 
-    private boolean checkIfMessageAlreadyExist(MPChatMessage msg)
-    {
+    private boolean checkIfMessageAlreadyExist(MPChatMessage msg) {
         boolean exist = false;
-        for (int i = 0; i < mMessageList.size(); ++i)
-        {
+        for (int i = 0; i < mMessageList.size(); ++i) {
             MPChatMessage currentMsg = mMessageList.get(i);
-            if (currentMsg.message_id.equalsIgnoreCase(msg.message_id))
-            {
+            if (currentMsg.message_id.equalsIgnoreCase(msg.message_id)) {
                 exist = true;
                 break;
             }
@@ -563,7 +557,6 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     }
 
 
-
     private void registerBroadCast() {
         mNewMessageBroadCastReceiver = new NewMessageBroadCastReceiver();
         IntentFilter filter = new IntentFilter();
@@ -614,7 +607,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         };
 
         if (mIWorkflowDelegate != null)
-            mIWorkflowDelegate.getProjectInfo(mAssetId, designerId,okResponseCallback);
+            mIWorkflowDelegate.getProjectInfo(mAssetId, designerId, okResponseCallback);
     }
 
     private void setHeaderViewVisibility(boolean visible) {
@@ -631,7 +624,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
 
     }
 
-    public void changeConsumerUI(){
+    public void changeConsumerUI() {
 
     }
 
