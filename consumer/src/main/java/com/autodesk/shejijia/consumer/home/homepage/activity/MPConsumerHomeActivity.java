@@ -358,6 +358,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
     }
 
+    private final static String TAG_CASES = "tag_cases";
+    private final static String TAG_BID_HALL = "tag_bid_hall";
+    private final static String TAG_PERSONAL_CENTER = "tag_personal_center";
     private final int REQUEST_CODE_CHAT = 0;
 
     private RadioButton mDesignerMainRadioBtn;
