@@ -10,17 +10,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -55,7 +55,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         initMenberEntity();
     }
 
-    private void initMenberEntity(){
+    private void initMenberEntity() {
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
@@ -131,6 +131,12 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+//                NetworkResponse networkResponse = volleyError.networkResponse;
+//                if (null == networkResponse) {
+//                    return;
+//                }
+//                int statusCode = networkResponse.statusCode;
+//                Log.d("MyPropertyActivity", "volleyError.networkResponse.statusCode:" + statusCode);
                 setBtnUnpress();
                 tv_my_property_account_balance.setText("¥ " + "0.00");
                 MPNetworkUtils.logError(TAG, volleyError);
