@@ -773,7 +773,8 @@ public class MPServerHttpManager {
      */
     public void agreeMeasureHouse(String need_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_PUT_AGREE_MEASURE_HOUSE + need_id;
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, null, callback) {
+        JSONObject jsonObject = new JSONObject();
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
@@ -1000,6 +1001,7 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
                 return header;
             }
         };

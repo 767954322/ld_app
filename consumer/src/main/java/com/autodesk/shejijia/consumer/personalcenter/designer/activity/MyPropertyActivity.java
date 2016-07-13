@@ -60,8 +60,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             designer_id = memberEntity.getAcs_member_id();
-            mXToken = memberEntity.getHs_accesstoken();
-            getMyPropertyData(mXToken, designer_id);
+            getMyPropertyData(designer_id);
         }
     }
 
@@ -110,10 +109,9 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
     /**
      * 获取我的资产信息
      *
-     * @param X_Token
      * @param designer_id
      */
-    public void getMyPropertyData(String X_Token, String designer_id) {
+    public void getMyPropertyData(String designer_id) {
         MPServerHttpManager.getInstance().getMyPropertyData(designer_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -170,5 +168,4 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
 
     private String designer_id;
     private String amount;
-    private String mXToken;
 }
