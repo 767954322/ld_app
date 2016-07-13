@@ -131,12 +131,6 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                NetworkResponse networkResponse = volleyError.networkResponse;
-//                if (null == networkResponse) {
-//                    return;
-//                }
-//                int statusCode = networkResponse.statusCode;
-//                Log.d("MyPropertyActivity", "volleyError.networkResponse.statusCode:" + statusCode);
                 setBtnUnpress();
                 tv_my_property_account_balance.setText("¥ " + "0.00");
                 MPNetworkUtils.logError(TAG, volleyError);

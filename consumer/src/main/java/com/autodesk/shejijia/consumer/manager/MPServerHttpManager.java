@@ -1000,6 +1000,7 @@ public class MPServerHttpManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
+                header.put("X-Token", xToken);
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
                 return header;
