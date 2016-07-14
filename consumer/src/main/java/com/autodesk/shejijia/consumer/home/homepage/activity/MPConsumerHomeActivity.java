@@ -61,8 +61,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
         showDesignerOrConsumerRadioGroup();
         super.initData(savedInstanceState);
-        showFragment(getDesignerMainRadioBtnId());
-
     }
 
 
@@ -240,15 +238,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         Intent intent = new Intent(MPConsumerHomeActivity.this, CaptureQrActivity.class);
         startActivityForResult(intent, REQUEST_CODE_CHAT);
 
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-        if (checkedId == getDesignerMainRadioBtnId())
-            showFragment(getDesignerMainRadioBtnId());
-
-        super.onCheckedChanged(group, checkedId);
     }
 
     protected int getDesignerMainRadioBtnId() {

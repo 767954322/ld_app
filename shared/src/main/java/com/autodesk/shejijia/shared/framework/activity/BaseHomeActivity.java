@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,8 +25,6 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.im.manager.MPMemberUnreadCountManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +43,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        showFragment(mRadioGroup.getCheckedRadioButtonId());
     }
 
 
@@ -100,8 +98,11 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (needLoginOnRadiobuttonTap(checkedId))
+        if (needLoginOnRadiobuttonTap(checkedId)) {
             startRegisterOrLoginActivity(checkedId);
+        } else {
+            showFragment(checkedId);
+        }
     }
 
     @Override
@@ -146,8 +147,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         }
     }
 
-    protected Fragment getExistFragment(Fragment cacheFragment, String tag) {
-        return cacheFragment == null ? getFragmentManager().findFragmentByTag(tag) : cacheFragment;
+    protected Fragment getExistFragment(Fragment cachedFragment, String tag) {
+        return cachedFragment == null ? getFragmentManager().findFragmentByTag(tag) : cachedFragment;
     }
 
     protected Fragment getFragmentByButtonId(int id) {
@@ -192,7 +193,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
     protected boolean isActiveFragment(String tag) {
-        Fragment fragment = getFragmentManager().findFragmentByTag(TAG_IM);
+        Fragment fragment = getFragmentManager().findFragmentByTag(tag);
         return (fragment != null && fragment.isVisible());
     }
 
