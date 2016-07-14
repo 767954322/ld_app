@@ -1,9 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -12,6 +10,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,22 +22,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.FileManager;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -144,45 +144,6 @@ public class CertificationActivity extends NavigationBarActivity implements View
         return false;
     }
 
-    /**
-     * @param intent
-     * @return
-     * @brief 解决小米手机上获取图片路径为null的情况 .
-     */
-    public Uri getUri(android.content.Intent intent) {
-        Uri uri = intent.getData();
-        String type = intent.getType();
-        if (uri.getScheme().equals("file") && (type.contains("image/"))) {
-            String path = uri.getEncodedPath();
-            if (path != null) {
-                path = Uri.decode(path);
-                ContentResolver cr = this.getContentResolver();
-                StringBuilder buff = new StringBuilder();
-                buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=")
-                        .append("'" + path + "'").append(")");
-                Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        new String[]{MediaStore.Images.ImageColumns._ID},
-                        buff.toString(), null, null);
-                int index = 0;
-                for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
-                    index = cur.getColumnIndex(MediaStore.Images.ImageColumns._ID);
-                    // set _id value
-                    index = cur.getInt(index);
-                }
-                if (index == 0) {
-                    // do nothing
-                } else {
-                    Uri uri_temp = Uri
-                            .parse("content://media/external/images/media/"
-                                    + index);
-                    if (uri_temp != null) {
-                        uri = uri_temp;
-                    }
-                }
-            }
-        }
-        return uri;
-    }
 
     @Override
     public void onClick(View v) {
@@ -394,17 +355,18 @@ public class CertificationActivity extends NavigationBarActivity implements View
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SYS_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
             try {
-                String imageFilePath = null;
-                Uri uri = getUri(data);
-                String[] proJ = {MediaStore.Images.Media.DATA};
-                Cursor cursor = managedQuery(uri, proJ, null, null, null);
-                if (cursor != null) {
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    imageFilePath = cursor.getString(column_index);// 图片在的路径
+                Uri uri = data.getData();
+                /**
+                 * 解决上传图片找不到路径问题
+                 */
+                String imageFilePath = PhotoPathUtils.getPath(CertificationActivity.this, uri);
+
+                if (TextUtils.isEmpty(imageFilePath)) {
+                    return;
                 }
-                FileInputStream fis = new FileInputStream(imageFilePath);
+
                 Object[] object = pictureProcessingUtil.judgePicture(imageFilePath); /// PictureProcessingUtil 压缩处理图片工具 .
+                FileInputStream fis = new FileInputStream(imageFilePath);
                 Bitmap _bitmap = (Bitmap) object[1];
 
                 if (state == IMG_AUTONYM_FRONT) { /// 身份证正面 .

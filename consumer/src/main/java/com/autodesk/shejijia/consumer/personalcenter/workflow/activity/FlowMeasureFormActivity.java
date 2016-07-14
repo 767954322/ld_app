@@ -257,8 +257,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     }
 
     private void updateRoomData() { /// 将获取到的数据变成可读的室卫厅 .
-        livingRoomJson = AppJsonFileReader.getLivingRoom(this);
         roomJson = AppJsonFileReader.getRoomHall(this);
+        livingRoomJson = AppJsonFileReader.getLivingRoom(this);
         toiletJson = AppJsonFileReader.getToilet(this);
         room = requirement.getRoom();
         living_room = requirement.getLiving_room();

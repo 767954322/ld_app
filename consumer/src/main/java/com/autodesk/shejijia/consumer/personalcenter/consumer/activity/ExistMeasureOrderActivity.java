@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -108,7 +109,6 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         });
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -136,7 +136,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                                 jsonObject.put("mobile_number", dList.get(expandFlag).getContacts_mobile());
                                 jsonObject.put("order_type", 0);
                                 jsonObject.put("thread_id", "");
-                                if (fee == null) {
+                                if (TextUtils.isEmpty(fee)) {
                                     jsonObject.put("amount", 0.01);
                                 } else {
                                     jsonObject.put("amount", fee);
@@ -163,15 +163,12 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         }
     }
 
-
     class GroupClickListener implements ExpandableListView.OnGroupClickListener {
         @Override
         public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
             if (expandFlag == -1) {
                 // 展开被选的group
                 explistview.expandGroup(groupPosition);
-                // 设置被选中的group置于顶端
-                // explistview.setSelectedGroup(groupPosition);
                 expandFlag = groupPosition;
             } else if (expandFlag == groupPosition) {
                 explistview.collapseGroup(expandFlag);
@@ -186,7 +183,6 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
             }
             return true;
         }
-
     }
 
     /**
@@ -240,8 +236,8 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.dialog.cancel();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                mDecorationListEntity = GsonUtil.jsonToBean(userInfo, DecorationListEntity.class);
-                updateViewFromData();
+                DecorationListEntity decorationListEntity = GsonUtil.jsonToBean(userInfo, DecorationListEntity.class);
+                updateViewFromData(decorationListEntity);
             }
 
             @Override
@@ -253,11 +249,12 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
 
     /**
      * 更新视图
+     *
+     * @param decorationListEntity
      */
-    private void updateViewFromData() {
-
+    private void updateViewFromData(DecorationListEntity decorationListEntity) {
         ArrayList<DecorationListEntity.NeedsListEntity> mList = new ArrayList<>();
-        mList.addAll(mDecorationListEntity.getNeeds_list());
+        mList.addAll(decorationListEntity.getNeeds_list());
         int size = mList.size();
         for (int i = 0; i < size; i++) {
             String wk_template_id = mList.get(i).getWk_template_id();
@@ -272,7 +269,6 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         }
 
         // 设置悬浮头部VIEW
-        // explistview.setHeaderView(getLayoutInflater().inflate(R.layout.group_head, explistview, false));
         if (dList != null) {
             adapter = new PinnedHeaderExpandableAdapter(dList, ExistMeasureOrderActivity.this, explistview);
             explistview.setAdapter(adapter);
@@ -345,6 +341,5 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     private int expandFlag = -1;// 控制列表的展开
 
     /// 集合，类.
-    private DecorationListEntity mDecorationListEntity;
     private ArrayList<DecorationListEntity.NeedsListEntity> dList = new ArrayList<>();
 }

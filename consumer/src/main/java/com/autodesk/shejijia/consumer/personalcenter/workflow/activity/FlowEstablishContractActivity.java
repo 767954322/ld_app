@@ -210,19 +210,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             } else { // 已有合同
                 if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) { /// 从项目资料跳转.
                     /// 如果是已有的合同设置所有得按键都不可点击 .
-                    tvc_consumer_name.setEnabled(false);
-                    tvc_consumer_phone.setEnabled(false);
-                    tvc_consumer_postcode.setEnabled(false);
-                    tvc_consumer_email.setEnabled(false);
-                    tvc_consumer_decorate_address.setEnabled(false);
-                    tvc_consumer_detail_address.setEnabled(false);
-                    tvc_designer_postcode.setEnabled(false);
-                    tvc_design_sketch.setEnabled(false);
-                    tvc_render_map.setEnabled(false);
-                    tvc_sketch_plus.setEnabled(false);
-                    tvc_first_cost.setEnabled(false);
-                    tvc_total_cost.setEnabled(false);
-                    tvc_last_cost.setEnabled(false);
+                    setTvcCannotClickable();
                 }
                 if (wk_cur_sub_node_idi == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
                     ll_send.setVisibility(View.VISIBLE);
@@ -278,19 +266,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         } else if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberType)) { /// 消费者 .
             /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
-            tvc_consumer_name.setEnabled(false);
-            tvc_consumer_phone.setEnabled(false);
-            tvc_consumer_postcode.setEnabled(false);
-            tvc_consumer_email.setEnabled(false);
-            tvc_consumer_decorate_address.setEnabled(false);
-            tvc_consumer_detail_address.setEnabled(false);
-            tvc_designer_postcode.setEnabled(false);
-            tvc_design_sketch.setEnabled(false);
-            tvc_render_map.setEnabled(false);
-            tvc_sketch_plus.setEnabled(false);
-            tvc_first_cost.setEnabled(false);
-            tvc_total_cost.setEnabled(false);
-            tvc_last_cost.setEnabled(false);
+            setTvcCannotClickable();
 
             List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = mBidders.get(0).getDesign_contract();
             if (null == design_contract || design_contract.size() < 1) {
@@ -299,7 +275,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
             String contractData = designContractEntity.getContract_data();
             final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
-            DesignContractBean designContractBean = new Gson().fromJson(str, DesignContractBean.class);
+            DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);
             String zip = designContractBean.getZip();
             String email = designContractBean.getEmail();
             zip = TextUtils.isEmpty(zip) ? "" : zip;
@@ -364,6 +340,25 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 btn_send.setText(R.string.receiving_room_deliverable);
             }
         }
+    }
+
+    /**
+     * 设置输入框不可点击输入
+     */
+    private void setTvcCannotClickable() {
+        tvc_consumer_name.setEnabled(false);
+        tvc_consumer_phone.setEnabled(false);
+        tvc_consumer_postcode.setEnabled(false);
+        tvc_consumer_email.setEnabled(false);
+        tvc_consumer_decorate_address.setEnabled(false);
+        tvc_consumer_detail_address.setEnabled(false);
+        tvc_designer_postcode.setEnabled(false);
+        tvc_design_sketch.setEnabled(false);
+        tvc_render_map.setEnabled(false);
+        tvc_sketch_plus.setEnabled(false);
+        tvc_first_cost.setEnabled(false);
+        tvc_total_cost.setEnabled(false);
+        tvc_last_cost.setEnabled(false);
     }
 
     /**

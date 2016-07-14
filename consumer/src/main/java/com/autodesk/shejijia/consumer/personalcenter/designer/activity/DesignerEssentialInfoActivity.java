@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -550,14 +551,14 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                 try {
                     CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
 
-                    String imageFilePath = null;
-                    Uri uri = getUri(data);// 解决方案
-                    String[] proj = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = managedQuery(uri, proj, null, null, null);
-                    if (cursor != null) {
-                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                        cursor.moveToFirst();
-                        imageFilePath = cursor.getString(column_index);// 图片在的路径
+                    Uri uri = data.getData();
+                    /**
+                     * 解决上传图片找不到路径问题
+                     */
+                    String imageFilePath = PhotoPathUtils.getPath(DesignerEssentialInfoActivity.this, uri);
+
+                    if (TextUtils.isEmpty(imageFilePath)) {
+                        return;
                     }
 
                     Object[] object = mPictureProcessingUtil.judgePicture(imageFilePath);
@@ -628,6 +629,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
     /**
      * upload file
+     *
      * @param file 文件
      * @throws Exception
      */
@@ -644,7 +646,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
             RequestBody fileBody = RequestBody.create(MEDIA_TYPE_PNG, file);
             MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
-            builder.addFormDataPart("file",file.getName(),fileBody);
+            builder.addFormDataPart("file", file.getName(), fileBody);
 
             RequestBody reqBody = builder.build();
             com.squareup.okhttp.Request.Builder reqBuilder = new com.squareup.okhttp.Request.Builder();
@@ -666,10 +668,9 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                 @Override
                 public void onResponse(Response response) throws IOException {
 
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         dealResult(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_successfully));
-                    }
-                    else{
+                    } else {
                         dealResult(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_failed));
 //                        throw new IOException("Unexpected code " + response);
                     }
@@ -677,12 +678,13 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             });
 
         } else {
-            MyToast.show(this,UIUtils.getString(R.string.file_does_not_exist));
+            MyToast.show(this, UIUtils.getString(R.string.file_does_not_exist));
         }
     }
 
     /**
      * init the client
+     *
      * @return
      */
     @NonNull
@@ -696,6 +698,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
     /**
      * deal with the result of upload
+     *
      * @param activity
      * @param string
      */
@@ -773,9 +776,8 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     }
 
     /**
-     * @brief 更新设计师基础信息
-     *
      * @param strDesignerId
+     * @brief 更新设计师基础信息
      * @brief Modify the designer information .
      */
     public void putAmendDesignerInfoData(String strDesignerId, JSONObject jsonObject) {

@@ -32,34 +32,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerQrEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CommonEssentialInfoAmendActivity;
+import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.tools.zxing.encoding.EncodingHandler;
 import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
-import com.autodesk.shejijia.shared.components.common.tools.zxing.encoding.EncodingHandler;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
-
 import com.socks.library.KLog;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
@@ -609,6 +609,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
     /**
      * upload file
+     *
      * @param file 文件
      * @throws Exception
      */
@@ -625,7 +626,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
             RequestBody fileBody = RequestBody.create(MEDIA_TYPE_PNG, file);
             MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
-            builder.addFormDataPart("file",file.getName(),fileBody);
+            builder.addFormDataPart("file", file.getName(), fileBody);
 
             RequestBody reqBody = builder.build();
             com.squareup.okhttp.Request.Builder reqBuilder = new com.squareup.okhttp.Request.Builder();
@@ -648,10 +649,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 @Override
                 public void onResponse(Response response) throws IOException {
 
-                    if (response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         dealResult(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_successfully));
-                    }
-                    else{
+                    } else {
                         dealResult(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_failed));
 //                        throw new IOException("Unexpected code " + response);
                     }
@@ -659,12 +659,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             });
 
         } else {
-            MyToast.show(this,UIUtils.getString(R.string.file_does_not_exist));
+            MyToast.show(this, UIUtils.getString(R.string.file_does_not_exist));
         }
     }
 
     /**
      * init the client
+     *
      * @return
      */
     @NonNull
@@ -678,6 +679,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
     /**
      * deal with the result of upload
+     *
      * @param activity
      * @param string
      */
@@ -722,16 +724,14 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SYS_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
             try {
-                String imageFilePath = null;
-                Uri uri = getUri(data);//解决方案
-                String[] proj = {MediaStore.Images.Media.DATA};
-                Cursor cursor = managedQuery(uri, proj, null, null, null);
-                if (cursor != null) {
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    imageFilePath = cursor.getString(column_index);// 图片在的路径
+                Uri uri = data.getData();
+                /**
+                 * 解决上传图片找不到路径问题
+                 */
+                String imageFilePath = PhotoPathUtils.getPath(ConsumerEssentialInfoActivity.this, uri);
+                if (TextUtils.isEmpty(imageFilePath)) {
+                    return;
                 }
-
                 Object[] object = pictureProcessingUtil.judgePicture(imageFilePath);
                 File tempFile = new File(imageFilePath);
                 Bitmap _bitmap = (Bitmap) object[1];
