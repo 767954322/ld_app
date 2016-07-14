@@ -77,8 +77,10 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberType)) {
             designerId = mAcsMemberId;
+            ifIsDesiner = true;
         } else {
             designerId = mRecieverUserId;
+            ifIsDesiner = false;
         }
 
     }
@@ -507,7 +509,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
                 wk_cur_sub_node_idi = Integer.valueOf(projectInfo.current_subNode);
 
             if (mIWorkflowDelegate != null) {
-                int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo);
+                int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo,ifIsDesiner);
 
                 if (imageResId > 0) {
                     mWorkflowButton.setVisibility(View.VISIBLE);
@@ -522,6 +524,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     private String mSnapshotFile;
     private String designerId;
     private boolean mIsToolViewOpen;
+    private boolean ifIsDesiner = true;
 
     private RelativeLayout mAudioParentView;
     private RelativeLayout mBottomCustomLayout;
