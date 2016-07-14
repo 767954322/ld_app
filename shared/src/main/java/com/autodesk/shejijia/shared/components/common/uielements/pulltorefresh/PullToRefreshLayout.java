@@ -164,6 +164,8 @@ public class PullToRefreshLayout extends RelativeLayout {
         }
 
     };
+    private RelativeLayout refresh_contain;
+
     ///设置刷新监听.
     public void setOnRefreshListener(OnRefreshListener listener) {
         mListener = listener;
@@ -280,7 +282,7 @@ public class PullToRefreshLayout extends RelativeLayout {
         }
     }
     ///改变状态.
-    private void changeState(int to) {
+    public void changeState(int to) {
         state = to;
         switch (state) {
             case INIT:
@@ -488,6 +490,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         @Override
         protected void onPostExecute(String result) {
+            refresh_contain.setVisibility(View.VISIBLE);
             changeState(REFRESHING);
             // 刷新操作
             if (mListener != null) {
@@ -498,13 +501,19 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         @Override
         protected void onProgressUpdate(Float... values) {
+
+            refresh_contain.setVisibility(View.GONE);
             if (pullDownY > refreshDist)
+
                 //不再走其他下拉，释放流程
-              //  changeState(RELEASE_TO_REFRESH);
+               // changeState(RELEASE_TO_REFRESH);
             requestLayout();
         }
 
     }
+
+
+
 
     /**
      * 自动刷新
@@ -529,6 +538,9 @@ public class PullToRefreshLayout extends RelativeLayout {
     private void initView() {
         // 初始化下拉布局
         pullView = refreshView.findViewById(R.id.pull_icon);
+
+        refresh_contain = (RelativeLayout) refreshView.findViewById(R.id.refresh_contain);
+
         refreshStateTextView = (TextView) refreshView.findViewById(R.id.state_tv);
         refreshingView = refreshView.findViewById(R.id.refreshing_icon);
         refreshStateImageView = refreshView.findViewById(R.id.state_iv);
