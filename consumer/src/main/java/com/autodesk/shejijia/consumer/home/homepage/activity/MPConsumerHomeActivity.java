@@ -154,16 +154,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             if (memberEntity != null) {
                 if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
-                    mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment) getExistFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                    mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment) getExistFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER_DESIGNER);
                     if (mDesignerPersonalCenterFragment == null) {
                         mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
-                        loadMainFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                        loadMainFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER_DESIGNER);
                     }
                 } else {
-                    mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment) getExistFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                    mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment) getExistFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER_CONSUMER);
                     if (mConsumerPersonalCenterFragment == null) {
                         mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
-                        loadMainFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER);
+                        loadMainFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER_CONSUMER);
                     }
                 }
             }
@@ -351,7 +351,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
     private final static String TAG_CASES = "tag_cases";
     private final static String TAG_BID_HALL = "tag_bid_hall";
-    private final static String TAG_PERSONAL_CENTER = "tag_personal_center";
+    private final static String TAG_PERSONAL_CENTER_DESIGNER = "tag_personal_center_designer";
+    private final static String TAG_PERSONAL_CENTER_CONSUMER = "tag_personal_center_consumer";
     private final static int REQUEST_CODE_CHAT = 0;
 
     private RadioButton mDesignerMainRadioBtn;

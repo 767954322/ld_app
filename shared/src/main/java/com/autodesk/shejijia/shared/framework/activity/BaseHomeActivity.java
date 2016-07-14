@@ -43,7 +43,10 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        showFragment(mRadioGroup.getCheckedRadioButtonId());
+        int checkedId = mRadioGroup.getCheckedRadioButtonId();
+        if (checkedId != -1) {
+            showFragment(checkedId);
+        }
     }
 
 
