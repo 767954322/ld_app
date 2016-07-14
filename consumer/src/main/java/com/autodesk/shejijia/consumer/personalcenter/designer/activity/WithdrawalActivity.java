@@ -20,10 +20,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.ResultHashMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -233,15 +231,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                try {
-                    String jsonString = GsonUtil.jsonToString(jsonObject);
-                    ResultHashMap resultHashMap = GsonUtil.jsonToBean(jsonString, ResultHashMap.class);
-                    KLog.json(TAG, jsonString);
-                    updateViewFromData(resultHashMap);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                updateViewFromData();
             }
 
             @Override
@@ -324,10 +314,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     }
 
     //获取数据后操作
-    private void updateViewFromData(ResultHashMap resultHashMap) {
-
-        String value = resultHashMap.getResult();
-        if (value.equals("success")) {
+    private void updateViewFromData() {
             new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
@@ -341,10 +328,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     }
                 }
             }).show();
-        } else {
-            new AlertView(UIUtils.getString(R.string.application_failure), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
-                    AlertView.Style.Alert, null).show();
-        }
     }
 
     @Override

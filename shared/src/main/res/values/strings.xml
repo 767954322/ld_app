@@ -30,6 +30,7 @@
     <string name="designer_bid_detail_realy_immediately_validation">立即验证</string>
     <string name="designer_bid_detail_success">应标成功</string>
     <string name="consume_send_success">选他量房成功</string>
+    <!--<string name="consume_send_success">选他量房成功</string>-->
     <string name="welcome_dialog">需要登陆后，进行后续操作</string>
     <string name="alipay_error">支付失败！</string>
 
@@ -74,7 +75,7 @@
     <string name="send_design_contract">发送设计合同</string>
     <string name="uploaded_deliverable">上传量房交付物</string>
     <string name="in_contract_sent">合同发送中...</string>
-    <string name="agree_and_send_design_first">同意并发送设计首款</string>
+    <string name="agree_and_send_design_first">同意并支付设计首款</string>
     <string name="receiving_room_deliverable">接收量房交付物</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款少于设计总额的80%</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>

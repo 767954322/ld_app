@@ -244,7 +244,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvPhone.setText(mobile_number);
         tvProjectBudget.setText(requirement.getDesign_budget() + "");
         tvc_measure_fitment_budget.setText(requirement.getDecoration_budget());
-        tvc_measure_form_area.setText(requirement.getHouse_area());
+        tvc_measure_form_area.setText(requirement.getHouse_area()+"m²");
 
         tvc_measure_form_address.setText(province_name + " " + city_name + " " + district_name);
         tvc_measure_form_estate.setText(requirement.getCommunity_name());

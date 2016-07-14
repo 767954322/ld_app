@@ -643,7 +643,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 tvc_phone.setText(requirement.getContacts_mobile());
                 tvc_project_budget.setText(requirement.getDesign_budget() + "");
                 tvc_fitment_budget.setText(requirement.getDecoration_budget());
-                tvc_area.setText(requirement.getHouse_area());
+                tvc_area.setText(requirement.getHouse_area()+"m²");
                 tvc_house_type.setText(requirement.getHouse_type());
                 tvc_time.setText(requirement.getPublish_time());
                 tvc_address.setText(requirement.getCity() + requirement.getProvince() + requirement.getDistrict());
