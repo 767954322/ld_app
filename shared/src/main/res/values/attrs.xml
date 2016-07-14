@@ -13,7 +13,7 @@
         <item>田园</item>
         <item>现代</item>
         <item>地中海</item>
-        <item>其他</item>
+        <item>其它</item>
     </string-array>
 
     <string-array name="all">
@@ -29,7 +29,7 @@
         <item>LOFT</item>
         <item>复式</item>
         <item>别墅</item>
-        <item>其他</item>
+        <item>其它</item>
     </string-array>
 
     <string-array name="hall">
@@ -86,7 +86,7 @@
         <item>金融场所</item>
         <item>运动场所</item>
         <item>教育机构</item>
-        <item>其他</item>
+        <item>其它</item>
     </string-array>
 
     <string-array name="mBank">

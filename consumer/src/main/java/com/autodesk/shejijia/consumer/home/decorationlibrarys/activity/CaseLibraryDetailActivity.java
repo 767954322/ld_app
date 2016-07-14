@@ -54,6 +54,15 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         getCaseDetailData(case_id);
+
+        if (caseDetailBean != null){
+
+            return;
+
+        }else {
+
+            mLookMore.setVisibility(View.GONE);
+        }
     }
 
     @Override

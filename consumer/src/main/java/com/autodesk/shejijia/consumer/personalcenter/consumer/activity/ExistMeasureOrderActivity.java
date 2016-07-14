@@ -87,7 +87,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     }
 
     private void showState() {
-        if (!fee.isEmpty()) {
+        if (!fee.isEmpty()&& !fee.equals("0")) {
             double dFee = Double.valueOf(fee);
             DecimalFormat df1 = new DecimalFormat("#####.00");
             tv_measure_fee.setText(df1.format(dFee) + "元");
