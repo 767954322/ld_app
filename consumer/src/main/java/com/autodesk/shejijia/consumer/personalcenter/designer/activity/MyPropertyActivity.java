@@ -10,17 +10,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -55,13 +55,12 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         initMenberEntity();
     }
 
-    private void initMenberEntity(){
+    private void initMenberEntity() {
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             designer_id = memberEntity.getAcs_member_id();
-            mXToken = memberEntity.getHs_accesstoken();
-            getMyPropertyData(mXToken, designer_id);
+            getMyPropertyData(designer_id);
         }
     }
 
@@ -110,10 +109,9 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
     /**
      * 获取我的资产信息
      *
-     * @param X_Token
      * @param designer_id
      */
-    public void getMyPropertyData(String X_Token, String designer_id) {
+    public void getMyPropertyData(String designer_id) {
         MPServerHttpManager.getInstance().getMyPropertyData(designer_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -170,5 +168,4 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
 
     private String designer_id;
     private String amount;
-    private String mXToken;
 }

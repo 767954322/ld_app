@@ -292,7 +292,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tvc_total_cost.setEnabled(false);
             tvc_last_cost.setEnabled(false);
 
-            List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract =mBidders.get(0).getDesign_contract();
+            List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = mBidders.get(0).getDesign_contract();
             if (null == design_contract || design_contract.size() < 1) {
                 return;
             }
@@ -468,6 +468,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             jsonObj.put(Constant.EstablishContractKey.RENDER_MAP, renderMap);
             jsonObj.put(Constant.EstablishContractKey.DESIGN_SKETCH_PLUS, sketchPlus);
 
+            contract_no = tv_contract_number.getText().toString().trim();
             jsonO.put(Constant.EstablishContractKey.CONTRACT_NO, contract_no); // 合同编号
             jsonO.put(Constant.EstablishContractKey.CONTRACT_CHARGE, total_cost); // 设计总额
             jsonO.put(Constant.EstablishContractKey.CONTRACT_FIRST_CHARGE, first_cost); // 设计首款

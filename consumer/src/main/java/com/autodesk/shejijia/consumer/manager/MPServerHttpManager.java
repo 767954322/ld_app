@@ -5,11 +5,11 @@ import android.util.Log;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -752,7 +752,7 @@ public class MPServerHttpManager {
 
     public void sendEstablishContract(final String need_id, final String Member_Type, final String acsToken, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_SEND_ESTABLISH_CONTRACT + need_id;
-        KLog.d(TAG, url);
+        KLog.d(TAG, "url:" + url + "##Authorization:" + addX_Token(xToken) + "##Member-Type:" + Member_Type + "##ACS-Token:" + acsToken);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
 
             @Override
@@ -775,7 +775,8 @@ public class MPServerHttpManager {
      */
     public void agreeMeasureHouse(String need_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_PUT_AGREE_MEASURE_HOUSE + need_id;
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, null, callback) {
+        JSONObject jsonObject = new JSONObject();
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
@@ -996,12 +997,14 @@ public class MPServerHttpManager {
      */
     public void getMyPropertyData(String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MY_PROPERTY + designer_id;
-        KLog.d(TAG, "url:" + url + "\n" + Constant.NetBundleKey.X_TOKEN + "=\"" + addX_Token(xToken + "\""));
+        KLog.d(TAG, "url:" + url + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
+                header.put("X-Token", xToken);
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
                 return header;
             }
         };
@@ -1020,11 +1023,14 @@ public class MPServerHttpManager {
         String url = UrlConstants.URL_TRANSACTION_RECORD + designer_id +
                 "?limit=" + limit +
                 "&offset=" + offset;
+
+        KLog.d(TAG, "url=" + url + "\ndesigner_id=" + designer_id + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put("X-Token", xToken);
                 return header;
             }
         };
@@ -1040,6 +1046,7 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put("X-Token", xToken);
                 return header;
             }
         };
@@ -1088,25 +1095,6 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
-
-    public void beiShuChatThreadData(String need_id, final JSONObject jsonObject,
-                                     OkJsonRequest.OKResponseCallback callback) {
-
-        String url = UrlConstants.URL_BeiShuMeal_Chat + need_id;
-
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, jsonObject, callback) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
-            }
-        };
-        queue.add(okRequest);
-
-    }
-
 
     /**
      * 为X-Token 增加前缀
