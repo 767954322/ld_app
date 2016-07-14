@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
@@ -283,7 +284,8 @@ public class DesignerPersonalCenterFragment extends BaseFragment implements View
                 break;
 
             case R.id.ll_personal_designer_msg_center:/// 消息中心页面.
-                MyToast.show(getActivity(), UIUtils.getString(R.string.functional_development));
+                Intent intent_messagecenter = new Intent(activity, MessageCenterActivity.class);
+                startActivity(intent_messagecenter);
                 break;
         }
     }

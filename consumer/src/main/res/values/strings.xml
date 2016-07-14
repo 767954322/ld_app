@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">设计家</string>
+    <string name="title_messagecenter">消息中心</string>
+    <string name="item_messagecenter_tital">消息中心</string>
 </resources>

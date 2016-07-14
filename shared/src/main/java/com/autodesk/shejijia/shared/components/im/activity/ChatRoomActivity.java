@@ -187,25 +187,18 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     public void onClick(View v) {
         super.onClick(v);
         int i = v.getId();
-        if (i == R.id.chat_selectphoto)
-        {
+        if (i == R.id.chat_selectphoto) {
             onSelectPhotoClicked();
 
-        }
-        else if (i == R.id.chat_takephoto)
-        {
+        } else if (i == R.id.chat_takephoto) {
             onTakeSnapshotClicked();
 
-        }
-        else if (i == R.id.chat_custom_button)
-        {
+        } else if (i == R.id.chat_custom_button) {
             if (mIWorkflowDelegate != null)
-                mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this,wk_cur_sub_node_idi,mAssetId,mRecieverUserId,mRecieverUserName,designerId);
-        }
-        else if (i == R.id.nav_secondary_imageButton)
-        {
+                mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId);
+        } else if (i == R.id.nav_secondary_imageButton) {
             if (mIWorkflowDelegate != null)
-                mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this,mAssetId,mRecieverUserId);
+                mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, mRecieverUserId);
         }
     }
 

@@ -267,4 +267,9 @@ public final class UrlConstants {
      * 北舒套餐聊天入口
      */
     public static final String URL_BeiShuMeal_Chat = MAIN_DESIGN + "/beishu/needs/";
+
+    /**
+     * 消息中心接口
+     */
+    public static final String URL_MESSAGE_CENTER = ALPHA_MP_MAIN + "/member-app/v1/api/member/";
 }

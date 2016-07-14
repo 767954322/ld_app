@@ -23,6 +23,8 @@ import java.util.List;
  */
 public class HoverCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity> {
 
+
+
     public interface OnItemHoverCaseClickListener {
         void OnItemHoverCaseClick(int position);
     }

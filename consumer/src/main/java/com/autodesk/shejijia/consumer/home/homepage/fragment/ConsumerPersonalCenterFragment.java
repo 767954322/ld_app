@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
@@ -27,7 +28,6 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 
@@ -90,7 +90,8 @@ public class ConsumerPersonalCenterFragment extends BaseFragment implements View
                 break;
 
             case R.id.rl_personal_b_collect:    /// 消息中心.
-                MyToast.show(getActivity(), UIUtils.getString(R.string.functional_development));
+                Intent intent_messagecenter = new Intent(activity, MessageCenterActivity.class);
+                startActivity(intent_messagecenter);
                 break;
 
             case R.id.rl_personal_b_setting:    /// 查看更多设置.

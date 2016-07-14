@@ -114,7 +114,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         super.onResume();
         refresh();
 
-        if(mRecieverUserName != null)
+        if (mRecieverUserName != null)
             setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName));
     }
 
@@ -406,7 +406,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         markThreadAsRead();
         retrieveThreadMessagesWithOffset(mThreadId, 0);
 
-        if (!mAssetId.equals("0") && mAssetId != null) {
+        if (mAssetId != null && !"0".equals(mAssetId)) {
             getProjectInfo();
         } else {
             changeConsumerUI();
