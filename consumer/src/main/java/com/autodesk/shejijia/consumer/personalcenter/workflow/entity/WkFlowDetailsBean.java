@@ -23,44 +23,6 @@ public class WkFlowDetailsBean implements Serializable {
     }
 
     public static class RequirementEntity implements Serializable {
-        @Override
-        public String toString() {
-            return "RequirementEntity{" +
-                    "after_bidding_status='" + after_bidding_status + '\'' +
-                    ", beishu_thread_id=" + beishu_thread_id +
-                    ", bidder_count=" + bidder_count +
-                    ", bidding_status=" + bidding_status +
-                    ", city='" + city + '\'' +
-                    ", click_number=" + click_number +
-                    ", community_name='" + community_name + '\'' +
-                    ", consumer_mobile='" + consumer_mobile + '\'' +
-                    ", consumer_name='" + consumer_name + '\'' +
-                    ", contacts_mobile='" + contacts_mobile + '\'' +
-                    ", contacts_name='" + contacts_name + '\'' +
-                    ", contract=" + contract +
-                    ", custom_string_status='" + custom_string_status + '\'' +
-                    ", decoration_budget='" + decoration_budget + '\'' +
-                    ", decoration_style='" + decoration_style + '\'' +
-                    ", delivery=" + delivery +
-                    ", design_budget=" + design_budget +
-                    ", detail_desc='" + detail_desc + '\'' +
-                    ", district='" + district + '\'' +
-                    ", end_day='" + end_day + '\'' +
-                    ", house_area='" + house_area + '\'' +
-                    ", house_type='" + house_type + '\'' +
-                    ", is_beishu='" + is_beishu + '\'' +
-                    ", is_public='" + is_public + '\'' +
-                    ", living_room='" + living_room + '\'' +
-                    ", needs_id='" + needs_id + '\'' +
-                    ", province='" + province + '\'' +
-                    ", publish_time='" + publish_time + '\'' +
-                    ", room='" + room + '\'' +
-                    ", toilet='" + toilet + '\'' +
-                    ", wk_template_id='" + wk_template_id + '\'' +
-                    ", bidders=" + bidders +
-                    '}';
-        }
-
         private String after_bidding_status;
         private String beishu_thread_id;
         private int bidder_count;
@@ -354,6 +316,9 @@ public class WkFlowDetailsBean implements Serializable {
         public BiddersEntity getOrderBidder() {
 
             List<BiddersEntity> bidders = this.getBidders();
+            if (null == bidders || bidders.size() < 1) {
+                return null;
+            }
             WkFlowDetailsBean.RequirementEntity.BiddersEntity biddersEntity = bidders.get(0);
             return biddersEntity;
         }
