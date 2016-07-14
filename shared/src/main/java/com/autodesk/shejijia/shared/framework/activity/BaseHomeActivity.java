@@ -6,49 +6,47 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.im.manager.MPMemberUnreadCountManager;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BaseHomeActivity extends NavigationBarActivity implements RadioGroup.OnCheckedChangeListener {
+
     @Override
     protected void initView() {
         super.initView();
         mTvMsgNumber = (TextView) findViewById(R.id.tv_msg_number);
         mDesignerSessionRadioBtn = (RadioButton) findViewById(getDesignerSessionRadioBtnId());
         mRadioGroup = (RadioGroup) findViewById(getRadioGroupId());
-
-        addRadioButtons(mDesignerSessionRadioBtn);
     }
 
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        int checkedId = mRadioGroup.getCheckedRadioButtonId();
+        if (checkedId != -1) {
+            showFragment(checkedId);
+        }
     }
 
 
@@ -73,7 +71,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     protected void onResume() {
         super.onResume();
 
-        if (isActiveFragment(MPThreadListFragment.class)) {
+        if (isActiveFragment(TAG_IM)) {
             getFileThreadUnreadCount();
         }
 
@@ -101,8 +99,23 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.onDestroy();
     }
 
-    protected void addRadioButtons(RadioButton button) {
-        mRadioButtons.add(button);
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (needLoginOnRadiobuttonTap(checkedId)) {
+            startRegisterOrLoginActivity(checkedId);
+        } else {
+            showFragment(checkedId);
+        }
+    }
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        if (isActiveFragment(TAG_IM))
+            openFileThreadActivity();
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 
     protected RadioButton getRadioButtonById(int id) {
@@ -115,20 +128,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return button;
     }
 
-
-    protected void initAndAddFragments(int index) {
-
-        if (mMPThreadListFragment == null && index == getDesignerSessionRadioBtnId()) {
-            MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-            mMPThreadListFragment = new MPThreadListFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString(MPThreadListFragment.MEMBERID, memberEntity.getAcs_member_id());
-            bundle.putString(MPThreadListFragment.MEMBERTYPE, memberEntity.getMember_type());
-            mMPThreadListFragment.setArguments(bundle);
-            loadMainFragment(mMPThreadListFragment);
-        }
-    }
-
     protected boolean needLoginOnRadiobuttonTap(int id) {
         if (id == getDesignerSessionRadioBtnId())
             return true;
@@ -136,6 +135,24 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             return false;
     }
 
+    protected void initAndAddFragments(int index) {
+        if (index == getDesignerSessionRadioBtnId()) {
+            mMPThreadListFragment = (MPThreadListFragment) getExistFragment(mMPThreadListFragment, TAG_IM);
+            if (mMPThreadListFragment == null) {
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                mMPThreadListFragment = new MPThreadListFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(MPThreadListFragment.MEMBERID, memberEntity.getAcs_member_id());
+                bundle.putString(MPThreadListFragment.MEMBERTYPE, memberEntity.getMember_type());
+                mMPThreadListFragment.setArguments(bundle);
+                loadMainFragment(mMPThreadListFragment, TAG_IM);
+            }
+        }
+    }
+
+    protected Fragment getExistFragment(Fragment cachedFragment, String tag) {
+        return cachedFragment == null ? getFragmentManager().findFragmentByTag(tag) : cachedFragment;
+    }
 
     protected Fragment getFragmentByButtonId(int id) {
         Fragment f = null;
@@ -145,41 +162,25 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return f;
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-        setRadioButtonChecked(checkedId);
-
-        if (needLoginOnRadiobuttonTap(checkedId))
-            startRegisterOrLoginActivity(checkedId);
-    }
-
-
-    public boolean isDestroyed() {
-        return isDestroyed;
-    }
-
     protected void showFragment(int index) {
         initAndAddFragments(index);
-        Fragment f = getFragmentByButtonId(index);
-        showFragment(f.getClass());
+        Fragment currentFragment = getFragmentByButtonId(mCurrentTabIndex);
+        Fragment nextFragment = getFragmentByButtonId(index);
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        fragmentTransaction.show(nextFragment);
+        fragmentTransaction.commit();
+        mCurrentTabIndex = index;
         configureNavigationBar(index);
     }
 
-    protected void loadMainFragment(Fragment fragment) {
-        mFragmentArrayList.add(fragment);
+    protected void loadMainFragment(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(getMainContentId(), fragment);
+        fragmentTransaction.add(getMainContentId(), fragment, tag);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public Resources getResources() {
-        Resources res = super.getResources();
-        Configuration config = new Configuration();
-        config.setToDefaults();
-        res.updateConfiguration(config, res.getDisplayMetrics());
-        return res;
     }
 
     protected void configureNavigationBar(int index) {
@@ -194,18 +195,10 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         }
     }
 
-
-    @Override
-    protected void rightNavButtonClicked(View view) {
-        if (isActiveFragment(MPThreadListFragment.class))
-            openFileThreadActivity();
-    }
-
-    protected boolean isActiveFragment(Class clazz) {
-        Fragment fragment = getFragment(clazz);
+    protected boolean isActiveFragment(String tag) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(tag);
         return (fragment != null && fragment.isVisible());
     }
-
 
     protected int getDesignerSessionRadioBtnId() {
         return -1;
@@ -228,49 +221,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         startActivity(intent);
     }
 
-
-    private void setRadioButtonChecked(int id) {
-        RadioButton checkedButton = getRadioButtonById(id);
-
-        for (int i = 0; i < mRadioButtons.size(); ++i) {
-            RadioButton button = mRadioButtons.get(i);
-            if (checkedButton == button)
-                button.setTextColor(UIUtils.getColor(R.color.bg_tab_pressed));
-            else
-                button.setTextColor(UIUtils.getColor(R.color.bg_tab_normal));
-        }
-    }
-
-
-    private void showFragment(Class clazz) {
-        //This is kind of a hack here to avoid  getting recreated but
-        //still gets refreshed when needed
-        MPThreadListFragment threadListFragment = null;
-        BaseFragment f = null;
-
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
-                fragmentTransaction.show(fragment);
-
-                if (fragment.getClass().equals(MPThreadListFragment.class))
-                    threadListFragment = (MPThreadListFragment) fragment;
-                else
-                    f = (BaseFragment) fragment;
-            } else
-                fragmentTransaction.hide(fragment);
-        }
-        fragmentTransaction.commit();
-
-        if (threadListFragment != null) {
-            threadListFragment.onFragmentShown();
-        }
-        if (f != null) {
-            f.onFragmentShown();
-        }
-    }
-
-
     private void registerBroadcastReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
@@ -283,23 +233,11 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if (action.equalsIgnoreCase(BroadCastInfo.RECEVIER_RECEIVERMESSAGE)) {
-                if (isActiveFragment(MPThreadListFragment.class))
+                if (isActiveFragment(TAG_IM))
                     getFileThreadUnreadCount();
             }
         }
     };
-
-    private Fragment getFragment(Class clazz) {
-        Fragment currentFragment = null;
-
-        for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
-                currentFragment = fragment;
-                break;
-            }
-        }
-        return currentFragment;
-    }
 
     private void startRegisterOrLoginActivity(int radioBtnId) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -325,7 +263,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
                     if (unread_message_count != 0) {
                         String badge = MPChatUtility.getFormattedBadgeString(unread_message_count);
 
-                        if (isActiveFragment(MPThreadListFragment.class))
+                        if (isActiveFragment(TAG_IM))
                             showBadgeOnNavBar(badge);
                     } else
                         setVisibilityForNavButton(ButtonType.BADGE, false);
@@ -338,17 +276,15 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
     }
 
-    private RadioButton mDesignerSessionRadioBtn;
-    private List<RadioButton> mRadioButtons = new ArrayList<RadioButton>();
+    private final static String TAG_IM = "tag_im";
+    protected int mCurrentTabIndex = -1;
 
+    private RadioButton mDesignerSessionRadioBtn;
     private RadioGroup mRadioGroup;
     private TextView mTvMsgNumber;
 
-    private boolean isDestroyed = false;
-
     private MPThreadListFragment mMPThreadListFragment;
 
-    private List<Fragment> mFragmentArrayList = new ArrayList<>();
-
+    private boolean isDestroyed = false;
     private MPMemberUnreadCountManager mMemberUnreadCountManager;
 }

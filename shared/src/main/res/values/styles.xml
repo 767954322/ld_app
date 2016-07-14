@@ -65,9 +65,8 @@
     </style>
     <!-- <item name="android:button">@null</item> -->
     <style name="main_tab_bottom">
-
         <item name="android:textSize">@dimen/size_13</item>
-        <item name="android:textColor">@color/bg_tab_normal</item>
+        <item name="android:textColor">@color/home_radiobtn_text_color</item>
         <item name="android:layout_marginTop">@dimen/size_2</item>
         <item name="android:padding">@dimen/size_2</item>
         <item name="android:drawablePadding">@dimen/size_2</item>
