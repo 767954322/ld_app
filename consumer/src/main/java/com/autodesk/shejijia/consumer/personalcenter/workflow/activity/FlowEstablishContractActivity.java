@@ -18,19 +18,13 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.ContractNo;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DesignContractBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
-import com.autodesk.shejijia.shared.components.common.utility.DbUtils;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
@@ -38,6 +32,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.DbUtils;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
@@ -47,6 +47,7 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.List;
 
 /**
  * @author Malidong .
@@ -232,8 +233,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.uploaded_deliverable);
                 }
-
-                String contractData = mCurrentWorkFlowDetail.getRequirement().getBidders().get(0).getDesign_contract().getContract_data();
+                List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = mCurrentWorkFlowDetail.getRequirement().getBidders().get(0).getDesign_contract();
+                if (null == design_contract || design_contract.size() < 1) {
+                    return;
+                }
+                WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
+                String contractData = designContractEntity.getContract_data();
                 String str = contractData.toString().replace("@jr@", "\""); /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
                 DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);
                 String zip = designContractBean.getZip();
@@ -241,7 +246,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 zip = (TextUtils.isEmpty(zip) || "null".equals(zip)) ? "" : zip;
                 email = (TextUtils.isEmpty(email) || "null".equals(email)) ? "" : email;
 
-                tv_contract_number.setText(mBidders.get(0).getDesign_contract().getContract_no());
+                tv_contract_number.setText(designContractEntity.getContract_no());
                 tvc_consumer_name.setText(designContractBean.getName());
                 tvc_consumer_phone.setText(designContractBean.getMobile());
                 tvc_consumer_postcode.setText(zip);
@@ -252,14 +257,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 tvc_render_map.setText(designContractBean.getRender_map());
                 tvc_sketch_plus.setText(designContractBean.getDesign_sketch_plus());
 
-                WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity design_contract = mBidders.get(0).getDesign_contract();
-                if (null == design_contract) {
-                    return;
-                }
-                tvc_total_cost.setText(design_contract.getContract_charge());
-                tvc_first_cost.setText(design_contract.getContract_first_charge());
-                Double totalCost = Double.parseDouble(design_contract.getContract_charge());
-                Double firstCost = Double.parseDouble(design_contract.getContract_first_charge());
+                tvc_total_cost.setText(designContractEntity.getContract_charge());
+                tvc_first_cost.setText(designContractEntity.getContract_first_charge());
+                Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
+                Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
                 DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
                 tvc_last_cost.setText(df.format(totalCost - firstCost));
             }
@@ -291,10 +292,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tvc_total_cost.setEnabled(false);
             tvc_last_cost.setEnabled(false);
 
-            if (mBidders.get(0).getDesign_contract() == null) {
+            List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = mBidders.get(0).getDesign_contract();
+            if (null == design_contract || design_contract.size() < 1) {
                 return;
             }
-            String contractData = mBidders.get(0).getDesign_contract().getContract_data();
+            WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
+            String contractData = designContractEntity.getContract_data();
             final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
             DesignContractBean designContractBean = new Gson().fromJson(str, DesignContractBean.class);
             String zip = designContractBean.getZip();
@@ -302,7 +305,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             zip = TextUtils.isEmpty(zip) ? "" : zip;
             email = TextUtils.isEmpty(email) ? "" : email;
 
-            tv_contract_number.setText(mBidders.get(0).getDesign_contract().getContract_no());
+            tv_contract_number.setText(designContractEntity.getContract_no());
             tvc_consumer_name.setText(designContractBean.getName());
             tvc_consumer_phone.setText(designContractBean.getMobile());
             tvc_consumer_postcode.setText(zip);
@@ -312,10 +315,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tvc_design_sketch.setText(designContractBean.getDesign_sketch());
             tvc_render_map.setText(designContractBean.getRender_map());
             tvc_sketch_plus.setText(designContractBean.getDesign_sketch_plus());
-            tvc_total_cost.setText(mBidders.get(0).getDesign_contract().getContract_charge());
-            tvc_first_cost.setText(mBidders.get(0).getDesign_contract().getContract_first_charge());
-            Double totalCost = Double.parseDouble(mBidders.get(0).getDesign_contract().getContract_charge());
-            Double firstCost = Double.parseDouble(mBidders.get(0).getDesign_contract().getContract_first_charge());
+            tvc_total_cost.setText(designContractEntity.getContract_charge());
+            tvc_first_cost.setText(designContractEntity.getContract_first_charge());
+            Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
+            Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
             tvc_last_cost.setText(df.format(totalCost - firstCost));
 
@@ -465,6 +468,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             jsonObj.put(Constant.EstablishContractKey.RENDER_MAP, renderMap);
             jsonObj.put(Constant.EstablishContractKey.DESIGN_SKETCH_PLUS, sketchPlus);
 
+            contract_no = tv_contract_number.getText().toString().trim();
             jsonO.put(Constant.EstablishContractKey.CONTRACT_NO, contract_no); // 合同编号
             jsonO.put(Constant.EstablishContractKey.CONTRACT_CHARGE, total_cost); // 设计总额
             jsonO.put(Constant.EstablishContractKey.CONTRACT_FIRST_CHARGE, first_cost); // 设计首款

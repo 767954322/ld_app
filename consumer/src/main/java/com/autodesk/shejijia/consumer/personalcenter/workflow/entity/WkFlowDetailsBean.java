@@ -62,7 +62,7 @@ public class WkFlowDetailsBean implements Serializable {
         }
 
         private String after_bidding_status;
-        private Object beishu_thread_id;
+        private String beishu_thread_id;
         private int bidder_count;
         private boolean bidding_status;
         private String city;
@@ -77,7 +77,7 @@ public class WkFlowDetailsBean implements Serializable {
         private String decoration_budget;
         private String decoration_style;
         private Object delivery;
-        private Object design_budget;
+        private String design_budget;
         private String detail_desc;
         private String district;
         private String end_day;
@@ -99,7 +99,7 @@ public class WkFlowDetailsBean implements Serializable {
             this.after_bidding_status = after_bidding_status;
         }
 
-        public void setBeishu_thread_id(Object beishu_thread_id) {
+        public void setBeishu_thread_id(String beishu_thread_id) {
             this.beishu_thread_id = beishu_thread_id;
         }
 
@@ -159,7 +159,7 @@ public class WkFlowDetailsBean implements Serializable {
             this.delivery = delivery;
         }
 
-        public void setDesign_budget(Object design_budget) {
+        public void setDesign_budget(String design_budget) {
             this.design_budget = design_budget;
         }
 
@@ -227,7 +227,7 @@ public class WkFlowDetailsBean implements Serializable {
             return after_bidding_status;
         }
 
-        public Object getBeishu_thread_id() {
+        public String getBeishu_thread_id() {
             return beishu_thread_id;
         }
 
@@ -358,55 +358,15 @@ public class WkFlowDetailsBean implements Serializable {
             return biddersEntity;
         }
 
-
         public static class BiddersEntity implements Serializable {
-            @Override
-            public String toString() {
-                return "BiddersEntity{" +
-                        "current_actions=" + current_actions +
-                        ", declaration='" + declaration + '\'' +
-                        ", design_contract=" + design_contract +
-                        ", designer_id=" + designer_id +
-                        ", join_time='" + join_time + '\'' +
-                        ", measure_time='" + measure_time + '\'' +
-                        ", measurement_fee='" + measurement_fee + '\'' +
-                        ", payment=" + payment +
-                        ", refused_time=" + refused_time +
-                        ", selected_time='" + selected_time + '\'' +
-                        ", status='" + status + '\'' +
-                        ", uid='" + uid + '\'' +
-                        ", wk_cur_node_id='" + wk_cur_node_id + '\'' +
-                        ", wk_cur_sub_node_id='" + wk_cur_sub_node_id + '\'' +
-                        ", wk_current_step_id='" + wk_current_step_id + '\'' +
-                        ", wk_id='" + wk_id + '\'' +
-                        ", orders=" + orders +
-                        ", wk_next_possible_sub_node_ids=" + wk_next_possible_sub_node_ids +
-                        ", wk_steps=" + wk_steps +
-                        '}';
-            }
-
             private Object current_actions;
             private String declaration;
-            /**
-             * contract_charge : 5000
-             * contract_create_date : 1458005615165
-             * contract_data : [{name:mali},{file_count:10}]
-             * contract_first_charge : 4000
-             * contract_no : LWEC-16031500001
-             * contract_status : 0
-             * contract_template_url : www.baidu.com
-             * contract_type : 0
-             * contract_update_date : null
-             * designer_id : 20730187
-             */
-
-            private DesignContractEntity design_contract;
             private int designer_id;
             private String join_time;
             private String measure_time;
             private String measurement_fee;
-            private Object payment;
-            private Object refused_time;
+            private PaymentBean payment;
+            private String refused_time;
             private String selected_time;
             private String status;
             private String uid;
@@ -414,29 +374,59 @@ public class WkFlowDetailsBean implements Serializable {
             private String wk_cur_sub_node_id;
             private String wk_current_step_id;
             private String wk_id;
-            /**
-             * designer_id : 20730187
-             * order_line_no : 920
-             * order_no : 644
-             * order_status : 5
-             * order_type : 1
-             */
 
+            private List<DesignContractEntity> design_contract;
             private List<OrdersEntity> orders;
-            /**
-             * id : 52
-             * name : open_3d_design
-             */
-
             private List<WkNextPossibleSubNodeIdsEntity> wk_next_possible_sub_node_ids;
-            /**
-             * files : null
-             * status : 1
-             * thread_id : TBE24OXILSR0KZR
-             * wk_step_id : 16011
-             */
-
             private List<WkStepsEntity> wk_steps;
+
+            public static class PaymentBean implements Serializable {
+                private String create_date;
+                private String measurement_fee;
+                private String paid_fee;
+                private String total_fee;
+                private String unpaid_fee;
+
+                public String getCreate_date() {
+                    return create_date;
+                }
+
+                public void setCreate_date(String create_date) {
+                    this.create_date = create_date;
+                }
+
+                public String getMeasurement_fee() {
+                    return measurement_fee;
+                }
+
+                public void setMeasurement_fee(String measurement_fee) {
+                    this.measurement_fee = measurement_fee;
+                }
+
+                public String getPaid_fee() {
+                    return paid_fee;
+                }
+
+                public void setPaid_fee(String paid_fee) {
+                    this.paid_fee = paid_fee;
+                }
+
+                public String getTotal_fee() {
+                    return total_fee;
+                }
+
+                public void setTotal_fee(String total_fee) {
+                    this.total_fee = total_fee;
+                }
+
+                public String getUnpaid_fee() {
+                    return unpaid_fee;
+                }
+
+                public void setUnpaid_fee(String unpaid_fee) {
+                    this.unpaid_fee = unpaid_fee;
+                }
+            }
 
             public void setCurrent_actions(Object current_actions) {
                 this.current_actions = current_actions;
@@ -446,7 +436,7 @@ public class WkFlowDetailsBean implements Serializable {
                 this.declaration = declaration;
             }
 
-            public void setDesign_contract(DesignContractEntity design_contract) {
+            public void setDesign_contract(List<DesignContractEntity> design_contract) {
                 this.design_contract = design_contract;
             }
 
@@ -466,11 +456,11 @@ public class WkFlowDetailsBean implements Serializable {
                 this.measurement_fee = measurement_fee;
             }
 
-            public void setPayment(Object payment) {
+            public void setPayment(PaymentBean payment) {
                 this.payment = payment;
             }
 
-            public void setRefused_time(Object refused_time) {
+            public void setRefused_time(String refused_time) {
                 this.refused_time = refused_time;
             }
 
@@ -522,7 +512,7 @@ public class WkFlowDetailsBean implements Serializable {
                 return declaration;
             }
 
-            public DesignContractEntity getDesign_contract() {
+            public List<DesignContractEntity> getDesign_contract() {
                 return design_contract;
             }
 
@@ -542,11 +532,11 @@ public class WkFlowDetailsBean implements Serializable {
                 return measurement_fee;
             }
 
-            public Object getPayment() {
+            public PaymentBean getPayment() {
                 return payment;
             }
 
-            public Object getRefused_time() {
+            public String getRefused_time() {
                 return refused_time;
             }
 
@@ -685,13 +675,13 @@ public class WkFlowDetailsBean implements Serializable {
             }
 
             public static class OrdersEntity implements Serializable {
-                private int designer_id;
+                private String designer_id;
                 private String order_line_no;
                 private String order_no;
                 private String order_status;
                 private String order_type;
 
-                public void setDesigner_id(int designer_id) {
+                public void setDesigner_id(String designer_id) {
                     this.designer_id = designer_id;
                 }
 
@@ -711,7 +701,7 @@ public class WkFlowDetailsBean implements Serializable {
                     this.order_type = order_type;
                 }
 
-                public int getDesigner_id() {
+                public String getDesigner_id() {
                     return designer_id;
                 }
 
@@ -733,11 +723,11 @@ public class WkFlowDetailsBean implements Serializable {
             }
 
             public static class WkNextPossibleSubNodeIdsEntity implements Serializable {
-                private int id;
+                private int actionId;
                 private String name;
 
-                public void setId(int id) {
-                    this.id = id;
+                public void setId(int actionId) {
+                    this.actionId = actionId;
                 }
 
                 public void setName(String name) {
@@ -745,7 +735,7 @@ public class WkFlowDetailsBean implements Serializable {
                 }
 
                 public int getId() {
-                    return id;
+                    return actionId;
                 }
 
                 public String getName() {

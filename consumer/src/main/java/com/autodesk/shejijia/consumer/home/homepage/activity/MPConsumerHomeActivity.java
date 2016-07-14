@@ -262,9 +262,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             mDesignerIndentListBtn.setVisibility(View.VISIBLE);
-        } else {
             TextView textView = (TextView) findViewById(R.id.tv_gron_msg_number);
             textView.setVisibility(View.VISIBLE);
+        } else {
+            TextView textView = (TextView) findViewById(R.id.tv_gron_msg_number);
+            textView.setVisibility(View.GONE);
             mDesignerIndentListBtn.setVisibility(View.GONE);
         }
     }

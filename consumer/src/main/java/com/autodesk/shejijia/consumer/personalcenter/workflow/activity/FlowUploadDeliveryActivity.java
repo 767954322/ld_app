@@ -96,7 +96,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         getDeliveredFile(needs_id, designer_id);
 
         KLog.d(TAG, "needs_id:" + needs_id + "##designer_id:" + designer_id);
-//        1578860　　20737093
 
     }
 

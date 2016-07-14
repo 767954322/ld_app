@@ -20,34 +20,33 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
+import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 
 import org.json.JSONObject;
 
@@ -73,10 +72,10 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     /**
      * 得到当前普通订单，方便DecorationActivity调用
      */
-    public static final Fragment getInstance(DecorationListEntity.NeedsListEntity needsListEntity) {
+    public static final Fragment getInstance(DecorationListEntity.NeedsListEntity NeedsListEntity) {
         Fragment fragment = new DecorationFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY, needsListEntity);
+        bundle.putSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY, NeedsListEntity);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -120,7 +119,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         if (mNeedsListEntity == null) {
             return;
         }
-        bidders = (ArrayList<DecorationListEntity.NeedsListEntity.BiddersEntity>) mNeedsListEntity.getBidders();
+        bidders = (ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean>) mNeedsListEntity.getBidders();
         wk_template_id = mNeedsListEntity.getWk_template_id();
 
         getJsonFileReader();
@@ -186,16 +185,16 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     /**
      * 应标设计师列表适配器
      */
-    private class MyDecorationAdapter extends CommonAdapter<DecorationListEntity.NeedsListEntity.BiddersEntity> {
-        ArrayList<DecorationListEntity.NeedsListEntity.BiddersEntity> biddersEntities;
+    private class MyDecorationAdapter extends CommonAdapter<DecorationListEntity.NeedsListEntity.BiddersBean> {
+        ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean> biddersEntities;
 
-        public MyDecorationAdapter(Context context, ArrayList<DecorationListEntity.NeedsListEntity.BiddersEntity> biddersEntities, int layoutId) {
+        public MyDecorationAdapter(Context context, ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean> biddersEntities, int layoutId) {
             super(context, biddersEntities, layoutId);
             this.biddersEntities = biddersEntities;
         }
 
         @Override
-        public void convert(final CommonViewHolder holder, DecorationListEntity.NeedsListEntity.BiddersEntity bidder) {
+        public void convert(final CommonViewHolder holder, DecorationListEntity.NeedsListEntity.BiddersBean bidder) {
 
             final String designer_id = bidder.getDesigner_id();
             final String bidderUid = bidder.getUid();
@@ -352,7 +351,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     String memType = memberEntity.getMember_type();
                     String designer_thread_id = mNeedsListEntity.getBidders().get(mPosition).getDesign_thread_id();
                     String userName = mNeedsListEntity.getConsumer_name();
-                    String needs_id = mNeedsListEntity.getNeeds_id()+"";
+                    String needs_id = mNeedsListEntity.getNeeds_id() + "";
 
                     if (TextUtils.isEmpty(designer_thread_id)) {
                         designer_thread_id = "";
@@ -522,7 +521,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
         if (bidders != null && bidders.size() > 0) {
             ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
-            for (DecorationListEntity.NeedsListEntity.BiddersEntity bidder : bidders) {
+            for (DecorationListEntity.NeedsListEntity.BiddersBean bidder : bidders) {
                 if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
                     mWk_cur_node_id_array.add(Integer.parseInt(bidder.getWk_cur_sub_node_id()));
                 }
@@ -728,7 +727,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                         bidders.get(mPosition).setWk_cur_sub_node_id(mwk_cur_sub_node_id);
                     }
                     boolean rmTag = false;
-                    for (DecorationListEntity.NeedsListEntity.BiddersEntity biddersEntity : bidders) {
+                    for (DecorationListEntity.NeedsListEntity.BiddersBean biddersEntity : bidders) {
                         /// TODO .
                         /// 如果有人支付了首款，就把没有支付量房费的应标者从当前列表中删除 .
                         String wk_cur_sub_node_id = biddersEntity.getWk_cur_sub_node_id();
@@ -828,5 +827,5 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private MyDecorationAdapter mDecorationAdapter;
     private MemberEntity mMemberEntity;
     private DecorationListEntity.NeedsListEntity mNeedsListEntity;
-    private ArrayList<DecorationListEntity.NeedsListEntity.BiddersEntity> bidders;
+    private ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean> bidders;
 }

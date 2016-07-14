@@ -8,25 +8,25 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
+import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -216,7 +216,7 @@ public class OrderCommonFragment extends BaseFragment {
             String livingRoom_Room_Toilet = room_convert + living_room_convert + toilet_convert;
             String address = province_name + city_name + district_name;
             String wk_template_id = orderListEntity.getWk_template_id();
-            List<OrderCommonEntity.OrderListEntity.BiddersEntity> bidders = orderListEntity.getBidders();
+            List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
             if (bidders != null && bidders.size() > 0) {
                 wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
                 holder.setText(R.id.tv_designer_order_state, MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id));

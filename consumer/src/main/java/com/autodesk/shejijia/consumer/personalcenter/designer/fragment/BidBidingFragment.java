@@ -106,8 +106,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
             MyBidBean.BiddingNeedsListEntity.BidderEntity bidderEntity = biddingNeedsListEntity.getBidder();
             if (bidderEntity != null) {
                 status = bidderEntity.getStatus();
-                String isBeiShu = biddingNeedsListEntity.getIs_beishu();
-                if (BE_BEING.equals(status) && IS_BEISHU.equals(isBeiShu)) {
+                if (BE_BEING.equals(status)) {
                     beBeingList.add(biddingNeedsListEntity);
                 }
             }
@@ -303,7 +302,6 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
 
     /// 变量.
     private static final String BE_BEING = "0";
-    private static final String IS_BEISHU = "1";
     private String status;
     private boolean isFirstIn = true;
 

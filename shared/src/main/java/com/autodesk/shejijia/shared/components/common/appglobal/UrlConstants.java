@@ -21,7 +21,7 @@ public final class UrlConstants {
     public static final String RUNNING_ALPHA = "RUNNING_ALPHA";
     /// 正式(PRODUCTION)环境  .
     public static final String RUNNING_PRODUCTION = "RUNNING_PRODUCTION";
-    /// DEV环境 .
+    /// alpha dev境 .
     public static final String RUNNING_DEV = "RUNNING_DEV";
 
     /**
@@ -49,8 +49,10 @@ public final class UrlConstants {
 
     /// 登录 .
     public static final String MP_MAIN_LOGIN_PATH = "http://121.69.19.182:8100/SSO_login.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGIN_PATH_UAT = "http://uat331www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-        public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
+    //    public static final String MP_MAIN_LOGIN_PATH_UAT = "http://uat331www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
+    //    public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
+    public static final String MP_MAIN_LOGIN_PATH_UAT = "http://uat-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
+    public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://alpha-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGIN_PATH_PRODUCTION = "http://www.shejijia.com/sso/SSO_login.html?caller=shejijia&browser_type=android";
     public static final String MP_MAIN_LOGIN_PATH_DEV = "http://dev-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
 
@@ -72,12 +74,14 @@ public final class UrlConstants {
     public static final String QA_MP_MAIN = "http://192.168.6.25:8080";
 
     /// UAT = UAT331环境地址 .
-    public static final String UAT_MP_MAIN = "http://uat331api.gdfcx.net:8080";
+//    public static final String UAT_MP_MAIN = "http://uat331api.gdfcx.net:8080";
+    public static final String UAT_MP_MAIN = "http://uat-api.gdfcx.net:8080";
 
     /// ALPHA = UAT415环境地址 .
-    public static final String ALPHA_MP_MAIN = "http://uat415api.gdfcx.net";
+//    public static final String ALPHA_MP_MAIN = "http://uat415api.gdfcx.net";
+    public static final String ALPHA_MP_MAIN = "http://alpha-api.gdfcx.net";
 
-    /// dev环境 .
+    /// alpha-dev环境 .
     public static final String DEV_MP_MAIN = "http://dev-api.gdfcx.net";
 
     /// PRODUCTION .
@@ -123,7 +127,7 @@ public final class UrlConstants {
     /**
      * 实名认证.
      */
-    public static final String URL_POST_REAL_NAME = MAIN_MEMBER + "/realnames/members/";
+    public static final String URL_POST_REAL_NAME = MAIN_MEMBER + "/designers/";
 
     /**
      * 设计师应标.
@@ -170,7 +174,7 @@ public final class UrlConstants {
     /**
      * 修改上传设计师头像.
      */
-    public static final String URL_PUT_AMEND_DESIGNER_INFO_PHOTO = MAIN_MEMBER + "/members/updateavatar"; //
+    public static final String URL_PUT_AMEND_DESIGNER_INFO_PHOTO = MAIN_MEMBER + "/members/avatars"; //
 
     /**
      * 是否是实名认证.

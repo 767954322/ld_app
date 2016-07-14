@@ -349,9 +349,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                mAgreeResponseBean = GsonUtil.jsonToBean(userInfo, AgreeResponseBean.class);
-
-                updateViewFromData();
+                AgreeResponseBean mAgreeResponseBean = GsonUtil.jsonToBean(userInfo, AgreeResponseBean.class);
+                updateViewFromData(mAgreeResponseBean);
             }
 
             @Override
@@ -364,7 +363,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         MPServerHttpManager.getInstance().agreeResponseBid(jsonObject, okResponseCallback);
     }
 
-    private void updateViewFromData() {
+    private void updateViewFromData(AgreeResponseBean mAgreeResponseBean) {
         CustomProgress.cancelDialog();
 
         List<AgreeResponseBean.BiddersEntity> bidders = mAgreeResponseBean.getBidders();
@@ -442,7 +441,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private LinearLayout ll_measure_form_style;
 
     private TimePickerView pvTime;
-    private AgreeResponseBean mAgreeResponseBean;
     private AlertView mCommonAlertView;
     private AlertView mAgreeMeasureHouseSuccessAlertView;
     private AlertView mAgreeMeasureHouseFailAlertView;

@@ -23,8 +23,7 @@
             style="@style/main_tab_bottom"
             android:checked="false"
             android:drawableTop="@drawable/selector_hall"
-            android:text="@string/tab_hall"
-            android:visibility="visible"/>
+            android:text="@string/tab_hall"/>
 
         <RadioButton
             android:id="@+id/designer_session_radio_btn"
@@ -52,6 +51,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/tv_gron_msg_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -60,7 +60,7 @@
             android:id="@+id/tv_msg_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/size_6"
+            android:layout_marginLeft="16dp"
             android:background="@drawable/redsharp"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
@@ -75,11 +75,5 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/tv_gron_msg_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:visibility="gone"/>
     </LinearLayout>
 </RelativeLayout>
