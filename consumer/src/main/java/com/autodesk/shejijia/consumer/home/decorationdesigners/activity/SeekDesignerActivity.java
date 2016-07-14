@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -61,7 +62,6 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         setTitleForNavbar(UIUtils.getString(R.string.find_designer));
         mSeekDesignerAdapter = new SeekDesignerAdapter(this, mDesignerListEntities);
         mListView.setAdapter(mSeekDesignerAdapter);
-        getFindDesignerData(0, LIMIT, 0);
     }
 
     @Override
@@ -208,6 +208,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         super.onWindowFocusChanged(hasFocus);
         // 第一次进入自动刷新
         if (isFirstIn) {
+            //changeState
             mPullToRefreshLayout.autoRefresh();
             isFirstIn = false;
         }
