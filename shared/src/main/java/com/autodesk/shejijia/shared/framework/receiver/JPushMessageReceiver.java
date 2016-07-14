@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -15,7 +16,6 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
 import org.json.JSONArray;
@@ -139,9 +139,15 @@ public class JPushMessageReceiver extends BroadcastReceiver {
                     .setSmallIcon(R.mipmap.icon_launcher_label)
                     .setContentTitle(title)
                     .setContentText(contentText);
+
+            Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.push_notification);
+
+            if(sound != null)
+                builder.setSound(sound);
+
             nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = builder.build();
-            notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL | Notification.DEFAULT_SOUND;
+            notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
             nm.notify(notificationId, notification);
         }
     }
