@@ -11,23 +11,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
@@ -36,6 +29,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -321,6 +320,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 break;
             case R.id.tvc_measure_form_address:
                 getPCDAddress();
+
                 break;
             default:
                 break;
@@ -329,7 +329,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
     private boolean checkMeasureArea(String area) {
 
-        String[] split = area.split(".");
+        String[] split = area.split("\\.");
         if (null != split) {
 
             if (split.length == 1) {
@@ -349,7 +349,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     }
                 }
             }
-
         }
         return false;
     }
