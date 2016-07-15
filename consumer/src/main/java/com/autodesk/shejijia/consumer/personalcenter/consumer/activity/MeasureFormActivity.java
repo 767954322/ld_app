@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -218,7 +219,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
                 boolean bName = name.matches("^[^ ]+[\\s\\S]*[^ ]+$"); /// 中间可以有空格 .
                 boolean bMobile = mobileNumber.matches(RegexUtil.PHONE_REGEX);
-                boolean bArea = houseArea.matches(RegexUtil.AREA_REGEX);
+                boolean bArea = checkMeasureArea(houseArea);
+
                 boolean bAddress = communityName.matches(RegexUtil.ADDRESS_REGEX);
 
                 if (name.length() < 2 || name.length() > 20 || !bName) {
@@ -323,6 +325,33 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             default:
                 break;
         }
+    }
+
+    private boolean checkMeasureArea(String area) {
+
+        String[] split = area.split(".");
+        if (null != split) {
+
+            if (split.length == 1) {
+                if (split[0].length() <= 4) {
+                    if (area.matches(RegexUtil.AREA_REGEX)) {
+                        return true;
+                    }
+                }
+
+            }
+            if (split.length == 2) {
+
+                if (split[0].length() <= 4 && split[1].length() <= 2) {
+
+                    if (area.matches(RegexUtil.AREA_REGEX)) {
+                        return true;
+                    }
+                }
+            }
+
+        }
+        return false;
     }
 
 
@@ -643,7 +672,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 tvc_phone.setText(requirement.getContacts_mobile());
                 tvc_project_budget.setText(requirement.getDesign_budget() + "");
                 tvc_fitment_budget.setText(requirement.getDecoration_budget());
-                tvc_area.setText(requirement.getHouse_area()+"m²");
+                tvc_area.setText(requirement.getHouse_area() + "m²");
                 tvc_house_type.setText(requirement.getHouse_type());
                 tvc_time.setText(requirement.getPublish_time());
                 tvc_address.setText(requirement.getCity() + requirement.getProvince() + requirement.getDistrict());
@@ -677,7 +706,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
                 KLog.d(TAG, jsonObject);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.consume_send_success), null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.choose_ta_room_success), null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
                         AlertView.Style.Alert, null).show();
                 CustomProgress.cancelDialog();
             }

@@ -29,7 +29,7 @@
     <string name="designer_bid_detail_realy_name">请先到个人中心完成实名认证</string>
     <string name="designer_bid_detail_realy_immediately_validation">立即验证</string>
     <string name="designer_bid_detail_success">应标成功</string>
-    <string name="consume_send_success">选他量房成功</string>
+    <string name="consume_send_success">选它量房成功</string>
     <!--<string name="consume_send_success">选他量房成功</string>-->
     <string name="welcome_dialog">需要登陆后，进行后续操作</string>
     <string name="alipay_error">支付失败！</string>
@@ -424,6 +424,8 @@
     <string name="requirements">发布设计需求</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
     <string name="please_input_correct_area">请填写正确的面积（整数部分不超过四位，小数不大于两位）</string>
+    <string name="please_input_correct_area_point">整数部分不允许全部为0</string>
+
     <string name="please_select_form">请选择户型</string>
     <string name="please_select_addresses">请选择地址</string>
     <string name="please_enter_correct_address">请输入正确的小区地址（长度为二到三十二位且不包含特殊字符）</string>
@@ -439,6 +441,8 @@
     <string name="please_fill_your_name">请正确填写姓名</string>
     <string name="please_fill_phone_number">请填写正确的电话号</string>
     <string name="please_fill_housing_area">请正确填写面积（整数位不超过四位，小数不超过两位）</string>
+    <string name="please_fill_housing_area_point">整数部位不允许全为0</string>
+
     <string name="please_fill_detailed_address">请正确填写小区名称</string>
     <string name="data_send">数据发送中...</string>
     <string name="demand_house_area">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
