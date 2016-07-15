@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
+        layout="@layout/view_navigation_header"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -82,6 +82,7 @@
             android:hint="@string/please_enter_your_phone"
             android:maxLength="11"
             android:phoneNumber="true"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_14"/>
     </LinearLayout>
 
@@ -124,6 +125,7 @@
             android:background="@color/no_color"
             android:gravity="center_vertical"
             android:hint="@string/demand_please_project_types"
+            android:textColor="@color/black"
             android:textColorHint="#999"
             android:textSize="@dimen/font_14"/>
 
@@ -172,6 +174,7 @@
             android:ems="10"
             android:hint="@string/demand_import_area"
             android:inputType="numberDecimal"
+            android:textColor="@color/black"
             android:textColorHint="#999"
             android:textSize="@dimen/font_14"/>
 
@@ -223,6 +226,7 @@
             android:gravity="center_vertical"
             android:hint="@string/demand_design_budget_hint"
             android:phoneNumber="true"
+            android:textColor="@color/black"
             android:textColorHint="#999"
             android:textSize="@dimen/font_14"/>
 
@@ -279,6 +283,7 @@
             android:gravity="center_vertical"
             android:hint="@string/demand_budget_hint"
             android:phoneNumber="true"
+            android:textColor="@color/black"
             android:textColorHint="#999"
             android:textSize="@dimen/font_14"/>
 
@@ -338,7 +343,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:hint="@string/issue_room"/>
+                android:hint="@string/issue_room"
+                android:textColor="@color/black"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -385,6 +391,7 @@
             android:layout_weight="1"
             android:background="@color/no_color"
             android:hint="@string/demand_please_style"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_14"/>
 
         <ImageView
@@ -422,6 +429,7 @@
             android:gravity="center_vertical"
             android:hint="@string/demand_please_address"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_14"/>
 
         <ImageView
@@ -467,6 +475,7 @@
             android:ellipsize="end"
             android:hint="@string/demand_please_specific_address"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:textSize="@dimen/font_14"/>
     </LinearLayout>
 

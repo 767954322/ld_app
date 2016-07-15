@@ -9,10 +9,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.OnWheelChangedListener;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.WheelView;
@@ -22,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.tools.wheel.adapters.Provi
 import com.autodesk.shejijia.shared.components.common.tools.wheel.model.CityModel;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.model.DistrictModel;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.model.ProvinceModel;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,16 +77,16 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = new Dialog(getActivity(), R.style.ShareDialogV2);
-//        Dialog dialog = new Dialog(getActivity(), R.style.ShareDialog);
-//        Window window = dialog.getWindow();
-//        window.setWindowAnimations(R.style.mystyle);  //添加动画
-//        WindowManager.LayoutParams wl = window.getAttributes();
-//        wl.x = 0;
-//        wl.y = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-//        // 以下这两句是为了保证按钮可以水平满屏
-//        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-//        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//        Dialog dialog = new Dialog(getActivity(), R.style.ShareDialogV2);
+        Dialog dialog = new Dialog(getActivity(), R.style.ShareDialog);
+        Window window = dialog.getWindow();
+        window.setWindowAnimations(R.style.mystyle);  //添加动画
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+        // 以下这两句是为了保证按钮可以水平满屏
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         return dialog;
     }
 
