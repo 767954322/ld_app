@@ -55,14 +55,7 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
         super.initData(savedInstanceState);
         getCaseDetailData(case_id);
 
-        if (caseDetailBean != null){
 
-            return;
-
-        }else {
-
-            mLookMore.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -114,14 +107,13 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 String info = GsonUtil.jsonToString(jsonObject);
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
-                KLog.json(TAG, info);
-
                 updateViewFromData();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                mLookMore.setVisibility(View.GONE);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryDetailActivity.this,
                         AlertView.Style.Alert, null).show();
             }
