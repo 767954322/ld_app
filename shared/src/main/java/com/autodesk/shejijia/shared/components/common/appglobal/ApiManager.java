@@ -12,7 +12,12 @@ public class ApiManager {
     /**
      * 控制运行环境
      * 切换为：UrlConstants.*,*为以下可选值
-     * RUNNING_DEVELOP,RUNNING_QA,RUNNING_UAT,RUNNING_ALPHA,RUNNING_PRODUCTION,RUNNING_DEV
+     * RUNNING_DEVELOP：开发环境
+     * RUNNING_QA：QA环境
+     * RUNNING_UAT：UAT331环境
+     * RUNNING_ALPHA：Alpha环境
+     * RUNNING_PRODUCTION：正式(PRODUCTION)环境
+     * RUNNING_DEV ：alpha dev境 .
      */
     public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_ALPHA;
 

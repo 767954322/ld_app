@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -256,8 +257,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onResponse(JSONObject jsonObject) {
                 try {
                     CustomProgress.cancelDialog();
+                    String jsonToString = GsonUtil.jsonToString(jsonObject);
+                    Log.d("jsonToString", jsonToString);
                     is_public_amend = jsonObject.getString(IS_PUBLIC);
-                    mStopDemandSuccessAlertView.show();
+//                 Log.d("is_public_amend", is_public_amend);
+//                 mStopDemandSuccessAlertView.show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
