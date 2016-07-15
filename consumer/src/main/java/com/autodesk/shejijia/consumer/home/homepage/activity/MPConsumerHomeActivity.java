@@ -48,19 +48,46 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         //hide navigation left button
         setVisibilityForNavButton(ButtonType.LEFT, false);
 
-        mDesignerMainRadioBtn = (RadioButton) findViewById(getDesignerMainRadioBtnId());
         designer_main_radio_group = (RadioGroup) findViewById(R.id.designer_main_radio_group);
         designer_main_radio_btn = (RadioButton) findViewById(R.id.designer_main_radio_btn);
+
+        mDesignerMainRadioBtn = (RadioButton) findViewById(getDesignerMainRadioBtnId());
         mDesignerIndentListBtn = (RadioButton) findViewById(R.id.designer_indent_list_btn);
-        mDesigner_session_radio_btn = (RadioButton) findViewById(R.id.designer_session_radio_btn);
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
+
+        addRadioButtons(mDesignerMainRadioBtn);
+        addRadioButtons(mDesignerIndentListBtn);
+        addRadioButtons(mDesignerPersonCenterRadioBtn);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-        showDesignerOrConsumerRadioGroup();
+        if (savedInstanceState != null)
+        {
+            // retrieve the fragment handle from fragmentmanager
+            mUserHomeFragment = (UserHomeFragment)getFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
+            if (mUserHomeFragment != null)
+                mFragmentArrayList.add(mUserHomeFragment);
+
+            mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment)getFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
+            if (mDesignerPersonalCenterFragment != null)
+                mFragmentArrayList.add(mDesignerPersonalCenterFragment);
+
+            mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment)getFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
+            if (mConsumerPersonalCenterFragment != null)
+                mFragmentArrayList.add(mConsumerPersonalCenterFragment);
+
+            mBidHallFragment = (BidHallFragment)getFragmentManager().findFragmentByTag(BID_FRAGMENT_TAG);
+            if (mBidHallFragment != null)
+                mFragmentArrayList.add(mBidHallFragment);
+        }
+
         super.initData(savedInstanceState);
+        showDesignerOrConsumerRadioGroup();
+
+        if (savedInstanceState == null)
+            showFragment(getDesignerMainRadioBtnId());
     }
 
 
@@ -78,10 +105,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                     break;
             }
         }
-//        else {
-//            mDesignerMainRadioBtn.performClick();
-//            showDesignerOrConsumerRadioGroup();
-//        }
 
         super.onResume();
     }
@@ -90,20 +113,20 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     protected void onRestart() {
         super.onRestart();
         showDesignerOrConsumerRadioGroup();
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (memberEntity == null) {
-            //未登录状态，会自动进入案例fragment
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        //登陆设计师时，会进入；
+        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+            designer_main_radio_group.check(getCurrentCheckedRadioButtonId());
+
+        }
+        //登陆消费者时，会进入
+        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
+            designer_main_radio_group.check(getCurrentCheckedRadioButtonId());
+        }
+
+        //未登录状态，会自动进入案例fragment
+        if (mMemberEntity == null) {
             designer_main_radio_btn.setChecked(true);
-        } else {
-            switch (memberEntity.getMember_type()) {
-                case Constant.UerInfoKey.DESIGNER_TYPE:
-                case Constant.UerInfoKey.CONSUMER_TYPE:
-                    designer_main_radio_group.check(mCurrentTabIndex);
-                    break;
-                default:
-                    // TODO other types
-                    break;
-            }
         }
     }
 
@@ -135,36 +158,33 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             return false;
     }
 
+
     @Override
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
-        if (index == getDesignerMainRadioBtnId()) {
-            mUserHomeFragment = (UserHomeFragment) getExistFragment(mUserHomeFragment, TAG_CASES);
-            if (mUserHomeFragment == null) {
-                mUserHomeFragment = new UserHomeFragment();
-                loadMainFragment(mUserHomeFragment, TAG_CASES);
-            }
-        } else if (index == R.id.designer_indent_list_btn) {
-            mBidHallFragment = (BidHallFragment) getExistFragment(mBidHallFragment, TAG_BID_HALL);
-            if (mBidHallFragment == null) {
-                mBidHallFragment = new BidHallFragment();
-                loadMainFragment(mBidHallFragment, TAG_BID_HALL);
-            }
-        } else if (index == R.id.designer_person_center_radio_btn) {
+
+        if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
+            mUserHomeFragment = new UserHomeFragment();
+            loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
+        }
+
+        if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
+            mBidHallFragment = new BidHallFragment();
+            loadMainFragment(mBidHallFragment, BID_FRAGMENT_TAG);
+        }
+
+        if (index == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-            if (memberEntity != null) {
-                if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
-                    mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment) getExistFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER_DESIGNER);
-                    if (mDesignerPersonalCenterFragment == null) {
-                        mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
-                        loadMainFragment(mDesignerPersonalCenterFragment, TAG_PERSONAL_CENTER_DESIGNER);
-                    }
-                } else {
-                    mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment) getExistFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER_CONSUMER);
-                    if (mConsumerPersonalCenterFragment == null) {
-                        mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
-                        loadMainFragment(mConsumerPersonalCenterFragment, TAG_PERSONAL_CENTER_CONSUMER);
-                    }
+
+            if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+                if (mDesignerPersonalCenterFragment == null) {
+                    mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
+                    loadMainFragment(mDesignerPersonalCenterFragment, DESIGNER_PERSONAL_FRAGMENT_TAG);
+                }
+            } else {
+                if (mConsumerPersonalCenterFragment == null) {
+                    mConsumerPersonalCenterFragment = new ConsumerPersonalCenterFragment();
+                    loadMainFragment(mConsumerPersonalCenterFragment, CONSUMER_PERSONAL_FRAGMENT_TAG);
                 }
             }
         }
@@ -190,7 +210,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
     @Override
     protected void leftNavButtonClicked(View view) {
-        if (isActiveFragment(TAG_BID_HALL))
+        if (isActiveFragment(BidHallFragment.class))
             mBidHallFragment.handleFilterOption();
     }
 
@@ -236,15 +256,24 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         super.secondaryNavButtonClicked(view);
 
         Intent intent = new Intent(MPConsumerHomeActivity.this, CaptureQrActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_CHAT);
+        startActivityForResult(intent, CHAT);
 
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+        if (checkedId == getDesignerMainRadioBtnId())
+            showFragment(getDesignerMainRadioBtnId());
+
+        super.onCheckedChanged(group, checkedId);
     }
 
     protected int getDesignerMainRadioBtnId() {
         return R.id.designer_main_radio_btn;
     }
 
-    protected int getDesignerSessionRadioBtnId() {
+    protected int getIMButtonId() {
         return R.id.designer_session_radio_btn;
     }
 
@@ -337,7 +366,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
         if (resultCode == Activity.RESULT_OK && data != null) {
             switch (requestCode) {
-                case REQUEST_CODE_CHAT:
+                case CHAT:
 
                     Bundle bundle = data.getExtras();
                     String scanResult = bundle.getString(Constant.QrResultKey.SCANNER_RESULT);
@@ -349,21 +378,21 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
     }
 
-    private final static String TAG_CASES = "tag_cases";
-    private final static String TAG_BID_HALL = "tag_bid_hall";
-    private final static String TAG_PERSONAL_CENTER_DESIGNER = "tag_personal_center_designer";
-    private final static String TAG_PERSONAL_CENTER_CONSUMER = "tag_personal_center_consumer";
-    private final static int REQUEST_CODE_CHAT = 0;
-
+    private final int CHAT = 0;
     private RadioButton mDesignerMainRadioBtn;
     private RadioButton mDesignerPersonCenterRadioBtn;
     private RadioButton mDesignerIndentListBtn;
     private RadioButton designer_main_radio_btn;
-    private RadioButton mDesigner_session_radio_btn;
     private RadioGroup designer_main_radio_group;
 
     private UserHomeFragment mUserHomeFragment;
     private BidHallFragment mBidHallFragment;
     private DesignerPersonalCenterFragment mDesignerPersonalCenterFragment;
     private ConsumerPersonalCenterFragment mConsumerPersonalCenterFragment;
+
+    private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
+    private static final String BID_FRAGMENT_TAG = "BID_FRAGMENT_TAG";
+    private static final String DESIGNER_PERSONAL_FRAGMENT_TAG = "DESIGNER_FRAGMENT_TAG";
+    private static final String CONSUMER_PERSONAL_FRAGMENT_TAG = "CONSUMER_FRAGMENT_TAG";
+
 }
