@@ -215,6 +215,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
     private TextView tv_flow_last_design_should_first;
     private Button btn_flow_last_design_send;
 
+    protected DesignerInfoDetails designerInfoList;
     private boolean isLock = true; // 是否锁定按键
 
 }

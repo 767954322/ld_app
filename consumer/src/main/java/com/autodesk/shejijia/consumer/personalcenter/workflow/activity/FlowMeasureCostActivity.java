@@ -187,6 +187,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
     private TextView tv_house_cost;
     private Button btn_pay_measure;
 
+    protected DesignerInfoDetails designerInfoList;
     private boolean payOk = false;
     private boolean isLock = true; // 是否锁定按键
 }

@@ -7,7 +7,6 @@ import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -165,7 +164,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected String wk_cur_sub_node_id;
     protected String needs_id;
 
-    protected DesignerInfoDetails designerInfoList;
+//    protected DesignerInfoDetails designerInfoList;
     protected MemberEntity memberEntity;
     protected WkFlowDetailsBean mCurrentWorkFlowDetail;
     protected WkFlowDetailsBean.RequirementEntity requirement;

@@ -812,6 +812,7 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void agreeResponseBid(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, UrlConstants.URL_AGREE_RESPONSE_BID, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
