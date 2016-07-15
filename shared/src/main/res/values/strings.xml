@@ -503,6 +503,7 @@
     <string name="autonym_audit_failure">审核失败</string>
     <string name="data_sent_please_patience_wait_audit">资料已送出，请耐心等待审核!</string>
     <string name="not_real_name_authentication">未实名认证</string>
+    <string name="desiner_not_real_name_authentication">设计师未通过认证</string>
     <string name="information_has_been_submitted">资料已提交</string>
     <string name="information_review_please_patient">资料正在审核中，请耐心等待！</string>
     <string name="audit_not_pass">审核未通过</string>

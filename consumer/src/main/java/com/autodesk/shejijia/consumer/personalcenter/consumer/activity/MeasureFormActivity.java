@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -55,7 +57,8 @@ import java.util.Locale;
  * @brief 量房表单页面 .
  */
 
-public class MeasureFormActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener {
+public class MeasureFormActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
+
 
     @Override
     protected int getLayoutResId() {
@@ -100,12 +103,19 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
     }
 
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        if (flow_state == 1) {
+
+            getRealNameAuditStatus(designer_id, hs_uid);
+
+        }
+
         setTitleForNavbar(UIUtils.getString(R.string.demand_measure_house_form));
         tvc_time.setFocusable(false);
-        showState(needs_id, designer_id);
+//      showState(needs_id, designer_id);
         getUserId();
         getConsumerInfoData(memberId);
         /// designBudget .
@@ -123,6 +133,36 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
 
+    /**
+     * 是否进行了实名认证
+     *
+     * @param designer_id
+     * @param hs_uid
+     */
+    public void getRealNameAuditStatus(String designer_id, String hs_uid) {
+        MPServerHttpManager.getInstance().getRealNameAuditStatus(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String auditInfo = GsonUtil.jsonToString(jsonObject);
+                RealName realName = GsonUtil.jsonToBean(auditInfo, RealName.class);
+                String audit_status = realName.getAudit_status();
+                if (!"2".equals(audit_status)) {
+                    if (MeasureFormActivity.this != null) {
+                        showAlertView(UIUtils.getString(R.string.desiner_not_real_name_authentication));
+                    }
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                if (MeasureFormActivity.this != null) {
+                    showAlertView(UIUtils.getString(R.string.desiner_not_real_name_authentication));
+                }
+            }
+        });
+    }
+
     private void getUserId() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null) {
@@ -139,27 +179,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         }
     }
 
-    private void showState(String needs_id, String designer_id) {
-        /**
-         * @brief complete flow scheme .
-         */
-        if (flow_state == 1) {
-            CustomProgress.show(MeasureFormActivity.this, "", false, null);
-            getOrderDetailsInfo(needs_id, designer_id);
-            tvc_name.setEnabled(false);
-            tvc_phone.setEnabled(false);
-            tvc_project_budget.setEnabled(false);
-            tvc_fitment_budget.setEnabled(false);
-            tvc_area.setEnabled(false);
-            tvc_house_type.setEnabled(false);
-            tvc_time.setEnabled(false);
-            tvc_address.setEnabled(false);
-            tvc_estate.setEnabled(false);
-            ll_style.setVisibility(View.GONE);
-            ll_type.setVisibility(View.GONE);
-            btn_send_form.setVisibility(View.GONE);
-        }
-    }
 
     @Override
     protected void initListener() {
@@ -624,49 +643,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     /**
-     * @param needs_id
-     * @param designer_id
-     * @brief 获取个人信息详情
-     */
-    public void getOrderDetailsInfo(String needs_id, String designer_id) {
-        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
-                String userInfo = GsonUtil.jsonToString(jsonObject);
-                wkFlowDetailsBean = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
-                WkFlowDetailsBean.RequirementEntity requirement = wkFlowDetailsBean.getRequirement();
-                if (requirement == null) {
-                    return;
-                }
-                tvc_name.setText(requirement.getContacts_name());
-                tvc_phone.setText(requirement.getContacts_mobile());
-                tvc_project_budget.setText(requirement.getDesign_budget() + "");
-                tvc_fitment_budget.setText(requirement.getDecoration_budget());
-                tvc_area.setText(requirement.getHouse_area()+"m²");
-                tvc_house_type.setText(requirement.getHouse_type());
-                tvc_time.setText(requirement.getPublish_time());
-                tvc_address.setText(requirement.getCity() + requirement.getProvince() + requirement.getDistrict());
-                tvc_estate.setText(requirement.getCommunity_name());
-                List<WkFlowDetailsBean.RequirementEntity.BiddersEntity> bidders = requirement.getBidders();
-                if (null != bidders && bidders.size() > 0) {
-                    String measurement_fee = bidders.get(0).getMeasurement_fee();
-                    measurement_fee = UIUtils.getNodataIfEmpty(measurement_fee);
-                    tv_measure_fee.setText(measurement_fee);
-                }
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.cancelDialog();
-            }
-        };
-        MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, designer_id, okResponseCallback);
-    }
-
-
-    /**
      * )
      * 提交量房数据
      *
@@ -677,8 +653,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
                 KLog.d(TAG, jsonObject);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.consume_send_success), null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.consume_send_success), null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                showAlertView(UIUtils.getString((R.string.consume_send_success)));
                 CustomProgress.cancelDialog();
             }
 
@@ -695,7 +672,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
     private void showAlertView(String content) {
         new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
-                AlertView.Style.Alert, null).show();
+                AlertView.Style.Alert, MeasureFormActivity.this).show();
     }
 
     ///控件.
@@ -755,4 +732,79 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
+
+    @Override
+    public void onItemClick(Object object, int position) {
+//        if (object == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
+//            CustomProgress.show(this, "", false, null);
+//            sendStopDemand(needs_id, 1);
+//        }
+
+        MeasureFormActivity.this.finish();
+    }
+
+
+    //    private void showState(String needs_id, String designer_id) {
+//        /**
+//         * @brief complete flow scheme .
+//         */
+//        if (flow_state == 1) {
+//            CustomProgress.show(MeasureFormActivity.this, "", false, null);
+//            getOrderDetailsInfo(needs_id, designer_id);
+//            tvc_name.setEnabled(false);
+//            tvc_phone.setEnabled(false);
+//            tvc_project_budget.setEnabled(false);
+//            tvc_fitment_budget.setEnabled(false);
+//            tvc_area.setEnabled(false);
+//            tvc_house_type.setEnabled(false);
+//            tvc_time.setEnabled(false);
+//            tvc_address.setEnabled(false);
+//            tvc_estate.setEnabled(false);
+//            ll_style.setVisibility(View.GONE);
+//            ll_type.setVisibility(View.GONE);
+//            btn_send_form.setVisibility(View.GONE);
+//        }
+//    }
+
+    //    /**
+//     * @param needs_id
+//     * @param designer_id
+//     * @brief 获取个人信息详情
+//     */
+//    public void getOrderDetailsInfo(String needs_id, String designer_id) {
+//        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                CustomProgress.cancelDialog();
+//                String userInfo = GsonUtil.jsonToString(jsonObject);
+//                wkFlowDetailsBean = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
+//                WkFlowDetailsBean.RequirementEntity requirement = wkFlowDetailsBean.getRequirement();
+//                if (requirement == null) {
+//                    return;
+//                }
+//                tvc_name.setText(requirement.getContacts_name());
+//                tvc_phone.setText(requirement.getContacts_mobile());
+//                tvc_project_budget.setText(requirement.getDesign_budget() + "");
+//                tvc_fitment_budget.setText(requirement.getDecoration_budget());
+//                tvc_area.setText(requirement.getHouse_area() + "m²");
+//                tvc_house_type.setText(requirement.getHouse_type());
+//                tvc_time.setText(requirement.getPublish_time());
+//                tvc_address.setText(requirement.getCity() + requirement.getProvince() + requirement.getDistrict());
+//                tvc_estate.setText(requirement.getCommunity_name());
+//                List<WkFlowDetailsBean.RequirementEntity.BiddersEntity> bidders = requirement.getBidders();
+//                if (null != bidders && bidders.size() > 0) {
+//                    String measurement_fee = bidders.get(0).getMeasurement_fee();
+//                    measurement_fee = UIUtils.getNodataIfEmpty(measurement_fee);
+//                    tv_measure_fee.setText(measurement_fee);
+//                }
+//            }
+//
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                MPNetworkUtils.logError(TAG, volleyError);
+//                CustomProgress.cancelDialog();
+//            }
+//        };
+//        MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, designer_id, okResponseCallback);
+//    }
 }
