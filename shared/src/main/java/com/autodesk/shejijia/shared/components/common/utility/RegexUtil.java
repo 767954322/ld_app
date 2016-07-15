@@ -26,7 +26,9 @@ public class RegexUtil {
     /**
      * 量房面积校验： 整数四位，小数2位，且不能为0
      */
-    public static final String AREA_REGEX = "^[0-9]{1,4}?(\\.[0-9]{0,2})?$";
+//    public static final String AREA_REGEX = "^[0-9]{1,4}?(\\.[0-9]{0,2})?$";
+
+    public static final String AREA_REGEX = "^(?!0{2,})(?:\\d{1,4}(\\.\\d+)?|10000)$";
 
     /**
      * 量房费验证：整数位可以有0
