@@ -329,7 +329,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
     private boolean checkMeasureArea(String area) {
 
-        String[] split = area.split(".");
+        String[] split = area.split("\\.");
         if (null != split) {
 
             if (split.length == 1) {
