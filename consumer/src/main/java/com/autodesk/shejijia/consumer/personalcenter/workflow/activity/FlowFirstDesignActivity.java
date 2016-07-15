@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -83,7 +84,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
             public void onResponse(JSONObject jsonObject) {
                 jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoList = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-
+                KLog.json("FlowFirstDesignActivity", jsonString);
                 upDataViewFromInfoData();
             }
 
@@ -93,10 +94,8 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowFirstDesignActivity.this,
                         AlertView.Style.Alert, null).show();
             }
-
         });
     }
-
 
     private void upDataViewFromData() {
         List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = mCurrentWorkFlowDetail.getRequirement().getBidders().get(0).getDesign_contract();
@@ -163,6 +162,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
+                Log.d("FlowFirstDesignActivity", userInfo);
                 KLog.json(TAG, userInfo);
 
                 AliPayBean aliPayBean = GsonUtil.jsonToBean(userInfo, AliPayBean.class);
@@ -216,5 +216,6 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     private TextView tv_flow_first_design_deduct_measure_cost;
     private Button btn_flow_first_design_send;
 
+    protected DesignerInfoDetails designerInfoList;
     private boolean isLock = true; // 是否锁定按键
 }

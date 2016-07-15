@@ -11,20 +11,21 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.AgreeResponseBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.DbUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +88,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     public void onItemClick(Object object, int position) {
         if (object == mRefuseMeasureHouseAlertView && position == 1) {
             CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
-            agreeRefusedHouse(needs_id);
+            refusedHouse(needs_id);
         }
         if (object == mAgreeResponseBidSuccessAlertView && position == 0) {
             Intent intent = new Intent();
@@ -322,7 +323,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
      * @param needs_id
      * @brief 设计师拒绝量房 .
      */
-    public void agreeRefusedHouse(String needs_id) {
+    public void refusedHouse(String needs_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -369,6 +370,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         List<AgreeResponseBean.BiddersEntity> bidders = mAgreeResponseBean.getBidders();
         if (bidders != null && bidders.size() > 0) {
             wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
+            KLog.d("FlowMeasureFormActivity", wk_cur_sub_node_id);
         }
         mAgreeResponseBidSuccessAlertView.show();
     }

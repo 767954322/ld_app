@@ -47,6 +47,7 @@ import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -540,10 +541,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
             /**
              * is_public=1,隐藏修改需求
              */
-            approveState = UIUtils.getString(R.string.canceled);
             mTvEndDay.setText(UIUtils.getString(R.string.end_day));
             mIbnDecorationModify.setVisibility(View.GONE);
-            mIbnDecorationModify.setClickable(false);
         }
         mTvBidState.setText(approveState);
     }
@@ -723,6 +722,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 case WK_FLOW_STATE:
                 case BIDING_STATE:
                     String mwk_cur_sub_node_id = data.getStringExtra(Constant.BundleKey.BUNDLE_SUB_NODE_ID);
+                    KLog.d("FlowMeasureFormActivity", mwk_cur_sub_node_id);
                     if (!TextUtils.isEmpty(mwk_cur_sub_node_id)) {
                         bidders.get(mPosition).setWk_cur_sub_node_id(mwk_cur_sub_node_id);
                     }
