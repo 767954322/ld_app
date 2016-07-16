@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,9 +18,11 @@ import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.ConsumerPersonalCenterFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerPersonalCenterFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -34,6 +37,9 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
@@ -218,10 +224,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
             case R.id.designer_session_radio_btn:  /// 会話聊天.
 
-                Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(AdskApplication.getInstance().getMemberEntity().getMember_type());
+
+                String acs_Member_Type = AdskApplication.getInstance().getMemberEntity().getMember_type();
+                Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
                 if (ifIsDesiner) {
-                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
-                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
+                    String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
+                    String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
+                    ifIsLohoDesiner(acs_Member_Id, hs_uid);
+//                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+//                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
                 } else {
                     setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
@@ -229,6 +240,36 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             default:
                 break;
         }
+    }
+
+    private void ifIsLohoDesiner(String desiner_id, String hs_uid) {
+
+        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String info = GsonUtil.jsonToString(jsonObject);
+                Log.d("test", "gumenghao ");
+                try {
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
+                    int is_loho = jsonObject1.getInt("is_loho");
+                    //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
+                    if (2 == is_loho) {
+                        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+                        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d("test", e.getMessage().toString());
+                }
+
+            }
+        });
+
+
     }
 
     @Override

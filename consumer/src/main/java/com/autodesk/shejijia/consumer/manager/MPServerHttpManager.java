@@ -869,6 +869,26 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 判断是否是乐屋设计师
+     * @param designers
+     * @param hs_uid
+     * @param callback
+     */
+    public void ifIsLohoDesiner(String designers, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
+        //http://alpha-api.gdfcx.net/member-app/v1/api/designers/20735915
+        String url = UrlConstants.ALPHA_MP_MAIN+"/member-app/v1/api/designers/"+designers;
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 获取与装修项目相关联的3D方案列表
      *
      * @param callback
