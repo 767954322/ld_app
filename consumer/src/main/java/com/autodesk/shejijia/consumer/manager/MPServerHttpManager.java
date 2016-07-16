@@ -211,7 +211,7 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-//                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
+                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
                 return header;
             }
         };
