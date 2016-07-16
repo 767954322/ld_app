@@ -241,7 +241,7 @@
     <string name="choose_designer_online_payment_first">选择设计师线上支付设计首款</string>
     <string name="designers_pay_design_first">已与设计师支付设计首款</string>
     <string name="choose_designer_online_payment_balance_payment">选择设计师线上支付设计尾款</string>
-    <string name="payment_designers_make_design">已于设计师支付设计尾款</string>
+    <string name="payment_designers_make_design">已与设计师支付设计尾款</string>
     <string name="receive_designer_send_design_deliverables">请接收设计师发送的设计交付物</string>
     <string name="you_receiving_designer_sent_design_deliverables">您已接收设计师发送的设计交付物</string>
     <string name="receiving_designer_sent_design_deliverables">接收设计师发送的设计交付物</string>
@@ -507,6 +507,7 @@
     <string name="autonym_audit_failure">审核失败</string>
     <string name="data_sent_please_patience_wait_audit">资料已送出，请耐心等待审核!</string>
     <string name="not_real_name_authentication">未实名认证</string>
+    <string name="desiner_not_real_name_authentication">设计师未通过认证</string>
     <string name="information_has_been_submitted">资料已提交</string>
     <string name="information_review_please_patient">资料正在审核中，请耐心等待！</string>
     <string name="audit_not_pass">审核未通过</string>

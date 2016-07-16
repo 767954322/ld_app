@@ -106,7 +106,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                  * 支付量房费
                  */
                 case 1:
-                    if (wk_template_idi == 1 || wk_template_idi == 2) { // 应标
+                    if (wk_template_idi == 1) {     // 应标
                         if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
                             view.setClickable(false);
                             /// 应标状态：
@@ -121,8 +121,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                             mcIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                             startActivity(mcIntent);
                         }
-                    }/* else { // 自选或北舒
-                        /// 自选量房阶段 .
+                    } else if (wk_template_idi == 2) {    /// 自选量房阶段 .
+
                         /// 12	confirm_measure	设计师同意量房 .
                         /// 13	decline_invite_measure 设计师拒绝量房.
                         if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 13) {
@@ -135,7 +135,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                             mcIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                             startActivity(mcIntent);
                         }
-                    }*/
+                    }
                     break;
 
                 /**

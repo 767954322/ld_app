@@ -21,12 +21,13 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 /**
- * @author  luchongbin .
+ * @author luchongbin .
  * @version 1.0 .
- * @date    16-6-13 上午10:12
- * @file    PullToRefreshLayout.java  .
- * @brief   自定义 RelativeLayout.
+ * @date 16-6-13 上午10:12
+ * @file PullToRefreshLayout.java  .
+ * @brief 自定义 RelativeLayout.
  */
 public class PullToRefreshLayout extends RelativeLayout {
     public static final String TAG = "PullToRefreshLayout";
@@ -145,7 +146,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                 timer.cancel();
                 requestLayout();
             }
-            if (pullUpY > 0|| Float.isNaN(pullUpY)) {
+            if (pullUpY > 0 || Float.isNaN(pullUpY)) {
                 // 已完成回弹
                 pullUpY = 0;
                 pullUpView.clearAnimation();
@@ -170,16 +171,19 @@ public class PullToRefreshLayout extends RelativeLayout {
     public void setOnRefreshListener(OnRefreshListener listener) {
         mListener = listener;
     }
+
     ///构造方法.
     public PullToRefreshLayout(Context context) {
         super(context);
         initView(context);
     }
+
     ///构造方法.
     public PullToRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
+
     ///构造方法.
     public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -281,6 +285,7 @@ public class PullToRefreshLayout extends RelativeLayout {
             hide();
         }
     }
+
     ///改变状态.
     public void changeState(int to) {
         state = to;
@@ -290,8 +295,8 @@ public class PullToRefreshLayout extends RelativeLayout {
                 refreshStateImageView.setVisibility(View.GONE);
                 refreshingView.setVisibility(View.GONE);
                 refreshingView.clearAnimation();
-                String pull_to_refresh_data = UIUtils.getString(R.string.pull_to_refresh)+"\n"
-                        + UIUtils.getString(R.string.release_to_refresh_lastTime)+date();
+                String pull_to_refresh_data = UIUtils.getString(R.string.pull_to_refresh) + "\n"
+                        + UIUtils.getString(R.string.release_to_refresh_lastTime) + date();
                 refreshStateTextView.setText(pull_to_refresh_data);
                 pullView.clearAnimation();
                 pullView.setVisibility(View.VISIBLE);
@@ -303,8 +308,8 @@ public class PullToRefreshLayout extends RelativeLayout {
                 break;
             case RELEASE_TO_REFRESH:
                 // 释放刷新状态
-                String release_to_refresh_data = UIUtils.getString(R.string.release_to_refresh)+"\n"
-                        + UIUtils.getString(R.string.release_to_refresh_lastTime)+date();
+                String release_to_refresh_data = UIUtils.getString(R.string.release_to_refresh) + "\n"
+                        + UIUtils.getString(R.string.release_to_refresh_lastTime) + date();
                 refreshStateTextView.setText(release_to_refresh_data);
                 pullView.startAnimation(rotateAnimation);
                 refreshingView.setVisibility(View.GONE);
@@ -335,8 +340,9 @@ public class PullToRefreshLayout extends RelativeLayout {
                 break;
         }
     }
-    private String date(){
-       String time =  DateUtil.showTime(System.currentTimeMillis());
+
+    private String date() {
+        String time = DateUtil.showTime(System.currentTimeMillis());
         return time;
     }
 
@@ -501,18 +507,17 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         @Override
         protected void onProgressUpdate(Float... values) {
-
+            if (null == refresh_contain) {
+                return;
+            }
             refresh_contain.setVisibility(View.GONE);
             if (pullDownY > refreshDist)
 
                 //不再走其他下拉，释放流程
-               // changeState(RELEASE_TO_REFRESH);
-            requestLayout();
+                // changeState(RELEASE_TO_REFRESH);
+                requestLayout();
         }
-
     }
-
-
 
 
     /**
@@ -534,6 +539,7 @@ public class PullToRefreshLayout extends RelativeLayout {
         if (mListener != null)
             mListener.onLoadMore(this);
     }
+
     ///初始化控件.
     private void initView() {
         // 初始化下拉布局
