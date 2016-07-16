@@ -141,17 +141,24 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @param hs_uid
      */
     public void getRealNameAuditStatus(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getRealNameAuditStatus(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+
+        MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                String auditInfo = GsonUtil.jsonToString(jsonObject);
-                RealName realName = GsonUtil.jsonToBean(auditInfo, RealName.class);
-                String audit_status = realName.getAudit_status();
-                if (!"2".equals(audit_status)) {
-                    if (MeasureFormActivity.this != null) {
-                        showAlertView(UIUtils.getString(R.string.desiner_not_real_name_authentication));
+
+                try {
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
+                    int is_real_name = jsonObject1.getInt("is_real_name");
+                    if (2 != is_real_name) {
+                        if (MeasureFormActivity.this != null) {
+                            showAlertView(UIUtils.getString(R.string.desiner_not_real_name_authentication));
+                        }
                     }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             }
 
             @Override
