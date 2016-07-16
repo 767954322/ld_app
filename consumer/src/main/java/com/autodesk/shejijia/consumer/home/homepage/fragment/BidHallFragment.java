@@ -135,7 +135,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                     }
 
                     if (list != null && list.getNeeds_list() != null) {
-                        List<BidHallEntity.NeedsListEntity> entitys = getNeedsListEntitys(list.getNeeds_list());
+                        List<BidHallEntity.NeedsListBean> entitys = getNeedsListEntitys(list.getNeeds_list());
                         mNeedsListEntities.addAll(entitys);
                     }
                     if (state == 0) {
@@ -170,7 +170,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
      *
      * @param list 应标集合信息
      */
-    private void hideFooterView(List<BidHallEntity.NeedsListEntity> list) {
+    private void hideFooterView(List<BidHallEntity.NeedsListBean> list) {
         if (list != null && list.size() > 0) {
             mRlEmpty.setVisibility(View.GONE);
         } else {
@@ -187,9 +187,9 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
     }
 
-    private List<BidHallEntity.NeedsListEntity> getNeedsListEntitys(List<BidHallEntity.NeedsListEntity> list) {
-        List<BidHallEntity.NeedsListEntity> needsLis = new ArrayList<>();
-        for (BidHallEntity.NeedsListEntity needsListEntity : list) {
+    private List<BidHallEntity.NeedsListBean> getNeedsListEntitys(List<BidHallEntity.NeedsListBean> list) {
+        List<BidHallEntity.NeedsListBean> needsLis = new ArrayList<>();
+        for (BidHallEntity.NeedsListBean needsListEntity : list) {
             if (getActivity() != null) {
 
                 Map<String, String> mapStyle = AppJsonFileReader.getStyle(getActivity());
@@ -290,7 +290,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     /// 集合,类.
     private FiltrateContentBean mFiltrateContentBean;
     private BidHallAdapter mBidHallAdapter;
-    private List<BidHallEntity.NeedsListEntity> mNeedsListEntities = new ArrayList<>();
-    private List<BidHallEntity.NeedsListEntity> mNeedsListEntityArrayList = new ArrayList<>();
+    private List<BidHallEntity.NeedsListBean> mNeedsListEntities = new ArrayList<>();
+    private List<BidHallEntity.NeedsListBean> mNeedsListEntityArrayList = new ArrayList<>();
 
 }
