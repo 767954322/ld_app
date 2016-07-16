@@ -59,7 +59,6 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
      *
      * @return
      */
-
     private String getTitleData() {
         Intent intent = getIntent();
         Bundle bundleExtra = intent.getBundleExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT);
@@ -103,7 +102,6 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
     private void initView(String title) {
         setTitleForNavbar(title);
         tv_nav_left_textView.setText(getResources().getString(R.string.select_finish));
-
     }
 
     @Override

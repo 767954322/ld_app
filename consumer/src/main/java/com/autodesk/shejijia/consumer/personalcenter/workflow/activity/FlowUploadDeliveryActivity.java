@@ -413,7 +413,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-
+                show_tag = 1;
                 Wk3DPlanDelivery wk3DPlanDelivery = GsonUtil.jsonToBean(userInfo, Wk3DPlanDelivery.class);
                 ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> deliveryFiles = (ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity>) wk3DPlanDelivery.getDeliveryFiles();
                 updateViewFromDeliveryFile(deliveryFiles);
@@ -1037,6 +1037,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
             }
         }
+        if (show_tag == 1) {
+            mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -1102,4 +1105,5 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private String type;                                             /// 交付类型:0：量房交付,1： 设计交付 .
     private String commonTip = UIUtils.getString(R.string.tip);
     private String[] sureString = new String[]{UIUtils.getString(R.string.sure)};
+    private int show_tag = 0;
 }

@@ -344,6 +344,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
     private Button mBtnSubmit3DPlan;
