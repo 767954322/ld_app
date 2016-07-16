@@ -17,9 +17,9 @@ import java.util.List;
  * @file BidHallAdapter.java  .
  * @brief 应标大厅.
  */
-public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListEntity> {
+public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListBean> {
 
-    public BidHallAdapter(Context context, List<BidHallEntity.NeedsListEntity> datas) {
+    public BidHallAdapter(Context context, List<BidHallEntity.NeedsListBean> datas) {
         super(context, datas);
     }
 
@@ -42,7 +42,7 @@ public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListEntity> {
 
     @Override
     public void initItem(View view, Holder holder, int position) {
-        BidHallEntity.NeedsListEntity customBid = mDatas.get(position);
+        BidHallEntity.NeedsListBean customBid = mDatas.get(position);
         ((ViewHolder) holder).tvCustomBidHouseAddress.setText(customBid.getCommunity_name());
 
         ((ViewHolder) holder).tv_bid_hall_style.setText(customBid.getDecoration_style() + "/");

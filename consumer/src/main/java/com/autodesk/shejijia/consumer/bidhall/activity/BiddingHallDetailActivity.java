@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.bidhall.entity.BidHallEntity;
+import com.autodesk.shejijia.consumer.bidhall.entity.BidHallDetailEntity;
 import com.autodesk.shejijia.consumer.bidhall.entity.RealNameBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -120,7 +120,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
-                mBidHallEntity = GsonUtil.jsonToBean(str, BidHallEntity.class);
+                mBidHallEntity = GsonUtil.jsonToBean(str, BidHallDetailEntity.class);
                 KLog.json(TAG, str);
 
                 updateViewFromBidHallDetailData();
@@ -232,7 +232,9 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String house_type = mBidHallEntity.getHouse_type();
         String phone = mBidHallEntity.getContacts_mobile();
         String decoration_style = mBidHallEntity.getDecoration_style();
+
         String needs_id = mBidHallEntity.getNeeds_id();
+
         String living_room = mBidHallEntity.getLiving_room();
         String room = mBidHallEntity.getRoom();
         String toilet = mBidHallEntity.getToilet();
@@ -357,6 +359,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
     private boolean bid_status;
 
     private RealNameBean mRealNameBean;
-    private BidHallEntity mBidHallEntity;
+    private BidHallDetailEntity mBidHallEntity;
 
 }
