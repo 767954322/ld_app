@@ -406,7 +406,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         markThreadAsRead();
         retrieveThreadMessagesWithOffset(mThreadId, 0);
 
-        if (!mAssetId.equals("0") && mAssetId != null) {
+        if (null != mAssetId && !"0".equals(mAssetId) ) {
             getProjectInfo();
         } else {
             changeConsumerUI();
