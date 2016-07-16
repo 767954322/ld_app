@@ -23,41 +23,54 @@ public class WkFlowDetailsBean implements Serializable {
     }
 
     public static class RequirementEntity implements Serializable {
-        private String after_bidding_status;
-        private String beishu_thread_id;
-        private int bidder_count;
-        private boolean bidding_status;
 
+        private Object contract;
+        private Object delivery;
         private String city;
+        private String district;
+        private String province;
+
+        private String room;
+        private String toilet;
+        private String needs_id;
+        private String avatar;
+        private String after_bidding_status;
+        private String consumer_uid;
+        private String beishu_thread_id;
+        private boolean bidding_status;
+        private int bidder_count;
+        private String city_name;
         private int click_number;
         private String community_name;
         private String consumer_mobile;
         private String consumer_name;
         private String contacts_mobile;
         private String contacts_name;
-        private Object contract;
         private String custom_string_status;
         private String decoration_budget;
         private String decoration_style;
-        private Object delivery;
         private String design_budget;
         private String detail_desc;
-        private String district;
+        private String district_name;
         private String end_day;
         private String house_area;
         private String house_type;
         private String is_beishu;
         private String is_public;
         private String living_room;
-        private String room;
-        private String toilet;
-        private String province;
-        private String needs_id;
         private String province_name;
         private String publish_time;
         private String wk_template_id;
 
         private List<BiddersEntity> bidders;
+
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public void setAvatar(String avatar) {
+            this.avatar = avatar;
+        }
 
         public void setAfter_bidding_status(String after_bidding_status) {
             this.after_bidding_status = after_bidding_status;
@@ -65,6 +78,38 @@ public class WkFlowDetailsBean implements Serializable {
 
         public void setBeishu_thread_id(String beishu_thread_id) {
             this.beishu_thread_id = beishu_thread_id;
+        }
+
+        public String getConsumer_uid() {
+            return consumer_uid;
+        }
+
+        public void setConsumer_uid(String consumer_uid) {
+            this.consumer_uid = consumer_uid;
+        }
+
+        public String getCity_name() {
+            return city_name;
+        }
+
+        public void setCity_name(String city_name) {
+            this.city_name = city_name;
+        }
+
+        public String getDistrict_name() {
+            return district_name;
+        }
+
+        public void setDistrict_name(String district_name) {
+            this.district_name = district_name;
+        }
+
+        public String getProvince_name() {
+            return province_name;
+        }
+
+        public void setProvince_name(String province_name) {
+            this.province_name = province_name;
         }
 
         public void setBidder_count(int bidder_count) {
@@ -330,7 +375,7 @@ public class WkFlowDetailsBean implements Serializable {
             private String declaration;
             private String status;
             private String uid;
-            private Object current_actions;
+            //            private Object current_actions;
             private String designer_id;
             private String design_thread_id;
             private String join_time;
@@ -349,22 +394,22 @@ public class WkFlowDetailsBean implements Serializable {
 
 
             private PaymentBean payment;
-            private List<DeliveryBean> delivery;
+            private DeliveryBean delivery;
             private List<OrdersEntity> orders;
             private List<DesignContractEntity> design_contract;
             private List<WkNextPossibleSubNodeIdsEntity> wk_next_possible_sub_node_ids;
             private List<WkStepsEntity> wk_steps;
 
             public static class DeliveryBean implements Serializable {
-                private String files;
+                private Object files;
                 private String type;
                 private String designer_id;
 
-                public String getFiles() {
+                public Object getFiles() {
                     return files;
                 }
 
-                public void setFiles(String files) {
+                public void setFiles(Object files) {
                     this.files = files;
                 }
 
@@ -481,16 +526,12 @@ public class WkFlowDetailsBean implements Serializable {
                 this.avatar = avatar;
             }
 
-            public List<DeliveryBean> getDelivery() {
+            public DeliveryBean getDelivery() {
                 return delivery;
             }
 
-            public void setDelivery(List<DeliveryBean> delivery) {
+            public void setDelivery(DeliveryBean delivery) {
                 this.delivery = delivery;
-            }
-
-            public void setCurrent_actions(Object current_actions) {
-                this.current_actions = current_actions;
             }
 
             public void setDeclaration(String declaration) {
@@ -563,10 +604,6 @@ public class WkFlowDetailsBean implements Serializable {
 
             public void setWk_steps(List<WkStepsEntity> wk_steps) {
                 this.wk_steps = wk_steps;
-            }
-
-            public Object getCurrent_actions() {
-                return current_actions;
             }
 
             public String getDeclaration() {
@@ -777,11 +814,11 @@ public class WkFlowDetailsBean implements Serializable {
             }
 
             public static class WkNextPossibleSubNodeIdsEntity implements Serializable {
-                private int actionId;
+                private int id;
                 private String name;
 
                 public void setId(int actionId) {
-                    this.actionId = actionId;
+                    this.id = actionId;
                 }
 
                 public void setName(String name) {
@@ -789,7 +826,7 @@ public class WkFlowDetailsBean implements Serializable {
                 }
 
                 public int getId() {
-                    return actionId;
+                    return id;
                 }
 
                 public String getName() {
@@ -798,7 +835,7 @@ public class WkFlowDetailsBean implements Serializable {
             }
 
             public static class WkStepsEntity implements Serializable {
-                private String files;
+                private Object files;
                 private int status;
                 private String thread_id;
                 private String previous_lastest_msg_id;
@@ -830,7 +867,7 @@ public class WkFlowDetailsBean implements Serializable {
                     this.timestamp_start = timestamp_start;
                 }
 
-                public void setFiles(String files) {
+                public void setFiles(Object files) {
                     this.files = files;
                 }
 
