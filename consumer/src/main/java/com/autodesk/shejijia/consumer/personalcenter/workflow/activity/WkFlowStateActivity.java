@@ -341,7 +341,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
         setTitleForNavbar(community_name); /// 设置标题 .
         mPtrLayout.onRefreshComplete();
-        mAdapter = new WkFlowStateAdapter(context, memberEntity.getMember_type(), mBiddersEntity);
+        mAdapter = new WkFlowStateAdapter(context, memberEntity.getMember_type(), mBiddersEntity, wk_template_id);
         mListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
@@ -399,7 +399,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                          * 支付量房费
                          */
                         case 1:
-                            if (wk_template_idi == 1) { // 应标
+                            if (wk_template_idi == 1) {                 // 应标
                                 if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
                                     view.setClickable(false);
                                 } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
@@ -410,7 +410,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                                     mcIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                                     startActivity(mcIntent);
                                 }
-                            } else { // 自选或北舒
+                            } else if (wk_template_idi == 2) {                                         // 自选或北舒
                                 if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 13) {
                                     view.setClickable(false);
                                 } else if (wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi > 13) {

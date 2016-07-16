@@ -251,6 +251,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
                 DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
                 tvc_last_cost.setText(df.format(totalCost - firstCost));
+                /**
+                 * 如果过了上传量房交付物的节点，就不可能改合同
+                 */
+                if (wk_cur_sub_node_idi >= 33) {
+                    setTvcCannotClickable();
+                }
             }
 
             /**

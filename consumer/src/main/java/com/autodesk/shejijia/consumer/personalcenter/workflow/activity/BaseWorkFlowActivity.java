@@ -135,7 +135,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
 
         for (WkFlowDetailsBean.RequirementEntity.BiddersEntity.OrdersEntity order : mBiddersEntity.getOrders()) {
             order_type = order.getOrder_type();
-            if (Constant.NumKey.ZERO.equals(order_type) && step == MPStatusMachine.NODE__MEANSURE_PAY) { /// 支付量房费 .
+            if (Constant.NumKey.ZERO.equals(order_type) && step == MPStatusMachine.NODE__MEANSURE_PAY) {            /// 支付量房费 .
                 return order;
             }
             if (Constant.NumKey.ONE.equals(order_type)) {
