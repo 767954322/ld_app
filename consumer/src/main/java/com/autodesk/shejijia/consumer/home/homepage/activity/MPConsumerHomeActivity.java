@@ -231,8 +231,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
                     ifIsLohoDesiner(acs_Member_Id, hs_uid);
-//                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
-//                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
                 } else {
                     setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
@@ -251,8 +249,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                String info = GsonUtil.jsonToString(jsonObject);
-                Log.d("test", "gumenghao ");
                 try {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
                     int is_loho = jsonObject1.getInt("is_loho");
@@ -263,7 +259,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.d("test", e.getMessage().toString());
                 }
 
             }

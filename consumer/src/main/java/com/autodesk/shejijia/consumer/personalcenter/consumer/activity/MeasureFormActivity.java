@@ -156,7 +156,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
                 if (MeasureFormActivity.this != null) {
                     showAlertView(UIUtils.getString(R.string.desiner_not_real_name_authentication));
                 }
@@ -672,8 +671,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     /**
-<<<<<<< HEAD
-=======
+     * <<<<<<< HEAD
+     * =======
+     *
      * @param needs_id
      * @param designer_id
      * @brief 获取个人信息详情
@@ -717,7 +717,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
 
     /**
->>>>>>> 70479696f352cc8b3f961b9dc90db280b920cc46
+     * >>>>>>> 70479696f352cc8b3f961b9dc90db280b920cc46
      * )
      * 提交量房数据
      *
