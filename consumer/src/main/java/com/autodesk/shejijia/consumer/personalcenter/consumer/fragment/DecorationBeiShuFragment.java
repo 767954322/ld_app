@@ -95,7 +95,7 @@ public class DecorationBeiShuFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-        need = (DecorationListEntity.NeedsListEntity) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_BEISHU_NEEDS_KEY);
+        need = (DecorationListEntity.NeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_BEISHU_NEEDS_KEY);
         if (need == null) {
             return;
         }
@@ -109,7 +109,7 @@ public class DecorationBeiShuFragment extends Fragment {
      * @param need
      * @return
      */
-    public static final Fragment getInstance(DecorationListEntity.NeedsListEntity need) {
+    public static final Fragment getInstance(DecorationListEntity.NeedsListBean need) {
         Fragment fragment = new DecorationBeiShuFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.DecorationBundleKey.DECORATION_BEISHU_NEEDS_KEY, need);
@@ -120,16 +120,16 @@ public class DecorationBeiShuFragment extends Fragment {
     /**
      * 创建北舒套餐后，设计师的适配器
      */
-    private class BeiShuAdapter extends CommonAdapter<DecorationListEntity.NeedsListEntity.BiddersBean> {
+    private class BeiShuAdapter extends CommonAdapter<DecorationListEntity.NeedsListBean.BiddersBean> {
         private String user_name;
         private String avatarUrl;
 
-        public BeiShuAdapter(Context context, List<DecorationListEntity.NeedsListEntity.BiddersBean> biddersEntities, int layoutId) {
+        public BeiShuAdapter(Context context, List<DecorationListEntity.NeedsListBean.BiddersBean> biddersEntities, int layoutId) {
             super(context, biddersEntities, layoutId);
         }
 
         @Override
-        public void convert(final CommonViewHolder holder, final DecorationListEntity.NeedsListEntity.BiddersBean biddersEntity) {
+        public void convert(final CommonViewHolder holder, final DecorationListEntity.NeedsListBean.BiddersBean biddersEntity) {
             avatarUrl = biddersEntity.getAvatar();
             user_name = biddersEntity.getUser_name();
             PolygonImageView piv_photo = holder.getView(R.id.ib_personal_b_photo_beishu);
@@ -211,7 +211,7 @@ public class DecorationBeiShuFragment extends Fragment {
     private String beishu_thread_id;
     public String member_id;
 
-    private List<DecorationListEntity.NeedsListEntity.BiddersBean> bidders;
-    private DecorationListEntity.NeedsListEntity need;
+    private List<DecorationListEntity.NeedsListBean.BiddersBean> bidders;
+    private DecorationListEntity.NeedsListBean need;
 }
 

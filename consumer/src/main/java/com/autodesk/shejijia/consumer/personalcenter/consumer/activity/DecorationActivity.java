@@ -181,7 +181,7 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
         } else {
             mRlEmpty.setVisibility(View.GONE);
         }
-        mNeedsListEntityArrayList = (ArrayList<DecorationListEntity.NeedsListEntity>) decorationListEntity.getNeeds_list();
+        mNeedsListEntityArrayList = (ArrayList<DecorationListEntity.NeedsListBean>) decorationListEntity.getNeeds_list();
         if (mNeedsListEntityArrayList == null || mNeedsListEntityArrayList.size() < 1) {
             return;
         }
@@ -313,7 +313,7 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
     private boolean isRefush = false;
     final int RESULT_CODE = 101;
 
-    private ArrayList<DecorationListEntity.NeedsListEntity> mNeedsListEntityArrayList;
+    private ArrayList<DecorationListEntity.NeedsListBean> mNeedsListEntityArrayList;
     private ArrayList<Fragment> mFragmentArrayList = new ArrayList<>();
-    private ArrayList<DecorationListEntity.NeedsListEntity> mNeedsListEntities = new ArrayList<>();
+    private ArrayList<DecorationListEntity.NeedsListBean> mNeedsListEntities = new ArrayList<>();
 }

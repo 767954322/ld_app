@@ -26,7 +26,7 @@ import java.util.Map;
  * @brief 附用历史量房订单适配器.
  */
 public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements PinnedHeaderExpandableListView.HeaderAdapter {
-    private ArrayList<DecorationListEntity.NeedsListEntity> mList;
+    private ArrayList<DecorationListEntity.NeedsListBean> mList;
     private Activity activity;
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
@@ -36,7 +36,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private Map<String, String> toiletJson;
     private String living_room_convert, room_convert, toilet_convert;
 
-    public PinnedHeaderExpandableAdapter(ArrayList<DecorationListEntity.NeedsListEntity> mList, Activity activity, PinnedHeaderExpandableListView listView) {
+    public PinnedHeaderExpandableAdapter(ArrayList<DecorationListEntity.NeedsListBean> mList, Activity activity, PinnedHeaderExpandableListView listView) {
         this.mList = mList;
         this.activity = activity;
         this.listView = listView;
