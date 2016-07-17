@@ -26,7 +26,8 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -73,7 +74,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     /**
      * 得到当前普通订单，方便DecorationActivity调用
      */
-    public static final Fragment getInstance(DecorationListEntity.NeedsListEntity NeedsListEntity) {
+    public static final Fragment getInstance(DecorationNeedsListBean NeedsListEntity) {
         Fragment fragment = new DecorationFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY, NeedsListEntity);
@@ -120,7 +121,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         if (mNeedsListEntity == null) {
             return;
         }
-        bidders = (ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean>) mNeedsListEntity.getBidders();
+        bidders = (ArrayList<DecorationBiddersBean>) mNeedsListEntity.getBidders();
         wk_template_id = mNeedsListEntity.getWk_template_id();
 
         getJsonFileReader();
@@ -186,16 +187,16 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     /**
      * 应标设计师列表适配器
      */
-    private class MyDecorationAdapter extends CommonAdapter<DecorationListEntity.NeedsListEntity.BiddersBean> {
-        ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean> biddersEntities;
+    private class MyDecorationAdapter extends CommonAdapter<DecorationBiddersBean> {
+        ArrayList<DecorationBiddersBean> biddersEntities;
 
-        public MyDecorationAdapter(Context context, ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean> biddersEntities, int layoutId) {
+        public MyDecorationAdapter(Context context, ArrayList<DecorationBiddersBean> biddersEntities, int layoutId) {
             super(context, biddersEntities, layoutId);
             this.biddersEntities = biddersEntities;
         }
 
         @Override
-        public void convert(final CommonViewHolder holder, DecorationListEntity.NeedsListEntity.BiddersBean bidder) {
+        public void convert(final CommonViewHolder holder, DecorationBiddersBean bidder) {
 
             final String designer_id = bidder.getDesigner_id();
             final String bidderUid = bidder.getUid();
@@ -522,7 +523,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
         if (bidders != null && bidders.size() > 0) {
             ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
-            for (DecorationListEntity.NeedsListEntity.BiddersBean bidder : bidders) {
+            for (DecorationBiddersBean bidder : bidders) {
                 if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
                     mWk_cur_node_id_array.add(Integer.parseInt(bidder.getWk_cur_sub_node_id()));
                 }
@@ -700,7 +701,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-        mNeedsListEntity = (DecorationListEntity.NeedsListEntity) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY);
+        mNeedsListEntity = (DecorationNeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY);
         if (mNeedsListEntity == null) {
             return;
         }
@@ -727,8 +728,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                         bidders.get(mPosition).setWk_cur_sub_node_id(mwk_cur_sub_node_id);
                     }
                     boolean rmTag = false;
-                    for (DecorationListEntity.NeedsListEntity.BiddersBean biddersEntity : bidders) {
-                        /// TODO .
+                    for (DecorationBiddersBean biddersEntity : bidders) {
                         /// 如果有人支付了首款，就把没有支付量房费的应标者从当前列表中删除 .
                         String wk_cur_sub_node_id = biddersEntity.getWk_cur_sub_node_id();
                         // wk_cur_sub_node_id
@@ -826,6 +826,6 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
     private MyDecorationAdapter mDecorationAdapter;
     private MemberEntity mMemberEntity;
-    private DecorationListEntity.NeedsListEntity mNeedsListEntity;
-    private ArrayList<DecorationListEntity.NeedsListEntity.BiddersBean> bidders;
+    private DecorationNeedsListBean mNeedsListEntity;
+    private ArrayList<DecorationBiddersBean> bidders;
 }

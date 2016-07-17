@@ -21,7 +21,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.ContractNo;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DesignContractBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -47,7 +47,6 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.List;
 
 /**
  * @author Malidong .
@@ -175,12 +174,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             ll_agree_establish_contract.setVisibility(View.GONE);
             tvc_last_cost.setEnabled(false);
             tvc_designer_postcode.setEnabled(false);
-            if (requirement.getBidders().get(0).getDesign_contract() == null) { /// 如果是新的合同.
+            if (mBidders.get(0).getDesign_contract() == null) { /// 如果是新的合同.
                 getContractNumber(); /// 获取合同编号.
-                tvc_consumer_name.setText(mCurrentWorkFlowDetail.getRequirement().getContacts_name());
-                tvc_consumer_phone.setText(mCurrentWorkFlowDetail.getRequirement().getContacts_mobile());
+                tvc_consumer_name.setText(requirement.getContacts_name());
+                tvc_consumer_phone.setText(requirement.getContacts_mobile());
 
-                WkFlowDetailsBean.RequirementEntity requirement = mCurrentWorkFlowDetail.getRequirement();
                 String province_name = requirement.getProvince();
                 String city_name = requirement.getCity();
                 String district_name = requirement.getDistrict();
@@ -194,7 +192,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     district_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.DISTRICT, district_name);
                 }
                 tvc_consumer_decorate_address.setText(province_name + " " + city_name + " " + district_name);
-                tvc_consumer_detail_address.setText(mCurrentWorkFlowDetail.getRequirement().getCommunity_name());
+                tvc_consumer_detail_address.setText(requirement.getCommunity_name());
                 if (wk_cur_sub_node_idi == 31) { /// 设计师发完合同后可以继续发送按钮显示.
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.send_design_contract);
@@ -221,11 +219,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.uploaded_deliverable);
                 }
-                List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = mCurrentWorkFlowDetail.getRequirement().getBidders().get(0).getDesign_contract();
-                if (null == design_contract || design_contract.size() < 1) {
+                MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+                if (null == designContractEntity ) {
                     return;
                 }
-                WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
                 String contractData = designContractEntity.getContract_data();
                 String str = contractData.toString().replace("@jr@", "\""); /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
                 DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);
@@ -274,11 +271,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
             setTvcCannotClickable();
 
-            List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = mBidders.get(0).getDesign_contract();
-            if (null == design_contract || design_contract.size() < 1) {
+            MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+            if (null == designContractEntity ) {
                 return;
             }
-            WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
             String contractData = designContractEntity.getContract_data();
             final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
             DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);

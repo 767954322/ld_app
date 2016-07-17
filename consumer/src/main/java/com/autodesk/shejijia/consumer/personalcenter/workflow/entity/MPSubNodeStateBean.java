@@ -8,10 +8,10 @@ import java.util.List;
  * @author   he.liu .
  * @version  v1.0 .
  * @date       2016-6-12 .
- * @file          MpSubNodeStateBean.java .
+ * @file          MPSubNodeStateBean.java .
  * @brief       当前子节点json文件转换的实体类.
  */
-public class MpSubNodeStateBean implements Serializable {
+public class MPSubNodeStateBean implements Serializable {
 
     private ArrayList<RootEntity> Root;
 

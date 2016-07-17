@@ -396,20 +396,28 @@ public class WkFlowDetailsBean implements Serializable {
             private PaymentBean payment;
             private DeliveryBean delivery;
             private List<OrdersEntity> orders;
-            private List<DesignContractEntity> design_contract;
+            private MPDesignContractBean design_contract;
             private List<WkNextPossibleSubNodeIdsEntity> wk_next_possible_sub_node_ids;
             private List<WkStepsEntity> wk_steps;
 
+            public MPDesignContractBean getDesign_contract() {
+                return design_contract;
+            }
+
+            public void setDesign_contract(MPDesignContractBean design_contract) {
+                this.design_contract = design_contract;
+            }
+
             public static class DeliveryBean implements Serializable {
-                private Object files;
+                private MPFileBean files;
                 private String type;
                 private String designer_id;
 
-                public Object getFiles() {
+                public MPFileBean getFiles() {
                     return files;
                 }
 
-                public void setFiles(Object files) {
+                public void setFiles(MPFileBean files) {
                     this.files = files;
                 }
 
@@ -428,6 +436,11 @@ public class WkFlowDetailsBean implements Serializable {
                 public void setDesigner_id(String designer_id) {
                     this.designer_id = designer_id;
                 }
+
+                public static class FilesBean{
+
+                }
+
             }
 
             public static class PaymentBean implements Serializable {
@@ -538,9 +551,7 @@ public class WkFlowDetailsBean implements Serializable {
                 this.declaration = declaration;
             }
 
-            public void setDesign_contract(List<DesignContractEntity> design_contract) {
-                this.design_contract = design_contract;
-            }
+
 
             public void setDesigner_id(String designer_id) {
                 this.designer_id = designer_id;
@@ -608,10 +619,6 @@ public class WkFlowDetailsBean implements Serializable {
 
             public String getDeclaration() {
                 return declaration;
-            }
-
-            public List<DesignContractEntity> getDesign_contract() {
-                return design_contract;
             }
 
             public String getDesigner_id() {

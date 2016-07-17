@@ -20,7 +20,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.RollFragAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.fragment.DecorationBeiShuFragment;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.fragment.DecorationFragment;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -36,6 +37,7 @@ import com.socks.library.KLog;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author he.liu
@@ -150,10 +152,10 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                DecorationListEntity decorationListEntity = GsonUtil.jsonToBean(userInfo, DecorationListEntity.class);
+                DecorationListBean decorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
                 KLog.json(TAG, userInfo);
 
-                updateViewFromDecorationData(decorationListEntity, offset);
+                updateViewFromDecorationData(decorationListBean, offset);
             }
 
             @Override
@@ -169,19 +171,19 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
     /**
      * 获取网络数据填充布局
      *
-     * @param decorationListEntity 　数据实体类
-     * @param offset               　显示的页数
+     * @param decorationListBean 　数据实体类
+     * @param offset             　显示的页数
      */
-    private void updateViewFromDecorationData(DecorationListEntity decorationListEntity, int offset) {
+    private void updateViewFromDecorationData(DecorationListBean decorationListBean, int offset) {
         mTvLoadingMore.setText(UIUtils.getString(R.string.load_succeed));
-        mCount = decorationListEntity.getCount();
+        mCount = decorationListBean.getCount();
         if (mCount == 0) {
             mRlEmpty.setVisibility(View.VISIBLE);
             return;
         } else {
             mRlEmpty.setVisibility(View.GONE);
         }
-        mNeedsListEntityArrayList = (ArrayList<DecorationListEntity.NeedsListEntity>) decorationListEntity.getNeeds_list();
+        mNeedsListEntityArrayList = decorationListBean.getNeeds_list();
         if (mNeedsListEntityArrayList == null || mNeedsListEntityArrayList.size() < 1) {
             return;
         }
@@ -313,7 +315,7 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
     private boolean isRefush = false;
     final int RESULT_CODE = 101;
 
-    private ArrayList<DecorationListEntity.NeedsListEntity> mNeedsListEntityArrayList;
+    private List<DecorationNeedsListBean> mNeedsListEntityArrayList;
     private ArrayList<Fragment> mFragmentArrayList = new ArrayList<>();
-    private ArrayList<DecorationListEntity.NeedsListEntity> mNeedsListEntities = new ArrayList<>();
+    private ArrayList<DecorationNeedsListBean> mNeedsListEntities = new ArrayList<>();
 }
