@@ -9,13 +9,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.PinnedHeaderExpandableAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -88,7 +89,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     }
 
     private void showState() {
-        if (!fee.isEmpty()&& !fee.equals("0")) {
+        if (!fee.isEmpty() && !fee.equals("0")) {
             double dFee = Double.valueOf(fee);
             DecimalFormat df1 = new DecimalFormat("#####.00");
             tv_measure_fee.setText(df1.format(dFee) + "元");
@@ -117,7 +118,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                  * 获取系统当前时间
                  */
                 SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                String date = sDateFormat.format(new java.util.Date());
+                String date = sDateFormat.format(new Date());
 
                 JSONObject jsonObject = new JSONObject();
                 try {
@@ -236,8 +237,8 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.dialog.cancel();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                DecorationListEntity decorationListEntity = GsonUtil.jsonToBean(userInfo, DecorationListEntity.class);
-                updateViewFromData(decorationListEntity);
+                DecorationListBean decorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
+                updateViewFromData(decorationListBean);
             }
 
             @Override
@@ -250,24 +251,23 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     /**
      * 更新视图
      *
-     * @param decorationListEntity
+     * @param decorationListBean
      */
-    private void updateViewFromData(DecorationListEntity decorationListEntity) {
-//        ArrayList<DecorationListEntity.NeedsListEntity> mList = new ArrayList<>();
-//        mList.addAll(decorationListEntity.getNeeds_list());
-//        int size = mList.size();
-//        for (int i = 0; i < size; i++) {
-//            String wk_template_id = mList.get(i).getWk_template_id();
-//            if (wk_template_id != null && Constant.NumKey.ONE.equals(wk_template_id)) {
-//                if (mList.get(i).getContract() == null) {
-//                    dList.add(mList.get(i));
-//                } else {
-//                    mList.get(i).setContract("null");
-//                    dList.add(mList.get(i));
-//                }
-//            }
-//        }
-
+    private void updateViewFromData(DecorationListBean decorationListBean) {
+        ArrayList<DecorationNeedsListBean> mList = new ArrayList<>();
+        mList.addAll(decorationListBean.getNeeds_list());
+        int size = mList.size();
+        for (int i = 0; i < size; i++) {
+            String wk_template_id = mList.get(i).getWk_template_id();
+            if (wk_template_id != null && Constant.NumKey.ONE.equals(wk_template_id)) {
+                if (mList.get(i).getContract() == null) {
+                    dList.add(mList.get(i));
+                } else {
+                    mList.get(i).setContract("null");
+                    dList.add(mList.get(i));
+                }
+            }
+        }
         // 设置悬浮头部VIEW
         if (dList != null) {
             adapter = new PinnedHeaderExpandableAdapter(dList, ExistMeasureOrderActivity.this, explistview);
@@ -340,6 +340,5 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     private String hs_uid;
     private int expandFlag = -1;// 控制列表的展开
 
-    /// 集合，类.
-    private ArrayList<DecorationListEntity.NeedsListBean> dList = new ArrayList<>();
+    private ArrayList<DecorationNeedsListBean> dList = new ArrayList<>();
 }

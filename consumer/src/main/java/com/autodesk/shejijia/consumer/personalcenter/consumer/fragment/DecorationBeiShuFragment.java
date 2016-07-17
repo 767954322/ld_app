@@ -13,23 +13,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
+import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 
 import java.util.List;
 
@@ -95,7 +96,8 @@ public class DecorationBeiShuFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-        need = (DecorationListEntity.NeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_BEISHU_NEEDS_KEY);
+
+        need = (DecorationNeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_BEISHU_NEEDS_KEY);
         if (need == null) {
             return;
         }
@@ -109,7 +111,8 @@ public class DecorationBeiShuFragment extends Fragment {
      * @param need
      * @return
      */
-    public static final Fragment getInstance(DecorationListEntity.NeedsListBean need) {
+
+    public static final Fragment getInstance(DecorationNeedsListBean need) {
         Fragment fragment = new DecorationBeiShuFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.DecorationBundleKey.DECORATION_BEISHU_NEEDS_KEY, need);
@@ -120,16 +123,17 @@ public class DecorationBeiShuFragment extends Fragment {
     /**
      * 创建北舒套餐后，设计师的适配器
      */
-    private class BeiShuAdapter extends CommonAdapter<DecorationListEntity.NeedsListBean.BiddersBean> {
+
+    private class BeiShuAdapter extends CommonAdapter<DecorationBiddersBean> {
         private String user_name;
         private String avatarUrl;
 
-        public BeiShuAdapter(Context context, List<DecorationListEntity.NeedsListBean.BiddersBean> biddersEntities, int layoutId) {
+        public BeiShuAdapter(Context context, List<DecorationBiddersBean> biddersEntities, int layoutId) {
             super(context, biddersEntities, layoutId);
         }
 
-        @Override
-        public void convert(final CommonViewHolder holder, final DecorationListEntity.NeedsListBean.BiddersBean biddersEntity) {
+
+        public void convert(final CommonViewHolder holder, final DecorationBiddersBean biddersEntity) {
             avatarUrl = biddersEntity.getAvatar();
             user_name = biddersEntity.getUser_name();
             PolygonImageView piv_photo = holder.getView(R.id.ib_personal_b_photo_beishu);
@@ -211,7 +215,7 @@ public class DecorationBeiShuFragment extends Fragment {
     private String beishu_thread_id;
     public String member_id;
 
-    private List<DecorationListEntity.NeedsListBean.BiddersBean> bidders;
-    private DecorationListEntity.NeedsListBean need;
+    private List<DecorationBiddersBean> bidders;
+    private DecorationNeedsListBean need;
 }
 

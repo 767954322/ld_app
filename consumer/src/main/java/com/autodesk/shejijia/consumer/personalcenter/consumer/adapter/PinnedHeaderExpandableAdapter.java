@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.uielements.PinnedHeaderExpandableListView;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.uielements.PinnedHeaderExpandableListView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 
 import java.util.ArrayList;
@@ -26,7 +26,8 @@ import java.util.Map;
  * @brief 附用历史量房订单适配器.
  */
 public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements PinnedHeaderExpandableListView.HeaderAdapter {
-    private ArrayList<DecorationListEntity.NeedsListBean> mList;
+
+    private ArrayList<DecorationNeedsListBean> mList;
     private Activity activity;
     private PinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
@@ -36,7 +37,8 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private Map<String, String> toiletJson;
     private String living_room_convert, room_convert, toilet_convert;
 
-    public PinnedHeaderExpandableAdapter(ArrayList<DecorationListEntity.NeedsListBean> mList, Activity activity, PinnedHeaderExpandableListView listView) {
+
+    public PinnedHeaderExpandableAdapter(ArrayList<DecorationNeedsListBean> mList, Activity activity, PinnedHeaderExpandableListView listView) {
         this.mList = mList;
         this.activity = activity;
         this.listView = listView;

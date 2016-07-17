@@ -26,7 +26,8 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListEntity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -73,7 +74,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     /**
      * 得到当前普通订单，方便DecorationActivity调用
      */
-    public static final Fragment getInstance(DecorationListEntity.NeedsListBean NeedsListBean) {
+
+    public static final Fragment getInstance(DecorationNeedsListBean NeedsListBean) {
         Fragment fragment = new DecorationFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY, NeedsListBean);
@@ -117,11 +119,12 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private void initData() {
         mScrollView.smoothScrollTo(0, 0);
         EventBus.getDefault().registerSticky(this);
-        if (mNeedsListBean == null) {
+        if (mNeedsListEntity == null) {
             return;
         }
-        bidders = (ArrayList<DecorationListEntity.NeedsListBean.BiddersBean>) mNeedsListBean.getBidders();
-        wk_template_id = mNeedsListBean.getWk_template_id();
+
+        bidders = (ArrayList<DecorationBiddersBean>) mNeedsListEntity.getBidders();
+        wk_template_id = mNeedsListEntity.getWk_template_id();
 
         getJsonFileReader();
         getDataFromNeed();
@@ -186,16 +189,16 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     /**
      * 应标设计师列表适配器
      */
-    private class MyDecorationAdapter extends CommonAdapter<DecorationListEntity.NeedsListBean.BiddersBean> {
-        ArrayList<DecorationListEntity.NeedsListBean.BiddersBean> biddersEntities;
+    private class MyDecorationAdapter extends CommonAdapter<DecorationBiddersBean> {
+        ArrayList<DecorationBiddersBean> biddersEntities;
 
-        public MyDecorationAdapter(Context context, ArrayList<DecorationListEntity.NeedsListBean.BiddersBean> biddersEntities, int layoutId) {
+        public MyDecorationAdapter(Context context, ArrayList<DecorationBiddersBean> biddersEntities, int layoutId) {
             super(context, biddersEntities, layoutId);
             this.biddersEntities = biddersEntities;
         }
 
-        @Override
-        public void convert(final CommonViewHolder holder, DecorationListEntity.NeedsListBean.BiddersBean bidder) {
+
+        public void convert(final CommonViewHolder holder, DecorationBiddersBean bidder) {
 
             final String designer_id = bidder.getDesigner_id();
             final String bidderUid = bidder.getUid();
@@ -350,9 +353,9 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                     String member_id = memberEntity.getAcs_member_id();
                     String memType = memberEntity.getMember_type();
-                    String designer_thread_id = mNeedsListBean.getBidders().get(mPosition).getDesign_thread_id();
-                    String userName = mNeedsListBean.getConsumer_name();
-                    String needs_id = mNeedsListBean.getNeeds_id() + "";
+                    String designer_thread_id = mNeedsListEntity.getBidders().get(mPosition).getDesign_thread_id();
+                    String userName = mNeedsListEntity.getConsumer_name();
+                    String needs_id = mNeedsListEntity.getNeeds_id() + "";
 
                     if (TextUtils.isEmpty(designer_thread_id)) {
                         designer_thread_id = "";
@@ -468,7 +471,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      */
     private void setBidState(String is_public) {
         String approveState = "";
-        custom_string_status = mNeedsListBean.getCustom_string_status();
+        custom_string_status = mNeedsListEntity.getCustom_string_status();
 
         if (TextUtils.isEmpty(is_public)) {
             return;
@@ -522,7 +525,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
         if (bidders != null && bidders.size() > 0) {
             ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
-            for (DecorationListEntity.NeedsListBean.BiddersBean bidder : bidders) {
+            for (DecorationBiddersBean bidder : bidders) {
                 if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
                     mWk_cur_node_id_array.add(Integer.parseInt(bidder.getWk_cur_sub_node_id()));
                 }
@@ -556,7 +559,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         if (TextUtils.isEmpty(is_public)) {
             return;
         }
-        if (mNeedsListBean != null) {
+        if (mNeedsListEntity != null) {
             setBidState(is_public);
         }
     }
@@ -625,7 +628,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         mTvBuildTime.setText(publish_time);
 
         refreshListView();
-        is_public = mNeedsListBean.getIs_public();
+        is_public = mNeedsListEntity.getIs_public();
         setBidState(is_public);
     }
 
@@ -643,28 +646,28 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      * 获取的当前订单相应字段中值
      */
     private void getDataFromNeed() {
-        needs_id = mNeedsListBean.getNeeds_id();
-        bidder_count = mNeedsListBean.getBidder_count();
-        community_name = mNeedsListBean.getCommunity_name();
-        end_day = mNeedsListBean.getEnd_day();
+        needs_id = mNeedsListEntity.getNeeds_id();
+        bidder_count = mNeedsListEntity.getBidder_count();
+        community_name = mNeedsListEntity.getCommunity_name();
+        end_day = mNeedsListEntity.getEnd_day();
         //装修预算
-        decoration_budget = mNeedsListBean.getDecoration_budget();
-        design_budget = mNeedsListBean.getDesign_budget();
-        publish_time = mNeedsListBean.getPublish_time();
-        is_public = mNeedsListBean.getIs_public();
+        decoration_budget = mNeedsListEntity.getDecoration_budget();
+        design_budget = mNeedsListEntity.getDesign_budget();
+        publish_time = mNeedsListEntity.getPublish_time();
+        is_public = mNeedsListEntity.getIs_public();
         /// 房屋面积 .
-        house_area = mNeedsListBean.getHouse_area();
+        house_area = mNeedsListEntity.getHouse_area();
         /// 房屋类型.
-        house_type = mNeedsListBean.getHouse_type();
+        house_type = mNeedsListEntity.getHouse_type();
         /// 风格 .
-        decoration_style = mNeedsListBean.getDecoration_style();
-        room = mNeedsListBean.getRoom();
-        living_room = mNeedsListBean.getLiving_room();
-        toilet = mNeedsListBean.getToilet();
-        province_name = mNeedsListBean.getProvince_name();
-        city_name = mNeedsListBean.getCity_name();
-        district_name = mNeedsListBean.getDistrict_name();
-        mDistrict = mNeedsListBean.getDistrict();
+        decoration_style = mNeedsListEntity.getDecoration_style();
+        room = mNeedsListEntity.getRoom();
+        living_room = mNeedsListEntity.getLiving_room();
+        toilet = mNeedsListEntity.getToilet();
+        province_name = mNeedsListEntity.getProvince_name();
+        city_name = mNeedsListEntity.getCity_name();
+        district_name = mNeedsListEntity.getDistrict_name();
+        mDistrict = mNeedsListEntity.getDistrict();
     }
 
     /**
@@ -700,8 +703,9 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-        mNeedsListBean = (DecorationListEntity.NeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY);
-        if (mNeedsListBean == null) {
+
+        mNeedsListEntity = (DecorationNeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY);
+        if (mNeedsListEntity == null) {
             return;
         }
         isShowStub = false;
@@ -727,8 +731,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                         bidders.get(mPosition).setWk_cur_sub_node_id(mwk_cur_sub_node_id);
                     }
                     boolean rmTag = false;
-                    for (DecorationListEntity.NeedsListBean.BiddersBean biddersEntity : bidders) {
-                        /// TODO .
+
+                    for (DecorationBiddersBean biddersEntity : bidders) {
                         /// 如果有人支付了首款，就把没有支付量房费的应标者从当前列表中删除 .
                         String wk_cur_sub_node_id = biddersEntity.getWk_cur_sub_node_id();
                         // wk_cur_sub_node_id
@@ -826,6 +830,6 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
     private MyDecorationAdapter mDecorationAdapter;
     private MemberEntity mMemberEntity;
-    private DecorationListEntity.NeedsListBean mNeedsListBean;
-    private ArrayList<DecorationListEntity.NeedsListBean.BiddersBean> bidders;
+    private DecorationNeedsListBean mNeedsListEntity;
+    private ArrayList<DecorationBiddersBean> bidders;
 }

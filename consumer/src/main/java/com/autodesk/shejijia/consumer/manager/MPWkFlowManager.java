@@ -6,7 +6,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MpSubNodeStateBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPSubNodeStateBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
@@ -34,7 +34,7 @@ public class MPWkFlowManager {
      * @return 当前节点的名字
      */
     public static String getWkSubNodeName(Context context, String wk_template_id, String wk_cur_sub_node_id) {
-        MpSubNodeStateBean mpSubNodeStateBean;
+        MPSubNodeStateBean MPSubNodeStateBean;
         String jsonFromAsset = null;
         String memType = null;
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -63,8 +63,8 @@ public class MPWkFlowManager {
             default:
                 break;
         }
-        mpSubNodeStateBean = GsonUtil.jsonToBean(jsonFromAsset, MpSubNodeStateBean.class);
-        ArrayList<MpSubNodeStateBean.RootEntity> mpSubNodeStateBeanRoot = mpSubNodeStateBean.getRoot();
+        MPSubNodeStateBean = GsonUtil.jsonToBean(jsonFromAsset, MPSubNodeStateBean.class);
+        ArrayList<MPSubNodeStateBean.RootEntity> mpSubNodeStateBeanRoot = MPSubNodeStateBean.getRoot();
         String wk_cur_sub_name = "";
 
         /// [2]获取对应订单节点的名字 .

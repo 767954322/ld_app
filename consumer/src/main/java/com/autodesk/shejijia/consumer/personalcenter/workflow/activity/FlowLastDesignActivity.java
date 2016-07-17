@@ -9,23 +9,23 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.AliPayBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
 import com.autodesk.shejijia.consumer.utils.AliPayService;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
-import java.util.List;
 
 /**
  * @author Malidong .
@@ -70,7 +70,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 
         getDesignerInfoData(designer_id, hs_uid);
 
-        upDataViewFromData();
+        updateViewFromData();
     }
 
     /**
@@ -85,7 +85,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoList = new Gson().fromJson(jsonString, DesignerInfoDetails.class);
 
-                upDataViewFromInfoData();
+                updateViewFromInfoData();
             }
 
             @Override
@@ -98,13 +98,11 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
     }
 
 
-    private void upDataViewFromData() {
-        List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = requirement.getBidders().get(0).getDesign_contract();
-        if (null == design_contract || design_contract.size() < 1) {
+    private void updateViewFromData() {
+        MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+        if (null == designContractEntity) {
             return;
         }
-        WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
-
         tv_flow_last_design_contract_no.setText(designContractEntity.getContract_no());
         tv_flow_last_design_aggregate_amount.setText(designContractEntity.getContract_charge());
         tv_flow_last_design_first.setText(designContractEntity.getContract_first_charge());
@@ -136,16 +134,15 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
         }
     }
 
-    private void upDataViewFromInfoData() {
+    private void updateViewFromInfoData() {
         if (!designerInfoList.equals(null)) {
             tv_flow_last_design_name.setText(designerInfoList.getReal_name().getReal_name());
             tv_flow_last_design_phone.setText(designerInfoList.getReal_name().getMobile_number().toString());
 
-            List<WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity> design_contract = requirement.getBidders().get(0).getDesign_contract();
-            if (null == design_contract || design_contract.size() < 1) {
+            MPDesignContractBean designContractEntity =mBidders.get(0).getDesign_contract();
+            if (null == designContractEntity) {
                 return;
             }
-            WkFlowDetailsBean.RequirementEntity.BiddersEntity.DesignContractEntity designContractEntity = design_contract.get(0);
             Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
             Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
