@@ -19,8 +19,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.ContractNo;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DesignContractBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -205,7 +205,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.send_design_contract);
                 }
-            } else { // 已有合同
+            } else {                                                                                                             /// 已有合同
                 if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {                  /// 从项目资料跳转.
                     setTvcCannotClickable();                                                                       /// 如果是已有的合同设置所有得按键都不可点击 .
                 }
@@ -224,7 +224,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 }
                 String contractData = designContractEntity.getContract_data();
                 String str = contractData.toString().replace("@jr@", "\"");                  /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
-                DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);
+                MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
                 String zip = designContractBean.getZip();
                 String email = designContractBean.getEmail();
                 zip = (TextUtils.isEmpty(zip) || "null".equals(zip)) ? "" : zip;
@@ -275,7 +275,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
             String contractData = designContractEntity.getContract_data();
             final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
-            DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);
+            MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
             String zip = designContractBean.getZip();
             String email = designContractBean.getEmail();
             zip = TextUtils.isEmpty(zip) ? "" : zip;
@@ -390,7 +390,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                contractNo = new Gson().fromJson(jsonObject.toString(), ContractNo.class);
+                contractNo = new Gson().fromJson(jsonObject.toString(), MPContractNoBean.class);
                 contract_no = contractNo.getContractNO(); /// 获取合同编号 .
                 tv_contract_number.setText(contract_no); /// 设置合同编号 .
             }
@@ -781,7 +781,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private LinearLayout ll_agree_establish_contract;
 
     private DesignerInfoDetails list;
-    private ContractNo contractNo; // 设计合同编号对象
+    private MPContractNoBean contractNo; // 设计合同编号对象
     private AddressDialog mChangeAddressDialog;
     private AlertView mDesignContract;
 

@@ -1,25 +1,25 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * <p>Description:</p>
- * <p>Copyright: Copyright (c) 2016</p>
- * <p>Company: http://www.leediancn.com</p>
- *
  * @author he.liu .
- * @date 2016-07-17.
+ * @version v1.0 .
+ * @date 2016-07-17 .
+ * @file MPDeliveryBean.java .
+ * @brief 交付物实体类 .
  */
 public class MPDeliveryBean implements Serializable {
-    private MPFileBean files;
+    private List<MPFileBean> files;
     private String type;
     private String designer_id;
 
-    public MPFileBean getFiles() {
+    public List<MPFileBean> getFiles() {
         return files;
     }
 
-    public void setFiles(MPFileBean files) {
+    public void setFiles(List<MPFileBean> files) {
         this.files = files;
     }
 

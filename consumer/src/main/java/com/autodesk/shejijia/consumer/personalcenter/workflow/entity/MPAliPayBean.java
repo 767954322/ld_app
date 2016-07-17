@@ -6,10 +6,10 @@ import java.io.Serializable;
  * @author   he.liu .
  * @version  v1.0 .
  * @date       2016-6-23 .
- * @file          AliPayBean.java .
+ * @file          MPAliPayBean.java .
  * @brief       申请支付时候支付宝获取数据的实体类 .
  */
-public class AliPayBean implements Serializable {
+public class MPAliPayBean implements Serializable {
 
     private String amount;
     private String notifyURL;

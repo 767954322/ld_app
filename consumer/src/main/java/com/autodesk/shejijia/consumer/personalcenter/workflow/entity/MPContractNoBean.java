@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 /**
  * @author Malidong .
- * @version 1.0 .
- * @date 16-6-7
- * @file ContractNo.java  .
- * @brief .
+ * @version v1.0 .
+ * @date 2016-6-23 .
+ * @file MPContractNoBean.java .
+ * @brief 合同编号实体类 .
  */
-public class ContractNo implements Serializable {
+public class MPContractNoBean implements Serializable {
 
     private String contractNO;
 

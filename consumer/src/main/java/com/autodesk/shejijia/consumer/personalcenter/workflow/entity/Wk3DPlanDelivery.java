@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author   he.liu .
- * @version  v1.0 .
- * @date       2016-6-12 .
- * @file          Wk3DPlanDelivery.java .
- * @brief       某一套设计方案的实体类 .
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-6-12 .
+ * @file Wk3DPlanDelivery.java .
+ * @brief 某一套设计方案的实体类 .
  */
 public class Wk3DPlanDelivery implements Serializable {
 

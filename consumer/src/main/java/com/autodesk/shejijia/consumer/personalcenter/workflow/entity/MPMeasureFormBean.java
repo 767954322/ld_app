@@ -7,49 +7,10 @@ import java.util.List;
  * @author he.liu .
  * @version 1.0 .
  * @date 16-6-7
- * @file AgreeResponseBean.java  .
- * @brief .
+ * @file MPMeasureFormBean.java  .
+ * @brief 消费者发送量房表单后返回的实体类.
  */
-public class AgreeResponseBean implements Serializable {
-
-    /**
-     * city_name : 北京市
-     * needs_id : 1586285
-     * consumer_mobile : 15295688688
-     * consumer_name : hetest001
-     * contacts_mobile : 15295688688
-     * living_room : one
-     * bidder_count : 0
-     * city : 110100
-     * decoration_style : ASAN
-     * house_type : house
-     * toilet : one
-     * is_public : 0
-     * beishu_thread_id : null
-     * after_bidding_status : null
-     * province : 110000
-     * custom_string_status : 3
-     * district : 110101
-     * is_beishu : 1
-     * bidding_status : true
-     * wk_template_id : 1
-     * community_name : 125569
-     * decoration_budget : 10万-20万
-     * bidders : [{"uid":"bb7839a7-1d4b-45ce-8b4f-15d3b3fb95af","wk_cur_sub_node_id":"11","declaration":"","payment":{"paid_fee":"0","measurement_fee":"0.00","unpaid_fee":"0","create_date":null,"total_fee":"0.00"},"status":"1","wk_current_step_id":null,"design_price_max":120,"design_price_min":61,"style_names":null,"measure_time":"2016-07-28 15:06:00","avatar":"http://image.gdfcx.net:8082/img/577e087de4b07d88ca90878f.img","wk_steps":[],"selected_time":"2016-07-15 15:06:15","wk_id":"13936","user_name":"hetest002dev","designer_id":20738079,"wk_cur_node_id":"1","refused_time":null,"design_contract":[],"measurement_fee":"0.00","join_time":"2016-07-15 10:19:25","orders":[{"order_line_no":"4941","designer_id":20738079,"order_status":"1","order_no":"3457","order_type":"0"}],"design_thread_id":"TVLZLHRIQN49881","delivery":{"type":0,"designer_id":null,"files":null},"wk_next_possible_sub_node_ids":[]},{"uid":"7db9447f-a024-4689-867b-1909ee16c04d","wk_cur_sub_node_id":"11","declaration":"","payment":{"paid_fee":"0","measurement_fee":"0.00","unpaid_fee":"0","create_date":null,"total_fee":"0.00"},"status":"1","wk_current_step_id":null,"design_price_max":200,"design_price_min":121,"style_names":"其他,韩式","measure_time":"2016-07-19 14:34:00","avatar":"http://uat415img.gdfcx.net:8082/img/5789fc56ed50cc1782eb2e20.img","wk_steps":[],"selected_time":"2016-07-17 14:34:49","wk_id":"13963","user_name":"liuxinle","designer_id":20730531,"wk_cur_node_id":"1","refused_time":null,"design_contract":[],"measurement_fee":"0.0","join_time":"2016-07-15 15:07:22","orders":[{"order_line_no":"4991","designer_id":20730531,"order_status":"1","order_no":"3491","order_type":"0"}],"design_thread_id":"TXBW8MOIQNEJIRL","delivery":{"type":0,"designer_id":null,"files":null},"wk_next_possible_sub_node_ids":[]}]
-     * avatar : null
-     * consumer_uid : 7597856a-9078-473a-879f-3c03319fb04a
-     * province_name : 北京
-     * detail_desc : desc
-     * publish_time : 2016-07-15 09:15:09
-     * district_name : 东城区
-     * click_number : 0
-     * end_day : null
-     * design_budget : 6000-10000
-     * house_area : 123
-     * contacts_name : hetest001
-     * room : one
-     */
-
+public class MPMeasureFormBean implements Serializable {
     private String city_name;
     private int needs_id;
     private String consumer_mobile;
@@ -84,33 +45,6 @@ public class AgreeResponseBean implements Serializable {
     private String house_area;
     private String contacts_name;
     private String room;
-    /**
-     * uid : bb7839a7-1d4b-45ce-8b4f-15d3b3fb95af
-     * wk_cur_sub_node_id : 11
-     * declaration :
-     * payment : {"paid_fee":"0","measurement_fee":"0.00","unpaid_fee":"0","create_date":null,"total_fee":"0.00"}
-     * status : 1
-     * wk_current_step_id : null
-     * design_price_max : 120
-     * design_price_min : 61
-     * style_names : null
-     * measure_time : 2016-07-28 15:06:00
-     * avatar : http://image.gdfcx.net:8082/img/577e087de4b07d88ca90878f.img
-     * wk_steps : []
-     * selected_time : 2016-07-15 15:06:15
-     * wk_id : 13936
-     * user_name : hetest002dev
-     * designer_id : 20738079
-     * wk_cur_node_id : 1
-     * refused_time : null
-     * design_contract : []
-     * measurement_fee : 0.00
-     * join_time : 2016-07-15 10:19:25
-     * orders : [{"order_line_no":"4941","designer_id":20738079,"order_status":"1","order_no":"3457","order_type":"0"}]
-     * design_thread_id : TVLZLHRIQN49881
-     * delivery : {"type":0,"designer_id":null,"files":null}
-     * wk_next_possible_sub_node_ids : []
-     */
 
     private List<BiddersBean> bidders;
 
@@ -394,7 +328,7 @@ public class AgreeResponseBean implements Serializable {
         this.bidders = bidders;
     }
 
-    public static class BiddersBean implements Serializable{
+    public static class BiddersBean implements Serializable {
         private String uid;
         private String wk_cur_sub_node_id;
         private String declaration;
@@ -643,6 +577,7 @@ public class AgreeResponseBean implements Serializable {
         public void setWk_next_possible_sub_node_ids(List<WkNextPossibleSubNodeIdsBean> wk_next_possible_sub_node_ids) {
             this.wk_next_possible_sub_node_ids = wk_next_possible_sub_node_ids;
         }
+
         public static class WkNextPossibleSubNodeIdsBean implements Serializable {
             private int id;
             private String name;
@@ -663,6 +598,7 @@ public class AgreeResponseBean implements Serializable {
                 this.name = name;
             }
         }
+
         public static class WkStepsBean implements Serializable {
             private Object files;
             private int status;
@@ -729,7 +665,7 @@ public class AgreeResponseBean implements Serializable {
             }
         }
 
-        public static class PaymentBean implements Serializable{
+        public static class PaymentBean implements Serializable {
             private String paid_fee;
             private String measurement_fee;
             private String unpaid_fee;
@@ -777,7 +713,7 @@ public class AgreeResponseBean implements Serializable {
             }
         }
 
-        public static class DeliveryBean implements Serializable{
+        public static class DeliveryBean implements Serializable {
             private int type;
             private String designer_id;
             private String files;
@@ -807,7 +743,7 @@ public class AgreeResponseBean implements Serializable {
             }
         }
 
-        public static class OrdersBean implements Serializable{
+        public static class OrdersBean implements Serializable {
             private String order_line_no;
             private int designer_id;
             private String order_status;

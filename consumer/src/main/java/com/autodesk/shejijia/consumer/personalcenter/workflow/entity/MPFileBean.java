@@ -3,22 +3,13 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.entity;
 import java.io.Serializable;
 
 /**
- * <p>Description:全流程文件的实体类</p>
- * <p>Copyright: Copyright (c) 2016</p>
- * <p>Company: http://www.leediancn.com</p>
- *
  * @author he.liu .
- * @date 2016-07-17.
+ * @version 1.0 .
+ * @date 2016-07-17
+ * @file MPFileBean.java  .
+ * @brief 全流程文件的实体类.
  */
 public class MPFileBean implements Serializable {
-    /**
-     * url : http://sherpapreview-standard.s3.cn-north-1.amazonaws.com.cn/Preview/Public/Beta/18122433.png
-     * type : 1
-     * filed_id : 18122433
-     * usage_type : 2
-     * filed_name : Errormessage.png
-     * submitted_date : null
-     */
     private String url;
     private String type;
     private String filed_id;

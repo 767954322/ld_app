@@ -441,7 +441,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-
+                show_finish_tag = 1;
                 KLog.json(TAG, userInfo);
 
                 mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
@@ -1037,7 +1037,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
             }
         }
-        if (show_tag == 1) {
+        if (show_tag == 1 && show_finish_tag == 0) {
             mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
         }
     }
@@ -1105,5 +1105,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private String type;                                             /// 交付类型:0：量房交付,1： 设计交付 .
     private String commonTip = UIUtils.getString(R.string.tip);
     private String[] sureString = new String[]{UIUtils.getString(R.string.sure)};
+    private int show_finish_tag = 0;
     private int show_tag = 0;
 }

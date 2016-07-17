@@ -7,6 +7,8 @@ import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -84,7 +86,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
                 return;
             }
             if (mBidders.size() > 0) {
-                WkFlowDetailsBean.RequirementEntity.BiddersEntity biddersEntity = mBidders.get(0);
+                MPBidderBean biddersEntity = mBidders.get(0);
                 if (null != biddersEntity) {
                     hs_uid = biddersEntity.getUid();
                 }
@@ -129,11 +131,11 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, designer_id, okResponseCallback);
     }
 
-    public WkFlowDetailsBean.RequirementEntity.BiddersEntity.OrdersEntity getOrderEntityByStep(final int step) {
+    public MPOrderBean getOrderEntityByStep(final int step) {
         String order_type;
         String order_status;
 
-        for (WkFlowDetailsBean.RequirementEntity.BiddersEntity.OrdersEntity order : mBiddersEntity.getOrders()) {
+        for (MPOrderBean order : mBiddersEntity.getOrders()) {
             order_type = order.getOrder_type();
             if (Constant.NumKey.ZERO.equals(order_type) && step == MPStatusMachine.NODE__MEANSURE_PAY) {            /// 支付量房费 .
                 return order;
@@ -164,10 +166,10 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected String wk_cur_sub_node_id;
     protected String needs_id;
 
-//    protected DesignerInfoDetails designerInfoList;
+    //    protected DesignerInfoDetails designerInfoList;
     protected MemberEntity memberEntity;
     protected WkFlowDetailsBean mCurrentWorkFlowDetail;
     protected WkFlowDetailsBean.RequirementEntity requirement;
-    protected WkFlowDetailsBean.RequirementEntity.BiddersEntity mBiddersEntity;
-    protected List<WkFlowDetailsBean.RequirementEntity.BiddersEntity> mBidders;
+    protected MPBidderBean mBiddersEntity;
+    protected List<MPBidderBean> mBidders;
 }

@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author   he.liu .
- * @version  v1.0 .
- * @date       2016-6-12 .
- * @file          Wk3DPlanBean.java .
- * @brief        获取与装修项目相关联的3D方案列表.
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-6-12 .
+ * @file Wk3DPlanBean.java .
+ * @brief 获取与装修项目相关联的3D方案列表.
  */
 public class Wk3DPlanBean implements Serializable {
-
     private int count;
     private int limit;
     private int offset;

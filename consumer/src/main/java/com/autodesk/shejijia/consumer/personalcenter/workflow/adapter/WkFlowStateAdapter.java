@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
@@ -24,7 +24,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
  */
 public class WkFlowStateAdapter extends BaseAdapter {
 
-    public WkFlowStateAdapter(Context context, String member_type, WkFlowDetailsBean.RequirementEntity.BiddersEntity biddersEntity, String wk_template_id) {
+    public WkFlowStateAdapter(Context context, String member_type, MPBidderBean biddersEntity, String wk_template_id) {
         this.context = context;
         this.biddersEntity = biddersEntity;
         this.member_type = member_type;
@@ -505,7 +505,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
     }
 
     private Context context;
-    private WkFlowDetailsBean.RequirementEntity.BiddersEntity biddersEntity;
+    private MPBidderBean biddersEntity;
 
     private String wk_cur_sub_node_id;
     private String member_type;
