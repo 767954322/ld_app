@@ -367,7 +367,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private void updateViewFromData(AgreeResponseBean mAgreeResponseBean) {
         CustomProgress.cancelDialog();
 
-        List<AgreeResponseBean.BiddersEntity> bidders = mAgreeResponseBean.getBidders();
+        List<AgreeResponseBean.BiddersBean> bidders = mAgreeResponseBean.getBidders();
         if (bidders != null && bidders.size() > 0) {
             wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
             KLog.d("FlowMeasureFormActivity", wk_cur_sub_node_id);
