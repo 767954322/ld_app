@@ -897,7 +897,7 @@ public class MPServerHttpManager {
      */
     public void get3DPlanInfoData(String needs_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELIVER +
-                "/references/" + needs_id +
+                "references/" + needs_id +
                 "?limit=10" +
                 "&offset=0" +
                 "&designer_id=" + designer_id;
