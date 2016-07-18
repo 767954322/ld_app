@@ -3,14 +3,13 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.entity;
 import java.io.Serializable;
 
 /**
- * @author Malidong .
- * @version 1.0 .
- * @date 16-6-7
- * @file DesignContractBean.java  .
- * @brief .
+ * @author Malidong.
+ * @version v1.0 .
+ * @date 2016-6-23 .
+ * @file MPContractDataBean.java .
+ * @brief 具体合同表单的实体类 .
  */
-public class DesignContractBean implements Serializable {
-
+public class MPContractDataBean implements Serializable {
     private String name;
     private String mobile;
     private String zip;

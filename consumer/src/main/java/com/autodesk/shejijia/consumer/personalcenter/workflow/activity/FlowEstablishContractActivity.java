@@ -19,8 +19,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.ContractNo;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DesignContractBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -174,8 +174,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             ll_agree_establish_contract.setVisibility(View.GONE);
             tvc_last_cost.setEnabled(false);
             tvc_designer_postcode.setEnabled(false);
-            if (mBidders.get(0).getDesign_contract() == null) { /// 如果是新的合同.
-                getContractNumber(); /// 获取合同编号.
+            if (mBidders.get(0).getDesign_contract() == null) {                         /// 如果是新的合同.
+                getContractNumber();                                                                   /// 获取合同编号.
                 tvc_consumer_name.setText(requirement.getContacts_name());
                 tvc_consumer_phone.setText(requirement.getContacts_mobile());
 
@@ -193,7 +193,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 }
                 tvc_consumer_decorate_address.setText(province_name + " " + city_name + " " + district_name);
                 tvc_consumer_detail_address.setText(requirement.getCommunity_name());
-                if (wk_cur_sub_node_idi == 31) { /// 设计师发完合同后可以继续发送按钮显示.
+                if (wk_cur_sub_node_idi == 31) {                                                            /// 设计师发完合同后可以继续发送按钮显示.
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.send_design_contract);
                 } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) { /// 当消费者发完设计首款按钮隐藏.
@@ -205,27 +205,26 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.send_design_contract);
                 }
-            } else { // 已有合同
-                if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) { /// 从项目资料跳转.
-                    /// 如果是已有的合同设置所有得按键都不可点击 .
-                    setTvcCannotClickable();
+            } else {                                                                                                             /// 已有合同
+                if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {                  /// 从项目资料跳转.
+                    setTvcCannotClickable();                                                                       /// 如果是已有的合同设置所有得按键都不可点击 .
                 }
-                if (wk_cur_sub_node_idi == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
+                if (wk_cur_sub_node_idi == 31) {                                                              /// 设计师发完合同后可以继续发送按钮显示 .
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.send_design_contract);
-                } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) { /// 当消费者发完设计首款按钮隐藏 .
+                } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) {   /// 当消费者发完设计首款按钮隐藏 .
                     ll_send.setVisibility(View.GONE);
                 } else if (wk_cur_sub_node_idi == 33) {
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.uploaded_deliverable);
                 }
                 MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
-                if (null == designContractEntity ) {
+                if (null == designContractEntity) {
                     return;
                 }
                 String contractData = designContractEntity.getContract_data();
-                String str = contractData.toString().replace("@jr@", "\""); /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
-                DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);
+                String str = contractData.toString().replace("@jr@", "\"");                  /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
+                MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
                 String zip = designContractBean.getZip();
                 String email = designContractBean.getEmail();
                 zip = (TextUtils.isEmpty(zip) || "null".equals(zip)) ? "" : zip;
@@ -257,7 +256,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
 
             /**
-             *  @brief 发送合同 .
+             *  发送合同 .
              */
             btn_send.setOnClickListener(new View.OnClickListener() {
 
@@ -268,16 +267,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             });
 
         } else if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberType)) { /// 消费者 .
-            /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
-            setTvcCannotClickable();
+            setTvcCannotClickable();                                                                  /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
 
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
-            if (null == designContractEntity ) {
+            if (null == designContractEntity) {
                 return;
             }
             String contractData = designContractEntity.getContract_data();
             final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
-            DesignContractBean designContractBean = GsonUtil.jsonToBean(str, DesignContractBean.class);
+            MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
             String zip = designContractBean.getZip();
             String email = designContractBean.getEmail();
             zip = TextUtils.isEmpty(zip) ? "" : zip;
@@ -392,7 +390,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                contractNo = new Gson().fromJson(jsonObject.toString(), ContractNo.class);
+                contractNo = new Gson().fromJson(jsonObject.toString(), MPContractNoBean.class);
                 contract_no = contractNo.getContractNO(); /// 获取合同编号 .
                 tv_contract_number.setText(contract_no); /// 设置合同编号 .
             }
@@ -783,7 +781,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private LinearLayout ll_agree_establish_contract;
 
     private DesignerInfoDetails list;
-    private ContractNo contractNo; // 设计合同编号对象
+    private MPContractNoBean contractNo; // 设计合同编号对象
     private AddressDialog mChangeAddressDialog;
     private AlertView mDesignContract;
 

@@ -12,7 +12,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.AgreeResponseBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPMeasureFormBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -350,8 +350,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                AgreeResponseBean mAgreeResponseBean = GsonUtil.jsonToBean(userInfo, AgreeResponseBean.class);
-                updateViewFromData(mAgreeResponseBean);
+                MPMeasureFormBean mMPMeasureFormBean = GsonUtil.jsonToBean(userInfo, MPMeasureFormBean.class);
+                updateViewFromData(mMPMeasureFormBean);
             }
 
             @Override
@@ -364,10 +364,10 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         MPServerHttpManager.getInstance().agreeResponseBid(jsonObject, okResponseCallback);
     }
 
-    private void updateViewFromData(AgreeResponseBean mAgreeResponseBean) {
+    private void updateViewFromData(MPMeasureFormBean mMPMeasureFormBean) {
         CustomProgress.cancelDialog();
 
-        List<AgreeResponseBean.BiddersEntity> bidders = mAgreeResponseBean.getBidders();
+        List<MPMeasureFormBean.BiddersBean> bidders = mMPMeasureFormBean.getBidders();
         if (bidders != null && bidders.size() > 0) {
             wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
             KLog.d("FlowMeasureFormActivity", wk_cur_sub_node_id);

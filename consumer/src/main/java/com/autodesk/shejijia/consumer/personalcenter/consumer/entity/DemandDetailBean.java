@@ -10,47 +10,9 @@ import java.util.List;
  * @version 1.0 .
  * @date 16-6-7 上午11:20
  * @file DemandDetailBean.java  .
- * @brief 修改需求 .
+ * @brief 修改需求成功后返回数据的实体类 .
  */
 public class DemandDetailBean implements Serializable {
-
-    /**
-     * after_bidding_status : null
-     * beishu_thread_id : null
-     * bidder_count : 0
-     * bidders : null
-     * bidding_status : false
-     * city : 110100
-     * city_name : 北京市
-     * click_number : 0
-     * community_name : 15253642
-     * consumer_mobile : 13111111111
-     * consumer_name : SB
-     * contacts_mobile : 15451321345
-     * contacts_name : 545445
-     * contract : null
-     * custom_string_status : 1
-     * decoration_budget : 5万以下
-     * decoration_style : 日式
-     * delivery : []
-     * design_budget : 3000以下
-     * detail_desc : desc
-     * district : 110101
-     * district_name : 东城区
-     * end_day : 29
-     * house_area : 1515
-     * house_type : 住宅空间
-     * is_beishu : 1
-     * is_public : 1
-     * living_room : 一厅
-     * needs_id : 1557820
-     * province : 110000
-     * province_name : 北京
-     * publish_time : 2016-03-25 15:28:58
-     * room : 一室
-     * toilet : 一卫
-     * wk_template_id : 1
-     */
 
     private Object after_bidding_status;
     private Object beishu_thread_id;

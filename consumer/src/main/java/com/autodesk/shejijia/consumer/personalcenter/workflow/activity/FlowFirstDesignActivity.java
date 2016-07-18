@@ -11,9 +11,9 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.AliPayBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPAliPayBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
 import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
@@ -116,7 +116,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
             btn_flow_first_design_send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    WkFlowDetailsBean.RequirementEntity.BiddersEntity.OrdersEntity order = null;
+                    MPOrderBean order = null;
                     order = getOrderEntityByStep(FlowFirstDesignActivity.this.wk_cur_ActionNode_id);
                     if (order == null)
                         return;
@@ -162,7 +162,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 Log.d("FlowFirstDesignActivity", userInfo);
                 KLog.json(TAG, userInfo);
 
-                AliPayBean aliPayBean = GsonUtil.jsonToBean(userInfo, AliPayBean.class);
+                MPAliPayBean MPAliPayBean = GsonUtil.jsonToBean(userInfo, MPAliPayBean.class);
                 String amount;
                 String notifyURL;
                 String tradeNO;
@@ -170,12 +170,12 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 String Seller;
                 String Partner;
 
-                Seller = aliPayBean.getSeller();
-                Partner = aliPayBean.getPartner();
-                productName = aliPayBean.getProductName();
-                amount = aliPayBean.getAmount();
-                notifyURL = aliPayBean.getNotifyURL();
-                tradeNO = aliPayBean.getTradeNO();
+                Seller = MPAliPayBean.getSeller();
+                Partner = MPAliPayBean.getPartner();
+                productName = MPAliPayBean.getProductName();
+                amount = MPAliPayBean.getAmount();
+                notifyURL = MPAliPayBean.getNotifyURL();
+                tradeNO = MPAliPayBean.getTradeNO();
 
                 AliPayService PayService = new AliPayService(Seller, Partner, productName, amount, notifyURL, productName, tradeNO);
                 PayService.SetCallBack(AliCallBack);

@@ -7,17 +7,17 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPAliPayBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
+import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.AliPayBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
-import com.autodesk.shejijia.consumer.utils.AliPayService;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
@@ -50,7 +50,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay_measure: /// 支付量房费 .
-                WkFlowDetailsBean.RequirementEntity.BiddersEntity.OrdersEntity order = getOrderEntityByStep(this.wk_cur_ActionNode_id);
+                MPOrderBean order = getOrderEntityByStep(this.wk_cur_ActionNode_id);
                 if (order == null) {
                     return;
                 }
@@ -140,7 +140,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 KLog.json(TAG, userInfo);
 
-                AliPayBean aliPayBean = GsonUtil.jsonToBean(userInfo, AliPayBean.class);
+                MPAliPayBean MPAliPayBean = GsonUtil.jsonToBean(userInfo, MPAliPayBean.class);
 
                 String amount;
                 String notifyURL;
@@ -149,12 +149,12 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
                 String Seller;
                 String Partner;
 
-                Seller = aliPayBean.getSeller();
-                Partner = aliPayBean.getPartner();
-                productName = aliPayBean.getProductName();
-                amount = aliPayBean.getAmount();
-                notifyURL = aliPayBean.getNotifyURL();
-                tradeNO = aliPayBean.getTradeNO();
+                Seller = MPAliPayBean.getSeller();
+                Partner = MPAliPayBean.getPartner();
+                productName = MPAliPayBean.getProductName();
+                amount = MPAliPayBean.getAmount();
+                notifyURL = MPAliPayBean.getNotifyURL();
+                tradeNO = MPAliPayBean.getTradeNO();
 
                 AliPayService PayService = new AliPayService(Seller, Partner, productName, amount, notifyURL, productName, tradeNO);
                 PayService.SetCallBack(AliCallBack);

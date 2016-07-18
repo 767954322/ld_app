@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * <p>Description:家装订单</p>
- * <p>Copyright: Copyright (c) 2016</p>
- * <p>Company: http://www.leediancn.com</p>
- *
  * @author he.liu .
- * @date 2016-07-17.
+ * @version 1.0 .
+ * @date 16-6-7 上午11:20
+ * @file DecorationListBean.java  .
+ * @brief 家装订单信息的实体类 .
  */
 public class DecorationNeedsListBean implements Serializable {
     /**
