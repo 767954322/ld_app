@@ -2,10 +2,6 @@ package com.autodesk.shejijia.consumer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -193,7 +189,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, info.need_id);
         intent_measure_room_cost.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
+        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
         context.startActivity(intent_measure_room_cost);
     }
 
@@ -221,13 +217,10 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         String Wk_cur_node_id;
 
         WkFlowDetailsBean wkFlowDetailsBean = new Gson().fromJson(OrderDetailsInfo, WkFlowDetailsBean.class);
-        Log.d("test", "Wk_template_id:" + wkFlowDetailsBean.toString());
         String Wk_cur_sub_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_sub_node_id();
         wk_cur_sub_node_idi = Integer.valueOf(Wk_cur_sub_node_id);
         Wk_template_id = wkFlowDetailsBean.getRequirement().getWk_template_id();
         Wk_cur_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_node_id();
-        Log.d("test", "Wk_cur_node_id:" + Wk_cur_node_id);
-
 
         if (Wk_template_id.equals("1")) {
 

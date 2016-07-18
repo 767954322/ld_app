@@ -243,7 +243,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvProjectBudget.setText(requirement.getDesign_budget() + "");
         tvc_measure_fitment_budget.setText(requirement.getDecoration_budget());
 
-        tvc_measure_form_area.setText(requirement.getHouse_area()+"m²");
+        tvc_measure_form_area.setText(requirement.getHouse_area() + "m²");
 
         tvc_measure_form_address.setText(province_name + " " + city_name + " " + district_name);
         tvc_measure_form_estate.setText(requirement.getCommunity_name());
@@ -340,8 +340,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     }
 
     /**
-     * @param jsonObject
-     * @brief 消费者同意应标 .
+     * 消费者同意应标 .
      */
     public void agreeResponseBid(JSONObject jsonObject) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {

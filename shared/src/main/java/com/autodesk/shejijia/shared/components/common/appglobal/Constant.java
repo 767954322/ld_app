@@ -105,6 +105,9 @@ public class Constant {
         public static final String BUNDLE_SUB_NODE_ID = "WORK_FLOW_SUB_NODE_ID";
         public static final String BUNDLE_ACTION_NODE_ID = "WORK_ACTION_NODE_ID";
         public static final String BUNDLE_DESIGNER_ID = "DESIGNER_ID";
+//        public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
+//        public static final String IM_TO_FLOW_NEEDS_ID = "imToFlowNeeds";
+//        public static final String IM_TO_FLOW_NODE_ID = "imToFlowNode";
     }
 
     /**
