@@ -126,7 +126,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                     String date = sDateFormat.format(new Date());
 
-                    if (currentTime == null) {
+                    if (TextUtils.isEmpty(currentTime)) {
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();
                     } else {
@@ -141,8 +141,9 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_NAME, user_name);
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_MOBILE_NUMBER, mobile_number);
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ORDER_TYPE, 0);
-                            if (amount == null) {
-                                jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.01);
+                            if (TextUtils.isEmpty(amount) || "null".equals(amount)) {
+                                /// TODO  修改默认量房费 0.01 为 0.00 .
+                                jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.00);
                             } else {
                                 jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, amount);
                             }
@@ -177,13 +178,9 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
-
         updateDisplayData();
-
         updateRoomData();
-
         updateCityData();
-
         /// time .
         setMeasureTime();
     }
@@ -239,25 +236,25 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         }
         user_name = requirement.getContacts_name();
         mobile_number = requirement.getContacts_mobile();
-        amount = requirement.getBidders().get(0).getMeasurement_fee();
+        amount = mBidders.get(0).getMeasurement_fee();
 
         tvName.setText(user_name);
         tvPhone.setText(mobile_number);
         tvProjectBudget.setText(requirement.getDesign_budget() + "");
         tvc_measure_fitment_budget.setText(requirement.getDecoration_budget());
-        tvc_measure_form_area.setText(requirement.getHouse_area()+"m²");
+        tvc_measure_form_area.setText(requirement.getHouse_area() + "m²");
 
         tvc_measure_form_address.setText(province_name + " " + city_name + " " + district_name);
         tvc_measure_form_estate.setText(requirement.getCommunity_name());
-        if (TextUtils.isEmpty(amount) || "null".equals(amount)) { /// 如果量房费空就默认为0.00 .
+        if (TextUtils.isEmpty(amount) || "null".equals(amount)) {                       /// 如果量房费空就默认为0.00 .
             amount = "0.00";
             tvc_measure_form_fee.setText(amount);
         } else {
-            tvc_measure_form_fee.setText(requirement.getBidders().get(0).getMeasurement_fee());
+            tvc_measure_form_fee.setText(mBidders.get(0).getMeasurement_fee());
         }
     }
 
-    private void updateRoomData() { /// 将获取到的数据变成可读的室卫厅 .
+    private void updateRoomData() {                                                                 /// 将获取到的数据变成可读的室卫厅 .
         roomJson = AppJsonFileReader.getRoomHall(this);
         livingRoomJson = AppJsonFileReader.getLivingRoom(this);
         toiletJson = AppJsonFileReader.getToilet(this);
