@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.TransactionRecordBean;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -44,28 +46,49 @@ public class TransactionRecordAdapter extends BaseAdapter<TransactionRecordBean.
 
     @Override
     public void initItem(View view, Holder holder, int position) {
-        ((ViewHolder) holder).tv_project_name.setText(mDatas.get(position).getName());
 
-        String data = DateUtil.showDate(mDatas.get(position).getCreate_date());
+        if (null != mDatas && null != mDatas.get(position)) {
+            String name = mDatas.get(position).getName();
+            if (!TextUtils.isEmpty(name)) {
+                ((ViewHolder) holder).tv_project_name.setText(name);
+            }
 
-        ((ViewHolder) holder).tv_project_time.setText(data);
+            String order_line_id = mDatas.get(position).getOrder_line_id() + "";
+            if (!TextUtils.isEmpty(order_line_id)) {
+                ((ViewHolder) holder).tv_order_reference.setText(order_line_id);
+            }
 
-        ((ViewHolder) holder).tv_order_reference.setText(mDatas.get(position).getOrder_line_id() + "");
-        ((ViewHolder) holder).tv_transaction_name.setText(mDatas.get(position).getTitle());
-        ((ViewHolder) holder).tv_transaction_amount.setText("¥" + mDatas.get(position).getAdjustment());
-        if (mDatas.get(position).getType().equals("0")) {
-            ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.no_payment));
-        } else if (mDatas.get(position).getType().equals("1")) {
-            ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.paid));
-        } else if (mDatas.get(position).getType().equals("2")) {
-            ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.transfer_room_design));
-        } else if (mDatas.get(position).getType().equals("3")) {
-            ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.has_been_booked));
+            String title = mDatas.get(position).getTitle();
+            if (!TextUtils.isEmpty(title)) {
+                ((ViewHolder) holder).tv_transaction_name.setText(title);
+            }
+
+            long create_date = mDatas.get(position).getCreate_date();
+            String data = DateUtil.showDate(create_date);
+            ((ViewHolder) holder).tv_project_time.setText(data);
+
+            double adjustment = mDatas.get(position).getAdjustment();
+            ((ViewHolder) holder).tv_transaction_amount.setText("¥" + adjustment);
+
+            String type = mDatas.get(position).getType();
+            if (!TextUtils.isEmpty(type)) {
+                if (type.equals("0")) {
+                    ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.no_payment));
+                } else if (type.equals("1")) {
+                    ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.paid));
+                } else if (type.equals("2")) {
+                    ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.transfer_room_design));
+                } else if (type.equals("3")) {
+                    ((ViewHolder) holder).tv_transaction_type.setText(UIUtils.getString(R.string.has_been_booked));
+                }
+            }
+
         }
+
 
     }
 
-    public class ViewHolder extends BaseAdapter.Holder {
+    public class ViewHolder extends Holder {
         TextView tv_project_name;
         TextView tv_project_time;
         TextView tv_transaction_name;

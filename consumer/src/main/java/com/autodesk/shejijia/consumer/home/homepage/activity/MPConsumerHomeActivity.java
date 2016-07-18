@@ -42,6 +42,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MPConsumerHomeActivity extends BaseHomeActivity {
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -69,22 +71,21 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-        if (savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             // retrieve the fragment handle from fragmentmanager
-            mUserHomeFragment = (UserHomeFragment)getFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
+            mUserHomeFragment = (UserHomeFragment) getFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
             if (mUserHomeFragment != null)
                 mFragmentArrayList.add(mUserHomeFragment);
 
-            mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment)getFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
+            mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment) getFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
             if (mDesignerPersonalCenterFragment != null)
                 mFragmentArrayList.add(mDesignerPersonalCenterFragment);
 
-            mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment)getFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
+            mConsumerPersonalCenterFragment = (ConsumerPersonalCenterFragment) getFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
             if (mConsumerPersonalCenterFragment != null)
                 mFragmentArrayList.add(mConsumerPersonalCenterFragment);
 
-            mBidHallFragment = (BidHallFragment)getFragmentManager().findFragmentByTag(BID_FRAGMENT_TAG);
+            mBidHallFragment = (BidHallFragment) getFragmentManager().findFragmentByTag(BID_FRAGMENT_TAG);
             if (mBidHallFragment != null)
                 mFragmentArrayList.add(mBidHallFragment);
         }
@@ -122,12 +123,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            designer_main_radio_group.check(getCurrentCheckedRadioButtonId());
+            designer_main_radio_group.check(index);
 
         }
         //登陆消费者时，会进入
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-            designer_main_radio_group.check(getCurrentCheckedRadioButtonId());
+            designer_main_radio_group.check(index);
         }
 
         //未登录状态，会自动进入案例fragment
@@ -168,6 +169,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
+        this.index =index;
 
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
             mUserHomeFragment = new UserHomeFragment();
@@ -420,6 +422,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     private RadioButton mDesignerIndentListBtn;
     private RadioButton designer_main_radio_btn;
     private RadioGroup designer_main_radio_group;
+
+    private int index;
 
     private UserHomeFragment mUserHomeFragment;
     private BidHallFragment mBidHallFragment;
