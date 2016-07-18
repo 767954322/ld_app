@@ -21,7 +21,7 @@ public class MPEnterpriseHomeActivity extends BaseHomeActivity
     }
 
 
-    protected int getDesignerSessionRadioBtnId()
+    protected int getIMButtonId()
     {
         return R.id.designer_session_radio_btn;
     }

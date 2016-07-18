@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+
 /**
  * @author Malidong .
  * @version 1.0 .
@@ -166,7 +167,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected String wk_cur_sub_node_id;
     protected String needs_id;
 
-    //    protected DesignerInfoDetails designerInfoList;
     protected MemberEntity memberEntity;
     protected WkFlowDetailsBean mCurrentWorkFlowDetail;
     protected WkFlowDetailsBean.RequirementEntity requirement;

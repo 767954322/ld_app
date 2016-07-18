@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
@@ -27,7 +30,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
@@ -35,7 +37,6 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
@@ -140,7 +141,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @param hs_uid
      */
     public void getRealNameAuditStatus(String designer_id, String hs_uid) {
-
         MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -157,11 +157,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
                 if (MeasureFormActivity.this != null) {
                     showAlertView(UIUtils.getString(R.string.desiner_not_real_name_authentication));
                 }
@@ -353,7 +353,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     private boolean checkMeasureArea(String area) {
-
         String[] split = area.split("\\.");
         if (null != split) {
 
@@ -675,62 +674,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             }
         });
     }
-
     /**
-<<<<<<< HEAD
-=======
-     * <<<<<<< HEAD
-     * =======
-     *
->>>>>>> 4cc203edb8f38a8f450d30db85fae4dc163b04ff
-     * @param needs_id
-     * @param designer_id
-     * @brief 获取个人信息详情
-     */
-    public void getOrderDetailsInfo(String needs_id, String designer_id) {
-        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
-                String userInfo = GsonUtil.jsonToString(jsonObject);
-                wkFlowDetailsBean = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
-                WkFlowDetailsBean.RequirementEntity requirement = wkFlowDetailsBean.getRequirement();
-                if (requirement == null) {
-                    return;
-                }
-                tvc_name.setText(requirement.getContacts_name());
-                tvc_phone.setText(requirement.getContacts_mobile());
-                tvc_project_budget.setText(requirement.getDesign_budget() + "");
-                tvc_fitment_budget.setText(requirement.getDecoration_budget());
-                tvc_area.setText(requirement.getHouse_area() + "m²");
-                tvc_house_type.setText(requirement.getHouse_type());
-                tvc_time.setText(requirement.getPublish_time());
-                tvc_address.setText(requirement.getCity() + requirement.getProvince() + requirement.getDistrict());
-                tvc_estate.setText(requirement.getCommunity_name());
-                List<MPBidderBean> bidders = requirement.getBidders();
-                if (null != bidders && bidders.size() > 0) {
-                    String measurement_fee = bidders.get(0).getMeasurement_fee();
-                    measurement_fee = UIUtils.getNodataIfEmpty(measurement_fee);
-                    tv_measure_fee.setText(measurement_fee);
-                }
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.cancelDialog();
-            }
-        };
-        MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, designer_id, okResponseCallback);
-    }
-
-
-    /**
-<<<<<<< HEAD
-=======
-     * >>>>>>> 70479696f352cc8b3f961b9dc90db280b920cc46
-     * )
->>>>>>> 4cc203edb8f38a8f450d30db85fae4dc163b04ff
      * 提交量房数据
      *
      * @param jsonObject
@@ -740,9 +684,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
                 KLog.d(TAG, jsonObject);
-
                 showAlertView(UIUtils.getString((R.string.consume_send_success)));
-
                 CustomProgress.cancelDialog();
             }
 

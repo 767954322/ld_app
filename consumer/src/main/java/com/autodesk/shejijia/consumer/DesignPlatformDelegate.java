@@ -89,8 +89,8 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
     }
 
-    public int getImageForProjectInfo(String OrderDetailsInfo) {
-        return getWorkflowButtonIco(OrderDetailsInfo);
+    public int getImageForProjectInfo(String OrderDetailsInfo, boolean ifIsDesiner) {
+        return getWorkflowButtonIco(OrderDetailsInfo, ifIsDesiner);
     }
 
     public void onChatRoomSupplementryButtonClicked(Context context, String assetId, String recieverId) {
@@ -172,7 +172,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("test",volleyError.toString());
+                Log.d("test", volleyError.toString());
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hsUid, okResponseCallback);
@@ -215,7 +215,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
     }
 
 
-    private int getWorkflowButtonIco(String OrderDetailsInfo) {
+    private int getWorkflowButtonIco(String OrderDetailsInfo, boolean ifIsDesiner) {
         int wk_cur_sub_node_idi;
         String Wk_template_id;
         String Wk_cur_node_id;
@@ -270,8 +270,12 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                         return -1;
                 }
             } else {
-                return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
 
+                if (!ifIsDesiner) {
+                    return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
+                } else {
+                    return -1;
+                }
             }
 
         } else if (Wk_template_id.equals("2")) {
@@ -319,9 +323,8 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         }
 
 
-        return 0;
+        return -1;
     }
-
 
 
 }

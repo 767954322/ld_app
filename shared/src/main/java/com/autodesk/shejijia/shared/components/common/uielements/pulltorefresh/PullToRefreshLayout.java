@@ -518,8 +518,6 @@ public class PullToRefreshLayout extends RelativeLayout {
                 requestLayout();
         }
     }
-
-
     /**
      * 自动刷新
      */

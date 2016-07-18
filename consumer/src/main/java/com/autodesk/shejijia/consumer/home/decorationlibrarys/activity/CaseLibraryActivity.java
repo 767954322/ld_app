@@ -150,6 +150,7 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
      * @param state
      */
     private void updateViewFromData(CaseLibraryBean mCaseLibraryBean, int state) {
+
         switch (state) {
             case 0:
                 OFFSET = 10;

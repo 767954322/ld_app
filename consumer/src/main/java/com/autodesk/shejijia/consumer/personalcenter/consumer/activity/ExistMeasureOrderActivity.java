@@ -89,7 +89,8 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     }
 
     private void showState() {
-        if (!fee.isEmpty() && !fee.equals("0")) {
+
+        if (!fee.isEmpty()&& !fee.equals("0")) {
             double dFee = Double.valueOf(fee);
             DecimalFormat df1 = new DecimalFormat("#####.00");
             tv_measure_fee.setText(df1.format(dFee) + "元");
@@ -256,6 +257,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     private void updateViewFromData(DecorationListBean decorationListBean) {
         ArrayList<DecorationNeedsListBean> mList = new ArrayList<>();
         mList.addAll(decorationListBean.getNeeds_list());
+
         int size = mList.size();
         for (int i = 0; i < size; i++) {
             String wk_template_id = mList.get(i).getWk_template_id();
@@ -339,6 +341,6 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     private String designer_id;
     private String hs_uid;
     private int expandFlag = -1;// 控制列表的展开
-
     private ArrayList<DecorationNeedsListBean> dList = new ArrayList<>();
+
 }
