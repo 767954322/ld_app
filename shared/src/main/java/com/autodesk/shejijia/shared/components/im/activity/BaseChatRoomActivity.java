@@ -315,7 +315,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
             int screenHeight = screenDimension[1];
             if (screenHeight - yPos > measuredHeight + 100) // picking 100 just as a tolerance
             {
-                if (mMessageList.size() > 0)
+                if (mMessageList.size() > 0 && !mIsKeyboardVisible)
                     mMessageListView.smoothScrollToPosition(mMessageList.size() - 1 + mMessageListView.getHeaderViewsCount());
 
                 mIsKeyboardVisible = true;
