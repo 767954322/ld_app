@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -85,7 +86,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoList = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 KLog.json("FlowFirstDesignActivity", jsonString);
-                upDataViewFromInfoData();
+                updateViewFromInfoData();
             }
 
             @Override
@@ -132,11 +133,16 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         }
     }
 
-    private void upDataViewFromInfoData() {
+    private void updateViewFromInfoData() {
         if (!designerInfoList.equals(null)) {
             tv_flow_first_design_name.setText(designerInfoList.getReal_name().getReal_name());
             tv_flow_first_design_phone.setText(designerInfoList.getReal_name().getMobile_number().toString());
-            tv_flow_first_design_deduct_measure_cost.setText(designerInfoList.getDesigner().getMeasurement_price().toString()); // 已扣除量房费
+
+            String measurement_price = designerInfoList.getDesigner().getMeasurement_price();
+            if (TextUtils.isEmpty(measurement_price) || "0".equals(measurement_price)) {
+                measurement_price = "0.00";
+            }
+            tv_flow_first_design_deduct_measure_cost.setText(measurement_price); // 已扣除量房费
 
             MPDesignContractBean designContractEntity = mCurrentWorkFlowDetail.getRequirement().getBidders().get(0).getDesign_contract();
             if (null == designContractEntity) {

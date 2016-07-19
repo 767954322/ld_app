@@ -102,7 +102,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                         switch (mWk_template_id_int) {
                             case 1:
                                 textColor = StepEnableColor;
-                                viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
+                                viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
                                 viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_agreed_room_invitation));
                                 break;
                             case 2:
