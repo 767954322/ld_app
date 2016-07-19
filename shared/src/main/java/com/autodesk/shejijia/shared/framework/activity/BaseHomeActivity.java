@@ -1,7 +1,5 @@
 package com.autodesk.shejijia.shared.framework.activity;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +8,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -55,7 +55,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         // retrieve the fragment handle from fragmentmanager
         if (savedInstanceState != null)
         {
-            mMPThreadListFragment = (MPThreadListFragment)getFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
+            mMPThreadListFragment = (MPThreadListFragment)getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
             mFragmentArrayList.add(mMPThreadListFragment);
 
             showFragment(getCurrentCheckedRadioButtonId());
@@ -175,7 +175,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected void loadMainFragment(Fragment fragment, String tag) {
         mFragmentArrayList.add(fragment);
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(getMainContentId(), fragment, tag);
         fragmentTransaction.commit();
     }
@@ -247,7 +247,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MPThreadListFragment threadListFragment = null;
         BaseFragment f = null;
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : mFragmentArrayList) {
             if (fragment.getClass().equals(clazz)) {
                 fragmentTransaction.show(fragment);

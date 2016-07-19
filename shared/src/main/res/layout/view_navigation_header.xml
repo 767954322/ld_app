@@ -21,6 +21,16 @@
             android:src="@drawable/icon_back_normal_z"
             android:visibility="visible"/>
 
+        <com.autodesk.shejijia.shared.components.common.uielements.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/size_33"
+            android:layout_height="@dimen/size_33"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/chat_room_commandcell_avatar_margintop"
+            android:layout_marginLeft="@dimen/chat_room_commandcell_avatar_marginleft"
+            android:src="@drawable/default_useravatar"
+            android:scaleType="centerCrop" />
+
         <TextView
             android:id="@+id/nav_left_textView"
             android:layout_width="wrap_content"
