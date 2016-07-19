@@ -9,6 +9,8 @@ import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesU
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.socks.library.KLog;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONObject;
 
@@ -16,6 +18,15 @@ public class ConsumerApplication extends AdskApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        reqisterWXAppId();
+    }
+
+    private void reqisterWXAppId() {
+
+        api = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        api.registerApp(APP_ID);
+
     }
 
     @Override
@@ -58,7 +69,8 @@ public class ConsumerApplication extends AdskApplication {
         MPServerHttpManager.getInstance().getLoginThreadId(designer_id, okResponseCallback);
     }
 
-
+    private static final String APP_ID = "WX_App_id";
+    public static IWXAPI api;
     private DesignPlatformDelegate mDesignPlatformDelegate = new DesignPlatformDelegate();
 
 }
