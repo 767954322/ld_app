@@ -192,7 +192,7 @@
             android:value="developer-default"/>
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="92ad078cc1062fd00744aa8f"/>
+            android:value="4294fc4dfddbcfb93d7aba73"/>
 
         <!-- ＵＭ统计 -->
         <meta-data
