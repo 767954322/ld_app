@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.MPCameraUtils;
@@ -67,9 +68,15 @@ public class MPPhotoPickerAdapter extends BaseAdapter{
         if (convertView == null)
         {
             view = inflater.inflate(R.layout.item_photopicker_cell, null);
+
             cell = new PhotoPickerCell();
             cell.image = (ImageView) view.findViewById(R.id.photopicker_cell_thumbnail);
             cell.selectionIndicator = (ImageView) view.findViewById(R.id.photopicker_cell_selectionindicator);
+
+            // Resize the imageview to the calculated cell size
+            RelativeLayout.LayoutParams imageLayoutParams = new RelativeLayout.LayoutParams
+                    (mCellWidth, mCellWidth);
+            cell.image.setLayoutParams(imageLayoutParams);
 
             view.setTag(cell);
         }
