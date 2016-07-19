@@ -307,7 +307,7 @@ public class MPPhotoPickerFragment extends Fragment implements
 
         if (mAssetId != null && mMemberId != null && mXToken != null)
         {
-            MPPhotoAlbumUtility.getCloudCollection(getActivity(), mXToken, mAssetId,
+            MPPhotoAlbumUtility.getCloudCollectionAsync(getActivity(), mXToken, mAssetId,
                     mMemberId, new MPPhotoAlbumUtility.CollectionFetchListener()
                     {
                         @Override

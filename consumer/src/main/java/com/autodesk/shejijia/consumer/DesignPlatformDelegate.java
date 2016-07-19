@@ -320,4 +320,25 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
     }
 
 
+    public void getCloudFilesAsync(final String X_Token, final String assetId, final String memberId,
+                                    final OkJsonRequest.OKResponseCallback callback)
+    {
+        MPServerHttpManager.getInstance().getCloudFiles(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback()
+        {
+            @Override
+            public void onErrorResponse(VolleyError volleyError)
+            {
+                callback.onErrorResponse(volleyError);
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject)
+            {
+                callback.onResponse(jsonObject);
+            }
+        });
+    }
+
+
+
 }

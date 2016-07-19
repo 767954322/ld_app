@@ -12,9 +12,11 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatHomeStylerCloudfile;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatHomeStylerCloudfiles;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONObject;
 
@@ -473,48 +475,45 @@ public class MPPhotoAlbumUtility
         album.isSelected = false;
         album.thumbnailOrientation = 0;
 
-        //TODO REFACTORING
-//        MPServerHttpManager.getInstance().getCloudFiles(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError)
-//            {
-//                MPNetworkUtils.logError("MPPhotoAlbumUtility", volleyError);
-//
-//                listener.onError();
-//            }
-//
-//            @Override
-//            public void onResponse(JSONObject jsonObject)
-//            {
-//                try
-//                {
-//                    String userInfo = new String(jsonObject.toString().getBytes("ISO-8859-1"),
-//                            "UTF-8");
-//                    MPChatHomeStylerCloudfiles cloudfiles = MPChatHomeStylerCloudfiles.
-//                            fromJSONString(userInfo);
-//
-//                    album.albumSize = cloudfiles.files.size();
-//
-//                    if (album.albumSize > 0)
-//                        album.thumbnailUri = cloudfiles.files.get(0).thumbnail + kCloudThumbnailQualifier;
-//
-//                    listener.onSuccess(album);
-//                }
-//                catch (Exception e)
-//                {
-//                    Log.d("MPPhotoAlbumUtility", "Exception while fetching cloud albums: " + e.getMessage());
-//                    e.printStackTrace();
-//
-//                    listener.onError();
-//                }
-//            }
-//        });
+        IWorkflowDelegate delegate = AdskApplication.getInstance().getIMWorkflowDelegate();
+        delegate.getCloudFilesAsync(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback()
+        {
+            @Override
+            public void onResponse(JSONObject jsonObject)
+            {
+                try
+                {
+                    String userInfo = new String(jsonObject.toString().getBytes("ISO-8859-1"),
+                            "UTF-8");
+                    MPChatHomeStylerCloudfiles cloudfiles = MPChatHomeStylerCloudfiles.
+                            fromJSONString(userInfo);
+
+                    album.albumSize = cloudfiles.files.size();
+
+                    if (album.albumSize > 0)
+                        album.thumbnailUri = cloudfiles.files.get(0).thumbnail + kCloudThumbnailQualifier;
+
+                    listener.onSuccess(album);
+                }
+                catch (Exception e)
+                {
+                    Log.d("MPPhotoAlbumUtility", "Exception while fetching cloud albums: " + e.getMessage());
+                    listener.onError();
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError)
+            {
+                MPNetworkUtils.logError("MPPhotoAlbumUtility", volleyError);
+                listener.onError();
+            }
+        });
     }
 
-    public static void getCloudCollection(Context context, final String X_Token,
-                                          final String assetId, final String memberId,
-                                          final CollectionFetchListener listener)
+    public static void getCloudCollectionAsync(Context context, final String X_Token,
+                                               final String assetId, final String memberId,
+                                               final CollectionFetchListener listener)
     {
         assert (listener != null);
         assert (context != null);
@@ -528,51 +527,48 @@ public class MPPhotoAlbumUtility
         collection.albumId = kCloudAlbumId;
         collection.photos = new ArrayList<>();
 
-        // TODO: REFACTORING
-//        MPServerHttpManager.getInstance().getCloudFiles(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback()
-//        {
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError)
-//            {
-//                MPNetworkUtils.logError("MPPhotoAlbumUtility", volleyError);
-//
-//                listener.onError();
-//            }
-//
-//            @Override
-//            public void onResponse(JSONObject jsonObject)
-//            {
-//                try
-//                {
-//                    String userInfo = new String(jsonObject.toString().getBytes("ISO-8859-1"),
-//                            "UTF-8");
-//                    MPChatHomeStylerCloudfiles cloudfiles = MPChatHomeStylerCloudfiles.
-//                            fromJSONString(userInfo);
-//
-//                    for (MPChatHomeStylerCloudfile file : cloudfiles.files)
-//                    {
-//                        MPPhotoModel photo = new MPPhotoModel();
-//
-//                        photo.imageId = file.uid;
-//                        photo.orientation = 0;
-//                        photo.fullImageUri = file.url;
-//                        photo.thumbnailUri = file.thumbnail + kCloudThumbnailQualifier;
-//                        photo.isSelected = false;
-//
-//                        collection.photos.add(photo);
-//                    }
-//
-//                    listener.onSuccess(collection);
-//                }
-//                catch (Exception e)
-//                {
-//                    Log.d("MPPhotoAlbumUtility", "Exception while fetching cloud albums: " + e.getMessage());
-//                    e.printStackTrace();
-//
-//                    listener.onError();
-//                }
-//            }
-//        });
+        IWorkflowDelegate delegate = AdskApplication.getInstance().getIMWorkflowDelegate();
+        delegate.getCloudFilesAsync(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback()
+        {
+            @Override
+            public void onErrorResponse(VolleyError volleyError)
+            {
+                MPNetworkUtils.logError("MPPhotoAlbumUtility", volleyError);
+                listener.onError();
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject)
+            {
+                try
+                {
+                    String userInfo = new String(jsonObject.toString().getBytes("ISO-8859-1"),
+                            "UTF-8");
+                    MPChatHomeStylerCloudfiles cloudfiles = MPChatHomeStylerCloudfiles.
+                            fromJSONString(userInfo);
+
+                    for (MPChatHomeStylerCloudfile file : cloudfiles.files)
+                    {
+                        MPPhotoModel photo = new MPPhotoModel();
+
+                        photo.imageId = file.uid;
+                        photo.orientation = 0;
+                        photo.fullImageUri = file.url;
+                        photo.thumbnailUri = file.thumbnail + kCloudThumbnailQualifier;
+                        photo.isSelected = false;
+
+                        collection.photos.add(photo);
+                    }
+
+                    listener.onSuccess(collection);
+                }
+                catch (Exception e)
+                {
+                    Log.d("MPPhotoAlbumUtility", "Exception while fetching cloud albums: " + e.getMessage());
+                    listener.onError();
+                }
+            }
+        });
     }
 
     /**
