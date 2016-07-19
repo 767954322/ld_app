@@ -66,7 +66,7 @@
 
     <!--Tab-->
     <string name="tab_im">聊天</string>
-    <string name="tab_personalcenter">我</string>
+    <string name="tab_personalcenter">我的项目</string>
     <string name="tab_hall">应标大厅</string>
     <string name="tab_home">案例</string>
 
@@ -468,7 +468,7 @@
     <string name="my_family_order">我的装修项目</string>
     <string name="message_center">消息中心</string>
     <string name="consumer_more">更多</string>
-    <string name="designer_personal">个人中心</string>
+    <string name="designer_personal">我的装修项目</string>
     <string name="autonym_uploading">上传中...</string>
     <string name="finish_cur_pager">关闭</string>
     <!-- DecorationBeiShuFragment -->

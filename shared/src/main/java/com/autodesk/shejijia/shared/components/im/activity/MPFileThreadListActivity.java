@@ -1,8 +1,8 @@
 package com.autodesk.shejijia.shared.components.im.activity;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
@@ -32,7 +32,7 @@ public class MPFileThreadListActivity extends NavigationBarActivity
         bundle.putString(MPThreadListFragment.MEMBERTYPE, intent.getStringExtra(MPFileThreadListActivity.MEMBERTYPE));
         threadListFragment.setArguments(bundle);
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.thread_fragment, threadListFragment);
         fragmentTransaction.show(threadListFragment);
         fragmentTransaction.commit();

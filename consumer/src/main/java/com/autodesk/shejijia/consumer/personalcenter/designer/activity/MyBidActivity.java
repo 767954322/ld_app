@@ -1,10 +1,10 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
@@ -146,7 +146,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
      */
     private void setDefaultFragment() {
         beBeingFragment = new BidBidingFragment();
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().replace(R.id.fl_my_bid_container, beBeingFragment)
                 .commit();
