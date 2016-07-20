@@ -19,6 +19,7 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationN
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -180,7 +181,7 @@ public class DecorationBeiShuFragment extends Fragment {
                                     int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                                     intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-
+                                    intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                                 } else {
                                     intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, "");

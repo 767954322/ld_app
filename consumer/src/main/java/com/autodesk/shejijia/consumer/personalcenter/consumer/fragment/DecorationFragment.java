@@ -33,6 +33,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowSta
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
@@ -368,7 +369,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     intent.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
                     intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, memType);
-
+                    intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                     getActivity().startActivity(intent);
                 }
 

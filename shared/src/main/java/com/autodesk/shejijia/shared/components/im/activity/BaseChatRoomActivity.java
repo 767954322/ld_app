@@ -17,6 +17,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
@@ -56,6 +57,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     public static final String RECIEVER_USER_NAME = "reciever_user_name";
     public static final String ACS_MEMBER_ID = "acs_member_id"; //logged in user
     public static final String PROJECT_INFO = "project_info";
+    public static final String MEDIA_TYPE = "media_type";
 
     public interface CallBack {
         void call();
@@ -152,7 +154,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         mRecieverUserName = bundle.getString(RECIEVER_USER_NAME);
         mAcsMemberId = bundle.getString(ACS_MEMBER_ID);
         mProjectInfo = bundle.getParcelable(PROJECT_INFO);
-
+        mMediaType = bundle.getString(MEDIA_TYPE);
     }
 
     protected void putInstanceStateToBundle(Bundle bundle) {
@@ -164,6 +166,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         bundle.putString(RECIEVER_USER_NAME, mRecieverUserName);
         bundle.putString(ACS_MEMBER_ID, mAcsMemberId);
         bundle.putParcelable(PROJECT_INFO, mProjectInfo);
+        bundle.putString(MEDIA_TYPE, mMediaType);
     }
 
 
@@ -210,6 +213,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                     intent.putExtra(MPFileHotspotActivity.SERVERFILEURL, msg.body);
                     intent.putExtra(MPFileHotspotActivity.RECEIVERNAME, mRecieverUserName);
                     intent.putExtra(MPFileHotspotActivity.FILEID, String.valueOf(msg.media_file_id));
+                    intent.putExtra(MPFileHotspotActivity.MEDIA_TYPE,mMediaType);
                     this.startActivity(intent);
                     break;
                 case eAUDIO:
@@ -406,7 +410,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         markThreadAsRead();
         retrieveThreadMessagesWithOffset(mThreadId, 0);
 
-        if (mAssetId != null && !"0".equals(mAssetId)) {
+        if (StringUtils.isValidString(mAssetId)) {
             getProjectInfo();
         } else {
             changeConsumerUI();
@@ -577,7 +581,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
 
 
     protected void getProjectInfo() {
-        assert (mAssetId != null);
+        assert (StringUtils.isValidString(mAssetId));
 
         String designerId;
 
@@ -606,8 +610,10 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
             }
         };
 
-        if (mIWorkflowDelegate != null)
-            mIWorkflowDelegate.getProjectInfo(mAssetId, designerId, okResponseCallback);
+        if (mIWorkflowDelegate != null && mMediaType != null) {
+            if(MPChatUtility.isDesignMediaType(mMediaType))
+                mIWorkflowDelegate.getProjectInfo(mAssetId, designerId, okResponseCallback);
+        }
     }
 
     private void setHeaderViewVisibility(boolean visible) {
@@ -644,6 +650,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     protected String mReceiverHsUid;
     protected String mRecieverUserName;
     protected MPChatProjectInfo mProjectInfo;
+    protected String mMediaType;
 
 
     IWorkflowDelegate mIWorkflowDelegate;

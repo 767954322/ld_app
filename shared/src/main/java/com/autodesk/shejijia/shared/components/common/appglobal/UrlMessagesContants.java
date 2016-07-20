@@ -26,11 +26,13 @@ public class UrlMessagesContants {
             appID = "96";
             mediaIdProject = "53";
             mediaIdCase = "58";
+            mediaIdConstruction = "62";
         } else {       //    product  环境
             initializeMarketplaceWithAFC = "HW1ON1";
             appID = "96";
             mediaIdProject = "53";
             mediaIdCase = "58";
+            mediaIdConstruction = "62";
         }
         KLog.d("yxw", initializeMarketplaceWithAFC + "   appID  ");
     }
@@ -64,6 +66,7 @@ public class UrlMessagesContants {
     public static String initializeMarketplaceWithAFC = null;
     public static String appID = null;
     public static String mediaIdProject = null;
+    public static String mediaIdConstruction = null;
     public static String mediaIdCase = null;
     public static boolean isStaging;
 }

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
@@ -165,7 +166,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                         int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-
+                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                     } else {
 
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);

@@ -22,6 +22,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
@@ -374,6 +375,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                             int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                             intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                             intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                            intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                         } else {
                             intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
                             intent.putExtra(ChatRoomActivity.ASSET_ID, "");
