@@ -393,6 +393,7 @@ public class Constant {
         //        public static final String X_TOKEN = "X-Token";
         public static final String X_TOKEN_PREFIX = "Basic ";
         public static final String X_TOKEN = "Authorization";
+        public static final String X_XTOKEN = "X-Token";
         public static final String CONTENT_TYPE = "Content-Type";
         public static final String MEMBER_TYPE = "Member-Type";
         public static final String ACS_TOKEN = "ACS-Token";

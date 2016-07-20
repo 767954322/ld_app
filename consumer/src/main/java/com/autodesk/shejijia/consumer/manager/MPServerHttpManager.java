@@ -448,6 +448,27 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 发送点赞请求
+     * @param assetId
+     * @param callback
+     */
+    public void sendThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
+        String url =" http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/1553716";
+//        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
+        Log.d("yxw",url);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_XTOKEN, xToken);
+                Log.d("yxw",Constant.NetBundleKey.X_XTOKEN+"   "+xToken);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 判断是否是实名认证
      *
      * @param hsUid

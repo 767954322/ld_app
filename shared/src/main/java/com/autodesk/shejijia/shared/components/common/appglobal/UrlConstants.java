@@ -123,6 +123,11 @@ public final class UrlConstants {
      * 案例库详情.
      */
     public static final String URL_GET_CASE_DETAILS = MAIN_DESIGN + "/cases/";
+    /**
+     * 点赞接口
+     * http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/{asset_id}    
+     */
+    public static final String URL_GET_CASE_DETAILS_LIKE = MAIN_DESIGN + "/cases/like/";
 
     /**
      * 实名认证.
