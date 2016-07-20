@@ -43,6 +43,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionB
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -423,6 +424,9 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                 }
 
                 setSwipeRefreshInfo();
+                if (null == mMemberEntity) {
+                    return;
+                }
                 member_id = mMemberEntity.getAcs_member_id();
                 getConsumerInfoData(member_id);
             }
