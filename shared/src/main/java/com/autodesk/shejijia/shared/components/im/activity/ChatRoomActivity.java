@@ -75,13 +75,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         super.initData(savedInstanceState);
         mIsToolViewOpen = false;
 
-        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberType)) {
-            designerId = mAcsMemberId;
-            ifIsDesiner = true;
-        } else {
-            designerId = mRecieverUserId;
-            ifIsDesiner = false;
-        }
+
 
     }
 
@@ -522,9 +516,9 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     }
 
     private String mSnapshotFile;
-    private String designerId;
+
     private boolean mIsToolViewOpen;
-    private boolean ifIsDesiner = true;
+
 
     private RelativeLayout mAudioParentView;
     private RelativeLayout mBottomCustomLayout;

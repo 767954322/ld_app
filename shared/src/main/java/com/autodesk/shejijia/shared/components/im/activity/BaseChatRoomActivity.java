@@ -34,6 +34,7 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,6 +93,13 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
             getInstanceStateFromBundle(bundle);
         }
 
+        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberType)) {
+            designerId = mAcsMemberId;
+            ifIsDesiner = true;
+        } else {
+            designerId = mRecieverUserId;
+            ifIsDesiner = false;
+        }
         mMessageAdapter = new ChatRoomAdapter(this, this);
         mMessageListView.setAdapter(mMessageAdapter);
     }
@@ -579,13 +587,6 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     protected void getProjectInfo() {
         assert (mAssetId != null);
 
-        String designerId;
-
-        if (mMemberType.equalsIgnoreCase(Constant.UerInfoKey.DESIGNER_TYPE))
-            designerId = mAcsMemberId;
-        else
-            designerId = mRecieverUserId;
-
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(final JSONObject jsonObject) {
@@ -596,6 +597,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                     mProjectInfo = MPChatProjectInfo.fromJSONString(userInfo);
                     //TODO: Update the UI based on the project info
                     upDataTheUI(userInfo, mProjectInfo);
+
                 } catch (Exception e) {
                 }
             }
@@ -648,7 +650,8 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
 
     IWorkflowDelegate mIWorkflowDelegate;
 
-
+    protected String designerId;
+    protected boolean ifIsDesiner = true;
     //mMessageList stores the messages with oldest (at begining) to newest (at last)
     protected ArrayList<MPChatMessage> mMessageList = new ArrayList<MPChatMessage>();
     protected ChatRoomAdapter mMessageAdapter;
