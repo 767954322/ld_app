@@ -29,7 +29,7 @@
     <string name="designer_bid_detail_realy_name">请先到个人中心完成实名认证</string>
     <string name="designer_bid_detail_realy_immediately_validation">立即验证</string>
     <string name="designer_bid_detail_success">应标成功</string>
-    <string name="consume_send_success">选它量房成功</string>
+    <string name="consume_send_success">选TA量房成功</string>
     <!--<string name="consume_send_success">选他量房成功</string>-->
     <string name="welcome_dialog">需要登陆后，进行后续操作</string>
     <string name="alipay_error">支付失败！</string>
@@ -238,10 +238,10 @@
     <string name="designers_send_contract">已有设计师发送合同，请同意付首款或拒绝</string>
     <string name="receive_designer_from_deliverables">请接收设计师发来的量房交付物</string>
     <string name="your_contract_agreed_designer">您已同意设计师发来的合同</string>
-    <string name="choose_designer_online_payment_first">选择设计师线上支付设计首款</string>
-    <string name="designers_pay_design_first">线上支付设计首款</string>
-    <string name="choose_designer_online_payment_balance_payment">选择设计师线上支付设计尾款</string>
-    <string name="payment_designers_make_design">线上支付设计尾款</string>
+    <string name="choose_designer_online_payment_first">选择设计师线上支付设计费首款</string>
+    <string name="designers_pay_design_first">线上支付设计费首款</string>
+    <string name="choose_designer_online_payment_balance_payment">选择设计师线上支付设计费尾款</string>
+    <string name="payment_designers_make_design">线上支付设计费尾款</string>
     <string name="receive_designer_send_design_deliverables">请接收设计师发送的设计交付物</string>
     <string name="you_receiving_designer_sent_design_deliverables">您已接收设计师发送的设计交付物</string>
     <string name="receiving_designer_sent_design_deliverables">接收设计师发送的设计交付物</string>
