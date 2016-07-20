@@ -122,7 +122,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 jumpToOtherProcessesFour(context, FlowFirstDesignActivity.class, assetId, recieverId);
 
             } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51) {
-                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, recieverId);
+                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 41) {
                 jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, recieverId);
