@@ -277,11 +277,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 case 11: // 量房
                     return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
 
-                case 12: // 消费者同意设计师
+                case 13: // 消费者同意设计师
                     return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
 
-                case 13: // 消费者拒绝设计师
-                    return -1;
+                case 14: // 消费者拒绝设计师
+                    return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
 
                 case 21: // 合同
                 case 22: // 打开3D工具
@@ -321,24 +321,19 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
 
     public void getCloudFilesAsync(final String X_Token, final String assetId, final String memberId,
-                                    final OkJsonRequest.OKResponseCallback callback)
-    {
-        MPServerHttpManager.getInstance().getCloudFiles(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback()
-        {
+                                   final OkJsonRequest.OKResponseCallback callback) {
+        MPServerHttpManager.getInstance().getCloudFiles(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback() {
             @Override
-            public void onErrorResponse(VolleyError volleyError)
-            {
+            public void onErrorResponse(VolleyError volleyError) {
                 callback.onErrorResponse(volleyError);
             }
 
             @Override
-            public void onResponse(JSONObject jsonObject)
-            {
+            public void onResponse(JSONObject jsonObject) {
                 callback.onResponse(jsonObject);
             }
         });
     }
-
 
 
 }

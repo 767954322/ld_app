@@ -14,12 +14,14 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPAliPayBea
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
 import com.autodesk.shejijia.consumer.utils.AliPayService;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
@@ -62,6 +64,11 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
         super.initData(savedInstanceState);
 
         setTitleForNavbar(getResources().getString(R.string.flow_cost_detail)); /// 设置标题 .
+
+        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(AdskApplication.getInstance().getMemberEntity().getMember_type())) {
+            btn_flow_last_design_send.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -139,7 +146,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
             tv_flow_last_design_name.setText(designerInfoList.getReal_name().getReal_name());
             tv_flow_last_design_phone.setText(designerInfoList.getReal_name().getMobile_number().toString());
 
-            MPDesignContractBean designContractEntity =mBidders.get(0).getDesign_contract();
+            MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) {
                 return;
             }
