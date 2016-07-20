@@ -119,18 +119,30 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                         }
                     } else if (wk_template_idi == 2) {    /// 自选量房阶段 .
 
-                        /// 12	confirm_measure	设计师同意量房 .
-                        /// 13	decline_invite_measure 设计师拒绝量房.
-                        if (wk_cur_sub_node_idi >= 12 && wk_cur_sub_node_idi != 13) {
+                        if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
+                            view.setClickable(false);
+                        } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
                             Intent mcIntent = new Intent(WkFlowStateActivity.this, FlowMeasureCostActivity.class);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, WkFlowStateActivity.this.needs_id);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, WkFlowStateActivity.this.designer_id);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
                             mcIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                             startActivity(mcIntent);
-                        } else {
-                            view.setClickable(false);
                         }
+
+
+//                        /// 12	confirm_measure	设计师同意量房 .
+//                        /// 13	decline_invite_measure 设计师拒绝量房.
+//                        if (wk_cur_sub_node_idi >= 12 && wk_cur_sub_node_idi != 13) {
+//                            Intent mcIntent = new Intent(WkFlowStateActivity.this, FlowMeasureCostActivity.class);
+//                            mcIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, WkFlowStateActivity.this.needs_id);
+//                            mcIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, WkFlowStateActivity.this.designer_id);
+//                            mcIntent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
+//                            mcIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
+//                            startActivity(mcIntent);
+//                        } else {
+//                            view.setClickable(false);
+//                        }
                     }
                     break;
 
