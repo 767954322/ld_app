@@ -209,6 +209,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
+                if(houseArea.equals("0.00")||houseArea.equals("0.0")){
+                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_housing_area));
+                    return;
+                }
                 JSONObject jsonObject = new JSONObject();
                 try {
 
