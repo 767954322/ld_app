@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.framework.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,7 +17,9 @@ public class NavigationBarActivity extends BaseActivity {
         LEFTCIRCLE,
         SECONDARY,
         BADGE,
-        RIGHT
+        RIGHT,
+        middle,
+        middlecontain,
     }
 
     @Override
@@ -117,6 +120,12 @@ public class NavigationBarActivity extends BaseActivity {
 
         if (view != null)
             view.setVisibility(visibilityFlag);
+
+        ViewGroup viewGroup = getNavitionViewGroup(type);
+
+        if (viewGroup != null)
+            viewGroup.setVisibility(visibilityFlag);
+
     }
 
     protected void hideAllNavButtons() {
@@ -368,7 +377,18 @@ public class NavigationBarActivity extends BaseActivity {
             textView = (TextView) findViewById(R.id.nav_left_textView);
         else if (type == ButtonType.RIGHT)
             textView = (TextView) findViewById(R.id.nav_right_textView);
+        else if (type == ButtonType.middle)
+            textView = (TextView) findViewById(R.id.nav_title_textView);
+
 
         return textView;
+    }
+    private ViewGroup getNavitionViewGroup(ButtonType type){
+
+        ViewGroup viewGroup = null;
+         if (type == ButtonType.middlecontain)
+             viewGroup = (ViewGroup) findViewById(R.id.ll_contain);
+
+        return viewGroup;
     }
 }

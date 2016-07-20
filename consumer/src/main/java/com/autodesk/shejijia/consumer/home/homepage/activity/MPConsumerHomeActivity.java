@@ -2,12 +2,14 @@ package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -15,13 +17,13 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
-import com.autodesk.shejijia.consumer.home.homepage.fragment.ConsumerPersonalCenterFragment;
-import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerPersonalCenterFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderActivity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderBeiShuActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -31,6 +33,8 @@ import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChoosevViewPointer;
+import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -47,7 +51,11 @@ import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MPConsumerHomeActivity extends BaseHomeActivity {
+public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener{
+
+
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -67,6 +75,27 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         mDesignerIndentListBtn = (RadioButton) findViewById(R.id.designer_indent_list_btn);
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
+        contain = (LinearLayout) findViewById(R.id.ll_contain);
+
+        contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout,null);
+        choosevViewPointer = (ChoosevViewPointer) contain_layout.findViewById(R.id.choose_point);
+
+        bidding = (TextView) contain_layout.findViewById(R.id.bidding);
+        design = (TextView) contain_layout.findViewById(R.id.design);
+        construction = (TextView) contain_layout.findViewById(R.id.construction);
+
+        ViewTreeObserver vto = contain.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                btWidth = contain.getMeasuredWidth();
+                btHeight = contain.getMeasuredHeight();
+
+            }
+        });
+
+
         user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
         addRadioButtons(mDesignerMainRadioBtn);
@@ -84,7 +113,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             if (mUserHomeFragment != null)
                 mFragmentArrayList.add(mUserHomeFragment);
 
-            mDesignerPersonalCenterFragment = (DesignerPersonalCenterFragment)getSupportFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
+            mDesignerPersonalCenterFragment = (MyDecorationProjectDesignerFragment) getSupportFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
             if (mDesignerPersonalCenterFragment != null)
                 mFragmentArrayList.add(mDesignerPersonalCenterFragment);
 
@@ -104,6 +133,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             showFragment(getDesignerMainRadioBtnId());
     }
 
+    @Override
+    protected void initListener() {
+        super.initListener();
+        bidding.setOnClickListener(this);
+        design.setOnClickListener(this);
+        construction.setOnClickListener(this);
+
+    }
 
     @Override
     protected void onResume() {
@@ -172,7 +209,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             return false;
     }
 
-
+    //将每个fragment添加
     @Override
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
@@ -189,10 +226,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
         if (index == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-
+            //判断是消费者，还是设计师，，从而区分消费者和设计师
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
                 if (mDesignerPersonalCenterFragment == null) {
-                    mDesignerPersonalCenterFragment = new DesignerPersonalCenterFragment();
+                    mDesignerPersonalCenterFragment = new MyDecorationProjectDesignerFragment();
                     loadMainFragment(mDesignerPersonalCenterFragment, DESIGNER_PERSONAL_FRAGMENT_TAG);
                 }
             } else {
@@ -220,16 +257,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         }
         return f;
     }
-
-
+    //监听筛选按钮，，，
     @Override
-    protected void leftNavButtonClicked(View view) {
+    protected void rightNavButtonClicked(View view) {
         if (isActiveFragment(BidHallFragment.class))
             mBidHallFragment.handleFilterOption();
+
     }
 
-
-    //判断圆形按钮跳入不同的界面
+    //判断圆形按钮跳入不同的个人中心界面
     @Override
     protected void leftCircleUserAvarClicked(View view) {
         super.leftCircleUserAvarClicked(view);
@@ -263,26 +299,42 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
         switch (index) {
             case R.id.designer_main_radio_btn:
                 setTitleForNavbar(UIUtils.getString(R.string.app_name));
+                setVisibilityForNavButton(ButtonType.middlecontain,false);
+                setVisibilityForNavButton(ButtonType.middle,true);
                 break;
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
-                TextView textView = (TextView) findViewById(R.id.nav_left_textView);
-                textView.setVisibility(View.VISIBLE);
-                Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                textView.setCompoundDrawables(null, null, drawable, null);
-                textView.setText(UIUtils.getString(R.string.bid_filter));
+                setVisibilityForNavButton(ButtonType.middlecontain,false);
+                setVisibilityForNavButton(ButtonType.middle,true);
+                setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
+
+//                TextView textView = (TextView) findViewById(R.id.nav_right_textView);
+//                textView.setVisibility(View.VISIBLE);
+//                Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
+//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//                textView.setCompoundDrawables(null, null, drawable, null);
+//                textView.setText(UIUtils.getString(R.string.bid_filter));
+
+
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
                 break;
 
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
-                setTitleForNavbar(UIUtils.getString(R.string.designer_personal));
+                setVisibilityForNavButton(ButtonType.middle,false);
+
+                contain.setVisibility(View.VISIBLE);
+                if (contain.getChildCount() == 0){
+
+                    contain.addView(contain_layout);
+                }
                 break;
 
             case R.id.designer_session_radio_btn:  /// 会話聊天.
 
-
+                setVisibilityForNavButton(ButtonType.middlecontain,false);
+                setVisibilityForNavButton(ButtonType.middle,true);
                 String acs_Member_Type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                 Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
+                setImageForNavButton(ButtonType.RIGHT,R.drawable.msg_file);
                 if (ifIsDesiner) {
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
@@ -294,6 +346,41 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             default:
                 break;
         }
+    }
+
+    //切换fragment 改变指针
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.bidding:
+                //指针
+                choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_NUMBER,POINTER_START_END_NUMBER);
+                break;
+            case R.id.design:
+
+                choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_END_NUMBER,POINTER_MIDDLE_END_NUMBER);
+
+                if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
+                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
+                        /// 北舒 .
+                        CommonUtils.launchActivity(MPConsumerHomeActivity.this, DesignerOrderBeiShuActivity.class);
+                    } else {
+                        CommonUtils.launchActivity(MPConsumerHomeActivity.this, DesignerOrderActivity.class);
+                    }
+                } else {
+                    CommonUtils.launchActivity(MPConsumerHomeActivity.this, DesignerOrderActivity.class);
+                }
+
+                break;
+            case R.id.construction:
+
+                choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_MIDDLE_END_NUMBER,POINTER_END_NUMBER);
+                break;
+
+        }
+
     }
 
     private void ifIsLohoDesiner(String desiner_id, String hs_uid) {
@@ -547,6 +634,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     }
 
     private final int CHAT = 0;
+    private static final int IS_BEI_SHU = 1;
     private RadioButton mDesignerMainRadioBtn;
     private RadioButton mDesignerPersonCenterRadioBtn;
     private RadioButton mDesignerIndentListBtn;
@@ -561,11 +649,24 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     private static final String CONSUMER_PERSONAL_FRAGMENT_TAG = "CONSUMER_FRAGMENT_TAG";
 
     private ImageView user_avatar;
+    private TextView bidding;
+    private TextView design;
+    private TextView construction;
+    private LinearLayout contain;
+    private LinearLayout contain_point;
+    private View contain_layout;
+    private ChoosevViewPointer choosevViewPointer;
     private int index;//判断所在fragment
     private int lastIndex;
     private String mNickNameConsumer;
     private boolean isRefush = false;
     final int RESULT_CODE = 101;
+    final float POINTER_START_NUMBER = 0F;
+    final float POINTER_START_END_NUMBER = 1/3F;
+    final float POINTER_MIDDLE_END_NUMBER= 2/3F;
+    final float POINTER_END_NUMBER = 1F;
+    private int btWidth;
+    private int btHeight;
 
     private UserHomeFragment mUserHomeFragment;
 
@@ -573,7 +674,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
 
     private BidHallFragment mBidHallFragment;
     private DesignerInfoDetails designerInfoDetails;
-    private DesignerPersonalCenterFragment mDesignerPersonalCenterFragment;
+    private MyDecorationProjectDesignerFragment mDesignerPersonalCenterFragment;
     private MyDecorationProjectDesignerFragment mMyDecorationProjectDesignerFragment;
+
 
 }
