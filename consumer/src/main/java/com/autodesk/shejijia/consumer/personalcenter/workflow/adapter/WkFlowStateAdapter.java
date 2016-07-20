@@ -26,9 +26,6 @@ public class WkFlowStateAdapter extends BaseAdapter {
     public WkFlowStateAdapter(Context context, String member_type, MPBidderBean biddersEntity, String wk_template_id) {
         this.context = context;
         this.member_type = member_type;
-//        if (StringUtils.isNumeric(wk_template_id)) {
-//            mWk_template_id_int = Integer.parseInt(wk_template_id);
-//        }
         wk_cur_sub_node_id = biddersEntity.getWk_cur_sub_node_id();
     }
 
@@ -89,33 +86,12 @@ public class WkFlowStateAdapter extends BaseAdapter {
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.refused_designer_quantity_room_invitation));
 
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepEnableColor;
-//                                viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_agreed_room_invitation));
-//                            default:
-//                                break;
-//                        }
                     } else if (stateCode == 13) {
 
                         textColor = StepEnableColor;
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_agreed_room_invitation));
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepEnableColor;
-//                                viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_refused_room_invitation));
-//                            default:
-//                                break;
-//                        }
+
                     } else if (stateCode == 14) {
                         textColor = StepEnableColor;
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
@@ -138,31 +114,12 @@ public class WkFlowStateAdapter extends BaseAdapter {
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.consumers_refused_standard));
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.consumers_refused_you_standard));
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepEnableColor;
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.please_pay_designer_volume_rate));
-//                            default:
-//                                break;
-//                        }
+
                     } else if (stateCode == 13) {
 
                         textColor = StepEnableColor;
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.please_pay_designer_volume_rate));
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepEnableColor;
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_refused_room_invitation));
-//                                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
-//                            default:
-//                                break;
-//                        }
+
                     } else if (stateCode == 14) {
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
@@ -291,35 +248,14 @@ public class WkFlowStateAdapter extends BaseAdapter {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.consumers_refused_standard));
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.consumers_refused_you_standard));
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepEnableColor;
-//                                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
-//                                viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_agreed_room_invitation));
-//                            default:
-//                                break;
-//                        }
+
                     }  else if (stateCode == 13) {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
 
                         textColor = StepEnableColor;
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.waiting_owner_pay_room));
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepDisEnableColor;
-//                                viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.refused_to_amount_of_room));
-//                                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.you_refused_customer_amount_room));
-//                                break;
-//                        }
+
                     } else if (stateCode == 14) {
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
@@ -349,33 +285,14 @@ public class WkFlowStateAdapter extends BaseAdapter {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.consumers_refused_standard));
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.consumers_refused_you_standard));
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepEnableColor;
-//                                viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.jeishouliangfangfei));
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_agreed_room_invitation));
-//                            default:
-//                                break;
-//                        }
+
                     } else if (stateCode == 13) {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.jeishouliangfangfei));
 
                         textColor = StepEnableColor;
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.waiting_owner_pay_room));
-//                        switch (mWk_template_id_int) {
-//                            case 1:
-//
-//                                break;
-//                            case 2:
-//                                textColor = StepDisEnableColor;
-//                                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
-//                                viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.jeishouliangfangfei));
-//                                break;
-//                        }
+
                     } else if (stateCode == 14) {
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
@@ -493,7 +410,6 @@ public class WkFlowStateAdapter extends BaseAdapter {
     private Context context;
     private String wk_cur_sub_node_id;
     private String member_type;
-    //    private int mWk_template_id_int;
     private final int StepEnableColor = Color.rgb(30, 30, 30); // 亮
     private final int StepDisEnableColor = Color.rgb(188, 188, 188); // 暗
 
