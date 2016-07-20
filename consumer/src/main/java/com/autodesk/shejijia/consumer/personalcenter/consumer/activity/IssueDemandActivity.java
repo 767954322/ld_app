@@ -188,7 +188,6 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 JSONObject jsonObject = new JSONObject();
                 try {
                     String click_number = "0";
-                    /// TODO  contacts_name  ,contacts_mobile .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY, mCurrentCityCode);/// city = 110100; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY_NAME, mCurrentCity);/// "city_name" = "\U5317\U4eac\U5e02"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CLICK_NUMBER, click_number);/// "click_number" = 0; .
