@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -71,7 +72,6 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         getDesignerInfoData(designer_id, hs_uid);
-
         updateViewFromData();
     }
 
@@ -103,12 +103,15 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
     }
 
     private void updateViewFromData() {
-        tv_house_cost.setText(mBiddersEntity.getMeasurement_fee());
+        String measurement_fee = mBiddersEntity.getMeasurement_fee();
+        if (TextUtils.isEmpty(measurement_fee)||"0.0".equals(measurement_fee)){
+            measurement_fee = "0.00";
+        }
+        tv_house_cost.setText(measurement_fee);
 
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             setTitleForNavbar(getResources().getString(R.string.i_want_to_pay));
-            if (Integer.valueOf(this.wk_cur_sub_node_id) >= 21) {
-                /// 如果是支付量房费状态及后续状态，就隐藏支付按钮 .
+            if (Integer.valueOf(this.wk_cur_sub_node_id) >= 21) {                         /// 如果是支付量房费状态及后续状态，就隐藏支付按钮 .
                 btn_pay_measure.setVisibility(View.GONE);
                 btn_pay_measure.setOnClickListener(null);
 

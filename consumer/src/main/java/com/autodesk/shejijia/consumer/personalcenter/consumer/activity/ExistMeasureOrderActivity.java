@@ -89,7 +89,6 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     }
 
     private void showState() {
-
         if (!fee.isEmpty()&& !fee.equals("0")) {
             double dFee = Double.valueOf(fee);
             DecimalFormat df1 = new DecimalFormat("#####.00");

@@ -14,16 +14,15 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPMeasureFormBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.consumer.utils.SplitStringUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
-import com.autodesk.shejijia.shared.components.common.utility.DbUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.socks.library.KLog;
 
@@ -221,18 +220,9 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
     /// 将省市区Code改成汉字 .
     private void updateCityData() {
-        String province_name = requirement.getProvince();
-        String city_name = requirement.getCity();
-        String district_name = requirement.getDistrict();
-        if (StringUtils.isNumeric(province_name)) {
-            province_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.PROVINCE, province_name);
-        }
-        if (StringUtils.isNumeric(city_name)) {
-            city_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.CITY, city_name);
-        }
-        if (StringUtils.isNumeric(district_name)) {
-            district_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.DISTRICT, district_name);
-        }
+        String province_name = requirement.getProvince_name();
+        String city_name = requirement.getCity_name();
+        String district_name = requirement.getDistrict_name();
         user_name = requirement.getContacts_name();
         mobile_number = requirement.getContacts_mobile();
         amount = mBidders.get(0).getMeasurement_fee();
@@ -243,14 +233,17 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvc_measure_fitment_budget.setText(requirement.getDecoration_budget());
 
         tvc_measure_form_area.setText(requirement.getHouse_area() + "m²");
-
+        if ("null".equals(district_name) || "none".equals(district_name) || TextUtils.isEmpty(district_name)) {
+            district_name = "";
+        }
         tvc_measure_form_address.setText(province_name + " " + city_name + " " + district_name);
         tvc_measure_form_estate.setText(requirement.getCommunity_name());
-        if (TextUtils.isEmpty(amount) || "null".equals(amount)) {                       /// 如果量房费空就默认为0.00 .
+        if (TextUtils.isEmpty(amount) || "null".equals(amount) || "0.0".equals(amount)) {                       /// 如果量房费空就默认为0.00 .
             amount = "0.00";
             tvc_measure_form_fee.setText(amount);
         } else {
-            tvc_measure_form_fee.setText(mBidders.get(0).getMeasurement_fee());
+            String measurement_fee = mBidders.get(0).getMeasurement_fee();
+            tvc_measure_form_fee.setText(SplitStringUtils.splitStringDot(measurement_fee));
         }
     }
 

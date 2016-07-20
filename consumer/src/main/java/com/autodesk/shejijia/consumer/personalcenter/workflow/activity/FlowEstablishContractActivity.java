@@ -580,7 +580,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         mChangeAddressDialog
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
-                    public void onClick(String province, String proviceCode, String city, String cityCode, String area, String areaCode) {
+                    public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
                         if ("null".equals(area) || "none".equals(area) || TextUtils.isEmpty(area)) {
                             area = "";
                         }
