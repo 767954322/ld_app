@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
@@ -207,6 +208,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, acs_member_id);
                         intent.putExtra(ChatRoomActivity.THREAD_ID, designer_thread_id);
                         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
+                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                         getActivity().startActivity(intent);
                     }
                 });

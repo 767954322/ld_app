@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
@@ -191,10 +192,14 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
         } else if (i == R.id.chat_custom_button) {
             if (mIWorkflowDelegate != null)
-                mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId);
+            {
+                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId);
+            }
         } else if (i == R.id.nav_secondary_imageButton) {
             if (mIWorkflowDelegate != null)
-                mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, mRecieverUserId);
+            {
+            	mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, mRecieverUserId);
+            }
         }
     }
 
@@ -223,6 +228,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         intent.putExtra(MediaMessagesChatRoomActivity.RECIEVER_USER_ID, mRecieverUserId);
         intent.putExtra(MediaMessagesChatRoomActivity.ACS_MEMBER_ID, mAcsMemberId);
         intent.putExtra(MediaMessagesChatRoomActivity.MEMBER_TYPE, mMemberType);
+        intent.putExtra(BaseChatRoomActivity.MEDIA_TYPE, mMediaType);
         startActivity(intent);
     }
 
@@ -372,6 +378,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         intent.putExtra(MPFileHotspotActivity.LOGGEDINUSERID, mAcsMemberId);
         intent.putExtra(MPFileHotspotActivity.LOCALIMAGEURL, localPath);
         intent.putExtra(MPFileHotspotActivity.PARENTTHREADID, mThreadId);
+        intent.putExtra(MPFileHotspotActivity.MEDIA_TYPE, mMediaType);
 
         if (mProjectInfo != null) {
             intent.putExtra(MPFileHotspotActivity.PROJECT_INFO, mProjectInfo);
@@ -418,7 +425,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
                 getMediaMessageUnreadCount();
                 getThreadDetailForThreadId(message.thread_id);
 
-            } else if (mAssetId != null) {
+            } else if (StringUtils.isValidString(mAssetId)) {
                 getProjectInfo();
             }
 

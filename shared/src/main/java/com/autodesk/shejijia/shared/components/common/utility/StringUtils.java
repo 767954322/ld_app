@@ -1249,4 +1249,9 @@ public class StringUtils {
     public static String arrayToCommaDelimitedString(Object[] arr) {
         return arrayToDelimitedString(arr, ",");
     }
+
+    public static boolean isValidString(String str)
+    {
+        return !(str == null || str.isEmpty() || str.equalsIgnoreCase("0"));
+    }
 }
