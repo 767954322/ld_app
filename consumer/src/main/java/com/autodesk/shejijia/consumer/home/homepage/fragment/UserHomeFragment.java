@@ -1,18 +1,26 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
+import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
@@ -39,8 +47,6 @@ import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
-import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import org.json.JSONObject;
@@ -74,6 +80,8 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_home);
         mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
         mListViewRootView = (RelativeLayout) rootView.findViewById(R.id.listview_content);
+        mFloatingActionsMenu = (FloatingActionMenu) rootView.findViewById(R.id.add_menu_buttons);
+        createCustomAnimation();
         initFloatingAction();
 
         mSignInNotificationReceiver = new SignInNotificationReceiver();
@@ -309,24 +317,28 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mShadeViewLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mListViewRootView.addView(mShadeView, mShadeViewLayoutParams);
         mShadeView.setVisibility(View.GONE);
-        mFloatingActionsMenu = (FloatingActionsMenu) rootView.findViewById(R.id.add_menu_buttons);
+
         mShadeView.setTag(MENU_COLLAPSE_TAG);
 
+        mFloatingActionsMenu.setClosedOnTouchOutside(true);
+//        createCustomAnimation();
         /**
          * requirement btn发布设计需求
          */
         requirementButton = new FloatingActionButton(activity);
-        requirementButton.setTitle(UIUtils.getString(R.string.requirements));
-        requirementButton.setSize(FloatingActionButton.SIZE_MINI);
-        requirementButton.setBackgroundResource(R.drawable.icon_release_requirements_normal);
+        requirementButton.setLabelText(UIUtils.getString(R.string.requirements));
+        requirementButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        requirementButton.setImageResource(R.drawable.icon_release_requirements_normal);
+        requirementButton.setColorNormal(Color.TRANSPARENT);
+        requirementButton.setColorPressed(Color.TRANSPARENT);
         requirementButton.setTag(REQUIREMENT_BUTTON_TAG);
-        mFloatingActionsMenu.addButton(requirementButton);
+        mFloatingActionsMenu.addMenuButton(requirementButton);
         requirementButton.setOnClickListener(this);
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             /// hide the requirement btn .
-            mFloatingActionsMenu.removeButton(requirementButton);
+            mFloatingActionsMenu.removeMenuButton(requirementButton);
 
         } else {
 
@@ -335,43 +347,77 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
          * find designer btn设计师
          */
         findDesignerButton = new FloatingActionButton(activity);
-        findDesignerButton.setTitle(UIUtils.getString(R.string.find_designer));
-        findDesignerButton.setSize(FloatingActionButton.SIZE_MINI);
-        findDesignerButton.setBackgroundResource(R.drawable.icon_find_designer_normal);
+        findDesignerButton.setLabelText(UIUtils.getString(R.string.find_designer));
+        findDesignerButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        findDesignerButton.setImageResource(R.drawable.icon_find_designer_normal);
+        findDesignerButton.setColorNormal(Color.TRANSPARENT);
+        findDesignerButton.setColorPressed(Color.TRANSPARENT);
         findDesignerButton.setTag(FIND_DESIGNER_BUTTON_TAG);
+        mFloatingActionsMenu.addMenuButton(findDesignerButton);
         findDesignerButton.setOnClickListener(this);
 
         /**
          * case library btn案例库
          */
         caseLibraryButton = new FloatingActionButton(activity);
-        caseLibraryButton.setTitle(UIUtils.getString(R.string.case_library));
-        caseLibraryButton.setSize(FloatingActionButton.SIZE_MINI);
-        caseLibraryButton.setBackgroundResource(R.drawable.icon_case_library_normal);
+        caseLibraryButton.setLabelText(UIUtils.getString(R.string.case_library));
+        caseLibraryButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        caseLibraryButton.setImageResource(R.drawable.icon_case_library_normal);
+        caseLibraryButton.setColorNormal(Color.TRANSPARENT);
+        caseLibraryButton.setColorPressed(Color.TRANSPARENT);
+        mFloatingActionsMenu.addMenuButton(caseLibraryButton);
         caseLibraryButton.setTag(CASE_LIBRARY_BUTTON_TAG);
+
         caseLibraryButton.setOnClickListener(this);
 
-        mFloatingActionsMenu.addButton(caseLibraryButton);
-        mFloatingActionsMenu.addButton(findDesignerButton);
-        mFloatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
-            @Override
-            public void onMenuExpanded() {
-                /// open floating action Menu
-                mShadeView.setVisibility(View.VISIBLE);
-            }
 
+
+        mFloatingActionsMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
-            public void onMenuCollapsed() {
-                /// hide floating action
-                mShadeView.setVisibility(View.GONE);
+            public void onMenuToggle(boolean opened) {
+                if (opened) {
+                    mShadeView.setVisibility(View.VISIBLE);
+                }else {
+                    mShadeView.setVisibility(View.GONE);
+                }
             }
         });
         mShadeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mFloatingActionsMenu.collapse();
+                mFloatingActionsMenu.close(true);
             }
         });
+    }
+
+    private void createCustomAnimation() {
+        AnimatorSet set = new AnimatorSet();
+
+        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(mFloatingActionsMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
+        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(mFloatingActionsMenu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
+
+        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(mFloatingActionsMenu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
+        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(mFloatingActionsMenu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
+
+        scaleOutX.setDuration(50);
+        scaleOutY.setDuration(50);
+
+        scaleInX.setDuration(150);
+        scaleInY.setDuration(150);
+
+        scaleInX.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mFloatingActionsMenu.getMenuIconView().setImageResource(mFloatingActionsMenu.isOpened()
+                        ? R.drawable.openfloat : R.drawable.closefloat);
+            }
+        });
+
+        set.play(scaleOutX).with(scaleOutY);
+        set.play(scaleInX).with(scaleInY).after(scaleOutX);
+        set.setInterpolator(new OvershootInterpolator(2));
+
+        mFloatingActionsMenu.setIconToggleAnimatorSet(set);
     }
 
     /**
@@ -395,13 +441,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         handler.sendMessage(msg);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mFloatingActionsMenu != null) {
-            mFloatingActionsMenu.collapse();
-        }
-    }
 
     /**
      * 全局的广播接收者,用于处理登录后数据的操作
@@ -417,7 +456,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
                 if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
                     /// hide the requirement btn .
-                    mFloatingActionsMenu.removeButton(requirementButton);
+                    mFloatingActionsMenu.removeMenuButton(requirementButton);
 
                 } else {
                 }
@@ -427,6 +466,15 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                 getConsumerInfoData(member_id);
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (null != mFloatingActionsMenu) {
+            mFloatingActionsMenu.close(true);
+        }
+
     }
 
     @Override
@@ -445,7 +493,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     private final static String MENU_COLLAPSE_TAG = "menu_collapse";
 
     private RelativeLayout mListViewRootView;
-    private FloatingActionsMenu mFloatingActionsMenu;
+    private FloatingActionMenu mFloatingActionsMenu;
     private PtrClassicFrameLayout mPtrLayout;
     private ListViewFinal mListView;
     private AlertView mRetryAlertView;
