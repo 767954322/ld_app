@@ -46,7 +46,6 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
             case 13:
                 jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, mpChatCommandInfo);
 
-                // jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, recieverId);
                 break;
 
             case 11:
