@@ -24,11 +24,15 @@ public class RegexUtil {
     public static final String PHONE_REGEX = "^1[3|4|5|7|8]\\d{9}$";
 
     /**
-     * 量房面积校验： 整数四位，小数2位，且不能为0
+     * 量房面积校验： 整数四位，小数2位
      */
-//    public static final String AREA_REGEX = "^[0-9]{1,4}?(\\.[0-9]{0,2})?$";
+    public static final String AREA_REGEX = "^[0-9]{1,4}?(\\.[0-9]{0,2})?$";
 
-    public static final String AREA_REGEX = "^(?!0{2,})(?:\\d{1,4}(\\.\\d+)?|10000)$";
+    /**
+     * 量房面积校验： 整数四位,不能全部为0
+     */
+
+    public static final String AREA_REGEX_ZERO = "^(?!0{2,})(?:\\d{1,4}(\\.\\d+)?|10000)$";
 
     /**
      * 量房费验证：整数位可以有0

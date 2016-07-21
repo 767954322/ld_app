@@ -19,6 +19,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
@@ -142,6 +143,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     return;
                 }
                 String area = et_issue_demand_area.getText().toString();
+
+                if(area.equals("0.00")||area.equals("0.0")||area.equals("0000.00")||area.equals("000.00")||area.equals("00.00")){
+                    showAlertView(R.string.please_input_correct_area);
+                    return;
+                }
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
