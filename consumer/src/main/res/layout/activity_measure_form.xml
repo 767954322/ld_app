@@ -168,7 +168,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:ems="10"
                     android:hint="请输入面积（平米）"
                     android:textSize="@dimen/font_12"/>
