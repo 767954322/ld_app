@@ -35,6 +35,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
@@ -162,6 +163,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+        /**
+         * 如果超过了33节点，就隐藏上传量房按钮
+         */
+        if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= 33) {
+            btn_send.setVisibility(View.GONE);
+            ll_agree_establish_contract.setVisibility(View.GONE);
+        }
+
         getDesignerInfoData(designer_id, hs_uid);
         int wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
         if (memberEntity != null) {
@@ -471,7 +480,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         boolean isMobile = consumerPhone.matches(RegexUtil.PHONE_REGEX);
         boolean isEmail = consumerEmail.matches(RegexUtil.EMAIL_REGEX);
-        boolean isPositiveInteger= designSketch.matches(RegexUtil.POSITIVE_INTEGER_REGEX);
+        boolean isPositiveInteger = designSketch.matches(RegexUtil.POSITIVE_INTEGER_REGEX);
 
         if (!consumerName.isEmpty()) {
 
@@ -479,7 +488,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
                 if (isEmail || consumerEmail.isEmpty()) {
 
-                    if (!detailAddress.isEmpty() && detailAddress.length() >2 && decorateAddress.length() <32) {
+                    if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
 
                         if (isPositiveInteger) {
 
@@ -576,7 +585,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
                     public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
-                        if ("null".equals(area) || "none".equals(area) || TextUtils.isEmpty(area)) {
+                        if ("null".equals(area)
+                                || "none".equals(area)
+                                || TextUtils.isEmpty(area)) {
                             area = "";
                         }
                         tvc_consumer_decorate_address.setText(province + city + area);
