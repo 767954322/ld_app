@@ -55,6 +55,11 @@ public class RegexUtil {
     public static final String EMAIL_REGEX = "^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$";
 
     /**
+     * 验证正整数
+     */
+    public static final String  POSITIVE_INTEGER_REGEX = "^[0-9]*[1-9][0-9]*$";
+
+    /**
      * 身份号码
      */
     public static final String ID_CARD_REGEX = "^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$|^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X|x)$";
