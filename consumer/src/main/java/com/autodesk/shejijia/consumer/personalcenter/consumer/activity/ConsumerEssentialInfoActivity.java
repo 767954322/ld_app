@@ -201,7 +201,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 || TextUtils.isEmpty(district_name)) {
             mTvConsumeAddress.setText(getResources().getString(R.string.has_yet_to_fill_out));
         } else {
-            if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
+            if (TextUtils.isEmpty(district_name)
+                    || "none".equals(district_name)
+                    || "null".equals(district_name)) {
                 district_name = "";
             }
             mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
