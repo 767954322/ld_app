@@ -45,6 +45,11 @@ public class RegexUtil {
     public static final String NAME_REGEX = "^([\u4e00-\u9fa5]{2,10})$";
 
     /**
+     * 验证邮编
+     */
+    public static final String POST_NUMBER_REGEX = "^[0-9]{6}$";
+
+    /**
      * 验证昵称
      */
     public static final String NICK_NAME_REGEX = "^[\\u4e00-\\u9fa5a-zA-Z0-9\\-]{2,10}$";
@@ -57,7 +62,7 @@ public class RegexUtil {
     /**
      * 验证正整数
      */
-    public static final String  POSITIVE_INTEGER_REGEX = "^[0-9]*[1-9][0-9]*$";
+    public static final String POSITIVE_INTEGER_REGEX = "^[0-9]*[1-9][0-9]*$";
 
     /**
      * 身份号码

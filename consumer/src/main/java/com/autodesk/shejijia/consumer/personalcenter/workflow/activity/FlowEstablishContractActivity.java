@@ -435,6 +435,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     /**
+     * 修改:         consumer/src/main/res/layout/activity_flow_establish_contract.xml
+     *
      * @brief 发送设计合同内容 .
      */
     private void sendEstablishContractCon() {
@@ -481,54 +483,60 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         boolean isMobile = consumerPhone.matches(RegexUtil.PHONE_REGEX);
         boolean isEmail = consumerEmail.matches(RegexUtil.EMAIL_REGEX);
         boolean isPositiveInteger = designSketch.matches(RegexUtil.POSITIVE_INTEGER_REGEX);
+        boolean isPostNum = consumerPostcode.matches(RegexUtil.POST_NUMBER_REGEX);
 
         if (!consumerName.isEmpty()) {
 
             if (isMobile) {
+                if (TextUtils.isEmpty(consumerPostcode) || isPostNum) {
 
-                if (isEmail || consumerEmail.isEmpty()) {
+                    if (isEmail || consumerEmail.isEmpty()) {
 
-                    if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
-
-                        if (isPositiveInteger) {
+                        if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
 
                             if (isPositiveInteger) {
 
-                                if (!sketchPlus.isEmpty() && Double.parseDouble(sketchPlus) >= 0) {
+                                if (isPositiveInteger) {
 
-                                    if (!total_cost.isEmpty() && Double.parseDouble(total_cost) >= 0) {
+                                    if (!sketchPlus.isEmpty() && Double.parseDouble(sketchPlus) >= 0) {
 
-                                        sendEstablishConContent(jsonO);
+                                        if (!total_cost.isEmpty() && Double.parseDouble(total_cost) >= 0) {
 
-                                    } else if (total_cost.isEmpty()) {
-                                        showAlertView(R.string.please_fill_in_the_total_project_design);
-                                    } else if (Double.parseDouble(total_cost) < 0) {
+                                            sendEstablishConContent(jsonO);
+
+                                        } else if (total_cost.isEmpty()) {
+                                            showAlertView(R.string.please_fill_in_the_total_project_design);
+                                        } else if (Double.parseDouble(total_cost) < 0) {
+                                            showAlertView(R.string.costs_cannot_be_negative);
+                                        }
+                                        return;
+                                    } else if (sketchPlus.isEmpty()) {
+                                        showAlertView(R.string.please_fill_out_each_increases_the_cost_of_a);
+                                    } else if (Double.parseDouble(sketchPlus) < 0) {
                                         showAlertView(R.string.costs_cannot_be_negative);
                                     }
                                     return;
-                                } else if (sketchPlus.isEmpty()) {
-                                    showAlertView(R.string.please_fill_out_each_increases_the_cost_of_a);
-                                } else if (Double.parseDouble(sketchPlus) < 0) {
-                                    showAlertView(R.string.costs_cannot_be_negative);
                                 }
+                                showAlertView(R.string.please_fill_in_the_number_of_rendering);
                                 return;
                             }
-                            showAlertView(R.string.please_fill_in_the_number_of_rendering);
+                            showAlertView(R.string.please_fill_in_the_number_of_drawing);
                             return;
                         }
-                        showAlertView(R.string.please_fill_in_the_number_of_drawing);
+                        showAlertView(R.string.detailed_address_cannot_be_empty);
                         return;
                     }
-                    showAlertView(R.string.detailed_address_cannot_be_empty);
+                    showAlertView(R.string.please_fill_in_the_right_phone_email);
                     return;
                 }
-                showAlertView(R.string.please_fill_in_the_right_phone_email);
+                showAlertView(R.string.please_fill_in_the_right_post_number);
                 return;
             }
             showAlertView(R.string.please_fill_in_the_right_phone_number);
             return;
         }
         showAlertView(R.string.the_name_cannot_be_empty);
+
     }
 
     /// 发送设计合同方法 .

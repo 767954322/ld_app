@@ -88,6 +88,7 @@
     <string name="please_fill_in_the_number_of_drawing">请填写效果图的张数</string>
     <string name="detailed_address_cannot_be_empty">请正确填写小区名称</string>
     <string name="please_fill_in_the_right_phone_number">请正确填写手机号</string>
+    <string name="please_fill_in_the_right_post_number">请正确填写邮编</string>
     <string name="please_fill_in_the_right_phone_email">请正确填写邮箱</string>
     <string name="the_name_cannot_be_empty">姓名不能为空</string>
     <string name="the_contract_sent_successfully">合同发送成功</string>
