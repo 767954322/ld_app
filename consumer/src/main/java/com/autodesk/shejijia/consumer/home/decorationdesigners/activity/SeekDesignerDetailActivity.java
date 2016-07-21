@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
@@ -115,15 +116,22 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             case R.id.btn_seek_designer_detail_optional_measure:
                 /// 选择该设计师去量房,如果用户还没登陆 会进入注册登陆界面.
                 if (null != memberEntity) {
-                    Intent intent = new Intent(SeekDesignerDetailActivity.this, MeasureFormActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Constant.SeekDesignerDetailKey.MEASURE_FREE, mMeasureFee);
-                    bundle.putString(Constant.SeekDesignerDetailKey.DESIGNER_ID, mDesignerId);
-                    bundle.putString(Constant.SeekDesignerDetailKey.SEEK_TYPE, Constant.SeekDesignerDetailKey.SEEK_DESIGNER_DETAIL);
-                    bundle.putString(Constant.SeekDesignerDetailKey.HS_UID, mHsUid);
-                    bundle.putInt(Constant.SeekDesignerDetailKey.FLOW_STATE, 0);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    if (null != seekDesignerDetailHomeBean) {
+                        Intent intent = new Intent(SeekDesignerDetailActivity.this, MeasureFormActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constant.SeekDesignerDetailKey.MEASURE_FREE, mMeasureFee);
+                        bundle.putString(Constant.SeekDesignerDetailKey.DESIGNER_ID, mDesignerId);
+                        bundle.putString(Constant.SeekDesignerDetailKey.SEEK_TYPE, Constant.SeekDesignerDetailKey.SEEK_DESIGNER_DETAIL);
+                        bundle.putString(Constant.SeekDesignerDetailKey.HS_UID, mHsUid);
+                        bundle.putInt(Constant.SeekDesignerDetailKey.FLOW_STATE, 0);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    } else {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this,
+                                AlertView.Style.Alert, null).show();
+                    }
+
+
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -133,45 +141,50 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                  * 聊天,如没有登陆 也会跳入注册登陆页面
                  */
                 if (memberEntity != null) {
-                    member_id = memberEntity.getAcs_member_id();
-                    final String designer_id = seekDesignerDetailHomeBean.getDesigner().getAcs_member_id();
-                    final String hs_uid = seekDesignerDetailHomeBean.getHs_uid();
-                    final String receiver_name = seekDesignerDetailHomeBean.getNick_name();
-                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
 
-                    MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            MPNetworkUtils.logError(TAG, volleyError);
-                        }
+                    if (null != seekDesignerDetailHomeBean) {
+                        member_id = memberEntity.getAcs_member_id();
+                        final String designer_id = seekDesignerDetailHomeBean.getDesigner().getAcs_member_id();
+                        final String hs_uid = seekDesignerDetailHomeBean.getHs_uid();
+                        final String receiver_name = seekDesignerDetailHomeBean.getNick_name();
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
 
-                        @Override
-                        public void onResponse(String s) {
-                            MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                            Intent intent = new Intent(SeekDesignerDetailActivity.this, ChatRoomActivity.class);
-                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-                            intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-
-                            if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-
-                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-                                int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-
-                            } else {
-
-                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-
+                        MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
                             }
-                            startActivity(intent);
-                        }
-                    });
 
+                            @Override
+                            public void onResponse(String s) {
+                                MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                                Intent intent = new Intent(SeekDesignerDetailActivity.this, ChatRoomActivity.class);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+
+                                if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
+                                    MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+                                    int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                                    intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
+                                } else {
+
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+
+                                }
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this,
+                                AlertView.Style.Alert, null).show();
+                    }
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }

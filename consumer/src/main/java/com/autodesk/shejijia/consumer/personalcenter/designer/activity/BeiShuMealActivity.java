@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -154,6 +155,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, consumer_member_id);
                 intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                 startActivity(intent);
                 finish();
             }

@@ -7,6 +7,7 @@ public class MPChatEntityData
 {
     public String asset_name;
     public int asset_id;
+    public int media_type;
     public MPChatThumbnails thumbnails;
     public String public_file_url;
     public String workflow_step_name;
@@ -41,6 +42,7 @@ public class MPChatEntityData
             data.thumbnails = MPChatThumbnails.fromJSONArray(jObject.optJSONArray("thumbnails"));
             data.public_file_url = jObject.optString("public_file_url");
             data.workflow_step_name = jObject.optString("workflow_step_name");
+            data.media_type = jObject.optInt("media_type");
         }
         catch(Exception e)
         {

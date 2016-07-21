@@ -63,7 +63,8 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     final public static String LOGGEDINUSERID = "loggedinuserid";
     final public static String LOCALIMAGEURL = "localimageurl";
     final public static String PARENTTHREADID = "parentthreadid";
-    public static final String PROJECT_INFO = "project_info";
+    final public static String PROJECT_INFO = "project_info";
+    final public static String MEDIA_TYPE = "media_type";
 
     public class HotspotImageData
     {
@@ -634,6 +635,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         mLocalImageFileURL = bundle.getString(LOCALIMAGEURL);
         mParentThreadId = bundle.getString(PARENTTHREADID);
         mProjInfo = bundle.getParcelable(PROJECT_INFO);
+        mMediaType = bundle.getString(MEDIA_TYPE);
     }
 
     private void putInstanceStateToBundle(Bundle bundle)
@@ -646,6 +648,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         bundle.putString(LOCALIMAGEURL, mLocalImageFileURL);
         bundle.putString(PARENTTHREADID, mParentThreadId);
         bundle.putParcelable(PROJECT_INFO, mProjInfo);
+        bundle.putString(MEDIA_TYPE,mMediaType);
     }
 
 
@@ -780,6 +783,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     private String mLocalImageFileURL;
     private String mParentThreadId;
     private MPChatProjectInfo mProjInfo;
+    private String mMediaType;
 
     private MPChatConversations mChatConversations;
     private HotspotBroadcastReceiver mBroadcastReceiver;

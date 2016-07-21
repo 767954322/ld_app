@@ -13,14 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -30,6 +26,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
@@ -37,6 +34,7 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
@@ -59,7 +57,6 @@ import java.util.Locale;
  */
 
 public class MeasureFormActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
-
 
     @Override
     protected int getLayoutResId() {
@@ -177,7 +174,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         }
 
         String has_yet_to_fill_out = UIUtils.getString(R.string.has_yet_to_fill_out);
-        if (mFree.equals(has_yet_to_fill_out)) {
+        if (has_yet_to_fill_out.equals(mFree)) {
             tv_measure_fee.setText("0.00");
             mFree = "0";
         } else {
@@ -366,13 +363,12 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         return true;
                     }
                 }
-
             }
             if (split.length == 2) {
-
                 if (split[0].length() <= 4 && split[1].length() <= 2) {
 
                     if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
+
                         return true;
                     }
                 }
@@ -593,6 +589,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         mCurrentCityCode = cityCode;
                         mCurrentDistrict = district;
                         mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) ? "" : areaCode;
+                        if ("null".equals(district) || "none".equals(district) || TextUtils.isEmpty(district)) {
+                            district = "";
+                        }
                         tvc_address.setText(province + city + district);
                         mChangeAddressDialog.dismiss();
                     }
@@ -678,6 +677,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             }
         });
     }
+
     /**
      * 提交量房数据
      *

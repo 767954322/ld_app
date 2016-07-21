@@ -167,8 +167,10 @@ public class MPWkFlowManager {
      *
      * @param wk_cur_sub_node_id 全流程节点
      *                           11	 邀请量房
-     *                           12	 设计师同意量房
-     *                           13	 设计师拒绝量房
+     *
+     *                           12	 设计师同意量房   13
+     *                           13	 设计师拒绝量房   14
+     *
      *                           21	 支付量房费
      *                           22	 打开3d工具
      *                           31	 设计师发送合同
@@ -190,10 +192,10 @@ public class MPWkFlowManager {
             case 11:
                 subNodePosition = 0;
                 break;
-            case 12:
+            case 13:
                 subNodePosition = 1;
                 break;
-            case 13:
+            case 14:
                 subNodePosition = 2;
                 break;
             case 21:

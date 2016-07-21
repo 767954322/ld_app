@@ -137,6 +137,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
     /**
      * 我要应标
+     *
      * @param declaration
      * @param user_name
      * @param needs_id
@@ -254,7 +255,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String toilet_cn = ConvertUtils.getConvert2CN(toiletJson, toilet);
         String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
         String livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_cn) + UIUtils.getNodataIfEmpty(living_room_cn) + UIUtils.getNodataIfEmpty(toilet_cn);
-        district_name = TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
+        district_name = TextUtils.isEmpty(mBidHallEntity.getDistrict()) || "none".equals(mBidHallEntity.getDistrict()) || TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
         String projectAddress = UIUtils.getNodataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNodataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
         setTitleForNavbar(community_name);

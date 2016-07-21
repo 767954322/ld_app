@@ -139,11 +139,24 @@ public class ThreadListAdapter extends BaseAdapter
                 break;
             case eCOMMAND:
             {
-                MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(thread.latest_message);
-                if (isUserConsumer())
-                    (holder).description.setText(info.for_consumer);
-                else
-                    (holder).description.setText(info.for_designer);
+                if (thread.latest_message.command.equalsIgnoreCase("command"))
+                {
+
+                    MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(thread.latest_message);
+                    if (isUserConsumer())
+                        (holder).description.setText(info.for_consumer);
+                    else
+                        (holder).description.setText(info.for_designer);
+                }
+                else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_ADD"))
+                {
+                    (holder).description.setText(thread.latest_message.body);
+                }
+                else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_REMOVE"))
+                {
+                    (holder).description.setText(thread.latest_message.body);
+                }
+
             }
             break;
             default:

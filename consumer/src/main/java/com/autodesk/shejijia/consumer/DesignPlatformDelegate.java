@@ -37,8 +37,10 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
     }
 
 
+    //聊天内容里按钮坚挺
     public void onCommandCellClicked(Context context, MPChatCommandInfo mpChatCommandInfo) {
         int subNodeId = Integer.parseInt(mpChatCommandInfo.sub_node_id);
+
 
         switch (subNodeId) {
             case 13:
@@ -99,6 +101,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
     }
 
 
+    //全流程，聊天下面小图标
     public void onChatRoomWorkflowButtonClicked(Context context, int wk_cur_sub_node_idi, String assetId, String recieverId, String receiverUserName, String designerId) {
 
         if (wk_cur_sub_node_idi != 0) {
@@ -118,7 +121,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 jumpToOtherProcessesFour(context, FlowFirstDesignActivity.class, assetId, recieverId);
 
             } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51) {
-                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, recieverId);
+                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 41) {
                 jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, recieverId);
@@ -189,7 +192,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, info.need_id);
         intent_measure_room_cost.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
+        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
         context.startActivity(intent_measure_room_cost);
     }
 

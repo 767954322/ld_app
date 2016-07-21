@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.im.datamodel;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -104,6 +106,18 @@ public class MPChatUtility
         return 0;
     }
 
+    public static String getMediaTypeFromThread(MPChatThread thread)
+    {
+        if (thread.entity.entityInfos.size() > 0)
+        {
+            MPChatEntityInfo info = thread.entity.entityInfos.get(0);
+            if (info.entity_data.media_type > 0)
+                return String.valueOf(info.entity_data.media_type);
+        }
+
+        return null;
+    }
+
 
     public static String getFileEntityIdForThread(MPChatThread thread)
     {
@@ -179,6 +193,24 @@ public class MPChatUtility
 
         return "";
     }
+
+    public static boolean isDesignMediaType(String mediaType)
+    {
+        if(mediaType.equalsIgnoreCase(UrlMessagesContants.mediaIdProject))
+            return true;
+
+        return false;
+    }
+
+
+    public static boolean isConstructionMediaType(String mediaType)
+    {
+        if(mediaType.equalsIgnoreCase(UrlMessagesContants.mediaIdConstruction))
+            return true;
+
+        return false;
+    }
+
 
     ///this is production Admin User Id.
     //////private static final String ADMIN_USER_ID = "20742718";
