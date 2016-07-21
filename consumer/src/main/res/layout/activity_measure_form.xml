@@ -168,9 +168,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
+                    android:inputType="number"
                     android:ems="10"
                     android:hint="请输入面积（平米）"
-                    android:phoneNumber="true"
                     android:textSize="@dimen/font_12"/>
 
                 <!--<TextView-->
