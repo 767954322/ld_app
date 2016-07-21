@@ -170,7 +170,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:hint="请输入面积（平米）"
-                    android:phoneNumber="true"
+                    android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12"/>
 
                 <!--<TextView-->
