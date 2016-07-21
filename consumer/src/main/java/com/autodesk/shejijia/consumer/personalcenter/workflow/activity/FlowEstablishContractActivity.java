@@ -19,8 +19,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -32,11 +32,9 @@ import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.utility.DbUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
@@ -179,17 +177,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 tvc_consumer_name.setText(requirement.getContacts_name());
                 tvc_consumer_phone.setText(requirement.getContacts_mobile());
 
-                String province_name = requirement.getProvince();
-                String city_name = requirement.getCity();
-                String district_name = requirement.getDistrict();
-                if (StringUtils.isNumeric(province_name)) {
-                    province_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.PROVINCE, province_name);
-                }
-                if (StringUtils.isNumeric(city_name)) {
-                    city_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.CITY, city_name);
-                }
-                if (StringUtils.isNumeric(district_name)) {
-                    district_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.DISTRICT, district_name);
+                String province_name = requirement.getProvince_name();
+                String city_name = requirement.getCity_name();
+                String district_name = requirement.getDistrict_name();
+                if ("none".equals(requirement.getDistrict())
+                        || "null".equals(district_name)
+                        || "none".equals(district_name)
+                        || TextUtils.isEmpty(district_name)) {
+                    district_name = "";
                 }
                 tvc_consumer_decorate_address.setText(province_name + " " + city_name + " " + district_name);
                 tvc_consumer_detail_address.setText(requirement.getCommunity_name());

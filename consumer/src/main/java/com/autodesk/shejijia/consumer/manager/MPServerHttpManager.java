@@ -750,6 +750,9 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+    /**
+     * 发送设计合同
+     */
     public void sendEstablishContract(final String need_id, final String Member_Type, final String acsToken, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_SEND_ESTABLISH_CONTRACT + need_id;
         KLog.d(TAG, "url:" + url + "##Authorization:" + addX_Token(xToken) + "##Member-Type:" + Member_Type + "##ACS-Token:" + acsToken);
@@ -873,13 +876,14 @@ public class MPServerHttpManager {
 
     /**
      * 判断是否是乐屋设计师
+     *
      * @param designers
      * @param hs_uid
      * @param callback
      */
     public void ifIsLohoDesiner(String designers, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
         //http://alpha-api.gdfcx.net/member-app/v1/api/designers/20735915
-        String url = UrlConstants.ALPHA_MP_MAIN+"/member-app/v1/api/designers/"+designers;
+        String url = UrlConstants.ALPHA_MP_MAIN + "/member-app/v1/api/designers/" + designers;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1082,14 +1086,14 @@ public class MPServerHttpManager {
      */
     public void getMessageCentermsgs(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MESSAGE_CENTER + member_id + "/sysmessages?limit=" + limit + "&offset=" + offset;
-        Log.d("test",url);
+        Log.d("test", url);
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                Log.d("test",addX_Token(xToken));
+                Log.d("test", addX_Token(xToken));
                 return header;
             }
         };
