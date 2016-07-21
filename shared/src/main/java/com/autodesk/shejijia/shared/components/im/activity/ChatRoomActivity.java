@@ -198,7 +198,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         } else if (i == R.id.nav_secondary_imageButton) {
             if (mIWorkflowDelegate != null)
             {
-            	mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, mRecieverUserId);
+            	mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, designerId);
             }
         }
     }

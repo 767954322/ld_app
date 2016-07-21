@@ -91,10 +91,10 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         return getWorkflowButtonIco(OrderDetailsInfo, ifIsDesiner);
     }
 
-    public void onChatRoomSupplementryButtonClicked(Context context, String assetId, String recieverId) {
+    public void onChatRoomSupplementryButtonClicked(Context context, String assetId, String designerId) {
         Intent maIntent = new Intent(context, ProjectMaterialActivity.class);
         maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, recieverId);
+        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designerId);
         maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, assetId);
         context.startActivity(maIntent);
 
@@ -106,25 +106,25 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
         if (wk_cur_sub_node_idi != 0) {
             if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == -1) {
-                jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, assetId, recieverId);
+                jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 13) {
-                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, recieverId);
+                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
-                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, recieverId);
+                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 21) {
-                jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, assetId, recieverId);
+                jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 31) {
-                jumpToOtherProcessesFour(context, FlowFirstDesignActivity.class, assetId, recieverId);
+                jumpToOtherProcessesFour(context, FlowFirstDesignActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51) {
                 jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 41) {
-                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, recieverId);
+                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, designerId);
 
             }
         } else {
