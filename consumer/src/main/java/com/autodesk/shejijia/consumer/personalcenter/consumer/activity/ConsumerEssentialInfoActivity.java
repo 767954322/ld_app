@@ -196,14 +196,15 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 所在地
          */
-        if (TextUtils.isEmpty(province_name)) {
-            mTvConsumeAddress.setText(getResources().getString(R.string.no_data));
+        if (TextUtils.isEmpty(province_name)
+                || TextUtils.isEmpty(city_name)
+                || TextUtils.isEmpty(district_name)) {
+            mTvConsumeAddress.setText(getResources().getString(R.string.has_yet_to_fill_out));
         } else {
-            if (district_name.isEmpty() || "none".equals(district_name)) {
-                mTvConsumeAddress.setText(province_name + " " + city_name + " ");
-            } else {
-                mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
+            if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
+                district_name = "";
             }
+            mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
         }
 
         /**
@@ -220,6 +221,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 mTvSex.setText(UIUtils.getString(R.string.boy));
                 break;
         }
+
     }
 
     @Override
