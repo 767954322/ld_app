@@ -167,7 +167,6 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         String district_name = mConsumerEssentialInfoEntity.getDistrict_name();
         if (TextUtils.isEmpty(province_name)
                 || TextUtils.isEmpty(city_name)
-                || TextUtils.isEmpty(district_name)
                 ) {
             tvLocation.setText(getResources().getString(R.string.has_yet_to_fill_out));
         } else {
