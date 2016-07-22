@@ -19,6 +19,7 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
 
     @Override
     public void onClick(View v) {
+
         switch (v.getId()) {
 
             case R.id.ll_project_material_measure_house:
@@ -81,7 +82,7 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
-        if (wk_cur_sub_node_idi >= 11 && wk_cur_sub_node_idi != 12) {
+        if (wk_cur_sub_node_idi >= 11) {
             ll_project_material_measure_house.setVisibility(View.VISIBLE);
         }
         if (wk_cur_sub_node_idi == 33) {
