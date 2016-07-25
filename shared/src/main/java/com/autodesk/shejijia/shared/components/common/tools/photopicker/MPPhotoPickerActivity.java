@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.fragment.MPPhotoAlbumFragment;
 import com.autodesk.shejijia.shared.components.im.fragment.MPPhotoPickerFragment;
@@ -67,6 +68,9 @@ public class MPPhotoPickerActivity extends NavigationBarActivity implements View
 
                 // Only for testing cloud albums, with li.yang
 //                mAssetId = "1578095";
+
+                if (!StringUtils.isValidString(mAssetId))
+                    mAssetId = null;
             }
         }
 
