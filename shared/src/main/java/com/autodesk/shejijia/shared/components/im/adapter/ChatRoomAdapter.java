@@ -440,6 +440,10 @@ public class ChatRoomAdapter extends BaseAdapter
     private void getUnreadFileCount(final ViewHolder holder, final int position)
     {
         MPChatMessage message = mListInterface.getMessageForIndex(position);
+
+        if (message == null)
+            return;
+
         MPChatHttpManager.getInstance().retrieveFileUnreadMessageCount(mListInterface.getLoggedinMemberId(), String.valueOf(message.media_file_id), new OkStringRequest.OKResponseCallback()
         {
             @Override
