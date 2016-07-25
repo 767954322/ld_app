@@ -4,62 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLinraryNewActivity">
 
     <include
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"></include>
 
+    <include
+        android:id="@+id/case_head"
+        layout="@layout/caselibrary_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/common_navbar"
+        android:visibility="gone"></include>
+
     <ListView
+
         android:id="@+id/case_library_new"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/common_navbar"></ListView>
+        android:layout_below="@+id/case_head"
+        ></ListView>
 
-    <TextView
-        android:layout_below="@+id/common_navbar"
-        android:id="@+id/tv_shadow"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="这是测试条目"
-        android:background="#ffffffff"
-        android:visibility="visible"
-        android:gravity="center"/>
 
-    <LinearLayout
-        android:layout_below="@+id/common_navbar"
-        android:orientation="horizontal"
+    <include
+        layout="@layout/case_library_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <RelativeLayout
-            android:background="@drawable/icon"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="分享"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_thumb_up"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:background="@drawable/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="点赞"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-    </LinearLayout>
 </RelativeLayout>

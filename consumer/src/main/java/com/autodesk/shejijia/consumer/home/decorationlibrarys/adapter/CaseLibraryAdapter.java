@@ -8,18 +8,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.SearchHoverCaseBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;
 
 /**
  * Created by：yangxuewu on 16/7/20 16:05
- *   auguest 新的案例详情适配器
+ * auguest 新的案例详情适配器
  */
 public class CaseLibraryAdapter extends BaseAdapter {
 
 
-    public CaseLibraryAdapter(Context context, List<SearchHoverCaseBean> items) {
+    public CaseLibraryAdapter(Context context, List<CaseDetailBean.ImagesEntity> items) {
         this.context = context;
         this.items = items;
     }
@@ -50,7 +52,8 @@ public class CaseLibraryAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        //holder.tv_data.setText(items.get(position).getValue());
+
+        ImageUtils.displayIconImage(items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG, holder.mCaseLibraryLImage);
         convertView.setTag(items.get(position));
         return convertView;
     }
@@ -59,6 +62,6 @@ public class CaseLibraryAdapter extends BaseAdapter {
         public ImageView mCaseLibraryLImage;
     }
 
-    private List<SearchHoverCaseBean> items;
+    private List<CaseDetailBean.ImagesEntity> items;
     private Context context;
 }
