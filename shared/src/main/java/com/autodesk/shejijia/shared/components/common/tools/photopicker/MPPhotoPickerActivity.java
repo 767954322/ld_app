@@ -336,8 +336,8 @@ public class MPPhotoPickerActivity extends NavigationBarActivity implements View
 
             // Need to rotate clockwise, opposite of the photo orientation
             ImageProcessingUtil util = new ImageProcessingUtil();
-            util.fastRotateAndCopyImage(sourceFile, targetFile,
-                    360 - mSelectedImages.get(0).orientation, this, new ImageProcessingUtil.ImageSaverHandler()
+            util.copyImageWithOrientation(sourceFile, targetFile,
+                    mSelectedImages.get(0).orientation, new ImageProcessingUtil.ImageSaverHandler()
                     {
                         @Override
                         public void onSuccess(String outImagePath)

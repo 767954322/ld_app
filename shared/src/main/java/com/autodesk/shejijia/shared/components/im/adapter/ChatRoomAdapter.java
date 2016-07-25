@@ -392,6 +392,8 @@ public class ChatRoomAdapter extends BaseAdapter {
             message = mListInterface.getMessageForIndex(position);
         }
 
+        if (message == null)
+            return;
 
         if (null != message && null != mListInterface) {
             MPChatHttpManager.getInstance().retrieveFileUnreadMessageCount(mListInterface.getLoggedinMemberId(), String.valueOf(message.media_file_id), new OkStringRequest.OKResponseCallback() {

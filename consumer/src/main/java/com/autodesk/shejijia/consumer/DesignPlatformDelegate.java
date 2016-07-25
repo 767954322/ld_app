@@ -118,7 +118,8 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 31) {
-                jumpToOtherProcessesFour(context, FlowFirstDesignActivity.class, assetId, designerId);
+                //FlowEstablishContractActivity
+                jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51) {
                 jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId);
@@ -245,7 +246,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                         return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
 
                     case 31: // 首款
-                        return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
+                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
 
                     case 33: // 量房交付物
                         return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
@@ -291,7 +292,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                     return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
 
                 case 31: // 首款
-                    return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
+                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
 
 
                 case 33: // 量房交付物

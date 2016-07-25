@@ -15,14 +15,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.os.AsyncTask;
-import android.renderscript.Allocation;
-import android.renderscript.RenderScript;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.im.constants.ImageParameter;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.io.BufferedInputStream;
 import java.io.Closeable;
@@ -412,25 +410,6 @@ public class ImageProcessingUtil {
 
     }
 
-    // This function will rotate the image using Renderscript
-    public void fastRotateAndCopyImage(final String inImagePath, final String outImagePath,
-                                       final int rotateBy, final Context context,
-                                       final ImageSaverHandler handler)
-    {
-        FastRotateBitmapTask rotateBitmapTask = new FastRotateBitmapTask(handler, rotateBy, context);
-        rotateBitmapTask.execute(inImagePath, outImagePath);
-    }
-
-
-    // This function will read the EXIF tags to find out how much to rotate the image by
-    // This function will rotate the image using Renderscript
-    public void fastRotateAndCopyImage(final String inImagePath, final String outImagePath,
-                                       final Context context, final ImageSaverHandler handler)
-    {
-        FastRotateBitmapTask rotateBitmapTask = new FastRotateBitmapTask(handler, context);
-        rotateBitmapTask.execute(inImagePath, outImagePath);
-    }
-
     //This function will load image in memory, rotate it if image is having rotation in EXIF
     // if succeeds, savepath will be returned
     // this function runs async
@@ -441,6 +420,12 @@ public class ImageProcessingUtil {
         saveBitmapWorkerTask.execute(inImagePath,outImagePath);
     }
 
+
+    public void copyImageWithOrientation(final String inImagePath, final String outImagePath,
+                                         final int rotateBy, final ImageSaverHandler handler) {
+        SaveBitmapWorkerTask saveBitmapWorkerTask = new SaveBitmapWorkerTask(handler,rotateBy);
+        saveBitmapWorkerTask.execute(inImagePath,outImagePath);
+    }
 
     public Bitmap scaleAndRotateImage(final Bitmap subsampledBitmap, final int rotation, final boolean flipHorizontal) {
         Matrix m = new Matrix();
@@ -462,114 +447,10 @@ public class ImageProcessingUtil {
     }
 
 
-    public Bitmap fastRotate(final Bitmap bitmap, final int rotation, final Context context)
-    {
-        int actualRotation;
-
-        if (rotation < 0)
-        {
-            Log.d("ImageProcessingUtil", "Cannot rotate bitmap: Please pass a rotation " +
-                    "value that is a positive integral multiple of 90");
-            return null;
-        }
-
-        if (rotation % 360 == 0)
-            return bitmap;
-
-        if (rotation % 90 != 0)
-        {
-            Log.d("ImageProcessingUtil", "Cannot rotate bitmap: Please pass a rotation " +
-                    "value that is a positive integral multiple of 90");
-            return null;
-        }
-        else if (rotation > 360)
-            actualRotation = rotation % 360;
-        else
-            actualRotation = rotation;
-
-        Bitmap target = null;
-
-        try
-        {
-            RenderScript rs = RenderScript.create(context);
-            ScriptC_rotator script = new ScriptC_rotator(rs);
-
-            int originalWidth = bitmap.getWidth();
-            int originalHeight = bitmap.getHeight();
-            Bitmap.Config config = bitmap.getConfig();
-
-            script.set_inWidth(originalWidth);
-            script.set_inHeight(originalHeight);
-
-            Allocation sourceAllocation = Allocation.createFromBitmap(rs, bitmap,
-                    Allocation.MipmapControl.MIPMAP_NONE,
-                    Allocation.USAGE_SCRIPT);
-            bitmap.recycle();
-            script.set_inImage(sourceAllocation);
-
-            int targetHeight = 0;
-            int targetWidth = 0;
-
-            switch (actualRotation)
-            {
-                case 90:
-                    targetHeight = originalWidth;
-                    targetWidth = originalHeight;
-                    break;
-
-                case 180:
-                    targetHeight = originalHeight;
-                    targetWidth = originalWidth;
-                    break;
-
-                case 270:
-                    targetHeight = originalWidth;
-                    targetWidth = originalHeight;
-                    break;
-
-                default:
-                    Log.d("ImageProcessingUtil", "Unexpected rotation value found!");
-                    return null;
-            }
-
-            target = Bitmap.createBitmap(targetWidth, targetHeight, config);
-            final Allocation targetAllocation = Allocation.createFromBitmap(rs, target,
-                    Allocation.MipmapControl.MIPMAP_NONE,
-                    Allocation.USAGE_SCRIPT);
-
-            switch (actualRotation)
-            {
-                case 90:
-                    script.forEach_rotate_90_clockwise(targetAllocation, targetAllocation);
-                    break;
-
-                case 180:
-                    script.forEach_rotate_180_clockwise(targetAllocation, targetAllocation);
-                    break;
-
-                case 270:
-                    script.forEach_rotate_270_clockwise(targetAllocation, targetAllocation);
-                    break;
-            }
-
-            targetAllocation.copyTo(target);
-            rs.destroy();
-        }
-        catch (Exception e)
-        {
-            Log.d("ImageProcessingUtil", "Exception while fast-rotating image: " + e.getMessage());
-            target = null;
-        }
-
-        return target;
-    }
-
-
     public interface ImageSaverHandler {
         void onSuccess(String outImagePath);
         void onFailure();
     }
-
 
     private ExifInfo getExifInfo(String inImagePath)
     {
@@ -615,7 +496,7 @@ public class ImageProcessingUtil {
         {
             BitmapFactory.Options options = new BitmapFactory.Options();
 
-            options.inSampleSize = 1;
+            options.inSampleSize = 2;
 
             inputStream = getStreamFromFile(inImagePath);
             decodedBitmap = BitmapFactory.decodeStream(inputStream, null, options);
@@ -719,9 +600,15 @@ public class ImageProcessingUtil {
     private class SaveBitmapWorkerTask extends AsyncTask<String,Void,String> {
 
         private ImageSaverHandler mHandler;
+        private Integer mRotateBy = null;
 
         public SaveBitmapWorkerTask(ImageSaverHandler handler) {
             mHandler = handler;
+        }
+
+        public SaveBitmapWorkerTask(ImageSaverHandler handler, int rotateBy) {
+            mHandler = handler;
+            mRotateBy = rotateBy;
         }
 
         // Decode image in background.
@@ -735,8 +622,19 @@ public class ImageProcessingUtil {
             if (inImagePath != null && !inImagePath.isEmpty()) {
 
                 try {
-                    //1. Read exif data of image
+                    // Read exif data of image
                     ExifInfo exifInfo = getExifInfo(inImagePath);
+
+                    int rotateBy = 0;
+
+                    //1. Get rotation value
+                    if (mRotateBy == null)
+                    {
+                        // Get rotation value from EXIF
+                        rotateBy = exifInfo.rotation;
+                    }
+                    else
+                        rotateBy = mRotateBy; // We had the rotation value passed to us
 
                     //2. decode it
                     Bitmap decodedBitmap = decodeBitmap(inImagePath);
@@ -747,7 +645,7 @@ public class ImageProcessingUtil {
                     else {
 
                         //3. rotate it
-                        decodedBitmap = scaleAndRotateImage(decodedBitmap,exifInfo.rotation,exifInfo.flipHorizontal);
+                        decodedBitmap = scaleAndRotateImage(decodedBitmap,rotateBy,exifInfo.flipHorizontal);
 
                         //4. save it
                         boolean success = saveBitmapAsJPEG(outImagePath, decodedBitmap);
@@ -776,95 +674,6 @@ public class ImageProcessingUtil {
                 } else {
                     mHandler.onFailure();
                 }
-            }
-        }
-    }
-
-
-    private class FastRotateBitmapTask extends AsyncTask<String, Void, String>
-    {
-        private ImageSaverHandler mHandler;
-        private Integer mRotateBy = null;
-        private Context mContext;
-
-        public FastRotateBitmapTask(ImageSaverHandler handler, Context context)
-        {
-            mHandler = handler;
-            mContext = context;
-        }
-
-        public FastRotateBitmapTask(ImageSaverHandler handler, int rotateBy, Context context)
-        {
-            mRotateBy = rotateBy;
-            mHandler = handler;
-            mContext = context;
-        }
-
-        // Decode image in background.
-        @Override
-        protected String doInBackground(String... params)
-        {
-            String inImagePath = params[0];
-            String outImagePath = params[1];
-            String result = null;
-
-            if (inImagePath != null && !inImagePath.isEmpty())
-            {
-                try
-                {
-                    int rotateBy = 0;
-
-                    //1. Get rotation value
-                    if (mRotateBy == null)
-                    {
-                        // Read EXIF
-                        ExifInfo exifInfo = getExifInfo(inImagePath);
-                        rotateBy = 360 - exifInfo.rotation;
-                    }
-                    else
-                        rotateBy = mRotateBy; // We had the rotation value passed to us
-
-                    Log.d("ImageProcessingUtil", "Rotating bitmap by: " + rotateBy + " degrees CW");
-
-                    //2. decode it
-                    Bitmap decodedBitmap = decodeBitmap(inImagePath);
-
-                    if (decodedBitmap == null)
-                        Log.d("ImageProcessingUtil", "Problem in decoding bitmap");
-                    else
-                    {
-                        //3. rotate it
-                        decodedBitmap = fastRotate(decodedBitmap, rotateBy, mContext);
-
-                        //4. save it
-                        boolean success = saveBitmapAsJPEG(outImagePath, decodedBitmap);
-
-                        if (!success)
-                            result = null;
-                        else
-                            result = outImagePath;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log.d("ImageProcessingUtil", e.getMessage());
-                    result = null;
-                }
-            }
-
-            //5. return path
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String outImagePath)
-        {
-            if (mHandler != null)
-            {
-                if (outImagePath != null)
-                    mHandler.onSuccess(outImagePath);
-                else
-                    mHandler.onFailure();
             }
         }
     }
