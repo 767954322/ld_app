@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -19,6 +21,7 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -49,7 +52,10 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initExtraBundle();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        state = (int) intent.getExtras().get(Constant.WorkFlowStateKey.JUMP_FROM_STATE);                                                    /// 状态标签，全流程、IM、资料项目 .
+
+//        state = intent.getIntExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE,-1);
+        state = (int) intent.getExtras().get(Constant.WorkFlowStateKey.JUMP_FROM_STATE);
+        /// 状态标签，全流程、IM、资料项目 .
         if (state == Constant.WorkFlowStateKey.STEP_DECORATION || state == Constant.WorkFlowStateKey.STEP_FLOW) { /// 全流程 .
             designer_id = bundle.getString(Constant.BundleKey.BUNDLE_DESIGNER_ID);
             needs_id = bundle.getString(Constant.BundleKey.BUNDLE_ASSET_NEED_ID);

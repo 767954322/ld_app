@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.fragment.DecorationBeiShuFragment;
+import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidBidingFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.OrderBeiShuFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -41,6 +43,76 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
 
     }
 
+    /**
+     * 设置应标的fragment
+     * */
+    public void setBidingFragment(){
+
+            if (mBidBidingFragment == null){
+
+                mBidBidingFragment = new BidingFragment();
+            }
+
+        switchFragment(mBidBidingFragment);
+    }
+    /**
+     * 设置设计的fragment
+     * */
+    public void setDesignBeiShuFragment(){
+
+        if (mBeishuMealFragment == null){
+
+            mBeishuMealFragment = new DesignerOrderBeiShuFragment();
+
+        }
+
+        switchFragment(mBeishuMealFragment);
+    }
+
+    /**
+     * 设置设计的fragment
+     * */
+    public void setDesignFragment(){
+
+        if (mCommonOrderFragment == null){
+
+            mCommonOrderFragment = new DesignerOrderFragment();
+
+        }
+
+        switchFragment(mCommonOrderFragment);
+    }
+
+    /**
+     * 设置施工的fragment
+     * */
+    public void setConstructionFragment(){
+
+        if (mDesignerConstructionFragment == null){
+
+            mDesignerConstructionFragment = new DesignerConstructionFragment();
+
+        }
+
+        switchFragment(mDesignerConstructionFragment);
+    }
+
+
+    /**
+     * 切换fragment
+     *
+     * @param
+     * @param to
+     */
+    private void switchFragment(Fragment to) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        if (!to.isAdded()) {
+            transaction.hide(fromFragment).add(R.id.ll_contain, to).commit();
+        } else {
+            transaction.hide(fromFragment).show(to).commit();
+        }
+        fromFragment = to;
+    }
 
     /**
      * @brief 默认北舒套餐页面 .
@@ -52,6 +124,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
                 .commit();*/
         fragmentManager.beginTransaction().replace(R.id.ll_contain, mBeishuMealFragment)
                 .commit();
+        fromFragment = mBeishuMealFragment;
     }
 
     private LinearLayout llFragmentContain;
@@ -61,6 +134,10 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     private FrameLayout mOrderContainer;
     private Fragment mBeishuMealFragment, mCommonOrderFragment;
     private FragmentManager fragmentManager;
+    private Fragment fromFragment;
     private FragmentTransaction transaction;
     private GradientDrawable drawable;/// set Textview bordercolor .
+    private Fragment mDesignerConstructionFragment;
+    private Fragment mBidBidingFragment;
+
 }

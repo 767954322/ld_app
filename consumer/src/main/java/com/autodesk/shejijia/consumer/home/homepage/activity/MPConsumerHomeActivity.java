@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -79,10 +81,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout,null);
         choosevViewPointer = (ChoosevViewPointer) contain_layout.findViewById(R.id.choose_point);
-
+       // contain.addView(contain_layout);
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
         construction = (TextView) contain_layout.findViewById(R.id.construction);
+
+        setMyProjectTitleColorChange(design,bidding,construction);
 
         ViewTreeObserver vto = contain.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -92,9 +96,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 btWidth = contain.getMeasuredWidth();
                 btHeight = contain.getMeasuredHeight();
 
+                if (btWidth != 0){
+
+                    choosevViewPointer.setInitCHooseVoewPoint(btWidth);
+                }
+
             }
         });
-
+        //getScreenWidth(this);
 
         user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
@@ -319,13 +328,27 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
 
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
-                setVisibilityForNavButton(ButtonType.middle,false);
+                //判断登陆的是设计师还是消费者，，，我的项目加载不同的信息
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
 
-                contain.setVisibility(View.VISIBLE);
-                if (contain.getChildCount() == 0){
 
-                    contain.addView(contain_layout);
+                    setVisibilityForNavButton(ButtonType.middle,false);
+
+                    contain.setVisibility(View.VISIBLE);
+                    if (contain.getChildCount() == 0){
+
+                        contain.addView(contain_layout);
+                    }
                 }
+
+                if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+
+                    setTitleForNavbar(UIUtils.getString(R.string.designer_personal));
+                }
+
+
+
                 break;
 
             case R.id.designer_session_radio_btn:  /// 会話聊天.
@@ -348,6 +371,18 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
+    /**
+     * 获取屏幕的宽
+     */
+    public static int getScreenWidth(Context context) {
+
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+
+        return width;
+    }
+
     //切换fragment 改变指针
     @Override
     public void onClick(View v) {
@@ -356,30 +391,42 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
             case R.id.bidding:
                 //指针
+                setMyProjectTitleColorChange(bidding,design,construction);
                 choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_NUMBER,POINTER_START_END_NUMBER);
+                mDesignerPersonalCenterFragment.setBidingFragment();
                 break;
             case R.id.design:
-
+                setMyProjectTitleColorChange(design,bidding,construction);
                 choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_END_NUMBER,POINTER_MIDDLE_END_NUMBER);
-
+                //判断进入北舒套餐，，还是进入普通订单页面
                 if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
                     if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
                         /// 北舒 .
-                        CommonUtils.launchActivity(MPConsumerHomeActivity.this, DesignerOrderBeiShuActivity.class);
+                        mDesignerPersonalCenterFragment.setDesignBeiShuFragment();
                     } else {
-                        CommonUtils.launchActivity(MPConsumerHomeActivity.this, DesignerOrderActivity.class);
+                        mDesignerPersonalCenterFragment.setDesignFragment();
                     }
                 } else {
-                    CommonUtils.launchActivity(MPConsumerHomeActivity.this, DesignerOrderActivity.class);
+                    mDesignerPersonalCenterFragment.setDesignFragment();
                 }
 
                 break;
             case R.id.construction:
-
+                setMyProjectTitleColorChange(construction,design,bidding);
                 choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_MIDDLE_END_NUMBER,POINTER_END_NUMBER);
+
+                mDesignerPersonalCenterFragment.setConstructionFragment();
                 break;
 
         }
+
+    }
+
+    protected void setMyProjectTitleColorChange(TextView titleCheck,TextView textUnckeck,TextView titleUncheck){
+
+        titleCheck.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
+        textUnckeck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
+        titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
 
     }
 
