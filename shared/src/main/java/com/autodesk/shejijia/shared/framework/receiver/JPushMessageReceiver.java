@@ -110,19 +110,37 @@ public class JPushMessageReceiver extends BroadcastReceiver {
                 if (jsonObject != null) {
 
                     JSONArray jArray = jsonObject.getJSONArray("args");
-                    String param1 = null;
-                    String param2 = null;
 
-                    param1 = (jArray.length() > 0) ? jArray.getString(0) : null;
-                    param2 = (jArray.length() > 1) ? jArray.getString(1) : null;
-                    String userName = param1;
+                    if (jsonObject.has("loc-key"))
+                    {
+                        String key = jsonObject.optString("loc-key");
 
-                    for (String token : param1.split("_")) {
-                        userName = token;
-                        break;
+                        if(key.equalsIgnoreCase("PRIVATE_MESSAGE_AUDIO"))
+                        {
+                            if (jArray.length() > 0)
+                                contentText = context.getResources().getString(R.string.push_notification_audio_message,jArray.getString(0));
+                        }
+                        else if(key.equalsIgnoreCase("PRIVATE_MESSAGE_IMAGE"))
+                        {
+                            if (jArray.length() > 0)
+                                contentText = context.getResources().getString(R.string.push_notification_image_message,jArray.getString(0));
+                        }
                     }
+                    else
+                    {
+                        if (jArray.length() > 1)
+                        {
+                            String userName = jArray.getString(0);
+                            String userMessage = jArray.getString(1);
 
-                    contentText = context.getResources().getString(R.string.push_notification_text_message, userName, param2);
+                            for (String token : userName.split("_"))
+                            {
+                                userName = token;
+                                break;
+                            }
+                            contentText = context.getResources().getString(R.string.push_notification_text_message, userName, userMessage);
+                        }
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -147,7 +165,7 @@ public class JPushMessageReceiver extends BroadcastReceiver {
 
             nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = builder.build();
-            notification.flags = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+            notification.flags =  Notification.FLAG_ONLY_ALERT_ONCE;
             nm.notify(notificationId, notification);
         }
     }
