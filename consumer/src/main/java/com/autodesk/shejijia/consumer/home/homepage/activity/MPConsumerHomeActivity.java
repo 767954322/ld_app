@@ -86,11 +86,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
         construction = (TextView) contain_layout.findViewById(R.id.construction);
-        choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
+       // choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
 
 
         setMyProjectTitleColorChange(design,bidding,construction);
-        setChooseViewWidth();
+       // setChooseViewWidth();
 
         //getScreenWidth(this);
 
@@ -143,7 +143,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void onResume() {
         Intent intent = getIntent();
-        setChooseViewWidth();
+        setChooseViewWidth(true);
         int id = intent.getIntExtra(Constant.DesignerBeiShuMeal.SKIP_DESIGNER_PERSONAL_CENTER, -1);
         if (id > 0) {
             switch (id) {
@@ -164,7 +164,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         super.onRestart();
         showDesignerOrConsumerRadioGroup();
         setConsumerOrDesignerPicture();//设置头像
-        choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
+       // choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -290,7 +290,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     }
     //设置指针控件宽度
-    public void setChooseViewWidth(){
+    public void setChooseViewWidth(final boolean just){
 
         ViewTreeObserver vto = contain.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -301,10 +301,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 btHeight = contain.getMeasuredHeight();
                 if (btWidth != 0){
 
-                   // choosevViewPointer.setInitCHooseVoewPoint(btWidth);
+                    choosevViewPointer.setInitChooseVoewPoint(btWidth,just);
                 }
 
             }
+
         });
     }
 
@@ -340,7 +341,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
                 //判断登陆的是设计师还是消费者，，，我的项目加载不同的信息
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                setChooseViewWidth();
+                setChooseViewWidth(true);
                 if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
 
 

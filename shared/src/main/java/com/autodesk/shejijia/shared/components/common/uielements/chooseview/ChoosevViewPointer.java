@@ -52,43 +52,44 @@ public class ChoosevViewPointer extends View{
         paint.setStrokeWidth(20);
         if (initWidth != 0){
             if (initBoolean){
+
                 canvas.drawLine(initWidth * 1/3f,0,initWidth * 2/3f,0,paint);
-                initBoolean = false;
             }
+
 
         }
         canvas.drawLine(width * A,0,width * B,0,paint);
     }
 
     public void setWidthOrHeight(int width,int height,float a,float b){
-
+        this.initWidth = 0;
         this.width = width;
         this.height = height;
         this.A = a;
         this.B = b;
+        initBoolean = false;
         invalidate();
 
     }
 
-    public void setInitCHooseVoewPoint(int width){
+    public void setInitChooseVoewPoint(int width,boolean just){
 
-        if (width == 480){
+//        if (width == 480){
+//
+//            this.initWidth = 756 * 480 / 1080;
+//        }
+//        if (width == 720){
+//
+//            this.initWidth = 756 * 720 /1080;
+//        }
 
-            this.initWidth = 756 * 480 / 1080;
-        }
-        if (width == 720){
+            this.initWidth = width;
+//        if (width == 1280){
+//
+//            this.initWidth = 756 * 1280 /1080;
+//        }
 
-            this.initWidth = 756 * 720 /1080;
-        }
-        if (width == 1080){
-
-            this.initWidth = 756;
-        }
-        if (width == 1280){
-
-            this.initWidth = 756 * 1280 /1080;
-        }
-        invalidate();
+            invalidate();
     }
 
 
