@@ -62,7 +62,7 @@ public class RegexUtil {
     /**
      * 验证正整数
      */
-    public static final String POSITIVE_INTEGER_REGEX = "^[0-9]*[1-9][0-9]*$";
+    public static final String POSITIVE_INTEGER_REGEX = "^[1-9]\\d*|0";
 
     /**
      * 身份号码

@@ -482,7 +482,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         boolean isMobile = consumerPhone.matches(RegexUtil.PHONE_REGEX);
         boolean isEmail = consumerEmail.matches(RegexUtil.EMAIL_REGEX);
-        boolean isPositiveInteger = designSketch.matches(RegexUtil.POSITIVE_INTEGER_REGEX);
+        boolean isSketch = designSketch.matches(RegexUtil.POSITIVE_INTEGER_REGEX); // 验证效果图张数
+        boolean isMap = renderMap.matches(RegexUtil.POSITIVE_INTEGER_REGEX); //　验证渲染图张数
         boolean isPostNum = consumerPostcode.matches(RegexUtil.POST_NUMBER_REGEX);
 
         if (!consumerName.isEmpty()) {
@@ -494,9 +495,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
                         if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
 
-                            if (isPositiveInteger) {
+                            if (isSketch) {
 
-                                if (isPositiveInteger) {
+                                if (isMap) {
 
                                     if (!sketchPlus.isEmpty() && Double.parseDouble(sketchPlus) >= 0) {
 
