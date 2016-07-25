@@ -72,7 +72,23 @@ public class ChoosevViewPointer extends View{
 
     public void setInitCHooseVoewPoint(int width){
 
-        this.initWidth = width;
+        if (width == 480){
+
+            this.initWidth = 756 * 480 / 1080;
+        }
+        if (width == 720){
+
+            this.initWidth = 756 * 720 /1080;
+        }
+        if (width == 1080){
+
+            this.initWidth = 756;
+        }
+        if (width == 1280){
+
+            this.initWidth = 756 * 1280 /1080;
+        }
+        invalidate();
     }
 
 

@@ -57,7 +57,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
 
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -79,30 +78,20 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         contain = (LinearLayout) findViewById(R.id.ll_contain);
 
+        screenWidth = getScreenWidth(this);
+
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout,null);
         choosevViewPointer = (ChoosevViewPointer) contain_layout.findViewById(R.id.choose_point);
        // contain.addView(contain_layout);
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
         construction = (TextView) contain_layout.findViewById(R.id.construction);
+        choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
+
 
         setMyProjectTitleColorChange(design,bidding,construction);
+        setChooseViewWidth();
 
-        ViewTreeObserver vto = contain.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-
-            @Override
-            public void onGlobalLayout() {
-                btWidth = contain.getMeasuredWidth();
-                btHeight = contain.getMeasuredHeight();
-
-                if (btWidth != 0){
-
-                    choosevViewPointer.setInitCHooseVoewPoint(btWidth);
-                }
-
-            }
-        });
         //getScreenWidth(this);
 
         user_avatar = (ImageView) findViewById(R.id.user_avatar);
@@ -154,6 +143,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void onResume() {
         Intent intent = getIntent();
+        setChooseViewWidth();
         int id = intent.getIntExtra(Constant.DesignerBeiShuMeal.SKIP_DESIGNER_PERSONAL_CENTER, -1);
         if (id > 0) {
             switch (id) {
@@ -173,6 +163,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void onRestart() {
         super.onRestart();
         showDesignerOrConsumerRadioGroup();
+        setConsumerOrDesignerPicture();//设置头像
+        choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -297,6 +289,24 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         startActivity(circleIntent);
 
     }
+    //设置指针控件宽度
+    public void setChooseViewWidth(){
+
+        ViewTreeObserver vto = contain.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                btWidth = contain.getMeasuredWidth();
+                btHeight = contain.getMeasuredHeight();
+                if (btWidth != 0){
+
+                   // choosevViewPointer.setInitCHooseVoewPoint(btWidth);
+                }
+
+            }
+        });
+    }
 
     protected void configureNavigationBar(int index) {
 
@@ -330,6 +340,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
                 //判断登陆的是设计师还是消费者，，，我的项目加载不同的信息
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                setChooseViewWidth();
                 if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
 
 
@@ -714,6 +725,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     final float POINTER_END_NUMBER = 1F;
     private int btWidth;
     private int btHeight;
+    private int screenWidth;
 
     private UserHomeFragment mUserHomeFragment;
 
