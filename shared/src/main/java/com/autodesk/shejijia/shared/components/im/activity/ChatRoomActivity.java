@@ -314,7 +314,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         String targetFilePath = localFile.getAbsolutePath();
 
         ImageProcessingUtil util = new ImageProcessingUtil();
-        util.fastRotateAndCopyImage(sourceFilePath, targetFilePath, this, new ImageProcessingUtil.ImageSaverHandler() {
+        util.copyImageWithOrientation(sourceFilePath, targetFilePath, new ImageProcessingUtil.ImageSaverHandler() {
             @Override
             public void onSuccess(String outImagePath) {
                 AsyncTask task = new AsyncTask<String, Void, String>() {

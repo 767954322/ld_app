@@ -442,6 +442,13 @@ public class ImageProcessingUtil {
     }
 
 
+    public void copyImageWithOrientation(final String inImagePath, final String outImagePath,
+                                         final int rotateBy, final ImageSaverHandler handler) {
+        SaveBitmapWorkerTask saveBitmapWorkerTask = new SaveBitmapWorkerTask(handler,rotateBy);
+        saveBitmapWorkerTask.execute(inImagePath,outImagePath);
+    }
+
+
     public Bitmap scaleAndRotateImage(final Bitmap subsampledBitmap, final int rotation, final boolean flipHorizontal) {
         Matrix m = new Matrix();
         // Flip bitmap if need
@@ -615,7 +622,7 @@ public class ImageProcessingUtil {
         {
             BitmapFactory.Options options = new BitmapFactory.Options();
 
-            options.inSampleSize = 1;
+            options.inSampleSize = 2;
 
             inputStream = getStreamFromFile(inImagePath);
             decodedBitmap = BitmapFactory.decodeStream(inputStream, null, options);
@@ -719,9 +726,15 @@ public class ImageProcessingUtil {
     private class SaveBitmapWorkerTask extends AsyncTask<String,Void,String> {
 
         private ImageSaverHandler mHandler;
+        private Integer mRotateBy = null;
 
         public SaveBitmapWorkerTask(ImageSaverHandler handler) {
             mHandler = handler;
+        }
+
+        public SaveBitmapWorkerTask(ImageSaverHandler handler, int rotateBy) {
+            mHandler = handler;
+            mRotateBy = rotateBy;
         }
 
         // Decode image in background.
@@ -735,8 +748,19 @@ public class ImageProcessingUtil {
             if (inImagePath != null && !inImagePath.isEmpty()) {
 
                 try {
-                    //1. Read exif data of image
+                    // Read exif data of image
                     ExifInfo exifInfo = getExifInfo(inImagePath);
+
+                    int rotateBy = 0;
+
+                    //1. Get rotation value
+                    if (mRotateBy == null)
+                    {
+                        // Get rotation value from EXIF
+                        rotateBy = exifInfo.rotation;
+                    }
+                    else
+                        rotateBy = mRotateBy; // We had the rotation value passed to us
 
                     //2. decode it
                     Bitmap decodedBitmap = decodeBitmap(inImagePath);
@@ -747,7 +771,7 @@ public class ImageProcessingUtil {
                     else {
 
                         //3. rotate it
-                        decodedBitmap = scaleAndRotateImage(decodedBitmap,exifInfo.rotation,exifInfo.flipHorizontal);
+                        decodedBitmap = scaleAndRotateImage(decodedBitmap,rotateBy,exifInfo.flipHorizontal);
 
                         //4. save it
                         boolean success = saveBitmapAsJPEG(outImagePath, decodedBitmap);
