@@ -5,4 +5,5 @@
     <string name="nodata">暂无数据</string>
     <string name="dianzanshu">"点赞数  "</string>
     <string name="thumbup_conunt">点赞数</string>
+    <string name="title_introduce">说明</string>
 </resources>
