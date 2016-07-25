@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailsPageActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -53,8 +56,21 @@ public class CaseLibraryAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ImageUtils.displayIconImage(items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG, holder.mCaseLibraryLImage);
+        final String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
+        ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
         convertView.setTag(items.get(position));
+
+
+        holder.mCaseLibraryLImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, CaseLibraryDetailsPageActivity.class);
+                intent.putExtra("imageUrl", imageUrl);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.my_scale_action, R.anim.my_alpha_action);
+            }
+        });
         return convertView;
     }
 

@@ -1,7 +1,12 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -20,14 +26,18 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.consumer.wxapi.ISendWXShared;
+import com.autodesk.shejijia.consumer.wxapi.SendWXShared;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -35,6 +45,9 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +72,11 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private TextView tvCustomerHomeArea;
     private Map<String, String> roomHall;
     private Map<String, String> style;
+    private LinearLayout ll_fenxiang_up;
+    private LinearLayout ll_fenxiang_down;
+    private WXSharedPopWin takePhotoPopWin;
+    private boolean ifIsSharedToFriends = true;
+    private PictureProcessingUtil pictureProcessingUtil;
 
     @Override
     protected int getLayoutResId() {
@@ -71,6 +89,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         super.initView();
         caseLibraryNew = (ListView) findViewById(R.id.case_library_new);
         llThumbUp = (LinearLayout) findViewById(R.id.rl_thumb_up);
+        ll_fenxiang_up = (LinearLayout) findViewById(R.id.ll_fenxiang);
         viewHead = findViewById(R.id.case_head);
         rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
 
@@ -86,6 +105,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         mdesignerAvater = (ImageView) view.findViewById(R.id.case_library_item_iv);
 
         View viewHead = LayoutInflater.from(this).inflate(R.layout.caselibrary_head, null);
+        ll_fenxiang_down = (LinearLayout) viewHead.findViewById(R.id.ll_fenxiang);
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
         View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
@@ -111,7 +131,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
         getCaseDetailData(case_id);
-
+        pictureProcessingUtil = new PictureProcessingUtil();
     }
 
 
@@ -121,6 +141,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         caseLibraryNew.setOnScrollListener(this);
         caseLibraryNew.setOnTouchListener(this);
         llThumbUp.setOnClickListener(this);
+        ll_fenxiang_down.setOnClickListener(this);
+        ll_fenxiang_up.setOnClickListener(this);
 
     }
 
@@ -143,18 +165,58 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         switch (v.getId()) {
             case R.id.rl_thumb_up:
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                if (mMemberEntity!=null){
+                if (mMemberEntity != null) {
                     sendThumbUp(caseDetailBean.getId());
-                }else {
+                } else {
                     AdskApplication.getInstance().doLogin(this);
 
                 }
+
+                break;
+            case R.id.ll_fenxiang:
+
+
+                if (takePhotoPopWin == null) {
+                    takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
+                }
+                takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
 
                 break;
             default:
                 break;
         }
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            switch (v.getId()) {
+
+                case R.id.tv_wx_shared_tofriends:
+                    String webUrl = "https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417751808&token=&lang=zh_CN";
+                    String imageUrl = "http://pic4.nipic.com/20091108/2454778_111024006409_2.jpg";
+                    ifIsSharedToFriends = true;
+                    try {
+                        Bitmap bitmap = null;//获取bitmap
+                        SendWXShared.sendProjectToWX(CaseLinraryNewActivity.this, webUrl, "分享标题", "分享最新内容", true, bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case R.id.tv_wx_shared_tocircleof_friends:
+                    ifIsSharedToFriends = false;
+                    Toast.makeText(CaseLinraryNewActivity.this, "分享朋友圈", Toast.LENGTH_SHORT).show();
+
+                    break;
+            }
+            if (takePhotoPopWin != null) {
+                takePhotoPopWin.dismiss();
+            }
+        }
+    };
 
 
     /**
@@ -167,7 +229,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
             @Override
             public void onResponse(JSONObject jsonObject) {
                 Log.d("yxw", jsonObject.toString());
-                ToastUtil.showCustomToast(CaseLinraryNewActivity.this,"点赞成功");
+                ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "点赞成功");
             }
 
             @Override
@@ -182,6 +244,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
 
     /**
      * 获得是否已经点赞接口
+     *
      * @param assetId
      */
     public void getThumbUp(String assetId) {
@@ -283,4 +346,5 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         }
         return false;
     }
+
 }

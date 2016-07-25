@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/font_200"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_wx_shared_tofriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/font_55"
+            android:drawablePadding="@dimen/font_7"
+            android:drawableTop="@drawable/icon_admin"
+            android:gravity="center"
+            android:text="微信好友"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:id="@+id/tv_wx_shared_tocircleof_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/font_20"
+            android:layout_marginRight="@dimen/font_55"
+            android:layout_marginTop="@dimen/font_20"
+            android:drawablePadding="@dimen/font_7"
+            android:drawableTop="@drawable/icon_admin"
+            android:gravity="center"
+            android:text="微信朋友圈"
+            android:textSize="@dimen/font_14" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

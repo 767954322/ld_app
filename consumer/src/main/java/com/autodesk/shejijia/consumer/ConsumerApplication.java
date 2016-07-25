@@ -69,7 +69,7 @@ public class ConsumerApplication extends AdskApplication {
         MPServerHttpManager.getInstance().getLoginThreadId(designer_id, okResponseCallback);
     }
 
-    private static final String APP_ID = "WX_App_id";
+    private static final String APP_ID = "wx4128c321fa069fa8";
     public static IWXAPI api;
     private DesignPlatformDelegate mDesignPlatformDelegate = new DesignPlatformDelegate();
 
