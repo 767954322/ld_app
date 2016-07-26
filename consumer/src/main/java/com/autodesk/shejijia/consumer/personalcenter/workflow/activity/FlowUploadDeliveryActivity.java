@@ -176,7 +176,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (object == mDelayAlertView && position != AlertView.CANCELPOSITION) {
-            Toast.makeText(this, "延期", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "确定延期", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -1066,6 +1066,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
         }
     }
+
 
     @Override
     protected void onDestroy() {

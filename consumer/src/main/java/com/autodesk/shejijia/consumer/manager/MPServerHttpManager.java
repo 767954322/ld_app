@@ -1168,6 +1168,31 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+
+    /**
+     * 交付物延期
+     * @param needs_id
+     * @param is_deleted
+     * @param callback
+     */
+    public void getFlowUploadDeliveryDelay(final String needs_id, final int is_deleted, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_POST_MODIFY_MEAL + needs_id +
+                "/cancel" +
+                "?is_deleted=" + is_deleted;
+        //design_app/v1/api/demands/{demands_id}/designers/{designer_id}/deliveries/options/delay
+        KLog.d(TAG, url);
+
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
     /**
      * 为X-Token 增加前缀
      *

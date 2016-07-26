@@ -281,4 +281,10 @@ public final class UrlConstants {
      * 消息中心接口
      */
     public static final String URL_MESSAGE_CENTER = ALPHA_MP_MAIN + "/member-app/v1/api/member/";
+
+    /**
+     * 交付物延期
+     */
+
+    public static final String URL_Delivery_Delay = ALPHA_MP_MAIN + "/member-app/v1/api/member/";
 }
