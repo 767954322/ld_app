@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailsPageActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -26,7 +23,19 @@ public class CaseLibraryAdapter extends BaseAdapter {
 
     public CaseLibraryAdapter(Context context, List<CaseDetailBean.ImagesEntity> items) {
         this.context = context;
+//        removeHead(items);
         this.items = items;
+    }
+
+    private void removeHead(List<CaseDetailBean.ImagesEntity> allItems) {
+        for (int i = 0; i < allItems.size(); i++) {
+            if (allItems.get(i).isIs_primary()) {
+                allItems.remove(i);
+            }
+
+        }
+        this.items = allItems;
+
     }
 
     @Override
@@ -56,21 +65,14 @@ public class CaseLibraryAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
-        ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
+        if (!items.get(position).isIs_primary()){
+            final String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
+            ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
+        }else {
+            holder.mCaseLibraryLImage.setVisibility(View.GONE);
+        }
+
         convertView.setTag(items.get(position));
-
-
-        holder.mCaseLibraryLImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(context, CaseLibraryDetailsPageActivity.class);
-                intent.putExtra("imageUrl", imageUrl);
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.my_scale_action, R.anim.my_alpha_action);
-            }
-        });
         return convertView;
     }
 

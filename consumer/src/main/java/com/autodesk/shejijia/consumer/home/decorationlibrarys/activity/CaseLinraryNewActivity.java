@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -54,7 +55,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class CaseLinraryNewActivity extends NavigationBarActivity implements AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
+public class CaseLinraryNewActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
     private ListView caseLibraryNew;
     private LinearLayout llThumbUp;
@@ -171,6 +172,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         ivCustomerIm.setOnClickListener(this);
         ivGuanzu.setOnClickListener(this);
         rlThumbUp.setOnClickListener(this);
+        caseLibraryNew.setOnItemClickListener(this);
 
     }
 
@@ -193,9 +195,9 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         switch (v.getId()) {
             case R.id.rl_thumb_up://点赞
                 if (isLogin) {
-                    if(!isMemberLike){
+                    if (!isMemberLike) {
                         sendThumbUp(caseDetailBean.getId());
-                    }else {
+                    } else {
                         //已经点过赞
                     }
 
@@ -205,7 +207,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 break;
             case R.id.iv_guanzu://关注
                 if (isLogin) {
-                    
+
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -341,13 +343,13 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
             public void onResponse(JSONObject jsonObject) {
                 Log.d("yxw", jsonObject.toString());
                 try {
-                     isMemberLike = jsonObject.getBoolean("is_member_like");
-                    if (isMemberLike){
+                    isMemberLike = jsonObject.getBoolean("is_member_like");
+                    if (isMemberLike) {
                         ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                         ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                     }
 
-                   // int count = jsonObject.getInt("count");
+                    // int count = jsonObject.getInt("count");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -393,12 +395,14 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                     if (images.get(i).isIs_primary() == true) {
                         ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
                     }
-                    images.remove(i);
+
                 }
+                mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLinraryNewActivity.this, images);
+                caseLibraryNew.setAdapter(mCaseLibraryAdapter);
                 //设置简介
-                String introduction = caseDetailBean.getDesigner_info().getDesigner().getIntroduction();
+                String introduction = caseDetailBean.getDescription();
                 if (introduction != null) {
-                    mCaseLibraryText.setText("          " + caseDetailBean.getDescription());
+                    mCaseLibraryText.setText("          " +introduction);
                 } else {
                     mCaseLibraryText.setText(R.string.nodata);
                 }
@@ -413,12 +417,11 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 if (style.containsKey(project_style)) {
                     tvCustomerHomeStyle.setText(style.get(project_style));
                 }
-                tvThumbUp.setText(getString(R.string.thumbup_conunt)+caseDetailBean.getFavorite_count());
-                tvheadThumbUp.setText(getString(R.string.thumbup_conunt)+caseDetailBean.getFavorite_count());
+                tvThumbUp.setText(getString(R.string.thumbup_conunt) + caseDetailBean.getFavorite_count());
+                tvheadThumbUp.setText(getString(R.string.thumbup_conunt) + caseDetailBean.getFavorite_count());
                 ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
                 ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
-                mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLinraryNewActivity.this, images);
-                caseLibraryNew.setAdapter(mCaseLibraryAdapter);
+
             }
 
             @Override
@@ -481,4 +484,13 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
+        bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position-3);
+        intent.putExtras(bundle);
+        this.startActivity(intent);
+    }
 }

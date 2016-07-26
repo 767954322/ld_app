@@ -157,6 +157,7 @@ public class Constant {
     public static class CaseLibraryDetail {
         public static final String CASE_URL = "url";
         public static final String CASE_DETAIL_BEAN = "CASE_DETAIL_BEAN";
+        public static final String CASE_DETAIL_POSTION = "CASE_DETAIL_POSTION";
         public static final String JPG = "HD.jpg";
         public static final String CASE_ID = "case_id";
     }
