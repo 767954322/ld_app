@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -68,6 +69,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mIvDesignApply = (ImageView) findViewById(R.id.iv_design_apply);
         mIvDesignPager = (ImageView) findViewById(R.id.iv_design_pager);
         mIvMaterialList = (ImageView) findViewById(R.id.iv_material_list);
+
+        mBtnDelay = (Button) findViewById(R.id.flow_upload_deliverable_delay);
+
+
     }
 
     @Override
@@ -103,43 +108,54 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     protected void initListener() {
         super.initListener();
         mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mBtnDelay.setOnClickListener(FlowUploadDeliveryActivity.this);
+
     }
 
     @Override
     public void onClick(View v) {
 
-        Intent intent3DPlan = new Intent(this, Wk3DPlanActivity.class);
-        /**
-         * 交付状态进行中
-         */
-        if (mDeliveryFilesEntities == null || mDeliveryFilesEntities.size() < 1) {
-            if (Integer.valueOf(wk_cur_sub_node_id) >= 21 && Integer.valueOf(wk_cur_sub_node_id) < 41) {
+        switch (v.getId()) {
+            case R.id.ll_3d_plan:
+                Intent intent3DPlan = new Intent(this, Wk3DPlanActivity.class);
                 /**
-                 * 量房交付中
+                 * 交付状态进行中
                  */
-                doingMeasureDelivery(v, intent3DPlan);
-            } else if (Integer.valueOf(wk_cur_sub_node_id) >= 51) {
-                /**
-                 * 设计交付中
-                 */
-                doingDesignDelivery(v, intent3DPlan);
-            }
-        } else {
-            /**
-             *交付完成
-             */
-            if (Integer.valueOf(wk_cur_sub_node_id) >= 22 && Integer.valueOf(wk_cur_sub_node_id) < 41) {
-                /**
-                 * 量房交付完成
-                 */
-                doneMeasureDelivery(v, intent3DPlan);
-            } else if (Integer.valueOf(wk_cur_sub_node_id) >= 61) {
-                /**
-                 * 设计交付完成
-                 */
-                doneDesignDelivery(v, intent3DPlan);
-            }
+                if (mDeliveryFilesEntities == null || mDeliveryFilesEntities.size() < 1) {
+                    if (Integer.valueOf(wk_cur_sub_node_id) >= 21 && Integer.valueOf(wk_cur_sub_node_id) < 41) {
+                        /**
+                         * 量房交付中
+                         */
+                        doingMeasureDelivery(v, intent3DPlan);
+                    } else if (Integer.valueOf(wk_cur_sub_node_id) >= 51) {
+                        /**
+                         * 设计交付中
+                         */
+                        doingDesignDelivery(v, intent3DPlan);
+                    }
+                } else {
+                    /**
+                     *交付完成
+                     */
+                    if (Integer.valueOf(wk_cur_sub_node_id) >= 22 && Integer.valueOf(wk_cur_sub_node_id) < 41) {
+                        /**
+                         * 量房交付完成
+                         */
+                        doneMeasureDelivery(v, intent3DPlan);
+                    } else if (Integer.valueOf(wk_cur_sub_node_id) >= 61) {
+                        /**
+                         * 设计交付完成
+                         */
+                        doneDesignDelivery(v, intent3DPlan);
+                    }
+                }
+                break;
+            case R.id.flow_upload_deliverable_delay:
+                mDelayAlertView.show();
+                break;
         }
+
+
     }
 
     @Override
@@ -157,6 +173,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 || object == mAlertViewMeasureConsumerDelivery
                 && position != AlertView.CANCELPOSITION) {
             FlowUploadDeliveryActivity.this.finish();
+        }
+
+        if (object == mDelayAlertView && position != AlertView.CANCELPOSITION) {
+            Toast.makeText(this, "延期", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -887,6 +907,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mAlertViewDesignConsumerDelivery = showAlertView(commonTip, UIUtils.getString(R.string.waiting_designer_upload_design_deliverable));
         mAlertViewMeasureDelivery = showAlertView(commonTip, UIUtils.getString(R.string.please_enter_web_page_submitted_room_deliverable));
         mAlertViewMeasureConsumerDelivery = showAlertView(commonTip, UIUtils.getString(R.string.waiting_designer_uploaded_room_deliverable));
+        mDelayAlertView = new AlertView(UIUtils.getString(R.string.flow_upload_delivery_delay), UIUtils.getString(R.string.flow_upload_delivery_delay_only), UIUtils.getString(R.string.cancel), null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
     }
 
     /**
@@ -1065,6 +1086,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private ImageView mIvDesignPager;
     private ImageView mIvMaterialList;
     private Button mBtnUploadSubmit3DPlan;  /// 发送 .
+
+    private Button mBtnDelay;
+    private AlertView mDelayAlertView;
 
     private LinearLayout mLl3DPlan;
     private LinearLayout mLlDesignApply;

@@ -206,6 +206,11 @@
     <string name="my_project_communication">沟通</string>
     <string name="my_project_design_deliverable">设计交付</string>
 
+
+    <string name="flow_upload_delivery_delay">延期确认?</string>
+    <string name="flow_upload_delivery_delay_only">您只有一次延期确认机会</string>
+
+
     <!-- HoverCaseActivity -->
     <string name="case_library">案例库</string>
 
