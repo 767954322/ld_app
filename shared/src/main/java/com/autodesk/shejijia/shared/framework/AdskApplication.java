@@ -163,8 +163,7 @@ public class AdskApplication extends Application {
         return memberEntity;
     }
 
-    public IWorkflowDelegate getIMWorkflowDelegate()
-    {
+    public IWorkflowDelegate getIMWorkflowDelegate() {
         return null;
     }
 
@@ -189,6 +188,8 @@ public class AdskApplication extends Application {
         /// 将获取到底数据设置为全局可以访问.
         AdskApplication.setMemberEntity(entity);
 
+        //登陆状态，开启推送
+        JPushInterface.resumePush(AdskApplication.this);
         openChatConnection();
 
         registerForPushNotification();
@@ -205,6 +206,9 @@ public class AdskApplication extends Application {
      */
     private void onLogout() {
         AdskApplication.setMemberEntity(null);
+
+        //推出登陆状态，关闭推送
+        JPushInterface.stopPush(AdskApplication.this);
 
         closeChatConnection();
 
