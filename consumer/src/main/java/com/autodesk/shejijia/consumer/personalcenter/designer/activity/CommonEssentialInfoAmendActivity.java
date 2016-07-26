@@ -1,20 +1,22 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import de.greenrobot.event.EventBus;
 
@@ -65,6 +67,8 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
                 return;
             } else if (!matches) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_error), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); // 此方法为了在弹出框得前提下隐藏软键盘
+                imm.hideSoftInputFromWindow(tvc_content.getWindowToken(), 0);
                 return;
             }
         } else if (pTag.equals(Constant.PersonCenterTagKey.MEASURE_HOUSE)) {
@@ -78,6 +82,8 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
                 return;
             } else if (!matches) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_error), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(tvc_content.getWindowToken(), 0);
                 return;
             }
         }
