@@ -59,7 +59,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private ListView caseLibraryNew;
     private LinearLayout llThumbUp;
     private String case_id;
-    /// 集合,类.
+    private boolean isLogin = false;
     private CaseDetailBean caseDetailBean;
     private CaseLibraryAdapter mCaseLibraryAdapter;
     private List<CaseDetailBean.ImagesEntity> images;
@@ -178,17 +178,21 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_thumb_up://点赞
-                if (memberEntity != null) {
+                if (isLogin) {
                     sendThumbUp(caseDetailBean.getId());
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
             case R.id.iv_guanzu://关注
-
+                if (isLogin) {
+//                    关注的接口
+                } else {
+                    AdskApplication.getInstance().doLogin(this);
+                }
                 break;
             case R.id.ll_fenxiang://分享
-                if (memberEntity != null) {
+                if (isLogin) {
                     if (takePhotoPopWin == null) {
                         takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
                     }
@@ -294,7 +298,6 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Log.d("yxw", jsonObject.toString());
                 ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "点赞成功");
             }
 
@@ -433,18 +436,22 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         return false;
     }
 
+
     /**
      * 根据登录用户，显示还是隐藏聊天按钮
      */
     private void showOrHideChatBtn() {
         memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
+            isLogin = true;
             member_type = memberEntity.getMember_type();
             if (member_type.equals(Constant.UerInfoKey.CONSUMER_TYPE)) {
                 ivCustomerIm.setVisibility(View.VISIBLE);
             } else {
                 ivCustomerIm.setVisibility(View.GONE);
             }
+        } else {
+            isLogin = false;
         }
     }
 
