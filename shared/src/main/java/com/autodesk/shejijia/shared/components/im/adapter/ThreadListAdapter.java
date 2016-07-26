@@ -108,7 +108,7 @@ public class ThreadListAdapter extends BaseAdapter
         MPChatUser sender = MPChatUtility.getComplimentryUserFromThread(thread, "" + mThreadListInterface.getLoggedInUserId());
         if (thread.unread_message_count > 0)
         {
-            (holder).unreadMessageCount.setText(thread.unread_message_count + "");
+            (holder).unreadMessageCount.setText(String.valueOf(thread.unread_message_count));
             (holder).unreadMessageCount.setVisibility(View.VISIBLE);
         }
         else

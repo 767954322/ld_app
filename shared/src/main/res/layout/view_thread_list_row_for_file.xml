@@ -8,7 +8,9 @@
         android:id="@+id/head_parent"
         android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/chat_list_filelist_avatar_verticalmargin"
+        android:layout_marginBottom="@dimen/chat_list_filelist_avatar_verticalmargin">
 
         <ImageView
             android:id="@+id/head_ico"
@@ -17,8 +19,6 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/chat_list_avatar_marginleft"
-            android:layout_marginTop="@dimen/chat_list_filelist_avatar_verticalmargin"
-            android:layout_marginBottom="@dimen/chat_list_filelist_avatar_verticalmargin"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -29,6 +29,7 @@
             android:layout_alignRight="@id/head_ico"
             android:background="@drawable/circle_shape"
             android:gravity="center"
+            android:textAlignment="center"
             android:text="11"
             android:textColor="@color/white"
             android:textSize="@dimen/chat_list_unread_fontsize" />
