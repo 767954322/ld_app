@@ -60,7 +60,6 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private ListView caseLibraryNew;
     private LinearLayout llThumbUp;
     private String case_id;
-    private boolean isLogin = false;
     private CaseDetailBean caseDetailBean;
     private CaseLibraryAdapter mCaseLibraryAdapter;
     private List<CaseDetailBean.ImagesEntity> images;
@@ -129,7 +128,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         ll_fenxiang_down = (LinearLayout) viewHead.findViewById(R.id.ll_fenxiang);
         rlThumbUp = (LinearLayout) viewHead.findViewById(R.id.rl_thumb_up);
         tvheadThumbUp = (TextView) viewHead.findViewById(R.id.tv_thumb_up);
-        ivThumbUp = (ImageView) viewHead.findViewById(R.id.iv_thumb_up);
+        ivHeadThumbUp = (ImageView) viewHead.findViewById(R.id.iv_thumb_up);
 
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
@@ -152,7 +151,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
         getCaseDetailData(case_id);
@@ -194,7 +193,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_thumb_up://点赞
-                if (isLogin) {
+                if (null!=memberEntity) {
                     if (!isMemberLike) {
                         sendThumbUp(caseDetailBean.getId());
                     } else {
@@ -206,14 +205,14 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 }
                 break;
             case R.id.iv_guanzu://关注
-                if (isLogin) {
+                if (null!=memberEntity) {
 
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
             case R.id.ll_fenxiang://分享
-                if (isLogin) {
+                if (null!=memberEntity) {
                     if (takePhotoPopWin == null) {
                         takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
                     }
@@ -320,6 +319,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onResponse(JSONObject jsonObject) {
                 ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "点赞成功");
+                ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
+                ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
             }
 
             @Override
@@ -345,6 +346,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 try {
                     isMemberLike = jsonObject.getBoolean("is_member_like");
                     if (isMemberLike) {
+                        rlThumbUp.setOnClickListener(null);
                         ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                         ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                     }
@@ -385,7 +387,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                     designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
                 }
                 //登录状态判断是否点赞
-                if (isLogin) {
+                if (null!=memberEntity) {
                     getThumbUp(caseDetailBean.getId());
                 }
 
@@ -468,17 +470,14 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
      * 根据登录用户，显示还是隐藏聊天按钮
      */
     private void showOrHideChatBtn() {
-        memberEntity = AdskApplication.getInstance().getMemberEntity();
+
         if (null != memberEntity) {
-            isLogin = true;
             member_type = memberEntity.getMember_type();
             if (member_type.equals(Constant.UerInfoKey.CONSUMER_TYPE)) {
                 ivCustomerIm.setVisibility(View.VISIBLE);
             } else {
                 ivCustomerIm.setVisibility(View.GONE);
             }
-        } else {
-            isLogin = false;
         }
     }
 
