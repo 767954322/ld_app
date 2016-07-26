@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseLibraryAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -24,9 +26,11 @@ import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.consumer.wxapi.SendWXShared;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
@@ -35,6 +39,11 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -60,6 +69,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private ImageView mdesignerAvater;
     private TextView mCaseLibraryText;
     private PolygonImageView pivImgCustomerHomeHeader;
+    private ImageView ivCustomerIm;
     private TextView ivConsumeHomeDesigner;
     private ImageView ivGuanzu;
     private TextView tvCustomerHomeStyle;
@@ -72,7 +82,12 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private WXSharedPopWin takePhotoPopWin;
     private boolean ifIsSharedToFriends = true;
     private PictureProcessingUtil pictureProcessingUtil;
-
+    private String designer_id;
+    private String hs_uid;
+    private MemberEntity memberEntity;
+    private String member_type;
+    private String member_id;
+    private String mMemberType;
 
     @Override
     protected int getLayoutResId() {
@@ -90,6 +105,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
 
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
+        ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
         ivGuanzu = (ImageView) findViewById(R.id.iv_guanzu);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
@@ -138,6 +154,9 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         llThumbUp.setOnClickListener(this);
         ll_fenxiang_down.setOnClickListener(this);
         ll_fenxiang_up.setOnClickListener(this);
+        pivImgCustomerHomeHeader.setOnClickListener(this);
+        ivCustomerIm.setOnClickListener(this);
+        ivGuanzu.setOnClickListener(this);
 
     }
 
@@ -158,26 +177,78 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_thumb_up:
-                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                if (mMemberEntity != null) {
+            case R.id.rl_thumb_up://点赞
+                if (memberEntity != null) {
                     sendThumbUp(caseDetailBean.getId());
                 } else {
                     AdskApplication.getInstance().doLogin(this);
-
                 }
+                break;
+            case R.id.iv_guanzu://关注
 
                 break;
-            case R.id.ll_fenxiang:
-
-
-                if (takePhotoPopWin == null) {
-                    takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
+            case R.id.ll_fenxiang://分享
+                if (memberEntity != null) {
+                    if (takePhotoPopWin == null) {
+                        takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
+                    }
+                    takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                } else {
+                    AdskApplication.getInstance().doLogin(this);
                 }
-                takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-
                 break;
+            case R.id.piv_img_customer_home_header:    /// 进入设计师详情页面.
+                Intent intent = new Intent(CaseLinraryNewActivity.this, SeekDesignerDetailActivity.class);
+                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
+                intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
+                startActivity(intent);
+                break;
+            case R.id.img_look_more_detail_chat:    /// 进入聊天页面,如果没有登陆则进入登陆注册页面.
+                if (memberEntity != null) {
+                    member_id = memberEntity.getAcs_member_id();
+                    mMemberType = memberEntity.getMember_type();
+                    final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
+                    final String hs_uid = caseDetailBean.getHs_designer_uid();
+                    final String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
+                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+
+                    MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            MPNetworkUtils.logError(TAG, volleyError);
+                        }
+
+                        @Override
+                        public void onResponse(String s) {
+                            MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                            Intent intent = new Intent(CaseLinraryNewActivity.this, ChatRoomActivity.class);
+                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                            intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+
+                            if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+
+                                int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                                intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
+                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+
+                            } else {
+
+                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                            }
+                            startActivity(intent);
+
+                        }
+
+                    });
+                } else {
+                    AdskApplication.getInstance().doLogin(this);
+                }
+
             default:
                 break;
         }
@@ -272,15 +343,20 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
      */
     public void getCaseDetailData(String case_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Log.d("CaseLinraryNewActivity", "jsonObject:" + jsonObject);
                 String info = GsonUtil.jsonToString(jsonObject);
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
                 setTitleForNavbar(caseDetailBean.getTitle());
+
+                hs_uid = caseDetailBean.getHs_designer_uid();
+
+                if (caseDetailBean != null && caseDetailBean.getDesigner_info() != null) {
+                    designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
+                }
                 //登录状态判断是否点赞
-                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                if (mMemberEntity != null) {
+                if (memberEntity != null) {
                     getThumbUp(caseDetailBean.getId());
                 }
 
@@ -295,7 +371,9 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 //设置简介
                 String introduction = caseDetailBean.getDesigner_info().getDesigner().getIntroduction();
                 if (introduction != null) {
-                    mCaseLibraryText.setText("          "+caseDetailBean.getDesigner_info().getDesigner().getIntroduction());
+                    mCaseLibraryText.setText("          " + caseDetailBean.getDescription());
+                } else {
+                    mCaseLibraryText.setText(R.string.nodata);
                 }
 
                 tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
@@ -329,6 +407,12 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private float mCurPosY = 0;
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        showOrHideChatBtn();
+    }
+
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
 
         switch (event.getAction()) {
@@ -347,6 +431,21 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 break;
         }
         return false;
+    }
+
+    /**
+     * 根据登录用户，显示还是隐藏聊天按钮
+     */
+    private void showOrHideChatBtn() {
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity) {
+            member_type = memberEntity.getMember_type();
+            if (member_type.equals(Constant.UerInfoKey.CONSUMER_TYPE)) {
+                ivCustomerIm.setVisibility(View.VISIBLE);
+            } else {
+                ivCustomerIm.setVisibility(View.GONE);
+            }
+        }
     }
 
 

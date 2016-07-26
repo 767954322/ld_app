@@ -38,14 +38,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/size_6"
-                android:background="@drawable/yiguanzhu_ico"/>
+                android:background="@drawable/yiguanzhu_ico"
+                android:paddingLeft="@dimen/size_10"/>
 
         </LinearLayout>
 
         <LinearLayout
-
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_20"
+            android:layout_marginBottom="@dimen/size_10"
             android:orientation="horizontal">
 
             <TextView
@@ -80,10 +81,21 @@
                 android:textColor="@color/bg_66"
                 android:textSize="@dimen/font_13"/>
 
+
         </LinearLayout>
 
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_look_more_detail_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/size_15"
+        android:background="@drawable/icon_chat_common_normal"/>
 
     <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
         android:id="@+id/piv_img_customer_home_header"
