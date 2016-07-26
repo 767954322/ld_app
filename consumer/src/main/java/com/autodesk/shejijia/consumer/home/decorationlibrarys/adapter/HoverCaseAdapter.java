@@ -4,13 +4,13 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class HoverCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity> {
             ((ViewHolder) holder).hoverCase.setImageResource(R.drawable.common_case_icon);
         }
         ((ViewHolder) holder).hoverCase.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ((ViewHolder) holder).hoverCase.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ((ViewHolder) holder).hoverCase.getLayoutParams();
         layoutParams.width = screenWidth;
         layoutParams.height = 197 * screenWidth / 320;
         ((ViewHolder) holder).hoverCase.setLayoutParams(layoutParams);

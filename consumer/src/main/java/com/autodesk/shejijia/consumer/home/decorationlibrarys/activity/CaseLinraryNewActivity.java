@@ -1,9 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,7 +23,6 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
-import com.autodesk.shejijia.consumer.wxapi.ISendWXShared;
 import com.autodesk.shejijia.consumer.wxapi.SendWXShared;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -45,13 +41,12 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 public class CaseLinraryNewActivity extends NavigationBarActivity implements AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
+
     private ListView caseLibraryNew;
     private LinearLayout llThumbUp;
     private String case_id;
@@ -78,6 +73,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private boolean ifIsSharedToFriends = true;
     private PictureProcessingUtil pictureProcessingUtil;
 
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_case_linrary_new;
@@ -92,7 +88,6 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         ll_fenxiang_up = (LinearLayout) findViewById(R.id.ll_fenxiang);
         viewHead = findViewById(R.id.case_head);
         rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
-
 
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
@@ -127,7 +122,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        setTitleForNavbar(UIUtils.getString(R.string.case_library));
+
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
         getCaseDetailData(case_id);
@@ -279,9 +274,16 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                Log.d("CaseLinraryNewActivity", "jsonObject:" + jsonObject);
                 String info = GsonUtil.jsonToString(jsonObject);
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
-                getThumbUp(caseDetailBean.getId());
+                setTitleForNavbar(caseDetailBean.getTitle());
+                //登录状态判断是否点赞
+                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+                if (mMemberEntity != null) {
+                    getThumbUp(caseDetailBean.getId());
+                }
+
                 images = caseDetailBean.getImages();
                 //查找是否是封面图片  若是就添加到头部
                 for (int i = 0; i < images.size(); i++) {
@@ -293,7 +295,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 //设置简介
                 String introduction = caseDetailBean.getDesigner_info().getDesigner().getIntroduction();
                 if (introduction != null) {
-                    mCaseLibraryText.setText(caseDetailBean.getDesigner_info().getDesigner().getIntroduction());
+                    mCaseLibraryText.setText("          "+caseDetailBean.getDesigner_info().getDesigner().getIntroduction());
                 }
 
                 tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
@@ -337,14 +339,15 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 mCurPosY = event.getY();
                 break;
             case MotionEvent.ACTION_UP:
-                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 30)) {
+                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 20)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 30)) {
+                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 20)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
                 }
                 break;
         }
         return false;
     }
+
 
 }

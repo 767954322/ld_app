@@ -8,9 +8,11 @@
     android:background="@android:color/white">
 
     <LinearLayout
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_centerHorizontal="true"
         android:id="@+id/ll_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/size_40">
 
         <LinearLayout
             android:id="@+id/ll_fenxiang"
@@ -36,7 +38,7 @@
             android:layout_height="@dimen/size_20"
             android:layout_gravity="center"
             android:layout_weight="0.1"
-            android:background="@color/bg_d4"/>
+            android:background="@color/bg_d7"/>
 
         <LinearLayout
             android:id="@+id/rl_thumb_up"
@@ -61,7 +63,7 @@
     <ImageView
         android:layout_below="@id/ll_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_1"
+        android:layout_height="@dimen/size_0.5"
         android:layout_gravity="center"
-        android:background="@color/bg_d4"/>
+        android:background="@color/bg_d7"/>
 </RelativeLayout>

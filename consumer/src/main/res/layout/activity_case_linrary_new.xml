@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/main_library"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:id="@+id/main_library"
     tools:context="com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLinraryNewActivity">
 
     <include
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"></include>
+
+
+    <ListView
+        android:id="@+id/case_library_new"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/common_navbar"
+        ></ListView>
 
     <include
         android:id="@+id/case_head"
@@ -18,16 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/common_navbar"
+        android:background="@android:color/white"
         android:visibility="gone"></include>
-
-    <ListView
-
-        android:id="@+id/case_library_new"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/case_head"
-        ></ListView>
-
 
     <include
         layout="@layout/case_library_bottom"
