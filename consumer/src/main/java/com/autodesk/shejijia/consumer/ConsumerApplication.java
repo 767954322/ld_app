@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.home.homepage.activity.MPSplashActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -29,6 +30,12 @@ public class ConsumerApplication extends AdskApplication {
     @Override
     public IWorkflowDelegate getIMWorkflowDelegate() {
         return mDesignPlatformDelegate;
+    }
+
+    @Override
+    public Class<?> getSplashActivityClass() {
+
+        return MPSplashActivity.class;
     }
 
     private void getLoginThreadId(String designer_id) {
