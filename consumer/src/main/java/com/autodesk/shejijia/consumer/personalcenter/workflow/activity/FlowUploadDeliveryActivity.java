@@ -590,6 +590,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                  */
                 if (Integer.valueOf(wk_cur_sub_node_id) >= 21 && Integer.valueOf(wk_cur_sub_node_id) < 41) {
                     String type;
+                    mLl3DPlan.setVisibility(View.VISIBLE);
                     mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
                     mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
                     for (Wk3DPlanListBean.DesignFileEntity designFileEntity : design_file) {
