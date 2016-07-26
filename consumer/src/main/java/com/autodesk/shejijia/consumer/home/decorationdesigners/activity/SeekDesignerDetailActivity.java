@@ -213,6 +213,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 try {
                     String info = GsonUtil.jsonToString(jsonObject);
                     KLog.json(TAG, info);
@@ -220,14 +221,24 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                     updateViewFromDesignerData(state);
                 } finally {
-                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    if (0 == state || 1 == state) {//0和1表示下拉状态
+                        mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    }
+                    if (2 == state) {//2表示上拉状态
+                        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    }
                 }
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                if (0 == state || 1 == state) {
+                    mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
+                }
+                if (2 == state) {
+                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                }
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailData(designer_id, offset, limit, okResponseCallback);
@@ -244,7 +255,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, LIMIT, 0);
+                mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
                 String info = GsonUtil.jsonToString(jsonObject);
                 seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, SeekDesignerDetailHomeBean.class);
                 KLog.json(TAG, info);
@@ -254,6 +266,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
                 MPNetworkUtils.logError(TAG, volleyError);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this,
                         AlertView.Style.Alert, null).show();
@@ -417,7 +430,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      */
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        getSeekDesignerDetailData(mDesignerId, 0, LIMIT, 1);
+        getSeekDesignerDetailHomeData(mDesignerId,mHsUid);
     }
 
     /// 加载更多.
