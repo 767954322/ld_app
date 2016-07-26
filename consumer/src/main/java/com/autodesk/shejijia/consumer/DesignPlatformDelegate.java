@@ -9,7 +9,6 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesign
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowFirstDesignActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowLastDesignActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureCostActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
@@ -44,7 +43,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
         switch (subNodeId) {
             case 13:
-                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, mpChatCommandInfo,MPStatusMachine.NODE__MEANSURE_PAY);
 
                 break;
 
@@ -69,7 +68,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
             case 41:
             case 42:
-                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, mpChatCommandInfo,MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
 
                 break;
 
@@ -109,23 +108,22 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 13) {
-                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, designerId);
+                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, designerId,MPStatusMachine.NODE__MEANSURE_PAY);
 
             } else if (wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
-                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, designerId);
+                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, designerId,MPStatusMachine.NODE__MEANSURE_PAY);
 
-            } else if (wk_cur_sub_node_idi == 21) {
+            } else if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 22) {
                 jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 31) {
-                //FlowEstablishContractActivity
-                jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId);
+                jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId,MPStatusMachine.NODE__MEANSURE_PAY);
 
-            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51|| wk_cur_sub_node_idi == 61) {
+            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51 || wk_cur_sub_node_idi == 61 || wk_cur_sub_node_idi == 52 || wk_cur_sub_node_idi == 62) {
                 jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId);
 
-            } else if (wk_cur_sub_node_idi == 41) {
-                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, designerId);
+            } else if (wk_cur_sub_node_idi == 41 || wk_cur_sub_node_idi == 42) {
+                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, designerId,MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
 
             }
         } else {
@@ -187,13 +185,14 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         context.startActivity(intent_check_room);
     }
 
-    private void jumpToOtherProcessesFour(Context context, Class activity, MPChatCommandInfo info) {
+    private void jumpToOtherProcessesFour(Context context, Class activity, MPChatCommandInfo info,int pay_state) {
 
         Intent intent_measure_room_cost = new Intent(context, activity);
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, info.need_id);
         intent_measure_room_cost.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
+//        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
+        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, pay_state);
         context.startActivity(intent_measure_room_cost);
     }
 
@@ -205,11 +204,12 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         context.startActivity(intent);
     }
 
-    private void jumpToOtherProcessesFour(Context context, Class activity, String assetId, String recieverId) {
+    private void jumpToOtherProcessesFour(Context context, Class activity, String assetId, String recieverId,int pay_state) {
         Intent intent = new Intent(context, activity);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, assetId);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, recieverId);
-        intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
+//        intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
+        intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, pay_state);
         intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
         context.startActivity(intent);
     }
