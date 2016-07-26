@@ -333,7 +333,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                         isAgree = !isAgree;
                     }
                 });
-                btn_send.setText(R.string.agree_and_send_design_first);
+                btn_send.setText(R.string.agree_and_send_design_first_new);
             } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) {
                 ll_send.setVisibility(View.GONE);
                 ll_agree_establish_contract.setVisibility(View.GONE);
