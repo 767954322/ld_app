@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
@@ -11,12 +12,11 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.util.ArrayList;
 
+
 /**
- * @author DongXueQiu .
  * @version 1.0 .
  * @date 2016/3/25 0025 9:53 .
  * @filename CaseLibraryDetailActivity.
- * @brief 案例详情页面.
  */
 public class CaseLibraryDetailActivity extends NavigationBarActivity implements ImageShowView.ImageShowViewListener {
 
@@ -35,7 +35,7 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
     protected void initExtraBundle() {
         super.initExtraBundle();
         caseDetailBean = (CaseDetailBean) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
-        intExtra = getIntent().getIntExtra(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, 0);
+        intExtra = getIntent().getIntExtra(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, 0);//获得点击的位置
     }
 
     @Override
@@ -51,21 +51,20 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
 
 
     /**
-     * 查看大图监听
+     * 长按图片可以获得图片的url
      *
      * @param position  　图片的索引
      * @param imageView 控件
      */
     @Override
     public void onImageClick(int position, View imageView) {
-//        String url = (String) imageView.getTag();
-//        Intent intent = new Intent(CaseLibraryDetailActivity.this, GalleryUrlActivity.class);
-//        intent.putExtra(Constant.CaseLibraryDetail.CASE_URL, url);
-//        startActivity(intent);
-//        overridePendingTransition(R.anim.my_scale_action, R.anim.my_alpha_action);
+        Toast.makeText(this, "长按图片" + mImageUrl.get(position), Toast.LENGTH_SHORT).show();
     }
 
 
+    /**
+     * 获取所有图片的url地址
+     */
     private void updateViewFromData() {
         for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
             if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
@@ -73,8 +72,9 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
                 mImageUrl.add(imageUrl);
             }
         }
-        mImageShowView.setImageResources(mImageUrl, this,intExtra);
+        mImageShowView.setImageResources(mImageUrl, this, intExtra);
     }
+
     private int intExtra;
     private ImageShowView mImageShowView;
     private String imageUrl;

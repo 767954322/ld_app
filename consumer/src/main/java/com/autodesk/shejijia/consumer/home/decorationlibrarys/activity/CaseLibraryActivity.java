@@ -93,7 +93,7 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
     @Override
     public void OnItemHoverCaseClick(int position) {
         String case_id = mCasesEntities.get(position).getId();
-        Intent intent = new Intent(mContext, CaseLibraryDetailActivity.class);
+        Intent intent = new Intent(mContext, CaseLinraryNewActivity.class);
         intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(intent);
     }

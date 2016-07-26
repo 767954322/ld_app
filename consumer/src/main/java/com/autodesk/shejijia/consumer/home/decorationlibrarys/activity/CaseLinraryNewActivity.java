@@ -395,7 +395,6 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                     if (images.get(i).isIs_primary() == true) {
                         ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
                     }
-
                 }
                 mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLinraryNewActivity.this, images);
                 caseLibraryNew.setAdapter(mCaseLibraryAdapter);
