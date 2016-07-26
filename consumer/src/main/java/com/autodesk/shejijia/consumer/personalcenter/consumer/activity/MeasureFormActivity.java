@@ -206,7 +206,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
-                if(houseArea.equals("0.00")||houseArea.equals("0.0")||houseArea.equals("00.00")){
+                if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
                     MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_housing_area));
                     return;
                 }
@@ -704,7 +704,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     private void showAlertView(String content) {
-        new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
                 AlertView.Style.Alert, MeasureFormActivity.this).show();
     }
 
