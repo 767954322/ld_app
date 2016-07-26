@@ -561,9 +561,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
 
             if (firstCost >= discountCost && firstCost <= totalCost) {
-                String measurement_price = list.getDesigner().getMeasurement_price();
-                measurement_price = TextUtils.isEmpty(measurement_price) ? "0" : measurement_price;
-                if (firstCost > Double.valueOf(measurement_price)) {
+                String measurement_fee = mBiddersEntity.getMeasurement_fee();
+                measurement_fee = TextUtils.isEmpty(measurement_fee) ? "0" : measurement_fee;
+                if (firstCost > Double.valueOf(measurement_fee)) {
                     CustomProgress.show(FlowEstablishContractActivity.this, UIUtils.getString(R.string.in_contract_sent), false, null);
                     sendEstablishContract(needs_id, ((memberEntity != null) ? memberEntity.getMember_type() : null), acsToken, jsonO);
                 } else {
