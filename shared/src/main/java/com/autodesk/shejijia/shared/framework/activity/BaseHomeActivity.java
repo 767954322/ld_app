@@ -325,7 +325,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         }
     }
 
-    private void getFileThreadUnreadCount() {
+    public void getFileThreadUnreadCount() {
         OkStringRequest.OKResponseCallback callback = new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError error) {

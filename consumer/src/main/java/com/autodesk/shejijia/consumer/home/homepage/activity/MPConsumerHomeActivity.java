@@ -35,6 +35,7 @@ import com.autodesk.shejijia.shared.components.im.datamodel.IMQrEntity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
@@ -170,7 +171,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
     @Override
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
-        this.index =index;
+        this.index = index;
 
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
             mUserHomeFragment = new UserHomeFragment();
@@ -257,6 +258,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                 } else {
                     setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
+                getFileThreadUnreadCount();
 
             default:
                 break;
