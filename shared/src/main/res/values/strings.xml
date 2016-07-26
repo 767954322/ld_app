@@ -524,7 +524,7 @@
     <string name="autonym_no_uploading">未上传</string>
     <string name="autonym_title">实名认证</string>
     <string name="no_upload_id_opposite">没有上传身份证反面照</string>
-    <string name="no_upload_id_positive">没有上传省份证正面照</string>
+    <string name="no_upload_id_positive">没有上传身份证正面照</string>
     <string name="no_holder_upload_my_front">没有上传本人持证正面照</string>
     <string name="id_number_input_is_not_correct">身份证号输入不正确</string>
     <string name="mobile_phone_number_input_is_not_correct">手机号输入不正确</string>
