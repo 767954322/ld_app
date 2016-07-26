@@ -273,7 +273,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         } else if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberType)) { /// 消费者 .
             setTvcCannotClickable();                                                                  /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
-            if (null == designContractEntity) {
+            if (null == designContractEntity) { // 如果设计师没有发送设计合同 .
+                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(Object o) {
+                        finish();
+                    }
+                });
+                mDesignContract.show();
                 return;
             }
             String contractData = designContractEntity.getContract_data();
@@ -418,7 +425,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 KLog.d(TAG, jsonObject.toString());
                 ContractState = 0;
                 CustomProgress.cancelDialog();
-//                new CustomDialog(FlowEstablishContractActivity.this, this).showCustomViewDialog(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), true, true, true, false);
                 mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
                 mDesignContract.show();
             }
@@ -724,6 +730,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     @Override
     public void onDismiss(Object o) {
+        MyToast.show(this, "adfdafa=========");
         if (ContractState == 0) {
             finish();
         }
