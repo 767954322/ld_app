@@ -333,7 +333,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                                     intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
                                     intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
                                     intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
-                                    startActivity(intent);
+                                    startActivityForResult(intent, ContractForFirst);
                                 }
                             });
                         }
@@ -349,6 +349,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 ll_agree_establish_contract.setVisibility(View.GONE);
                 btn_send.setText(R.string.receiving_room_deliverable);
             }
+        }
+    }
+
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) { // 判断IM跳转到合同，合同跳转支付首款后进行得操作
+        super.onActivityReenter(resultCode, data);
+        if (resultCode == FirstForContract) {
+            finish();
         }
     }
 
@@ -813,5 +821,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private String first_cost;
     private String memberType = null;
     private int ContractState = -1; // 判断合同是否发送成功弹出框的点击事件
+    private int ContractForFirst = 0; //　从合同跳转到设计首款
+    private int FirstForContract = 1; // 首款调到设计合同
     private boolean isAgree = false;
 }

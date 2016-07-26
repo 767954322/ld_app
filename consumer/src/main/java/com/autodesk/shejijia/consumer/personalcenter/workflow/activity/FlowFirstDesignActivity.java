@@ -199,6 +199,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
 
         public void onOK() {
             MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success));
+            setResult(FirstForContract);
             finish();
         }
 
@@ -218,6 +219,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     private TextView tv_flow_first_design_aggregate_amount;
     private TextView tv_flow_first_design_deduct_measure_cost;
     private Button btn_flow_first_design_send;
+    private int FirstForContract = 1; // 首款调到设计合同
 
     protected DesignerInfoDetails designerInfoList;
     private boolean isLock = true; // 是否锁定按键
