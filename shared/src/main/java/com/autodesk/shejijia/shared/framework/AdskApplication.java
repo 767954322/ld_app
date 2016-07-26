@@ -78,7 +78,6 @@ public class AdskApplication extends Application {
         if (entity != null) {
             onLoginSuccess(entity);
         }
-
         JPushInterface.setDebugMode(true);    // Enable logging settings, turn off logging when you publish
         JPushInterface.init(this);            // Init JPush
     }
@@ -102,13 +101,13 @@ public class AdskApplication extends Application {
 
             @Override
             public void onActivityResumed(Activity activity) {
-                if (activity instanceof BaseChatRoomActivity)
+                //if (activity instanceof BaseChatRoomActivity)
                     mIsChatRoomActivityInForeground = true;
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
-                if (activity instanceof BaseChatRoomActivity)
+                //if (activity instanceof BaseChatRoomActivity)
                     mIsChatRoomActivityInForeground = false;
             }
 
@@ -122,8 +121,6 @@ public class AdskApplication extends Application {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                if (activity instanceof BaseChatRoomActivity)
-                    mIsChatRoomActivityInForeground = false;
             }
         });
 
@@ -164,6 +161,12 @@ public class AdskApplication extends Application {
     }
 
     public IWorkflowDelegate getIMWorkflowDelegate()
+    {
+        return null;
+    }
+
+
+    public Class<?> getSplashActivityClass()
     {
         return null;
     }
