@@ -15,6 +15,22 @@ public class MPChatThread
     public MPChatEntityInfos entity;
     public MPChatMessage latest_message;
 
+    @Override
+    public String toString() {
+        return "MPChatThread{" +
+                "subject='" + subject + '\'' +
+                ", thread_id='" + thread_id + '\'' +
+                ", recipients=" + recipients +
+                ", total_message_count=" + total_message_count +
+                ", unread_message_count=" + unread_message_count +
+                ", sender=" + sender +
+                ", created_date='" + created_date + '\'' +
+                ", entity=" + entity +
+                ", latest_message=" + latest_message +
+                '}';
+    }
+
+
     public static MPChatThread fromJSONString(String jsonString)
     {
         MPChatThread thread = new MPChatThread();
