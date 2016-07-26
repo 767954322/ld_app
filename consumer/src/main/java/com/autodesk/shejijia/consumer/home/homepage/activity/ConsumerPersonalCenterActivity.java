@@ -52,7 +52,6 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         mLlPersonalDemand = (LinearLayout) findViewById(R.id.ll_personal_b_demand);
         mRlPersonalCollect = (RelativeLayout) findViewById(R.id.rl_personal_b_collect);
         mRlPersonalSetting = (RelativeLayout) findViewById(R.id.rl_personal_b_setting);
-        mRlPersonalFitment = (RelativeLayout) findViewById(R.id.rl_personal_b_fitment);
         mPolygonImageView = (PolygonImageView) findViewById(R.id.ib_personal_b_photo);
         mTvLoginOrRegister = (TextView) findViewById(R.id.tv_loginOrRegister);
     }
@@ -77,7 +76,6 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         mLlPersonalDemand.setOnClickListener(this);
         mRlPersonalCollect.setOnClickListener(this);
         mRlPersonalSetting.setOnClickListener(this);
-        mRlPersonalFitment.setOnClickListener(this);
         mPolygonImageView.setOnClickListener(this);
     }
 
@@ -114,11 +112,11 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 }
                 break;
 
-            case R.id.rl_personal_b_fitment:    /// 我的装修项目 .
-                intent = new Intent(ConsumerPersonalCenterActivity.this, DecorationActivity.class);
-                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
-                startActivity(intent);
-                break;
+//            case R.id.rl_personal_b_fitment:    /// 我的装修项目 .
+//                intent = new Intent(ConsumerPersonalCenterActivity.this, DecorationActivity.class);
+//                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
+//                startActivity(intent);
+//                break;
         }
     }
 
@@ -185,8 +183,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == ConsumerPersonalCenterActivity.this.RESULT_OK && requestCode == MORE_LOGOUT && data != null) {
-            ConsumerPersonalCenterActivity.this.finish();
-            startActivity(new Intent(ConsumerPersonalCenterActivity.this, ConsumerPersonalCenterActivity.this.getClass()));
+            finish();
         }
     }
 

@@ -54,7 +54,7 @@ public class ConsumerPersonalCenterFragment extends BaseFragment implements View
         mLlPersonalDemand = (LinearLayout) rootView.findViewById(R.id.ll_personal_b_demand);
         mRlPersonalCollect = (RelativeLayout) rootView.findViewById(R.id.rl_personal_b_collect);
         mRlPersonalSetting = (RelativeLayout) rootView.findViewById(R.id.rl_personal_b_setting);
-        mRlPersonalFitment = (RelativeLayout) rootView.findViewById(R.id.rl_personal_b_fitment);
+        //mRlPersonalFitment = (RelativeLayout) rootView.findViewById(R.id.rl_personal_b_fitment);
         mPolygonImageView = (PolygonImageView) rootView.findViewById(R.id.ib_personal_b_photo);
         mTvLoginOrRegister = (TextView) rootView.findViewById(R.id.tv_loginOrRegister);
     }
@@ -74,7 +74,7 @@ public class ConsumerPersonalCenterFragment extends BaseFragment implements View
         mLlPersonalDemand.setOnClickListener(this);
         mRlPersonalCollect.setOnClickListener(this);
         mRlPersonalSetting.setOnClickListener(this);
-        mRlPersonalFitment.setOnClickListener(this);
+       // mRlPersonalFitment.setOnClickListener(this);
         mPolygonImageView.setOnClickListener(this);
     }
 
@@ -112,11 +112,11 @@ public class ConsumerPersonalCenterFragment extends BaseFragment implements View
                 }
                 break;
 
-            case R.id.rl_personal_b_fitment:    /// 我的装修项目 .
-                intent = new Intent(activity, DecorationActivity.class);
-                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
-                startActivity(intent);
-                break;
+//            case R.id.rl_personal_b_fitment:    /// 我的装修项目 .
+//                intent = new Intent(activity, DecorationActivity.class);
+//                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
+//                startActivity(intent);
+//                break;
         }
     }
 

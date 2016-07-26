@@ -24,8 +24,6 @@ import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProject
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderActivity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderBeiShuActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -35,8 +33,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChoosevViewPointer;
-import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -81,7 +78,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         screenWidth = getScreenWidth(this);
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout,null);
-        choosevViewPointer = (ChoosevViewPointer) contain_layout.findViewById(R.id.choose_point);
+        chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
        // contain.addView(contain_layout);
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
@@ -301,7 +298,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 btHeight = contain.getMeasuredHeight();
                 if (btWidth != 0){
 
-                    choosevViewPointer.setInitChooseVoewPoint(btWidth,just);
+                    chooseViewPointer.setInitChooseVoewPoint(btWidth,just);
                 }
 
             }
@@ -356,7 +353,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                 if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
 
-                    setTitleForNavbar(UIUtils.getString(R.string.designer_personal));
+                    setTitleForNavbar(UIUtils.getString(R.string.consumer_decoration));
                 }
 
 
@@ -404,12 +401,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.bidding:
                 //指针
                 setMyProjectTitleColorChange(bidding,design,construction);
-                choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_NUMBER,POINTER_START_END_NUMBER);
+                chooseViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_NUMBER,POINTER_START_END_NUMBER);
                 mDesignerPersonalCenterFragment.setBidingFragment();
                 break;
             case R.id.design:
                 setMyProjectTitleColorChange(design,bidding,construction);
-                choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_END_NUMBER,POINTER_MIDDLE_END_NUMBER);
+                chooseViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_END_NUMBER,POINTER_MIDDLE_END_NUMBER);
                 //判断进入北舒套餐，，还是进入普通订单页面
                 if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
                     if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
@@ -425,7 +422,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
             case R.id.construction:
                 setMyProjectTitleColorChange(construction,design,bidding);
-                choosevViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_MIDDLE_END_NUMBER,POINTER_END_NUMBER);
+                chooseViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_MIDDLE_END_NUMBER,POINTER_END_NUMBER);
 
                 mDesignerPersonalCenterFragment.setConstructionFragment();
                 break;
@@ -714,7 +711,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private LinearLayout contain;
     private LinearLayout contain_point;
     private View contain_layout;
-    private ChoosevViewPointer choosevViewPointer;
+    private ChooseViewPointer chooseViewPointer;
     private int index;//判断所在fragment
     private int lastIndex;
     private String mNickNameConsumer;

@@ -11,15 +11,20 @@ import com.autodesk.shejijia.shared.R;
 
 /**
  * Created by yaoxuehua on 16-7-19.
+ * @author yaoxuehua
+ * @version v1.0 .
+ * @date 2016-7-19 .
+ * @file ChooseViewPointer.java .
+ * @brief 运行环境的管理切换类.
  */
-public class ChoosevViewPointer extends View{
+public class ChooseViewPointer extends View{
 
     private Context context;
     private int width,height,initWidth = 0;
     private float A = 1/3f,B = 2/3f;
     private boolean initBoolean = true;
     private View view;
-    public ChoosevViewPointer(Context context,int width,int height/*,float a,float b*/) {
+    public ChooseViewPointer(Context context, int width, int height/*,float a,float b*/) {
         super(context);
         this.context = context;
         this.width = width - (104*2);
@@ -29,11 +34,11 @@ public class ChoosevViewPointer extends View{
         init();
     }
 
-    public ChoosevViewPointer(Context context, AttributeSet attrs) {
+    public ChooseViewPointer(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ChoosevViewPointer(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ChooseViewPointer(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -74,20 +79,7 @@ public class ChoosevViewPointer extends View{
 
     public void setInitChooseVoewPoint(int width,boolean just){
 
-//        if (width == 480){
-//
-//            this.initWidth = 756 * 480 / 1080;
-//        }
-//        if (width == 720){
-//
-//            this.initWidth = 756 * 720 /1080;
-//        }
-
             this.initWidth = width;
-//        if (width == 1280){
-//
-//            this.initWidth = 756 * 1280 /1080;
-//        }
 
             invalidate();
     }

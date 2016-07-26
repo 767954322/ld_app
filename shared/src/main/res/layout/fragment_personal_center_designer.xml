@@ -207,43 +207,43 @@
 
             </LinearLayout>
 
-            <include layout="@layout/view_common_line"/>
+            <!--<include layout="@layout/view_common_line"/>-->
 
-            <LinearLayout
-                android:id="@+id/ll_personal_designer_decorate"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_50"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_personal_designer_decorate"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/size_50"-->
+                <!--android:background="@color/white"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_20"
-                    android:layout_marginRight="@dimen/size_20"
-                    android:src="@drawable/icon_my_project_normal"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/size_20"-->
+                    <!--android:layout_marginRight="@dimen/size_20"-->
+                    <!--android:src="@drawable/icon_my_project_normal"/>-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/decoration_order"
-                    android:textColor="@color/bg_51"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/decoration_order"-->
+                    <!--android:textColor="@color/bg_51"/>-->
 
-                <TextView
-                    android:layout_width="@dimen/size_1"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                <!--<TextView-->
+                    <!--android:layout_width="@dimen/size_1"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"/>-->
 
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_20"
-                    android:layout_marginRight="@dimen/size_20"
-                    android:src="@drawable/icon_unfold_normal"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/size_20"-->
+                    <!--android:layout_marginRight="@dimen/size_20"-->
+                    <!--android:src="@drawable/icon_unfold_normal"/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <include layout="@layout/view_common_line"/>
 
