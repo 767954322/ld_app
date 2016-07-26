@@ -48,12 +48,14 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/iv_thumb_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/size_8"
                 android:background="@drawable/dianzan_ico"/>
 
             <TextView
+                android:id="@+id/tv_thumb_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="点赞"/>

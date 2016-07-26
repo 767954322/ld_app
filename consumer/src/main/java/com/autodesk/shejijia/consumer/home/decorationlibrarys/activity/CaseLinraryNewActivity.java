@@ -75,10 +75,12 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private TextView tvCustomerHomeStyle;
     private TextView tvCustomerHomeRoom;
     private TextView tvCustomerHomeArea;
+    private TextView tvThumbUp;
     private Map<String, String> roomHall;
     private Map<String, String> style;
     private LinearLayout ll_fenxiang_up;
     private LinearLayout rlThumbUp;
+    private TextView tvheadThumbUp;
     private LinearLayout ll_fenxiang_down;
     private WXSharedPopWin takePhotoPopWin;
     private boolean ifIsSharedToFriends = true;
@@ -89,6 +91,9 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private String member_type;
     private String member_id;
     private String mMemberType;
+    private boolean isMemberLike;
+    private ImageView ivThumbUp;
+    private ImageView ivHeadThumbUp;
 
     @Override
     protected int getLayoutResId() {
@@ -105,6 +110,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         viewHead = findViewById(R.id.case_head);
         rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
 
+        ivThumbUp = (ImageView) findViewById(R.id.iv_thumb_up);
+
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
@@ -112,6 +119,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
+        tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
 
         View view = LayoutInflater.from(this).inflate(R.layout.case_library_new_item, null);
         mdesignerAvater = (ImageView) view.findViewById(R.id.case_library_item_iv);
@@ -119,6 +127,9 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         View viewHead = LayoutInflater.from(this).inflate(R.layout.caselibrary_head, null);
         ll_fenxiang_down = (LinearLayout) viewHead.findViewById(R.id.ll_fenxiang);
         rlThumbUp = (LinearLayout) viewHead.findViewById(R.id.rl_thumb_up);
+        tvheadThumbUp = (TextView) viewHead.findViewById(R.id.tv_thumb_up);
+        ivThumbUp = (ImageView) viewHead.findViewById(R.id.iv_thumb_up);
+
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
         View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
@@ -182,7 +193,12 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         switch (v.getId()) {
             case R.id.rl_thumb_up://点赞
                 if (isLogin) {
-                    sendThumbUp(caseDetailBean.getId());
+                    if(!isMemberLike){
+                        sendThumbUp(caseDetailBean.getId());
+                    }else {
+                        //已经点过赞
+                    }
+
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -325,8 +341,13 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
             public void onResponse(JSONObject jsonObject) {
                 Log.d("yxw", jsonObject.toString());
                 try {
-                    boolean is_member_like = jsonObject.getBoolean("is_member_like");
-                    int count = jsonObject.getInt("count");
+                     isMemberLike = jsonObject.getBoolean("is_member_like");
+                    if (isMemberLike){
+                        ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
+                        ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
+                    }
+
+                   // int count = jsonObject.getInt("count");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -347,7 +368,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
      *
      * @param case_id 该案例的ID
      */
-    public void getCaseDetailData(String case_id) {
+    public void getCaseDetailData(final String case_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -362,7 +383,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                     designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
                 }
                 //登录状态判断是否点赞
-                if (memberEntity != null) {
+                if (isLogin) {
                     getThumbUp(caseDetailBean.getId());
                 }
 
@@ -392,7 +413,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 if (style.containsKey(project_style)) {
                     tvCustomerHomeStyle.setText(style.get(project_style));
                 }
-
+                tvThumbUp.setText(getString(R.string.thumbup_conunt)+caseDetailBean.getFavorite_count());
+                tvheadThumbUp.setText(getString(R.string.thumbup_conunt)+caseDetailBean.getFavorite_count());
                 ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
                 ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
                 mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLinraryNewActivity.this, images);
