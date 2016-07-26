@@ -302,8 +302,17 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tv_contract_number.setText(designContractEntity.getContract_no());
             tvc_consumer_name.setText(designContractBean.getName());
             tvc_consumer_phone.setText(designContractBean.getMobile());
-            tvc_consumer_postcode.setText(zip);
-            tvc_consumer_email.setText(email);
+            if (!"null".equals(zip)) {
+                tvc_consumer_postcode.setText(zip);
+            } else {
+                tvc_consumer_postcode.setText("");
+            }
+            if (!"null".equals(email)) {
+                tvc_consumer_email.setText(email);
+            } else {
+                tvc_consumer_email.setText("");
+            }
+
             tvc_consumer_decorate_address.setText(designContractBean.getAddr());
             tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
             tvc_design_sketch.setText(designContractBean.getDesign_sketch());
