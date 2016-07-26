@@ -171,12 +171,14 @@
                 android:text="距离系统确认时间还有"/>
 
             <TextView
+                android:id="@+id/tv_delayed_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="7天"/>
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_delayed_instruction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/icon_instruction"
