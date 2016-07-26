@@ -78,6 +78,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
     private Map<String, String> roomHall;
     private Map<String, String> style;
     private LinearLayout ll_fenxiang_up;
+    private LinearLayout rlThumbUp;
     private LinearLayout ll_fenxiang_down;
     private WXSharedPopWin takePhotoPopWin;
     private boolean ifIsSharedToFriends = true;
@@ -117,6 +118,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
 
         View viewHead = LayoutInflater.from(this).inflate(R.layout.caselibrary_head, null);
         ll_fenxiang_down = (LinearLayout) viewHead.findViewById(R.id.ll_fenxiang);
+        rlThumbUp = (LinearLayout) viewHead.findViewById(R.id.rl_thumb_up);
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
         View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
@@ -157,6 +159,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
         pivImgCustomerHomeHeader.setOnClickListener(this);
         ivCustomerIm.setOnClickListener(this);
         ivGuanzu.setOnClickListener(this);
+        rlThumbUp.setOnClickListener(this);
 
     }
 
@@ -186,7 +189,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Abs
                 break;
             case R.id.iv_guanzu://关注
                 if (isLogin) {
-//                    关注的接口
+                    
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
