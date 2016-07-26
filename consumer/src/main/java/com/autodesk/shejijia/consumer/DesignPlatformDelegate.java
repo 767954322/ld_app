@@ -121,7 +121,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 //FlowEstablishContractActivity
                 jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId);
 
-            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51) {
+            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51|| wk_cur_sub_node_idi == 61) {
                 jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 41) {
