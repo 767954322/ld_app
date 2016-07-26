@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.framework.receiver;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.network.PushNotificationHttpManager;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -118,26 +120,20 @@ public class JPushMessageReceiver extends BroadcastReceiver {
                         if(key.equalsIgnoreCase("PRIVATE_MESSAGE_AUDIO"))
                         {
                             if (jArray.length() > 0)
-                                contentText = context.getResources().getString(R.string.push_notification_audio_message,jArray.getString(0));
+                                contentText = context.getResources().getString(R.string.push_notification_audio_message,MPChatUtility.getUserDisplayNameFromUser(jArray.getString(0)));
                         }
                         else if(key.equalsIgnoreCase("PRIVATE_MESSAGE_IMAGE"))
                         {
                             if (jArray.length() > 0)
-                                contentText = context.getResources().getString(R.string.push_notification_image_message,jArray.getString(0));
+                                contentText = context.getResources().getString(R.string.push_notification_image_message,MPChatUtility.getUserDisplayNameFromUser(jArray.getString(0)));
                         }
                     }
                     else
                     {
                         if (jArray.length() > 1)
                         {
-                            String userName = jArray.getString(0);
+                            String userName = MPChatUtility.getUserDisplayNameFromUser(jArray.getString(0));
                             String userMessage = jArray.getString(1);
-
-                            for (String token : userName.split("_"))
-                            {
-                                userName = token;
-                                break;
-                            }
                             contentText = context.getResources().getString(R.string.push_notification_text_message, userName, userMessage);
                         }
                     }
@@ -156,16 +152,19 @@ public class JPushMessageReceiver extends BroadcastReceiver {
             builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.mipmap.icon_launcher_label)
                     .setContentTitle(title)
-                    .setContentText(contentText);
+                    .setContentText(contentText)
+                    .setContentIntent(getNotificationContentIntent(context,bundle));
 
             Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.push_notification);
 
             if(sound != null)
                 builder.setSound(sound);
 
+            builder.setAutoCancel(true);
             nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = builder.build();
-            notification.flags =  Notification.FLAG_ONLY_ALERT_ONCE;
+            notification.flags =  Notification.FLAG_ONLY_ALERT_ONCE | Notification.FLAG_AUTO_CANCEL;
+
             nm.notify(notificationId, notification);
         }
     }
@@ -191,6 +190,15 @@ public class JPushMessageReceiver extends BroadcastReceiver {
                 }
             });
         }
+    }
+
+    private PendingIntent getNotificationContentIntent(Context context, Bundle bundle)
+    {
+        Intent notificationIntent = null;
+        notificationIntent = new Intent(context, AdskApplication.getInstance().getSplashActivityClass());
+        notificationIntent.putExtras(bundle);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        return  contentIntent;
     }
 
     private static final String TAG = "JPush";

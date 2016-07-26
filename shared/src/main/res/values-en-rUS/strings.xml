@@ -821,8 +821,8 @@
     <string name="bid_filter">screening</string>
 
     <string name="push_notification_text_message">%1$s: %2$s</string>
-    <string name="push_notification_audio_message">%1$sFrom a voice</string>
-    <string name="push_notification_image_message">%1$sSend a picture</string>
+    <string name="push_notification_audio_message">%1$sSent a voice</string>
+    <string name="push_notification_image_message">%1$sI sent a picture</string>
 
     <string name="max_characters_limit_reached">The&#160;&#160;content&#160;&#160;is&#160;&#160;too&#160;&#160;long, you&#160;&#160;input&#160;&#160;cannot&#160;&#160;exceed&#160;&#160;1000&#160;&#160;characters</string>
 

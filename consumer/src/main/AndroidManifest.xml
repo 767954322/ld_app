@@ -55,6 +55,8 @@
         <activity
             android:name="com.autodesk.shejijia.consumer.home.homepage.activity.MPSplashActivity"
             android:alwaysRetainTaskState="true"
+            android:launchMode="singleTop"
+            android:noHistory="true"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
