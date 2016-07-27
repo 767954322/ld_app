@@ -589,7 +589,13 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         toilet = amendDemandBean.getToilet();
         decoration_style = amendDemandBean.getDecoration_style();
         house_type = amendDemandBean.getHouse_type();
-
+        custom_string_status = amendDemandBean.getCustom_string_status();
+        if (Constant.NumKey.ONE.equals(custom_string_status) || Constant.NumKey.ZERO_ONE.equals(custom_string_status)) {
+            /**
+             * 审核中,可以修改需求
+             */
+            mTvBidState.setText(UIUtils.getString(R.string.checking));
+        }
         convertEn2Cn();
 
         livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_convert) + UIUtils.getNodataIfEmpty(living_room_convert) + UIUtils.getNodataIfEmpty(toilet_convert);

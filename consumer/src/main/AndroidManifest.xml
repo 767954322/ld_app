@@ -82,6 +82,7 @@
             android:name=".personalcenter.consumer.activity.IssueDemandActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="adjustUnspecified"
             android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.consumer.activity.MessageCenterActivity"

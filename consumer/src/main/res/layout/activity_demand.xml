@@ -471,6 +471,7 @@
             android:layout_width="@dimen/size_1"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:maxLength="32"
             android:background="@color/no_color"
             android:ellipsize="end"
             android:hint="@string/demand_please_specific_address"

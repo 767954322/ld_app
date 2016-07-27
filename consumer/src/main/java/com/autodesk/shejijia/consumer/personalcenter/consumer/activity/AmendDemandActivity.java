@@ -216,6 +216,13 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         }
         if (obj == mAmendDemandSuccessAlertView && position != AlertView.CANCELPOSITION) {
             if (amendDemandBean != null) {
+                if (Constant.NumKey.TWO.equals(custom_string_status)
+                        || Constant.NumKey.ZERO_TWO.equals(custom_string_status)) {
+                    /**
+                     * 审核未通过,修改需求表单后重新审核.
+                     */
+                    amendDemandBean.setCustom_string_status(Constant.NumKey.ONE);
+                }
                 EventBus.getDefault().postSticky(amendDemandBean);
             }
             finish();
@@ -315,7 +322,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         consumer_name = demandDetailBean.getConsumer_name();
         contacts_mobile = demandDetailBean.getContacts_mobile();
         contacts_name = demandDetailBean.getContacts_name();
-        custom_string_status = demandDetailBean.getCustom_string_status();
+        this.custom_string_status = demandDetailBean.getCustom_string_status();
         decoration_budget = demandDetailBean.getDecoration_budget();
         detail_desc = demandDetailBean.getDetail_desc();
         province_name = demandDetailBean.getProvince_name();
@@ -328,7 +335,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         String publish_time = demandDetailBean.getPublish_time();
         String community_name = demandDetailBean.getCommunity_name();
 
-        if (custom_string_status.equals(Constant.NumKey.THREE) || custom_string_status.equals(Constant.NumKey.ZERO_THREE)) {
+        if (this.custom_string_status.equals(Constant.NumKey.THREE) || this.custom_string_status.equals(Constant.NumKey.ZERO_THREE)) {
             btnFitmentAmendDemand.setClickable(false);
             btnFitmentAmendDemand.setPressed(false);
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
