@@ -216,10 +216,7 @@
                 android:text="@string/delivery_sure"
                 android:textColor="@color/bg_ff"/>
         </LinearLayout>
-
-
     </LinearLayout>
-
 
     <!--android:background="@drawable/bg_common_btn_blue"-->
 

@@ -215,9 +215,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     if (deliveryFilesEntitiesThreePlanRemove.size() > 0) {
                         mDeliveryFilesEntityArrayList.clear();
                         Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity = deliveryFilesEntitiesThreePlanRemove.get(0);
-//                                if (TextUtils.isEmpty(mDesign_name)) {
-//                                    return;
-//                                }
                         mDesign_name = TextUtils.isEmpty(mDesign_name) ? community_name : mDesign_name;
                         deliveryFilesEntity.setName(mDesign_name);
                         mDeliveryFilesEntityArrayList.add(deliveryFilesEntity);
@@ -712,6 +709,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     mDeliveryFilesEntitiesMaterialBill.add(deliveryFilesEntity);
                 }
             }
+        }
+        /// 如果是消费者，添加确认和延期的操作 .
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
+//            int stateCode = Integer.parseInt(wk_cur_sub_node_id);
+//            mLinerDelayedShow.setVisibility(View.VISIBLE);
         }
     }
 
