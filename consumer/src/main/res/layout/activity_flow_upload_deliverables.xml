@@ -137,11 +137,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_0"
-        android:layout_weight="1"/>
-
     <Button
         android:id="@+id/btn_upload_submit_3dplan"
         android:layout_width="match_parent"
@@ -156,63 +151,75 @@
         android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/ll_delayed_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_margin="5dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delivery_delayed_days"/>
+
+                <TextView
+                    android:id="@+id/tv_delayed_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7天"/>
+            </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_delayed_instruction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="距离系统确认时间还有"/>
-
-            <TextView
-                android:id="@+id/tv_delayed_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7天"/>
+                android:clickable="true"
+                android:drawableLeft="@drawable/icon_instruction"
+                android:drawablePadding="5dp"
+                android:text="@string/title_introduce"
+                android:textColor="@color/bg_0084ff"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_delayed_instruction"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_instruction"
-            android:drawablePadding="5dp"
-            android:text="@string/title_introduce"
-            android:textColor="@color/bg_0084ff"/>
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/flow_upload_deliverable_delay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/textview_border_beishu"
+                android:text="@string/delivery_delayed"
+                android:textColor="@color/bg_0084ff"/>
+
+            <Button
+                android:id="@+id/btn_delivery_sure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_common_btn_blue"
+                android:text="@string/delivery_sure"
+                android:textColor="@color/bg_ff"/>
+        </LinearLayout>
+
+
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:visibility="visible">
-
-        <Button
-            android:id="@+id/flow_upload_deliverable_delay"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/textview_border_beishu"
-            android:text="延期"
-            android:textColor="@color/bg_0084ff"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_common_btn_blue"
-            android:text="确认"
-            android:textColor="@color/bg_ff"/>
-
-    </LinearLayout>
 
     <!--android:background="@drawable/bg_common_btn_blue"-->
 

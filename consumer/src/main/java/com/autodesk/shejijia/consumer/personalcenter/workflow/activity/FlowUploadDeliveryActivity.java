@@ -61,18 +61,20 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mLlDesignPager = (LinearLayout) findViewById(R.id.ll_design_pager);
         mLlMaterialList = (LinearLayout) findViewById(R.id.ll_material_list);
         mBtnUploadSubmit3DPlan = (Button) findViewById(R.id.btn_upload_submit_3dplan);
-
         mTvCommunityName = (TextView) findViewById(R.id.tv_community_name);
         mTvDelivery = (TextView) findViewById(R.id.tv_delivery);
+
+        mTvInstruction = (TextView) findViewById(R.id.tv_delayed_instruction);  ///延期说明 .
+        mTvDelayedDays = (TextView) findViewById(R.id.tv_delayed_day);  /// 延期天数.
+        mBtnDeliverySure = (Button) findViewById(R.id.btn_delivery_sure);  /// 确认.
+        mLinerDelayedShow = (LinearLayout) findViewById(R.id.ll_delayed_show);  /// 控制显示延期或者确认按钮.
+
         /// 交付物的几种类型 .
         mIv3DPlan = (ImageView) findViewById(R.id.iv_3d_plan);
         mIvDesignApply = (ImageView) findViewById(R.id.iv_design_apply);
         mIvDesignPager = (ImageView) findViewById(R.id.iv_design_pager);
         mIvMaterialList = (ImageView) findViewById(R.id.iv_material_list);
-
         mBtnDelay = (Button) findViewById(R.id.flow_upload_deliverable_delay);
-
-
     }
 
     @Override
@@ -101,7 +103,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         getDeliveredFile(needs_id, designer_id);
 
         KLog.d(TAG, "needs_id:" + needs_id + "##designer_id:" + designer_id);
-
     }
 
     @Override
@@ -109,7 +110,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         super.initListener();
         mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
         mBtnDelay.setOnClickListener(FlowUploadDeliveryActivity.this);
-
+        mTvInstruction.setOnClickListener(this);
     }
 
     @Override
@@ -153,9 +154,12 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             case R.id.flow_upload_deliverable_delay:
                 mDelayAlertView.show();
                 break;
+
+            case R.id.tv_delayed_instruction:/// 延期说明 .
+                Intent intent = new Intent(FlowUploadDeliveryActivity.this, DeliveryDelayedInstructionsActivity.class);
+                startActivity(intent);
+                break;
         }
-
-
     }
 
     @Override
@@ -1086,6 +1090,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private ImageView mIvDesignPager;
     private ImageView mIvMaterialList;
     private Button mBtnUploadSubmit3DPlan;  /// 发送 .
+    private TextView mTvInstruction;
+    private TextView mTvDelayedDays;
+    private Button mBtnDeliverySure;
+    private LinearLayout mLinerDelayedShow;
 
     private Button mBtnDelay;
     private AlertView mDelayAlertView;

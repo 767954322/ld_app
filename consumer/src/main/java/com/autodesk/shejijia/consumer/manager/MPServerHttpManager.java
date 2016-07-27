@@ -637,7 +637,7 @@ public class MPServerHttpManager {
     public void getOrderDetailsInfoData(String needs_id, String member_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_ORDER_DETAILS + needs_id +
                 "/designers/" + member_id;
-//        KLog.d(TAG, url);
+        KLog.d(TAG, url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
