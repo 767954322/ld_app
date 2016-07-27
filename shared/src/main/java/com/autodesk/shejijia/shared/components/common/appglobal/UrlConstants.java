@@ -280,5 +280,5 @@ public final class UrlConstants {
     /**
      * 消息中心接口
      */
-    public static final String URL_MESSAGE_CENTER = ALPHA_MP_MAIN + "/member-app/v1/api/member/";
+    public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
 }

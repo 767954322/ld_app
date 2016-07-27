@@ -64,10 +64,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mTvCommunityName = (TextView) findViewById(R.id.tv_community_name);
         mTvDelivery = (TextView) findViewById(R.id.tv_delivery);
 
-        mTvInstruction = (TextView) findViewById(R.id.tv_delayed_instruction);  ///延期说明 .
-        mTvDelayedDays = (TextView) findViewById(R.id.tv_delayed_day);  /// 延期天数.
-        mBtnDeliverySure = (Button) findViewById(R.id.btn_delivery_sure);  /// 确认.
-        mLinerDelayedShow = (LinearLayout) findViewById(R.id.ll_delayed_show);  /// 控制显示延期或者确认按钮.
+        mTvInstruction = (TextView) findViewById(R.id.tv_delayed_instruction);                 ///延期说明 .
+        mTvDelayedDays = (TextView) findViewById(R.id.tv_delayed_day);                          /// 延期天数.
+        mBtnDeliverySure = (Button) findViewById(R.id.btn_delivery_consumer_sure);     /// 确认.
+        mLinerDelayedShow = (LinearLayout) findViewById(R.id.ll_delayed_show);           /// 控制显示延期或者确认按钮.
 
         /// 交付物的几种类型 .
         mIv3DPlan = (ImageView) findViewById(R.id.iv_3d_plan);
@@ -100,6 +100,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
          * 判断是不是已经有交付物
          */
         CustomProgress.showDefaultProgress(FlowUploadDeliveryActivity.this);
+
         getDeliveredFile(needs_id, designer_id);
 
         KLog.d(TAG, "needs_id:" + needs_id + "##designer_id:" + designer_id);
@@ -110,14 +111,27 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         super.initListener();
         mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
         mBtnDelay.setOnClickListener(FlowUploadDeliveryActivity.this);
-        mTvInstruction.setOnClickListener(this);
+        mTvInstruction.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mBtnDeliverySure.setOnClickListener(FlowUploadDeliveryActivity.this);
     }
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
-            case R.id.ll_3d_plan:
+            case R.id.flow_upload_deliverable_delay:    /// 延期按钮 .        // TODO 执行延期交付的操作.
+                mDelayAlertView.show();
+                break;
+
+            case R.id.tv_delayed_instruction:                /// 延期说明 .
+                Intent intent = new Intent(FlowUploadDeliveryActivity.this, DeliveryDelayedInstructionsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.btn_delivery_consumer_sure:       /// 确认交付 .　// TODO 执行确认交付的操作.
+                makeSureDelivery();
+                break;
+
+            default:
                 Intent intent3DPlan = new Intent(this, Wk3DPlanActivity.class);
                 /**
                  * 交付状态进行中
@@ -143,6 +157,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                          * 量房交付完成
                          */
                         doneMeasureDelivery(v, intent3DPlan);
+                        /// TODO 原来条件是>=61 .
                     } else if (Integer.valueOf(wk_cur_sub_node_id) >= 61) {
                         /**
                          * 设计交付完成
@@ -150,14 +165,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                         doneDesignDelivery(v, intent3DPlan);
                     }
                 }
-                break;
-            case R.id.flow_upload_deliverable_delay:
-                mDelayAlertView.show();
-                break;
-
-            case R.id.tv_delayed_instruction:/// 延期说明 .
-                Intent intent = new Intent(FlowUploadDeliveryActivity.this, DeliveryDelayedInstructionsActivity.class);
-                startActivity(intent);
                 break;
         }
     }
@@ -265,7 +272,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private void doingDesignDelivery(View v, Intent intent3DPlan) {
         Bundle bundle;
         switch (v.getId()) {
-            case R.id.ll_3d_plan:  /// 3d方案 .
+            case R.id.ll_3d_plan:                   /// 3d方案 .
                 /**
                  *  进入3D方案，选择其中一个，并返回选中的3d_asset_id
                  */
@@ -277,7 +284,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     startActivityForResult(intent3DPlan, 0);
                 }
                 break;
-            case R.id.ll_design_apply:  /// 渲染图设计 .
+            case R.id.ll_design_apply:      /// 渲染图设计 .
                 if (null == mWk3DPlanListBeanArrayList || mWk3DPlanListBeanArrayList.size() == 0) {
                     showAlertView(commonTip, UIUtils.getString(R.string.please_select_3d_design)).show();
                 }
@@ -391,7 +398,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                  * 交付状态进行中
                  */
                 case DELIVERED_STATE_UN_FINISH:
-                    doingDelivery();
+                    uploadingDelivery();
                     break;
             }
         }
@@ -497,6 +504,24 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError, true);
                 CustomProgress.cancelDialog();
+            }
+        });
+    }
+
+    /**
+     * 消费者发送确认交付
+     */
+    private void makeSureDelivery() {
+        //     needs_id  对应于　demands_id
+        MPServerHttpManager.getInstance().makeSureDelivery(needs_id, designer_id, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError, true);
             }
         });
     }
@@ -710,17 +735,47 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
             }
         }
-        /// 如果是消费者，添加确认和延期的操作 .
-        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
-//            int stateCode = Integer.parseInt(wk_cur_sub_node_id);
-//            mLinerDelayedShow.setVisibility(View.VISIBLE);
+        doDeliveryDelayed();
+    }
+
+    /**
+     * 处理设计交付的不同状态
+     * wk_sub_node_id
+     * <61 : 消费者，等待设计师上传设计交付物
+     * 设计师，上传设计交付物
+     * =61: 消费者，确认或者延期的操作 .
+     * 　　设计师：可以重新发送设计交付物（显示发送按钮）
+     * >61(=63):
+     * 消费者和设计师：查看设计交付
+     */
+    private void doDeliveryDelayed() {
+        int wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
+        mLinerDelayedShow.setVisibility(View.VISIBLE);
+        if (61 == wk_sub_node_id_int) {
+            switch (mMemberType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+                    mLinerDelayedShow.setVisibility(View.VISIBLE);
+
+                    break;
+
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mLinerDelayedShow.setVisibility(View.GONE);
+//                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
+//                    sureSubmit();
+                    break;
+            }
+        } else if (wk_sub_node_id_int > 61) {
+            mLinerDelayedShow.setVisibility(View.GONE);
+            mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
         }
     }
+
 
     /**
      * 正在上传量房或者设计交付物
      */
-    private void doingDelivery() {
+    private void uploadingDelivery() {
         /**
          * [0]量房交付
          */

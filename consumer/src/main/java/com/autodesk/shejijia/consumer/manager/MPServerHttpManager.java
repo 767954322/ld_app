@@ -1030,12 +1030,37 @@ public class MPServerHttpManager {
         String url = UrlConstants.URL_DELIVER +
                 "/delivery/" + needs_id +
                 "?designer_id=" + designer_id;
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 消费者交付物确认处理
+     *
+     * @param demands_id         　当前项目需求id
+     * @param designer_id        　设计师id
+     * @param okResponseCallback 回调接口
+     */
+    public void makeSureDelivery(String demands_id, String designer_id, OkJsonRequest.OKResponseCallback okResponseCallback) {
+        String makeSureUrl = UrlConstants.MAIN_DESIGN +
+                "/demands/" + demands_id +
+                "/designers/" + designer_id +
+                "/deliveries/options/confirm";
+        KLog.d(TAG, makeSureUrl);
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, makeSureUrl, null, okResponseCallback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return header;
             }
         };
@@ -1180,4 +1205,5 @@ public class MPServerHttpManager {
 
 
     private String TAG = getClass().getSimpleName();
+
 }
