@@ -755,7 +755,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     @Override
     public void onDismiss(Object o) {
-        MyToast.show(this, "adfdafa=========");
         if (ContractState == 0) {
             finish();
         }
