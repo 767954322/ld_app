@@ -349,6 +349,7 @@
     <string name="girl">女</string>
     <string name="essential_info">基本信息</string>
     <string name="photograph">拍照</string>
+    <string name="savelocal">保存到本地</string>
     <string name="photo_album">从手机相册选择</string>
     <string name="information_on_the_cross">信息上传中...</string>
     <string name="autonym_sd_disabled">SD卡不可用！</string>

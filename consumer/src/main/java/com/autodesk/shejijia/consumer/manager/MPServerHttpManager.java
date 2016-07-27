@@ -402,12 +402,12 @@ public class MPServerHttpManager {
      * @param limit
      */
     public void getSeekDesignerDetailData(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
-        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/20730531/cases?offset=0&sort_order=desc&sort_by=date&limit=10";
-//        String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/cases?" +
-//                "offset=" + offset +
-//                "&sort_order=desc" +
-//                "&sort_by=date" +
-//                "&limit=" + limit;
+//        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/20730531/cases?offset=0&sort_order=desc&sort_by=date&limit=10";
+        String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/cases?" +
+                "offset=" + offset +
+                "&sort_order=desc" +
+                "&sort_by=date" +
+                "&limit=" + limit;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -442,7 +442,7 @@ public class MPServerHttpManager {
     public void getCaseListDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
 //        String url = UrlConstants.URL_GET_CASE_DETAILS + case_id;
 //        http://alpha-api.gdfcx.net/design-app/v1/api/cases/1553719
-        String url ="http://192.168.120.90:8080/design-app/v1/api/cases/1553719";
+        String url ="http://192.168.120.90:8080/design-app/v1/api/cases/"+case_id;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -458,7 +458,7 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void sendThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
-        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/1553716";
+        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
 //        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
         Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
@@ -479,7 +479,7 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
-        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/1553716";
+        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
 //        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
         Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {

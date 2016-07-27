@@ -151,7 +151,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        memberEntity = AdskApplication.getInstance().getMemberEntity();
+
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
         getCaseDetailData(case_id);
@@ -437,6 +437,13 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
 
     private float mPosY = 0;
     private float mCurPosY = 0;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
+    }
 
     @Override
     protected void onRestart() {

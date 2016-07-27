@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.ImageShowView;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -59,6 +60,18 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
     @Override
     public void onImageClick(int position, View imageView) {
         Toast.makeText(this, "长按图片" + mImageUrl.get(position), Toast.LENGTH_SHORT).show();
+        new ActionSheetDialog(this)
+                .builder()
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem(getResources().getString(R.string.savelocal), ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                               // cameraPhoto();
+                            }
+                        })
+                .show();
     }
 
 
