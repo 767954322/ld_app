@@ -621,6 +621,10 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         intent.putExtra(ImageChatRoomActivity.PARENTTHREADID, mParentThreadId);
         intent.putExtra(BaseChatRoomActivity.MEMBER_TYPE, AdskApplication.getInstance().getMemberEntity().getMember_type());
 
+        if (mProjInfo != null) {
+            intent.putExtra(ImageChatRoomActivity.PROJECT_INFO, mProjInfo);
+        }
+
         startActivityForResult(intent, HotSpotsInfo.imgChatResultCode);
     }
 
