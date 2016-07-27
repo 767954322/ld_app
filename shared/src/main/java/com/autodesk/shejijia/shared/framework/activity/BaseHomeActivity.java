@@ -201,6 +201,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     protected void rightNavButtonClicked(View view) {
+
+
+
         if (isActiveFragment(MPThreadListFragment.class))
             openFileThreadActivity();
     }
@@ -221,7 +224,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return -1;
     }
 
-    private void openFileThreadActivity() {
+    public void openFileThreadActivity() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         Intent intent = new Intent(this, MPFileThreadListActivity.class);
         intent.putExtra(MPFileThreadListActivity.MEMBERID, memberEntity.getAcs_member_id());
