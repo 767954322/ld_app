@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -465,6 +466,36 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                 member_id = mMemberEntity.getAcs_member_id();
                 getConsumerInfoData(member_id);
             }
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
+            /// hide the requirement btn .
+           // mFloatingActionsMenu.addMenuButton(requirementButton);
+            mFloatingActionsMenu.removeAllMenuButtons();
+            mFloatingActionsMenu.addMenuButton(requirementButton);
+            mFloatingActionsMenu.addMenuButton(findDesignerButton);
+            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+
+        }else if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+            /// hide the requirement btn .
+            // mFloatingActionsMenu.addMenuButton(requirementButton);
+            mFloatingActionsMenu.removeAllMenuButtons();
+            mFloatingActionsMenu.addMenuButton(findDesignerButton);
+            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+
+        }else {
+
+            mFloatingActionsMenu.removeAllMenuButtons();
+            mFloatingActionsMenu.addMenuButton(requirementButton);
+            mFloatingActionsMenu.addMenuButton(findDesignerButton);
+            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+
         }
     }
 

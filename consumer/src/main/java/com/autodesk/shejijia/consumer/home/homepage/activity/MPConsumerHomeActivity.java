@@ -161,7 +161,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         super.onRestart();
         showDesignerOrConsumerRadioGroup();
         setConsumerOrDesignerPicture();//设置头像
-       // choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
+
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
