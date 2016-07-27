@@ -193,7 +193,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_thumb_up://点赞
-                if (null!=memberEntity) {
+                if (null != memberEntity) {
                     if (!isMemberLike) {
                         sendThumbUp(caseDetailBean.getId());
                     } else {
@@ -205,14 +205,14 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 }
                 break;
             case R.id.iv_guanzu://关注
-                if (null!=memberEntity) {
+                if (null != memberEntity) {
 
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
             case R.id.ll_fenxiang://分享
-                if (null!=memberEntity) {
+                if (null != memberEntity) {
                     if (takePhotoPopWin == null) {
                         takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
                     }
@@ -281,24 +281,26 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            String webUrl = "http://blog.csdn.net/qinglianluan/article/details/16847735/";
+            String imageUrl = "http://img1.imgtn.bdimg.com/it/u=3731860233,1648607528&fm=21&gp=0.jpg/";
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
-                    String webUrl = "https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=1417751808&token=&lang=zh_CN";
-                    String imageUrl = "http://pic4.nipic.com/20091108/2454778_111024006409_2.jpg";
+
                     ifIsSharedToFriends = true;
                     try {
-                        Bitmap bitmap = null;//获取bitmap
-                        SendWXShared.sendProjectToWX(CaseLinraryNewActivity.this, webUrl, "分享标题", "分享最新内容", true, bitmap);
+                        SendWXShared.sendProjectToWX(webUrl, "分享标题", "分享最新内容", ifIsSharedToFriends, imageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                     break;
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
-                    Toast.makeText(CaseLinraryNewActivity.this, "分享朋友圈", Toast.LENGTH_SHORT).show();
+                    try {
+                        SendWXShared.sendProjectToWX(webUrl, "分享标题", "分享最新内容", ifIsSharedToFriends, imageUrl);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     break;
             }
@@ -307,7 +309,6 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             }
         }
     };
-
 
     /**
      * 发送点赞请求
@@ -387,7 +388,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                     designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
                 }
                 //登录状态判断是否点赞
-                if (null!=memberEntity) {
+                if (null != memberEntity) {
                     getThumbUp(caseDetailBean.getId());
                 }
 
@@ -403,7 +404,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 //设置简介
                 String introduction = caseDetailBean.getDescription();
                 if (introduction != null) {
-                    mCaseLibraryText.setText("          " +introduction);
+                    mCaseLibraryText.setText("          " + introduction);
                 } else {
                     mCaseLibraryText.setText(R.string.nodata);
                 }
@@ -494,7 +495,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
-        bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position-3);
+        bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position - 3);
         intent.putExtras(bundle);
         this.startActivity(intent);
     }

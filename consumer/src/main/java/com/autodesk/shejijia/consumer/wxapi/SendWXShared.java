@@ -7,15 +7,21 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 
 import junit.framework.Assert;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -33,27 +39,48 @@ import java.net.URL;
  * @brief 微信分享工具类 .
  */
 public class SendWXShared {
-    public static void sendProjectToWX(Context context, String webUrl, String title, String description, boolean ifIsSharedToFriends, Bitmap bitmap) throws IOException {
-        WXWebpageObject webpage = new WXWebpageObject();
-        if (!TextUtils.isEmpty(webUrl)) {
-            webpage.webpageUrl = webUrl;
-        }
-        WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = title;
-        msg.description = description;
+    public static void sendProjectToWX( final String webUrl, final String title, final String description, final boolean ifIsSharedToFriends, final String imgUrl) throws IOException {
+        ImageLoader.getInstance().loadImage(imgUrl, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
 
-        if (bitmap != null) {
-            msg.thumbData = bmpToByteArray(bitmap, true);
-        }
+            }
 
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction("webpage");
-        req.message = msg;
-        req.scene = ifIsSharedToFriends ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-        ConsumerApplication.api.sendReq(req);
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+
+                WXWebpageObject webpage = new WXWebpageObject();
+                if (!TextUtils.isEmpty(webUrl)) {
+                    webpage.webpageUrl = webUrl;
+                }
+                WXMediaMessage msg = new WXMediaMessage(webpage);
+                msg.title = title;
+                msg.description = description;
+                Bitmap thumbBmp = Bitmap.createScaledBitmap(loadedImage, 150, 150, true);
+                byte[] bytes = bmpToByteArray(thumbBmp, true);
+                msg.thumbData = bytes;
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = buildTransaction("webpage");
+                req.message = msg;
+                req.scene = ifIsSharedToFriends ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+                ConsumerApplication.api.sendReq(req);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
     }
 
-    private static String buildTransaction(final String type) {
+
+    public static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
