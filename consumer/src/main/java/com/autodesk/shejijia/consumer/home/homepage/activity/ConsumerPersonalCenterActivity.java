@@ -36,7 +36,11 @@ import org.json.JSONObject;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by yaoxuehua on 16-7-12.
+ * @author yaoxuehua .
+ * @version 1.0 .
+ * @date 16-7-12
+ * @file DesignerOrderBeiShuActivity.java  .
+ * @brief 消费者个人中心 .
  */
 public class ConsumerPersonalCenterActivity extends NavigationBarActivity implements View.OnClickListener {
 

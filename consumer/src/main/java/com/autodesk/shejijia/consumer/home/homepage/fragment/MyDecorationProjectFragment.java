@@ -41,7 +41,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yaoxuehua on 16-7-12.
+ * @author yaoxuehua .
+ * @version 1.0 .
+ * @date 16-7-12
+ * @file DesignerOrderBeiShuActivity.java  .
+ * @brief 我的装修项目--消费者 .
  */
 public class MyDecorationProjectFragment extends BaseFragment implements View.OnClickListener{
     @Override

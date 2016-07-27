@@ -20,7 +20,11 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.OrderBeiS
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 /**
- * Created by yaoxuehua on 16-7-13.
+ * @author yaoxuehua .
+ * @version 1.0 .
+ * @date 16-7-13
+ * @file DesignerOrderBeiShuActivity.java  .
+ * @brief 我的装修项目--设计师.
  */
 public class MyDecorationProjectDesignerFragment extends BaseFragment{
 

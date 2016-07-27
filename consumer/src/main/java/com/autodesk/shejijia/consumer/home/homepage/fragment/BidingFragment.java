@@ -36,7 +36,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yaoxuehua on 16-7-20.
+ * @author yaoxuehua .
+ * @version 1.0 .
+ * @date 16-7-20
+ * @file DesignerOrderBeiShuActivity.java  .
+ * @brief 应标中fragment.
  */
 public class BidingFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener{
     @Override
