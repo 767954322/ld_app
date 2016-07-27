@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -407,10 +409,39 @@ public class WkFlowStateAdapter extends BaseAdapter {
         public TextView tv_meal_content;
     }
 
+    //呼吸状态，动画效果呢；
+
+    public void setItemAnimation(View view,boolean cancelAnimation,boolean animation){
+
+        imagView_SaleAnimation = new ScaleAnimation(1.0f,1.25f,1.0f,1.25f,0.7f,0.7f);
+        imagView_SaleAnimation.setDuration(1000);
+        imagView_SaleAnimation.setRepeatCount(10000);
+        imagView_SaleAnimation.setRepeatMode(Animation.REVERSE);
+        view.setAnimation(imagView_SaleAnimation);
+
+        if (cancelAnimation){
+
+            setCancelItemAnimation(view);
+        }
+    }
+
+    //呼吸状态，取消动画效果；
+    public void setCancelItemAnimation(View view){
+
+        if (imagView_SaleAnimation != null){
+
+            view.clearAnimation();
+        }
+
+    }
+
+
+
     private Context context;
     private String wk_cur_sub_node_id;
     private String member_type;
     private final int StepEnableColor = Color.rgb(30, 30, 30); // 亮
     private final int StepDisEnableColor = Color.rgb(188, 188, 188); // 暗
+    private Animation imagView_SaleAnimation;
 
 }

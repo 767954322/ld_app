@@ -224,4 +224,38 @@
         <item name="android:windowBackground">@android:color/transparent</item><!-- 模糊 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+
+    <!-- FloatingActionMenu -->
+    <style name="MenuLabelsStyle">
+        <item name="android:background">@null</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/size_14</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="MenuButtonsStyle">
+        <item name="fab_size">mini</item>
+        <item name="fab_showAnimation">@anim/scale_down</item>
+        <item name="fab_hideAnimation">@anim/scale_up</item>
+        <item name="fab_shadowColor">#00FFFFFF</item>
+        <item name="fab_colorNormal">#00FFFFFF</item>
+        <item name="fab_colorPressed">#00FFFFFF</item>
+        <item name="fab_colorRipple">#00FFFFFF</item>
+    </style>
+
+    <style name="MenuButtonsSmall">
+        <item name="fab_size">mini</item>
+        <item name="fab_colorNormal">#00FFFFFF</item>
+        <item name="fab_colorPressed">#00FFFFFF</item>
+        <item name="fab_colorRipple">#00FFFFFF</item>
+    </style>
+
+    <style name="MenuButtonsSmall.Green">
+        <item name="fab_colorNormal">#00FFFFFF</item>
+        <item name="fab_colorPressed">#00FFFFFF</item>
+        <item name="fab_colorRipple">#00FFFFFF</item>
+    </style>
+
 </resources>

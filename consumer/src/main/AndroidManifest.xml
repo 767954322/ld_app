@@ -146,6 +146,19 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".home.homepage.activity.ConsumerPersonalCenterActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.homepage.activity.DesignerPersonalCenterActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".personalcenter.designer.activity.CertificationActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

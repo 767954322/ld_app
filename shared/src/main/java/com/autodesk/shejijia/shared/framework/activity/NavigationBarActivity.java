@@ -2,7 +2,9 @@ package com.autodesk.shejijia.shared.framework.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -12,9 +14,12 @@ public class NavigationBarActivity extends BaseActivity {
 
     protected enum ButtonType {
         LEFT,
+        LEFTCIRCLE,
         SECONDARY,
         BADGE,
-        RIGHT
+        RIGHT,
+        middle,
+        middlecontain,
     }
 
     @Override
@@ -44,8 +49,20 @@ public class NavigationBarActivity extends BaseActivity {
         ImageButton rightImageButton = (ImageButton) findViewById(R.id.nav_right_imageButton);
         TextView rightTextView = (TextView) findViewById(R.id.nav_right_textView);
         TextView leftTextView = (TextView) findViewById(R.id.nav_left_textView);
+        ImageView userAvatar = (ImageView) findViewById(R.id.user_avatar);
 
         //2. hook up events
+
+        if (userAvatar != null){
+
+            userAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    leftCircleUserAvarClicked(v);
+                }
+            });
+        }
+
         if (leftImageButton != null)
             leftImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,6 +120,12 @@ public class NavigationBarActivity extends BaseActivity {
 
         if (view != null)
             view.setVisibility(visibilityFlag);
+
+        ViewGroup viewGroup = getNavitionViewGroup(type);
+
+        if (viewGroup != null)
+            viewGroup.setVisibility(visibilityFlag);
+
     }
 
     protected void hideAllNavButtons() {
@@ -180,6 +203,12 @@ public class NavigationBarActivity extends BaseActivity {
         finish();
     }
 
+    protected void leftCircleUserAvarClicked(View view){
+
+
+    }
+
+
     protected void rightNavButtonClicked(View view) {
     }
 
@@ -215,6 +244,20 @@ public class NavigationBarActivity extends BaseActivity {
         return 0;
     }
 
+    protected void setImageForNavCircleView(ButtonType type, int resId) {
+        View view = getNavigationButton(type);
+
+        if (view != null && view instanceof ImageView) {
+            ((ImageView) view).setImageResource(resId);
+            view.setVisibility(View.VISIBLE);
+
+            TextView textView = getNavigationTextView(type);
+
+            if (textView != null)
+                textView.setVisibility(View.GONE);
+        }
+    }
+
     private void setupNavigationBar() {
         View navBar = findViewById(R.id.common_navbar);
 
@@ -231,6 +274,7 @@ public class NavigationBarActivity extends BaseActivity {
 
         // first setup left button
         ImageButton leftImageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
+        ImageView user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
         if (leftImageButton != null) {
 
@@ -319,6 +363,8 @@ public class NavigationBarActivity extends BaseActivity {
             view = findViewById(R.id.nav_secondary_imageButton);
         else if (type == ButtonType.BADGE)
             view = findViewById(R.id.nav_badge_textView);
+        else if (type == ButtonType.LEFTCIRCLE)
+            view = findViewById(R.id.user_avatar);
 
         return view;
     }
@@ -331,7 +377,18 @@ public class NavigationBarActivity extends BaseActivity {
             textView = (TextView) findViewById(R.id.nav_left_textView);
         else if (type == ButtonType.RIGHT)
             textView = (TextView) findViewById(R.id.nav_right_textView);
+        else if (type == ButtonType.middle)
+            textView = (TextView) findViewById(R.id.nav_title_textView);
+
 
         return textView;
+    }
+    private ViewGroup getNavitionViewGroup(ButtonType type){
+
+        ViewGroup viewGroup = null;
+         if (type == ButtonType.middlecontain)
+             viewGroup = (ViewGroup) findViewById(R.id.ll_contain);
+
+        return viewGroup;
     }
 }

@@ -193,4 +193,14 @@
     <color name="bgColor_alert_button_press">#EAEAEA</color><!--actionsheet模式的取消按钮背景颜色-->
     <color name="bgColor_actionsheet_cancel_nor">#ffffff</color>
 
+
+    <color name="app_primary">#1976D2</color>
+    <color name="app_primary_dark">#1565C0</color>
+    <color name="grey">#DDDDDD</color>
+    <color name="light_grey">#EEEEEE</color>
+    <color name="white_transparent">#99FFFFFF</color>
+    <!--我的项目-->
+    <color name="my_project_title_pointer_color" >#0084ff</color>
+    <color name="my_project_title_text_color">#333333</color>
+
 </resources>

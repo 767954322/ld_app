@@ -240,6 +240,11 @@ public class OrderCommonFragment extends BaseFragment {
                             intentOrder.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, orderListEntity.getNeeds_id());
                             intentOrder.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
                             intentOrder.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
+
+                            intentOrder.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, orderListEntity.getNeeds_id());
+                            intentOrder.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_DESIGNERORDER_ACTIVITY);
+                            intentOrder.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
+
                             getActivity().startActivity(intentOrder);
                         }
                     }

@@ -67,7 +67,7 @@ public class DesignerPersonalCenterFragment extends BaseFragment implements View
         mLlSetMeal = (LinearLayout) rootView.findViewById(R.id.ll_set_meal);
         mLlPersonalDesignerInfo = (LinearLayout) rootView.findViewById(R.id.ll_personal_designer_info);
         mLlPersonalDesignerManage = (LinearLayout) rootView.findViewById(R.id.ll_personal_designer_manage);
-        mLlPersonalDesignerDecorate = (LinearLayout) rootView.findViewById(R.id.ll_personal_designer_decorate);
+       // mLlPersonalDesignerDecorate = (LinearLayout) rootView.findViewById(R.id.ll_personal_designer_decorate);
         mLlPersonalDesignerProperty = (LinearLayout) rootView.findViewById(R.id.ll_personal_designer_property);
         mLlPersonalDesignerMore = (LinearLayout) rootView.findViewById(R.id.ll_personal_designer_more);
         mLlPersonalDesignerMsgCenter = (LinearLayout) rootView.findViewById(R.id.ll_personal_designer_msg_center);
@@ -90,7 +90,7 @@ public class DesignerPersonalCenterFragment extends BaseFragment implements View
         mLlNoAttestation.setOnClickListener(this);
         mLlPersonalDesignerInfo.setOnClickListener(this);
         mLlPersonalDesignerManage.setOnClickListener(this);
-        mLlPersonalDesignerDecorate.setOnClickListener(this);
+       // mLlPersonalDesignerDecorate.setOnClickListener(this);
         mLlPersonalDesignerProperty.setOnClickListener(this);
         mLlPersonalDesignerMore.setOnClickListener(this);
         mTvDesignerNickname.setOnClickListener(this);
@@ -255,18 +255,18 @@ public class DesignerPersonalCenterFragment extends BaseFragment implements View
                 CommonUtils.launchActivity(getActivity(), MyBidActivity.class);
                 break;
 
-            case R.id.ll_personal_designer_decorate:    /// 我的订单 .
-                if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
-                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-                        /// 北舒 .
-                        CommonUtils.launchActivity(getActivity(), DesignerOrderBeiShuActivity.class);
-                    } else {
-                        CommonUtils.launchActivity(getActivity(), DesignerOrderActivity.class);
-                    }
-                } else {
-                    CommonUtils.launchActivity(getActivity(), DesignerOrderActivity.class);
-                }
-                break;
+//            case R.id.ll_personal_designer_decorate:    /// 我的订单 .
+//                if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
+//                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
+//                        /// 北舒 .
+//                        CommonUtils.launchActivity(getActivity(), DesignerOrderBeiShuActivity.class);
+//                    } else {
+//                        CommonUtils.launchActivity(getActivity(), DesignerOrderActivity.class);
+//                    }
+//                } else {
+//                    CommonUtils.launchActivity(getActivity(), DesignerOrderActivity.class);
+//                }
+//                break;
 
             case R.id.ll_personal_designer_property:    /// 查看我的资产页面.
                 CommonUtils.launchActivity(getActivity(), MyPropertyActivity.class);
@@ -374,7 +374,7 @@ public class DesignerPersonalCenterFragment extends BaseFragment implements View
     private LinearLayout mLlPersonalDesignerManage;
     private LinearLayout mLlPersonalDesignerProperty;
     private LinearLayout mLlPersonalDesignerMore;
-    private LinearLayout mLlPersonalDesignerDecorate;
+   // private LinearLayout mLlPersonalDesignerDecorate;
     private LinearLayout mLlPersonalDesignerInfo;
     private LinearLayout mLlPersonalDesignerMsgCenter;
     private LinearLayout mLlNoAttestation;
