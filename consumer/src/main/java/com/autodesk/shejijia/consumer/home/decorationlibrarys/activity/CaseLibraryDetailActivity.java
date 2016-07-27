@@ -1,6 +1,11 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,7 +15,15 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.ImageShowView;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -58,8 +71,8 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
      * @param imageView 控件
      */
     @Override
-    public void onImageClick(int position, View imageView) {
-        Toast.makeText(this, "长按图片" + mImageUrl.get(position), Toast.LENGTH_SHORT).show();
+    public void onImageClick(final int position, View imageView) {
+//        Toast.makeText(this, "长按图片" + mImageUrl.get(position), Toast.LENGTH_SHORT).show();
         new ActionSheetDialog(this)
                 .builder()
                 .setCancelable(true)
@@ -68,12 +81,118 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                               // cameraPhoto();
+
+                                ImageLoader.getInstance().loadImage(mImageUrl.get(position), new ImageLoadingListener() {
+                                    @Override
+                                    public void onLoadingStarted(String imageUri, View view) {
+
+                                    }
+
+                                    @Override
+                                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                                    }
+
+                                    @Override
+                                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                                        try {
+                                            saveImageToGallery(loadedImage);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onLoadingCancelled(String imageUri, View view) {
+
+                                    }
+                                });
+
                             }
                         })
                 .show();
     }
 
+    /**
+     * 保存图片到本地
+     */
+    public void saveImageToGallery(Bitmap bmp) throws IOException {
+        if (bmp == null) {
+            Toast.makeText(CaseLibraryDetailActivity.this, "保存出错了", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//            String fileName = System.currentTimeMillis() + ".jpg";
+//            String appDirName = Environment.getExternalStorageDirectory() + "Boohee";
+//            File file = new File(appDirName);
+            File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
+            if (!appDir.exists()) {
+                appDir.mkdir();
+            }
+            String fileName = System.currentTimeMillis() + ".jpg";
+            File file = new File(appDir, fileName);
+
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.flush();
+                fos.close();
+
+                // 最后通知图库更新
+                try {
+                    MediaStore.Images.Media.insertImage(CaseLibraryDetailActivity.this.getContentResolver(), file.getAbsolutePath(), fileName, null);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "title", "description");
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                Uri uri = Uri.fromFile(file);
+                intent.setData(uri);
+                CaseLibraryDetailActivity.this.sendBroadcast(intent);
+                Toast.makeText(CaseLibraryDetailActivity.this, "保存成功了", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+//        // 首先保存图片
+//        File appDir = new File(SAVE_PIC_PATH, "iamge");
+//        if (!appDir.exists()) {
+//            appDir.mkdir();
+//        }
+//        String fileName = System.currentTimeMillis() + ".jpg";
+//        File file = new File(appDir, fileName);
+//        try {
+//            FileOutputStream fos = new FileOutputStream(file);
+//            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+//            fos.flush();
+//            fos.close();
+//        } catch (FileNotFoundException e) {
+//            Toast.makeText(CaseLibraryDetailActivity.this, "文件未发现", Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            Toast.makeText(CaseLibraryDetailActivity.this, "保存出错了", Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            Toast.makeText(CaseLibraryDetailActivity.this, "保存出错了", Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
+//        }
+//        // 最后通知图库更新
+//        try {
+//            MediaStore.Images.Media.insertImage(CaseLibraryDetailActivity.this.getContentResolver(), file.getAbsolutePath(), fileName, null);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        Uri uri = Uri.fromFile(file);
+//        intent.setData(uri);
+//        CaseLibraryDetailActivity.this.sendBroadcast(intent);
+//        Toast.makeText(CaseLibraryDetailActivity.this, "保存成功了", Toast.LENGTH_SHORT).show();
+    }
 
     /**
      * 获取所有图片的url地址
@@ -88,6 +207,10 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
         mImageShowView.setImageResources(mImageUrl, this, intExtra);
     }
 
+    private final String SAVE_PIC_PATH = Environment.getExternalStorageState()
+            .equalsIgnoreCase(Environment.MEDIA_MOUNTED) ? Environment.getExternalStorageDirectory()
+            .getAbsolutePath() : "/mnt/sdcard";
+    //    private static final String SAVE_REAL_PATH = SAVE_PIC_PATH + "/good/savePic";
     private int intExtra;
     private ImageShowView mImageShowView;
     private String imageUrl;

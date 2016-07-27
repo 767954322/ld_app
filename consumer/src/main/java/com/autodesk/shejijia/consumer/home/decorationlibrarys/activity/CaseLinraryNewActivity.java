@@ -281,8 +281,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl = "http://blog.csdn.net/qinglianluan/article/details/16847735/";
-            String imageUrl = "http://img1.imgtn.bdimg.com/it/u=3731860233,1648607528&fm=21&gp=0.jpg/";
+            String webUrl = "http://blog.csdn.net/qinglianluan/article/details/16847735";
+            String imageUrl = "http://img1.imgtn.bdimg.com/it/u=3731860233,1648607528&fm=21&gp=0.jpg";
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
