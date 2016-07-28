@@ -58,6 +58,6 @@ public class MPFileThreadListActivity extends NavigationBarActivity {
 
     @Override
     protected String getActivityTitle() {
-        return getResources().getString(R.string.picture_img);
+        return getResources().getString(R.string.file_thread_list_title);
     }
 }

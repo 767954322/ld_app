@@ -713,6 +713,7 @@
     <string name="querenliangfang">确认量房</string>
 
     <string name="mychat">我的聊天</string>
+    <string name="file_thread_list_title">热点聊天</string>
     <string name="there_is_no_data">没有数据了</string>
     <string name="the_data_load_failure">数据加载失败</string>
     <string name="im_succes_sendvoice">语音发送成功</string>
