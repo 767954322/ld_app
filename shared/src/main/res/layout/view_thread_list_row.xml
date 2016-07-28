@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/chat_list_parent_height"
                 android:minHeight="@dimen/chat_list_parent_minheight">
@@ -12,7 +13,9 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/chat_list_avatar_marginleft"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_useravatar" />
+        android:src="@drawable/default_useravatar"
+        custom:border_width="1dp"
+        custom:border_color="@color/chat_list_background"/>
 
     <TextView
         android:id="@+id/tv_unread_message_count"

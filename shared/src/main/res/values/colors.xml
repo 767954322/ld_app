@@ -179,7 +179,9 @@
     <color name="chat_list_common_message_textcolor">#FF666666</color>
     <color name="chat_room_bottombar_background">#FFFFFFFF</color>
     <color name="chat_room_bottombar_bordercolor">#DFDFDF</color>
+    <color name="chat_list_background">#FFFFFFFF</color>
     <color name="chat_list_common_messagetime_textcolor">#D9D9D9</color>
+    <color name="chat_room_commandcell_background">#e0e0f1</color>
 
     <!--覆盖颜色-->
     <color name="bgColor_alertview_alert">#f8f8f8</color>
