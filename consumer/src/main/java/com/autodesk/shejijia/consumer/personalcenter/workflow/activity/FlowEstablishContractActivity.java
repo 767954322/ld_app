@@ -370,8 +370,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     @Override
-    public void onActivityReenter(int resultCode, Intent data) { // 判断IM跳转到合同，合同跳转支付首款后进行得操作
-        super.onActivityReenter(resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == FirstForContract) {
             finish();
         }
