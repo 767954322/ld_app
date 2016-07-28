@@ -10,10 +10,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="@dimen/chat_list_common_title_margintop"
-        android:gravity="center"
+        android:gravity="left"
         android:textSize="@dimen/chat_list_common_title_fontsize"
         android:textColor="@color/black"
-        android:text="@string/xiao_wu" />
+        android:layout_marginRight="5dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="@string/xiao_wu"
+        android:layout_toStartOf="@+id/tv_time"/>
 
     <TextView
         android:id="@+id/tv_content"
