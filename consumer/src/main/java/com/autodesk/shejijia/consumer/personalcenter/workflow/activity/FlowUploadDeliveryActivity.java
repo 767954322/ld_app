@@ -74,7 +74,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mIvDesignApply = (ImageView) findViewById(R.id.iv_design_apply);
         mIvDesignPager = (ImageView) findViewById(R.id.iv_design_pager);
         mIvMaterialList = (ImageView) findViewById(R.id.iv_material_list);
-        mBtnDelay = (Button) findViewById(R.id.flow_upload_deliverable_delay);
+        mBtnDelay = (Button) findViewById(R.id.btn_flow_upload_deliverable_delay);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.flow_upload_deliverable_delay:    /// 延期按钮 .        // TODO 执行延期交付的操作.
+            case R.id.btn_flow_upload_deliverable_delay:    /// 延期按钮 .        // TODO 执行延期交付的操作.
                 mDelayAlertView.show();
                 break;
 
@@ -194,7 +194,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
         if (object == mDelaySuccessAlertView && position != AlertView.CANCELPOSITION) {
             Toast.makeText(this, "延期成功", Toast.LENGTH_SHORT).show();
-        }
+            mBtnDelay.setEnabled(false);
+            mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+            mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
+         }
     }
 
     /**
@@ -796,8 +799,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
                 case Constant.UerInfoKey.DESIGNER_TYPE:
                     mLinerDelayedShow.setVisibility(View.GONE);
-                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
-                    cancelSubmit();
+//                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
+//                    sureSubmit();
                     break;
             }
         } else if (wk_sub_node_id_int > 61) {
