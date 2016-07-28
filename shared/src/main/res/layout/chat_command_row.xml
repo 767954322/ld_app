@@ -51,6 +51,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/chat_room_commandcell_text_margintop"
                 android:layout_marginRight="@dimen/chat_room_commandcell_text_marginright"
+                android:textColor="@color/black"
                 android:textSize="@dimen/chat_room_cell_message_fontsize"/>
 
             <Button
