@@ -13,4 +13,13 @@
         \n2、延期，将会把确认时间延长７天。您有一次延期确认的机会。
         \n3、请在设计师提交设计交付后７日内确认设计师提供的交付资料是否完整。如果在７日内不做处理，系统将默认您确认了设计交付。</string>
 
+
+    <string name="warmTips">温馨提示：</string>
+    <string name="Mrasuretips">提示：</string>
+
+    <string name="update_measure_house_cost">量房费可更改</string>
+    <string name="no_pay_rent">量房费为0时，不需要支付量房费。</string>
+
+    <string name="warm_tips_content">签订设计合同后，您所支付的量房费将会抵消等额的设计费。</string>
+
 </resources>

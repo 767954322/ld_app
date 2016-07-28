@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -69,6 +70,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         btn_measure_form_accept = (Button) findViewById(R.id.btn_measure_form_accept);
         btn_measure_form_send = (Button) findViewById(R.id.btn_measure_form_send);
         btn_measure_form_refuse = (Button) findViewById(R.id.btn_measure_form_refuse);
+        tvWarmTips = (TextView) findViewById(R.id.tvWarmTips);
+        tvWarmTipsContent = (TextView) findViewById(R.id.tvWarmTipsContent);
+        rlMeasureWarmTips = (RelativeLayout) findViewById(R.id.rlMeasureWarmTips);
+        tvMeasureWarmTips = (TextView) findViewById(R.id.tvMeasureWarmTips);
+        tvMeasureWarmTipsContent = (TextView) findViewById(R.id.tvMeasureWarmTipsContent);
         ll_measure_form_style.setVisibility(View.GONE);
     }
 
@@ -194,7 +200,10 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             return;
         }
         int wk_cur_sub_node_id_i = Integer.valueOf(wk_cur_sub_node_id);
+
+
         if (memType.equals(Constant.UerInfoKey.CONSUMER_TYPE)) { // 消费者
+
             if (wk_cur_sub_node_id_i >= 11) {
                 ll_consumer_send.setVisibility(View.GONE);
                 tvc_measure_form_time.setClickable(false);
@@ -202,6 +211,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
             } else {
                 ll_consumer_send.setVisibility(View.VISIBLE);
+                tvWarmTips.setText(R.string.warmTips);
+                tvWarmTipsContent.setText(R.string.warm_tips_content);
                 tvc_measure_form_time.setText("");
             }
         } else if (memType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) { // 设计师
@@ -210,12 +221,20 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             switch (wk_cur_sub_node_id_i) {
                 case 11:
                     if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
+                        rlMeasureWarmTips.setVisibility(View.GONE);
                         ll_designer_send.setVisibility(View.GONE);
                     } else {
+                        rlMeasureWarmTips.setVisibility(View.VISIBLE);
                         ll_designer_send.setVisibility(View.VISIBLE);
+                        tvWarmTips.setText(R.string.Mrasuretips);
+                        tvWarmTipsContent.setText(R.string.update_measure_house_cost);
+                        tvMeasureWarmTips.setText(R.string.warmTips);
+                        tvMeasureWarmTipsContent.setText(R.string.no_pay_rent);
+
                     }
                     break;
                 default:
+                    rlMeasureWarmTips.setVisibility(View.GONE);
                     ll_designer_send.setVisibility(View.GONE);
                     break;
             }
@@ -433,6 +452,15 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private TextView tvc_measure_form_address;
     private TextView tvc_measure_form_estate;
     private TextView tvc_measure_form_fee;
+    private TextView tvWarmTips;
+    private TextView tvWarmTipsContent;
+
+    private RelativeLayout rlMeasureWarmTips;
+    private TextView tvMeasureWarmTips;
+    private TextView tvMeasureWarmTipsContent;
+
+
+
     private Button btn_measure_form_accept;
     private Button btn_measure_form_send;
     private Button btn_measure_form_refuse;

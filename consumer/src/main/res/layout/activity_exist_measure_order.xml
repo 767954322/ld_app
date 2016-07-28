@@ -85,6 +85,26 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10"
+            android:paddingBottom="@dimen/size_10">
+            <TextView
+                android:id="@+id/tvExistWarmTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/warmTips"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tvExistWarmTips"
+                android:text="@string/warm_tips_content"/>
+
+        </RelativeLayout>
+
         <Button
             android:id="@+id/btn_exist_measure_order_send"
             android:layout_width="match_parent"
