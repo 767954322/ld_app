@@ -19,7 +19,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:id="@+id/photoalbum_cell_thumbnail"
-            android:src="@drawable/photopicker_thumbnail_placeholder"
+            android:src="@drawable/photopicker_placeholder"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="9dp"
             android:layout_marginLeft="25dp"
