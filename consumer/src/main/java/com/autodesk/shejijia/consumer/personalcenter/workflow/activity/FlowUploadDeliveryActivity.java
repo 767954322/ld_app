@@ -517,6 +517,22 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         });
     }
 
+    private void getFlowUploadDeliveryDelayDate(String demands_id, String designer_id){
+        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        MPServerHttpManager.getInstance().getFlowUploadDeliveryDelayDate(demands_id, designer_id, okResponseCallback);
+    }
+
     /**
      * 消费者发送延期交付
      */
