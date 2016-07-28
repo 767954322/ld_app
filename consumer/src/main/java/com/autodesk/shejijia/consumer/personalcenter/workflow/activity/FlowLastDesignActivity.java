@@ -184,7 +184,6 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
                 amount = MPAliPayBean.getAmount();
                 notifyURL = MPAliPayBean.getNotifyURL();
                 tradeNO = MPAliPayBean.getTradeNO();
-
                 AliPayService PayService = new AliPayService(Seller, Partner, productName, amount, notifyURL, productName, tradeNO);
                 PayService.SetCallBack(AliCallBack);
                 PayService.DoPayment(FlowLastDesignActivity.this);

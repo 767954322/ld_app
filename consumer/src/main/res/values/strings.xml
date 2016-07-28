@@ -6,6 +6,9 @@
     <string name="dianzanshu">"点赞数  "</string>
     <string name="thumbup_conunt">点赞数</string>
     <string name="title_introduce">说明</string>
+    <string name="delivery_delayed">延期</string>
+    <string name="delivery_sure">确认</string>
+    <string name="delivery_delayed_days">距离系统确认时间还有</string>
     <string name="delivery_delayed_instructions">1、确认，表示您认可设计师提交的设计交付,设计师将不可以再对设计交付做修改。
         \n2、延期，将会把确认时间延长７天。您有一次延期确认的机会。
         \n3、请在设计师提交设计交付后７日内确认设计师提供的交付资料是否完整。如果在７日内不做处理，系统将默认您确认了设计交付。</string>
