@@ -86,9 +86,7 @@ public class MPPhotoUtility
     {
         String[] projection =
                 {
-                        MediaStore.Images.Media.DATA,
-                        MediaStore.Images.Media.HEIGHT,
-                        MediaStore.Images.Media.WIDTH
+                        MediaStore.Images.Media.DATA
                 };
 
         Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -114,15 +112,10 @@ public class MPPhotoUtility
             {
                 String dataUri = cursor.getString(cursor.getColumnIndex(
                         MediaStore.Images.Media.DATA));
-                Integer height = cursor.getInt(cursor.getColumnIndex(
-                        MediaStore.Images.Media.HEIGHT));
-                Integer width = cursor.getInt(cursor.getColumnIndex(
-                        MediaStore.Images.Media.WIDTH));
 
                 cursor.close();
 
-                if (width > 0 && height > 0)
-                    return dataUri;
+                return dataUri;
             }
             else
             {

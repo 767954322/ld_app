@@ -157,6 +157,9 @@ public class MPPhotoPickerAdapter extends BaseAdapter{
         @Override
         public Bitmap process(Bitmap bitmap)
         {
+            if (mRotateBy % 360 == 0)
+                return bitmap;
+
             return MPCameraUtils.getRotatedImage(bitmap, mRotateBy);
         }
     }
