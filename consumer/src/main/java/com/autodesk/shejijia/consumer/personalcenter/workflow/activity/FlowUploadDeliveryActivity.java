@@ -544,7 +544,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         MPServerHttpManager.getInstance().makeSureDelivery(needs_id, designer_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-
+                String jsonToString = GsonUtil.jsonToString(jsonObject);
+                Toast.makeText(FlowUploadDeliveryActivity.this, jsonToString, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -578,10 +579,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 //                msg.what = DELIVERED_STATE_UN_FINISH;
 //                mHandler.sendMessage(msg);
 //            } else if (wk_sub_node_id_int >= 61 || Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
-                Message msg = Message.obtain();
-                msg.what = DELIVERED_STATE_FINISH;
-                msg.obj = deliveryFiles;
-                mHandler.sendMessage(msg);
+            Message msg = Message.obtain();
+            msg.what = DELIVERED_STATE_FINISH;
+            msg.obj = deliveryFiles;
+            mHandler.sendMessage(msg);
 //            }
         }
     }
@@ -771,6 +772,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
             }
         }
+
         doDeliveryDelayed();
     }
 
@@ -785,14 +787,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * 消费者和设计师：查看设计交付
      */
     private void doDeliveryDelayed() {
-
-        mLinerDelayedShow.setVisibility(View.VISIBLE);
         if (61 == wk_sub_node_id_int) {
             switch (mMemberType) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
                     mLinerDelayedShow.setVisibility(View.VISIBLE);
-
                     break;
 
                 case Constant.UerInfoKey.DESIGNER_TYPE:
