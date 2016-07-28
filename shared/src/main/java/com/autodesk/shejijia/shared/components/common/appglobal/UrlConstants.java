@@ -286,5 +286,8 @@ public final class UrlConstants {
      */
     public static final String URL_Delivery_Delay = MAIN_MEMBER  + "/member/";
    
+    // public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/demands/";
+
+  
 
 }

@@ -189,7 +189,12 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
         if (object == mDelayAlertView && position != AlertView.CANCELPOSITION) {
             Toast.makeText(this, "确定延期", Toast.LENGTH_SHORT).show();
+            delayDelivery(needs_id,designer_id);
         }
+
+        if (object == mDelaySuccessAlertView && position != AlertView.CANCELPOSITION) {
+            Toast.makeText(this, "延期成功", Toast.LENGTH_SHORT).show();
+         }
     }
 
     /**
@@ -507,6 +512,25 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 CustomProgress.cancelDialog();
             }
         });
+    }
+
+    /**
+     * 消费者发送延期交付
+     */
+    public void delayDelivery(String demands_id, String designer_id) {
+
+        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                mDelaySuccessAlertView.show();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+        MPServerHttpManager.getInstance().getFlowUploadDeliveryDelay(demands_id, designer_id, okResponseCallback);
     }
 
     /**
@@ -979,6 +1003,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mAlertViewMeasureConsumerDelivery = showAlertView(commonTip, UIUtils.getString(R.string.waiting_designer_uploaded_room_deliverable));
         mDelayAlertView = new AlertView(UIUtils.getString(R.string.flow_upload_delivery_delay), UIUtils.getString(R.string.flow_upload_delivery_delay_only),
                 UIUtils.getString(R.string.cancel), null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
+        mDelaySuccessAlertView = new AlertView(UIUtils.getString(R.string.flow_upload_delivery_delay_success), UIUtils.getString(R.string.flow_upload_delivery_delay_contact_designer),
+                null, null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
     }
 
     /**
@@ -1165,6 +1191,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
     private Button mBtnDelay;
     private AlertView mDelayAlertView;
+    private AlertView mDelaySuccessAlertView;
 
     private LinearLayout mLl3DPlan;
     private LinearLayout mLlDesignApply;

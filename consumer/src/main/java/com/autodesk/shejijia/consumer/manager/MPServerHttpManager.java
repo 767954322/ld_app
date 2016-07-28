@@ -1196,15 +1196,14 @@ public class MPServerHttpManager {
 
     /**
      * 交付物延期
-     * @param needs_id
-     * @param is_deleted
+     * @param demands_id  需求id
+     * @param designer_id 设计师id
      * @param callback
      */
-    public void getFlowUploadDeliveryDelay(final String needs_id, final int is_deleted, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_POST_MODIFY_MEAL + needs_id +
-                "/cancel" +
-                "?is_deleted=" + is_deleted;
-        //design_app/v1/api/demands/{demands_id}/designers/{designer_id}/deliveries/options/delay
+    public void getFlowUploadDeliveryDelay(String demands_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_Delivery_Delay + demands_id +
+                "/designers/" + designer_id+
+                "/deliveries/options/delay";
         KLog.d(TAG, url);
 
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
@@ -1212,7 +1211,6 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
                 return header;
             }
         };
