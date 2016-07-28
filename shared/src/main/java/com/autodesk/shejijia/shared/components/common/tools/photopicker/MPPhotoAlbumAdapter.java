@@ -141,7 +141,7 @@ public class MPPhotoAlbumAdapter extends BaseAdapter
                         new ImageViewAware(row.thumbnail), options, imageSize, null, null);
             else
                 row.thumbnail.setImageDrawable(mContext.getResources().getDrawable(
-                        R.drawable.photopicker_thumbnail_placeholder));
+                        R.drawable.photopicker_placeholder));
         }
         catch (Exception e)
         {
