@@ -243,13 +243,13 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                     case 21: // 合同
                     case 22: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                     case 31: // 首款
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                     case 33: // 量房交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     case 41: // 支付设计首款
                     case 42: // 打开3D工具
@@ -257,11 +257,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                     case 51: // 支付尾款
                     case 52: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     case 61: // 上传支付交付物
                     case 62: // 编辑交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     default:
                         return -1;
@@ -289,14 +289,14 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                 case 21: // 合同
                 case 22: // 打开3D工具
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                 case 31: // 首款
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
 
                 case 33: // 量房交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 case 41: // 支付设计首款
                 case 42: // 打开3D工具
@@ -304,11 +304,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                 case 51: // 支付尾款
                 case 52: // 打开3D工具
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 case 61: // 上传支付交付物
                 case 62: // 编辑交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 default:
                     return -1;
