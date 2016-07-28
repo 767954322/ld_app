@@ -112,11 +112,11 @@ public class MPPhotoAlbumAdapter extends BaseAdapter
             int numPhotos = album.albumSize;
 
             if (numPhotos > 1)
-                row.subtitleLabel.setText(numPhotos + " " +
-                        mContext.getString(R.string.photopicker_album_subtitle_multiple));
+                row.subtitleLabel.setText(String.format("%d %s", numPhotos,
+                        mContext.getString(R.string.photopicker_album_subtitle_multiple)));
             else if (numPhotos == 1)
-                row.subtitleLabel.setText(numPhotos + " " +
-                        mContext.getString(R.string.photopicker_album_subtitle_single));
+                row.subtitleLabel.setText(String.format("%d %s", numPhotos,
+                        mContext.getString(R.string.photopicker_album_subtitle_single)));
             else
                 row.subtitleLabel.setVisibility(View.GONE);
 
