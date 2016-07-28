@@ -77,7 +77,6 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         mIsToolViewOpen = false;
 
 
-
     }
 
 
@@ -191,14 +190,12 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
             onTakeSnapshotClicked();
 
         } else if (i == R.id.chat_custom_button) {
-            if (mIWorkflowDelegate != null)
-            {
-                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId);
+            if (mIWorkflowDelegate != null) {
+                mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId);
             }
         } else if (i == R.id.nav_secondary_imageButton) {
-            if (mIWorkflowDelegate != null)
-            {
-            	mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, designerId);
+            if (mIWorkflowDelegate != null) {
+                mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, designerId);
             }
         }
     }
@@ -510,11 +507,12 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
                 wk_cur_sub_node_idi = Integer.valueOf(projectInfo.current_subNode);
 
             if (mIWorkflowDelegate != null) {
-                int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo,ifIsDesiner);
+                int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo, ifIsDesiner);
 
                 if (imageResId > 0) {
                     mWorkflowButton.setVisibility(View.VISIBLE);
-                    mWorkflowButton.setBackgroundResource(imageResId);
+                    mWorkflowButton.setImageResource(imageResId);
+//                  mWorkflowButton.setBackgroundResource(imageResId);
                 } else if (imageResId == -1) {
                     mWorkflowButton.setVisibility(View.GONE);
                 }
