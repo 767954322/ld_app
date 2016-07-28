@@ -19,7 +19,7 @@ public class ApiManager {
      * RUNNING_PRODUCTION：正式(PRODUCTION)环境
      * RUNNING_DEV ：alpha dev境 .
      */
-    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_UAT;
+    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_ALPHA;
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
@@ -104,6 +104,7 @@ public class ApiManager {
 
     public static String getMPMain_Design(String runningDevelopment) {
         String main_design = null;
+        String tempMpMain = "http://192.168.120.123:8081";
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
                 main_design = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
@@ -118,7 +119,8 @@ public class ApiManager {
                 break;
 
             case UrlConstants.RUNNING_ALPHA:
-                main_design = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
+                main_design = tempMpMain + UrlConstants.MP_MAIN_DESIGN;
+//                main_design = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
             case UrlConstants.RUNNING_PRODUCTION:

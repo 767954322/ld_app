@@ -1028,7 +1028,7 @@ public class MPServerHttpManager {
      */
     public void getDeliveredFile(String needs_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELIVER +
-                "/delivery/" + needs_id +
+                "delivery/" + needs_id +
                 "?designer_id=" + designer_id;
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
@@ -1051,16 +1051,19 @@ public class MPServerHttpManager {
      * @param okResponseCallback 回调接口
      */
     public void makeSureDelivery(String demands_id, String designer_id, OkJsonRequest.OKResponseCallback okResponseCallback) {
-        String makeSureUrl = UrlConstants.MAIN_DESIGN +
+        String tempMpMain = "http://192.168.120.123:8081";
+        String makeSureUrl =/* UrlConstants.MAIN_DESIGN*/ tempMpMain + "/design-app/v1/api" +
                 "/demands/" + demands_id +
                 "/designers/" + designer_id +
                 "/deliveries/options/confirm";
         KLog.d(TAG, makeSureUrl);
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, makeSureUrl, null, okResponseCallback) {
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, makeSureUrl, null, okResponseCallback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+//                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put("X-Token", xToken);
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
                 return header;
             }
         };
