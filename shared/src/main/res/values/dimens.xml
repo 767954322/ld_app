@@ -289,7 +289,8 @@
     <dimen name="chat_list_common_minheight">80dp</dimen>
     <dimen name="chat_list_common_sidemargin">10dp</dimen>
     <dimen name="chat_list_common_title_margintop">20dp</dimen>
-    <dimen name="chat_list_common_title_fontsize">15sp</dimen>
+    <dimen name="chat_list_common_title_fontsize">17sp</dimen>
+    <dimen name="chat_list_common_content_fontsize">16sp</dimen>
     <dimen name="chat_list_common_message_margintop">4dp</dimen>
     <dimen name="chat_list_common_message_marginbottom">10dp</dimen>
     <dimen name="chat_list_common_message_paddingright">15dp</dimen>
