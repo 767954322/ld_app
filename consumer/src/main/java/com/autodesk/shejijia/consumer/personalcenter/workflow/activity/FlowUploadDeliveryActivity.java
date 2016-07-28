@@ -189,12 +189,12 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
         if (object == mDelayAlertView && position != AlertView.CANCELPOSITION) {
             Toast.makeText(this, "确定延期", Toast.LENGTH_SHORT).show();
-            delayDelivery(needs_id,designer_id);
+            delayDelivery(needs_id, designer_id);
         }
 
         if (object == mDelaySuccessAlertView && position != AlertView.CANCELPOSITION) {
             Toast.makeText(this, "延期成功", Toast.LENGTH_SHORT).show();
-         }
+        }
     }
 
     /**
@@ -733,6 +733,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         get3DPlan(needs_id, designer_id, DELIVERED_STATE_FINISH, mMemberType);
 
         for (Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity : mDeliveryFilesEntities) {
+            if (null == deliveryFilesEntity) {
+                continue;
+            }
             type = deliveryFilesEntity.getType();
             if (Constant.DeliveryTypeBundleKey.TYPE_MEASURE_DELIVERY.equals(type)) {
                 /**
@@ -793,8 +796,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
                 case Constant.UerInfoKey.DESIGNER_TYPE:
                     mLinerDelayedShow.setVisibility(View.GONE);
-//                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
-//                    sureSubmit();
+                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
+                    cancelSubmit();
                     break;
             }
         } else if (wk_sub_node_id_int > 61) {

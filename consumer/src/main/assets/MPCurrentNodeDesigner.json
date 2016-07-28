@@ -101,6 +101,39 @@
           "nName": ""
         }
       ]
+    },{
+      "wk_cur_sub_node_id": "63",
+      "wk_cur_sub_name": "已接收设计交付物",
+      "detail": [
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        },
+        {
+          "message": "",
+          "selectShow": "false"
+        }
+      ]
     }
   ]
 }
