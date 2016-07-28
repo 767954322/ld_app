@@ -32,6 +32,7 @@
         android:lines="1"
         android:ellipsize="end"
         android:textColor="@color/chat_list_common_message_textcolor"
+        android:textSize="@dimen/chat_list_common_content_fontsize"
         android:text="@string/hello" />
 
     <TextView
