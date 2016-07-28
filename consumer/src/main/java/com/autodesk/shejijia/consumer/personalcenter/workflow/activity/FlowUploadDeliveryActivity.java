@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DeliveryDelayBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
@@ -24,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.DeliverySelector;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -103,6 +104,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         CustomProgress.showDefaultProgress(FlowUploadDeliveryActivity.this);
 
         getDeliveredFile(needs_id, designer_id);
+        getFlowUploadDeliveryDelayDate(needs_id, designer_id);
 
         KLog.d(TAG, "needs_id:" + needs_id + "##designer_id:" + designer_id);
     }
@@ -129,6 +131,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.btn_delivery_consumer_sure:       /// 确认交付 .　// TODO 执行确认交付的操作.
+
+                CustomProgress.show(FlowUploadDeliveryActivity.this, "", false, null);
                 makeSureDelivery();
                 break;
 
@@ -186,18 +190,27 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 && position != AlertView.CANCELPOSITION) {
             FlowUploadDeliveryActivity.this.finish();
         }
-
+        /**
+         * 确定延期
+         */
         if (object == mDelayAlertView && position != AlertView.CANCELPOSITION) {
-            Toast.makeText(this, "确定延期", Toast.LENGTH_SHORT).show();
+            CustomProgress.show(FlowUploadDeliveryActivity.this, "", false, null);
             delayDelivery(needs_id, designer_id);
         }
-
+        /**
+         * 延期成功
+         */
         if (object == mDelaySuccessAlertView && position != AlertView.CANCELPOSITION) {
-            Toast.makeText(this, "延期成功", Toast.LENGTH_SHORT).show();
             mBtnDelay.setEnabled(false);
             mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
             mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
-         }
+        }
+
+        if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
+            MyToast.show(FlowUploadDeliveryActivity.this, "马上评价");
+        } else {
+            MyToast.show(FlowUploadDeliveryActivity.this, "稍后评价");
+        }
     }
 
     /**
@@ -478,7 +491,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-
                 KLog.json(TAG, userInfo);
 
                 mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
@@ -517,16 +529,26 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         });
     }
 
-    private void getFlowUploadDeliveryDelayDate(String demands_id, String designer_id){
+    /**
+     * 获取延期时间
+     */
+    private void getFlowUploadDeliveryDelayDate(String demands_id, String designer_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-
+                String jsonToString = GsonUtil.jsonToString(jsonObject);
+                DeliveryDelayBean deliveryDelayBean = GsonUtil.jsonToBean(jsonToString, DeliveryDelayBean.class);
+                mTvDelayedDays.setText(deliveryDelayBean.remain_days + "天");
+                if (!"0".equals(deliveryDelayBean.delayCount)) {
+                    mBtnDelay.setEnabled(false);
+                    mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+                    mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
+                }
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                MPNetworkUtils.logError(TAG, volleyError, true);
             }
         };
 
@@ -541,12 +563,17 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 mDelaySuccessAlertView.show();
+                String jsonToString = GsonUtil.jsonToString(jsonObject);
+                DeliveryDelayBean deliveryDelayBean = GsonUtil.jsonToBean(jsonToString, DeliveryDelayBean.class);
+                mTvDelayedDays.setText(deliveryDelayBean.remain_days + "天");
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                CustomProgress.cancelDialog();
+                MPNetworkUtils.logError(TAG, volleyError, true);
             }
         };
         MPServerHttpManager.getInstance().getFlowUploadDeliveryDelay(demands_id, designer_id, okResponseCallback);
@@ -560,12 +587,15 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         MPServerHttpManager.getInstance().makeSureDelivery(needs_id, designer_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 String jsonToString = GsonUtil.jsonToString(jsonObject);
-                Toast.makeText(FlowUploadDeliveryActivity.this, jsonToString, Toast.LENGTH_SHORT).show();
+                KLog.d("FlowUploadDeliveryActiv", jsonToString);
+                mDeliverySureAlertView.show();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError, true);
             }
         });
@@ -816,7 +846,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 case Constant.UerInfoKey.DESIGNER_TYPE:
                     mLinerDelayedShow.setVisibility(View.GONE);
 //                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
-//                    sureSubmit();
+//                    cancelSubmit();
                     break;
             }
         } else if (wk_sub_node_id_int > 61) {
@@ -1022,10 +1052,13 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mAlertViewDesignConsumerDelivery = showAlertView(commonTip, UIUtils.getString(R.string.waiting_designer_upload_design_deliverable));
         mAlertViewMeasureDelivery = showAlertView(commonTip, UIUtils.getString(R.string.please_enter_web_page_submitted_room_deliverable));
         mAlertViewMeasureConsumerDelivery = showAlertView(commonTip, UIUtils.getString(R.string.waiting_designer_uploaded_room_deliverable));
+
         mDelayAlertView = new AlertView(UIUtils.getString(R.string.flow_upload_delivery_delay), UIUtils.getString(R.string.flow_upload_delivery_delay_only),
                 UIUtils.getString(R.string.cancel), null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
         mDelaySuccessAlertView = new AlertView(UIUtils.getString(R.string.flow_upload_delivery_delay_success), UIUtils.getString(R.string.flow_upload_delivery_delay_contact_designer),
                 null, null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
+        mDeliverySureAlertView = new AlertView(UIUtils.getString(R.string.delivery_sure_success), UIUtils.getString(R.string.delivery_sure_success_content),
+                UIUtils.getString(R.string.delivery_later_evaluation), null, new String[]{UIUtils.getString(R.string.delivery_immediate_evaluation)}, this, AlertView.Style.Alert, this);
     }
 
     /**
@@ -1212,6 +1245,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
     private Button mBtnDelay;
     private AlertView mDelayAlertView;
+    private AlertView mDeliverySureAlertView;
     private AlertView mDelaySuccessAlertView;
 
     private LinearLayout mLl3DPlan;

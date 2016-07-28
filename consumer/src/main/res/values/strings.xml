@@ -5,6 +5,8 @@
     <string name="nodata">暂无数据</string>
     <string name="dianzanshu">"点赞数  "</string>
     <string name="thumbup_conunt">点赞数</string>
+
+    <!--交付物延期确认-->
     <string name="title_introduce">说明</string>
     <string name="delivery_delayed">延期</string>
     <string name="delivery_sure">确认</string>
@@ -12,5 +14,12 @@
     <string name="delivery_delayed_instructions">1、确认，表示您认可设计师提交的设计交付,设计师将不可以再对设计交付做修改。
         \n2、延期，将会把确认时间延长７天。您有一次延期确认的机会。
         \n3、请在设计师提交设计交付后７日内确认设计师提供的交付资料是否完整。如果在７日内不做处理，系统将默认您确认了设计交付。</string>
-
+    <string name="flow_upload_delivery_delay">延期确认?</string>
+    <string name="flow_upload_delivery_delay_only">您只有一次延期确认机会</string>
+    <string name="flow_upload_delivery_delay_success">延期确认成功</string>
+    <string name="flow_upload_delivery_delay_contact_designer">请联系设计师对设计交付资料做调整</string>
+    <string name="delivery_sure_success">确认成功</string>
+    <string name="delivery_sure_success_content">请对设计师这次的设计服务做评价</string>
+    <string name="delivery_immediate_evaluation">立即评价</string>
+    <string name="delivery_later_evaluation">稍后评价</string>
 </resources>

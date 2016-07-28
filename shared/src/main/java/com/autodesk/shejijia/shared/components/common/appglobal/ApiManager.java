@@ -107,6 +107,7 @@ public class ApiManager {
         String tempMpMain = "http://192.168.120.123:8081";
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
+
                 main_design = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
