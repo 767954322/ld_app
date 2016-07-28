@@ -209,6 +209,8 @@
 
     <string name="flow_upload_delivery_delay">延期确认?</string>
     <string name="flow_upload_delivery_delay_only">您只有一次延期确认机会</string>
+    <string name="flow_upload_delivery_delay_success">延期确认成功</string>
+    <string name="flow_upload_delivery_delay_contact_designer">请联系设计师对设计交付资料做调整</string>
 
 
     <!-- HoverCaseActivity -->
