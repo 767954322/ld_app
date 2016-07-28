@@ -281,13 +281,11 @@ public final class UrlConstants {
      * 消息中心接口
      */
       public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
+
     /**
      * 交付物延期
      */
-    public static final String URL_Delivery_Delay = MAIN_MEMBER  + "/member/";
-   
-    // public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/demands/";
-
-  
+    public static final String URL_Delivery_Delay = MAIN_DESIGN + "/demands/";
+    public static final String URL_Delivery_Delay_Data = MAIN_DESIGN + "/demands/";
 
 }

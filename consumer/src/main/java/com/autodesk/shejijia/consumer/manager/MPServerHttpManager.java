@@ -1219,6 +1219,29 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
+
+    /**
+     * 交付物延期时间
+     * @param demands_id  需求id
+     * @param designer_id 设计师id
+     * @param callback
+     */
+    public void getFlowUploadDeliveryDelayDate(String demands_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_Delivery_Delay_Data + demands_id +
+                "/designers/" + designer_id+
+                "/deliveries/options/confirm/remaindays";
+        KLog.d(TAG, url);
+
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
     /**
      * 为X-Token 增加前缀
      *
