@@ -3,13 +3,18 @@ package com.autodesk.shejijia.shared.components.common.network;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,18 +27,17 @@ import java.util.Map;
  * @brief JSON对象请求.
  */
 public class OkJsonRequest extends JsonObjectRequest {
-
     /**
      * 请求网络
      *
-     * @param method
-     * @param url
-     * @param jsonRequest
-     * @param listener
-     * @param errorListener
+     * @param method          请求方式
+     * @param url             请求的地址
+     * @param jsonRequest     请求体
+     * @param successListener 成功的回调
+     * @param errorListener   失败的回调
      */
-    public OkJsonRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        super(method, url, jsonRequest, listener, errorListener);
+    public OkJsonRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
+        super(method, url, jsonRequest, successListener, errorListener);
         this.setRetryPolicy(new DefaultRetryPolicy(300 * 1000, 0, 1.0f));
     }
 
@@ -46,8 +50,6 @@ public class OkJsonRequest extends JsonObjectRequest {
     public OkJsonRequest(int method, String url, JSONObject jsonRequest, OKResponseCallback callback) {
         this(method, url, jsonRequest, callback, callback);
     }
-
-
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -69,25 +71,50 @@ public class OkJsonRequest extends JsonObjectRequest {
         return super.setCacheEntry(entry);
     }
 
-    /*@Override
+    //    @Override
+//    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+//        try {
+//            String jsonString = new String(response.data,
+//                    HttpHeaderParser.parseCharset(response.headers));
+//
+//            JSONObject result = null;
+//
+//            if (jsonString != null && jsonString.length() > 0)
+//                result = new JSONObject(jsonString);
+//
+//            return Response.success(result,
+//                    HttpHeaderParser.parseCacheHeaders(response));
+//        } catch (UnsupportedEncodingException e) {
+//            return Response.error(new ParseError(e));
+//        } catch (JSONException je) {
+//            return Response.error(new ParseError(je));
+//        }
+//    }@Override
+
+    /**
+     * 增加response为null情况判断，防止走失败方法
+     *
+     * @param response
+     * @return
+     */
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
                     HttpHeaderParser.parseCharset(response.headers));
-
-            JSONObject result = null;
-
-            if (jsonString != null && jsonString.length() > 0)
-                result = new JSONObject(jsonString);
-
-            return Response.success(result,
-                    HttpHeaderParser.parseCacheHeaders(response));
+            //Allow null
+            if (jsonString == null || jsonString.length() == 0) {
+                return Response.success(null,
+                        HttpHeaderParser.parseCacheHeaders(response));
+            } else {
+                return Response.success(new JSONObject(jsonString),
+                        HttpHeaderParser.parseCacheHeaders(response));
+            }
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
         } catch (JSONException je) {
             return Response.error(new ParseError(je));
         }
-    }*/
+    }
 
     /**
      * 取消请求

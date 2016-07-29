@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -208,7 +209,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
             MyToast.show(FlowUploadDeliveryActivity.this, "马上评价");
-        } else {
+        } else if (object == mDeliverySureAlertView) {
             MyToast.show(FlowUploadDeliveryActivity.this, "稍后评价");
         }
     }
@@ -588,14 +589,16 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                String jsonToString = GsonUtil.jsonToString(jsonObject);
-                KLog.d("FlowUploadDeliveryActiv", jsonToString);
                 mDeliverySureAlertView.show();
             }
 
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onErrorResponse(VolleyError volleyError) { /// 204 .
                 CustomProgress.cancelDialog();
+                if (volleyError instanceof TimeoutError) {
+                    // Take action when timeout happens
+                    mDeliverySureAlertView.show();
+                }
                 MPNetworkUtils.logError(TAG, volleyError, true);
             }
         });

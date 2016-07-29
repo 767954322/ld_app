@@ -26,6 +26,7 @@ public class DeliveryDelayedInstructionsActivity extends NavigationBarActivity {
     protected void initView() {
         super.initView();
         mTvDelayedInstructions = (TextView) findViewById(R.id.tv_delayed_instructions);
+
     }
 
     @Override

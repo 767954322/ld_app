@@ -52,10 +52,10 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.my_property));
-        initMenberEntity();
+        initMemberEntity();
     }
 
-    private void initMenberEntity() {
+    private void initMemberEntity() {
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
@@ -80,7 +80,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
             case R.id.rl_my_property_withdrawal_record:  /// 提现记录页面 .
                 startActivity(new Intent(this, WithdrawalRecordActivity.class));
                 break;
-            case R.id.btn_my_property_withdrawal:   /// 我的提现页面 .
+            case R.id.btn_my_property_withdrawal:          /// 我的提现页面 .
                 Intent intent = new Intent(this, WithdrawalActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constant.DesignerMyPropertyKey.MY_PROPERTY_BEAN, myPropertyBean);
