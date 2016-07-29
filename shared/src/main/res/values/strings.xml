@@ -742,8 +742,8 @@
     <string name="normal">按住 说话</string>
     <string name="sd_imgs">本地图片</string>
     <string name="determine">完成</string>
-    <string name="picture_msg">图片</string>
-    <string name="audio_msg">语音</string>
+    <string name="picture_msg">[图片]</string>
+    <string name="audio_msg">[语音]</string>
     <string name="other_msg">系统消息</string>
     <string name="audio_recording_started">錄音開始</string>
 

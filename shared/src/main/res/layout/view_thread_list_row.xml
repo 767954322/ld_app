@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/chat_list_avatar_marginleft"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_useravatar" />
+        android:src="@drawable/icon_default_avator" />
 
     <TextView
         android:id="@+id/tv_unread_message_count"

@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:textColor="@color/search_title"
             android:layout_marginLeft="10dp"
             android:textSize="@dimen/font_17"
             android:visibility="gone"/>
@@ -40,7 +41,7 @@
         android:ellipsize="end"
         android:maxEms="6"
         android:singleLine="true"
-        android:textSize="@dimen/font_16"/>
+        android:textSize="@dimen/font_18"/>
 
     <ImageButton
         android:id="@+id/nav_secondary_imageButton"

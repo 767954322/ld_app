@@ -23,8 +23,8 @@ public class CircleImageView extends ImageView {
 	private static final Xfermode MASK_XFERMODE;
 	private Bitmap mask;
 	private Paint paint;
-	private int mBorderWidth = 10;
-	private int mBorderColor = Color.parseColor("#f2f2f2");
+	private int mBorderWidth = 0;
+	private int mBorderColor = Color.parseColor("#ffffff");
 
 	static {
 		PorterDuff.Mode localMode = PorterDuff.Mode.DST_IN;

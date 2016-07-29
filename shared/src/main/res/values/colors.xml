@@ -176,7 +176,7 @@
     <color name="chat_room_cell_message_textcolor">#424242</color>
     <color name="chat_room_cell_messagetime_textcolor">#D9D9D9</color>
     <color name="chat_room_commandcell_button_textcolor">#FF4C86FF</color>
-    <color name="chat_list_common_message_textcolor">#FF797979</color>
+    <color name="chat_list_common_message_textcolor">#666666</color>
     <color name="chat_list_common_messagetime_textcolor">#D9D9D9</color>
 
     <!--覆盖颜色-->
