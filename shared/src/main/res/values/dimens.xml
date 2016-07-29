@@ -217,6 +217,7 @@
     <dimen name="chat_bottombar_sendbutton_width">45dp</dimen>
     <dimen name="chat_bottombar_sendbutton_marginright">7dp</dimen>
 
+    <dimen name="chat_toolview_minheight">50dp</dimen>
     <dimen name="chat_toolview_button_side">40dp</dimen>
     <dimen name="chat_toolview_button_verticalmargin">5dp</dimen>
     <dimen name="chat_toolview_button_sidemargin">40dp</dimen>
