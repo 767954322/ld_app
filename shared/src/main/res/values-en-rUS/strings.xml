@@ -698,7 +698,8 @@
     <string name="goutong">communication</string>
     <string name="querenliangfang">Confirm&#160;&#160;the&#160;&#160;amount&#160;&#160;of&#160;&#160;room</string>
 
-    <string name="mychat">MyChat</string>
+    <string name="mychat">My Chat</string>
+    <string name="file_thread_list_title">Content based chat</string>
     <string name="there_is_no_data">There&#160;&#160;is&#160;&#160;no&#160;&#160;data&#160;&#160;for</string>
     <string name="the_data_load_failure">The&#160;&#160;data&#160;&#160;load&#160;&#160;failure</string>
     <string name="im_succes_sendvoice">The&#160;&#160;voice&#160;&#160;sent&#160;&#160;successfully</string>
