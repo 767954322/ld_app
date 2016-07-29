@@ -9,6 +9,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.utility.Device;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -660,5 +661,16 @@ public class MPChatHttpManager {
         map.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
         map.put("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
         return map;
+    }
+
+    public void getThreadIdIfNotChatBefore(final String acs_number_id, final String desiner_id, OkStringRequest.OKResponseCallback callback) {
+
+        String url = UrlConstants.UAT_MP_MAIN + "/design-app/v1/api/chat/" + acs_number_id + "/" + desiner_id;
+        queue.add(new OkStringRequest(Request.Method.POST, url, callback) {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return getDefaultHeaders();
+            }
+
+        });
     }
 }
