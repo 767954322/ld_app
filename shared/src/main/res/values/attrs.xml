@@ -108,7 +108,6 @@
         <item>北京银行</item>
         <item>平安银行</item>
     </string-array>
-    <!-- floating-action-button styleable -->
 
     <declare-styleable name="FloatingActionButton">
         <attr name="fab_colorNormal" format="color" />
@@ -136,6 +135,170 @@
         <attr name="fab_progress_showBackground" format="boolean" />
     </declare-styleable>
 
+
+    <declare-styleable name="AddFloatingActionButton">
+        <attr name="fab_plusIconColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="FloatingActionsMenu">
+        <attr name="fab_addButtonColorPressed" format="color" />
+        <attr name="fab_addButtonColorNormal" format="color" />
+
+        <attr name="fab_addButtonSize" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="mini" value="1" />
+        </attr>
+        <attr name="fab_addButtonPlusIconColor" format="color" />
+        <attr name="fab_addButtonStrokeVisible" format="boolean" />
+        <attr name="fab_labelStyle" format="reference" />
+
+        <attr name="fab_labelsPosition" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+
+        <attr name="fab_expandDirection" format="enum">
+            <enum name="up" value="0" />
+            <enum name="down" value="1" />
+            <enum name="left" value="2" />
+            <enum name="right" value="3" />
+        </attr>
+        <!--<attr name="menu_backgroundColor" format="color" />-->
+        <!--<attr name="menu_fab_label" format="string" />-->
+        <!--<attr name="menu_fab_show_animation" format="reference" />-->
+        <!--<attr name="menu_fab_hide_animation" format="reference" />-->
+    </declare-styleable>
+
+
+    <declare-styleable name="CircleButton">
+        <attr name="cb_color" format="color" />
+        <attr name="cb_pressedRingWidth" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CircularImage">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <!-- 带有数字进度条的attrs -->
+    <declare-styleable name="NumberProgressBar">
+        <attr name="progress" format="integer" />
+        <attr name="max" format="integer" />
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_reached_color" format="color" />
+        <attr name="progress_reached_bar_height" format="dimension" />
+        <attr name="progress_unreached_bar_height" format="dimension" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_offset" format="dimension" />
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="horizontalSpacing" format="dimension" />
+        <attr name="verticalSpacing" format="dimension" />
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="debugDraw" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_LayoutParams">
+        <attr name="layout_newLine" format="boolean" />
+        <attr name="layout_horizontalSpacing" format="dimension" />
+        <attr name="layout_verticalSpacing" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TwoTextView">
+        <attr name="ttLeftText" format="string|reference" />
+        <attr name="ttRightText" format="string|reference" />
+        <attr name="ttLeftTextSize" format="dimension" />
+        <attr name="ttRightTextSize" format="dimension" />
+        <attr name="ttLeftTextColor" format="reference" />
+        <attr name="ttRightTextColor" format="reference" />
+    </declare-styleable>
+
+    <!-- Head graphical tools -->
+    <declare-styleable name="PolygonImageView">
+        <attr name="poly_vertices" format="integer" />
+        <attr name="poly_rotation_angle" format="float" />
+        <attr name="poly_corner_radius" format="float" />
+        <attr name="poly_border" format="boolean" />
+        <attr name="poly_border_color" format="color" />
+        <attr name="poly_border_width" format="dimension" />
+        <attr name="poly_shadow" format="boolean" />
+        <attr name="poly_shadow_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PolygonImageViewTheme">
+        <attr name="polygonImageViewStyle" format="reference" />
+    </declare-styleable>
+
+    <!-- Load Animation -->
+    <declare-styleable name="Dialog">
+        <attr name="DialogTitleAppearance" format="reference" />
+        <attr name="DialogTitleText" format="reference|string" />
+        <attr name="DialogSpotColor" format="reference|color" />
+        <attr name="DialogSpotCount" format="integer" />
+    </declare-styleable>
+
+    <!--
+        max                 最大进度
+        startAngle             进度从圆环的哪个角度开始走
+        backColor             圆环内部的填充色
+        roundColor             圆环的颜色
+        roundProgressColor  圆环进度的颜色
+        roundWidth             圆环宽度
+        textColor             中心文字的颜色
+        textSize             中心文字的大小
+        textIsDisplayable     中心文字是否显示
+        style = 0/1          进度的风格，实心或者空心
+     -->
+    <declare-styleable name="RoundProgressBar">
+        <attr name="max_round" format="integer"></attr>
+        <attr name="startAngle" format="integer"></attr>
+        <attr name="roundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
+        <attr name="roundWidth" format="dimension"></attr>
+        <attr name="backColor_round" format="color" />
+        <attr name="textColor_round" format="color" />
+        <attr name="textSize_round" format="dimension" />
+        <attr name="textIsDisplayable" format="boolean"></attr>
+        <attr name="style">
+            <enum name="STROKE" value="0"></enum>
+            <enum name="FILL" value="1"></enum>
+        </attr>
+    </declare-styleable>
+
+    <!--自定义复用滚轮-->
+    <declare-styleable name="wheelview">
+        <attr name="gravity">
+            <enum name="center" value="17" />
+            <enum name="left" value="3" />
+            <enum name="right" value="5" />
+        </attr>
+        <attr name="textSize" format="dimension" />
+        <attr name="textColorOut" format="color" />
+        <attr name="textColorCenter" format="color" />
+        <attr name="dividerColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RatioImageView">
+
+        <!--宽度是否根据src图片的比例来测量（高度已知）-->
+        <attr name="is_width_fix_drawable_size_ratio" format="boolean" />
+        <!--高度是否根据src图片的比例来测量（宽度已知）-->
+        <attr name="is_height_fix_drawable_size_ratio" format="boolean" />
+
+        <!-- 高度设置，参考宽度，如0.5 , 表示 高度＝宽度×０.5 -->
+        <attr name="height_to_width_ratio" format="float" />
+        <!-- 宽度设置，参考高度，如0.5 , 表示 宽度＝高度×０.5 -->
+        <attr name="width_to_height_ratio" format="float" />
+
+    </declare-styleable>
     <declare-styleable name="FloatingActionMenu">
         <attr name="menu_showShadow" format="boolean" />
         <attr name="menu_buttonSpacing" format="dimension" />
@@ -192,122 +355,4 @@
         <attr name="menu_fab_show_animation" format="reference" />
         <attr name="menu_fab_hide_animation" format="reference" />
     </declare-styleable>
-
-
-    <declare-styleable name="CircleButton">
-        <attr name="cb_color" format="color"/>
-        <attr name="cb_pressedRingWidth" format="dimension"/>
-    </declare-styleable>
-
-    <declare-styleable name="CircularImage">
-        <attr name="border_width" format="dimension"/>
-        <attr name="border_color" format="color"/>
-    </declare-styleable>
-
-    <!-- 带有数字进度条的attrs -->
-    <declare-styleable name="NumberProgressBar">
-        <attr name="progress" format="integer"/>
-        <attr name="max" format="integer"/>
-        <attr name="progress_unreached_color" format="color"/>
-        <attr name="progress_reached_color" format="color"/>
-        <attr name="progress_reached_bar_height" format="dimension"/>
-        <attr name="progress_unreached_bar_height" format="dimension"/>
-        <attr name="progress_text_size" format="dimension"/>
-        <attr name="progress_text_color" format="color"/>
-        <attr name="progress_text_offset" format="dimension"/>
-        <attr name="progress_text_visibility" format="enum">
-            <enum name="visible" value="0"/>
-            <enum name="invisible" value="1"/>
-        </attr>
-    </declare-styleable>
-
-    <declare-styleable name="FlowLayout">
-        <attr name="horizontalSpacing" format="dimension"/>
-        <attr name="verticalSpacing" format="dimension"/>
-        <attr name="orientation" format="enum">
-            <enum name="horizontal" value="0"/>
-            <enum name="vertical" value="1"/>
-        </attr>
-        <attr name="debugDraw" format="boolean"/>
-    </declare-styleable>
-    <declare-styleable name="FlowLayout_LayoutParams">
-        <attr name="layout_newLine" format="boolean"/>
-        <attr name="layout_horizontalSpacing" format="dimension"/>
-        <attr name="layout_verticalSpacing" format="dimension"/>
-    </declare-styleable>
-
-    <declare-styleable name="TwoTextView">
-        <attr name="ttLeftText" format="string|reference"/>
-        <attr name="ttRightText" format="string|reference"/>
-        <attr name="ttLeftTextSize" format="dimension"/>
-        <attr name="ttRightTextSize" format="dimension"/>
-        <attr name="ttLeftTextColor" format="reference"/>
-        <attr name="ttRightTextColor" format="reference"/>
-    </declare-styleable>
-
-    <!-- Head graphical tools -->
-    <declare-styleable name="PolygonImageView">
-        <attr name="poly_vertices" format="integer"/>
-        <attr name="poly_rotation_angle" format="float"/>
-        <attr name="poly_corner_radius" format="float"/>
-        <attr name="poly_border" format="boolean"/>
-        <attr name="poly_border_color" format="color"/>
-        <attr name="poly_border_width" format="dimension"/>
-        <attr name="poly_shadow" format="boolean"/>
-        <attr name="poly_shadow_color" format="color"/>
-    </declare-styleable>
-
-    <declare-styleable name="PolygonImageViewTheme">
-        <attr name="polygonImageViewStyle" format="reference"/>
-    </declare-styleable>
-
-    <!-- Load Animation -->
-    <declare-styleable name="Dialog">
-        <attr name="DialogTitleAppearance" format="reference"/>
-        <attr name="DialogTitleText" format="reference|string"/>
-        <attr name="DialogSpotColor" format="reference|color"/>
-        <attr name="DialogSpotCount" format="integer"/>
-    </declare-styleable>
-
-    <!--
-        max                 最大进度
-        startAngle             进度从圆环的哪个角度开始走
-        backColor             圆环内部的填充色
-        roundColor             圆环的颜色
-        roundProgressColor  圆环进度的颜色
-        roundWidth             圆环宽度
-        textColor             中心文字的颜色
-        textSize             中心文字的大小
-        textIsDisplayable     中心文字是否显示
-        style = 0/1          进度的风格，实心或者空心
-     -->
-    <declare-styleable name="RoundProgressBar">
-        <attr name="max_round" format="integer"></attr>
-        <attr name="startAngle" format="integer"></attr>
-        <attr name="roundColor" format="color"/>
-        <attr name="roundProgressColor" format="color"/>
-        <attr name="roundWidth" format="dimension"></attr>
-        <attr name="backColor_round" format="color"/>
-        <attr name="textColor_round" format="color"/>
-        <attr name="textSize_round" format="dimension"/>
-        <attr name="textIsDisplayable" format="boolean"></attr>
-        <attr name="style">
-            <enum name="STROKE" value="0"></enum>
-            <enum name="FILL" value="1"></enum>
-        </attr>
-    </declare-styleable>
-
-<!--自定义复用滚轮-->
-    <declare-styleable name="wheelview">
-        <attr name="gravity">
-            <enum name="center" value="17"/>
-            <enum name="left" value="3"/>
-            <enum name="right" value="5"/>
-        </attr>
-        <attr name="textSize" format="dimension"/>
-        <attr name="textColorOut" format="color"/>
-        <attr name="textColorCenter" format="color"/>
-        <attr name="dividerColor" format="color"/>
-    </declare-styleable>
-
 </resources>

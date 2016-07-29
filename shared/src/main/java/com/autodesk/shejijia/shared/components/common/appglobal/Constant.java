@@ -157,6 +157,7 @@ public class Constant {
     public static class CaseLibraryDetail {
         public static final String CASE_URL = "url";
         public static final String CASE_DETAIL_BEAN = "CASE_DETAIL_BEAN";
+        public static final String CASE_DETAIL_POSTION = "CASE_DETAIL_POSTION";
         public static final String JPG = "HD.jpg";
         public static final String CASE_ID = "case_id";
     }
@@ -393,6 +394,7 @@ public class Constant {
         //        public static final String X_TOKEN = "X-Token";
         public static final String X_TOKEN_PREFIX = "Basic ";
         public static final String X_TOKEN = "Authorization";
+        public static final String X_XTOKEN = "X-Token";
         public static final String CONTENT_TYPE = "Content-Type";
         public static final String MEMBER_TYPE = "Member-Type";
         public static final String ACS_TOKEN = "ACS-Token";

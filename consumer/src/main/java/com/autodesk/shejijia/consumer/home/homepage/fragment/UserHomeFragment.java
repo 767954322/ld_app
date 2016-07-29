@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -26,31 +25,32 @@ import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionM
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryActivity;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLinraryNewActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHomeCaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
-import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
 
@@ -137,7 +137,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     @Override
     public void OnItemCaseClick(int position) {
         String case_id = casesEntities.get(position).getId();
-        mIntent = new Intent(getActivity(), CaseLibraryDetailActivity.class);
+        mIntent = new Intent(getActivity(), CaseLinraryNewActivity.class);
         mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         activity.startActivity(mIntent);
     }
@@ -374,13 +374,12 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         caseLibraryButton.setOnClickListener(this);
 
 
-
         mFloatingActionsMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
             public void onMenuToggle(boolean opened) {
                 if (opened) {
                     mShadeView.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     mShadeView.setVisibility(View.GONE);
                 }
             }
@@ -481,20 +480,20 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             /// hide the requirement btn .
-           // mFloatingActionsMenu.addMenuButton(requirementButton);
+            // mFloatingActionsMenu.addMenuButton(requirementButton);
             mFloatingActionsMenu.removeAllMenuButtons();
             mFloatingActionsMenu.addMenuButton(requirementButton);
             mFloatingActionsMenu.addMenuButton(findDesignerButton);
             mFloatingActionsMenu.addMenuButton(caseLibraryButton);
 
-        }else if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+        } else if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             /// hide the requirement btn .
             // mFloatingActionsMenu.addMenuButton(requirementButton);
             mFloatingActionsMenu.removeAllMenuButtons();
             mFloatingActionsMenu.addMenuButton(findDesignerButton);
             mFloatingActionsMenu.addMenuButton(caseLibraryButton);
 
-        }else {
+        } else {
 
             mFloatingActionsMenu.removeAllMenuButtons();
             mFloatingActionsMenu.addMenuButton(requirementButton);

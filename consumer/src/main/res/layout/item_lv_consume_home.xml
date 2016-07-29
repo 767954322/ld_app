@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_ff"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_ff"
+              android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_180"
                 android:scaleType="centerCrop"
-                android:src="@drawable/common_case_icon" />
+                android:src="@drawable/common_case_icon"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,7 +29,7 @@
 
                 <TextView
                     android:layout_width="@dimen/size_60"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -47,7 +47,8 @@
                         android:singleLine="true"
                         android:text="居然大厦"
                         android:textColor="@color/bg_40"
-                        android:textSize="@dimen/font_16" />
+                        android:textSize="@dimen/font_16"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -61,14 +62,14 @@
                             android:layout_gravity="center_vertical"
                             android:text="一室"
                             android:textColor="@color/bg_66"
-                            android:textSize="@dimen/font_13" />
+                            android:textSize="@dimen/font_13"/>
 
                         <TextView
                             android:layout_width="@dimen/size_1"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="@dimen/size_5"
-                            android:background="@color/bg_b0" />
+                            android:background="@color/bg_b0"/>
 
                         <TextView
                             android:id="@+id/tv_customer_home_room"
@@ -77,14 +78,14 @@
                             android:layout_gravity="center_vertical"
                             android:text="欧式"
                             android:textColor="@color/bg_66"
-                            android:textSize="@dimen/font_13" />
+                            android:textSize="@dimen/font_13"/>
 
                         <TextView
                             android:layout_width="@dimen/size_1"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_margin="@dimen/size_5"
-                            android:background="@color/bg_b0" />
+                            android:background="@color/bg_b0"/>
 
 
                         <TextView
@@ -94,8 +95,30 @@
                             android:layout_gravity="center_vertical"
                             android:text="120"
                             android:textColor="@color/bg_66"
-                            android:textSize="@dimen/font_13" />
+                            android:textSize="@dimen/font_13"/>
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/size_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_marginTop="@dimen/size_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/size_5"
+                            android:background="@drawable/dianzanshu_ico"/>
+
+                        <TextView
+                            android:layout_marginTop="@dimen/size_2"
+                            android:layout_marginLeft="@dimen/size_4"
+                            android:textSize="11sp"
+                            android:id="@+id/tv_thumb_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点赞数111"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -114,7 +137,7 @@
                         android:layout_marginBottom="@dimen/size_10"
                         android:layout_marginRight="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_10"
-                        android:background="@color/bg_b0" />
+                        android:background="@color/bg_b0"/>
 
                     <ImageView
                         android:id="@+id/img_consume_home_chat"
@@ -122,7 +145,7 @@
                         android:layout_height="@dimen/size_30"
                         android:layout_gravity="center"
                         android:layout_marginRight="@dimen/size_10"
-                        android:src="@drawable/icon_chat_common_normal" />
+                        android:src="@drawable/icon_chat_common_normal"/>
 
                 </LinearLayout>
 
@@ -141,7 +164,7 @@
             app:poly_border_color="@color/bg_ff"
             app:poly_border_width="@dimen/size_5"
             app:poly_corner_radius="5"
-            app:poly_vertices="0" />
+            app:poly_vertices="0"/>
     </FrameLayout>
 
 </LinearLayout>

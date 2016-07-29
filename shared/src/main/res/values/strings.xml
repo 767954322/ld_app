@@ -351,6 +351,7 @@
     <string name="girl">女</string>
     <string name="essential_info">基本信息</string>
     <string name="photograph">拍照</string>
+    <string name="savelocal">保存到本地</string>
     <string name="photo_album">从手机相册选择</string>
     <string name="information_on_the_cross">信息上传中...</string>
     <string name="autonym_sd_disabled">SD卡不可用！</string>
@@ -858,5 +859,9 @@
     <string name="pickerview_hours">时</string>
     <string name="pickerview_minutes">分</string>
     <string name="pickerview_seconds">秒</string>
-
+    <!-- 微信分享 -->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
 </resources>
