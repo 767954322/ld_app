@@ -120,8 +120,8 @@ public class ApiManager {
                 break;
 
             case UrlConstants.RUNNING_ALPHA:
-                main_design = tempMpMain + UrlConstants.MP_MAIN_DESIGN;
-//                main_design = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
+//                main_design = tempMpMain + UrlConstants.MP_MAIN_DESIGN;
+                main_design = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
             case UrlConstants.RUNNING_PRODUCTION:
