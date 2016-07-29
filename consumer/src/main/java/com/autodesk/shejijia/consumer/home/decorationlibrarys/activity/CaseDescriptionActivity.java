@@ -29,6 +29,9 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Map;
 
 /**
@@ -126,7 +129,7 @@ public class CaseDescriptionActivity extends NavigationBarActivity implements Vi
                     final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
                     final String hs_uid = caseDetailBean.getHs_designer_uid();
                     final String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
-                    final String recipient_ids = member_id + "," + designer_id+","+ ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
 
                     MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                         @Override
@@ -138,25 +141,43 @@ public class CaseDescriptionActivity extends NavigationBarActivity implements Vi
                         public void onResponse(String s) {
                             MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                            Intent intent = new Intent(CaseDescriptionActivity.this, ChatRoomActivity.class);
+                            final Intent intent = new Intent(CaseDescriptionActivity.this, ChatRoomActivity.class);
                             intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                             intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
                             intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
 
                             if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
 
+                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                                 int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                                 intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId+"");
-                                intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                            } else {
-
+                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
                                 intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                CaseDescriptionActivity.this.startActivity(intent);
+
+                            } else {
+                                MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError volleyError) {
+                                        MPNetworkUtils.logError(TAG, volleyError);
+                                    }
+
+                                    @Override
+                                    public void onResponse(String s) {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(s);
+                                            String thread_id = jsonObject.getString("thread_id");
+                                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                            intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                            intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                            CaseDescriptionActivity.this.startActivity(intent);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
-                            startActivity(intent);
 
                         }
 
