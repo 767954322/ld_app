@@ -681,7 +681,8 @@
     <string name="im_close_send_voice">Cancel&#160;&#160;sending</string>
     <string name="im_starting_send_voice">sending</string>
     <string name="record_too_short">The&#160;&#160;tape&#160;&#160;is&#160;&#160;too&#160;&#160;short</string>
-    <string name="hold_down_the_talk">Hold&#160;&#160;down&#160;&#160;the&#160;&#160;talk</string>
+    <string name="hold_down_the_talk">Press and hold to talk</string>
+    <string name="audio_record_slide_cancel">Move outside to cancel</string>
     <string name="check_room">Check&#160;&#160;the&#160;&#160;amount&#160;&#160;of&#160;&#160;room</string>
     <string name="measure_room_cost">Amount&#160;&#160;of&#160;&#160;room&#160;&#160;cost</string>
     <string name="upload_delivery">Upload&#160;&#160;the&#160;&#160;delivery</string>
@@ -699,7 +700,8 @@
     <string name="querenliangfang">Confirm&#160;&#160;the&#160;&#160;amount&#160;&#160;of&#160;&#160;room</string>
 
     <string name="mychat">My Chat</string>
-    <string name="file_thread_list_title">Content based chat</string>
+    <string name="file_thread_list_title">File based chat</string>
+    <string name="imagechatroom_title">Content based chat</string>
     <string name="there_is_no_data">There&#160;&#160;is&#160;&#160;no&#160;&#160;data&#160;&#160;for</string>
     <string name="the_data_load_failure">The&#160;&#160;data&#160;&#160;load&#160;&#160;failure</string>
     <string name="im_succes_sendvoice">The&#160;&#160;voice&#160;&#160;sent&#160;&#160;successfully</string>
@@ -808,11 +810,10 @@
 
     <string name="share">share</string>
 
-    <string name="photopicker_camera_roll">Camera&#160;&#160;Roll</string>
     <string name="photopicker_album_subtitle_single">photo</string>
     <string name="photopicker_album_subtitle_multiple">photos</string>
     <string name="photopicker_source_text">Source</string>
-    <string name="photopicker_cloud_album">Cloud&#160;&#160;Files</string>
+    <string name="photopicker_cloud_album">Cloud Storage</string>
     <string name="no_support_emojo">Does&#160;&#160;not&#160;&#160;&#160;&#160;input&#160;&#160;emoticons</string>
     <string name="empty_order_fitment_add">You&#160;&#160;haven\'t&#160;&#160;order, please&#160;&#160;to&#160;&#160;order&#160;&#160;should&#160;&#160;be&#160;&#160;the&#160;&#160;hall。</string>
 
@@ -827,10 +828,12 @@
 
     <string name="max_characters_limit_reached">The&#160;&#160;content&#160;&#160;is&#160;&#160;too&#160;&#160;long, you&#160;&#160;input&#160;&#160;cannot&#160;&#160;exceed&#160;&#160;1000&#160;&#160;characters</string>
 
-    <string name="photopicker_cloud_placeholder_label">Please&#160;&#160;to&#160;&#160;designer&#160;&#160;version&#160;&#160;Web&#160;&#160;upload&#160;&#160;information</string>
+    <string name="photopicker_cloud_placeholder_label">To upload photos, please go to the Web</string>
 
     <string name="chatroom_audio_recording_erroralert_title">prompt</string>
     <string name="chatroom_audio_recording_erroralert_message">Retry&#160;&#160;sending&#160;&#160;audio </string>
     <string name="chatroom_audio_recording_erroralert_ok">OK</string>
     <string name="chatroom_audio_recording_erroralert_cancel">cancel</string>
+
+    <string name="chatroom_loadmore_text">LOAD EARLIER MESSAGES</string>
 </resources>

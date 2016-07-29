@@ -172,7 +172,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
     @Override
     protected String getActivityTitle()
     {
-        return getResources().getString(R.string.mychat);
+        return getResources().getString(R.string.imagechatroom_title);
     }
 
 

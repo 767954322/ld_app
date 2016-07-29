@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="查看更多记录"
+            android:text="@string/chatroom_loadmore_text"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18" />
 
