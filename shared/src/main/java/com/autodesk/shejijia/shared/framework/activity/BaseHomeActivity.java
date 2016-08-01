@@ -79,6 +79,13 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AdskApplication.getInstance().openChatConnection();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
