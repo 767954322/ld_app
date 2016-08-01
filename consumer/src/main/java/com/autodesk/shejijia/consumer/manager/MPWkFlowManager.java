@@ -70,7 +70,7 @@ public class MPWkFlowManager {
         /// [2]获取对应订单节点的名字 .
         if (StringUtils.isNumeric(wk_cur_sub_node_id)) {
             int wk_cur_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
-            if (wk_cur_sub_node_id_int >= 11 && wk_cur_sub_node_id_int <= 63) {
+            if (wk_cur_sub_node_id_int >= 11 && wk_cur_sub_node_id_int <= 72) {
                 int position = -1;
                 switch (templateIdPosition) {
                     case 0:     /// 应标 .
@@ -161,6 +161,15 @@ public class MPWkFlowManager {
             case 63:
                 subNodePosition = 14;
                 break;
+            case 64:
+                subNodePosition = 15;
+                break;
+            case 71:
+                subNodePosition = 16;
+                break;
+            case 72:
+                subNodePosition = 17;
+                break;
         }
         return subNodePosition;
     }
@@ -233,6 +242,15 @@ public class MPWkFlowManager {
                 break;
             case 63:    /// 新增 .
                 subNodePosition = 13;
+                break;
+            case 64:
+                subNodePosition = 15;
+                break;
+            case 71:
+                subNodePosition = 16;
+                break;
+            case 72:
+                subNodePosition = 17;
                 break;
         }
         return subNodePosition;
