@@ -244,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -257,7 +257,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/replace_rank_card"
+                    android:text="@string/un_bind_rank_card"
                     android:textColor="@color/blue" />
             </LinearLayout>
         </RelativeLayout>

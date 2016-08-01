@@ -11,6 +11,7 @@
     <string name="application_successful">申请成功</string>
     <string name="application_failure">申请失败</string>
     <string name="application_detail">你已成功申请提现\n请在提现记录中查看详情</string>
+    <string name="application_unbing">解除绑定成功</string>
 
     <string name="tip_content_one">持卡人姓名不能为空</string>
     <string name="tip_content_two">支行名称不能为空</string>
@@ -668,6 +669,7 @@
     <string name="withdrawal_branch_name">支行名称：</string>
     <string name="withdrawal_bank_card_number">银行卡号：</string>
     <string name="replace_rank_card">更换银行卡</string>
+    <string name="un_bind_rank_card">解除绑定</string>
     <string name="confirm_and_submit">确认并提交</string>
 
     <!-- CustomBidFragment-->

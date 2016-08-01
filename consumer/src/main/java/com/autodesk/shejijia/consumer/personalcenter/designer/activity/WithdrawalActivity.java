@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,21 +11,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -99,14 +97,15 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 bank_name = item_back_name;
                 break;
             case R.id.ll_withdrawal_replace_bank_card:
+                sendUnBindBankCard(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
 
-                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
-                tv_withdrawal_cardholder_name.setVisibility(View.GONE);
-                tv_withdrawal_branch_bank.setVisibility(View.GONE);
-                tv_withdrawal_bank_card_number.setVisibility(View.GONE);
-                et_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
-                et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
-                et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
+//                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
+//                tv_withdrawal_cardholder_name.setVisibility(View.GONE);
+//                tv_withdrawal_branch_bank.setVisibility(View.GONE);
+//                tv_withdrawal_bank_card_number.setVisibility(View.GONE);
+//                et_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
+//                et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
+//                et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
 
                 break;
             case R.id.btn_withdrawal_true:
@@ -244,6 +243,42 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         MPServerHttpManager.getInstance().getWithDrawBalanceData(designer_id, jsonObject, callback);
     }
 
+
+    /**
+     * 解除银行卡绑定
+     * @param designer_id
+     * @param account_user_name
+     * @param bank_name
+     * @param branch_bank_name
+     * @param deposit_card
+     */
+    public void sendUnBindBankCard(long designer_id, String account_user_name, String bank_name, String branch_bank_name, String deposit_card) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_ACCOUNT_USER_NAME, account_user_name);
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_BANK_NAME, bank_name);
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_BRANCH_BANK_NAME, branch_bank_name);
+            jsonObject.put(JsonConstants.WITHDRAWARE_BALANCE_DEPOSIT_CARD, isValidateNumber(deposit_card));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                updateViewFromData();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.application_failure), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }
+        };
+        MPServerHttpManager.getInstance().sendUnBindBankCard(designer_id, jsonObject, callback);
+    }
+
     /**
      * house type
      */
@@ -319,13 +354,13 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object o, int position) {
-                    if (position != AlertView.CANCELPOSITION) {
-                        Intent intent = new Intent();
-                        intent.putExtra(Constant.DesignerWithDraw.AMOUNT, "0.00");
-                        intent.putExtra(Constant.DesignerWithDraw.IS_SUCCESS, true);
-                        WithdrawalActivity.this.setResult(Activity.RESULT_OK, intent);
-                        WithdrawalActivity.this.finish();
-                    }
+//                    if (position != AlertView.CANCELPOSITION) {
+//                        Intent intent = new Intent();
+//                        intent.putExtra(Constant.DesignerWithDraw.AMOUNT, "0.00");
+//                        intent.putExtra(Constant.DesignerWithDraw.IS_SUCCESS, true);
+//                        WithdrawalActivity.this.setResult(Activity.RESULT_OK, intent);
+//                        WithdrawalActivity.this.finish();
+//                    }
                 }
             }).show();
     }

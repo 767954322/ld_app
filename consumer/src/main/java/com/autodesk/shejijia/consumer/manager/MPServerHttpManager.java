@@ -1164,6 +1164,21 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+    public void sendUnBindBankCard(final long designer_id,
+                                       JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, UrlConstants.URL_WITHDRAW_BALANCE + designer_id, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.X_XTOKEN, xToken);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
     /**
      * 为X-Token 增加前缀
      *
