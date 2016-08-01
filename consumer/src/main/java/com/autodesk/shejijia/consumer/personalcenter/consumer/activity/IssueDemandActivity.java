@@ -15,23 +15,22 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
+import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -144,7 +143,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 }
                 String area = et_issue_demand_area.getText().toString();
 
-                if(area.equals("0.00")||area.equals("0.0")||area.equals("0000.00")||area.equals("000.00")||area.equals("00.00")){
+                if (area.equals("0.00") || area.equals("0.0") || area.equals("0000.00") || area.equals("000.00") || area.equals("00.00")) {
                     showAlertView(R.string.please_input_correct_area);
                     return;
                 }
@@ -287,8 +286,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 }
                 isSendState = true;
                 Intent intent = new Intent();
-                intent.putExtra("SUCCESS",success);
-                setResult(RESULT_CODE,intent);
+                intent.putExtra("SUCCESS", success);
+                setResult(RESULT_CODE, intent);
             }
 
             @Override
@@ -540,5 +539,5 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String room, living_room, toilet;
     private boolean isSendState = true;
     private String success = "";
-    final int RESULT_CODE=101;
+    final int RESULT_CODE = 101;
 }

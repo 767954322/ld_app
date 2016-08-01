@@ -463,7 +463,7 @@
 
         <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity">
         </activity>
-        <activity android:name=".personalcenter.consumer.activity.AppraiseActivity">
+        <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity">
         </activity>
     </application>
 
