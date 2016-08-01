@@ -209,6 +209,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
             MyToast.show(FlowUploadDeliveryActivity.this, "立即评价");
         } else if (object == mDeliverySureAlertView) {
+            mLinerDelayedShow.setVisibility(View.GONE);
             MyToast.show(FlowUploadDeliveryActivity.this, "稍后评价");
         }
     }
