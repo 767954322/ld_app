@@ -106,7 +106,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
         getDeliveredFile(needs_id, designer_id);
         getFlowUploadDeliveryDelayDate(needs_id, designer_id);
-
         KLog.d(TAG, "needs_id:" + needs_id + "##designer_id:" + designer_id);
     }
 
@@ -208,7 +207,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
-            MyToast.show(FlowUploadDeliveryActivity.this, "马上评价");
+            MyToast.show(FlowUploadDeliveryActivity.this, "立即评价");
         } else if (object == mDeliverySureAlertView) {
             MyToast.show(FlowUploadDeliveryActivity.this, "稍后评价");
         }
