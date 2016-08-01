@@ -56,7 +56,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/login"
-                    android:textColor="@color/white"
+                    android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_18" />
             </LinearLayout>
 
@@ -80,7 +80,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="@string/my_fitment" />
+                    android:text="@string/my_fitment"
+                    android:textColor="@color/bg_33" />
             </LinearLayout>
 
             <LinearLayout
@@ -92,7 +93,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="60dp"
                     android:background="@color/bg_impression" />
             </LinearLayout>
 
@@ -116,7 +116,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_fitment"
-                    android:text="@string/my_family_order" />
+                    android:text="@string/my_family_order"
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -136,7 +137,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="60dp"
                     android:background="@color/bg_impression" />
             </LinearLayout>
 
@@ -160,7 +160,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_my_collect"
-                    android:text="@string/message_center" />
+                    android:text="@string/message_center"
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -180,7 +181,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="60dp"
                     android:background="@color/bg_impression" />
             </LinearLayout>
 
@@ -204,7 +204,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_essential_setting"
-                    android:text="@string/consumer_more" />
+                    android:text="@string/consumer_more"
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
                     android:layout_width="wrap_content"
