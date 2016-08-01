@@ -121,7 +121,14 @@ public class MPServerHttpManager {
 //                "&sort_order=desc" +
 //                "&custom_string_form=" + custom_string_form;
 
-        String url="http://192.168.120.90:8080/design-app/v1/api/cases/search?custom_string_style=&custom_string_type=&custom_string_keywords=&sort_by=date&custom_string_area=&custom_string_bedroom=&taxonomy_id=01&offset=0&limit=10&custom_string_restroom=&sort_order=desc&custom_string_form=";
+        String url="http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
+                "custom_string_style=&custom_string_type=" +
+                "&custom_string_keywords=" +
+                "&sort_by=date" +
+                "&custom_string_area=" +
+                "&custom_string_bedroom=" +
+                "&taxonomy_id=01&offset=0" +
+                "&limit=10&custom_string_restroom=&sort_order=desc&custom_string_form=";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
