@@ -52,6 +52,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MPFileHotspotActivity extends NavigationBarActivity
 {
@@ -70,7 +71,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         public int org_img_width;
         public int org_img_height;
         public float img_magnification;
-        public FrameLayout singHotSpotImageView_mask;
+        public RelativeLayout parentLayout;
     }
 
     @Override
@@ -86,7 +87,6 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         super.initView();
 
         mFileHotspotView = (MPFileHotspotView) findViewById(R.id.singHotSpotImageView);
-        singHotSpotImageView_mask = (FrameLayout) findViewById(R.id.singHotSpotImageView_mask);
         mAddHotSpotButton = (ImageButton) findViewById(R.id.add_hot_icon);
         mHotspotsContainer = (RelativeLayout) findViewById(R.id.hotSpots_frame);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -350,7 +350,24 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     private void clearHotspots()
     {
         mHotspotsContainer.setVisibility(View.GONE);
-        singHotSpotImageView_mask.removeAllViews();
+
+        RelativeLayout parentLayout = (RelativeLayout) findViewById(R.id.singHotSpotImageView_frame);
+        ArrayList<Integer> indices = new ArrayList<Integer>();
+
+        for (int i = 0; i < parentLayout.getChildCount(); i++) {
+
+            final View view = parentLayout.getChildAt(i);
+
+            Object object = view.getTag(view.getId());
+
+            if(object == null || !object.getClass().equals(Point.class))
+                continue;
+
+            indices.add(i);
+        }
+
+        if(!indices.isEmpty())
+            parentLayout.removeViews(indices.get(0), indices.size());
     }
 
 
@@ -362,8 +379,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         org_img_height = loadedImage.getHeight();
 
         HotspotImageData imageData = new HotspotImageData();
-        imageData.singHotSpotImageView_mask = singHotSpotImageView_mask;
-
+        imageData.parentLayout = (RelativeLayout) findViewById(R.id.singHotSpotImageView_frame);
         imageData.org_img_width = org_img_width;
         imageData.org_img_height = org_img_height;
 
@@ -770,7 +786,6 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     private ImageButton mAddHotSpotButton;
     private View mSendButton;
     private RelativeLayout mHotspotsContainer;
-    private FrameLayout singHotSpotImageView_mask;
     private ProgressBar mProgressBar;
     private ViewGroup mOnBoardingLayout;
 
