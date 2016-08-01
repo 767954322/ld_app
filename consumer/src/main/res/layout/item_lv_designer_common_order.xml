@@ -29,7 +29,7 @@
                 android:layout_marginLeft="@dimen/size_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_position_normal"/>
+                android:src="@drawable/address_ico"/>
 
             <TextView
                 android:id="@+id/tv_designer_order_address"
@@ -40,7 +40,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="居然大厦"
-                android:textColor="@color/bg_33"
+                android:textColor="@color/bg_0084ff"
                 android:textSize="@dimen/font_16"/>
 
             <TextView
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="上传设计交付物"
-                android:textColor="@color/bg_0d74bc"
+                android:textColor="@color/bg_0084ff"
                 android:textSize="@dimen/font_14"/>
         </LinearLayout>
 
@@ -57,7 +57,7 @@
             android:layout_height="@dimen/size_1"
             android:layout_marginLeft="@dimen/size_10"
             android:layout_marginRight="@dimen/size_10"
-            android:background="@color/bg_e4"/>
+            android:background="@color/bg_ea"/>
 
 
         <LinearLayout
@@ -163,7 +163,7 @@
             android:layout_marginLeft="@dimen/size_10"
             android:layout_marginRight="@dimen/size_10"
             android:layout_marginTop="@dimen/size_5"
-            android:background="@color/bg_e4"/>
+            android:background="@color/bg_ea"/>
 
         <!--<include layout="@layout/item_lv_decoration_beishu"></include>-->
         <LinearLayout

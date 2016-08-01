@@ -117,11 +117,12 @@
     <color name="bg_d5">#D5D5D5</color>
     <color name="bg_d7">#D7D7D7</color>
     <color name="bg_df">#DFDFDF</color>
+    <color name="bg_e4">#E4E4E4</color>
     <color name="bg_e7">#E7E7E7</color>
+    <color name="bg_ea">#EAEAEA</color>
     <color name="bg_eb">#EBEBEB</color>
     <color name="bg_ed">#EDEDED</color>
     <color name="bg_ef">#EFEFEF</color>
-    <color name="bg_e4">#E4E4E4</color>
     <color name="bg_f0">#F0F0F0</color>
     <color name="bg_f1">#F1F1F1</color>
     <color name="bg_f2">#F2F2F2</color>
@@ -133,6 +134,7 @@
     <color name="bg_e000">#e0000000</color>
     <color name="bg_f09c">#FF0099CC</color>
     <color name="bg_0d74bc">#0D74BC</color>
+    <color name="bg_00f">#0000FF</color>
     <color name="bg_3B85D1">#3B85D1</color>
     <color name="bg_edf1f4">#EDF1F4</color>
     <color name="bg_336dad">#336DAB</color>
