@@ -229,6 +229,7 @@
     <dimen name="chat_room_cell_avatar_side">60dp</dimen>
     <dimen name="chat_room_cell_message_fontsize">15sp</dimen>
     <dimen name="chat_room_cell_messagetime_fontsize">12sp</dimen>
+    <dimen name="chat_room_cell_avatar_borderwidth">1dp</dimen>
 
     <dimen name="chat_room_textcell_sidemargin">2dp</dimen>
     <dimen name="chat_room_textcell_content_margin">10dp</dimen>

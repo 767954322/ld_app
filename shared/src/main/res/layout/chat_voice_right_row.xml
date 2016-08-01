@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -32,7 +33,9 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_useravatar"/>
+            android:src="@drawable/default_useravatar"
+            custom:border_width="@dimen/chat_room_cell_avatar_borderwidth"
+            custom:border_color="@color/chat_room_background"/>
 
         <RelativeLayout
             android:id="@+id/audio_cell_parent_layout"
