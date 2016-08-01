@@ -21,13 +21,24 @@
             android:src="@drawable/icon_back_normal_z"
             android:visibility="visible"/>
 
+        <com.autodesk.shejijia.shared.components.common.uielements.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="@dimen/size_33"
+            android:layout_height="@dimen/size_33"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/chat_room_commandcell_avatar_margintop"
+            android:layout_marginLeft="@dimen/chat_room_commandcell_avatar_marginleft"
+            android:src="@drawable/default_useravatar"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            />
+
         <TextView
             android:id="@+id/nav_left_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:textColor="@color/search_title"
             android:layout_marginLeft="10dp"
             android:textSize="@dimen/font_17"
             android:visibility="gone"/>
@@ -38,10 +49,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:textStyle="bold"
         android:ellipsize="end"
         android:maxEms="6"
         android:singleLine="true"
-        android:textSize="@dimen/font_18"/>
+        android:textSize="@dimen/font_16"/>
+
+    <LinearLayout
+        android:id="@+id/ll_contain"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@id/backButton_layout"
+        android:layout_marginRight="55dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+    </LinearLayout>
+
+
 
     <ImageButton
         android:id="@+id/nav_secondary_imageButton"
@@ -53,6 +81,20 @@
         android:background="@drawable/transparent"
         android:src="@drawable/icon_project_material"
         android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/right_contain"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rightButton_layout"
@@ -69,7 +111,8 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/transparent"
             android:src="@drawable/msg_file"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/nav_badge_textView"
@@ -97,4 +140,13 @@
             android:textSize="15sp"
             android:visibility="gone"/>
     </RelativeLayout>
+
+    <!--标题栏，底部1px线-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d4d4d4"
+        android:layout_alignParentBottom="true"
+        />
+
 </RelativeLayout>

@@ -16,6 +16,8 @@
             style="@style/main_tab_bottom"
             android:checked="true"
             android:drawableTop="@drawable/selector_home"
+            android:layout_marginTop="@dimen/size_6"
+            android:textSize="@dimen/size_12"
             android:text="@string/tab_home"/>
 
         <RadioButton
@@ -23,6 +25,8 @@
             style="@style/main_tab_bottom"
             android:checked="false"
             android:drawableTop="@drawable/selector_hall"
+            android:layout_marginTop="@dimen/size_6"
+            android:textSize="@dimen/size_12"
             android:text="@string/tab_hall"/>
 
         <RadioButton
@@ -30,6 +34,8 @@
             style="@style/main_tab_bottom"
             android:checked="false"
             android:drawableTop="@drawable/selector_chat"
+            android:layout_marginTop="@dimen/size_6"
+            android:textSize="@dimen/size_12"
             android:text="@string/tab_im"/>
 
         <RadioButton
@@ -37,6 +43,8 @@
             style="@style/main_tab_bottom"
             android:checked="false"
             android:drawableTop="@drawable/selector_personal"
+            android:layout_marginTop="@dimen/size_6"
+            android:textSize="@dimen/size_12"
             android:text="@string/tab_personalcenter"/>
     </RadioGroup>
 
