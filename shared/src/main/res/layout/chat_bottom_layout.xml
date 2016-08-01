@@ -3,7 +3,7 @@
               android:id="@+id/chat_parent_layout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/grey_white"
+              android:background="@drawable/chat_bottombar_background"
               android:gravity="center"
               android:orientation="horizontal">
 

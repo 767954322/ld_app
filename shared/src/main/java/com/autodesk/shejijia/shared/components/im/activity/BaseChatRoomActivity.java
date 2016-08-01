@@ -78,6 +78,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         mViewHeader = LayoutInflater.from(this).inflate(R.layout.chat_room_loadmore_header, null);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mLoadmoreContent = mViewHeader.findViewById(R.id.loadmore_content);
+        mLoadMoreProgressBar = (ProgressBar) mViewHeader.findViewById(R.id.loadmore_progressbar);
 
         setHeaderViewVisibility(false);
         mMessageListView.addHeaderView(mViewHeader);
@@ -309,6 +310,9 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         if (i == R.id.chat_header) {
             retrieveThreadMessagesWithOffset(mThreadId, mMessageList.size());
 
+            if(mLoadMoreProgressBar != null)
+                mLoadMoreProgressBar.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -379,6 +383,9 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                     MPNetworkUtils.logError(TAG, error);
                     mIsNextPageRequestRunning = false;
                     hideLoadingIndicator();
+
+                    if(mLoadMoreProgressBar != null)
+                        mLoadMoreProgressBar.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -387,6 +394,9 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                     MPChatMessages msgs = MPChatMessages.fromJSONString(response);
                     onMessagesReceived(msgs);
                     hideLoadingIndicator();
+
+                    if(mLoadMoreProgressBar != null)
+                        mLoadMoreProgressBar.setVisibility(View.GONE);
                 }
             };
             MPChatHttpManager.getInstance().retrieveThreadMessages(mAcsMemberId, threadId,
@@ -640,6 +650,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     protected ListView mMessageListView;
     protected View mViewHeader;
     protected View mLoadmoreContent;
+    protected ProgressBar mLoadMoreProgressBar;
     protected ProgressBar mProgressBar;
 
     protected boolean mIsKeyboardVisible = false;

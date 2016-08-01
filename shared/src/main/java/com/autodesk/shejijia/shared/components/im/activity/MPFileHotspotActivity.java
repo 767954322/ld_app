@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.constants.HotSpotsInfo;
@@ -227,10 +226,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     {
         mSendButton = view;
         sendImage();
-        CustomProgress.show(MPFileHotspotActivity.this, "", false, null);
-//        mProgressDialog = new CustomProgressDialog(MPFileHotspotActivity.this);
-//        mProgressDialog.show();
-//        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
 
@@ -513,7 +509,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
                         attachedImageToAsset();
                         MPFileUtility.removeFile(mLocalImageFileURL);
-                        CustomProgress.cancelDialog();
+                        mProgressBar.setVisibility(View.GONE);
                         MPFileHotspotActivity.this.finish();
                     }
 
@@ -521,7 +517,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
                     public void onFailure()
                     {
                         //TODO error out for resending
-                        CustomProgress.cancelDialog();
+                        mProgressBar.setVisibility(View.GONE);
                         MPFileHotspotActivity.this.finish();
                     }
                 });
@@ -775,7 +771,6 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     private View mSendButton;
     private RelativeLayout mHotspotsContainer;
     private FrameLayout singHotSpotImageView_mask;
-    //    private CustomProgressDialog mProgressDialog;
     private ProgressBar mProgressBar;
     private ViewGroup mOnBoardingLayout;
 

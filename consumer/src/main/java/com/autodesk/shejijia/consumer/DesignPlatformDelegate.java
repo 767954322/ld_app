@@ -43,7 +43,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
         switch (subNodeId) {
             case 13:
-                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, mpChatCommandInfo,MPStatusMachine.NODE__MEANSURE_PAY);
+                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, mpChatCommandInfo, MPStatusMachine.NODE__MEANSURE_PAY);
 
                 break;
 
@@ -68,7 +68,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
             case 41:
             case 42:
-                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, mpChatCommandInfo,MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
+                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, mpChatCommandInfo, MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
 
                 break;
 
@@ -101,38 +101,45 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
 
     //全流程，聊天下面小图标
-    public void onChatRoomWorkflowButtonClicked(Context context, int wk_cur_sub_node_idi, String assetId, String recieverId, String receiverUserName, String designerId) {
+    public void onChatRoomWorkflowButtonClicked(Context context, int wk_cur_sub_node_idi, String assetId, String recieverId, String receiverUserName, String designerId, String hs_uid) {
 
         if (wk_cur_sub_node_idi != 0) {
             if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == -1) {
                 jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 13) {
-                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, designerId,MPStatusMachine.NODE__MEANSURE_PAY);
+                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, designerId, MPStatusMachine.NODE__MEANSURE_PAY);
 
             } else if (wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
-                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, designerId,MPStatusMachine.NODE__MEANSURE_PAY);
+                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, designerId, MPStatusMachine.NODE__MEANSURE_PAY);
 
             } else if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 22) {
                 jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 31) {
-                jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId,MPStatusMachine.NODE__MEANSURE_PAY);
+                jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId, MPStatusMachine.NODE__MEANSURE_PAY);
 
             } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51 || wk_cur_sub_node_idi == 61 || wk_cur_sub_node_idi == 52 || wk_cur_sub_node_idi == 62) {
                 jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId);
 
             } else if (wk_cur_sub_node_idi == 41 || wk_cur_sub_node_idi == 42) {
-                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, designerId,MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
+                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, designerId, MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
 
             }
         } else {
 
-            String spStr[] = new String[0];
-            if (receiverUserName != null && !receiverUserName.equals("")) {
-                spStr = receiverUserName.split("_");
+            String flow_hs_uid;
+
+            if (null == hs_uid && "".equals(hs_uid)) {
+                String spStr[] = new String[0];
+                if (receiverUserName != null && !receiverUserName.equals("")) {
+                    spStr = receiverUserName.split("_");
+                }
+                flow_hs_uid = spStr[1];
+            } else {
+                flow_hs_uid = hs_uid;
             }
-            String flow_hs_uid = spStr[1];
+
 
             getSeekDesignerDetailHomeData(context, designerId, flow_hs_uid, assetId, recieverId);
 
@@ -185,7 +192,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         context.startActivity(intent_check_room);
     }
 
-    private void jumpToOtherProcessesFour(Context context, Class activity, MPChatCommandInfo info,int pay_state) {
+    private void jumpToOtherProcessesFour(Context context, Class activity, MPChatCommandInfo info, int pay_state) {
 
         Intent intent_measure_room_cost = new Intent(context, activity);
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
@@ -204,7 +211,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         context.startActivity(intent);
     }
 
-    private void jumpToOtherProcessesFour(Context context, Class activity, String assetId, String recieverId,int pay_state) {
+    private void jumpToOtherProcessesFour(Context context, Class activity, String assetId, String recieverId, int pay_state) {
         Intent intent = new Intent(context, activity);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, assetId);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, recieverId);
@@ -243,13 +250,13 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                     case 21: // 合同
                     case 22: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                     case 31: // 首款
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                     case 33: // 量房交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     case 41: // 支付设计首款
                     case 42: // 打开3D工具
@@ -257,11 +264,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                     case 51: // 支付尾款
                     case 52: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     case 61: // 上传支付交付物
                     case 62: // 编辑交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     default:
                         return -1;
@@ -289,14 +296,14 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                 case 21: // 合同
                 case 22: // 打开3D工具
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                 case 31: // 首款
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
 
                 case 33: // 量房交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 case 41: // 支付设计首款
                 case 42: // 打开3D工具
@@ -304,11 +311,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                 case 51: // 支付尾款
                 case 52: // 打开3D工具
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 case 61: // 上传支付交付物
                 case 62: // 编辑交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 default:
                     return -1;

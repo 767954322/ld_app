@@ -8,20 +8,17 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
-public class MPFileThreadListActivity extends NavigationBarActivity
-{
+public class MPFileThreadListActivity extends NavigationBarActivity {
     public static final String MEMBERID = "Memeber_Id";
     public static final String MEMBERTYPE = "Memeber_Type";
 
     @Override
-    protected int getLayoutResId()
-    {
+    protected int getLayoutResId() {
         return R.layout.activity_thread_list_file;
     }
 
     @Override
-    protected void initView()
-    {
+    protected void initView() {
         super.initView();
         Intent intent = getIntent();
 
@@ -39,33 +36,28 @@ public class MPFileThreadListActivity extends NavigationBarActivity
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState)
-    {
+    protected void initData(Bundle savedInstanceState) {
 
     }
 
     @Override
-    protected void initListener()
-    {
+    protected void initListener() {
         super.initListener();
     }
 
 
-
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
     }
 
     @Override
     protected String getActivityTitle() {
-        return getResources().getString(R.string.mychat);
+        return getResources().getString(R.string.file_thread_list_title);
     }
 }

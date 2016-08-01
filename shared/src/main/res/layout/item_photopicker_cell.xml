@@ -9,7 +9,7 @@
         android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:background="@color/bg_be"
-        android:src="@drawable/photopicker_thumbnail_placeholder"/>
+        android:src="@drawable/photopicker_placeholder"/>
 
     <ImageView
         android:id="@+id/photopicker_cell_selectionindicator"

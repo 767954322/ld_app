@@ -57,6 +57,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.socks.library.KLog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -181,13 +182,14 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
 
                 @Override
                 public void onResponse(String s) {
+
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                    Intent intent = new Intent(SearchActivity.this, ChatRoomActivity.class);
-                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                    final Intent intent = new Intent(SearchActivity.this, ChatRoomActivity.class);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
 
                     if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
 
@@ -195,14 +197,31 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
                         int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                    } else {
-
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                        SearchActivity.this.startActivity(intent);
 
+                    } else {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
+                            }
+
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String thread_id = jsonObject.getString("thread_id");
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                    SearchActivity.this.startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
-                    SearchActivity.this.startActivity(intent);
                 }
             });
         } else {

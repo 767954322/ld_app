@@ -713,6 +713,8 @@
     <string name="querenliangfang">确认量房</string>
 
     <string name="mychat">我的聊天</string>
+    <string name="file_thread_list_title">图片聊天</string>
+    <string name="imagechatroom_title">热点聊天</string>
     <string name="there_is_no_data">没有数据了</string>
     <string name="the_data_load_failure">数据加载失败</string>
     <string name="im_succes_sendvoice">语音发送成功</string>
@@ -821,11 +823,10 @@
 
     <string name="share">分享</string>
 
-    <string name="photopicker_camera_roll">Camera Roll</string>
-    <string name="photopicker_album_subtitle_single">photo</string>
-    <string name="photopicker_album_subtitle_multiple">photos</string>
-    <string name="photopicker_source_text">Source</string>
-    <string name="photopicker_cloud_album">Cloud Files</string>
+    <string name="photopicker_album_subtitle_single">照片</string>
+    <string name="photopicker_album_subtitle_multiple">照片</string>
+    <string name="photopicker_source_text">资源</string>
+    <string name="photopicker_cloud_album">云储存</string>
     <string name="no_support_emojo">不支持输入表情符号</string>
     <string name="empty_order_fitment_add">您还没有订单项目，请去应标大厅接单。</string>
 
@@ -858,5 +859,7 @@
     <string name="pickerview_hours">时</string>
     <string name="pickerview_minutes">分</string>
     <string name="pickerview_seconds">秒</string>
+
+    <string name="chatroom_loadmore_text">查看更多记录</string>
 
 </resources>

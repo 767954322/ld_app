@@ -342,10 +342,6 @@ public class MPPhotoAlbumFragment extends Fragment
 
                     MPPhotoAlbumModel album = mAlbums.get(position);
 
-                    // The album is already selected; do nothing
-                    if (album.isSelected)
-                        return;
-
                     // Do not allow selection of invalid/improperly initialized albums
                     if (album.albumSize < 0)
                         return;
