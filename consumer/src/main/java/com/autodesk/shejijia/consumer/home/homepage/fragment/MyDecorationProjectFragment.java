@@ -55,8 +55,6 @@ public class MyDecorationProjectFragment extends BaseFragment implements View.On
 
     @Override
     protected void initView() {
-//        mIbnAdd = (ImageButton) rootView.findViewById(R.id.nav_right_imageButton);
-//        mIbnBack = (ImageButton) rootView.findViewById(R.id.nav_left_imageButton);
         mLlPagers = (LinearLayout) rootView.findViewById(R.id.dots_ll);
         mRlEmpty = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
@@ -65,7 +63,6 @@ public class MyDecorationProjectFragment extends BaseFragment implements View.On
         mTvEmptyShow = (TextView) rootView.findViewById(R.id.tv_empty_message);
         mIvEmptyShow = (ImageView) rootView.findViewById(R.id.iv_default_empty);
 
-       // mIbnAdd.setVisibility(View.VISIBLE);
         mTvLoadingMore.setVisibility(View.GONE);
 
     }
@@ -73,10 +70,8 @@ public class MyDecorationProjectFragment extends BaseFragment implements View.On
     @Override
     protected void initData() {
         mContext = getActivity();
-      //  mTitle.setText(UIUtils.getString(R.string.consumer_decoration));
         mTvLoadingMore.setText(UIUtils.getString(R.string.loding_more));
         mTvEmptyShow.setText(UIUtils.getString(R.string.empty_order_fitment));
-      //  mIbnAdd.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_title_add));
         mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_order_empty));
         initPagerNum();
 
@@ -89,8 +84,6 @@ public class MyDecorationProjectFragment extends BaseFragment implements View.On
     @Override
     protected void initListener() {
         super.initListener();
-//        mIbnAdd.setOnClickListener(this);
-//        mIbnBack.setOnClickListener(this);
     }
 
     @Override
