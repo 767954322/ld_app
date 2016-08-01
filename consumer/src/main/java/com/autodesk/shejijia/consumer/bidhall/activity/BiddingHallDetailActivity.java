@@ -6,8 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.entity.BidHallDetailEntity;
@@ -284,6 +287,15 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         if (Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT.equals(demand_type)) {
             mBtnSendBid.setVisibility(View.GONE);
         }
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        //判断是消费者，还是设计师，，从而区分消费者和设计师
+        if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+
+            mBtnSendBid.setVisibility(View.GONE);
+
+        }
+
     }
 
     /**

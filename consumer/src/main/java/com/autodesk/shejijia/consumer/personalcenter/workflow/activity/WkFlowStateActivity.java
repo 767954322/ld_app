@@ -65,11 +65,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
         demandDetails = (ImageView) right_contain.findViewById(R.id.demand_details);
         projectInformation = (ImageView) right_contain.findViewById(R.id.project_information);
-//        setImageForNavButton(ButtonType.RIGHT, R.drawable.project_information); /// 设置公用得头式图得标题 .
-//        setVisibilityForNavButton(ButtonType.RIGHT, true); /// 公用得头式图将右边的图片显示 .
-//
-//        setImageForNavButton(ButtonType.SECONDARY,R.drawable.project_information);
-//        setVisibilityForNavButton(ButtonType.SECONDARY,true);
 
     }
 
@@ -85,7 +80,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.initExtraBundle();
 
         Bundle bundle = getIntent().getExtras();
-        needs_id = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID);
         bid_status = bundle.getBoolean(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS);
         demand_type = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_TYPE);
 
