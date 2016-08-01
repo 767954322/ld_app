@@ -25,7 +25,7 @@
 
     <string name="warmTips">温馨提示：</string>
     <string name="Mrasuretips">提示：</string>
-
+    <string name="illustrate">  量房费说明</string>
     <string name="update_measure_house_cost">量房费可更改</string>
     <string name="no_pay_rent">量房费为0时，不需要支付量房费。</string>
 

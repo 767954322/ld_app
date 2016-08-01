@@ -73,8 +73,10 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvWarmTips = (TextView) findViewById(R.id.tvWarmTips);
         tvWarmTipsContent = (TextView) findViewById(R.id.tvWarmTipsContent);
         rlMeasureWarmTips = (RelativeLayout) findViewById(R.id.rlMeasureWarmTips);
+        rlWarmTips= (RelativeLayout) findViewById(R.id.rlWarmTips);
         tvMeasureWarmTips = (TextView) findViewById(R.id.tvMeasureWarmTips);
         tvMeasureWarmTipsContent = (TextView) findViewById(R.id.tvMeasureWarmTipsContent);
+        tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
         ll_measure_form_style.setVisibility(View.GONE);
     }
 
@@ -88,10 +90,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         initAlertView();
     }
 
-    @Override
-    protected void initExtraBundle() {
-        super.initExtraBundle();
-    }
 
     @Override
     public void onItemClick(Object object, int position) {
@@ -121,6 +119,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         btn_measure_form_send.setOnClickListener(this);
         btn_measure_form_refuse.setOnClickListener(this);
         tvc_measure_form_time.setOnClickListener(this);
+        tvIllustrate.setOnClickListener(this);
     }
 
     @Override
@@ -170,6 +169,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     e.printStackTrace();
                 }
                 break;
+            case R.id.tvIllustrate: /// 量房费说明 .
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null, null, new String[]{UIUtils.getString(R.string.finish_cur_pager)}, FlowMeasureFormActivity.this,
+                        AlertView.Style.Alert, null).show();
+
+                break;
             case R.id.btn_measure_form_accept: /// 同意量房 .
                 CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
                 agreeMeasureHouse(needs_id);
@@ -203,14 +207,16 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
 
         if (memType.equals(Constant.UerInfoKey.CONSUMER_TYPE)) { // 消费者
-
+            rlWarmTips.setVisibility(View.GONE);
             if (wk_cur_sub_node_id_i >= 11) {
                 ll_consumer_send.setVisibility(View.GONE);
+                tvIllustrate.setVisibility(View.GONE);
                 tvc_measure_form_time.setClickable(false);
                 tvc_measure_form_time.setText(mBidders.get(0).getMeasure_time()); /// 量房时间 .
 
             } else {
                 ll_consumer_send.setVisibility(View.VISIBLE);
+                tvIllustrate.setVisibility(View.VISIBLE);
                 tvWarmTips.setText(R.string.warmTips);
                 tvWarmTipsContent.setText(R.string.warm_tips_content);
                 tvc_measure_form_time.setText("");
@@ -453,9 +459,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private TextView tvc_measure_form_estate;
     private TextView tvc_measure_form_fee;
     private TextView tvWarmTips;
+    private TextView tvIllustrate;
     private TextView tvWarmTipsContent;
 
     private RelativeLayout rlMeasureWarmTips;
+    private RelativeLayout rlWarmTips;
     private TextView tvMeasureWarmTips;
     private TextView tvMeasureWarmTipsContent;
 
