@@ -33,4 +33,5 @@
     <string name="appraise_designer">评分</string>
     <string name="appraise_designer_hint">写下这次设计服务的体会，分享给其他小伙伴～</string>
     <string name="appraise_designer_submit">提交</string>
+    <string name="my_attention">我的关注</string>
 </resources>
