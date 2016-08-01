@@ -111,6 +111,9 @@ public class MPPhotoAlbumAdapter extends BaseAdapter
 
             int numPhotos = album.albumSize;
 
+            // Set visible by default; needed because we are recycling views
+            row.subtitleLabel.setVisibility(View.VISIBLE);
+
             if (numPhotos > 1)
                 row.subtitleLabel.setText(String.format("%d %s", numPhotos,
                         mContext.getString(R.string.photopicker_album_subtitle_multiple)));
