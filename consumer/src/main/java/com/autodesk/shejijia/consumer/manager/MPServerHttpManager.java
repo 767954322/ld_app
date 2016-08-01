@@ -1133,9 +1133,9 @@ public class MPServerHttpManager {
      * @param offset
      * @param limit
      */
-    public void getMessageCentermsgs(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
+    public void getMessageCenterMessages(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MESSAGE_CENTER + member_id + "/sysmessages?limit=" + limit + "&offset=" + offset;
-        Log.d("test", url);
+        KLog.d("test", url);
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
@@ -1267,7 +1267,6 @@ public class MPServerHttpManager {
     private String addX_Token(String xToken) {
         return Constant.NetBundleKey.X_TOKEN_PREFIX + xToken;
     }
-
 
     private String TAG = getClass().getSimpleName();
 
