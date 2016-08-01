@@ -39,7 +39,7 @@ import java.net.URL;
  * @brief 微信分享工具类 .
  */
 public class SendWXShared {
-    public static void sendProjectToWX( final String webUrl, final String title, final String description, final boolean ifIsSharedToFriends, final String imgUrl) throws IOException {
+    public static void sendProjectToWX(final String webUrl, final String title, final String description, final boolean ifIsSharedToFriends, final String imgUrl) throws IOException {
         ImageLoader.getInstance().loadImage(imgUrl, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
@@ -68,7 +68,7 @@ public class SendWXShared {
                 SendMessageToWX.Req req = new SendMessageToWX.Req();
                 req.transaction = buildTransaction("webpage");
                 req.message = msg;
-                req.scene = ifIsSharedToFriends ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+                req.scene = ifIsSharedToFriends ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
                 ConsumerApplication.api.sendReq(req);
             }
 
