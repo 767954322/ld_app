@@ -76,6 +76,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
          */
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) { // 消费者
             switch (position) {
+                //确认量房
                 case 0:
                     viewHolder.piv_meal_phone.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_xuanzeshejishi));
                     if (stateCode == 11) {
@@ -106,7 +107,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
-
+                //支付量房费用
                 case 1:
                     viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
                     viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.pay_amount_of_room_charge));
@@ -138,7 +139,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
-
+                //接受设计交付物
                 case 2:
                     if (stateCode == 21) {
                         textColor = StepEnableColor;
@@ -169,7 +170,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
-
+                //支付设计首款
                 case 3:
                     viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.zhifusheijiweikuan));
                     if (stateCode == 31) {
@@ -188,6 +189,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
+                //支付设计尾款
                 case 4:
                     viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.zhifushejiket));
                     if (stateCode == 41 || stateCode == 42) {
@@ -206,7 +208,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
-
+                //接收设计交付物
                 case 5:
                     viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.jieshoujiafuwu));
                     if (stateCode == 51 || stateCode == 52) {
@@ -233,6 +235,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
              * 设计师全流程状态
              */
             switch (position) {
+                //确认量房
                 case 0:
                     if (stateCode == 11) {
                         textColor = StepEnableColor;
@@ -278,6 +281,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
 
+                //接收量房费
                 case 1:
                     if (stateCode == 12) {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
@@ -314,7 +318,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
-
+                //上传量房交付物
                 case 2:
                     if (stateCode == 21 || stateCode == 22) {
                         textColor = StepEnableColor;
@@ -340,6 +344,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
+                //接收设计首款
                 case 3:
                     if (stateCode == 31) {
                         textColor = StepEnableColor;
@@ -360,6 +365,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
+                //接受设计尾款
                 case 4:
                     if (stateCode == 41) {
                         textColor = StepEnableColor;
@@ -380,6 +386,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
                     break;
+                //上传设计交付物
                 case 5:
                     viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.shangchuanjiaofuwu));
                     if (stateCode == 51) {
