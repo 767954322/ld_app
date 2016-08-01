@@ -36,7 +36,7 @@
             android:layout_marginLeft="@dimen/chat_room_commandcell_avatar_marginleft"
             android:src="@drawable/default_useravatar"
             android:scaleType="centerCrop"
-            custom:border_width="1dp"
+            custom:border_width="@dimen/chat_room_cell_avatar_borderwidth"
             custom:border_color="@color/chat_room_commandcell_background"/>
 
         <LinearLayout
