@@ -155,13 +155,15 @@
     <string name="please_select_style">请选择风格</string>
     <string name="demand_measure_house_time">量房时间：</string>
     <string name="please_select_quantity_room_time">请选择量房时间</string>
-    <string name="demand_measure_house_address">量房地址：</string>
+    <string name="europe_and_america_style">欧美风</string>
+    <string name="demand_measure_house_address">项目地址：</string>
     <string name="please_select_address">请选择省市区</string>
     <string name="demand_village_name">小区名称：</string>
     <string name="please_select_community_name">请输入小区名称</string>
     <string name="demand_measure_house_charge">量&#160;&#160;房&#160;&#160;费：</string>
     <string name="flow_send">发送</string>
     <string name="agreed">同意</string>
+    <string name="agreed_home">确定量房</string>
     <string name="refuse">拒绝</string>
     <string name="amount_of_time_is_empty">量房时间为空</string>
     <string name="amount_of_time_than_current_time_one_hour">量房时间至少大于当前时间一小时</string>
@@ -171,9 +173,10 @@
     <string name="refused_room_success">拒绝量房成功</string>
     <string name="choose_ta_room_success">选TA量房成功</string>
     <string name="choose_ta_room_fail">选TA量房失败</string>
+    <string name="agree_measure_house_time">请选择量房时间</string>
     <string name="the_designer_rejected_quantity">WkFlowMea.设计师拒绝量房</string>
     <string name="consumer_should_agree_with_mark">WkFlowMea.消费者同意应标</string>
-    <string name="phone">电&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;话：</string>
+    <string name="phone">手机号码：</string>
 
     <!--  FlowUploadDeliveryActivity -->
     <string name="data_null">暂无数据</string>
@@ -398,7 +401,7 @@
     <string name="fitment_area">房屋面积：</string>
     <string name="fitment_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
     <string name="fitment_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
-    <string name="are">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
+    <string name="are">房屋面积：</string>
     <string name="fitment_address">项目地址：</string>
     <string name="fitment_specific_address">具体地址：</string>
     <string name="fitment_release_time">发布时间：</string>
@@ -449,7 +452,7 @@
     <string name="please_fill_detailed_address">请正确填写小区名称</string>
     <string name="data_send">数据发送中...</string>
     <string name="demand_house_area">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
-    <string name="demand_measure_house_form">量房表单</string>
+    <string name="demand_measure_house_form">量房资料</string>
     <string name="exist_measure_order_information">已有量房资料</string>
 
 
