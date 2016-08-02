@@ -42,4 +42,6 @@
     <string name="attention_cancel">取消关注</string>
     <string name="attention_tip_message_first">您确定取消对</string>
     <string name="attention_tip_message_last">的关注吗？</string>
+    <string name="following_sure">确定</string>
+    <string name="following_cancel">取消</string>
 </resources>

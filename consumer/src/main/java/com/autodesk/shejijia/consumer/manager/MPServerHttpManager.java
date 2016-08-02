@@ -1267,13 +1267,13 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 关注或者取消关注
+     * 关注
      *
      * @param member_id          登陆人编号
      * @param followed_member_id 被关注设计师编号
      * @param callback           回调接口
      */
-    public void attentionOrUnFollowDesigner(String member_id, String followed_member_id, String followed_member_uid, OkJsonRequest.OKResponseCallback callback) {
+    public void followingDesigner(String member_id, String followed_member_id, String followed_member_uid, OkJsonRequest.OKResponseCallback callback) {
         String attentionOrUnfollowDesignerUrl = UrlConstants.MAIN_MEMBER +
                 "/members/" + member_id +
                 "/follows/" + followed_member_id +
@@ -1292,8 +1292,33 @@ public class MPServerHttpManager {
             }
         };
         queue.add(okJsonRequest);
+    }
 
+    /**
+     * 取消关注
+     *
+     * @param member_id          登陆人编号
+     * @param followed_member_id 被关注设计师编号
+     * @param callback           回调接口
+     */
+    public void unFollowedDesigner(String member_id, final String followed_member_id, final String followed_member_uid, OkJsonRequest.OKResponseCallback callback) {
+        String attentionOrUnfollowDesignerUrl = UrlConstants.MAIN_MEMBER +
+                "/members/" + member_id +
+                "/follows/" + followed_member_id;
+        KLog.d(TAG, attentionOrUnfollowDesignerUrl);
 
+        OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.PUT, attentionOrUnfollowDesignerUrl, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.HS_UID, followed_member_uid);
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                KLog.d(TAG, Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okJsonRequest);
     }
 
     /**

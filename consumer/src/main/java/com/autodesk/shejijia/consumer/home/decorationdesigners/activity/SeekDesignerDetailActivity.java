@@ -15,8 +15,9 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailHomeBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
@@ -59,6 +60,8 @@ import java.util.ArrayList;
 public class SeekDesignerDetailActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, SeekDesignerDetailAdapter.OnItemCaseLibraryClickListener {
 
 
+    private String mSelfAcsMemberId;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_seek_designer_detail;
@@ -99,10 +102,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         showOrHideChatMeasure();
+
         mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(SeekDesignerDetailActivity.this, mCasesEntityArrayList, this);
         mListView.setAdapter(mSeekDesignerDetailAdapter);
 
-        attentionOrUnFollowDesigner(false);
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
     }
 
@@ -137,7 +140,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this,
                                 AlertView.Style.Alert, null).show();
                     }
-
 
                 } else {
                     AdskApplication.getInstance().doLogin(this);
@@ -264,7 +266,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
                 String info = GsonUtil.jsonToString(jsonObject);
-                seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, SeekDesignerDetailHomeBean.class);
+                seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
                 KLog.json(TAG, info);
 
                 updateViewFromDesignerDetailData(seekDesignerDetailHomeBean);
@@ -305,23 +307,40 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      *
      * @param seekDesignerDetailHomeBean 　设计师信息实体类
      */
-    private void updateViewFromDesignerDetailData(SeekDesignerDetailHomeBean seekDesignerDetailHomeBean) {
+    private void updateViewFromDesignerDetailData(DesignerDetailHomeBean seekDesignerDetailHomeBean) {
+
+
         if (null != seekDesignerDetailHomeBean) {
+            /**
+             * 设置取消还是关注文字
+             */
+
             if (seekDesignerDetailHomeBean.getAvatar() == null) {
                 mHeadIcon.setImageResource(R.drawable.icon_default_avator);
             } else {
                 ImageUtils.displayAvatarImage(seekDesignerDetailHomeBean.getAvatar(), mHeadIcon);
             }
-
-            SeekDesignerDetailHomeBean.DesignerEntity designer = seekDesignerDetailHomeBean.getDesigner();
+            DesignerBean designer = seekDesignerDetailHomeBean.getDesigner();
             if (null != designer.getIs_real_name() + "" && designer.getIs_real_name() == 2) {
                 mIvCertification.setVisibility(View.VISIBLE);
             } else {
                 mIvCertification.setVisibility(View.GONE);
             }
-            String nick_name = seekDesignerDetailHomeBean.getNick_name();
-            nick_name = TextUtils.isEmpty(nick_name) ? "" : nick_name;
-            setTitleForNavbar(nick_name);
+            
+            /**
+             * 如果是当前设计师，就不显示关注按钮
+             */
+            if (!mSelfAcsMemberId.equals(designer.getAcs_member_id())) {
+                setRightTitle(seekDesignerDetailHomeBean.is_following);
+            } else {
+                setVisibilityForNavButton(ButtonType.LEFT, false);
+            }
+
+            mNickName = seekDesignerDetailHomeBean.getNick_name();
+            mNickName = TextUtils.isEmpty(mNickName) ? "" : mNickName;
+            setTitleForNavbar(mNickName);
+
+            unFollowedAlertView();
 
             if (null == designer.getExperience() + "" || designer.getExperience() == 0) {
                 mTvYeas.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
@@ -395,6 +414,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         if (null != memberEntity) {
             member_id = memberEntity.getAcs_member_id();
             mMemberType = memberEntity.getMember_type();
+            mSelfAcsMemberId = memberEntity.getAcs_member_id();
             if (mMemberType.equals((Constant.UerInfoKey.CONSUMER_TYPE))) {
                 mLlChatMeasure.setVisibility(View.VISIBLE);
             } else {
@@ -405,43 +425,76 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
     /**
      * 设置title栏，关注的显示问题
+     * true :关注状态-->对应取消关注
+     * false : 取消关注-->对应关注
      */
     private void setRightTitle(boolean follows_type) {
+
         if (follows_type) {
-            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
-        } else {
             setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_cancel));
+        } else {
+            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
         }
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
-
+    /**
+     * 如果判断字段is_following为true，就是关注中，点击取消关注
+     */
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
 
-        attentionOrUnFollowDesigner(true);
+        if (seekDesignerDetailHomeBean.is_following) {
+            unFollowedAlertView.show();
+        } else {
+            followingDesigner();
+        }
     }
 
     /**
-     * 关注或者取消关注设计师
+     * 关注设计师
      */
-    private void attentionOrUnFollowDesigner(final boolean isFirstAttention) {
+    private void followingDesigner() {
         CustomProgress.show(this, "", false, null);
         String followed_member_id = mDesignerId;
         String followed_member_uid = mHsUid;
-        MPServerHttpManager.getInstance().attentionOrUnFollowDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().followingDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                String attentionOrUnFollowDesignerString = GsonUtil.jsonToString(jsonObject);
-                if (isFirstAttention) {
-                    MyToast.show(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_success));
-                    setRightTitle(false);
-                } else {
-                    unFollowedAlertView("姓名");
-                }
+                String followingDesignerString = GsonUtil.jsonToString(jsonObject);
+                setRightTitle(true);
+                /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
+                seekDesignerDetailHomeBean.is_following = true;
+                MyToast.show(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_success));
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                setRightTitle(true);
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
+    }
+
+    /**
+     * 取消关注设计师
+     */
+    private void unFollowedDesigner() {
+        CustomProgress.show(this, "", false, null);
+        String followed_member_id = mDesignerId;
+        String followed_member_uid = mHsUid;
+        MPServerHttpManager.getInstance().unFollowedDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+                String unFollowDesignerString = GsonUtil.jsonToString(jsonObject);
+                setRightTitle(false);
+                MyToast.show(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_cancel));
             }
 
             @Override
@@ -471,12 +524,17 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     /**
      * 取消关注提示框
      */
-    private AlertView unFollowedAlertView(String desingerName) {
-        return new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + desingerName + UIUtils.getString(R.string.attention_tip_message_last), null, null, null, SeekDesignerDetailActivity.this,
+    private void unFollowedAlertView() {
+        unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
+                UIUtils.getString(R.string.following_cancel), null,
+                new String[]{UIUtils.getString(R.string.following_sure)},
+                SeekDesignerDetailActivity.this,
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
-                
+                if (position != AlertView.CANCELPOSITION) {
+                    unFollowedDesigner();
+                }
             }
         }).setCancelable(true);
     }
@@ -520,10 +578,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private ImageView mIvCertification;
     private PolygonImageView mHeadIcon;
     private Button mBtnChat, mBtnMeasure;
+    private AlertView unFollowedAlertView;
 
+    private String mNickName;
     private String mMeasureFee;
     private String member_id;
-    private boolean isFirstAttention = false;
     private String mMemberType, mDesignerId, mHsUid;
     private SeekDesignerDetailAdapter mSeekDesignerDetailAdapter;
     private SeekDesignerDetailBean mSeekDesignerDetailBean;
@@ -531,6 +590,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private int OFFSET = 0;
     private boolean isFirstIn = true;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
-    private SeekDesignerDetailHomeBean seekDesignerDetailHomeBean;
+    private DesignerDetailHomeBean seekDesignerDetailHomeBean;
 
 }
