@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gradient_reflect">
+               >
     <!--android:background="@drawable/toast_shape"-->
     <RelativeLayout
+        android:alpha="100"
+        android:background="@drawable/gradient_reflect"
         android:layout_width="@dimen/size_100"
         android:layout_height="@dimen/size_100"
         android:layout_centerInParent="true"
