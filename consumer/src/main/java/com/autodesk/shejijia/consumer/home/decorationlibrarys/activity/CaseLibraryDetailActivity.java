@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.ImageShowView;
@@ -120,14 +121,11 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
      */
     public void saveImageToGallery(Bitmap bmp) throws IOException {
         if (bmp == null) {
-            Toast.makeText(CaseLibraryDetailActivity.this, "保存出错了", Toast.LENGTH_SHORT).show();
+            ToastUtil.showCustomToast(CaseLibraryDetailActivity.this, getString(R.string.save_failure));
             return;
         }
 
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-//            String fileName = System.currentTimeMillis() + ".jpg";
-//            String appDirName = Environment.getExternalStorageDirectory() + "Boohee";
-//            File file = new File(appDirName);
             File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
             if (!appDir.exists()) {
                 appDir.mkdir();
@@ -152,46 +150,12 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
                 Uri uri = Uri.fromFile(file);
                 intent.setData(uri);
                 CaseLibraryDetailActivity.this.sendBroadcast(intent);
-                Toast.makeText(CaseLibraryDetailActivity.this, "保存成功了", Toast.LENGTH_SHORT).show();
+                ToastUtil.showCustomToast(CaseLibraryDetailActivity.this, getString(R.string.save_success));
             } catch (IOException e) {
                 e.printStackTrace();
+                ToastUtil.showCustomToast(CaseLibraryDetailActivity.this, getString(R.string.save_failure));
             }
-
         }
-
-//        // 首先保存图片
-//        File appDir = new File(SAVE_PIC_PATH, "iamge");
-//        if (!appDir.exists()) {
-//            appDir.mkdir();
-//        }
-//        String fileName = System.currentTimeMillis() + ".jpg";
-//        File file = new File(appDir, fileName);
-//        try {
-//            FileOutputStream fos = new FileOutputStream(file);
-//            bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-//            fos.flush();
-//            fos.close();
-//        } catch (FileNotFoundException e) {
-//            Toast.makeText(CaseLibraryDetailActivity.this, "文件未发现", Toast.LENGTH_SHORT).show();
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            Toast.makeText(CaseLibraryDetailActivity.this, "保存出错了", Toast.LENGTH_SHORT).show();
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            Toast.makeText(CaseLibraryDetailActivity.this, "保存出错了", Toast.LENGTH_SHORT).show();
-//            e.printStackTrace();
-//        }
-//        // 最后通知图库更新
-//        try {
-//            MediaStore.Images.Media.insertImage(CaseLibraryDetailActivity.this.getContentResolver(), file.getAbsolutePath(), fileName, null);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        Uri uri = Uri.fromFile(file);
-//        intent.setData(uri);
-//        CaseLibraryDetailActivity.this.sendBroadcast(intent);
-//        Toast.makeText(CaseLibraryDetailActivity.this, "保存成功了", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -207,10 +171,6 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
         mImageShowView.setImageResources(mImageUrl, this, intExtra);
     }
 
-    private final String SAVE_PIC_PATH = Environment.getExternalStorageState()
-            .equalsIgnoreCase(Environment.MEDIA_MOUNTED) ? Environment.getExternalStorageDirectory()
-            .getAbsolutePath() : "/mnt/sdcard";
-    //    private static final String SAVE_REAL_PATH = SAVE_PIC_PATH + "/good/savePic";
     private int intExtra;
     private ImageShowView mImageShowView;
     private String imageUrl;

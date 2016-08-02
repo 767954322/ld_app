@@ -1,6 +1,9 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -213,10 +216,16 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 break;
             case R.id.ll_fenxiang://分享
                 if (null != memberEntity) {
-                    if (takePhotoPopWin == null) {
-                        takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
+
+                    if (isWeixinAvilible(CaseLinraryNewActivity.this)) {
+                        if (takePhotoPopWin == null) {
+                            takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
+                        }
+                        takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    } else {
+                        ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "请先安装微信");
                     }
-                    takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -276,6 +285,21 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             default:
                 break;
         }
+    }
+
+    public static boolean isWeixinAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
