@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -73,8 +74,7 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
      */
     @Override
     public void onImageClick(final int position, View imageView) {
-//        Toast.makeText(this, "长按图片" + mImageUrl.get(position), Toast.LENGTH_SHORT).show();
-        new ActionSheetDialog(this)
+        ActionSheetDialog actionSheetDialog = new ActionSheetDialog(this)
                 .builder()
                 .setCancelable(true)
                 .setCanceledOnTouchOutside(true)
@@ -112,8 +112,9 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
                                 });
 
                             }
-                        })
-                .show();
+                        });
+        actionSheetDialog.setCancelTextColor(Color.GRAY);
+        actionSheetDialog.show();
     }
 
     /**

@@ -30,6 +30,6 @@
     <string name="no_pay_rent">量房费为0时，不需要支付量房费。</string>
 
     <string name="warm_tips_content">签订设计合同后，您所支付的量房费将会抵消等额的设计费。</string>
-    <string name="save_success">保存成功</string>
+    <string name="save_success">已保存到本地相册</string>
     <string name="save_failure">保存失败</string>
 </resources>
