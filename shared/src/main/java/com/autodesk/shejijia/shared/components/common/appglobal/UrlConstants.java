@@ -280,18 +280,19 @@ public final class UrlConstants {
     /**
      * 消息中心接口
      */
-      public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
+    public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
 
     /**
      * 交付物延期
      */
     public static final String URL_DELIVERY_DELAY = MAIN_DESIGN + "/demands/";
     /**
-     *  delay time
+     * delay time
      */
     public static final String URL_DELIVERY_DELAY_DATA = MAIN_DESIGN + "/demands/";
     /**
-     *  Delete Attention
+     * Delete Attention
+     * "http://dev-www.gdfcx.net/member-app/v1/api"
      */
-    public static final String URL_DELETE_ATTENTION = "http://dev-www.gdfcx.net/member-app/v1/api" + "/members/";
+    public static final String URL_DELETE_ATTENTION = MAIN_MEMBER + "/members/";
 }

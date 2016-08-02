@@ -70,9 +70,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_10"
             android:text="@string/appraise_designer"/>
-        <!--    style="@style/custom_rating_bar"        -->
+        <!--            style="@android:style/Widget.RatingBar.Small"       -->
+
         <RatingBar
-            style="@android:style/Widget.RatingBar.Small"
+            style="@style/custom_rating_bar"
             android:id="@+id/rating_star"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
