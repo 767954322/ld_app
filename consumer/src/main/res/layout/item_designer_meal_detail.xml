@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/designer_meal_detail_title"
                 android:textColor="@color/bg_00"
-                android:textSize="@dimen/font_18"
+                android:textSize="@dimen/font_15"
                 android:textStyle="bold" />
 
             <TextView

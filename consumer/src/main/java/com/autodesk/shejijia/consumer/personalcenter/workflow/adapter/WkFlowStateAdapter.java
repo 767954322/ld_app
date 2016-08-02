@@ -410,7 +410,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
     private Context context;
     private String wk_cur_sub_node_id;
     private String member_type;
-    private final int StepEnableColor = Color.rgb(30, 30, 30); // 亮
-    private final int StepDisEnableColor = Color.rgb(188, 188, 188); // 暗
+    private final int StepEnableColor = Color.rgb(51, 51, 51); // 亮
+    private final int StepDisEnableColor = Color.rgb(227, 227, 227); // 暗
 
 }
