@@ -15,7 +15,7 @@
             android:layout_width="@dimen/size_130"
             android:layout_height="@dimen/size_100"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/size_10">
+            android:layout_marginTop="@dimen/size_10">
 
             <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
                 android:id="@+id/piv_seek_designer_head"
@@ -42,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/size_24">
 
             <TextView
                 android:layout_width="wrap_content"

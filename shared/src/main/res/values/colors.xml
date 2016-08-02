@@ -199,7 +199,7 @@
     <color name="textColor_alert_button_others">#007aff</color><!--点击颜色-->
     <color name="bgColor_alert_button_press">#EAEAEA</color><!--actionsheet模式的取消按钮背景颜色-->
     <color name="bgColor_actionsheet_cancel_nor">#ffffff</color>
-    <color name="navbar_bottom_border_color">#D6D6D6</color>
+    <color name="navbar_bottom_border_color">#d4d4d4</color>
 
 
 </resources>
