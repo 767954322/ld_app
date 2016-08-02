@@ -463,7 +463,8 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="AnZhuoShiChang"/>
-
+        <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity">
+        </activity>
         <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity">
         </activity>
         <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity" />
