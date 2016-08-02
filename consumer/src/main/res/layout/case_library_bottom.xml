@@ -34,11 +34,11 @@
                 android:visibility="visible"/>
 
             <ImageView
-                android:id="@+id/iv_guanzu"
+                android:id="@+id/iv_follow_designer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/size_6"
-                android:background="@drawable/yiguanzhu_ico"
+                android:background="@drawable/ic_followed_cancel"
                 android:paddingLeft="@dimen/size_10"/>
 
         </LinearLayout>

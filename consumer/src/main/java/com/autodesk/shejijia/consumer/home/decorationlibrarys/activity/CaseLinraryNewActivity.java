@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -71,7 +69,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private PolygonImageView pivImgCustomerHomeHeader;
     private ImageView ivCustomerIm;
     private TextView ivConsumeHomeDesigner;
-    private ImageView ivGuanzu;
+    private ImageView mIvFollowedDesigner;
     private TextView tvCustomerHomeStyle;
     private TextView tvCustomerHomeRoom;
     private TextView tvCustomerHomeArea;
@@ -115,7 +113,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
-        ivGuanzu = (ImageView) findViewById(R.id.iv_guanzu);
+        mIvFollowedDesigner = (ImageView) findViewById(R.id.iv_follow_designer);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
@@ -169,7 +167,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         ll_fenxiang_up.setOnClickListener(this);
         pivImgCustomerHomeHeader.setOnClickListener(this);
         ivCustomerIm.setOnClickListener(this);
-        ivGuanzu.setOnClickListener(this);
+        mIvFollowedDesigner.setOnClickListener(this);
         rlThumbUp.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
 
@@ -204,13 +202,15 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
-            case R.id.iv_guanzu://关注
-                if (null != memberEntity) {
 
+            case R.id.iv_follow_designer://关注
+                if (null != memberEntity) {
+                    
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
+
             case R.id.ll_fenxiang://分享
                 if (null != memberEntity) {
                     if (takePhotoPopWin == null) {
