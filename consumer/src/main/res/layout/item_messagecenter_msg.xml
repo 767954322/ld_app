@@ -2,13 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#BABABA">
+    android:background="#eef1f4">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/font_1"
-        android:layout_alignParentTop="true"
-        android:background="#999999" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/font_1"
-            android:background="#999999" />
+            android:background="#d7d7d7" />
 
         <TextView
             android:id="@+id/item_messagecenter_tital"
