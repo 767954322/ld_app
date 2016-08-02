@@ -13,33 +13,36 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailHomeBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -54,6 +57,7 @@ import java.util.ArrayList;
  * @brief 查看设计师详情页面 .
  */
 public class SeekDesignerDetailActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, SeekDesignerDetailAdapter.OnItemCaseLibraryClickListener {
+
 
     @Override
     protected int getLayoutResId() {
@@ -97,8 +101,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         showOrHideChatMeasure();
         mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(SeekDesignerDetailActivity.this, mCasesEntityArrayList, this);
         mListView.setAdapter(mSeekDesignerDetailAdapter);
+
+        attentionOrUnFollowDesigner(false);
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
     }
+
 
     @Override
     protected void initListener() {
@@ -143,7 +150,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 if (memberEntity != null) {
 
                     if (null != seekDesignerDetailHomeBean) {
-                        member_id = memberEntity.getAcs_member_id();
                         final String designer_id = seekDesignerDetailHomeBean.getDesigner().getAcs_member_id();
                         final String hs_uid = seekDesignerDetailHomeBean.getHs_uid();
                         final String receiver_name = seekDesignerDetailHomeBean.getNick_name();
@@ -387,6 +393,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private void showOrHideChatMeasure() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
+            member_id = memberEntity.getAcs_member_id();
             mMemberType = memberEntity.getMember_type();
             if (mMemberType.equals((Constant.UerInfoKey.CONSUMER_TYPE))) {
                 mLlChatMeasure.setVisibility(View.VISIBLE);
@@ -394,6 +401,56 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mLlChatMeasure.setVisibility(View.GONE);
             }
         }
+    }
+
+    /**
+     * 设置title栏，关注的显示问题
+     */
+    private void setRightTitle(boolean follows_type) {
+        if (follows_type) {
+            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
+        } else {
+            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_cancel));
+        }
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
+    }
+
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+
+        attentionOrUnFollowDesigner(true);
+    }
+
+    /**
+     * 关注或者取消关注设计师
+     */
+    private void attentionOrUnFollowDesigner(final boolean isFirstAttention) {
+        CustomProgress.show(this, "", false, null);
+        String followed_member_id = mDesignerId;
+        String followed_member_uid = mHsUid;
+        MPServerHttpManager.getInstance().attentionOrUnFollowDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+                String attentionOrUnFollowDesignerString = GsonUtil.jsonToString(jsonObject);
+                if (isFirstAttention) {
+                    MyToast.show(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_success));
+                    setRightTitle(false);
+                } else {
+                    unFollowedAlertView("姓名");
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                setRightTitle(true);
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
     }
 
     @Override
@@ -409,6 +466,19 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private AlertView getEmptyAlertView(String content) {
         return new AlertView(UIUtils.getString(R.string.tip), content, null, null, null, SeekDesignerDetailActivity.this,
                 AlertView.Style.Alert, null).setCancelable(true);
+    }
+
+    /**
+     * 取消关注提示框
+     */
+    private AlertView unFollowedAlertView(String desingerName) {
+        return new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + desingerName + UIUtils.getString(R.string.attention_tip_message_last), null, null, null, SeekDesignerDetailActivity.this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                
+            }
+        }).setCancelable(true);
     }
 
     /**
@@ -430,7 +500,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      */
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        getSeekDesignerDetailHomeData(mDesignerId,mHsUid);
+        getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
     }
 
     /// 加载更多.
@@ -439,7 +509,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         getSeekDesignerDetailData(mDesignerId, OFFSET, LIMIT, 2);
     }
 
-    /// 控件.
     private LinearLayout mLlChatMeasure;
     private RelativeLayout mRlEmpty;
     private PullToRefreshLayout mPullToRefreshLayout;
@@ -452,9 +521,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private PolygonImageView mHeadIcon;
     private Button mBtnChat, mBtnMeasure;
 
-    /// 变量.
     private String mMeasureFee;
     private String member_id;
+    private boolean isFirstAttention = false;
     private String mMemberType, mDesignerId, mHsUid;
     private SeekDesignerDetailAdapter mSeekDesignerDetailAdapter;
     private SeekDesignerDetailBean mSeekDesignerDetailBean;

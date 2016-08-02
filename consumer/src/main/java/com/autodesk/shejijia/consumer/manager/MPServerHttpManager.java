@@ -121,7 +121,7 @@ public class MPServerHttpManager {
 //                "&sort_order=desc" +
 //                "&custom_string_form=" + custom_string_form;
 
-        String url="http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
+        String url = "http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
                 "custom_string_style=&custom_string_type=" +
                 "&custom_string_keywords=" +
                 "&sort_by=date" +
@@ -409,7 +409,6 @@ public class MPServerHttpManager {
      * @param limit
      */
     public void getSeekDesignerDetailData(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
-//        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/20730531/cases?offset=0&sort_order=desc&sort_by=date&limit=10";
         String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/cases?" +
                 "offset=" + offset +
                 "&sort_order=desc" +
@@ -1151,7 +1150,7 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                Log.d("test", addX_Token(xToken));
+                KLog.d("test", addX_Token(xToken));
                 return header;
             }
         };
@@ -1268,7 +1267,36 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 关注或者取消关注
      *
+     * @param member_id          登陆人编号
+     * @param followed_member_id 被关注设计师编号
+     * @param callback           回调接口
+     */
+    public void attentionOrUnFollowDesigner(String member_id, String followed_member_id, String followed_member_uid, OkJsonRequest.OKResponseCallback callback) {
+        String attentionOrUnfollowDesignerUrl = UrlConstants.MAIN_MEMBER +
+                "/members/" + member_id +
+                "/follows/" + followed_member_id +
+                "?followed_member_uid=" + followed_member_uid;
+
+        KLog.d(TAG, attentionOrUnfollowDesignerUrl);
+
+        OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.POST, attentionOrUnfollowDesignerUrl, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                KLog.d(TAG, Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okJsonRequest);
+
+
+    }
+
+    /**
      * @param member_id
      * @param limit
      * @param offset
@@ -1289,7 +1317,6 @@ public class MPServerHttpManager {
         queue.add(okJsonRequest);
 
     }
-
 
 
     /**

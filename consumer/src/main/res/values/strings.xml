@@ -11,7 +11,7 @@
     <string name="delivery_delayed">延期</string>
     <string name="delivery_sure">确认</string>
     <string name="delivery_delayed_days">距离系统确认时间还有</string>
-    <string name="delivery_delayed_instructions">1、确认，表示您认可设计师提交的设计交付,设计师将不可以再对设计交付做修改。
+    <string name="delivery_delayed_instructions">1、确认，表示您认可设计师提交的设计交付，设计师将不可以再对设计交付做修改。
         \n2、延期，将会把确认时间延长７天。您有一次延期确认的机会。
         \n3、请在设计师提交设计交付后７日内确认设计师提供的交付资料是否完整。如果在７日内不做处理，系统将默认您确认了设计交付。</string>
     <string name="flow_upload_delivery_delay">延期确认?</string>
@@ -33,5 +33,13 @@
     <string name="appraise_designer">评分</string>
     <string name="appraise_designer_hint">写下这次设计服务的体会，分享给其他小伙伴～</string>
     <string name="appraise_designer_submit">提交</string>
+
+    <!--关注相关内容-->
     <string name="my_attention">我的关注</string>
+    <string name="attention_num">关注人数</string>
+    <string name="attention_success">关注成功</string>
+    <string name="attention_sure">关注</string>
+    <string name="attention_cancel">取消关注</string>
+    <string name="attention_tip_message_first">您确定取消对</string>
+    <string name="attention_tip_message_last">的关注吗？</string>
 </resources>

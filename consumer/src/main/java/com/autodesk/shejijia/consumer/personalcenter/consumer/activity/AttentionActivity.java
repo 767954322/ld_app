@@ -11,7 +11,6 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.AttentionA
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AttentionEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AttentionActivity extends NavigationBarActivity {
-
 
 
     @Override
@@ -47,11 +45,11 @@ public class AttentionActivity extends NavigationBarActivity {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.my_attention));
 
-        attentionAdapter = new AttentionAdapter(this,attentionList);
+        attentionAdapter = new AttentionAdapter(this, attentionList);
         lv_attention.setAdapter(attentionAdapter);
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         String acs_member_id = memberEntity.getAcs_member_id();
-        deleteAttention(acs_member_id,0,100);
+        deleteAttention(acs_member_id, 0, 100);
     }
 
     @Override
@@ -66,7 +64,10 @@ public class AttentionActivity extends NavigationBarActivity {
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 attentionEntity = GsonUtil.jsonToBean(userInfo, AttentionEntity.class);
-                attentionList.addAll(attentionEntity.getDesigner_list());
+                List<AttentionEntity.DesignerListBean> designer_list = attentionEntity.getDesigner_list();
+                if (null != designer_list && designer_list.size() > 0) {
+                    attentionList.addAll(attentionEntity.getDesigner_list());
+                }
                 attentionAdapter.notifyDataSetChanged();
 
             }
@@ -77,7 +78,7 @@ public class AttentionActivity extends NavigationBarActivity {
             }
 
         };
-        MPServerHttpManager.getInstance().deleteAttention(member_id,limit,offset,okResponseCallback);
+        MPServerHttpManager.getInstance().deleteAttention(member_id, limit, offset, okResponseCallback);
     }
 
     private AttentionEntity attentionEntity;

@@ -19,12 +19,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -198,10 +198,17 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
      * 获取所有图片的url地址
      */
     private void updateViewFromData() {
+        List<CaseDetailBean.ImagesEntity> images = caseDetailBean.getImages();
+        if (null == images || images.size() < 1) {
+            return;
+        }
         for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
             if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
-                imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
-                mImageUrl.add(imageUrl);
+                CaseDetailBean.ImagesEntity imagesEntity = caseDetailBean.getImages().get(i);
+                if (null != imagesEntity) {
+                    imageUrl = imagesEntity.getFile_url() + Constant.CaseLibraryDetail.JPG;
+                    mImageUrl.add(imageUrl);
+                }
             }
         }
         mImageShowView.setImageResources(mImageUrl, this, intExtra);

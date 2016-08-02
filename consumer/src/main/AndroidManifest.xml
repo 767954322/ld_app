@@ -467,7 +467,6 @@
         <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity">
         </activity>
         <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity" />
-        <activity android:name=".personalcenter.designer.activity.AttestationActivity" />
         <activity android:name=".personalcenter.consumer.activity.AttentionActivity" />
     </application>
 

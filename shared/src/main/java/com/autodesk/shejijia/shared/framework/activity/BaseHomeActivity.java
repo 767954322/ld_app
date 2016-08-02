@@ -251,7 +251,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
+            if (null != fragment && fragment.getClass().equals(clazz)) {
                 fragmentTransaction.show(fragment);
 
                 if (fragment.getClass().equals(MPThreadListFragment.class))
