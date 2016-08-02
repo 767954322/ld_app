@@ -668,40 +668,13 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
     private void disableUserInteraction()
     {
-        ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
-
-        if(layout != null)
-            setEnableStateForBottombar(layout,false);
+        mHandler.disableUserInteraction();
     }
 
     private void enableUserInteraction()
     {
-        ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
-
-        if(layout != null)
-            setEnableStateForBottombar(layout,true);
+        mHandler.enableUserInteraction();
     }
-
-
-    private void setEnableStateForBottombar(ViewGroup viewGroup, boolean bEnable)
-    {
-        for (int i = 0; i < viewGroup.getChildCount(); i++)
-        {
-            View child = viewGroup.getChildAt(i);
-            child.setEnabled(bEnable);
-            child.setClickable(bEnable);
-            if (child instanceof ViewGroup)
-            {
-                ViewGroup group = (ViewGroup) child;
-                for (int j = 0; j < group.getChildCount(); j++)
-                {
-                    group.getChildAt(j).setEnabled(bEnable);
-                    group.getChildAt(j).setClickable(bEnable);
-                }
-            }
-        }
-    }
-
 
     private RelativeLayout mAudioParentView;
     private RoundProgressBar mAudioProgressBar;

@@ -148,6 +148,28 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
     }
 
 
+    public void enableUserInteraction () {
+        if (mIsInVoiceRecordMode)
+            setVoiceModeEnabled(true);
+        else
+            setTextModeEnabled(true);
+
+        mSendTextButton.setEnabled(true);
+        mOpenCustomViewButton.setEnabled(true);
+        mRecordAudioButton.setEnabled(true);
+    }
+
+
+    public void disableUserInteraction () {
+        setVoiceModeEnabled(false);
+        setTextModeEnabled(false);
+
+        mSendTextButton.setEnabled(false);
+        mOpenCustomViewButton.setEnabled(false);
+        mRecordAudioButton.setEnabled(false);
+    }
+
+
     private boolean didMoveOutside(View v, MotionEvent event) {
         int[] origin = new int[2];
         v.getLocationOnScreen(origin);
@@ -181,18 +203,21 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
     private void onVoiceClicked() {
         if (mIsInVoiceRecordMode) {
             mIsInVoiceRecordMode = false;
+
             mChatTextView.setText("");
-            mChatTextView.setEnabled(true);
-            mRecordTextView.setVisibility(View.GONE);
             mRecordAudioButton.setImageResource(R.drawable.voice_ico);
 
+            setVoiceModeEnabled(false);
+            setTextModeEnabled(true);
         } else {
             mIsInVoiceRecordMode = true;
+
             mChatTextView.setText("");
-            mChatTextView.setEnabled(false);
-            mRecordTextView.setVisibility(View.VISIBLE);
             mRecordTextView.setText(R.string.hold_down_the_talk);
             mRecordAudioButton.setImageResource(R.drawable.keyboard_ico);
+
+            setTextModeEnabled(false);
+            setVoiceModeEnabled(true);
         }
     }
 
@@ -271,6 +296,21 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
         alertDialogBuilder.setPositiveButton(mContext.getString(R.string.sure), null);
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    private void setVoiceModeEnabled(boolean enabled)
+    {
+        if (enabled)
+            mRecordTextView.setVisibility(View.VISIBLE);
+        else
+            mRecordTextView.setVisibility(View.GONE);
+
+        mRecordTextView.setEnabled(enabled);
+    }
+
+    private void setTextModeEnabled(boolean enabled)
+    {
+        mChatTextView.setEnabled(enabled);
     }
 
     private Context mContext;
