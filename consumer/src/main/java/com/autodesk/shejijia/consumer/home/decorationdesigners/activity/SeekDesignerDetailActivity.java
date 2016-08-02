@@ -59,9 +59,6 @@ import java.util.ArrayList;
  */
 public class SeekDesignerDetailActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, SeekDesignerDetailAdapter.OnItemCaseLibraryClickListener {
 
-
-    private String mSelfAcsMemberId;
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_seek_designer_detail;
@@ -70,7 +67,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     @Override
     protected void initView() {
         super.initView();
+
         mHeader = View.inflate(this, R.layout.activity_seek_designer_detail_header, null);
+        mTvFollowedNum = (TextView) mHeader.findViewById(R.id.tv_followed_num);
         mFooterView = View.inflate(this, R.layout.view_empty_layout, null);
         mLlChatMeasure = (LinearLayout) mHeader.findViewById(R.id.ll_seek_designer_detail_chat_measure);
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
@@ -314,7 +313,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             /**
              * 设置取消还是关注文字
              */
-
             if (seekDesignerDetailHomeBean.getAvatar() == null) {
                 mHeadIcon.setImageResource(R.drawable.icon_default_avator);
             } else {
@@ -326,7 +324,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             } else {
                 mIvCertification.setVisibility(View.GONE);
             }
-            
+
             /**
              * 如果是当前设计师，就不显示关注按钮
              */
@@ -335,7 +333,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             } else {
                 setVisibilityForNavButton(ButtonType.LEFT, false);
             }
-
+            mTvFollowedNum.setText(" : " + seekDesignerDetailHomeBean.following_count);
             mNickName = seekDesignerDetailHomeBean.getNick_name();
             mNickName = TextUtils.isEmpty(mNickName) ? "" : mNickName;
             setTitleForNavbar(mNickName);
@@ -374,6 +372,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             mTvYeas.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
             mTvDesignFee.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
             mTvMeasureFee.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
+            mTvFollowedNum.setText(" : " + UIUtils.getString(R.string.has_yet_to_fill_out));
         }
     }
 
@@ -579,8 +578,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private PolygonImageView mHeadIcon;
     private Button mBtnChat, mBtnMeasure;
     private AlertView unFollowedAlertView;
+    private TextView mTvFollowedNum;    /// 关注人数 .
 
     private String mNickName;
+    private String mSelfAcsMemberId;
     private String mMeasureFee;
     private String member_id;
     private String mMemberType, mDesignerId, mHsUid;

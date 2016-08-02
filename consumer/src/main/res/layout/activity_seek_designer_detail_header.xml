@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/piv_seek_designer_head_linearlayout"
@@ -41,25 +41,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/designer_working_year" />
-
-            <TextView
-                android:id="@+id/tv_seek_designer_detail_yeas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="尚未填写" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_5"
             android:gravity="center"
             android:orientation="horizontal">
@@ -67,29 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/be_good_at" />
-
-            <TextView
-                android:id="@+id/tv_seek_designer_detail_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="尚未填写" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_5"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/designer_design_fee" />
+                android:text="@string/designer_design_fee"/>
 
             <TextView
                 android:id="@+id/tv_seek_designer_design_fee"
@@ -97,25 +56,88 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="尚未填写" />
+                android:text="尚未填写"/>
 
             <TextView
                 android:layout_width="@dimen/size_1"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
-                android:background="@color/comment_black" />
+                android:background="@color/comment_black"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_10"
-                android:text="@string/designer_measure_fee" />
+                android:text="@string/designer_measure_fee"/>
 
             <TextView
                 android:id="@+id/tv_seek_designer_detail_measure_fee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="尚未填写" />
+                android:text="尚未填写"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/be_good_at"/>
+
+            <TextView
+                android:id="@+id/tv_seek_designer_detail_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="尚未填写"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/designer_working_year"/>
+
+            <TextView
+                android:id="@+id/tv_seek_designer_detail_yeas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="尚未填写"/>
+
+            <TextView
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/comment_black"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:text="@string/attention_num"/>
+
+
+            <TextView
+                android:id="@+id/tv_followed_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
 
         </LinearLayout>
 
@@ -123,9 +145,9 @@
             android:id="@+id/ll_seek_designer_detail_chat_measure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/size_5"
             android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginTop="@dimen/size_5"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
@@ -135,8 +157,8 @@
                 android:layout_marginRight="@dimen/size_20"
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/designer_online_communication"
-                android:textSize="@dimen/font_12"
-                android:textColor="@color/bg_ff" />
+                android:textColor="@color/bg_ff"
+                android:textSize="@dimen/font_12"/>
 
             <Button
                 android:id="@+id/btn_seek_designer_detail_optional_measure"
@@ -144,8 +166,8 @@
                 android:layout_height="@dimen/size_30"
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/optional_measure"
-                android:textSize="@dimen/font_12"
-                android:textColor="@color/bg_ff" />
+                android:textColor="@color/bg_ff"
+                android:textSize="@dimen/font_12"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
