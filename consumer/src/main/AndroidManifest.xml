@@ -367,7 +367,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity" />
         <activity
-            android:name=".home.decorationlibrarys.activity.CaseLinraryNewActivity"
+            android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />

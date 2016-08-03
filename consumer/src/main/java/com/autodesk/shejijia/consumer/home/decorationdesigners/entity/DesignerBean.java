@@ -22,7 +22,7 @@ public class DesignerBean {
     private String personal_honour;
     private String diy_count;
     private int case_count;
-    private int is_loho;
+    private String is_loho;
     private int is_real_name;
     private Object theme_pic;
 
@@ -138,11 +138,11 @@ public class DesignerBean {
         this.case_count = case_count;
     }
 
-    public int getIs_loho() {
+    public String getIs_loho() {
         return is_loho;
     }
 
-    public void setIs_loho(int is_loho) {
+    public void setIs_loho(String is_loho) {
         this.is_loho = is_loho;
     }
 

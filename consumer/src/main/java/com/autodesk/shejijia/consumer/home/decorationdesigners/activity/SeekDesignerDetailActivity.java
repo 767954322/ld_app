@@ -326,12 +326,19 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             }
 
             /**
-             * 如果是当前设计师，就不显示关注按钮
+             * 如果当前没有acs_member_id,就是没有登录，点击跳转到登录页面
              */
-            if (!mSelfAcsMemberId.equals(designer.getAcs_member_id())) {
-                setRightTitle(seekDesignerDetailHomeBean.is_following);
+            if (!TextUtils.isEmpty(mSelfAcsMemberId)) {
+                /**
+                 * 如果是当前设计师，就不显示关注按钮
+                 */
+                if (!mSelfAcsMemberId.equals(designer.getAcs_member_id())) {
+                    setRightTitle(seekDesignerDetailHomeBean.is_following);
+                } else {
+                    setVisibilityForNavButton(ButtonType.LEFT, false);
+                }
             } else {
-                setVisibilityForNavButton(ButtonType.LEFT, false);
+                setRightTitle(false);
             }
             mTvFollowedNum.setText(" : " + seekDesignerDetailHomeBean.following_count);
             mNickName = seekDesignerDetailHomeBean.getNick_name();
@@ -438,16 +445,20 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     }
 
     /**
-     * 如果判断字段is_following为true，就是关注中，点击取消关注
+     * [1]是否登录状态，未登录，先登录
+     * [2]如果判断字段is_following为true，就是关注中，点击取消关注
      */
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
-
-        if (seekDesignerDetailHomeBean.is_following) {
-            unFollowedAlertView.show();
+        if (TextUtils.isEmpty(mSelfAcsMemberId)) {
+            AdskApplication.getInstance().doLogin(this);
         } else {
-            followingDesigner();
+            if (seekDesignerDetailHomeBean.is_following) {
+                unFollowedAlertView.show();
+            } else {
+                followingDesigner();
+            }
         }
     }
 
@@ -456,8 +467,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      */
     private void followingDesigner() {
         CustomProgress.show(this, "", false, null);
-        String followed_member_id = mDesignerId;
-        String followed_member_uid = mHsUid;
+        String followed_member_id = mDesignerId; /// 从接口获取的的acs_member_id .
+        String followed_member_uid = mHsUid; /// 从接口获取的uid .
         MPServerHttpManager.getInstance().followingDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
 
             @Override
