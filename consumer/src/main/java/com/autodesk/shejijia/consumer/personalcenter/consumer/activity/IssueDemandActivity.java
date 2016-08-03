@@ -114,6 +114,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_issue_house_type: /// 房屋类型 .
+//                startActivity(new Intent(this, AppraiseDesignerActivity.class));
                 pvHouseTypeOptions.show();
                 break;
 
