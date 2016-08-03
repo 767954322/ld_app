@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -53,9 +54,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.initData(savedInstanceState);
 
         // retrieve the fragment handle from fragmentmanager
-        if (savedInstanceState != null)
-        {
-            mMPThreadListFragment = (MPThreadListFragment)getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
+        if (savedInstanceState != null) {
+            mMPThreadListFragment = (MPThreadListFragment) getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
             mFragmentArrayList.add(mMPThreadListFragment);
 
             showFragment(getCurrentCheckedRadioButtonId());
@@ -177,7 +177,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         mFragmentArrayList.add(fragment);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(getMainContentId(), fragment, tag);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -201,7 +201,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     protected void rightNavButtonClicked(View view) {
-
 
 
         if (isActiveFragment(MPThreadListFragment.class))
@@ -353,7 +352,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             }
         };
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
+        if (null != memberEntity) {
+            MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
+        }
     }
 
 
