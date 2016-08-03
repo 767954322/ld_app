@@ -99,10 +99,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private ImageView ivThumbUp;
     private ImageView ivHeadThumbUp;
 
-    private AlertView unFollowedAlertView;
-
     private float mPosY = 0;
     private float mCurPosY = 0;
+
+    private AlertView unFollowedAlertView;
     private DesignerInfoBean mDesignerInfo;
     private String mHs_uid;
     private String mNickName;
@@ -218,7 +218,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             case R.id.tv_follow_designer://关注
 
                 if (null != memberEntity) {
-                    member_id = memberEntity.getAcs_member_id();
                     if (null != caseDetailBean && null != caseDetailBean.getDesigner_info()) {
                         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
@@ -255,7 +254,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 break;
             case R.id.img_look_more_detail_chat:    /// 进入聊天页面,如果没有登陆则进入登陆注册页面.
                 if (memberEntity != null) {
-                    member_id = memberEntity.getAcs_member_id();
                     mMemberType = memberEntity.getMember_type();
                     final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
                     final String hs_uid = caseDetailBean.getHs_designer_uid();
@@ -280,20 +278,15 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
                             if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
                                 MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-
                                 int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                                 intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                                 intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-
                             } else {
-
                                 intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
                                 intent.putExtra(ChatRoomActivity.ASSET_ID, "");
                             }
                             startActivity(intent);
-
                         }
-
                     });
                 } else {
                     AdskApplication.getInstance().doLogin(this);
@@ -430,10 +423,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         if (null == caseDetailBean) {
             return;
         }
-
-        hs_uid = caseDetailBean.getHs_designer_uid();
-
         mDesignerInfo = caseDetailBean.getDesigner_info();
+        hs_uid = caseDetailBean.getHs_designer_uid();
         if (mDesignerInfo == null) {
             return;
         }
@@ -444,6 +435,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         /**
          * 如果当前没有acs_member_id,就是没有登录，点击跳转到登录页面
          */
+        if (null != memberEntity) {
+            member_id = memberEntity.getAcs_member_id();
+        }
         if (!TextUtils.isEmpty(member_id)) {
             /**
              * 如果是当前设计师，就不显示关注按钮
@@ -456,7 +450,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         } else {
             setFollowedTitle(false);
         }
-        unFollowedAlertView();
+        initUnFollowedAlertView();
 
         //登录状态判断是否点赞
         if (null != memberEntity) {
@@ -524,7 +518,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     /**
      * 取消关注提示框
      */
-    private void unFollowedAlertView() {
+    private void initUnFollowedAlertView() {
         unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
                 UIUtils.getString(R.string.following_cancel), null,
                 new String[]{UIUtils.getString(R.string.following_sure)},
