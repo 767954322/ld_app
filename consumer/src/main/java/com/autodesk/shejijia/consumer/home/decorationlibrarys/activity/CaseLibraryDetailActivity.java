@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
@@ -21,7 +20,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -163,13 +161,16 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
      * 获取所有图片的url地址
      */
     private void updateViewFromData() {
-        for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
-            if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
-                imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
-                mImageUrl.add(imageUrl);
-            }
-        }
-        mImageShowView.setImageResources(mImageUrl, this, intExtra);
+      if (caseDetailBean.getImages()!=null){
+          for (int i = 0; i <caseDetailBean.getImages().size(); i++) {
+              if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
+                  imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
+                  mImageUrl.add(imageUrl);
+              }
+          }
+          mImageShowView.setImageResources(mImageUrl, this, intExtra);
+      }
+
     }
 
     private int intExtra;
