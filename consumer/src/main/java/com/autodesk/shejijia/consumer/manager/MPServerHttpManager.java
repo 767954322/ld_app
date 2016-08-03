@@ -446,9 +446,8 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getCaseListDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
-//        String url = UrlConstants.URL_GET_CASE_DETAILS + case_id;
-//        http://alpha-api.gdfcx.net/design-app/v1/api/cases/1553719
-        String url = "http://192.168.120.90:8080/design-app/v1/api/cases/" + case_id;
+        String url = UrlConstants.URL_GET_CASE_DETAILS + case_id;
+//        String url = "http://192.168.120.90:8080/design-app/v1/api/cases/" + case_id;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1179,7 +1178,7 @@ public class MPServerHttpManager {
     }
 
     public void sendUnBindBankCard(final long designer_id,
-                                       JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+                                   JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, UrlConstants.URL_WITHDRAW_BALANCE + designer_id, jsonObject, callback) {
             @Override

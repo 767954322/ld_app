@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLinraryNewActivity">
+    tools:context=".home.decorationlibrarys.activity.CaseLibraryNewActivity">
 
     <include
         android:id="@+id/common_navbar"

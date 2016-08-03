@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.ImagesBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
@@ -21,15 +21,15 @@ import java.util.List;
 public class CaseLibraryAdapter extends BaseAdapter {
 
 
-    public CaseLibraryAdapter(Context context, List<CaseDetailBean.ImagesEntity> items) {
+    public CaseLibraryAdapter(Context context, List<ImagesBean> items) {
         this.context = context;
 //        removeHead(items);
         this.items = items;
     }
 
-    private void removeHead(List<CaseDetailBean.ImagesEntity> allItems) {
+    private void removeHead(List<ImagesBean> allItems) {
         for (int i = 0; i < allItems.size(); i++) {
-            if (allItems.get(i).isIs_primary()) {
+            if (allItems.get(i).is_primary()) {
                 allItems.remove(i);
             }
 
@@ -65,10 +65,10 @@ public class CaseLibraryAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (!items.get(position).isIs_primary()){
+        if (!items.get(position).is_primary()) {
             final String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
             ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
-        }else {
+        } else {
             holder.mCaseLibraryLImage.setVisibility(View.GONE);
         }
 
@@ -80,6 +80,6 @@ public class CaseLibraryAdapter extends BaseAdapter {
         public ImageView mCaseLibraryLImage;
     }
 
-    private List<CaseDetailBean.ImagesEntity> items;
+    private List<ImagesBean> items;
     private Context context;
 }

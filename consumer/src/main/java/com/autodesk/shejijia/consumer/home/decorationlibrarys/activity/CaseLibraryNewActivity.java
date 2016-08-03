@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.ImagesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseLibraryAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -53,14 +54,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class CaseLinraryNewActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
+public class CaseLibraryNewActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
     private ListView caseLibraryNew;
     private LinearLayout llThumbUp;
     private String case_id;
     private CaseDetailBean caseDetailBean;
     private CaseLibraryAdapter mCaseLibraryAdapter;
-    private List<CaseDetailBean.ImagesEntity> images;
+    private List<ImagesBean> images;
     private RelativeLayout rlCaseLibraryHead;
     private View viewHead;
     private RelativeLayout rlCaseLibraryBottom;
@@ -222,7 +223,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 }
                 break;
             case R.id.piv_img_customer_home_header:    /// 进入设计师详情页面.
-                Intent intent = new Intent(CaseLinraryNewActivity.this, SeekDesignerDetailActivity.class);
+                Intent intent = new Intent(CaseLibraryNewActivity.this, SeekDesignerDetailActivity.class);
                 intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
                 intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
                 startActivity(intent);
@@ -246,7 +247,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                         public void onResponse(String s) {
                             MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                            Intent intent = new Intent(CaseLinraryNewActivity.this, ChatRoomActivity.class);
+                            Intent intent = new Intent(CaseLibraryNewActivity.this, ChatRoomActivity.class);
                             intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                             intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                             intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
@@ -319,7 +320,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "点赞成功");
+                ToastUtil.showCustomToast(CaseLibraryNewActivity.this, "点赞成功");
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
             }
@@ -327,7 +328,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLinraryNewActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
                         AlertView.Style.Alert, null).show();
             }
         };
@@ -361,7 +362,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLinraryNewActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
                         AlertView.Style.Alert, null).show();
             }
         };
@@ -395,11 +396,11 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 images = caseDetailBean.getImages();
                 //查找是否是封面图片  若是就添加到头部
                 for (int i = 0; i < images.size(); i++) {
-                    if (images.get(i).isIs_primary() == true) {
+                    if (images.get(i).is_primary() == true) {
                         ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
                     }
                 }
-                mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLinraryNewActivity.this, images);
+                mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLibraryNewActivity.this, images);
                 caseLibraryNew.setAdapter(mCaseLibraryAdapter);
                 //设置简介
                 String introduction = caseDetailBean.getDescription();
@@ -429,7 +430,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLinraryNewActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
                         AlertView.Style.Alert, null).show();
             }
         };

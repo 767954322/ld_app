@@ -1,29 +1,17 @@
-package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
+package com.autodesk.shejijia.consumer.home.decorationlibrarys.entity;
 
-import java.io.Serializable;
-import java.util.List;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.RealNameBean;
 
 /**
- * @author DongXueQiu .
- * @version 1.0 .
- * @date 2016/4/22 0022 16:26 .
- * @file DesignerDetailHomeBean  .
- * @brief 查看设计师设计过的房子的bean.
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-8-3 .
+ * @file DesignerInfoBean.java .
+ * @brief 案例库首页获取的设计师基本信息 .
  */
-public class DesignerDetailHomeBean implements Serializable {
-    /**
-     * 是否经过关注
-     */
-    public boolean is_following;
-    /**
-     * 关注的人数
-     */
-    public String following_count;
-
+public class DesignerInfoBean {
     private DesignerBean designer;
-    private RealNameBean real_name;
-    private List<CasesListBean> cases_list;
-
     private String email;
     private String avatar;
     private int gender;
@@ -31,7 +19,6 @@ public class DesignerDetailHomeBean implements Serializable {
     private String province;
     private String city;
     private String district;
-
     private String address;
     private String member_id;
     private String hs_uid;
@@ -47,17 +34,23 @@ public class DesignerDetailHomeBean implements Serializable {
     private String province_name;
     private String district_name;
     private int is_order_sms;
-    public String nick_name;
-    private String is_validated_by_mobile;
-    private String is_email_binding;
-    private String has_secreted;
+    private String nick_name;
+    private int is_validated_by_mobile;
+    private int is_email_binding;
+    private int has_secreted;
+    public boolean is_following;
 
-    public List<CasesListBean> getCases_list() {
-        return cases_list;
+    /**
+     * 老数据，有这一字段
+     */
+    private RealNameBean real_name;
+
+    public RealNameBean getReal_name() {
+        return real_name;
     }
 
-    public void setCases_list(List<CasesListBean> cases_list) {
-        this.cases_list = cases_list;
+    public void setReal_name(RealNameBean real_name) {
+        this.real_name = real_name;
     }
 
     public DesignerBean getDesigner() {
@@ -66,14 +59,6 @@ public class DesignerDetailHomeBean implements Serializable {
 
     public void setDesigner(DesignerBean designer) {
         this.designer = designer;
-    }
-
-    public RealNameBean getReal_name() {
-        return real_name;
-    }
-
-    public void setReal_name(RealNameBean real_name) {
-        this.real_name = real_name;
     }
 
     public String getEmail() {
@@ -164,7 +149,7 @@ public class DesignerDetailHomeBean implements Serializable {
         this.first_name = first_name;
     }
 
-    public Object getLast_name() {
+    public String getLast_name() {
         return last_name;
     }
 
@@ -172,7 +157,7 @@ public class DesignerDetailHomeBean implements Serializable {
         this.last_name = last_name;
     }
 
-    public Object getHome_phone() {
+    public String getHome_phone() {
         return home_phone;
     }
 
@@ -260,27 +245,35 @@ public class DesignerDetailHomeBean implements Serializable {
         this.nick_name = nick_name;
     }
 
-    public String getIs_validated_by_mobile() {
+    public int getIs_validated_by_mobile() {
         return is_validated_by_mobile;
     }
 
-    public void setIs_validated_by_mobile(String is_validated_by_mobile) {
+    public void setIs_validated_by_mobile(int is_validated_by_mobile) {
         this.is_validated_by_mobile = is_validated_by_mobile;
     }
 
-    public String getIs_email_binding() {
+    public int getIs_email_binding() {
         return is_email_binding;
     }
 
-    public void setIs_email_binding(String is_email_binding) {
+    public void setIs_email_binding(int is_email_binding) {
         this.is_email_binding = is_email_binding;
     }
 
-    public String getHas_secreted() {
+    public int getHas_secreted() {
         return has_secreted;
     }
 
-    public void setHas_secreted(String has_secreted) {
+    public void setHas_secreted(int has_secreted) {
         this.has_secreted = has_secreted;
+    }
+
+    public boolean is_following() {
+        return is_following;
+    }
+
+    public void setIs_following(boolean is_following) {
+        this.is_following = is_following;
     }
 }

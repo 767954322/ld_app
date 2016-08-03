@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.ImagesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
@@ -198,13 +199,13 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
      * 获取所有图片的url地址
      */
     private void updateViewFromData() {
-        List<CaseDetailBean.ImagesEntity> images = caseDetailBean.getImages();
+        List<ImagesBean> images = caseDetailBean.getImages();
         if (null == images || images.size() < 1) {
             return;
         }
         for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
             if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
-                CaseDetailBean.ImagesEntity imagesEntity = caseDetailBean.getImages().get(i);
+                ImagesBean imagesEntity = caseDetailBean.getImages().get(i);
                 if (null != imagesEntity) {
                     imageUrl = imagesEntity.getFile_url() + Constant.CaseLibraryDetail.JPG;
                     mImageUrl.add(imageUrl);

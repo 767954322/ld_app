@@ -22,6 +22,7 @@ public class RealNameBean {
     private Object audit_date;
     private Object auditor_opinion;
 
+
     public Object getBirthday() {
         return birthday;
     }

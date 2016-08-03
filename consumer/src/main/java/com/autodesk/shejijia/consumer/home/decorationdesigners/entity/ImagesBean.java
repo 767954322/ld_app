@@ -8,16 +8,17 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
  * @brief 案例库图片实体类 .
  */
 public class ImagesBean {
-    private Object file_id;
+    private String file_id;
     private String file_name;
     private String file_url;
     private boolean is_primary;
+    private boolean is_delete;
 
-    public Object getFile_id() {
+    public String getFile_id() {
         return file_id;
     }
 
-    public void setFile_id(Object file_id) {
+    public void setFile_id(String file_id) {
         this.file_id = file_id;
     }
 
@@ -43,5 +44,13 @@ public class ImagesBean {
 
     public void setIs_primary(boolean is_primary) {
         this.is_primary = is_primary;
+    }
+
+    public boolean is_delete() {
+        return is_delete;
+    }
+
+    public void setIs_delete(boolean is_delete) {
+        this.is_delete = is_delete;
     }
 }
