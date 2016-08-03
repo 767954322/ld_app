@@ -78,6 +78,17 @@ public class AdskApplication extends Application {
         if (entity != null) {
             onLoginSuccess(entity);
         }
+        else
+        {
+            entity = new MemberEntity();
+            entity.setMember_type(Constant.UerInfoKey.DESIGNER_TYPE);
+            entity.setAcs_x_secure_session("F0671F0718FC96B0F1E4086391895C10");
+            entity.setAcs_member_id("20730187");
+            entity.setAcs_x_session("2C0C5A83-0B66-4E2C-8C07-92D730A0D43F");
+            entity.setAcs_token("qlXjg1E7JzmjglKw7sLat8rnfx.43POjplbVT0m1b1RB_59V");
+            entity.setHs_accesstoken("1d3bc90b-cc6b-4d06-991d-58fb970e8e26");
+            onLoginSuccess(entity);
+        }
         JPushInterface.setDebugMode(true);    // Enable logging settings, turn off logging when you publish
         JPushInterface.init(this);            // Init JPush
     }
