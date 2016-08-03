@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -53,9 +54,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.initData(savedInstanceState);
 
         // retrieve the fragment handle from fragmentmanager
-        if (savedInstanceState != null)
-        {
-            mMPThreadListFragment = (MPThreadListFragment)getFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
+        if (savedInstanceState != null) {
+            mMPThreadListFragment = (MPThreadListFragment) getFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
             mFragmentArrayList.add(mMPThreadListFragment);
 
             showFragment(getCurrentCheckedRadioButtonId());
@@ -266,7 +266,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             } else
                 fragmentTransaction.hide(fragment);
         }
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
 
         if (threadListFragment != null) {
             threadListFragment.onFragmentShown();

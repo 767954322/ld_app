@@ -661,43 +661,51 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
          */
         get3DPlan(needs_id, designer_id, DELIVERED_STATE_FINISH, mMemberType);
 
-        for (Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity : mDeliveryFilesEntities) {
-            type = deliveryFilesEntity.getType();
-            if (Constant.DeliveryTypeBundleKey.TYPE_MEASURE_DELIVERY.equals(type)) {
-                /**
-                 * 量房订单
-                 */
-                setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
-                mTvDelivery.setText(UIUtils.getString(R.string.deliver_measure_consumer));
-                show3DAndHideLevel();
-                mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
-                usage_type = deliveryFilesEntity.getUsage_type();
-                if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntitiesMeasure.add(deliveryFilesEntity);
-                }
-            } else if (Constant.DeliveryTypeBundleKey.TYPE_DESIGN_DELIVERY.equals(type)) {
-                usage_type = deliveryFilesEntity.getUsage_type();
-                /**
-                 * 设计交付
-                 */
-                setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
-                mTvDelivery.setText(UIUtils.getString(R.string.three_plan));
-                showAllLevel();
-                setSelectIcon();
-                clickLevel();
+        if (null != mDeliveryFilesEntities && mDeliveryFilesEntities.size() != 0) {
 
-                if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_THREE_PLAN_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntityArrayList.add(deliveryFilesEntity);
-                } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_RENDERING_DESIGN_DELIVERY_0.equals(usage_type)
-                        || Constant.DeliveryTypeBundleKey.USAGE_TYPE_READERING_DESIGN_DELIVERY_4.equals(usage_type)) {
-                    mDeliveryFilesEntitiesRendering.add(deliveryFilesEntity);
-                } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntitiesDesignBlueprint.add(deliveryFilesEntity);
-                } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_MATERIAL_BILL_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntitiesMaterialBill.add(deliveryFilesEntity);
+            for (Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity : mDeliveryFilesEntities) {
+                if(null != deliveryFilesEntity){
+                    type = deliveryFilesEntity.getType();
+                    if (Constant.DeliveryTypeBundleKey.TYPE_MEASURE_DELIVERY.equals(type)) {
+                        /**
+                         * 量房订单
+                         */
+                        setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
+                        mTvDelivery.setText(UIUtils.getString(R.string.deliver_measure_consumer));
+                        show3DAndHideLevel();
+                        mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
+                        usage_type = deliveryFilesEntity.getUsage_type();
+                        if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
+                            mDeliveryFilesEntitiesMeasure.add(deliveryFilesEntity);
+                        }
+                    } else if (Constant.DeliveryTypeBundleKey.TYPE_DESIGN_DELIVERY.equals(type)) {
+                        usage_type = deliveryFilesEntity.getUsage_type();
+                        /**
+                         * 设计交付
+                         */
+                        setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
+                        mTvDelivery.setText(UIUtils.getString(R.string.three_plan));
+                        showAllLevel();
+                        setSelectIcon();
+                        clickLevel();
+
+                        if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_THREE_PLAN_DELIVERY.equals(usage_type)) {
+                            mDeliveryFilesEntityArrayList.add(deliveryFilesEntity);
+                        } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_RENDERING_DESIGN_DELIVERY_0.equals(usage_type)
+                                || Constant.DeliveryTypeBundleKey.USAGE_TYPE_READERING_DESIGN_DELIVERY_4.equals(usage_type)) {
+                            mDeliveryFilesEntitiesRendering.add(deliveryFilesEntity);
+                        } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
+                            mDeliveryFilesEntitiesDesignBlueprint.add(deliveryFilesEntity);
+                        } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_MATERIAL_BILL_DELIVERY.equals(usage_type)) {
+                            mDeliveryFilesEntitiesMaterialBill.add(deliveryFilesEntity);
+                        }
+                    }
                 }
+
             }
+
         }
+
     }
 
     /**
