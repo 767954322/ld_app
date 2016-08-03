@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -346,6 +344,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "点赞成功");
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
+                tvThumbUp.setText(getString(R.string.thumbup_conunt) +(caseDetailBean.getFavorite_count()+1));
+                tvheadThumbUp.setText(getString(R.string.thumbup_conunt) +(caseDetailBean.getFavorite_count()+1));
             }
 
             @Override
@@ -487,9 +487,9 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 mCurPosY = event.getY();
                 break;
             case MotionEvent.ACTION_UP:
-                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 20)) {
+                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 20)) {
+                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
                 }
                 break;
