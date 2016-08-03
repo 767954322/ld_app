@@ -223,9 +223,6 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
     private void initiateTextMessageSendSequence(final String body)
     {
-        disableUserInteraction();
-        showLoadingIndicator();
-
         if (mThreadId != null) // if there is already a thread available
         {
             OkStringRequest.OKResponseCallback replyCallback = new OkStringRequest.OKResponseCallback()
@@ -234,15 +231,11 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                 public void onErrorResponse(VolleyError error)
                 {
                     MPNetworkUtils.logError(TAG, error);
-                    enableUserInteraction();
-                    hideLoadingIndicator();
                 }
 
                 @Override
                 public void onResponse(String response)
                 {
-                    enableUserInteraction();
-                    hideLoadingIndicator();
                 }
             };
 
@@ -250,10 +243,16 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
         }
         else if (mFileId != null) //is file already uploaded
         {
+            disableUserInteraction();
+            showLoadingIndicator();
+
             initiateNewThreadSequenceWithTextMessage(body);
         }
         else //neither file is uploaded nor thread exist
         {
+            disableUserInteraction();
+            showLoadingIndicator();
+
             final String mediaType = "IMAGE"; //important, this should be only for image not audio
             MPChatHttpManager.getInstance().sendMediaMessage(mAcsMemberId, mRecieverUserId, "Subject",
                     mParentThreadId, new File(mSourceImagePath), mediaType, new MPChatHttpManager.ResponseHandler()
@@ -412,7 +411,6 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
     private void initiateAudioMessageSendSequence(final String url, final CallBack errorCallback)
     {
         showLoadingIndicator();
-        disableUserInteraction();
 
         if (mThreadId != null)
         {
@@ -426,7 +424,6 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                             MPFileUtility.removeFile(url);
                             mShouldHideLoadindIndicator = true;
                             hideLoadingIndicator();
-                            enableUserInteraction();
                         }
 
                         @Override
@@ -437,16 +434,19 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
                             mShouldHideLoadindIndicator = true;
                             hideLoadingIndicator();
-                            enableUserInteraction();
                         }
                     });
         }
         else if (mFileId != null)
         {
+            disableUserInteraction();
+
             initiateNewThreadSequenceWithAudioMessage(url, errorCallback);
         }
         else
         {
+            disableUserInteraction();
+
             String mediaType = "IMAGE"; //Important, we are sending image here, that too in parent thread
             MPChatHttpManager.getInstance().sendMediaMessage(mAcsMemberId, mRecieverUserId, "New", mParentThreadId,
                     new File(mSourceImagePath), mediaType, new MPChatHttpManager.ResponseHandler()
