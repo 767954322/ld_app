@@ -145,11 +145,21 @@ public class ThreadListAdapter extends BaseAdapter {
                     if (thread.latest_message.body != null) {
                         String user_type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                         String body = thread.latest_message.body;
-                        Body body_entity = GsonUtil.jsonToBean(body, Body.class);
-                        if (user_type.equals(Constant.UerInfoKey.DESIGNER_TYPE)) {
-                            (holder).description.setText(body_entity.getFor_designer() + "");
-                        } else if (user_type.equals(Constant.UerInfoKey.CONSUMER_TYPE)) {
-                            (holder).description.setText(body_entity.getFor_consumer() + "");
+                        try
+                        {
+                            Body body_entity = GsonUtil.jsonToBean(body, Body.class);
+                            if (user_type.equals(Constant.UerInfoKey.DESIGNER_TYPE))
+                            {
+                                (holder).description.setText(body_entity.getFor_designer() + "");
+                            }
+                            else if (user_type.equals(Constant.UerInfoKey.CONSUMER_TYPE))
+                            {
+                                (holder).description.setText(body_entity.getFor_consumer() + "");
+                            }
+                        }
+                        catch (Exception ignored)
+                        {
+
                         }
                     }
                 }
