@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerEssentialInfoActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.DecorationActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
@@ -44,7 +45,6 @@ import de.greenrobot.event.EventBus;
  */
 public class ConsumerPersonalCenterActivity extends NavigationBarActivity implements View.OnClickListener {
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_personal_center_consumer;
@@ -58,6 +58,8 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         mRlPersonalSetting = (RelativeLayout) findViewById(R.id.rl_personal_b_setting);
         mPolygonImageView = (PolygonImageView) findViewById(R.id.ib_personal_b_photo);
         mTvLoginOrRegister = (TextView) findViewById(R.id.tv_loginOrRegister);
+        mDesignerAttention = (LinearLayout) findViewById(R.id.ll_personal_designer_attention);
+
     }
 
     @Override
@@ -65,7 +67,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.designer_personal));
         mTvLoginOrRegister.setText(R.string.no_data);
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity == null) {
             return;
         }
@@ -81,6 +83,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         mRlPersonalCollect.setOnClickListener(this);
         mRlPersonalSetting.setOnClickListener(this);
         mPolygonImageView.setOnClickListener(this);
+        mDesignerAttention.setOnClickListener(this);
     }
 
     @Override
@@ -121,6 +124,14 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
 //                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
 //                startActivity(intent);
 //                break;
+            case R.id.ll_personal_designer_attention: /// 我的关注 .
+                if (mMemberEntity != null) {
+                    Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this,AttentionActivity.class);
+                    startActivity(intent2);
+                }else{
+                    AdskApplication.getInstance().doLogin(this);
+                }
+                break;
         }
     }
 
@@ -214,4 +225,6 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     private String member_id;
     private String nick_name;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
+    private LinearLayout mDesignerAttention;
+    private MemberEntity mMemberEntity;
 }

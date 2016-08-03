@@ -14,14 +14,28 @@ import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 
 import java.util.List;
 
+
 /**
- * Created by xueqiudong on 16-8-1.
+ * @author DongXueQiu .
+ * @version 1.0 .
+ * @date 2016/8/1 0029 17:32 .
+ * @file AttentionAdapter  .
+ * @brief 关注列表适配器 .
  */
 public class AttentionAdapter extends BaseAdapter {
 
     public AttentionAdapter(Context context, List<AttentionEntity.DesignerListBean> datas) {
         super(context, datas);
 
+    }
+
+    /// item单击监听接口.
+    public interface OnItemCancelAttentionClickListener {
+        void OnItemCancelAttentionClick(int position);
+    }
+
+    public void setOnItemCancelAttentionClick(OnItemCancelAttentionClickListener mOnItemCancelAttentionClickListener) {
+        this.mOnItemCancelAttentionClickListener = mOnItemCancelAttentionClickListener;
     }
 
     @Override
@@ -58,13 +72,35 @@ public class AttentionAdapter extends BaseAdapter {
 
         int is_real_name = designerListBean.getIs_real_name();
 
-        if (is_real_name==2) {
+        if (is_real_name == 2) {
             ((ViewHolder) holder).img_attention_attestation_icon.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ((ViewHolder) holder).img_attention_attestation_icon.setVisibility(View.GONE);
         }
 
+        ((ViewHolder) holder).iv_cancel_attention.setOnClickListener(new MyOnClickListener(position, (ViewHolder) holder));
+    }
 
+    class MyOnClickListener implements View.OnClickListener {
+
+        private int position;
+        private ViewHolder mViewHolder;
+
+        private MyOnClickListener(int position, ViewHolder mViewHolder) {
+            this.position = position;
+            this.mViewHolder = mViewHolder;
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.iv_cancel_attention:
+                    if (mOnItemCancelAttentionClickListener != null) {
+                        mOnItemCancelAttentionClickListener.OnItemCancelAttentionClick(position);
+                    }
+                    break;
+            }
+        }
     }
 
     public class ViewHolder extends BaseAdapter.Holder {
@@ -75,5 +111,7 @@ public class AttentionAdapter extends BaseAdapter {
         private ImageView iv_cancel_attention;
 
     }
+
+    private OnItemCancelAttentionClickListener mOnItemCancelAttentionClickListener;
 
 }

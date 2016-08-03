@@ -167,7 +167,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerActivity.this,
                         AlertView.Style.Alert, null).show();
             }

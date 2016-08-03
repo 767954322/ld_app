@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by xueqiudong on 16-8-1.
+ * @author DongXueQiu .
+ * @version 1.0 .
+ * @date 2016/8/1 0029 17:32 .
+ * @file AttentionEntity  .
+ * @brief 关注列表实体类 .
  */
 public class AttentionEntity implements Serializable{
 
@@ -64,7 +68,7 @@ public class AttentionEntity implements Serializable{
     public static class DesignerListBean {
         private String avatar;
         private String nick_name;
-        private int member_id;
+        private String member_id;
         private String hs_uid;
         private int is_real_name;
 
@@ -84,11 +88,11 @@ public class AttentionEntity implements Serializable{
             this.nick_name = nick_name;
         }
 
-        public int getMember_id() {
+        public String getMember_id() {
             return member_id;
         }
 
-        public void setMember_id(int member_id) {
+        public void setMember_id(String member_id) {
             this.member_id = member_id;
         }
 

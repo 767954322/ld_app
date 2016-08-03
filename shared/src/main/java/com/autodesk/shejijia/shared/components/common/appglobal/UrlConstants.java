@@ -287,11 +287,11 @@ public final class UrlConstants {
      */
     public static final String URL_DELIVERY_DELAY = MAIN_DESIGN + "/demands/";
     /**
-     * delay time
+     * 交付物延期时间
      */
     public static final String URL_DELIVERY_DELAY_DATA = MAIN_DESIGN + "/demands/";
     /**
-     * Delete Attention
+     * 关注列表
      * "http://dev-www.gdfcx.net/member-app/v1/api"
      */
     public static final String URL_DELETE_ATTENTION = MAIN_MEMBER + "/members/";

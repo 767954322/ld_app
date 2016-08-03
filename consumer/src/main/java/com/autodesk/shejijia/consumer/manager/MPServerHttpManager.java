@@ -1322,12 +1322,13 @@ public class MPServerHttpManager {
     }
 
     /**
-     * @param member_id
+     * 关注列表
+     * @param member_id  用户id
      * @param limit
      * @param offset
      * @param callback
      */
-    public void deleteAttention(String member_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
+    public void attentionListData(String member_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELETE_ATTENTION + member_id + "/follows?" + "limit=" + limit + "&offset=" + offset;
         KLog.d(TAG, url);
 
