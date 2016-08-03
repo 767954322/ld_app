@@ -39,6 +39,7 @@
     <string name="attention_num">关注人数</string>
     <string name="attention_success">关注成功</string>
     <string name="attention_sure">关注</string>
+    <string name="attention_sure_add">+关注</string>
     <string name="attention_cancel">取消关注</string>
     <string name="attention_tip_message_first">您确定取消对</string>
     <string name="attention_tip_message_last">的关注吗？</string>

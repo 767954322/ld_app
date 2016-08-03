@@ -467,8 +467,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      */
     private void followingDesigner() {
         CustomProgress.show(this, "", false, null);
-        String followed_member_id = mDesignerId;
-        String followed_member_uid = mHsUid;
+        String followed_member_id = mDesignerId; /// 从接口获取的的acs_member_id .
+        String followed_member_uid = mHsUid; /// 从接口获取的uid .
         MPServerHttpManager.getInstance().followingDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
 
             @Override

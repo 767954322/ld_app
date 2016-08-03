@@ -3,6 +3,8 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.entity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.RealNameBean;
 
+import java.io.Serializable;
+
 /**
  * @author he.liu .
  * @version v1.0 .
@@ -10,7 +12,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.RealNameBe
  * @file DesignerInfoBean.java .
  * @brief 案例库首页获取的设计师基本信息 .
  */
-public class DesignerInfoBean {
+public class DesignerInfoBean implements Serializable {
     private DesignerBean designer;
     private String email;
     private String avatar;

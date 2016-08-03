@@ -66,11 +66,6 @@ public class SeekDesignerBean implements Serializable {
         private String mobile_number;
         private String nick_name;
         private String province;
-        /**
-         * certificate_no : 23232519850502162x
-         * real_name : 刘百慧
-         */
-
         private RealNameEntity real_name;
         private String register_date;
         private String user_name;

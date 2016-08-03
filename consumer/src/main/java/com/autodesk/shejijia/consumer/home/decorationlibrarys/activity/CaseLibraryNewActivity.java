@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.ImagesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseLibraryAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -31,8 +33,11 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -70,7 +75,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private PolygonImageView pivImgCustomerHomeHeader;
     private ImageView ivCustomerIm;
     private TextView ivConsumeHomeDesigner;
-    private ImageView mIvFollowedDesigner;
+    private TextView mTvFollowedDesigner;
     private TextView tvCustomerHomeStyle;
     private TextView tvCustomerHomeRoom;
     private TextView tvCustomerHomeArea;
@@ -94,6 +99,14 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private ImageView ivThumbUp;
     private ImageView ivHeadThumbUp;
 
+    private AlertView unFollowedAlertView;
+
+    private float mPosY = 0;
+    private float mCurPosY = 0;
+    private DesignerInfoBean mDesignerInfo;
+    private String mHs_uid;
+    private String mNickName;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_case_linrary_new;
@@ -114,7 +127,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
-        mIvFollowedDesigner = (ImageView) findViewById(R.id.iv_follow_designer);
+        mTvFollowedDesigner = (TextView) findViewById(R.id.tv_follow_designer);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
@@ -136,7 +149,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         caseLibraryNew.addHeaderView(view);
         caseLibraryNew.addHeaderView(viewHead);
         caseLibraryNew.addHeaderView(viewText);
-
     }
 
 
@@ -144,7 +156,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     protected void initExtraBundle() {
         super.initExtraBundle();
         case_id = getIntent().getStringExtra(Constant.CaseLibraryDetail.CASE_ID);   /// 获取发过来的ID.
-
     }
 
     @Override
@@ -168,7 +179,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         ll_fenxiang_up.setOnClickListener(this);
         pivImgCustomerHomeHeader.setOnClickListener(this);
         ivCustomerIm.setOnClickListener(this);
-        mIvFollowedDesigner.setOnClickListener(this);
+        mTvFollowedDesigner.setOnClickListener(this);
         rlThumbUp.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
 
@@ -204,9 +215,23 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 }
                 break;
 
-            case R.id.iv_follow_designer://关注
+            case R.id.tv_follow_designer://关注
+
                 if (null != memberEntity) {
-                    
+                    member_id = memberEntity.getAcs_member_id();
+                    if (null != caseDetailBean && null != caseDetailBean.getDesigner_info()) {
+                        DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
+                        boolean is_following = designer_info.is_following;
+                        if (TextUtils.isEmpty(member_id)) {
+                            AdskApplication.getInstance().doLogin(this);
+                        } else {
+                            if (is_following) {
+                                unFollowedAlertView.show();
+                            } else {
+                                followingDesigner();
+                            }
+                        }
+                    }
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -316,6 +341,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
      *
      * @param assetId
      */
+
     public void sendThumbUp(String assetId) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -383,47 +409,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
                 setTitleForNavbar(caseDetailBean.getTitle());
 
-                hs_uid = caseDetailBean.getHs_designer_uid();
-
-                if (caseDetailBean != null && caseDetailBean.getDesigner_info() != null) {
-                    designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
-                }
-                //登录状态判断是否点赞
-                if (null != memberEntity) {
-                    getThumbUp(caseDetailBean.getId());
-                }
-
-                images = caseDetailBean.getImages();
-                //查找是否是封面图片  若是就添加到头部
-                for (int i = 0; i < images.size(); i++) {
-                    if (images.get(i).is_primary() == true) {
-                        ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
-                    }
-                }
-                mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLibraryNewActivity.this, images);
-                caseLibraryNew.setAdapter(mCaseLibraryAdapter);
-                //设置简介
-                String introduction = caseDetailBean.getDescription();
-                if (introduction != null) {
-                    mCaseLibraryText.setText("          " + introduction);
-                } else {
-                    mCaseLibraryText.setText(R.string.nodata);
-                }
-
-                tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
-                String room_type = caseDetailBean.getRoom_type();
-                if (roomHall.containsKey(room_type)) {
-                    tvCustomerHomeRoom.setText(roomHall.get(room_type));
-                }
-
-                String project_style = caseDetailBean.getProject_style();
-                if (style.containsKey(project_style)) {
-                    tvCustomerHomeStyle.setText(style.get(project_style));
-                }
-                tvThumbUp.setText(getString(R.string.thumbup_conunt) + caseDetailBean.getFavorite_count());
-                tvheadThumbUp.setText(getString(R.string.thumbup_conunt) + caseDetailBean.getFavorite_count());
-                ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
-                ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+                updateViewFromCaseDetailData();
 
             }
 
@@ -437,9 +423,176 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         MPServerHttpManager.getInstance().getCaseListDetail(case_id, okResponseCallback);
     }
 
-    private float mPosY = 0;
-    private float mCurPosY = 0;
+    /**
+     * 获取案例的数据，更新页面
+     */
+    private void updateViewFromCaseDetailData() {
+        if (null == caseDetailBean) {
+            return;
+        }
 
+        hs_uid = caseDetailBean.getHs_designer_uid();
+
+        mDesignerInfo = caseDetailBean.getDesigner_info();
+        if (mDesignerInfo == null) {
+            return;
+        }
+        designer_id = mDesignerInfo.getDesigner().getAcs_member_id();
+        mHs_uid = mDesignerInfo.getHs_uid();
+        mNickName = mDesignerInfo.getNick_name();
+        boolean is_following = mDesignerInfo.is_following;
+        /**
+         * 如果当前没有acs_member_id,就是没有登录，点击跳转到登录页面
+         */
+        if (!TextUtils.isEmpty(member_id)) {
+            /**
+             * 如果是当前设计师，就不显示关注按钮
+             */
+            if (!member_id.equals(designer_id)) {
+                setFollowedTitle(is_following);
+            } else {
+                mTvFollowedDesigner.setVisibility(View.GONE);
+            }
+        } else {
+            setFollowedTitle(false);
+        }
+        unFollowedAlertView();
+
+        //登录状态判断是否点赞
+        if (null != memberEntity) {
+            getThumbUp(caseDetailBean.getId());
+        }
+
+        images = caseDetailBean.getImages();
+        //查找是否是封面图片  若是就添加到头部
+        for (int i = 0; i < images.size(); i++) {
+            if (images.get(i).is_primary() == true) {
+                ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+            }
+        }
+
+        mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLibraryNewActivity.this, images);
+
+        caseLibraryNew.setAdapter(mCaseLibraryAdapter);
+        //设置简介
+        String introduction = caseDetailBean.getDescription();
+        if (introduction != null) {
+            mCaseLibraryText.setText("          " + introduction);
+        } else {
+            mCaseLibraryText.setText(R.string.nodata);
+        }
+
+        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
+        String room_type = caseDetailBean.getRoom_type();
+        if (roomHall.containsKey(room_type)) {
+            tvCustomerHomeRoom.setText(roomHall.get(room_type));
+        }
+
+        String project_style = caseDetailBean.getProject_style();
+        if (style.containsKey(project_style)) {
+            tvCustomerHomeStyle.setText(style.get(project_style));
+        }
+
+        tvThumbUp.setText(getString(R.string.thumbup_conunt)
+                + caseDetailBean.getFavorite_count());
+        tvheadThumbUp.setText(getString(R.string.thumbup_conunt)
+                + caseDetailBean.getFavorite_count());
+        ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name()
+        );
+        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+    }
+
+    /**
+     * 设置title栏，关注的显示问题
+     * true :关注状态-->对应取消关注
+     * false : 取消关注-->对应关注
+     */
+    private void setFollowedTitle(boolean is_following) {
+
+        if (is_following) {
+            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
+            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_border_beishu));
+            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
+
+        } else {
+            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
+            mTvFollowedDesigner.setBackgroundColor(UIUtils.getColor(R.color.actionsheet_blue));
+            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
+        }
+    }
+
+    /**
+     * 取消关注提示框
+     */
+    private void unFollowedAlertView() {
+        unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
+                UIUtils.getString(R.string.following_cancel), null,
+                new String[]{UIUtils.getString(R.string.following_sure)},
+                CaseLibraryNewActivity.this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    unFollowedDesigner();
+                }
+            }
+        }).setCancelable(true);
+    }
+
+    /**
+     * 关注设计师
+     */
+    private void followingDesigner() {
+        CustomProgress.show(this, "", false, null);
+        String followed_member_id = designer_id;
+        String followed_member_uid = mHs_uid;
+        MPServerHttpManager.getInstance().followingDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+                String followingDesignerString = GsonUtil.jsonToString(jsonObject);
+                setFollowedTitle(true);
+
+                /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
+                mDesignerInfo.is_following = true;
+                MyToast.show(CaseLibraryNewActivity.this, UIUtils.getString(R.string.attention_success));
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                setFollowedTitle(true);
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
+    }
+
+    /**
+     * 取消关注设计师
+     */
+    private void unFollowedDesigner() {
+        CustomProgress.show(this, "", false, null);
+        String followed_member_id = designer_id;
+        String followed_member_uid = mHs_uid;
+        MPServerHttpManager.getInstance().unFollowedDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+                String unFollowDesignerString = GsonUtil.jsonToString(jsonObject);
+                setFollowedTitle(false);
+                MyToast.show(CaseLibraryNewActivity.this, UIUtils.getString(R.string.attention_cancel));
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                setFollowedTitle(true);
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
+    }
 
     @Override
     protected void onResume() {
