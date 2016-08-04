@@ -121,11 +121,7 @@ public class MPServerHttpManager {
 //                "&sort_order=desc" +
 //                "&custom_string_form=" + custom_string_form;
 
-<<<<<<< HEAD
-        String url="http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
-=======
         String url = "http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
->>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                 "custom_string_style=&custom_string_type=" +
                 "&custom_string_keywords=" +
                 "&sort_by=date" +

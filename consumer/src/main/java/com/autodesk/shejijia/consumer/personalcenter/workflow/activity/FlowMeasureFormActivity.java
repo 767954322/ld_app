@@ -66,18 +66,15 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvName = (TextView) findViewById(R.id.tvc_measure_form_name);
         tvPhone = (TextView) findViewById(R.id.tvc_measure_form_phone);
 
-<<<<<<< HEAD
-        consumer_designer_house_charge_show = (LinearLayout) findViewById(R.id.consumer_designer_house_charge_show);
+        consumer_designer_house_charge_show = (LinearLayout) findViewById(R.id.consumer_house_charge_show);
         designer_house_charge_show = (LinearLayout) findViewById(R.id.designer_house_charge_show);
         tv_measure_form_designer_liangfangfeit = (EditText) findViewById(R.id.tv_measure_form_designer_liangfangfeit);
         consumer_rmb_show = (TextView) findViewById(R.id.consumer_rmb_show);
         rl_house_charge_show = (RelativeLayout) findViewById(R.id.rl_house_charge_show);
-=======
         consumer_house_charge_show = (LinearLayout) findViewById(R.id.consumer_house_charge_show);
         designer_house_charge_show = (LinearLayout) findViewById(R.id.designer_house_charge_show);
         tv_measure_form_designer_liangfangfeit = (EditText) findViewById(R.id.tv_measure_form_designer_liangfangfeit);
         consumer_rmb_show = (TextView) findViewById(R.id.consumer_rmb_show);
->>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
 
         tvc_measure_form_type = (TextView) findViewById(R.id.tvc_measure_form_house_type);
         tvc_measure_form_style = (TextView) findViewById(R.id.tvc_measure_form_house_style);
@@ -236,11 +233,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             designer_house_charge_show.setVisibility(View.GONE);
             rlWarmTips.setVisibility(View.GONE);
             if (wk_cur_sub_node_id_i >= 11) {
-<<<<<<< HEAD
                 consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
-=======
                 consumer_house_charge_show.setVisibility(View.VISIBLE);
->>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                 ll_consumer_send.setVisibility(View.GONE);
                 tvIllustrate.setVisibility(View.GONE);
                 tvc_measure_form_time.setClickable(false);
@@ -264,17 +258,12 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             switch (wk_cur_sub_node_id_i) {
                 case 11:
                     if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
-<<<<<<< HEAD
                         ll_designer_send.setVisibility(View.GONE);
-                    } else {
                         designer_house_charge_show.setVisibility(View.VISIBLE);
                         setViewAnimation(rlMeasureWarmTips);
-=======
                        // rlMeasureWarmTips.setVisibility(View.GONE);
-                        ll_designer_send.setVisibility(View.GONE);
                     } else {
                        // rlMeasureWarmTips.setVisibility(View.VISIBLE);
->>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                         ll_designer_send.setVisibility(View.VISIBLE);
                         tvWarmTips.setText(R.string.Mrasuretips);
                         tvWarmTipsContent.setText(R.string.update_measure_house_cost);
@@ -594,11 +583,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private RelativeLayout rlMeasureWarmTips;
     private RelativeLayout rl_house_charge_show;
     private RelativeLayout rlWarmTips;
-<<<<<<< HEAD
     private LinearLayout consumer_designer_house_charge_show;
-=======
     private LinearLayout consumer_house_charge_show;
->>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
     private LinearLayout designer_house_charge_show;
     private EditText tv_measure_form_designer_liangfangfeit;
     private TextView tvMeasureWarmTips;

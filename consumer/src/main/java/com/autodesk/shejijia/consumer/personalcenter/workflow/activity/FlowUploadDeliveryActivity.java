@@ -207,12 +207,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
-<<<<<<< HEAD
-=======
             mLinerDelayedShow.setVisibility(View.GONE);
             Intent intent = new Intent(this, AppraiseDesignerActivity.class);
             startActivityForResult(intent, 1);
->>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
             MyToast.show(FlowUploadDeliveryActivity.this, "立即评价");
         } else if (object == mDeliverySureAlertView) {
             mLinerDelayedShow.setVisibility(View.GONE);

@@ -19,11 +19,7 @@ public class ApiManager {
      * RUNNING_PRODUCTION：正式(PRODUCTION)环境
      * RUNNING_DEV ：alpha dev境 .
      */
-<<<<<<< HEAD
     public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DOCKER_DESIGN;
-=======
-    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DEV;
->>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
