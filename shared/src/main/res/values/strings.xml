@@ -861,5 +861,6 @@
     <string name="pickerview_seconds">秒</string>
 
     <string name="chatroom_loadmore_text">查看更多记录</string>
+    <string name="no_repeat_click">请勿重复点击</string>
 
 </resources>

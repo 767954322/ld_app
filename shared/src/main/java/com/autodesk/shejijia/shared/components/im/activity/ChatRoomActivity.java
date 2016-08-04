@@ -13,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -184,18 +186,39 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.chat_selectphoto) {
-            onSelectPhotoClicked();
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                onSelectPhotoClicked();
+            }
 
         } else if (i == R.id.chat_takephoto) {
-            onTakeSnapshotClicked();
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                onTakeSnapshotClicked();
+            }
 
         } else if (i == R.id.chat_custom_button) {
-            if (mIWorkflowDelegate != null) {
-                mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId,mReceiverHsUid);
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                if (mIWorkflowDelegate != null) {
+                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId, mReceiverHsUid);
+                }
             }
+
         } else if (i == R.id.nav_secondary_imageButton) {
-            if (mIWorkflowDelegate != null) {
-                mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, designerId);
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                if (mIWorkflowDelegate != null) {
+                    mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, designerId);
+                }
             }
         }
     }

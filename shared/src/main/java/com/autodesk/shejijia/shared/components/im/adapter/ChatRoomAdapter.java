@@ -12,10 +12,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
@@ -331,7 +333,11 @@ public class ChatRoomAdapter extends BaseAdapter {
             (holder).commandButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ChatRoomAdapter.this.mListInterface.onMessageCellClicked(position);
+                    if (SingleClickUtils.isFastDoubleClick()) {
+                        Toast.makeText(mContext, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+                    } else {
+                        ChatRoomAdapter.this.mListInterface.onMessageCellClicked(position);
+                    }
                 }
             });
         } catch (Exception e) {
@@ -380,7 +386,12 @@ public class ChatRoomAdapter extends BaseAdapter {
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChatRoomAdapter.this.mListInterface.onMessageCellClicked(position);
+                if (SingleClickUtils.isFastDoubleClick()) {
+                    Toast.makeText(mContext, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+                } else {
+                    ChatRoomAdapter.this.mListInterface.onMessageCellClicked(position);
+                }
+
             }
         });
     }
@@ -443,7 +454,12 @@ public class ChatRoomAdapter extends BaseAdapter {
             holder.messageImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ChatRoomAdapter.this.mListInterface.onMessageCellClicked(position);
+                    if (SingleClickUtils.isFastDoubleClick()) {
+                        Toast.makeText(mContext, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+                    } else {
+                        ChatRoomAdapter.this.mListInterface.onMessageCellClicked(position);
+                    }
+
                 }
             });
         } catch (Exception e) {
