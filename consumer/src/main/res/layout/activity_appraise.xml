@@ -83,6 +83,11 @@
 
     </LinearLayout>
 
+    <include
+        layout="@layout/view_parting_line"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
 
         <include layout="@layout/view_parting_line"></include>
 
