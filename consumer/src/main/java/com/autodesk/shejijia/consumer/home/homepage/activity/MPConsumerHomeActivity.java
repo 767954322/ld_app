@@ -368,10 +368,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                         MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
                         final Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
 
                         if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
 
