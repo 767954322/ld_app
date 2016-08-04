@@ -144,6 +144,45 @@
                     android:background="@color/bg_impression" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_personal_designer_attention"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:src="@drawable/icon_my_assets_normal"/>
+
+                <TextView
+                    android:text="@string/my_attention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bg_51"/>
+
+                <TextView
+                    android:layout_width="@dimen/size_1"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:src="@drawable/icon_unfold_normal"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_common_line"/>
+
+
             <RelativeLayout
                 android:id="@+id/rl_personal_b_collect"
                 android:layout_width="match_parent"

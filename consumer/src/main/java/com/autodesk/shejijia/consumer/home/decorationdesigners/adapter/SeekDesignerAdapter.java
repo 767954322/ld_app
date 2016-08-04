@@ -54,6 +54,7 @@ public class SeekDesignerAdapter extends BaseAdapter<SeekDesignerBean.DesignerLi
         viewHolder.mPolygonImageView = (PolygonImageView) container.findViewById(R.id.piv_seek_designer_photo);
         viewHolder.mImageView = (ImageView) container.findViewById(R.id.img_seek_designer_authentication);
         viewHolder.mImgSeekDesignerChat = (ImageView) container.findViewById(R.id.img_seek_designer_chat);
+        viewHolder.mTvAttentionNum = (TextView) container.findViewById(R.id.tv_attention_num);
         return viewHolder;
     }
 
@@ -101,6 +102,7 @@ public class SeekDesignerAdapter extends BaseAdapter<SeekDesignerBean.DesignerLi
             } else {
                 ((ViewHolder) holder).mImageView.setVisibility(View.GONE);
             }
+            ((ViewHolder) holder).mTvAttentionNum.setText(UIUtils.getString(R.string.attention_num) + " : ");
 
         } else {
             ((ViewHolder) holder).mTvName.setText(R.string.has_yet_to_fill_out);
@@ -149,6 +151,7 @@ public class SeekDesignerAdapter extends BaseAdapter<SeekDesignerBean.DesignerLi
         public TextView mTvCost;
         public ImageView mImageView;
         public ImageView mImgSeekDesignerChat;
+        public TextView mTvAttentionNum;
     }
 
     private Context context;

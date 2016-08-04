@@ -16,6 +16,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AppraiseDesignerActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DeliveryDelayBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
@@ -83,7 +84,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         initAlertView();
-
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null) {
             mMemberType = memberEntity.getMember_type();
@@ -207,6 +207,12 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
+<<<<<<< HEAD
+=======
+            mLinerDelayedShow.setVisibility(View.GONE);
+            Intent intent = new Intent(this, AppraiseDesignerActivity.class);
+            startActivityForResult(intent, 1);
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
             MyToast.show(FlowUploadDeliveryActivity.this, "立即评价");
         } else if (object == mDeliverySureAlertView) {
             mLinerDelayedShow.setVisibility(View.GONE);
@@ -714,6 +720,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             }
             return;
         } else {
+
             if (DELIVERED_STATE_FINISH == deliveredFinish) {
                 mDesign_name = mWk3DPlanListBean.getDesign_name();
             } else {
@@ -835,8 +842,12 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * 设计师，上传设计交付物
      * =61: 消费者，确认或者延期的操作 .
      * 　　设计师：可以重新发送设计交付物（显示发送按钮）
-     * >61(=63):
-     * 消费者和设计师：查看设计交付
+     * =63:
+     * 　　消费者进行了确认操作
+     * =64
+     * 　　消费者做了延期操作
+     * >64(71,72)
+     * 　　消费者需要进行评价
      */
     private void doDeliveryDelayed() {
         if (61 == wk_sub_node_id_int) {
@@ -845,19 +856,29 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
                     mLinerDelayedShow.setVisibility(View.VISIBLE);
                     break;
-
                 case Constant.UerInfoKey.DESIGNER_TYPE:
                     mLinerDelayedShow.setVisibility(View.GONE);
-//                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
-//                    cancelSubmit();
                     break;
             }
-        } else if (wk_sub_node_id_int > 61) {
+        } else if (wk_sub_node_id_int == 64) {
+            switch (mMemberType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mBtnDelay.setEnabled(false);
+                    mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+                    mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
+                    break;
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mLinerDelayedShow.setVisibility(View.GONE);
+                    break;
+            }
+        } else if (wk_sub_node_id_int == 63) {
+            mLinerDelayedShow.setVisibility(View.GONE);
+            mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+        } else if (wk_sub_node_id_int > 64) {
             mLinerDelayedShow.setVisibility(View.GONE);
             mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
         }
     }
-
 
     /**
      * 正在上传量房或者设计交付物

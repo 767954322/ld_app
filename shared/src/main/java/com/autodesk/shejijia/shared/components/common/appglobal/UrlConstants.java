@@ -297,11 +297,12 @@ public final class UrlConstants {
     /**
      * 消息中心接口
      */
-      public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
+    public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
 
     /**
      * 交付物延期
      */
+<<<<<<< HEAD
     public static final String URL_Delivery_Delay = MAIN_DESIGN + "/demands/";
     public static final String URL_Delivery_Delay_Data = MAIN_DESIGN + "/demands/";
 
@@ -311,4 +312,16 @@ public final class UrlConstants {
 
     public static final String URL_WkFlowState_pointe_Information = "http://192.168.120.123:8081/design-app/v1/api/fullflow/message";
 
+=======
+    public static final String URL_DELIVERY_DELAY = MAIN_DESIGN + "/demands/";
+    /**
+     * 交付物延期时间
+     */
+    public static final String URL_DELIVERY_DELAY_DATA = MAIN_DESIGN + "/demands/";
+    /**
+     * 关注列表
+     * "http://dev-www.gdfcx.net/member-app/v1/api"
+     */
+    public static final String URL_DELETE_ATTENTION = MAIN_MEMBER + "/members/";
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
 }

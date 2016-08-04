@@ -92,7 +92,10 @@ public class WkFlowStateAdapter extends BaseAdapter {
 
 
             switch (position) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                 //确认量房
                 case 0:
                     viewHolder.tv_meal_title.setText(mapWkFlowState.get("1").getDescription());//确认量房

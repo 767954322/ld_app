@@ -196,6 +196,7 @@
                 <!--android:layout_height="wrap_content"-->
                 <!--android:layout_marginRight="@dimen/size_10"-->
                 <!--android:text="m²" />-->
+<<<<<<< HEAD
             </LinearLayout>
 
             <LinearLayout
@@ -250,6 +251,70 @@
                     android:gravity="center_vertical"
                     android:hint="@string/please_select_design_budget"
                     android:textSize="@dimen/font_15" />
+=======
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/bg_ff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_ef" />
+            </LinearLayout>
+
+<<<<<<< HEAD
+<!--装修预算-->
+            <LinearLayout
+                android:layout_width="match_parent"
+=======
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/bg_ff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_ef" />
+            </LinearLayout>
+
+<!--设计预算-->
+            <LinearLayout
+                android:layout_width="match_parent"
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
+                android:layout_height="@dimen/size_45"
+                android:background="@color/bg_ff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_15"
+                    android:layout_marginLeft="@dimen/size_10"
+<<<<<<< HEAD
+=======
+                    android:text="@string/demand_planning_budget" />
+
+                <TextView
+                    android:id="@+id/tvc_measure_form_project_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/no_color"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="@string/please_select_design_budget"
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
             <LinearLayout
@@ -279,6 +344,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                     android:text="@string/demand_project_budget" />
 
                 <TextView
@@ -291,6 +357,49 @@
                     android:gravity="center_vertical"
                     android:hint="@string/please_select_decorate_budget"
                     android:textSize="@dimen/font_15" />
+<<<<<<< HEAD
+=======
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/bg_ff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_ef" />
+            </LinearLayout>
+<!--风格-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_45"
+                android:background="@color/bg_ff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_15"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:text="@string/demand_style" />
+
+                <TextView
+                    android:id="@+id/tvc_measure_form_house_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/no_color"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="@string/europe_and_america_style"
+                    android:textSize="@dimen/font_15" />
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
             </LinearLayout>
 
             <LinearLayout
@@ -333,8 +442,10 @@
                     android:textSize="@dimen/font_15" />
             </LinearLayout>
 
+            <!--户型-->
             <LinearLayout
                 android:layout_width="match_parent"
+<<<<<<< HEAD
                 android:layout_height="@dimen/size_1"
                 android:background="@color/bg_ff"
                 android:orientation="horizontal">
@@ -348,6 +459,8 @@
             <!--户型-->
             <LinearLayout
                 android:layout_width="match_parent"
+=======
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                 android:layout_height="@dimen/size_45"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
@@ -603,7 +716,10 @@
                     android:background="@color/bg_ff"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+<<<<<<< HEAD
                     android:visibility="gone"
+=======
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                     >
 
                     <TextView
@@ -632,7 +748,11 @@
 
             <!--消费者——量房费-已经发送过之后-->
             <LinearLayout
+<<<<<<< HEAD
                 android:id="@+id/consumer_designer_house_charge_show"
+=======
+                android:id="@+id/consumer_house_charge_show"
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
                 android:layout_marginTop="@dimen/size_10"
@@ -716,17 +836,27 @@
             <LinearLayout
                 android:id="@+id/ll_measure_form_consumer_send"
                 android:layout_width="match_parent"
+<<<<<<< HEAD
                 android:layout_height="100dp"
                 android:background="@color/bg_eef1f4"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/size_41"
+=======
+                android:layout_height="wrap_content"
+                android:background="@color/bg_eef1f4"
+                android:orientation="horizontal"
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                 android:padding="@dimen/size_20"
                 android:visibility="gone">
 
                 <Button
                     android:id="@+id/btn_measure_form_send"
                     android:layout_width="match_parent"
+<<<<<<< HEAD
                     android:layout_height="@dimen/size_44"
+=======
+                    android:layout_height="@dimen/size_40"
+>>>>>>> d09fbdf9ec3b5d5b9f772d33de3989bd34f6a2d6
                     android:background="@drawable/bg_common_btn_blue"
                     android:text="@string/flow_send"
                     android:textColor="@color/bg_ff" />

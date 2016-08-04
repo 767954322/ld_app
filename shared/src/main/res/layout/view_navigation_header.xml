@@ -26,10 +26,10 @@
             android:layout_width="@dimen/size_33"
             android:layout_height="@dimen/size_33"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/chat_room_commandcell_avatar_margintop"
             android:layout_marginLeft="@dimen/chat_room_commandcell_avatar_marginleft"
-            android:src="@drawable/default_useravatar"
+            android:layout_marginTop="@dimen/chat_room_commandcell_avatar_margintop"
             android:scaleType="centerCrop"
+            android:src="@drawable/default_useravatar"
             android:visibility="gone"
             />
 
@@ -59,15 +59,14 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:gravity="center_vertical"
-        android:layout_toRightOf="@id/backButton_layout"
         android:layout_marginRight="55dp"
+        android:layout_toRightOf="@id/backButton_layout"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         android:visibility="gone"
         >
 
     </LinearLayout>
-
 
 
     <ImageButton
@@ -136,6 +135,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
+            android:text=""
             android:textSize="15sp"
             android:visibility="gone"/>
     </RelativeLayout>

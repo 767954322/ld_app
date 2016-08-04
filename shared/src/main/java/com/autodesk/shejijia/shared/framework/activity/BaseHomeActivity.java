@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -53,9 +54,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.initData(savedInstanceState);
 
         // retrieve the fragment handle from fragmentmanager
-        if (savedInstanceState != null)
-        {
-            mMPThreadListFragment = (MPThreadListFragment)getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
+        if (savedInstanceState != null) {
+            mMPThreadListFragment = (MPThreadListFragment) getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
             mFragmentArrayList.add(mMPThreadListFragment);
 
             showFragment(getCurrentCheckedRadioButtonId());
@@ -203,7 +203,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     protected void rightNavButtonClicked(View view) {
 
 
-
         if (isActiveFragment(MPThreadListFragment.class))
             openFileThreadActivity();
     }
@@ -252,7 +251,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
+            if (null != fragment && fragment.getClass().equals(clazz)) {
                 fragmentTransaction.show(fragment);
 
                 if (fragment.getClass().equals(MPThreadListFragment.class))
@@ -311,7 +310,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         Fragment currentFragment = null;
 
         for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
+            if (null != fragment && fragment.getClass().equals(clazz)) {
                 currentFragment = fragment;
                 break;
             }

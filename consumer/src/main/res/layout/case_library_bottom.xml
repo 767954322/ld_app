@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/rl_case_library_bottom"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_case_library_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -33,13 +33,18 @@
                 android:textSize="@dimen/font_16"
                 android:visibility="visible"/>
 
-            <ImageView
-                android:id="@+id/iv_guanzu"
+            <TextView
+                android:id="@+id/tv_follow_designer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/size_6"
-                android:background="@drawable/yiguanzhu_ico"
-                android:paddingLeft="@dimen/size_10"/>
+                android:layout_marginLeft="@dimen/size_8"
+                android:layout_marginRight="@dimen/size_8"
+                android:background="@color/actionsheet_blue"
+                android:paddingLeft="@dimen/size_8"
+                android:paddingRight="@dimen/size_8"
+                android:text="@string/attention_sure_add"
+                android:textColor="@color/white"
+                />
 
         </LinearLayout>
 

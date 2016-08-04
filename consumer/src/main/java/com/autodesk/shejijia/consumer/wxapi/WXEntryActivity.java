@@ -1,9 +1,11 @@
 package com.autodesk.shejijia.consumer.wxapi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
@@ -21,6 +23,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ConsumerApplication.api.handleIntent(getIntent(), this);
     }
 
     @Override
@@ -46,7 +49,15 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 result = R.string.errcode_unknown;
                 break;
         }
-
+        this.finish();
         Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //如果分享的时候，该已经开启，那么微信开始这个activity时，会调用onNewIntent，所以这里要处理微信的返回结果
+        setIntent(intent);
+        ConsumerApplication.api.handleIntent(intent, this);
     }
 }

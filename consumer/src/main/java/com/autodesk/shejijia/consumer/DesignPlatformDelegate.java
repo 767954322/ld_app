@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailHomeBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
@@ -155,7 +155,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
             public void onResponse(JSONObject jsonObject) {
 
                 String info = GsonUtil.jsonToString(jsonObject);
-                SeekDesignerDetailHomeBean seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, SeekDesignerDetailHomeBean.class);
+                DesignerDetailHomeBean seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
                 final String measureFee = seekDesignerDetailHomeBean.getDesigner().getMeasurement_price();
 
                 Intent intent = new Intent(context, MeasureFormActivity.class);

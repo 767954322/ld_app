@@ -15,14 +15,13 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerQrEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.AttestationInfoActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.BeiShuMealActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CertificationActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerEssentialInfoActivity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderActivity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderBeiShuActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyPropertyActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
@@ -56,6 +55,7 @@ import de.greenrobot.event.EventBus;
  */
 public class DesignerPersonalCenterActivity extends NavigationBarActivity implements View.OnClickListener {
 
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_personal_center_designer;
@@ -67,7 +67,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mLlSetMeal = (LinearLayout) findViewById(R.id.ll_set_meal);
         mLlPersonalDesignerInfo = (LinearLayout) findViewById(R.id.ll_personal_designer_info);
         mLlPersonalDesignerManage = (LinearLayout) findViewById(R.id.ll_personal_designer_manage);
-      //  mLlPersonalDesignerDecorate = (LinearLayout) findViewById(R.id.ll_personal_designer_decorate);
+        //  mLlPersonalDesignerDecorate = (LinearLayout) findViewById(R.id.ll_personal_designer_decorate);
         mLlPersonalDesignerProperty = (LinearLayout) findViewById(R.id.ll_personal_designer_property);
         mLlPersonalDesignerMore = (LinearLayout) findViewById(R.id.ll_personal_designer_more);
         mLlPersonalDesignerMsgCenter = (LinearLayout) findViewById(R.id.ll_personal_designer_msg_center);
@@ -76,6 +76,8 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mTvAuditStatusAgo = (TextView) findViewById(R.id.tv_audit_status_ago);
         mImgCertificateIcon = (ImageView) findViewById(R.id.img_autonym_icon);
         mTvDesignerNickname = (TextView) findViewById(R.id.tv_designer_nickname);
+
+        mTvDesignerAttention = (LinearLayout) findViewById(R.id.ll_personal_designer_attention);
     }
 
     @Override
@@ -93,11 +95,13 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mLlNoAttestation.setOnClickListener(this);
         mLlPersonalDesignerInfo.setOnClickListener(this);
         mLlPersonalDesignerManage.setOnClickListener(this);
-       // mLlPersonalDesignerDecorate.setOnClickListener(this);
+        // mLlPersonalDesignerDecorate.setOnClickListener(this);
         mLlPersonalDesignerProperty.setOnClickListener(this);
         mLlPersonalDesignerMore.setOnClickListener(this);
         mTvDesignerNickname.setOnClickListener(this);
         mLlPersonalDesignerMsgCenter.setOnClickListener(this);
+
+        mTvDesignerAttention.setOnClickListener(this);
     }
 
     /**
@@ -289,6 +293,16 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             case R.id.ll_personal_designer_msg_center:/// 消息中心页面.
                 MyToast.show(DesignerPersonalCenterActivity.this, UIUtils.getString(R.string.functional_development));
                 break;
+
+            case R.id.ll_personal_designer_attention: /// 我的关注 .
+
+                if (memberEntity != null) {
+                    Intent intent2 = new Intent(DesignerPersonalCenterActivity.this,AttentionActivity.class);
+                    startActivity(intent2);
+                }else{
+                    AdskApplication.getInstance().doLogin(this);
+                }
+                break;
         }
     }
 
@@ -376,7 +390,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
     private LinearLayout mLlPersonalDesignerManage;
     private LinearLayout mLlPersonalDesignerProperty;
     private LinearLayout mLlPersonalDesignerMore;
- //   private LinearLayout mLlPersonalDesignerDecorate;
+    //   private LinearLayout mLlPersonalDesignerDecorate;
     private LinearLayout mLlPersonalDesignerInfo;
     private LinearLayout mLlPersonalDesignerMsgCenter;
     private LinearLayout mLlNoAttestation;
@@ -384,6 +398,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
     private TextView mTvAuditStatusAgo;
     private ImageView mImgCertificateIcon;
     private PolygonImageView mPolygonImageView;
+    private LinearLayout mTvDesignerAttention;
 
     /// 变量.
     private String designer_id, hs_uid;
