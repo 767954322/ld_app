@@ -19,7 +19,7 @@ public class ApiManager {
      * RUNNING_PRODUCTION：正式(PRODUCTION)环境
      * RUNNING_DEV ：alpha dev境 .
      */
-    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_UAT;
+    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DOCKER_DESIGN;
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
@@ -132,6 +132,11 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 main_design = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
+
+            //xin
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                main_design = UrlConstants.DOCKER_HAWKEYE_DESIGN + UrlConstants.MP_MAIN_DESIGN;
+                break;
         }
         return main_design;
     }
@@ -168,6 +173,10 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 main_member = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_MEMBER;
                 break;
+            //xin
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                main_member = UrlConstants.DOCKER_HAWKEYE_MEMBER + UrlConstants.MP_MAIN_MEMBER;
+
         }
         return main_member;
     }
@@ -204,6 +213,10 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_TRANSACTION;
                 break;
+            //XIN
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                main_transaction = UrlConstants.DOCKER_HAWKEYE_TRANSCATION + UrlConstants.MP_MAIN_TRANSACTION;
+
         }
         return main_transaction;
     }

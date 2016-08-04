@@ -546,6 +546,7 @@
 
 <!--消费者——量房费用-->
             <RelativeLayout
+                android:id="@+id/rl_house_charge_show"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_35"
                 android:layout_marginLeft="@dimen/size_10"
@@ -602,6 +603,7 @@
                     android:background="@color/bg_ff"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     >
 
                     <TextView
@@ -630,7 +632,7 @@
 
             <!--消费者——量房费-已经发送过之后-->
             <LinearLayout
-                android:id="@+id/consumer_house_charge_show"
+                android:id="@+id/consumer_designer_house_charge_show"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
                 android:layout_marginTop="@dimen/size_10"
@@ -714,16 +716,17 @@
             <LinearLayout
                 android:id="@+id/ll_measure_form_consumer_send"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:background="@color/bg_eef1f4"
                 android:orientation="horizontal"
+                android:layout_marginTop="@dimen/size_41"
                 android:padding="@dimen/size_20"
                 android:visibility="gone">
 
                 <Button
                     android:id="@+id/btn_measure_form_send"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_40"
+                    android:layout_height="@dimen/size_44"
                     android:background="@drawable/bg_common_btn_blue"
                     android:text="@string/flow_send"
                     android:textColor="@color/bg_ff" />

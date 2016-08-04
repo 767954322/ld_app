@@ -250,6 +250,8 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+
+
     /**
      * @param jsonObject
      * @param needs_id
@@ -294,6 +296,24 @@ public class MPServerHttpManager {
             }
         };
         queue.add(okRequest);
+    }
+
+    /**
+     * 全流程节点信息获取
+     *
+     * */
+
+    public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback){
+
+        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET,UrlConstants.URL_WkFlowState_pointe_Information,null,callback){
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+
+        queue.add(okJsonRequest);
     }
 
     /**

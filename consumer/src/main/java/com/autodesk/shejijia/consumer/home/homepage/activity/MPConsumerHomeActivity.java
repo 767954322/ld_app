@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -25,6 +26,9 @@ import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateContainsBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -40,7 +44,6 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.components.im.activity.MediaMessagesChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.IMQrEntity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
@@ -49,13 +52,15 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
 
-public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener{
 
+public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener {
 
 
     @Override
@@ -80,20 +85,26 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         screenWidth = getScreenWidth(this);
 
-        contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout,null);
+        contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout, null);
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
         construction = (TextView) contain_layout.findViewById(R.id.construction);
 
 
-        setMyProjectTitleColorChange(design,bidding,construction);
+        setMyProjectTitleColorChange(design, bidding, construction);
 
         user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
         addRadioButtons(mDesignerMainRadioBtn);
         addRadioButtons(mDesignerIndentListBtn);
         addRadioButtons(mDesignerPersonCenterRadioBtn);
+
+
+        //获取节点信息
+
+        getWkFlowStatePointInformation();
+
     }
 
     @Override
@@ -102,7 +113,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (savedInstanceState != null) {
             // retrieve the fragment handle from fragmentmanager
 
-            mUserHomeFragment = (UserHomeFragment)getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
+            mUserHomeFragment = (UserHomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
             if (mUserHomeFragment != null)
                 mFragmentArrayList.add(mUserHomeFragment);
 
@@ -110,14 +121,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             if (mDesignerPersonalCenterFragment != null)
                 mFragmentArrayList.add(mDesignerPersonalCenterFragment);
 
-            mConsumerPersonalCenterFragment = (MyDecorationProjectFragment)getSupportFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
+            mConsumerPersonalCenterFragment = (MyDecorationProjectFragment) getSupportFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
             if (mConsumerPersonalCenterFragment != null)
                 mFragmentArrayList.add(mConsumerPersonalCenterFragment);
 
-            mBidHallFragment = (BidHallFragment)getSupportFragmentManager().findFragmentByTag(BID_FRAGMENT_TAG);
+            mBidHallFragment = (BidHallFragment) getSupportFragmentManager().findFragmentByTag(BID_FRAGMENT_TAG);
             if (mBidHallFragment != null)
                 mFragmentArrayList.add(mBidHallFragment);
         }
+
 
         super.initData(savedInstanceState);
         showDesignerOrConsumerRadioGroup();
@@ -172,6 +184,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
         //未登录状态，会自动进入案例fragment
+
         if (mMemberEntity == null) {
             designer_main_radio_btn.setChecked(true);
         }
@@ -254,16 +267,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
         return f;
     }
+
     //监听筛选按钮，，，
     @Override
     protected void rightNavButtonClicked(View view) {
-        if (isActiveFragment(BidHallFragment.class)){
+        if (isActiveFragment(BidHallFragment.class)) {
 
             mBidHallFragment.handleFilterOption();
         }
 
         if (isActiveFragment(MPThreadListFragment.class))
-                openFileThreadActivity();
+            openFileThreadActivity();
 
 
     }
@@ -291,8 +305,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         startActivity(circleIntent);
 
     }
+
     //设置指针控件宽度
-    public void setChooseViewWidth(final boolean just){
+    public void setChooseViewWidth(final boolean just) {
 
         ViewTreeObserver vto = contain.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -301,9 +316,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onGlobalLayout() {
                 btWidth = contain.getMeasuredWidth();
                 btHeight = contain.getMeasuredHeight();
-                if (btWidth != 0){
+                if (btWidth != 0) {
 
-                    chooseViewPointer.setInitChooseVoewPoint(btWidth,just);
+                    chooseViewPointer.setInitChooseVoewPoint(btWidth, just);
                 }
 
             }
@@ -321,12 +336,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         switch (index) {
             case R.id.designer_main_radio_btn:
                 setTitleForNavbar(UIUtils.getString(R.string.app_name));
-                setVisibilityForNavButton(ButtonType.middlecontain,false);
-                setVisibilityForNavButton(ButtonType.middle,true);
+                setVisibilityForNavButton(ButtonType.middlecontain, false);
+                setVisibilityForNavButton(ButtonType.middle, true);
                 break;
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
-                setVisibilityForNavButton(ButtonType.middlecontain,false);
-                setVisibilityForNavButton(ButtonType.middle,true);
+                setVisibilityForNavButton(ButtonType.middlecontain, false);
+                setVisibilityForNavButton(ButtonType.middle, true);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
 
 //                TextView textView = (TextView) findViewById(R.id.nav_right_textView);
@@ -347,10 +362,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
 
 
-                    setVisibilityForNavButton(ButtonType.middle,false);
+                    setVisibilityForNavButton(ButtonType.middle, false);
 
                     contain.setVisibility(View.VISIBLE);
-                    if (contain.getChildCount() == 0){
+                    if (contain.getChildCount() == 0) {
 
                         contain.addView(contain_layout);
                     }
@@ -362,16 +377,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 }
 
 
-
                 break;
 
             case R.id.designer_session_radio_btn:  /// 会話聊天.
 
-                setVisibilityForNavButton(ButtonType.middlecontain,false);
-                setVisibilityForNavButton(ButtonType.middle,true);
+                setVisibilityForNavButton(ButtonType.middlecontain, false);
+                setVisibilityForNavButton(ButtonType.middle, true);
                 String acs_Member_Type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                 Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
-                setImageForNavButton(ButtonType.RIGHT,R.drawable.msg_file);
+                setImageForNavButton(ButtonType.RIGHT, R.drawable.msg_file);
                 if (ifIsDesiner) {
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
@@ -402,17 +416,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.bidding:
                 //指针
-                setMyProjectTitleColorChange(bidding,design,construction);
-                chooseViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_NUMBER,POINTER_START_END_NUMBER);
+                setMyProjectTitleColorChange(bidding, design, construction);
+                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_NUMBER, POINTER_START_END_NUMBER);
                 mDesignerPersonalCenterFragment.setBidingFragment();
                 break;
             case R.id.design:
-                setMyProjectTitleColorChange(design,bidding,construction);
-                chooseViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_START_END_NUMBER,POINTER_MIDDLE_END_NUMBER);
+                setMyProjectTitleColorChange(design, bidding, construction);
+                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER, POINTER_MIDDLE_END_NUMBER);
                 //判断进入北舒套餐，，还是进入普通订单页面
                 if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
                     if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
@@ -427,8 +441,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                 break;
             case R.id.construction:
-                setMyProjectTitleColorChange(construction,design,bidding);
-                chooseViewPointer.setWidthOrHeight(btWidth,btHeight,POINTER_MIDDLE_END_NUMBER,POINTER_END_NUMBER);
+                setMyProjectTitleColorChange(construction, design, bidding);
+                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER);
 
                 mDesignerPersonalCenterFragment.setConstructionFragment();
                 break;
@@ -437,7 +451,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     }
 
-    protected void setMyProjectTitleColorChange(TextView titleCheck,TextView textUnckeck,TextView titleUncheck){
+    protected void setMyProjectTitleColorChange(TextView titleCheck, TextView textUnckeck, TextView titleUncheck) {
 
         titleCheck.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
         textUnckeck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
@@ -554,6 +568,45 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
     /**
+     * 获取全流程节点信息；
+     * 登陆一次获取一次
+     */
+
+    public void getWkFlowStatePointInformation() {
+
+
+        MPServerHttpManager.getInstance().getWkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                Gson gson = new Gson();
+                WkFlowStateContainsBean wkFlowStateContainsBean = gson.fromJson(jsonString, WkFlowStateContainsBean.class);
+
+                Map<String,WkFlowStateBean> mapWkFlowStateBean = wkFlowStateContainsBean.getNodes_message();
+                WkFlowStateMap.map = mapWkFlowStateBean;
+
+            }
+        });
+    }
+
+    /**
+     * 将WkFlowStateBean取出；
+     * */
+    public WkFlowStateBean setMapWkFlowState(JSONObject jsonObject){
+
+        String jsonString = GsonUtil.jsonToString(jsonObject);
+         WkFlowStateBean wkFlowStateBean = GsonUtil.jsonToBean(jsonString,WkFlowStateBean.class);
+
+        return wkFlowStateBean;
+    }
+
+    /**
      * 设计师个人信息
      *
      * @param designer_id
@@ -601,7 +654,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         setImageForNavCircleView(ButtonType.LEFTCIRCLE, R.drawable.icon_default_avator);
 
     }
-
 
 
     private void showDesignerOrConsumerRadioGroup() {
@@ -726,8 +778,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private boolean isRefush = false;
     final int RESULT_CODE = 101;
     final float POINTER_START_NUMBER = 0F;
-    final float POINTER_START_END_NUMBER = 1/3F;
-    final float POINTER_MIDDLE_END_NUMBER= 2/3F;
+    final float POINTER_START_END_NUMBER = 1 / 3F;
+    final float POINTER_MIDDLE_END_NUMBER = 2 / 3F;
     final float POINTER_END_NUMBER = 1F;
     private int btWidth;
     private int btHeight;
@@ -736,6 +788,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private UserHomeFragment mUserHomeFragment;
 
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
+    private WkFlowStateBean wkFlowStateBean;
 
     private BidHallFragment mBidHallFragment;
     private DesignerInfoDetails designerInfoDetails;

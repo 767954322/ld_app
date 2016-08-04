@@ -23,6 +23,12 @@ public final class UrlConstants {
     public static final String RUNNING_PRODUCTION = "RUNNING_PRODUCTION";
     /// alpha dev境 .
     public static final String RUNNING_DEV = "RUNNING_DEV";
+    /// DOCKER_DESIGN环境
+    public static final String RUNNING_DOCKER_DESIGN = "RUNNING_DOCKER_DESIGN";
+//    /// DOCKER_MEMBER
+//    public static final String RUNNING_DOCKER_MENBER = "RUNNING_DOCKER_MENBER";
+//    /// DOCKER_TRANSACTION
+//    public static final String RUNNING_DOCKER_TRANSACTION = "RUNNING_DOCKER_TRANSACTION";
 
     /**
      * 如需更改环境，需到ApiManager中修改RUNNING_DEVLEOPMENT的值
@@ -73,6 +79,16 @@ public final class UrlConstants {
     /// QA环境地址 .
     public static final String QA_MP_MAIN = "http://192.168.6.25:8080";
 
+    //新环境
+    public static final String DOCKER_HAWKEYE_DESIGN = "http://192.168.88.155:8080";
+
+    //新环境
+    public static final String DOCKER_HAWKEYE_MEMBER = "http://192.168.88.153:8080";
+
+    //新环境
+    public static final String DOCKER_HAWKEYE_TRANSCATION = "http://192.168.88.152:8080";
+
+
     /// UAT = UAT331环境地址 .
 //    public static final String UAT_MP_MAIN = "http://uat331api.gdfcx.net:8080";
     public static final String UAT_MP_MAIN = "http://uat-api.gdfcx.net:8080";
@@ -91,6 +107,7 @@ public final class UrlConstants {
     public static final int PRODUCTION_ADMIN_USER_ID = 20742718;
     /// 开发环境user_id .
     public static final int UAT_ADMIN_USER_ID = 20730165;
+
 
     public static final String MP_MAIN_TRANSACTION = "/transaction-app/v1/api";
     public static final String MP_MAIN_DESIGN = "/design-app/v1/api";
@@ -287,5 +304,11 @@ public final class UrlConstants {
      */
     public static final String URL_Delivery_Delay = MAIN_DESIGN + "/demands/";
     public static final String URL_Delivery_Delay_Data = MAIN_DESIGN + "/demands/";
+
+    /**
+     * 获取全流程节点信息网址
+     * */
+
+    public static final String URL_WkFlowState_pointe_Information = "http://192.168.120.123:8081/design-app/v1/api/fullflow/message";
 
 }
