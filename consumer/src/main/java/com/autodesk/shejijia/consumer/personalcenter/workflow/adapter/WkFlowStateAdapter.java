@@ -326,7 +326,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     break;
                 //上传设计交付物
                 case 5:
-                    viewHolder.tv_meal_title.setText(mapWkFlowState.get("61").getDescription());//上传交付
+                    viewHolder.tv_meal_title.setText(mapWkFlowState.get("6").getDescription());//上传交付
                     if (stateCode == 51) {
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejijiaofuwu));

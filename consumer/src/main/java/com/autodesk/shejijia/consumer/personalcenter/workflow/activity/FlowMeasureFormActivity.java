@@ -233,7 +233,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             designer_house_charge_show.setVisibility(View.GONE);
             rlWarmTips.setVisibility(View.GONE);
             if (wk_cur_sub_node_id_i >= 11) {
-                consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
+                consumer_designer_house_charge_show.setVisibility(View.GONE);
                 consumer_house_charge_show.setVisibility(View.VISIBLE);
                 ll_consumer_send.setVisibility(View.GONE);
                 tvIllustrate.setVisibility(View.GONE);
@@ -248,6 +248,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 tvWarmTipsContent.setText(R.string.warm_tips_content);
                 tvc_measure_form_time.setText("");
                 consumer_house_charge_show.setVisibility(View.VISIBLE);
+                consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
             }
         } else if (memType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) { // 设计师
             tvc_measure_form_time.setClickable(false);
