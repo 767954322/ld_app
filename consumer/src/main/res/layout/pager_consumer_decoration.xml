@@ -13,7 +13,12 @@
 
         <include layout="@layout/view_parting_line"></include>
 
+        <include
+            android:id="@+id/demand_details"
+            layout="@layout/layout_evaluation_popup"></include>
+
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -34,7 +39,6 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="居然大厦"
                 android:textColor="@color/bg_33"
                 android:textSize="@dimen/font_16"/>
 
@@ -42,7 +46,6 @@
                 android:id="@+id/tv_consumer_decoration_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="上传设计交付物"
                 android:textColor="@color/bg_0d74bc"
                 android:textSize="@dimen/font_14"/>
         </LinearLayout>
