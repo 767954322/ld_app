@@ -8,12 +8,14 @@
               android:orientation="horizontal">
 
     <LinearLayout
+        android:id="@+id/chat_bottom_layout_ll1"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:layout_width="0px"
         android:layout_height="0px"/>
 
     <RelativeLayout
+        android:id="@+id/chat_bottom_layout_rl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/chat_bottombar_minheight">

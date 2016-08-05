@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/chat_text_right_row_rootlayout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginRight="@dimen/chat_room_textcell_sidemargin"
@@ -20,6 +21,7 @@
         android:visibility="gone"/>
 
     <RelativeLayout
+        android:id="@+id/chat_text_right_row_rl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/chat_room_textcell_content_margin"

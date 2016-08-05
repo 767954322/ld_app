@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_msg_imgchat_list_rootlayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-    >
+                android:layout_height="match_parent" >
 
 
     <LinearLayout
+        android:id="@+id/activity_msg_imgchat_list_ll1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/activity_msg_imgchat_list_rl1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_50"
             android:background="@color/bg_f9"
