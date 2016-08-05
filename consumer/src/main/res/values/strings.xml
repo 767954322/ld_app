@@ -41,6 +41,7 @@
     <string name="appraise_designer_title">评价</string>
     <string name="appraise_designer_hint">写下这次设计服务的体会，分享给其他小伙伴～</string>
     <string name="appraise_designer_submit">提交</string>
+    <string name="appraise_designer_tips">您还没有对设计师的服务进行评价</string>
 
     <!--关注相关内容-->
     <string name="my_attention">我的关注</string>

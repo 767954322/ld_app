@@ -57,8 +57,8 @@ public class AlertView {
 
     private Context context;
     private ViewGroup contentContainer;
-    private ViewGroup decorView;//activity的根View
-    private ViewGroup rootView;//AlertView 的 根View
+    private ViewGroup decorView;    //activity的根View
+    private ViewGroup rootView;     //AlertView 的 根View
     private ViewGroup loAlertHeader;//窗口headerView
 
     private Style style = Style.Alert;

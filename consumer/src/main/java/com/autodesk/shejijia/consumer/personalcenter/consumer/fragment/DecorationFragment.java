@@ -25,11 +25,14 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AppraiseDesignerActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploadDeliveryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -67,6 +70,7 @@ import de.greenrobot.event.EventBus;
  * @brief 消费者：我的装修项目中的普通订单展示.
  */
 public class DecorationFragment extends Fragment implements View.OnClickListener, OnItemClickListener {
+
 
     public DecorationFragment() {
         super();
@@ -115,6 +119,11 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         mTvBuildTime = (TextView) mRootView.findViewById(R.id.consumer_decoration_buildtime);
         mIbnDecorationShow = (ImageButton) mRootView.findViewById(R.id.ibn_decoration_show);
         mIbnDecorationModify = (ImageButton) mRootView.findViewById(R.id.ibn_decoration_modify);
+        /**
+         * 立即评价
+         */
+        mLlEvaluate = (LinearLayout) mRootView.findViewById(R.id.ll_evaluate_tip);
+        mTvEvaluate = (TextView) mRootView.findViewById(R.id.tv_appraise_designer);
     }
 
     private void initData() {
@@ -141,6 +150,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
     private void initListener() {
         mIbnDecorationShow.setOnClickListener(this);
+        mTvEvaluate.setOnClickListener(this);
     }
 
     @Override
@@ -168,11 +178,19 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 intent.putExtras(bundle);
                 getActivity().startActivityForResult(intent, 0);
                 break;
+
+            case R.id.tv_appraise_designer: /// 立即评价 .
+                Intent evaluateIntent = new Intent(getActivity(), AppraiseDesignerActivity.class);
+                evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
+                evaluateIntent.putExtra(FlowUploadDeliveryActivity.BIDDER_ENTITY, mMPBidderBean);
+                evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id_evaluate);
+                startActivityForResult(evaluateIntent, EVALUATE_STATE);
+                break;
         }
     }
 
     /**
-     * 弹出应表中的dialog
+     * 弹出应标中的dialog
      */
     @Override
     public void onItemClick(Object obj, int position) {
@@ -518,7 +536,6 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     /**
                      * 审核通过,但是有设计师应标，隐藏修改需求.
                      */
-//                    approveState = UIUtils.getString(R.string.approve);
                     approveState = "应标中";
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setClickable(true);
@@ -548,6 +565,20 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
                 if (max == 64) {
                     approveState = "设计中";
+                }
+
+                if (max == 63) {
+                    mLlEvaluate.setVisibility(View.VISIBLE);
+                    for (DecorationBiddersBean biddersBean : bidders) {
+                        if ((max + "").equals(biddersBean.getWk_cur_sub_node_id())) {
+                            designer_id_evaluate = biddersBean.getDesigner_id();
+                            mMPBidderBean.setAvatar(biddersBean.getAvatar());
+                            mMPBidderBean.setUser_name(biddersBean.getUser_name());
+                            mMPBidderBean.setDesigner_id(biddersBean.getDesigner_id());
+                        }
+                    }
+                } else {
+                    mLlEvaluate.setVisibility(View.GONE);
                 }
 //                approveState = MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, String.valueOf(max));
                 mIbnDecorationModify.setVisibility(View.GONE);
@@ -777,6 +808,9 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     }
                     mDecorationAdapter.notifyDataSetChanged();
                     break;
+
+                case EVALUATE_STATE:
+                    break;
                 default:
                     break;
             }
@@ -785,6 +819,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
     private static final int WK_FLOW_STATE = 0;
     private static final int BIDING_STATE = 1;
+    private static final int EVALUATE_STATE = 2;
     private static final String IS_PUBLIC = "1";
     private static final String NONE = "none";
 
@@ -812,6 +847,11 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private ImageButton mIbnDecorationShow;
     private ImageButton mIbnDecorationModify;
     private AlertView mAlertViewRefuse;
+
+    private LinearLayout mLlEvaluate;
+    private TextView mTvEvaluate;
+    private String designer_id_evaluate; /// 进行设计交付的设计师的designer_id .
+    private MPBidderBean mMPBidderBean = new MPBidderBean();
 
     private int mPosition; /// 获取对应的item的position .
     private boolean isShowStub;
