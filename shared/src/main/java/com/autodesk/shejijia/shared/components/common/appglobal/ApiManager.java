@@ -175,6 +175,7 @@ public class ApiManager {
             //xin
             case UrlConstants.RUNNING_DOCKER_DESIGN:
                 main_member = UrlConstants.DOCKER_HAWKEYE_MEMBER + UrlConstants.MP_MAIN_MEMBER;
+                break;
 
         }
         return main_member;
@@ -215,6 +216,7 @@ public class ApiManager {
             //XIN
             case UrlConstants.RUNNING_DOCKER_DESIGN:
                 main_transaction = UrlConstants.DOCKER_HAWKEYE_TRANSCATION + UrlConstants.MP_MAIN_TRANSACTION;
+                break;
 
         }
         return main_transaction;
