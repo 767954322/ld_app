@@ -207,13 +207,16 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
+            MyToast.show(FlowUploadDeliveryActivity.this, "立即评价");
             mLinerDelayedShow.setVisibility(View.GONE);
             Intent intent = new Intent(this, AppraiseDesignerActivity.class);
-            startActivityForResult(intent, 1);
-            MyToast.show(FlowUploadDeliveryActivity.this, "立即评价");
+            intent.putExtra(BIDDER_ENTITY, mBiddersEntity);
+            intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
+            intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
+            startActivityForResult(intent, BIDDER_ENTITY_TAG);
         } else if (object == mDeliverySureAlertView) {
-            mLinerDelayedShow.setVisibility(View.GONE);
             MyToast.show(FlowUploadDeliveryActivity.this, "稍后评价");
+            mLinerDelayedShow.setVisibility(View.GONE);
         }
     }
 
@@ -1189,6 +1192,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                         }
                     }
                     break;
+
+                case BIDDER_ENTITY_TAG: /// 评价完成或者取消评价，隐藏评价 .
+                    mLinerDelayedShow.setVisibility(View.GONE);
+                    break;
                 case 4:
                 default:
                     break;
@@ -1251,6 +1258,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
     private static final int DELIVERED_STATE_FINISH = 0; /// 已完成交付 .
     private static final int DELIVERED_STATE_UN_FINISH = 1;/// 尚未完成交付 .
+    public static final String BIDDER_ENTITY = "mBiddersEntity";
+    public static final int BIDDER_ENTITY_TAG = 2;
     public static String fileLink;
 
     private TextView mTvDelivery;

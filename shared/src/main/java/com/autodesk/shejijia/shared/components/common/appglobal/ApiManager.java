@@ -18,6 +18,7 @@ public class ApiManager {
      * RUNNING_ALPHA：Alpha环境
      * RUNNING_PRODUCTION：正式(PRODUCTION)环境
      * RUNNING_DEV ：alpha dev境 .
+     * RUNNING_DOCKER_DESIGN：DOCKER 环境
      */
     public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DOCKER_DESIGN;
 

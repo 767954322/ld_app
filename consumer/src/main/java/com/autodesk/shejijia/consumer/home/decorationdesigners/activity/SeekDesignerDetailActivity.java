@@ -308,7 +308,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      */
     private void updateViewFromDesignerDetailData(DesignerDetailHomeBean seekDesignerDetailHomeBean) {
 
-
         if (null != seekDesignerDetailHomeBean) {
             /**
              * 设置取消还是关注文字

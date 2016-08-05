@@ -23,6 +23,13 @@
     <string name="delivery_immediate_evaluation">立即评价</string>
     <string name="delivery_later_evaluation">稍后评价</string>
 
+    <string name="evaluation_abandon_msg">您确定要放弃评价吗？</string>
+    <string name="evaluation_abandon">放弃</string>
+    <string name="evaluation_continue_edit">继续编辑</string>
+    <string name="evaluation_success_title">评论成功</string>
+    <string name="evaluation_success_msg">您的评价将在设计师个人主页中展示</string>
+
+
     <string name="warmTips">温馨提示：</string>
     <string name="Mrasuretips">提示：</string>
     <string name="illustrate">  量房费说明</string>
@@ -31,6 +38,7 @@
 
     <string name="warm_tips_content">签订设计合同后，您所支付的量房费将会抵消等额的设计费。</string>
     <string name="appraise_designer">评分</string>
+    <string name="appraise_designer_title">评价</string>
     <string name="appraise_designer_hint">写下这次设计服务的体会，分享给其他小伙伴～</string>
     <string name="appraise_designer_submit">提交</string>
 

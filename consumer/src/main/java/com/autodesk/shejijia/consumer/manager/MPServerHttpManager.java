@@ -251,7 +251,6 @@ public class MPServerHttpManager {
     }
 
 
-
     /**
      * @param jsonObject
      * @param needs_id
@@ -300,12 +299,11 @@ public class MPServerHttpManager {
 
     /**
      * 全流程节点信息获取
-     *
-     * */
+     */
 
-    public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback){
+    public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback) {
 
-        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET,UrlConstants.URL_WkFlowState_pointe_Information,null,callback){
+        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_WkFlowState_pointe_Information, null, callback) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -937,6 +935,7 @@ public class MPServerHttpManager {
                 "&orderLineId=" + order_line_no +
                 "&channel_type=mobile" +
                 "&paymethod=1";
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1238,11 +1237,36 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 保存评价信息接口
+     *  @param demands_id         项目编号
+     * @param designer_id        设计师编号
+     * @param jsonObject
+     * @param okResponseCallback 回调接口
+     */
+    public void submitAppraisement(String demands_id, String designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback okResponseCallback) {
+        String makeSureUrl = UrlConstants.MAIN_MEMBER +
+                "/demands/" + demands_id +
+                "/designers/" + designer_id +
+                "/score";
+        KLog.d(TAG, makeSureUrl);
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, makeSureUrl, jsonObject, okResponseCallback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 交付物延期
      *
      * @param demands_id  需求id
      * @param designer_id 设计师id
-     * @param callback
+     * @param callback    回调接口
      */
     public void getFlowUploadDeliveryDelay(String demands_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELIVERY_DELAY + demands_id +
@@ -1266,7 +1290,7 @@ public class MPServerHttpManager {
      *
      * @param demands_id  需求id
      * @param designer_id 设计师id
-     * @param callback
+     * @param callback    回调接口
      */
     public void getFlowUploadDeliveryDelayDate(String demands_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELIVERY_DELAY_DATA + demands_id +
@@ -1274,7 +1298,7 @@ public class MPServerHttpManager {
                 "/deliveries/options/confirm/remaindays";
         KLog.d(TAG, url);
 
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, null, callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
@@ -1342,7 +1366,8 @@ public class MPServerHttpManager {
 
     /**
      * 关注列表
-     * @param member_id  用户id
+     *
+     * @param member_id 用户id
      * @param limit
      * @param offset
      * @param callback

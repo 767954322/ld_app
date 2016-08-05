@@ -18,8 +18,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
-import org.json.JSONObject;
-
 import java.util.Map;
 
 /**
@@ -250,19 +248,11 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 case 1:
                     viewHolder.tv_meal_title.setText(mapWkFlowState.get("2").getDescription());//支付量房费
                     if (stateCode == 12) {
-//                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
-//                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.jeishouliangfangfei));
-//
-//                        textColor = StepDisEnableColor;
-//                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
-//                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.consumers_refused_standard));
-//                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.consumers_refused_you_standard));
-
+                        textColor = StepDisEnableColor;
+                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
                     } else if (stateCode == 13) {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
                         textColor = StepEnableColor;
-                        // viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.waiting_owner_pay_room));//等待业主支付量房费
-
                     } else if (stateCode == 14) {
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
@@ -277,7 +267,6 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     break;
                 //上传量房交付物
                 case 2:
-
                     viewHolder.tv_meal_title.setText(mapWkFlowState.get("3").getDescription());//签订设计合同
                     if (stateCode == 21 || stateCode == 22) {
                         textColor = StepEnableColor;
