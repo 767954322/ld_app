@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -31,6 +33,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -85,6 +88,13 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mBtnChat = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_chat);
         mBtnMeasure = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_optional_measure);
 
+        case_2d_btn = (TextView) mHeader.findViewById(R.id.case_2d_btn);
+        case_3d_btn = (TextView) mHeader.findViewById(R.id.case_3d_btn);
+        consumer_appraise = (TextView) mHeader.findViewById(R.id.consumer_appraise);
+        chooseViewPointer = (ChooseViewPointer)mHeader.findViewById(R.id.choose_point);
+
+        width = getWindowWidth();
+
         mListView.addHeaderView(mHeader);
         mListView.addFooterView(mFooterView);
     }
@@ -116,6 +126,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mBtnMeasure.setOnClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
         mBtnChat.setOnClickListener(this);
+        case_3d_btn.setOnClickListener(this);
+        case_2d_btn.setOnClickListener(this);
+        consumer_appraise.setOnClickListener(this);
     }
 
     @Override
@@ -196,6 +209,21 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
+            case R.id.case_2d_btn:
+                chooseViewPointer.setDecreaseWidth(50f);
+                chooseViewPointer.setWidthOrHeight(width,0,0f,1/3f);
+                chooseViewPointer.invalidate();
+                break;
+            case R.id.case_3d_btn:
+                chooseViewPointer.setDecreaseWidth(50f);
+                chooseViewPointer.setWidthOrHeight(width,0,1/3f,2/3f);
+                break;
+            case R.id.consumer_appraise:
+
+                chooseViewPointer.setDecreaseWidth(50f);
+                chooseViewPointer.setWidthOrHeight(width,0,2/3f,1f);
+                break;
+
         }
     }
 
@@ -210,6 +238,20 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
         intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(intent);
+    }
+
+    //获取屏幕宽度
+    public int getWindowWidth(){
+
+        DisplayMetrics metric = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metric);
+        int width = metric.widthPixels;     // 屏幕宽度（像素）
+//        int height = metric.heightPixels;   // 屏幕高度（像素）
+//        float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
+//        int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
+
+        return width;
+
     }
 
     /**
@@ -589,6 +631,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private Button mBtnChat, mBtnMeasure;
     private AlertView unFollowedAlertView;
     private TextView mTvFollowedNum;    /// 关注人数 .
+    private LinearLayout ll_case_choose_contain;//容器
+    private TextView case_2d_btn;//2d案例
+    private TextView case_3d_btn;//3d案例
+    private TextView consumer_appraise;//评价按钮
+    private ChooseViewPointer chooseViewPointer;//滚动条
 
     private String mNickName;
     private String mSelfAcsMemberId;
@@ -599,6 +646,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private SeekDesignerDetailBean mSeekDesignerDetailBean;
     private int LIMIT = 10;
     private int OFFSET = 0;
+    private int width;
     private boolean isFirstIn = true;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
     private DesignerDetailHomeBean seekDesignerDetailHomeBean;
