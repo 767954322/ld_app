@@ -1238,13 +1238,14 @@ public class MPServerHttpManager {
 
     /**
      * 保存评价信息接口
-     *  @param demands_id         项目编号
+     *
+     * @param demands_id         项目编号
      * @param designer_id        设计师编号
      * @param jsonObject
      * @param okResponseCallback 回调接口
      */
     public void submitAppraisement(String demands_id, String designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback okResponseCallback) {
-        String makeSureUrl = UrlConstants.MAIN_MEMBER +
+        String makeSureUrl = UrlConstants.MAIN_DESIGN +
                 "/demands/" + demands_id +
                 "/designers/" + designer_id +
                 "/score";

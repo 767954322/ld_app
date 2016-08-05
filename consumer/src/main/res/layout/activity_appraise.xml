@@ -41,7 +41,7 @@
                 android:layout_marginRight="@dimen/size_10"
                 android:src="@drawable/icon_certification_normal"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
         </FrameLayout>
 
         <TextView
@@ -86,32 +86,34 @@
 
     <include layout="@layout/view_parting_line"></include>
 
-    <LinearLayout
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/size_16"-->
+    <!--android:orientation="vertical">-->
+
+    <EditText
+        android:id="@+id/et_appraisement_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_150"
+        android:layout_margin="@dimen/size_16"
+        android:background="@null"
+        android:gravity="left"
+        android:hint="@string/appraise_designer_hint"
+        android:textColorLink="@color/bg_tab_normal"
+        android:textSize="@dimen/font_14"/>
+
+    <include layout="@layout/view_parting_line"></include>
+
+    <Button
+
+        android:id="@+id/btn_submit_appraisement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/size_16"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/et_appraisement_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:focusable="false"
-            android:hint="@string/appraise_designer_hint"
-            android:textColorLink="@color/bg_tab_normal"
-            android:textSize="@dimen/font_14"/>
-
-        <Button
-            android:id="@+id/btn_submit_appraisement"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/bg_common_btn_blue"
-            android:text="@string/appraise_designer_submit"
-            android:textColor="@color/bg_ff"/>
-    </LinearLayout>
-
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_common_btn_blue"
+        android:text="@string/appraise_designer_submit"
+        android:textColor="@color/bg_ff"/>
 </LinearLayout>
+

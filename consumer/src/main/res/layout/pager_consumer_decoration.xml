@@ -14,7 +14,6 @@
         <include layout="@layout/view_parting_line"></include>
 
         <include
-            android:id="@+id/demand_details"
             layout="@layout/layout_evaluation_popup"></include>
 
         <LinearLayout

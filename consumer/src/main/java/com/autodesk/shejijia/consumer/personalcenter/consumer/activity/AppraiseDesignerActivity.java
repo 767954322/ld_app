@@ -80,6 +80,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         Bundle bundle = intent.getExtras();
         if (null != bundle) {
             mMPBidderBean = (MPBidderBean) bundle.getSerializable(FlowUploadDeliveryActivity.BIDDER_ENTITY);
+            mMPBidderBean.getDesigner_id();
             designer_id = bundle.getString(Constant.BundleKey.BUNDLE_DESIGNER_ID);
             needs_id = bundle.getString(Constant.BundleKey.BUNDLE_ASSET_NEED_ID);
         }
@@ -103,7 +104,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         super.initListener();
         mRatingBarStar.setOnRatingBarChangeListener(this);
         mBenSubmitAppraisement.setOnClickListener(this);
-        mAppraiseDesignerAlertView = new AlertView(null,
+        mAppraiseDesignerAlertView = new AlertView("",
                 UIUtils.getString(R.string.evaluation_abandon_msg),
                 UIUtils.getString(R.string.evaluation_continue_edit),
                 null, new String[]{UIUtils.getString(R.string.evaluation_abandon)}, this, AlertView.Style.Alert, this);
@@ -121,10 +122,10 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
                 if (isValidateSubmitContent) {
                     CustomProgress.show(AppraiseDesignerActivity.this, "", false, null);
                     MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                    String acs_member_id = memberEntity.getAcs_member_id();
+                    String hs_uid = memberEntity.getHs_uid();
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("member_id", acs_member_id);             /// 消费者编号 .
+                        jsonObject.put("designer_uid", hs_uid);             /// 消费者编号 .
                         jsonObject.put("member_grade", mRatingProgress);        /// 消费者评分 .
                         jsonObject.put("member_estimate", appeasementsContent); /// 消费者评价，最大200中文字符 .
                     } catch (JSONException e) {
