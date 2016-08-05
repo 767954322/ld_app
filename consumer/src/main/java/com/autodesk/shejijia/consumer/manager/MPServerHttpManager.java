@@ -251,7 +251,6 @@ public class MPServerHttpManager {
     }
 
 
-
     /**
      * @param jsonObject
      * @param needs_id
@@ -300,12 +299,11 @@ public class MPServerHttpManager {
 
     /**
      * 全流程节点信息获取
-     *
-     * */
+     */
 
-    public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback){
+    public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback) {
 
-        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET,UrlConstants.URL_WkFlowState_pointe_Information,null,callback){
+        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_WkFlowState_pointe_Information, null, callback) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -937,6 +935,7 @@ public class MPServerHttpManager {
                 "&orderLineId=" + order_line_no +
                 "&channel_type=mobile" +
                 "&paymethod=1";
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1342,7 +1341,8 @@ public class MPServerHttpManager {
 
     /**
      * 关注列表
-     * @param member_id  用户id
+     *
+     * @param member_id 用户id
      * @param limit
      * @param offset
      * @param callback

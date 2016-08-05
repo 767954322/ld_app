@@ -109,8 +109,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         switch (v.getId()){
 
             case R.id.demand_details:
-
-
                 /**
                  * 需求详情 .
                  */
