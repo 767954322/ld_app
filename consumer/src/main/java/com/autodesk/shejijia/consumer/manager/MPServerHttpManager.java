@@ -120,8 +120,21 @@ public class MPServerHttpManager {
 //                "&custom_string_restroom=" + custom_string_restroom +
 //                "&sort_order=desc" +
 //                "&custom_string_form=" + custom_string_form;
+        String url ="http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
+                "custom_string_style=" + custom_string_style +
+                "&custom_string_type=" + custom_string_type +
+                "&custom_string_keywords=" + custom_string_keywords +
+                "&sort_by=date" +
+                "&custom_string_area=" + custom_string_area +
+                "&custom_string_bedroom=" + custom_string_bedroom +
+                "&taxonomy_id=" + taxonomy_id +
+                "&offset=" + offset +
+                "&limit=" + limit +
+                "&custom_string_restroom=" + custom_string_restroom +
+                "&sort_order=desc" +
+                "&custom_string_form=" + custom_string_form;
 
-        String url="http://192.168.120.90:8080/design-app/v1/api/cases/search?custom_string_style=&custom_string_type=&custom_string_keywords=&sort_by=date&custom_string_area=&custom_string_bedroom=&taxonomy_id=01&offset=0&limit=10&custom_string_restroom=&sort_order=desc&custom_string_form=";
+       // String url="http://192.168.120.90:8080/design-app/v1/api/cases/search?custom_string_style=&custom_string_type=&custom_string_keywords=&sort_by=date&custom_string_area=&custom_string_bedroom=&taxonomy_id=01&offset=0&limit=10&custom_string_restroom=&sort_order=desc&custom_string_form=";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -402,7 +415,7 @@ public class MPServerHttpManager {
      * @param limit
      */
     public void getSeekDesignerDetailData(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
-//        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/20730531/cases?offset=0&sort_order=desc&sort_by=date&limit=10";
+//        String url ="http://192.168.120.90:8010/tranaction-app/v1/api/designers/20730531/cases?offset=0&sort_order=desc&sort_by=date&limit=10";
         String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/cases?" +
                 "offset=" + offset +
                 "&sort_order=desc" +
@@ -441,7 +454,7 @@ public class MPServerHttpManager {
      */
     public void getCaseListDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
 //        String url = UrlConstants.URL_GET_CASE_DETAILS + case_id;
-//        http://alpha-api.gdfcx.net/design-app/v1/api/cases/1553719
+//        http://alpha-api.gdfcx.net/tranaction-app /v1/api/cases/1553719
         String url ="http://192.168.120.90:8080/design-app/v1/api/cases/"+case_id;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
@@ -1172,8 +1185,11 @@ public class MPServerHttpManager {
 
     public void sendUnBindBankCard(final long designer_id,
                                        JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+//        String url = UrlConstants.URL_WITHDRAW_BALANCE + designer_id;
+//        String url = UrlConstants.URL_WITHDRAW_BALANCE + designer_id;
 
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, UrlConstants.URL_WITHDRAW_BALANCE + designer_id, jsonObject, callback) {
+        String url ="http://192.168.120.90:8010/tranaction-app/v1/api/designers/d2/cases/like/"+assetId;
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT,url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
