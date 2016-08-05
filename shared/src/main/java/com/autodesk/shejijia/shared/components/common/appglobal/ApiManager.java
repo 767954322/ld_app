@@ -295,6 +295,9 @@ public class ApiManager {
             case UrlConstants.RUNNING_PRODUCTION:
                 versionPrefix = "P";
                 break;
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                versionPrefix = "DOCKER";
+                break;
         }
         return versionPrefix;
     }
