@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FollowingDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.ImagesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseLibraryAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
@@ -227,7 +228,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                             if (is_following) {
                                 unFollowedAlertView.show();
                             } else {
-                                followingDesigner();
+                                followingOrUnFollowedDesigner(true);
                             }
                         }
                     }
@@ -527,56 +528,38 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
-                    unFollowedDesigner();
+                    followingOrUnFollowedDesigner(false);
                 }
             }
         }).setCancelable(true);
     }
 
+
     /**
-     * 关注设计师
+     * 关注或者取消关注设计师
+     *
+     * @param followsType true 为关注，false 取消关注
      */
-    private void followingDesigner() {
+    private void followingOrUnFollowedDesigner(final boolean followsType) {
         CustomProgress.show(this, "", false, null);
         String followed_member_id = designer_id;
         String followed_member_uid = mHs_uid;
-        MPServerHttpManager.getInstance().followingDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().followingOrUnFollowedDesigner(member_id, followed_member_id, followed_member_uid, followsType, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                String followingDesignerString = GsonUtil.jsonToString(jsonObject);
-                setFollowedTitle(true);
+                String followingOrUnFollowedDesignerString = GsonUtil.jsonToString(jsonObject);
+                FollowingDesignerBean followingDesignerBean = GsonUtil.jsonToBean(followingOrUnFollowedDesignerString, FollowingDesignerBean.class);
 
-                /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
-                mDesignerInfo.is_following = true;
-                MyToast.show(CaseLibraryNewActivity.this, UIUtils.getString(R.string.attention_success));
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                CustomProgress.cancelDialog();
-                setFollowedTitle(true);
-                MPNetworkUtils.logError(TAG, volleyError);
-            }
-        });
-    }
-
-    /**
-     * 取消关注设计师
-     */
-    private void unFollowedDesigner() {
-        CustomProgress.show(this, "", false, null);
-        String followed_member_id = designer_id;
-        String followed_member_uid = mHs_uid;
-        MPServerHttpManager.getInstance().unFollowedDesigner(member_id, followed_member_id, followed_member_uid, new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
-                String unFollowDesignerString = GsonUtil.jsonToString(jsonObject);
-                setFollowedTitle(false);
-                MyToast.show(CaseLibraryNewActivity.this, UIUtils.getString(R.string.attention_cancel));
+                setFollowedTitle(followsType);
+                if (followsType) {
+                    MyToast.show(CaseLibraryNewActivity.this, UIUtils.getString(R.string.attention_success));
+                    /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
+                    mDesignerInfo.is_following = true;
+                } else {
+                    mDesignerInfo.is_following = false;
+                }
             }
 
             @Override

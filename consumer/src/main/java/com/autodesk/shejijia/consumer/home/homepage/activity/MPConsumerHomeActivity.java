@@ -595,16 +595,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         });
     }
 
-    /**
-     * 将WkFlowStateBean取出；
-     * */
-    public WkFlowStateBean setMapWkFlowState(JSONObject jsonObject){
-
-        String jsonString = GsonUtil.jsonToString(jsonObject);
-         WkFlowStateBean wkFlowStateBean = GsonUtil.jsonToBean(jsonString,WkFlowStateBean.class);
-
-        return wkFlowStateBean;
-    }
 
     /**
      * 设计师个人信息

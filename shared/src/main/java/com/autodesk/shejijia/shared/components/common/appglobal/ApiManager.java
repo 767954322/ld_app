@@ -18,6 +18,7 @@ public class ApiManager {
      * RUNNING_ALPHA：Alpha环境
      * RUNNING_PRODUCTION：正式(PRODUCTION)环境
      * RUNNING_DEV ：alpha dev境 .
+     * RUNNING_DOCKER_DESIGN：DOCKER 环境
      */
     public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DOCKER_DESIGN;
 
@@ -175,6 +176,7 @@ public class ApiManager {
             //xin
             case UrlConstants.RUNNING_DOCKER_DESIGN:
                 main_member = UrlConstants.DOCKER_HAWKEYE_MEMBER + UrlConstants.MP_MAIN_MEMBER;
+                break;
 
         }
         return main_member;
@@ -215,6 +217,7 @@ public class ApiManager {
             //XIN
             case UrlConstants.RUNNING_DOCKER_DESIGN:
                 main_transaction = UrlConstants.DOCKER_HAWKEYE_TRANSCATION + UrlConstants.MP_MAIN_TRANSACTION;
+                break;
 
         }
         return main_transaction;
@@ -294,6 +297,9 @@ public class ApiManager {
                 break;
             case UrlConstants.RUNNING_PRODUCTION:
                 versionPrefix = "P";
+                break;
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                versionPrefix = "DOCKER";
                 break;
         }
         return versionPrefix;

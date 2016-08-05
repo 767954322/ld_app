@@ -161,6 +161,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
      * @brief 获取支付宝详细信息 .
      */
     private void getAliPayDetailInfo(String order_no, String order_line_no) {
+
         MPServerHttpManager.getInstance().getAlipayDetailInfo(order_no, order_line_no, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -182,7 +183,6 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 amount = MPAliPayBean.getAmount();
                 notifyURL = MPAliPayBean.getNotifyURL();
                 tradeNO = MPAliPayBean.getTradeNO();
-
                 AliPayService PayService = new AliPayService(Seller, Partner, productName, amount, notifyURL, productName, tradeNO);
                 PayService.SetCallBack(AliCallBack);
                 PayService.DoPayment(FlowFirstDesignActivity.this);

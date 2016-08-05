@@ -30,13 +30,16 @@ public class AttentionAdapter extends BaseAdapter {
     }
 
     /// item单击监听接口.
-    public interface OnItemCancelAttentionClickListener {
+    public interface OnItemClickListener {
         void OnItemCancelAttentionClick(int position);
+
+        void OnItemAvatarClickListener(int position);
     }
 
-    public void setOnItemCancelAttentionClick(OnItemCancelAttentionClickListener mOnItemCancelAttentionClickListener) {
-        this.mOnItemCancelAttentionClickListener = mOnItemCancelAttentionClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
+
 
     @Override
     public int getLayoutId() {
@@ -79,6 +82,7 @@ public class AttentionAdapter extends BaseAdapter {
         }
 
         ((ViewHolder) holder).iv_cancel_attention.setOnClickListener(new MyOnClickListener(position, (ViewHolder) holder));
+        ((ViewHolder) holder).piv_attention_piv_head_icon.setOnClickListener(new MyOnClickListener(position, (ViewHolder) holder));
     }
 
     class MyOnClickListener implements View.OnClickListener {
@@ -95,10 +99,14 @@ public class AttentionAdapter extends BaseAdapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.iv_cancel_attention:
-                    if (mOnItemCancelAttentionClickListener != null) {
-                        mOnItemCancelAttentionClickListener.OnItemCancelAttentionClick(position);
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.OnItemCancelAttentionClick(position);
                     }
                     break;
+                case R.id.piv_attention_piv_head_icon:
+                    if (null != mOnItemClickListener) {
+                        mOnItemClickListener.OnItemAvatarClickListener(position);
+                    }
             }
         }
     }
@@ -109,9 +117,7 @@ public class AttentionAdapter extends BaseAdapter {
         private ImageView img_attention_attestation_icon;
         private TextView tv_attention_name;
         private ImageView iv_cancel_attention;
-
     }
 
-    private OnItemCancelAttentionClickListener mOnItemCancelAttentionClickListener;
-
+    private OnItemClickListener mOnItemClickListener;
 }

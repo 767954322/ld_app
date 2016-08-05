@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/size_40"
+              android:id="@+id/ll_evaluate_tip"
+              android:background="@color/alertdialog_line"
+              android:orientation="horizontal"
+              android:paddingLeft="@dimen/size_10"
+              android:paddingRight="@dimen/size_10"
+              android:visibility="gone"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10"
+        android:text="@string/appraise_designer_tips"
+        android:textColor="@color/bg_66"/>
+
+    <TextView
+        android:id="@+id/tv_appraise_designer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_3"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@drawable/textview_border_evaluate"
+        android:paddingBottom="@dimen/size_3"
+        android:paddingLeft="@dimen/size_5"
+        android:paddingRight="@dimen/size_5"
+        android:paddingTop="@dimen/size_3"
+        android:text="立即评价"
+        android:textColor="@color/bg_0084ff"/>
+
+</LinearLayout>

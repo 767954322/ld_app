@@ -261,7 +261,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             } else
                 fragmentTransaction.hide(fragment);
         }
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
 
         if (threadListFragment != null) {
             threadListFragment.onFragmentShown();

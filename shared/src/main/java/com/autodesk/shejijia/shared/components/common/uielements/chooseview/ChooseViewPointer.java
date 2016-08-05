@@ -10,7 +10,6 @@ import android.view.View;
 import com.autodesk.shejijia.shared.R;
 
 /**
- * Created by yaoxuehua on 16-7-19.
  * @author yaoxuehua
  * @version v1.0 .
  * @date 2016-7-19 .
@@ -23,7 +22,9 @@ public class ChooseViewPointer extends View{
     private int width,height,initWidth = 0;
     private float A = 1/3f,B = 2/3f;
     private boolean initBoolean = true;
+    private float decreaseWidth = 0.0f;
     private View view;
+
     public ChooseViewPointer(Context context, int width, int height/*,float a,float b*/) {
         super(context);
         this.context = context;
@@ -60,10 +61,8 @@ public class ChooseViewPointer extends View{
 
                 canvas.drawLine(initWidth * 1/3f,0,initWidth * 2/3f,0,paint);
             }
-
-
         }
-        canvas.drawLine(width * A,0,width * B,0,paint);
+        canvas.drawLine(width * A + decreaseWidth,0,width * B - decreaseWidth,0,paint);
     }
 
     public void setWidthOrHeight(int width,int height,float a,float b){
@@ -82,6 +81,12 @@ public class ChooseViewPointer extends View{
             this.initWidth = width;
 
             invalidate();
+    }
+
+    public void setDecreaseWidth(float decreaseWidth){
+
+        this.decreaseWidth = decreaseWidth;
+
     }
 
 

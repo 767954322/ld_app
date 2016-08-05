@@ -10,6 +10,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -53,6 +55,12 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         super.initView();
         mListView = (ListView) findViewById(R.id.xlv_seek_designer);
         mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
+
+        setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
+        setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
+
+        setVisibilityForNavButton(ButtonType.RIGHT, true);
+        setVisibilityForNavButton(ButtonType.SECONDARY, true);
     }
 
     /// 数据逻辑.
@@ -71,6 +79,21 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         mListView.setOnItemClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
     }
+
+    @Override
+    protected void secondaryNavButtonClicked(View view) {
+        super.secondaryNavButtonClicked(view);
+        intent = new Intent(this, DesignerFiltrateActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+        intent = new Intent(this, DesignerSearchActivity.class);
+        startActivity(intent);
+    }
+
 
     /**
      * 选中某一个设计师进入详情页面
@@ -236,6 +259,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     private int OFFSET = 0;
     private boolean isFirstIn = true;
     private String member_id;
+    private Intent intent;
 
     /// 集合，类.
     private SeekDesignerBean mSeekDesignerBean;

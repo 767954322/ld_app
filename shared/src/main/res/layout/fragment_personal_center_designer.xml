@@ -298,7 +298,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_20"
                     android:layout_marginRight="@dimen/size_20"
-                    android:src="@drawable/icon_my_assets_normal"/>
+                    android:src="@drawable/ic_following"/>
 
                 <TextView
                     android:text="@string/my_attention"

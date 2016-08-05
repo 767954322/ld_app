@@ -16,7 +16,7 @@
             android:layout_width="@dimen/size_50"
             android:layout_height="@dimen/size_50"
             android:layout_gravity="center"
-            android:background="@drawable/icon_commen_head_normal"
+            android:src="@drawable/icon_commen_head_normal"
             app:poly_corner_radius="5"
             app:poly_vertices="0"/>
 
