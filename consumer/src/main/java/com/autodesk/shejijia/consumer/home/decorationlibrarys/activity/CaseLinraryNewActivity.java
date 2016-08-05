@@ -311,7 +311,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
 
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, "分享标题", "分享最新内容", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), "分享最新内容", ifIsSharedToFriends, imageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -319,7 +319,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, "分享标题", "分享最新内容", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), "分享最新内容", ifIsSharedToFriends, imageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
