@@ -41,20 +41,21 @@ public class ApiManager {
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH;
                 break;
 
-            case UrlConstants.RUNNING_UAT:
-                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_UAT;
-                break;
-
-            case UrlConstants.RUNNING_ALPHA:
-                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_ALPHA;
-                break;
-
             case UrlConstants.RUNNING_PRODUCTION:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_PRODUCTION;
                 break;
 
             case UrlConstants.RUNNING_DEV:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_DEV;
+                break;
+
+            case UrlConstants.RUNNING_UAT:
+                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_UAT;
+                break;
+
+            case UrlConstants.RUNNING_ALPHA:
+            default:
+                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_ALPHA;
                 break;
         }
         return login_path;
@@ -81,15 +82,17 @@ public class ApiManager {
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_UAT;
                 break;
 
-            case UrlConstants.RUNNING_ALPHA:
-                logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_ALPHA;
-                break;
-
             case UrlConstants.RUNNING_PRODUCTION:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_PRODUCTION;
                 break;
+
             case UrlConstants.RUNNING_DEV:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_DEV;
+                break;
+
+            case UrlConstants.RUNNING_ALPHA:
+            default:
+                logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_ALPHA;
                 break;
         }
         return logout_path;
@@ -104,10 +107,8 @@ public class ApiManager {
 
     public static String getMPMain_Design(String runningDevelopment) {
         String main_design = null;
-        String tempMpMain = "http://192.168.120.123:8081";
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
-
                 main_design = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
@@ -116,13 +117,11 @@ public class ApiManager {
                 break;
 
             case UrlConstants.RUNNING_UAT:
-                main_design = tempMpMain + UrlConstants.MP_MAIN_DESIGN;
-//                main_design = UrlConstants.UAT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
+                main_design = UrlConstants.UAT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
             case UrlConstants.RUNNING_ALPHA:
-                main_design = tempMpMain + UrlConstants.MP_MAIN_DESIGN;
-//                main_design = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
+                main_design = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
             case UrlConstants.RUNNING_PRODUCTION:
@@ -239,7 +238,7 @@ public class ApiManager {
             case UrlConstants.RUNNING_PRODUCTION:
                 return false;
             default:
-                return false;
+                return true;
         }
     }
 
