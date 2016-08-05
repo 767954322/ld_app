@@ -518,13 +518,15 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     /**
                      * 审核通过,但是有设计师应标，隐藏修改需求.
                      */
-                    approveState = UIUtils.getString(R.string.approve);
+//                    approveState = UIUtils.getString(R.string.approve);
+                    approveState = "应标中";
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setClickable(true);
                 }
             }
         }
         if (bidders != null && bidders.size() > 0) {
+
             ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
             for (DecorationBiddersBean bidder : bidders) {
                 if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
@@ -533,7 +535,21 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
             }
             if (mWk_cur_node_id_array.size() > 0) {
                 Integer max = Collections.max(mWk_cur_node_id_array);
-                approveState = MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, String.valueOf(max));
+                if (max < 41) {
+                    approveState = "应标中";
+                }
+                if (max >= 41) {
+                    approveState = "设计中";
+                }
+
+                if (max >= 63 && max != 64) {
+                    approveState = "项目完成";
+                }
+
+                if (max == 64) {
+                    approveState = "设计中";
+                }
+//                approveState = MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, String.valueOf(max));
                 mIbnDecorationModify.setVisibility(View.GONE);
                 mIbnDecorationModify.setClickable(false);
             }

@@ -860,6 +860,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         } else if (wk_sub_node_id_int == 64) {
             switch (mMemberType) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mLinerDelayedShow.setVisibility(View.VISIBLE);
                     mBtnDelay.setEnabled(false);
                     mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                     mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
