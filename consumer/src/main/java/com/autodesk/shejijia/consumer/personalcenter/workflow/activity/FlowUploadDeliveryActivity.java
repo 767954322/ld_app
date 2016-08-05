@@ -854,17 +854,21 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     mLinerDelayedShow.setVisibility(View.VISIBLE);
                     break;
                 case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
                     mLinerDelayedShow.setVisibility(View.GONE);
                     break;
             }
         } else if (wk_sub_node_id_int == 64) {
             switch (mMemberType) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+                    mLinerDelayedShow.setVisibility(View.VISIBLE);
                     mBtnDelay.setEnabled(false);
                     mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                     mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
                     break;
                 case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
                     mLinerDelayedShow.setVisibility(View.GONE);
                     break;
             }

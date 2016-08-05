@@ -141,7 +141,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     private void updateViewFromData(int state) {
         switch (state) {
             case 0:
-                OFFSET = 10;
+                OFFSET = 0;
                 attentionList.clear();
                 break;
             case 1:
@@ -155,10 +155,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
                 break;
         }
 
-        List<AttentionEntity.DesignerListBean> designer_list = attentionEntity.getDesigner_list();
-        if (null != designer_list && designer_list.size() > 0) {
-            attentionList.addAll(designer_list);
-        }
+        attentionList.addAll(attentionEntity.getDesigner_list());
         attentionAdapter.notifyDataSetChanged();
     }
 
