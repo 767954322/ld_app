@@ -98,26 +98,17 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     viewHolder.piv_meal_phone.setImageDrawable(context.getResources().getDrawable(R.drawable.icon_xuanzeshejishi));
                     if (stateCode == 11) {
                         textColor = StepEnableColor;
-//                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
-//                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.send_invitation_designer_quantity_room));
                         viewHolder.tv_meal_title.setText(mapWkFlowState.get("11").getDescription());//邀请量房
-                        viewHolder.tv_meal_content.setText(mapWkFlowState.get("11").getConsumerMessage());//等待设计师确认量房
 
                     } else if (stateCode == 12) {
 
                         textColor = StepEnableColor;
-                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
-                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.refused_designer_quantity_room_invitation));
-//                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("12").getDescription());
-//                        viewHolder.tv_meal_content.setText(mapWkFlowState.get("12").getConsumerMessage());
+                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("12").getDescription());//消费者拒绝量房邀请
 
                     } else if (stateCode == 13) {
 
                         textColor = StepEnableColor;
-//                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
-//                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_agreed_room_invitation));
-                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("13").getDescription());
-                     //   viewHolder.tv_meal_content.setText(mapWkFlowState.get("13").getConsumerMessage());
+                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("13").getDescription());//确认量房
 
 
                     } else if (stateCode == 14) {
@@ -126,7 +117,6 @@ public class WkFlowStateAdapter extends BaseAdapter {
 //                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
 //                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_refused_room_invitation));
                         viewHolder.tv_meal_title.setText(mapWkFlowState.get("14").getDescription());//设计师拒绝量房
-                        viewHolder.tv_meal_content.setText(mapWkFlowState.get("14").getConsumerMessage());//订单结束，设计师已取消量房
                     } else if (stateCode > 14) {
                         textColor = StepEnableColor;
 //                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("13").getDescription());
@@ -152,20 +142,20 @@ public class WkFlowStateAdapter extends BaseAdapter {
 
                         textColor = StepEnableColor;
                        // viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.please_pay_designer_volume_rate));
-                        viewHolder.tv_meal_content.setText(mapWkFlowState.get("13").getConsumerMessage());//未支付量房费
+                      //  viewHolder.tv_meal_content.setText(mapWkFlowState.get("13").getConsumerMessage());//未支付量房费
+                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("2").getDescription());//支付量房费
 
                     } else if (stateCode == 14) {//设计师拒绝量房
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
-                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_has_declined_room));
+                       // viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.designer_has_declined_room));
 
                         viewHolder.tv_meal_title.setText(mapWkFlowState.get("14").getDescription());//设计师拒绝量房
-                        viewHolder.tv_meal_content.setText(mapWkFlowState.get(14).getConsumerMessage());//订单结束，设计师已取消量房
 
                     } else if (stateCode > 14) {
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
-                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.you_designers_pay_excess_rate));//支付完量房房费后
+                      //  viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.you_designers_pay_excess_rate));//支付完量房房费后
                         viewHolder.tv_meal_title.setText(mapWkFlowState.get("2").getDescription());//支付量房费
 
                     } else {
@@ -287,14 +277,13 @@ public class WkFlowStateAdapter extends BaseAdapter {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
 //                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.querenliangfang));
 //                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.check_room_invitation_and_confirm_room));
-                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("11").getDescription());//确认量房
-                        viewHolder.tv_meal_content.setText(mapWkFlowState.get("11").getDesignerMessage());//等待接受量房邀请
+                        viewHolder.tv_meal_title.setText(mapWkFlowState.get("11").getDescription());//邀请量房
+
 
                     } else if (stateCode > 11 && stateCode != 12 && stateCode != 14) {
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
-                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.your_confirmed_quantity));
                     } else if (stateCode == 12) {
 
                         textColor = StepEnableColor;
@@ -309,26 +298,13 @@ public class WkFlowStateAdapter extends BaseAdapter {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
 
                         textColor = StepEnableColor;
-                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.your_confirmed_quantity));
-                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.waiting_owner_pay_room));
                         viewHolder.tv_meal_title.setText(mapWkFlowState.get("13").getDescription());//确认量房
-                        viewHolder.tv_meal_content.setText(mapWkFlowState.get("13").getDesignerMessage());//等待支付量房费
 
                     } else if (stateCode == 14) {
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_xuanzeshejishi));
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.refused_to_amount_of_room));
                         viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.you_refused_customer_amount_room));
-                    } else if (stateCode >= 21) {
-                        textColor = StepEnableColor;
-                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
-                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.you_have_receiving_volume_rate));
-                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.you_received_amount_room_charge_consumers));
-                    } else {
-                        textColor = StepDisEnableColor;
-                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.liangfangfei_ico));
-                        viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.jeishouliangfangfei));
-                        viewHolder.tv_meal_content.setText(UIUtils.getString(R.string.jeishouliangfangfei));
                     }
                     viewHolder.tv_meal_title.setTextColor(textColor);
                     viewHolder.tv_meal_content.setTextColor(textColor);
@@ -336,6 +312,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
 
                 //接收量房费
                 case 1:
+                    viewHolder.tv_meal_title.setText(mapWkFlowState.get("2").getDescription());//支付量房费
                     if (stateCode == 12) {
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
                         viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.jeishouliangfangfei));

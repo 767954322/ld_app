@@ -309,7 +309,7 @@ public final class UrlConstants {
      * 获取全流程节点信息网址
      * */
 
-    public static final String URL_WkFlowState_pointe_Information = "http://192.168.120.123:8081/design-app/v1/api/fullflow/message";
+    public static final String URL_WkFlowState_pointe_Information = "http://192.168.88.155:8080/design-app/v1/api/fullflow/message";
 
     public static final String URL_DELIVERY_DELAY = MAIN_DESIGN + "/demands/";
     /**
