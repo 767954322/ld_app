@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/chat_voice_right_row_rootlayout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -19,6 +20,7 @@
         android:visibility="gone"/>
 
     <RelativeLayout
+        android:id="@+id/chat_voice_right_row_rl1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/chat_room_audiocell_content_margin"
@@ -72,6 +74,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/chat_voice_right_row_rl2"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/chat_room_audiocell_content_inner_height"
             android:layout_toLeftOf="@id/audio_cell_parent_layout"

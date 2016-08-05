@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/chat_command_row_rootlayout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_horizontal"
@@ -21,6 +22,7 @@
         android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/chat_command_row_ll1"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/chat_room_commandcell_avatarparent_margin"
         android:layout_height="wrap_content"
@@ -40,6 +42,7 @@
             custom:border_color="@color/chat_room_commandcell_background"/>
 
         <LinearLayout
+            android:id="@+id/chat_command_row_ll2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
