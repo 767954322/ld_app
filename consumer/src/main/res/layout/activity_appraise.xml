@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".personalcenter.consumer.activity.AppraiseDesignerActivity">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header"/>
+
+    <LinearLayout
+        android:id="@+id/piv_seek_designer_head_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".personalcenter.consumer.activity.AppraiseDesignerActivity">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <include
-            android:id="@+id/common_navbar"
-            layout="@layout/view_navigation_header" />
+        <FrameLayout
+            android:layout_width="@dimen/size_130"
+            android:layout_height="@dimen/size_100"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/size_10">
 
-        <LinearLayout
-            android:id="@+id/piv_seek_designer_head_linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="@dimen/size_130"
-                android:layout_height="@dimen/size_100"
+            <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+                android:id="@+id/piv_designer_avatar"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_80"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/size_10">
+                android:background="@drawable/icon_default_avator"
+                app:poly_vertices="0"/>
 
-                <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
-                    android:id="@+id/piv_designer_avatar"
-                    android:layout_width="@dimen/size_80"
-                    android:layout_height="@dimen/size_80"
-                    android:layout_gravity="center"
-                    android:background="@drawable/icon_default_avator"
-                    app:poly_vertices="0" />
-
-                <ImageView
-                    android:id="@+id/iv_designer_certification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="@dimen/size_10"
-                    android:layout_marginRight="@dimen/size_10"
-                    android:src="@drawable/icon_certification_normal"
-                    android:textColor="@color/white"
-                    android:visibility="gone" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/tv_designer_name"
+            <ImageView
+                android:id="@+id/iv_designer_certification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/size_10" />
-        </LinearLayout>
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginRight="@dimen/size_10"
+                android:src="@drawable/icon_certification_normal"
+                android:textColor="@color/white"
+                android:visibility="gone"/>
+        </FrameLayout>
 
-        <include layout="@layout/view_parting_line"></include>
+        <TextView
+            android:id="@+id/tv_designer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_10"/>
+    </LinearLayout>
+
+    <include layout="@layout/view_parting_line"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,39 +83,35 @@
 
     </LinearLayout>
 
-    <include
-        layout="@layout/view_parting_line"></include>
+
+    <include layout="@layout/view_parting_line"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_16"
+        android:orientation="vertical">
 
-        <include layout="@layout/view_parting_line"></include>
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/et_appraisement_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/size_16"
-            android:orientation="vertical">
+            android:background="@null"
+            android:focusable="false"
+            android:hint="@string/appraise_designer_hint"
+            android:textColorLink="@color/bg_tab_normal"
+            android:textSize="@dimen/font_14"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@null"
-                android:focusable="false"
-                android:hint="@string/appraise_designer_hint"
-                android:textColorLink="@color/bg_tab_normal"
-                android:textSize="@dimen/font_14" />
-
-            <Button
-                android:id="@+id/btn_submit_appraisement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_common_btn_blue"
-                android:text="@string/appraise_designer_submit"
-                android:textColor="@color/bg_ff" />
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/btn_submit_appraisement"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_common_btn_blue"
+            android:text="@string/appraise_designer_submit"
+            android:textColor="@color/bg_ff"/>
     </LinearLayout>
+
+</LinearLayout>

@@ -109,8 +109,7 @@ public class ApiManager {
         String main_design = null;
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
-                main_design = tempMpMain + UrlConstants.MP_MAIN_DESIGN;
-//                main_design = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
+                main_design = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
             case UrlConstants.RUNNING_QA:
@@ -149,10 +148,8 @@ public class ApiManager {
      */
     public static String getMPMain_Member(String runningDevelopment) {
         String main_member = null;
-        String tempMpMain = "http://192.168.120.123:8081";
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
-//                main_member = tempMpMain + UrlConstants.MP_MAIN_MEMBER;
                 main_member = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_MEMBER;
                 break;
 
