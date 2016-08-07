@@ -130,7 +130,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
             String flow_hs_uid;
 
-            if (null == hs_uid && "".equals(hs_uid)) {
+            if (null == hs_uid || "".equals(hs_uid)) {
                 String spStr[] = new String[0];
                 if (receiverUserName != null && !receiverUserName.equals("")) {
                     spStr = receiverUserName.split("_");
@@ -168,7 +168,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 Intent intent = new Intent(context, MeasureFormActivity.class);
                 intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, assetId);
                 intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-                intent.putExtra(Constant.SeekDesignerDetailKey.FLOW_STATE, Constant.WorkFlowStateKey.STEP_IM);
+                intent.putExtra(Constant.SeekDesignerDetailKey.FLOW_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                 intent.putExtra(Constant.SeekDesignerDetailKey.HS_UID, hsUid);
                 intent.putExtra(Constant.SeekDesignerDetailKey.MEASURE_FREE, measureFee);
                 context.startActivity(intent);
