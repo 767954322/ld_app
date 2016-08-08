@@ -225,7 +225,7 @@
         <LinearLayout
             android:id="@+id/contain_point"
             android:layout_width="match_parent"
-            android:layout_height="13dp"
+            android:layout_height="3dp"
             android:orientation="vertical">
 
             <com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer
