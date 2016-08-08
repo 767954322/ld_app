@@ -307,6 +307,8 @@
     <dimen name="chat_list_filelist_avatar_side">70dp</dimen>
     <dimen name="chat_list_filelist_avatar_verticalmargin">5dp</dimen>
 
+    <dimen name="navbar_icon_padding">8dp</dimen>
+
     <!--标题文字大小-->
     <dimen name="textSize_alert_title">22sp</dimen>
     <dimen name="textSize_actionsheet_title">14sp</dimen><!--标题文字高度-->
