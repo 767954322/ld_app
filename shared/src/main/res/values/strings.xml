@@ -300,8 +300,10 @@
     <string name="version">Version BQ0.0.0.1</string>
     <string name="designer_home_about">关于设计家</string>
     <string name="designer_introduced">设计家介绍</string>
+
+
     <string name="contact">联系方式</string>
-    <string name="version_introduced">版本说明</string>
+    <string name="version_introduced">版权说明</string>
     <string name="version_detail">版本</string>
 
     <!-- AmendDemandActivity -->
