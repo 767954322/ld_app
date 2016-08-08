@@ -1263,6 +1263,23 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 获取设计师首页评价列表信息
+     * <p/>
+     */
+    public void getEstimateList(String designer_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
+        String estimateUrl = UrlConstants.MAIN_MEMBER + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, estimateUrl, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 交付物延期
      *
      * @param demands_id  需求id
@@ -1352,6 +1369,35 @@ public class MPServerHttpManager {
         KLog.d(TAG, attentionOrUnfollowDesignerUrl);
 
         OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.PUT, attentionOrUnfollowDesignerUrl, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.HS_UID, followed_member_uid);
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                KLog.d(TAG, Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okJsonRequest);
+    }
+
+    /**
+     * 关注或者取消关注设计师
+     *
+     * @param member_id          登陆人编号
+     * @param followed_member_id 被关注设计师编号
+     * @param callback           回调接口
+     */
+    public void followingOrUnFollowedDesigner(String member_id, final String followed_member_id, final String followed_member_uid, OkJsonRequest.OKResponseCallback callback) {
+        String tempMpMain = "http://192.168.120.123:8081/member-app/v1/api";
+
+        String attentionOrUnFollowDesignerUrl = tempMpMain +
+                "/members/" + member_id +
+                "/follows/" + followed_member_id;
+        KLog.d(TAG, attentionOrUnFollowDesignerUrl);
+
+        OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.PUT, attentionOrUnFollowDesignerUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
