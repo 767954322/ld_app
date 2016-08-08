@@ -1186,9 +1186,7 @@ public class MPServerHttpManager {
     public void sendUnBindBankCard(final long designer_id,
                                        JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
 //        String url = UrlConstants.URL_WITHDRAW_BALANCE + designer_id;
-//        String url = UrlConstants.URL_WITHDRAW_BALANCE + designer_id;
-
-        String url ="http://192.168.120.90:8010/tranaction-app/v1/api/designers/d2/cases/like/"+assetId;
+        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT,url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

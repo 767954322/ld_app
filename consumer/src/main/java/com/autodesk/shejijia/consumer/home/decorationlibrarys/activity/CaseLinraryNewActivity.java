@@ -95,7 +95,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private boolean isMemberLike;
     private ImageView ivThumbUp;
     private ImageView ivHeadThumbUp;
-
+    private String firstCaseLibraryImageUrl;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_case_linrary_new;
@@ -303,15 +303,17 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl = "http://blog.csdn.net/qinglianluan/article/details/16847735";
+            String webUrl = "http://alpha-www.gdfcx.net/share/2dcase.html?caseid=1588939";
+//            String imageUrl = firstCaseLibraryImageUrl;
             String imageUrl = "http://img1.imgtn.bdimg.com/it/u=3731860233,1648607528&fm=21&gp=0.jpg";
+
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
 
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), "分享最新内容", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription()+" ", ifIsSharedToFriends, imageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -319,7 +321,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), "分享最新内容", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription()+" ", ifIsSharedToFriends, imageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -420,6 +422,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 //查找是否是封面图片  若是就添加到头部
                 for (int i = 0; i < images.size(); i++) {
                     if (images.get(i).isIs_primary() == true) {
+                        firstCaseLibraryImageUrl= images.get(i).getFile_url()+Constant.CaseLibraryDetail.JPG;
                         ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
                     }
                 }
