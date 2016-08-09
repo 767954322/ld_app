@@ -793,9 +793,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
                 mTvDelivery.setText(UIUtils.getString(R.string.three_plan));
                 showAllLevel();
-                if (wk_sub_node_id_int==63||wk_sub_node_id_int>64){
-                    setSelectIcon();
-                }
+                setSelectIcon();
                 clickLevel();
 
                 if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_THREE_PLAN_DELIVERY.equals(usage_type)) {
@@ -810,7 +808,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
             }
         }
-        doDeliveryDelayed();
     }
 
     /**
