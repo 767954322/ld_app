@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,14 +9,15 @@ import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.AttentionAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AttentionEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -37,7 +39,7 @@ import java.util.List;
  * @file AttentionActivity  .
  * @brief 关注列表 .
  */
-public class AttentionActivity extends NavigationBarActivity implements AttentionAdapter.OnItemCancelAttentionClickListener, PullToRefreshLayout.OnRefreshListener {
+public class AttentionActivity extends NavigationBarActivity implements AttentionAdapter.OnItemClickListener, PullToRefreshLayout.OnRefreshListener {
 
     @Override
     protected int getLayoutResId() {
@@ -86,7 +88,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     @Override
     protected void initListener() {
         super.initListener();
-        attentionAdapter.setOnItemCancelAttentionClick(this);
+        attentionAdapter.setOnItemClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -103,8 +105,24 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         mMemberId = attentionList.get(position).getMember_id();
         mHsUid = attentionList.get(position).getHs_uid();
         mNickName = attentionList.get(position).getNick_name();
+
         initFollowedAlertView();
         unFollowedAlertView.show();
+    }
+
+    /**
+     * 点击头像进入设计师主页
+     *
+     * @param position
+     */
+    @Override
+    public void OnItemAvatarClickListener(int position) {
+        Intent intent = new Intent(this, SeekDesignerDetailActivity.class);
+        String hs_uid = attentionList.get(position).getHs_uid();
+        String member_id = attentionList.get(position).getMember_id();
+        intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, member_id);
+        intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
+        startActivity(intent);
     }
 
     /**
@@ -209,7 +227,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                attentionList.remove(position);
+                attentionList.remove(position + 1);
                 if (attentionList.size() == 0) {
                     mRlEmptyView.setVisibility(View.VISIBLE);
                 } else {
@@ -234,7 +252,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
                 UIUtils.getString(R.string.following_cancel), null,
                 new String[]{UIUtils.getString(R.string.following_sure)},
                 AttentionActivity.this,
-                AlertView.Style.Alert, new OnItemClickListener() {
+                AlertView.Style.Alert, new com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
