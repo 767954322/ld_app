@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -158,9 +159,33 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         }
         List<AttentionEntity.DesignerListBean> designer_list = attentionEntity.getDesigner_list();
         if (null != designer_list && designer_list.size() > 0) {
+            String nick_name;
+            for (AttentionEntity.DesignerListBean designerListBean : designer_list) {
+                nick_name = designerListBean.getNick_name();
+                designerListBean.setNick_name(subString(nick_name));
+            }
+
             attentionList.addAll(designer_list);
         }
         attentionAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 截取，执行字符串中的内容
+     *
+     * @param nick_name
+     * @return
+     */
+    private String subString(String nick_name) {
+        String nick_name_1 = UIUtils.getString(R.string.nodata);
+        if (TextUtils.isEmpty(nick_name)) {
+            return nick_name_1;
+        }
+        int index = nick_name.indexOf("_");
+        if (index > 0) {
+            nick_name_1 = nick_name.substring(0, index);
+        }
+        return nick_name_1;
     }
 
     @Override
