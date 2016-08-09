@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -35,6 +38,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author DongXueQue .
@@ -110,7 +115,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
                 break;
             case R.id.btn_withdrawal_true:
-
                 String tv_user_name = getText(tv_withdrawal_cardholder_name);
                 account_user_name = (tv_user_name == null) ? getText(et_withdrawal_cardholder_name) : tv_user_name;
                 bank_name = getText(tv_withdrawal_open_account_bank);
@@ -119,9 +123,24 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 String tv_card_number = getText(tv_withdrawal_bank_card_number);
                 deposit_card = (tv_card_number == null) ? getText(et_withdrawal_bank_card_number) : tv_card_number;
 
-                boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
+
+                String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
+                String regex_bank = "[\\u4e00-\\u9fa5]{2,32}";
+
+                boolean isName = account_user_name.trim().matches(regex_name);
+                boolean isBank = branch_bank_name.trim().matches(regex_bank);
+                if (!isName) {
+                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if (!isBank) {
+                    Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                    break;
+                }
 
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
+                boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
 
                 if (flag && null != memberEntity) {
                     designer_id = Long.parseLong(memberEntity.getAcs_member_id());
@@ -175,7 +194,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             return false;
         }
 
-        if (deposit_card == null || "".equals(deposit_card)) {
+        if (TextUtils.isEmpty(deposit_card)) {
             String content = UIUtils.getString(R.string.tip_content_three);
             openAlertView(content);
             return false;
