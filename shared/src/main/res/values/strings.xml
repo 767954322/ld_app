@@ -608,7 +608,7 @@
 
     <!--DesignerOrderBeiShuActivity -->
     <string name="my_project_bei_shu">北舒套餐</string>
-    <string name="my_project_common">普通项目</string>
+    <string name="my_project_common">普通订单</string>
     <string name="decoration_order">我的订单</string>
 
     <!-- MyBidActivity -->
