@@ -227,7 +227,11 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                attentionList.remove(position + 1);
+                if (attentionList.size() > 1) {
+                    attentionList.remove(position + 1);
+                } else if (attentionList.size() == 1) {
+                    attentionList.remove(0);
+                }
                 if (attentionList.size() == 0) {
                     mRlEmptyView.setVisibility(View.VISIBLE);
                 } else {
