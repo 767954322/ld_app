@@ -3,6 +3,8 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -37,10 +39,6 @@ import java.util.List;
  */
 public class AttentionActivity extends NavigationBarActivity implements AttentionAdapter.OnItemCancelAttentionClickListener, PullToRefreshLayout.OnRefreshListener {
 
-    private String mMemberId;
-    private String mHsUid;
-    private String mNickName;
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_attention;
@@ -49,8 +47,9 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     @Override
     protected void initView() {
         super.initView();
-        lv_attention = (PullListView) findViewById(R.id.lv_attention);
+        mLvAttention = (PullListView) findViewById(R.id.lv_attention);
         mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
+        mRlEmptyView = (RelativeLayout) findViewById(R.id.rl_empty_layout);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         setTitleForNavbar(UIUtils.getString(R.string.my_attention));
 
         attentionAdapter = new AttentionAdapter(this, attentionList);
-        lv_attention.setAdapter(attentionAdapter);
+        mLvAttention.setAdapter(attentionAdapter);
 
         memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null == memberEntity) {
@@ -125,6 +124,11 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
                 AttentionEntity attentionEntity = GsonUtil.jsonToBean(userInfo, AttentionEntity.class);
 
                 updateViewFromData(state, attentionEntity);
+                if (attentionEntity.getCount() == 0) {
+                    mRlEmptyView.setVisibility(View.VISIBLE);
+                } else {
+                    mRlEmptyView.setVisibility(View.GONE);
+                }
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
 
@@ -206,7 +210,11 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 attentionList.remove(position);
-
+                if (attentionList.size() == 0) {
+                    mRlEmptyView.setVisibility(View.VISIBLE);
+                } else {
+                    mRlEmptyView.setVisibility(View.GONE);
+                }
                 attentionAdapter.notifyDataSetChanged();
             }
 
@@ -256,17 +264,20 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
 
     }
 
-    private PullListView lv_attention;
+    private PullListView mLvAttention;
     private PullToRefreshLayout mPullToRefreshLayout;
     private String acs_member_id;
     private MemberEntity memberEntity;
     private AlertView unFollowedAlertView;
+    private RelativeLayout mRlEmptyView;
 
     private AttentionAdapter attentionAdapter;
     public ArrayList<AttentionEntity.DesignerListBean> attentionList = new ArrayList<>();
+    private String mMemberId;
+    private String mHsUid;
+    private String mNickName;
     private boolean isFirstIn = true;
     private int OFFSET = 0;
     private int LIMIT = 10;
-
 
 }
