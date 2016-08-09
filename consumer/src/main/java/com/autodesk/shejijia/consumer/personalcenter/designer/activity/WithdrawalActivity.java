@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +24,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -91,12 +92,15 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
     @Override
     public void onClick(View v) {
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         switch (v.getId()) {
             case R.id.ll_withdrawal_open_account_bank:
                 pvBankNameOptions.show();
                 bank_name = item_back_name;
                 break;
             case R.id.ll_withdrawal_replace_bank_card:
+                designer_id = Long.parseLong(memberEntity.getAcs_member_id());
                 sendUnBindBankCard(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
 
 //                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
@@ -120,7 +124,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
                 boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
 
-                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
 
                 if (flag && null != memberEntity) {
                     designer_id = Long.parseLong(memberEntity.getAcs_member_id());
@@ -139,9 +142,9 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
      */
     private String isValidateNumber(String isNumber) {
         KLog.d(TAG, isNumber);
-        if (!StringUtils.isNonNumeric(isNumber)) {
-            isNumber = "0000000000000000000";
-        }
+//        if (!StringUtils.isNonNumeric(isNumber)) {
+//            isNumber = "0000000000000000000";
+//        }
         return isNumber;
     }
 
@@ -246,6 +249,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
     /**
      * 解除银行卡绑定
+     *
      * @param designer_id
      * @param account_user_name
      * @param bank_name
@@ -266,13 +270,14 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                updateViewFromData();
+                new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                        AlertView.Style.Alert, null).show();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.application_failure), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                new AlertView(UIUtils.getString(R.string.application_failure), UIUtils.getString(R.string.application_unbing_fail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
                         AlertView.Style.Alert, null).show();
             }
         };
@@ -350,19 +355,19 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
     //获取数据后操作
     private void updateViewFromData() {
-            new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
-                    AlertView.Style.Alert, new OnItemClickListener() {
-                @Override
-                public void onItemClick(Object o, int position) {
-//                    if (position != AlertView.CANCELPOSITION) {
-//                        Intent intent = new Intent();
-//                        intent.putExtra(Constant.DesignerWithDraw.AMOUNT, "0.00");
-//                        intent.putExtra(Constant.DesignerWithDraw.IS_SUCCESS, true);
-//                        WithdrawalActivity.this.setResult(Activity.RESULT_OK, intent);
-//                        WithdrawalActivity.this.finish();
-//                    }
+        new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object o, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    Intent intent = new Intent();
+                    intent.putExtra(Constant.DesignerWithDraw.AMOUNT, "0.00");
+                    intent.putExtra(Constant.DesignerWithDraw.IS_SUCCESS, true);
+                    WithdrawalActivity.this.setResult(Activity.RESULT_OK, intent);
+                    WithdrawalActivity.this.finish();
                 }
-            }).show();
+            }
+        }).show();
     }
 
     @Override

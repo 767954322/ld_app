@@ -12,6 +12,7 @@
     <string name="application_failure">申请失败</string>
     <string name="application_detail">你已成功申请提现\n请在提现记录中查看详情</string>
     <string name="application_unbing">解除绑定成功</string>
+    <string name="application_unbing_fail">解除失败</string>
 
     <string name="tip_content_one">持卡人姓名不能为空</string>
     <string name="tip_content_two">支行名称不能为空</string>

@@ -107,20 +107,7 @@ public class MPServerHttpManager {
                                 final int offset, final int limit,
                                 OkJsonRequest.OKResponseCallback callback) {
 
-//        String url = UrlConstants.URL_GET_CASE_LIST_SEARCH +
-//                "custom_string_style=" + custom_string_style +
-//                "&custom_string_type=" + custom_string_type +
-//                "&custom_string_keywords=" + custom_string_keywords +
-//                "&sort_by=date" +
-//                "&custom_string_area=" + custom_string_area +
-//                "&custom_string_bedroom=" + custom_string_bedroom +
-//                "&taxonomy_id=" + taxonomy_id +
-//                "&offset=" + offset +
-//                "&limit=" + limit +
-//                "&custom_string_restroom=" + custom_string_restroom +
-//                "&sort_order=desc" +
-//                "&custom_string_form=" + custom_string_form;
-        String url ="http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
+        String url = UrlConstants.URL_GET_CASE_LIST_SEARCH +
                 "custom_string_style=" + custom_string_style +
                 "&custom_string_type=" + custom_string_type +
                 "&custom_string_keywords=" + custom_string_keywords +
@@ -133,6 +120,19 @@ public class MPServerHttpManager {
                 "&custom_string_restroom=" + custom_string_restroom +
                 "&sort_order=desc" +
                 "&custom_string_form=" + custom_string_form;
+//        String url ="http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
+//                "custom_string_style=" + custom_string_style +
+//                "&custom_string_type=" + custom_string_type +
+//                "&custom_string_keywords=" + custom_string_keywords +
+//                "&sort_by=date" +
+//                "&custom_string_area=" + custom_string_area +
+//                "&custom_string_bedroom=" + custom_string_bedroom +
+//                "&taxonomy_id=" + taxonomy_id +
+//                "&offset=" + offset +
+//                "&limit=" + limit +
+//                "&custom_string_restroom=" + custom_string_restroom +
+//                "&sort_order=desc" +
+//                "&custom_string_form=" + custom_string_form;
 
        // String url="http://192.168.120.90:8080/design-app/v1/api/cases/search?custom_string_style=&custom_string_type=&custom_string_keywords=&sort_by=date&custom_string_area=&custom_string_bedroom=&taxonomy_id=01&offset=0&limit=10&custom_string_restroom=&sort_order=desc&custom_string_form=";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
@@ -453,9 +453,9 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getCaseListDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
-//        String url = UrlConstants.URL_GET_CASE_DETAILS + case_id;
+        String url = UrlConstants.URL_GET_CASE_DETAILS + case_id;
 //        http://alpha-api.gdfcx.net/tranaction-app /v1/api/cases/1553719
-        String url ="http://192.168.120.90:8080/design-app/v1/api/cases/"+case_id;
+//        String url ="http://192.168.120.90:8080/design-app/v1/api/cases/"+case_id;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -471,8 +471,8 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void sendThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
-        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
-//        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
+//        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
+        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
         Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
@@ -492,8 +492,8 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
-        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
-//        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
+//        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
+        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
         Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
@@ -1084,6 +1084,8 @@ public class MPServerHttpManager {
      */
     public void getMyPropertyData(String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MY_PROPERTY + designer_id;
+//        http://192.168.120.90:8010
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/withdraw/20730531";
         KLog.d(TAG, "url:" + url + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
@@ -1185,8 +1187,8 @@ public class MPServerHttpManager {
 
     public void sendUnBindBankCard(final long designer_id,
                                        JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-//        String url = UrlConstants.URL_WITHDRAW_BALANCE + designer_id;
-        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+        String url = UrlConstants.URL_WITHDRAW_MEMBERS + designer_id+"/balances/delete";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT,url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
