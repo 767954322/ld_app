@@ -200,6 +200,9 @@ public class BidHallDetailEntity implements Serializable {
     public void setBidding_status(boolean bidding_status) {
         this.bidding_status = bidding_status;
     }
+    public boolean getBidding_status() {
+        return bidding_status;
+    }
 
     public String getWk_template_id() {
         return wk_template_id;
