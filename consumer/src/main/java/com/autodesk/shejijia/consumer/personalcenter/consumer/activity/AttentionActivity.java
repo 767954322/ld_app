@@ -138,7 +138,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     private void updateViewFromData(int state, AttentionEntity attentionEntity) {
         switch (state) {
             case 0:
-                OFFSET = 10;
+                OFFSET = 0;
                 attentionList.clear();
                 break;
             case 1:
@@ -151,7 +151,11 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             default:
                 break;
         }
-
+        /// 处理上拉加载更多时候，重复加载问题 .
+        int count = attentionEntity.getCount();
+        if (count == attentionList.size()) {
+            return;
+        }
         List<AttentionEntity.DesignerListBean> designer_list = attentionEntity.getDesigner_list();
         if (null != designer_list && designer_list.size() > 0) {
             attentionList.addAll(designer_list);
@@ -161,6 +165,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+//        attentionListData(acs_member_id, 0, LIMIT, 1);
         attentionListData(acs_member_id, 0, LIMIT, 1);
     }
 
