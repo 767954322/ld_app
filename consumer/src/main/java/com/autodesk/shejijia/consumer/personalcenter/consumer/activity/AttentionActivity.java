@@ -95,9 +95,8 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
 
         String member_id = attentionList.get(position).getMember_id();
         String hs_uid = attentionList.get(position).getHs_uid();
-
+        attentionList.remove(position);
         followingOrUnFollowedDesigner(false, member_id, hs_uid);
-
     }
 
     /**
@@ -190,7 +189,6 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-//        attentionListData(acs_member_id, 0, LIMIT, 1);
         attentionListData(acs_member_id, 0, LIMIT, 1);
     }
 
@@ -212,7 +210,6 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                attentionList.clear();
                 attentionAdapter.notifyDataSetChanged();
             }
 
