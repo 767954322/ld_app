@@ -34,7 +34,6 @@ import java.util.List;
  */
 public class AttentionActivity extends NavigationBarActivity implements AttentionAdapter.OnItemCancelAttentionClickListener, PullToRefreshLayout.OnRefreshListener {
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_attention;
@@ -72,9 +71,10 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         lv_attention.setAdapter(attentionAdapter);
 
         memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == memberEntity) {
+            return;
+        }
         acs_member_id = memberEntity.getAcs_member_id();
-
-
     }
 
     @Override
@@ -95,12 +95,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         String member_id = attentionList.get(position).getMember_id();
         String hs_uid = attentionList.get(position).getHs_uid();
 
-        CustomProgress.show(this, "", false, null);
-
-        String followed_member_id = member_id;
-        String followed_member_uid = hs_uid;
-
-        unFollowedDesigner(acs_member_id, followed_member_id, followed_member_uid);
+        followingOrUnFollowedDesigner(false, member_id, hs_uid);
 
     }
 
@@ -111,15 +106,16 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
      * @param limit
      * @param offset
      */
-    public void attentionListData(String member_id, int limit, int offset, final int state) {
+    public void attentionListData(String member_id, int offset, int limit, final int state) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                attentionEntity = GsonUtil.jsonToBean(userInfo, AttentionEntity.class);
-                updateViewFromData(state);
+                AttentionEntity attentionEntity = GsonUtil.jsonToBean(userInfo, AttentionEntity.class);
+
+                updateViewFromData(state, attentionEntity);
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
             }
 
@@ -136,9 +132,10 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     /**
      * 获取数据，更新页面
      *
-     * @param state 　刷新用到的状态
+     * @param attentionEntity
+     * @param state           　刷新用到的状态
      */
-    private void updateViewFromData(int state) {
+    private void updateViewFromData(int state, AttentionEntity attentionEntity) {
         switch (state) {
             case 0:
                 OFFSET = 10;
@@ -162,16 +159,26 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         attentionAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * 取消关注
-     *
-     * @param member_id           用户id
-     * @param followed_member_id  已关注用户的id
-     * @param followed_member_uid 已关注用户的uid
-     */
-    private void unFollowedDesigner(String member_id, String followed_member_id, String followed_member_uid) {
+    @Override
+    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+        attentionListData(acs_member_id, 0, LIMIT, 1);
+    }
 
-        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+    @Override
+    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+        attentionListData(acs_member_id, OFFSET, LIMIT, 2);
+    }
+
+    /**
+     * 关注或者取消关注设计师
+     *
+     * @param followsType true 为关注，false 取消关注
+     */
+    private void followingOrUnFollowedDesigner(final boolean followsType, String followed_member_id, String followed_member_uid) {
+        CustomProgress.show(this, "", false, null);
+
+        MPServerHttpManager.getInstance().followingOrUnFollowedDesigner(acs_member_id, followed_member_id, followed_member_uid, followsType, new OkJsonRequest.OKResponseCallback() {
+
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
@@ -184,34 +191,21 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
                 CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
             }
-        };
-        MPServerHttpManager.getInstance().unFollowedDesigner(member_id, followed_member_id, followed_member_uid, okResponseCallback);
+        });
     }
 
 
-    /// 控件.
     private PullListView lv_attention;
     private PullToRefreshLayout mPullToRefreshLayout;
-
-    /// 变量.
     private String acs_member_id;
     private MemberEntity memberEntity;
 
-    /// 集合，类.
-    private AttentionEntity attentionEntity;
+    //    private AttentionEntity attentionEntity;
     private AttentionAdapter attentionAdapter;
     public ArrayList<AttentionEntity.DesignerListBean> attentionList = new ArrayList<>();
     private boolean isFirstIn = true;
     private int OFFSET = 0;
     private int LIMIT = 10;
 
-    @Override
-    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        attentionListData(acs_member_id, 0, LIMIT, 1);
-    }
 
-    @Override
-    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        attentionListData(acs_member_id, OFFSET, LIMIT, 2);
-    }
 }
