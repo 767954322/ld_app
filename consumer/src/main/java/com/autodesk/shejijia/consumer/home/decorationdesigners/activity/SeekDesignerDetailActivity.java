@@ -526,6 +526,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 if (followsType) {
                     MyToast.show(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_success));
                     seekDesignerDetailHomeBean.is_following = true;
+                } else {
+                    seekDesignerDetailHomeBean.is_following = false;
                 }
             }
 
