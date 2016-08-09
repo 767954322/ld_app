@@ -4,9 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
 
     <LinearLayout
         android:id="@+id/ll_beishu_border"

@@ -1,8 +1,8 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.OrderCommonFragment;
@@ -41,7 +41,7 @@ public class DesignerOrderActivity extends NavigationBarActivity {
          * 复用北舒设计师普通订单
          */
         Fragment newFragment = new OrderCommonFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fl_commonorder_container, newFragment);
         transaction.commit();
     }

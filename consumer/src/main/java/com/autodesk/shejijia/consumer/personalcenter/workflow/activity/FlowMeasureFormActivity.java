@@ -82,6 +82,10 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         initAlertView();
     }
 
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+    }
 
     @Override
     public void onItemClick(Object object, int position) {

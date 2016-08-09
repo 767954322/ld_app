@@ -64,8 +64,9 @@ public class MPWkFlowManager {
                 break;
         }
         MPSubNodeStateBean = GsonUtil.jsonToBean(jsonFromAsset, MPSubNodeStateBean.class);
-        ArrayList<MPSubNodeStateBean.RootEntity> mpSubNodeStateBeanRoot = MPSubNodeStateBean.getRoot();
         String wk_cur_sub_name = "";
+        if (MPSubNodeStateBean != null){
+        ArrayList<MPSubNodeStateBean.RootEntity> mpSubNodeStateBeanRoot = MPSubNodeStateBean.getRoot();
 
         /// [2]获取对应订单节点的名字 .
         if (StringUtils.isNumeric(wk_cur_sub_node_id)) {
@@ -86,7 +87,7 @@ public class MPWkFlowManager {
             } else {
                 wk_cur_sub_name = UIUtils.getString(R.string.my_bid_be_being_bid);
             }
-        }
+        }}
         return wk_cur_sub_name;
     }
 
