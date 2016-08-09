@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
@@ -92,6 +93,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
                 MPBidderBean biddersEntity = mBidders.get(0);
                 if (null != biddersEntity) {
                     hs_uid = biddersEntity.getUid();
+                    mDeliveryBean = biddersEntity.getDelivery();
                 }
             }
             mBiddersEntity = requirement.getOrderBidder();
@@ -174,4 +176,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected WkFlowDetailsBean.RequirementEntity requirement;
     protected MPBidderBean mBiddersEntity;
     protected List<MPBidderBean> mBidders;
+    protected MPDeliveryBean mDeliveryBean;
+
 }

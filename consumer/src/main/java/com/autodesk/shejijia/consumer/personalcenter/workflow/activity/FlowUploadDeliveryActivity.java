@@ -2,8 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,6 +16,9 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AppraiseDesignerActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DeliveryDelayBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPThreeDimensBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
@@ -97,17 +98,96 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
+
+        if (null == mDeliveryBean) {
+            return;
+        }
+
+        List<MPFileBean> files = mDeliveryBean.getFiles();
+        if (null == files) {
+            return;
+        }
+
+        Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
+        delivery.setDeliveryFiles(files);
+
+        handleDeliveryState(wk_sub_node_id_int, delivery);
+
         community_name = requirement.getCommunity_name();
         mTvCommunityName.setText(community_name);
         /**
          * 判断是不是已经有交付物
          */
-        CustomProgress.showDefaultProgress(FlowUploadDeliveryActivity.this);
-
-        getDeliveredFile(needs_id, designer_id);
         getFlowUploadDeliveryDelayDate(needs_id, designer_id);
-        KLog.d(TAG, "needs_id:" + needs_id + "##designer_id:" + designer_id);
     }
+
+    /**
+     * 处理设计交付的不同状态
+     * wk_sub_node_id
+     * 33: 量房交付物
+     * <p/>
+     * <61 : 消费者，等待设计师上传设计交付物
+     * 设计师，上传设计交付物
+     * =61: 消费者，确认或者延期的操作 .
+     * 　　设计师：可以重新发送设计交付物（显示发送按钮）
+     * =63:
+     * 　　消费者进行了确认操作
+     * =64
+     * 　　消费者做了延期操作
+     * >64(71,72)
+     * 　　消费者需要进行评价
+     */
+    private void handleDeliveryState(int wk_sub_node_id_int, Wk3DPlanDelivery delivery) {
+        if (wk_sub_node_id_int < 61) {
+            switch (mMemberType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+                    mLinerDelayedShow.setVisibility(View.GONE);
+                    mAlertViewDesignConsumerDelivery.show();
+                    break;
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
+                    mLinerDelayedShow.setVisibility(View.GONE);
+                    get3DPlan(needs_id, designer_id, DELIVERED_STATE_FINISH);
+                    break;
+            }
+        } else if (61 == wk_sub_node_id_int) {
+            switch (mMemberType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+                    mLinerDelayedShow.setVisibility(View.VISIBLE);
+                    break;
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
+                    mLinerDelayedShow.setVisibility(View.GONE);
+                    get3DPlan(needs_id, designer_id, DELIVERED_STATE_FINISH);
+                    break;
+            }
+        } else if (wk_sub_node_id_int == 64) {
+            switch (mMemberType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+                    mLinerDelayedShow.setVisibility(View.VISIBLE);
+                    mBtnDelay.setEnabled(false);
+                    mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+                    mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
+
+                    deliveryFilesFormat(delivery);
+
+                    break;
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
+                    mLinerDelayedShow.setVisibility(View.GONE);
+                    get3DPlan(needs_id, designer_id, DELIVERED_STATE_FINISH);
+                    break;
+            }
+        } else if (wk_sub_node_id_int == 63 || wk_sub_node_id_int > 64) {
+            mLinerDelayedShow.setVisibility(View.GONE);
+            mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+            deliveryFilesFormat(delivery);
+        }
+    }
+
 
     @Override
     protected void initListener() {
@@ -246,11 +326,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             case R.id.ll_3d_plan:
                 if (null != mDeliveryFilesEntityArrayList && mDeliveryFilesEntityArrayList.size() > 0) {
                     bundle = new Bundle();
-                    ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> deliveryFilesEntitiesThreePlanRemove = new ArrayList<>();
+                    ArrayList<MPFileBean> deliveryFilesEntitiesThreePlanRemove = new ArrayList<>();
                     deliveryFilesEntitiesThreePlanRemove.addAll(mDeliveryFilesEntityArrayList);
                     if (deliveryFilesEntitiesThreePlanRemove.size() > 0) {
                         mDeliveryFilesEntityArrayList.clear();
-                        Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity = deliveryFilesEntitiesThreePlanRemove.get(0);
+                        MPFileBean deliveryFilesEntity = deliveryFilesEntitiesThreePlanRemove.get(0);
                         mDesign_name = TextUtils.isEmpty(mDesign_name) ? community_name : mDesign_name;
                         deliveryFilesEntity.setName(mDesign_name);
                         mDeliveryFilesEntityArrayList.add(deliveryFilesEntity);
@@ -314,9 +394,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
                 break;
             case R.id.ll_design_apply:      /// 渲染图设计 .
-                if (null == mWk3DPlanListBeanArrayList || mWk3DPlanListBeanArrayList.size() == 0) {
-                    showAlertView(commonTip, UIUtils.getString(R.string.please_select_3d_design)).show();
-                }
                 if (null != mDesignFileEntities3DPlanRendering) {
                     bundle = new Bundle();
                     putBundleValue(1, 1, bundle);
@@ -412,27 +489,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         bundle.putInt(Constant.DeliveryBundleKey.DELIVERY_STATE, delivery_state);
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                /**
-                 * 交付完成
-                 */
-                case DELIVERED_STATE_FINISH:
-                    uploadedDelivery(msg);
-                    break;
-                /**
-                 * 交付状态进行中
-                 */
-                case DELIVERED_STATE_UN_FINISH:
-                    uploadingDelivery();
-                    break;
-            }
-        }
-    };
-
     /**
      * [1]获取与装修项目相关联的3D方案列表
      *
@@ -440,7 +496,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * @param designer_id     　用户id
      * @param deliveredFinish 交付状态
      */
-    private void get3DPlan(final String needs_id, String designer_id, final int deliveredFinish, final String memType) {
+    private void get3DPlan(final String needs_id, String designer_id, final int deliveredFinish) {
         MPServerHttpManager.getInstance().get3DPlanInfoData(needs_id, designer_id, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -448,32 +504,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 Wk3DPlanBean wk3DPlanBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanBean.class);
-                updateViewFrom3DPlanData(wk3DPlanBean, deliveredFinish, memType);
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError, true);
-                CustomProgress.cancelDialog();
-            }
-        });
-    }
-
-    /**
-     * 查看自己的设计方案
-     *
-     * @param needs_id    　项目编号
-     * @param designer_id 　用户的id
-     */
-    private void getDeliveredFile(final String needs_id, String designer_id) {
-        MPServerHttpManager.getInstance().getDeliveredFile(needs_id, designer_id, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String userInfo = GsonUtil.jsonToString(jsonObject);
-
-                Wk3DPlanDelivery wk3DPlanDelivery = GsonUtil.jsonToBean(userInfo, Wk3DPlanDelivery.class);
-                ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> deliveryFiles = (ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity>) wk3DPlanDelivery.getDeliveryFiles();
-                updateViewFromDeliveryFile(deliveryFiles);
+                updateViewFrom3DPlanData(wk3DPlanBean);
             }
 
             @Override
@@ -490,9 +521,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * @param needs_id        　项目编号
      * @param design_asset_id 通过3d_asset_id获取相应的3D方案
      * @param deliveredFinish 　是否已经交付完成
-     * @param memType         　用户类型
      */
-    private void get3DPlanList(String needs_id, final String design_asset_id, final int deliveredFinish, final String memType) {
+    private void get3DPlanList(String needs_id, final String design_asset_id, final int deliveredFinish) {
         MPServerHttpManager.getInstance().get3DPlanList(needs_id, design_asset_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -501,7 +531,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 KLog.json(TAG, userInfo);
 
                 mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
-                updateViewFrom3DPlanList(deliveredFinish, memType, design_asset_id);
+                updateViewFrom3DPlanList(deliveredFinish, design_asset_id);
             }
 
             @Override
@@ -540,6 +570,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * 获取延期时间
      */
     private void getFlowUploadDeliveryDelayDate(String demands_id, String designer_id) {
+        CustomProgress.showDefaultProgress(FlowUploadDeliveryActivity.this);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -610,83 +641,40 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         });
     }
 
-    /**
-     * 判断是否已经提交了交付物
-     *
-     * @param deliveryFiles 　网页上传的交付数据
-     */
-    private void updateViewFromDeliveryFile(ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> deliveryFiles) {
-        if (deliveryFiles == null || deliveryFiles.size() < 1) {
-            /**
-             * 尚未完成交付
-             */
-            Message msg = Message.obtain();
-            msg.what = DELIVERED_STATE_UN_FINISH;
-            mHandler.sendMessage(msg);
-        } else {
-            /**
-             *  当设计师已经提交了设计交付，
-             *      wk_sub_node_id ＝61：设计师可以重新发送设计交付物
-             *                                  >61(=63)交付完成
-             */
-//            if (wk_sub_node_id_int == 61 && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberType)) {
-//                Message msg = Message.obtain();
-//                msg.what = DELIVERED_STATE_UN_FINISH;
-//                mHandler.sendMessage(msg);
-//            } else if (wk_sub_node_id_int >= 61 || Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
-            Message msg = Message.obtain();
-            msg.what = DELIVERED_STATE_FINISH;
-            msg.obj = deliveryFiles;
-            mHandler.sendMessage(msg);
-//            }
-        }
-    }
 
     /**
      * 解析获取到的当前所有3D方案，若有多个3D方案，其中每个3D方案的{3d_asset_id},即：design_asset_id 不同
      *
-     * @param wk3DPlanBean    3D设计方案的实体类
-     * @param deliveredFinish 是否已经交付完成
-     * @param memType         　当前用户类型
+     * @param wk3DPlanBean 3D设计方案的实体类
      */
-    private void updateViewFrom3DPlanData(Wk3DPlanBean wk3DPlanBean, int deliveredFinish, String memType) {
+    private void updateViewFrom3DPlanData(Wk3DPlanBean wk3DPlanBean) {
         String design_asset_id;
 
-        ArrayList<Wk3DPlanBean.ThreeDimensionalEntity> threeDimensionalEntities = (ArrayList<Wk3DPlanBean.ThreeDimensionalEntity>) wk3DPlanBean.getThree_dimensionals();
+        ArrayList<MPThreeDimensBean> threeDimensionalEntities =
+                (ArrayList<MPThreeDimensBean>) wk3DPlanBean.getThree_dimensionals();
+
         if (null == threeDimensionalEntities || threeDimensionalEntities.size() < 1) {
-            if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memType)) {
-                if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
-                    mAlertViewMeasureDelivery.show();
-                } else if (Integer.valueOf(wk_cur_sub_node_id) >= 42) {
-                    mAlertViewDesignDelivery.show();
-                }
-            } else {
-                mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-            }
+            alertMeasureOrDesign();
             return;
         }
 
         /**
          * 每个3D方案的3d_asset_id
          */
-        if (DELIVERED_STATE_FINISH == deliveredFinish) {
+
+        if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
+            /**
+             * 量房交付的列表
+             */
             design_asset_id = threeDimensionalEntities.get(0).getDesign_asset_id();
-            get3DPlanList(needs_id, design_asset_id, deliveredFinish, memType);
+            get3DPlanList(needs_id, design_asset_id, DELIVERED_STATE_UN_FINISH);
         } else {
-            if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
-                /**
-                 * 量房交付的列表
-                 */
-                design_asset_id = threeDimensionalEntities.get(0).getDesign_asset_id();
-                get3DPlanList(needs_id, design_asset_id, DELIVERED_STATE_UN_FINISH, Constant.UerInfoKey.DESIGNER_TYPE);
-            } else {
-                /**
-                 * 设计交付列表
-                 */
-                for (Wk3DPlanBean.ThreeDimensionalEntity threeDimensionalEntity : threeDimensionalEntities) {
-                    design_asset_id = threeDimensionalEntity.getDesign_asset_id();
-                    get3DPlanList(needs_id, design_asset_id, DELIVERED_STATE_UN_FINISH, Constant.UerInfoKey.DESIGNER_TYPE);
-                }
+            /**
+             * 设计交付列表
+             */
+            for (MPThreeDimensBean threeDimensionalEntity : threeDimensionalEntities) {
+                design_asset_id = threeDimensionalEntity.getDesign_asset_id();
+                get3DPlanList(needs_id, design_asset_id, DELIVERED_STATE_UN_FINISH);
             }
         }
     }
@@ -696,29 +684,21 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      *
      * @param deliveredFinish 　是否已经交付完成
      * @param design_asset_id
-     * @param memType         　 当前用户类型
      */
-    private void updateViewFrom3DPlanList(int deliveredFinish, String memType, String design_asset_id) {
+    private void updateViewFrom3DPlanList(int deliveredFinish, String design_asset_id) {
         /**
          *为其传递3d_asset_id
          */
         mWk3DPlanListBean.setDesign_asset_id(design_asset_id);
-        ArrayList<Wk3DPlanListBean.DesignFileEntity> design_file = (ArrayList<Wk3DPlanListBean.DesignFileEntity>) mWk3DPlanListBean.getDesign_file();
+        ArrayList<MPDesignFileBean> design_file = (ArrayList<MPDesignFileBean>) mWk3DPlanListBean.getDesign_file();
 
         if (null == design_file || design_file.size() < 1) {
             /**
              * [1]提示网页提交量房或者设计交付物
              */
-            if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memType)) {
-                if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
-                    mAlertViewMeasureDelivery.show();
-                } else if (Integer.valueOf(wk_cur_sub_node_id) >= 42) {
-                    mAlertViewDesignDelivery.show();
-                }
-            } else {
-                mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-            }
+            alertMeasureOrDesign();
             return;
+
         } else {
 
             if (DELIVERED_STATE_FINISH == deliveredFinish) {
@@ -732,7 +712,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     mLl3DPlan.setVisibility(View.VISIBLE);
                     mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
                     mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
-                    for (Wk3DPlanListBean.DesignFileEntity designFileEntity : design_file) {
+                    for (MPDesignFileBean designFileEntity : design_file) {
                         type = designFileEntity.getType();
                         if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(type)) {
                             mDesignFileEntitiesMeasure.add(designFileEntity);
@@ -746,8 +726,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                      * [2]设计交付,判断是否有type为10 的情况
                      */
                     String type;
-                    mWk3DPlanListBeanArrayList = new ArrayList<>();
-                    for (Wk3DPlanListBean.DesignFileEntity designFileEntity : design_file) {
+                    for (MPDesignFileBean designFileEntity : design_file) {
                         type = designFileEntity.getType();
                         if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_THREE_PLAN_DELIVERY.equals(type)) {
                             /**
@@ -757,45 +736,45 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                             mWk3DPlanListBeanArrayList.add(mWk3DPlanListBean);
                         }
                     }
+
                     /**
                      * 判断是否有type为10的类型
                      */
                     if (mWk3DPlanListBeanArrayList.size() < 1) {
-                        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
-                            mAlertViewDesignConsumerDelivery.show();
-                        } else {
-                            mAlertViewDesignDelivery.show();
-                        }
-                        return;
+                        mAlertViewDesignDelivery.show();
                     }
-                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
+                    return;
                 }
+                mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
             }
         }
     }
 
     /**
-     * 上传交付物完成
-     *
-     * @param msg 传递是否交付完成的消息
+     * 弹窗提示量房还是设计交付
      */
-    private void uploadedDelivery(Message msg) {
+    private void alertMeasureOrDesign() {
+        if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
+            mAlertViewMeasureDelivery.show();
+        } else if (Integer.valueOf(wk_cur_sub_node_id) >= 42) {
+            mAlertViewDesignDelivery.show();
+        }
+    }
+
+    /**
+     * 交付物分类
+     *
+     * @param delivery
+     */
+    private void deliveryFilesFormat(Wk3DPlanDelivery delivery) {
         String type;
         String usage_type;
-        CustomProgress.cancelDialog();
-        mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-        showAllLevel();
-        mDeliveryFilesEntities = (ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity>) msg.obj;
-        /**
-         * 获取某一个3D方案的名称
-         */
-        get3DPlan(needs_id, designer_id, DELIVERED_STATE_FINISH, mMemberType);
-
-        for (Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity : mDeliveryFilesEntities) {
-            if (null == deliveryFilesEntity) {
+        for (MPFileBean fileBean : delivery.getDeliveryFiles()) {
+            if (null == fileBean) {
                 continue;
             }
-            type = deliveryFilesEntity.getType();
+            type = fileBean.getType();
+            usage_type = fileBean.getUsage_type();
             if (Constant.DeliveryTypeBundleKey.TYPE_MEASURE_DELIVERY.equals(type)) {
                 /**
                  * 量房订单
@@ -804,34 +783,33 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 mTvDelivery.setText(UIUtils.getString(R.string.deliver_measure_consumer));
                 show3DAndHideLevel();
                 mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
-                usage_type = deliveryFilesEntity.getUsage_type();
                 if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntitiesMeasure.add(deliveryFilesEntity);
+                    mDeliveryFilesEntitiesMeasure.add(fileBean);
                 }
             } else if (Constant.DeliveryTypeBundleKey.TYPE_DESIGN_DELIVERY.equals(type)) {
-                usage_type = deliveryFilesEntity.getUsage_type();
                 /**
                  * 设计交付
                  */
                 setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
                 mTvDelivery.setText(UIUtils.getString(R.string.three_plan));
                 showAllLevel();
-                setSelectIcon();
+                if (wk_sub_node_id_int==63||wk_sub_node_id_int>64){
+                    setSelectIcon();
+                }
                 clickLevel();
 
                 if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_THREE_PLAN_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntityArrayList.add(deliveryFilesEntity);
+                    mDeliveryFilesEntityArrayList.add(fileBean);
                 } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_RENDERING_DESIGN_DELIVERY_0.equals(usage_type)
                         || Constant.DeliveryTypeBundleKey.USAGE_TYPE_READERING_DESIGN_DELIVERY_4.equals(usage_type)) {
-                    mDeliveryFilesEntitiesRendering.add(deliveryFilesEntity);
+                    mDeliveryFilesEntitiesRendering.add(fileBean);
                 } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntitiesDesignBlueprint.add(deliveryFilesEntity);
+                    mDeliveryFilesEntitiesDesignBlueprint.add(fileBean);
                 } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_MATERIAL_BILL_DELIVERY.equals(usage_type)) {
-                    mDeliveryFilesEntitiesMaterialBill.add(deliveryFilesEntity);
+                    mDeliveryFilesEntitiesMaterialBill.add(fileBean);
                 }
             }
         }
-
         doDeliveryDelayed();
     }
 
@@ -1169,8 +1147,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     for (Wk3DPlanListBean wk3DPlanListBean : mWk3DPlanListBeanArrayList) {
                         if (wk3DPlanListBean.getDesign_asset_id().equals(design_asset_id)) {
                             this.mWk3DPlanListBean = wk3DPlanListBean;
-                            List<Wk3DPlanListBean.DesignFileEntity> designFileEntityList = wk3DPlanListBean.getDesign_file();
-                            for (Wk3DPlanListBean.DesignFileEntity designFileEntity : designFileEntityList) {
+                            List<MPDesignFileBean> designFileEntityList = wk3DPlanListBean.getDesign_file();
+                            for (MPDesignFileBean designFileEntity : designFileEntityList) {
                                 if (designFileEntity.getLink().equals(fileLink)) {
                                     arrayList.add(designFileEntity.getId());
                                 }
@@ -1181,8 +1159,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     /**
                      * 当前3D方案的详情
                      */
-                    ArrayList<Wk3DPlanListBean.DesignFileEntity> design_file = (ArrayList<Wk3DPlanListBean.DesignFileEntity>) mWk3DPlanListBean.getDesign_file();
-                    for (Wk3DPlanListBean.DesignFileEntity designFileEntity : design_file) {
+                    ArrayList<MPDesignFileBean> design_file = (ArrayList<MPDesignFileBean>) mWk3DPlanListBean.getDesign_file();
+                    for (MPDesignFileBean designFileEntity : design_file) {
                         type = designFileEntity.getType();
                         if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_RENDERING_DESIGN_DELIVERY_0.equals(type)
                                 || Constant.DeliveryTypeBundleKey.USAGE_TYPE_READERING_DESIGN_DELIVERY_4.equals(type)) {
@@ -1301,20 +1279,20 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     /**
      * 用于存储有不同design_asset_id的实体类的集合
      */
-    private ArrayList<Wk3DPlanListBean> mWk3DPlanListBeanArrayList;
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> mDeliveryFilesEntities;
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> mDeliveryFilesEntityArrayList = new ArrayList<>();
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> mDeliveryFilesEntitiesRendering = new ArrayList<>();
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> mDeliveryFilesEntitiesDesignBlueprint = new ArrayList<>();
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> mDeliveryFilesEntitiesMaterialBill = new ArrayList<>();
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> mDeliveryFilesEntitiesMeasure = new ArrayList<>();
+    private ArrayList<Wk3DPlanListBean> mWk3DPlanListBeanArrayList = new ArrayList<>();
+    private ArrayList<MPFileBean> mDeliveryFilesEntities;
+    private ArrayList<MPFileBean> mDeliveryFilesEntityArrayList = new ArrayList<>();
+    private ArrayList<MPFileBean> mDeliveryFilesEntitiesRendering = new ArrayList<>();
+    private ArrayList<MPFileBean> mDeliveryFilesEntitiesDesignBlueprint = new ArrayList<>();
+    private ArrayList<MPFileBean> mDeliveryFilesEntitiesMaterialBill = new ArrayList<>();
+    private ArrayList<MPFileBean> mDeliveryFilesEntitiesMeasure = new ArrayList<>();
     /**
      * 当前3D方案的所有设计图
      */
-    private ArrayList<Wk3DPlanListBean.DesignFileEntity> mDesignFileEntities3DPlanRendering = new ArrayList<>();
-    private ArrayList<Wk3DPlanListBean.DesignFileEntity> mDesignFileEntities3DPlanDesignBlueprint = new ArrayList<>();
-    private ArrayList<Wk3DPlanListBean.DesignFileEntity> mDesignFileEntities3DPlanMaterialBill = new ArrayList<>();
-    private ArrayList<Wk3DPlanListBean.DesignFileEntity> mDesignFileEntitiesMeasure = new ArrayList<>();
+    private ArrayList<MPDesignFileBean> mDesignFileEntities3DPlanRendering = new ArrayList<>();
+    private ArrayList<MPDesignFileBean> mDesignFileEntities3DPlanDesignBlueprint = new ArrayList<>();
+    private ArrayList<MPDesignFileBean> mDesignFileEntities3DPlanMaterialBill = new ArrayList<>();
+    private ArrayList<MPDesignFileBean> mDesignFileEntitiesMeasure = new ArrayList<>();
 
     private String design_asset_id; /// 用于记录选中的设计图的id .
     private String community_name;

@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
@@ -72,12 +74,12 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
                 title = wk3DPlanListBean.getDesign_name();
 
             } else if (Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS.equals(string)) {
-                designFileEntity = (Wk3DPlanListBean.DesignFileEntity) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
+                designFileEntity = (MPDesignFileBean) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
                 url = designFileEntity.getLink();
                 title = designFileEntity.getName();
             }
         } else {
-            deliveryFilesEntity = (Wk3DPlanDelivery.DeliveryFilesEntity) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
+            deliveryFilesEntity = (MPFileBean) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
             url = deliveryFilesEntity.getUrl();
             title = deliveryFilesEntity.getName();
         }
@@ -134,9 +136,9 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
     private TextView tv_nav_left_textView;
     private MPFileHotspotView iv_image_show;
 
-    private Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity;
+    private MPFileBean deliveryFilesEntity;
     private Wk3DPlanListBean wk3DPlanListBean;
-    private Wk3DPlanListBean.DesignFileEntity designFileEntity;
+    private MPDesignFileBean designFileEntity;
 
     private String url;
 }

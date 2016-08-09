@@ -102,7 +102,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
 
         //获取节点信息
-
         getWkFlowStatePointInformation();
 
     }
@@ -573,7 +572,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
      */
 
     public void getWkFlowStatePointInformation() {
-
 
         MPServerHttpManager.getInstance().getWkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
             @Override

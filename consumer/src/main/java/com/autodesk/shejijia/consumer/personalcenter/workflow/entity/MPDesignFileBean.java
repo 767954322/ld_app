@@ -79,4 +79,3 @@ public class MPDesignFileBean implements Serializable {
         this.type = type;
     }
 }
-}

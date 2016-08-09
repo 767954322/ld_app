@@ -17,6 +17,9 @@ public class MPFileBean implements Serializable {
     private String filed_name;
     private String submitted_date;
 
+    private String id;
+    private String name;
+
     public String getUrl() {
         return url;
     }
@@ -63,5 +66,21 @@ public class MPFileBean implements Serializable {
 
     public void setSubmitted_date(String submitted_date) {
         this.submitted_date = submitted_date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

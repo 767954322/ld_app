@@ -18,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -370,6 +371,6 @@ public class WkFlowStateAdapter extends BaseAdapter {
     private final int StepEnableColor = Color.rgb(30, 30, 30); // 亮
     private final int StepDisEnableColor = Color.rgb(188, 188, 188); // 暗
     private Animation imagView_SaleAnimation;
-    private Map<String, WkFlowStateBean> mapWkFlowState;
+    private Map<String, WkFlowStateBean> mapWkFlowState=new HashMap<>();
 
 }

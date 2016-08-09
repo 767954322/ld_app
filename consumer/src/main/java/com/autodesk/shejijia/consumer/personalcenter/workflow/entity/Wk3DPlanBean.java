@@ -15,7 +15,7 @@ public class Wk3DPlanBean implements Serializable {
     private int limit;
     private int offset;
 
-    private List<ThreeDimensionalEntity> three_dimensionals;
+    private List<MPThreeDimensBean> three_dimensionals;
 
     public int getCount() {
         return count;
@@ -41,32 +41,12 @@ public class Wk3DPlanBean implements Serializable {
         this.offset = offset;
     }
 
-    public List<ThreeDimensionalEntity> getThree_dimensionals() {
+    public List<MPThreeDimensBean> getThree_dimensionals() {
         return three_dimensionals;
     }
 
-    public void setThree_dimensionals(List<ThreeDimensionalEntity> three_dimensionals) {
+    public void setThree_dimensionals(List<MPThreeDimensBean> three_dimensionals) {
         this.three_dimensionals = three_dimensionals;
     }
 
-    public static class ThreeDimensionalEntity implements Serializable {
-        private String design_asset_id;
-        private String designer_id;
-
-        public String getDesign_asset_id() {
-            return design_asset_id;
-        }
-
-        public void setDesign_asset_id(String design_asset_id) {
-            this.design_asset_id = design_asset_id;
-        }
-
-        public String getDesigner_id() {
-            return designer_id;
-        }
-
-        public void setDesigner_id(String designer_id) {
-            this.designer_id = designer_id;
-        }
-    }
 }

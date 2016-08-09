@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DFinishDeliveryAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DLevelZeroAdapter;
@@ -203,7 +205,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
         if (level == 0) {
             refreshGridViewLevelZero(level_bundle);
         } else {
-            mDesignFileEntities = (ArrayList<Wk3DPlanListBean.DesignFileEntity>) level_bundle.getSerializable(Constant.DeliveryBundleKey.THREE_PLAN);
+            mDesignFileEntities = (ArrayList<MPDesignFileBean>) level_bundle.getSerializable(Constant.DeliveryBundleKey.THREE_PLAN);
             refreshGridViewOthers(mDesignFileEntities, level);
         }
         setAdapterListener();
@@ -217,7 +219,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
      */
     private void doneDelivery(Bundle level_bundle, int level) {
         mBtnSubmit3DPlan.setVisibility(View.GONE);
-        mDeliveryFilesEntities = (ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity>) level_bundle.getSerializable(Constant.DeliveryBundleKey.DELIVERY_ENTITY);
+        mDeliveryFilesEntities = (ArrayList<MPFileBean>) level_bundle.getSerializable(Constant.DeliveryBundleKey.DELIVERY_ENTITY);
         if (null != mDeliveryFilesEntities) {
             switch (level) {
                 case 0:
@@ -268,7 +270,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
     /**
      * 更新选中某个3D方案后，给每个level设置相应数据，即design_file
      */
-    private void refreshGridViewOthers(final ArrayList<Wk3DPlanListBean.DesignFileEntity> design_file, final int level) {
+    private void refreshGridViewOthers(final ArrayList<MPDesignFileBean> design_file, final int level) {
         switch (level) {
             case 1:
                 setTitleForNavbar(UIUtils.getString(R.string.flow_rendering_design));
@@ -352,9 +354,9 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
 
     private ArrayList<String> mDesignFileIdArrayList = new ArrayList();                  /// 用于存放选中的design_file_id的集合 .
     private ArrayList<String> mDesignFileIdArrayListOthers;
-    private ArrayList<Wk3DPlanListBean.DesignFileEntity> mDesignFileEntities;   /// 当前3D方案的所有设计图 .
+    private ArrayList<MPDesignFileBean> mDesignFileEntities;   /// 当前3D方案的所有设计图 .
     private ArrayList<Wk3DPlanListBean> mWk3DPlanListBeanArrayList;               ///用于存储有不同design_asset_id的实体类的集合 .
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> mDeliveryFilesEntities;
+    private ArrayList<MPFileBean> mDeliveryFilesEntities;
 
     private Wk3DLevelZeroAdapter mWk3DLevelZeroAdapter;
     private Wk3DPlanAdapter mWk3DPlanAdapter;
