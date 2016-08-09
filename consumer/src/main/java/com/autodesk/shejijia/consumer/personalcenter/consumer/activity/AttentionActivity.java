@@ -112,7 +112,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         mHsUid = attentionList.get(position).getHs_uid();
         mNickName = attentionList.get(position).getNick_name();
 
-        initFollowedAlertView();
+        initFollowedAlertView(position);
         unFollowedAlertView.show();
     }
 
@@ -220,7 +220,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     }
 
     /**
-     * 关注或者取消关注设计师
+     * 取消关注设计师
      *
      * @param followsType true 为关注，false 取消关注
      * @param position
@@ -233,11 +233,9 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                if (attentionList.size() > 1) {
-                    attentionList.remove(position + 1);
-                } else if (attentionList.size() == 1) {
-                    attentionList.remove(0);
-                }
+                /// 手动移除集合中已经取消的设计师 .
+                attentionList.remove(position);
+
                 if (attentionList.size() == 0) {
                     mRlEmptyView.setVisibility(View.VISIBLE);
                 } else {
@@ -256,8 +254,10 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
 
     /**
      * 取消关注提示框
+     *
+     * @param cancelPosition
      */
-    private void initFollowedAlertView() {
+    private void initFollowedAlertView(final int cancelPosition) {
         unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
                 UIUtils.getString(R.string.following_cancel), null,
                 new String[]{UIUtils.getString(R.string.following_sure)},
@@ -266,7 +266,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
-                    followingOrUnFollowedDesigner(mMemberId, mHsUid, false, position);
+                    followingOrUnFollowedDesigner(mMemberId, mHsUid, false, cancelPosition);
                 }
             }
         }).setCancelable(true);
