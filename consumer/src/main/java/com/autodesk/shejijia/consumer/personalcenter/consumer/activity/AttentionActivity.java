@@ -92,11 +92,13 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
      */
     @Override
     public void OnItemCancelAttentionClick(int position) {
-
+        if (position + 1 > attentionList.size()) {
+            return;
+        }
         String member_id = attentionList.get(position).getMember_id();
         String hs_uid = attentionList.get(position).getHs_uid();
-        attentionList.remove(position);
-        followingOrUnFollowedDesigner(false, member_id, hs_uid);
+
+        followingOrUnFollowedDesigner(false, member_id, hs_uid, position);
     }
 
     /**
@@ -184,8 +186,9 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
      * 关注或者取消关注设计师
      *
      * @param followsType true 为关注，false 取消关注
+     * @param position
      */
-    private void followingOrUnFollowedDesigner(final boolean followsType, String followed_member_id, String followed_member_uid) {
+    private void followingOrUnFollowedDesigner(final boolean followsType, String followed_member_id, String followed_member_uid, final int position) {
         CustomProgress.show(this, "", false, null);
 
         MPServerHttpManager.getInstance().followingOrUnFollowedDesigner(acs_member_id, followed_member_id, followed_member_uid, followsType, new OkJsonRequest.OKResponseCallback() {
@@ -193,6 +196,8 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
+                attentionList.remove(position);
+                
                 attentionAdapter.notifyDataSetChanged();
             }
 
