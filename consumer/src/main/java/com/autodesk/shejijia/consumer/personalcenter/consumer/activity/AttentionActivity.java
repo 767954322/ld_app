@@ -71,6 +71,12 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPullToRefreshLayout.autoRefresh();
+    }
+
+    @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.my_attention));

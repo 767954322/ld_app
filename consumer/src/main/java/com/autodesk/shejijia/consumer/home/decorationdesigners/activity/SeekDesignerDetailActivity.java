@@ -265,9 +265,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onResponse(JSONObject jsonObject) {
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
                 String info = GsonUtil.jsonToString(jsonObject);
                 seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
+
+                getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
                 KLog.json(TAG, info);
 
                 updateViewFromDesignerDetailData(seekDesignerDetailHomeBean);

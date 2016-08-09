@@ -54,5 +54,5 @@
     <string name="attention_tip_message_last">的关注吗？</string>
     <string name="following_sure">确定</string>
     <string name="following_cancel">取消</string>
-    <string name="following_no_data">关注列表为空</string>
+    <string name="following_no_data">您还没有关注的设计师</string>
 </resources>
