@@ -541,7 +541,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     protected void onRestart() {
         super.onRestart();
         showOrHideChatMeasure();
-//        getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
+        getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
     }
 
     /**

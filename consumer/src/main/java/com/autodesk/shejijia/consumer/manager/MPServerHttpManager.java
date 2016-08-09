@@ -1340,8 +1340,8 @@ public class MPServerHttpManager {
                                               boolean followsType,
                                               OkJsonRequest.OKResponseCallback callback) {
 
-        String tempMpMain = "http://192.168.120.123:8081/member-app/v1/api";
-        String attentionOrUnFollowDesignerUrl = tempMpMain +
+//        String tempMpMain = "http://192.168.120.123:8081/member-app/v1/api";
+        String attentionOrUnFollowDesignerUrl = UrlConstants.MAIN_MEMBER +
                 "/members/" + member_id +
                 "/follows/" + followed_member_id +
                 "?followed_member_uid=" + followed_member_uid +

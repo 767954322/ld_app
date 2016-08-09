@@ -12,6 +12,8 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AttentionEn
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -34,6 +36,10 @@ import java.util.List;
  * @brief 关注列表 .
  */
 public class AttentionActivity extends NavigationBarActivity implements AttentionAdapter.OnItemCancelAttentionClickListener, PullToRefreshLayout.OnRefreshListener {
+
+    private String mMemberId;
+    private String mHsUid;
+    private String mNickName;
 
     @Override
     protected int getLayoutResId() {
@@ -95,10 +101,11 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         if (position + 1 > attentionList.size()) {
             return;
         }
-        String member_id = attentionList.get(position).getMember_id();
-        String hs_uid = attentionList.get(position).getHs_uid();
-
-        followingOrUnFollowedDesigner(false, member_id, hs_uid, position);
+        mMemberId = attentionList.get(position).getMember_id();
+        mHsUid = attentionList.get(position).getHs_uid();
+        mNickName = attentionList.get(position).getNick_name();
+        initFollowedAlertView();
+        unFollowedAlertView.show();
     }
 
     /**
@@ -163,7 +170,9 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             String nick_name;
             for (AttentionEntity.DesignerListBean designerListBean : designer_list) {
                 nick_name = designerListBean.getNick_name();
-                designerListBean.setNick_name(subString(nick_name));
+                splitString(nick_name);
+                designerListBean.setNick_name(mNickName);
+                designerListBean.setHs_uid(mHsUid);
             }
 
             attentionList.addAll(designer_list);
@@ -188,7 +197,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
      * @param followsType true 为关注，false 取消关注
      * @param position
      */
-    private void followingOrUnFollowedDesigner(final boolean followsType, String followed_member_id, String followed_member_uid, final int position) {
+    private void followingOrUnFollowedDesigner(String followed_member_id, String followed_member_uid, final boolean followsType, final int position) {
         CustomProgress.show(this, "", false, null);
 
         MPServerHttpManager.getInstance().followingOrUnFollowedDesigner(acs_member_id, followed_member_id, followed_member_uid, followsType, new OkJsonRequest.OKResponseCallback() {
@@ -197,7 +206,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 attentionList.remove(position);
-                
+
                 attentionAdapter.notifyDataSetChanged();
             }
 
@@ -210,29 +219,49 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
     }
 
     /**
+     * 取消关注提示框
+     */
+    private void initFollowedAlertView() {
+        unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
+                UIUtils.getString(R.string.following_cancel), null,
+                new String[]{UIUtils.getString(R.string.following_sure)},
+                AttentionActivity.this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    followingOrUnFollowedDesigner(mMemberId, mHsUid, false, position);
+                }
+            }
+        }).setCancelable(true);
+    }
+
+    /**
      * 截取，以“-”分割的字符串中的内容
      *
      * @param nick_name 需要截取的字符串
-     * @return 截取后的字符串
      */
-    private String subString(String nick_name) {
-        String nick_name_1 = UIUtils.getString(R.string.nodata);
+    private void splitString(String nick_name) {
         if (TextUtils.isEmpty(nick_name)) {
-            return nick_name_1;
+            return;
         }
-        int index = nick_name.indexOf("_");
-        if (index > 0) {
-            nick_name_1 = nick_name.substring(0, index);
+        String[] nickNameArray = nick_name.split("_");
+        if (null != nickNameArray && nickNameArray.length > 1) {
+            mHsUid = nickNameArray[1];
+            mNickName = nickNameArray[0];
+        } else {
+            mNickName = UIUtils.getString(R.string.nodata);
+            mHsUid = "";
         }
-        return nick_name_1;
+
     }
 
     private PullListView lv_attention;
     private PullToRefreshLayout mPullToRefreshLayout;
     private String acs_member_id;
     private MemberEntity memberEntity;
+    private AlertView unFollowedAlertView;
 
-    //    private AttentionEntity attentionEntity;
     private AttentionAdapter attentionAdapter;
     public ArrayList<AttentionEntity.DesignerListBean> attentionList = new ArrayList<>();
     private boolean isFirstIn = true;
