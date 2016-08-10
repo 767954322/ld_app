@@ -271,7 +271,17 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             @Override
             public void onResponse(JSONObject jsonObject) {
                 new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
-                        AlertView.Style.Alert, null).show();
+                        AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        if (position != -1) {
+
+                            tv_withdrawal_cardholder_name.setText(" ");
+                            tv_withdrawal_branch_bank.setText("");
+                            tv_withdrawal_bank_card_number.setText("");
+                        }
+                    }
+                }).show();
             }
 
             @Override
