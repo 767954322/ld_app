@@ -329,7 +329,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             deposit_card = myPropertyBean.getDeposit_card();
             branch_bank_name = myPropertyBean.getBranch_bank_name();
             if (null == bank_name || bank_name.equals("")) {
-                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
+                ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE);
             } else {
                 ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE);
             }

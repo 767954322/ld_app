@@ -96,6 +96,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private ImageView ivThumbUp;
     private ImageView ivHeadThumbUp;
     private String firstCaseLibraryImageUrl;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_case_linrary_new;
@@ -313,7 +314,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
 
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription()+" ", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, imageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -321,7 +322,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription()+" ", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, imageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -347,8 +348,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 ToastUtil.showCustomToast(CaseLinraryNewActivity.this, getString(R.string.dianzhangchenggong));
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
-                tvThumbUp.setText(getString(R.string.thumbup_conunt) +(caseDetailBean.getFavorite_count()+1));
-                tvheadThumbUp.setText(getString(R.string.thumbup_conunt) +(caseDetailBean.getFavorite_count()+1));
+                tvThumbUp.setText(getString(R.string.thumbup_conunt) + (caseDetailBean.getFavorite_count() + 1));
+                tvheadThumbUp.setText(getString(R.string.thumbup_conunt) + (caseDetailBean.getFavorite_count() + 1));
             }
 
             @Override
@@ -423,7 +424,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 //查找是否是封面图片  若是就添加到头部
                 for (int i = 0; i < images.size(); i++) {
                     if (images.get(i).isIs_primary() == true) {
-                        firstCaseLibraryImageUrl= images.get(i).getFile_url()+Constant.CaseLibraryDetail.JPG;
+                        firstCaseLibraryImageUrl = images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
                         ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
                     }
                 }
@@ -520,11 +521,16 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
-        bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position - 3);
-        intent.putExtras(bundle);
-        this.startActivity(intent);
+        if (position != 2) {
+            Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
+            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position - 3);
+            intent.putExtras(bundle);
+            this.startActivity(intent);
+        }
+
+
     }
+
 }

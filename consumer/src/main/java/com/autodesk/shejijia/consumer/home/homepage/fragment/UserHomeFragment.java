@@ -109,6 +109,9 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
     }
 
+
+
+
     @Override
     protected void initListener() {
         super.initListener();
