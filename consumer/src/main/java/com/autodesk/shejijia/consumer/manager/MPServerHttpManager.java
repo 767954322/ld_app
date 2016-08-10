@@ -35,13 +35,6 @@ public class MPServerHttpManager {
     private static String acs_token;
 
     public MPServerHttpManager() {
-//        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (null != memberEntity) {
-//            xToken = memberEntity.getHs_accesstoken();
-//            member_id = memberEntity.getAcs_member_id();
-//            memType = memberEntity.getMember_type();
-//            acs_token = memberEntity.getAcs_token();
-//        }
     }
 
     public static MPServerHttpManager getInstance() {
@@ -52,9 +45,6 @@ public class MPServerHttpManager {
             memType = memberEntity.getMember_type();
             acs_token = memberEntity.getAcs_token();
         }
-//        if (null == mpServerHttpManager) {
-//            mpServerHttpManager = new MPServerHttpManager();
-//        }
         return mpServerHttpManager;
     }
 
@@ -121,14 +111,6 @@ public class MPServerHttpManager {
                 "&sort_order=desc" +
                 "&custom_string_form=" + custom_string_form;
 
-//        String url = "http://192.168.120.90:8080/design-app/v1/api/cases/search?" +
-//                "custom_string_style=&custom_string_type=" +
-//                "&custom_string_keywords=" +
-//                "&sort_by=date" +
-//                "&custom_string_area=" +
-//                "&custom_string_bedroom=" +
-//                "&taxonomy_id=01&offset=0" +
-//                "&limit=10&custom_string_restroom=&sort_order=desc&custom_string_form=";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -242,7 +224,7 @@ public class MPServerHttpManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
-//                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
+                header.put(Constant.NetBundleKey.HS_UID, hs_uid);
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return header;
             }
@@ -267,8 +249,6 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-//                header.put(Constant.NetBundleKey.MEMBER_TYPE, memType);
-//                header.put(Constant.NetBundleKey.ACS_TOKEN, acsToken);
                 return header;
             }
         };
@@ -828,7 +808,6 @@ public class MPServerHttpManager {
      */
     public void sendEstablishContract(final String need_id, final String Member_Type, final String acsToken, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_SEND_ESTABLISH_CONTRACT + need_id;
-        KLog.d(TAG, "url:" + url + "##Authorization:" + addX_Token(xToken) + "##Member-Type:" + Member_Type + "##ACS-Token:" + acsToken);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
 
             @Override
@@ -956,7 +935,6 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void ifIsLohoDesiner(String designers, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
-        //http://alpha-api.gdfcx.net/member-app/v1/api/designers/20735915
         String url = UrlConstants.ALPHA_MP_MAIN + "/member-app/v1/api/designers/" + designers;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
@@ -1162,7 +1140,6 @@ public class MPServerHttpManager {
      */
     public void getMessageCenterMessages(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MESSAGE_CENTER + member_id + "/sysmessages?limit=" + limit + "&offset=" + offset;
-        KLog.d("test", url);
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
