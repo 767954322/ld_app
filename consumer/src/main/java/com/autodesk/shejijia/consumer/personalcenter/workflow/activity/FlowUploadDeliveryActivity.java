@@ -1223,6 +1223,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 /**
                  * 设计交付
                  */
+                boolean isFinish = wk_sub_node_id_int > 64 || wk_sub_node_id_int == 63; /// 已经确认量房的状态 .
+                if (isFinish) {
+                    return;
+                }
                 if (mMemberType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) {
                     changeItemClickState();
                     changeSubmitOkState();
@@ -1301,12 +1305,12 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private ArrayList<MPDesignFileBean> mDesignFileEntities3DPlanMaterialBill = new ArrayList<>();
     private ArrayList<MPDesignFileBean> mDesignFileEntitiesMeasure = new ArrayList<>();
 
-    private String design_asset_id; /// 用于记录选中的设计图的id .
+    private String design_asset_id;                                 /// 用于记录选中的设计图的id .
     private String community_name;
     private String design_asset_id_measure;
     private String mMemberType;
     private String type;                                             /// 交付类型:0：量房交付,1： 设计交付 .
     private String commonTip = UIUtils.getString(R.string.tip);
     private String[] sureString = new String[]{UIUtils.getString(R.string.sure)};
-    private int wk_sub_node_id_int;                        /// 当前wk_sub_node_id .
+    private int wk_sub_node_id_int;                                   /// 当前wk_sub_node_id .
 }
