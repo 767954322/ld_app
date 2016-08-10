@@ -111,6 +111,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
 
         if (null == mDeliveryBean) {
+            alertMeasureOrDesign();
             return;
         }
 
