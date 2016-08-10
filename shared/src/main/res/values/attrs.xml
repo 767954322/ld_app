@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--年限-->
+    <string-array name="year">
+        <item>2年以下</item>
+        <item>3-5年</item>
+        <item>6-10年</item>
+        <item>10年以上</item>
+    </string-array>
+
+
+    <!--价格-->
+    <string-array name="price">
+        <item>30-60/㎡</item>
+        <item>60-120/㎡</item>
+        <item>120-200/㎡</item>
+        <item>200-600/㎡</item>
+        <item>600-1000/㎡</item>
+    </string-array>
+
     <!--风格-->
     <string-array name="style">
         <item>日式</item>
