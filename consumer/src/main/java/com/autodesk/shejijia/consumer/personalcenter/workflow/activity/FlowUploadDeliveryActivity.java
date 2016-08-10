@@ -91,6 +91,15 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
     }
 
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mBtnDelay.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mTvInstruction.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mBtnDeliverySure.setOnClickListener(FlowUploadDeliveryActivity.this);
+    }
+
     /**
      * 获取订单信息，之后执行的操作
      */
@@ -116,7 +125,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         community_name = requirement.getCommunity_name();
         mTvCommunityName.setText(community_name);
         /**
-         * 判断是不是已经有交付物
+         * 延期时间判断
          */
         getFlowUploadDeliveryDelayDate(needs_id, designer_id);
     }
@@ -188,15 +197,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
     }
 
-
-    @Override
-    protected void initListener() {
-        super.initListener();
-        mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
-        mBtnDelay.setOnClickListener(FlowUploadDeliveryActivity.this);
-        mTvInstruction.setOnClickListener(FlowUploadDeliveryActivity.this);
-        mBtnDeliverySure.setOnClickListener(FlowUploadDeliveryActivity.this);
-    }
 
     @Override
     public void onClick(View v) {
@@ -574,6 +574,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 String jsonToString = GsonUtil.jsonToString(jsonObject);
                 DeliveryDelayBean deliveryDelayBean = GsonUtil.jsonToBean(jsonToString, DeliveryDelayBean.class);
                 mTvDelayedDays.setText(deliveryDelayBean.remain_days + "天");
@@ -586,6 +587,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError, true);
             }
         };
