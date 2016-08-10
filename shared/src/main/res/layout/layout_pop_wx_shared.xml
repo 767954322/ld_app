@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/pop_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/font_160"
+        android:layout_height="@dimen/size_120"
         android:layout_alignParentBottom="true"
         android:background="@color/white">
 

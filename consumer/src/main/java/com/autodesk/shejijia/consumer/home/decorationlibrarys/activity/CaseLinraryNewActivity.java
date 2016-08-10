@@ -343,6 +343,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                rlThumbUp.setOnClickListener(null);
                 ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "点赞成功");
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
