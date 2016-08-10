@@ -568,6 +568,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 }
 
                 if (max == 63) {
+
                     mLlEvaluate.setVisibility(View.VISIBLE);
                     for (DecorationBiddersBean biddersBean : bidders) {
                         if ((max + "").equals(biddersBean.getWk_cur_sub_node_id())) {
@@ -577,10 +578,12 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                             mMPBidderBean.setDesigner_id(biddersBean.getDesigner_id());
                         }
                     }
+                    if (is_evaluated) {
+                        mLlEvaluate.setVisibility(View.GONE);
+                    }
                 } else {
                     mLlEvaluate.setVisibility(View.GONE);
                 }
-//                approveState = MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, String.valueOf(max));
                 mIbnDecorationModify.setVisibility(View.GONE);
                 mIbnDecorationModify.setClickable(false);
             }
@@ -810,6 +813,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     break;
 
                 case EVALUATE_STATE:
+                    is_evaluated = data.getBooleanExtra(AppraiseDesignerActivity.IS_EVALUATE, false);
                     break;
                 default:
                     break;
@@ -852,6 +856,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private TextView mTvEvaluate;
     private String designer_id_evaluate; /// 进行设计交付的设计师的designer_id .
     private MPBidderBean mMPBidderBean = new MPBidderBean();
+    private boolean is_evaluated = false;
 
     private int mPosition; /// 获取对应的item的position .
     private boolean isShowStub;

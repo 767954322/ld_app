@@ -45,9 +45,11 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         RatingBar.OnRatingBarChangeListener,
         View.OnClickListener, OnItemClickListener {
 
+    public static final String IS_EVALUATE = "IS_EVALUATE"; /// 用于判断是否评价完成，方便回显 .
+
     private RatingBar mRatingBarStar;
-    private Button mBenSubmitAppraisement;
-    private EditText mEditAppraisementContent;
+    private Button mBtnSubmitEvaluation;
+    private EditText mEditEvaluationContent;
     private TextView mTvDesignerName;
     private AlertView mAppraiseDesignerAlertView;
     private AlertView mAppraiseDesignerSuccessAlertView;
@@ -68,8 +70,8 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         super.initView();
         mRatingBarStar = (RatingBar) findViewById(R.id.rating_star);
         mPolygonImageView = (PolygonImageView) findViewById(R.id.piv_designer_avatar);
-        mBenSubmitAppraisement = (Button) findViewById(R.id.btn_submit_appraisement);
-        mEditAppraisementContent = (EditText) findViewById(R.id.et_appraisement_content);
+        mBtnSubmitEvaluation = (Button) findViewById(R.id.btn_submit_appraisement);
+        mEditEvaluationContent = (EditText) findViewById(R.id.et_appraisement_content);
         mTvDesignerName = (TextView) findViewById(R.id.tv_designer_name);
     }
 
@@ -103,7 +105,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
     protected void initListener() {
         super.initListener();
         mRatingBarStar.setOnRatingBarChangeListener(this);
-        mBenSubmitAppraisement.setOnClickListener(this);
+        mBtnSubmitEvaluation.setOnClickListener(this);
         mAppraiseDesignerAlertView = new AlertView("",
                 UIUtils.getString(R.string.evaluation_abandon_msg),
                 UIUtils.getString(R.string.evaluation_continue_edit),
@@ -117,7 +119,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_submit_appraisement:
-                String appeasementsContent = mEditAppraisementContent.getText().toString();
+                String appeasementsContent = mEditEvaluationContent.getText().toString();
                 boolean isValidateSubmitContent = validateSubmitContent(appeasementsContent);
                 if (isValidateSubmitContent) {
                     CustomProgress.show(AppraiseDesignerActivity.this, "", false, null);
@@ -132,7 +134,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
                         e.printStackTrace();
                     }
                     KLog.d(TAG, "jsonObject:" + jsonObject);
-                    submitAppraisement(jsonObject);
+                    submitEvaluation(jsonObject);
                 }
                 break;
         }
@@ -168,7 +170,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
      * demands_id  项目编号
      * designer_id 设计师编号
      */
-    private void submitAppraisement(JSONObject jsonObject) {
+    private void submitEvaluation(JSONObject jsonObject) {
         MPServerHttpManager.getInstance().submitAppraisement(needs_id, designer_id, jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -198,6 +200,9 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
          * 放弃或者继续编辑
          */
         if (mAppraiseDesignerAlertView == object && position != AlertView.CANCELPOSITION) {
+            Intent intent = new Intent();
+            intent.putExtra(IS_EVALUATE, false);
+            setResult(RESULT_OK, intent);
             finish();
         } else if (mAppraiseDesignerAlertView == object && position == AlertView.CANCELPOSITION) {
             return;
@@ -206,6 +211,9 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
          * 评论成功执行的操作
          */
         if (mAppraiseDesignerSuccessAlertView == object && position != AlertView.CANCELPOSITION) {
+            Intent intent = new Intent();
+            intent.putExtra(IS_EVALUATE, true);
+            setResult(RESULT_OK, intent);
             finish();
         }
     }
@@ -257,6 +265,4 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         }
         return false;
     }
-
-
 }
