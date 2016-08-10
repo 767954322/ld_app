@@ -105,11 +105,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         super.onWorkFlowData();
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
 
+        /// 尚未上传交付物，mDeliveryBen为null就不会朝下走 .
         if (null == mDeliveryBean) {
             alertMeasureOrDesign();
             return;
         }
-
         mFiles = mDeliveryBean.getFiles();
         if (null == mFiles) {
             return;
@@ -165,6 +165,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
                     mLinerDelayedShow.setVisibility(View.VISIBLE);
+                    deliveryFilesFormat(delivery);
+
                     break;
 
                 case Constant.UerInfoKey.DESIGNER_TYPE:
@@ -773,7 +775,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 default:
                     break;
             }
-        } else if (Integer.valueOf(wk_cur_sub_node_id) >= 42) {
+        } else if (wk_sub_node_id_int >= 42 && wk_sub_node_id_int < 61) {
             switch (mMemberType) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mAlertViewDesignConsumerDelivery.show();

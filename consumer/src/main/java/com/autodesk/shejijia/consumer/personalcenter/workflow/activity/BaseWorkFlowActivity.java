@@ -182,6 +182,5 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected List<MPBidderBean> mBidders;
     protected MPDeliveryBean mDeliveryBean;
     protected String mMemberType;
-    ;
 
 }
