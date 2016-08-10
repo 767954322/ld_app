@@ -517,7 +517,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         boolean isMap = renderMap.matches(RegexUtil.POSITIVE_INTEGER_REGEX); //　验证渲染图张数
         boolean isPostNum = consumerPostcode.matches(RegexUtil.POST_NUMBER_REGEX);
 
-        if (!consumerName.isEmpty()) {
+        if (!consumerName.isEmpty() && consumerName.matches(RegexUtil.NAME_REGEX)) {
 
             if (isMobile) {
                 if (TextUtils.isEmpty(consumerPostcode) || isPostNum) {
@@ -567,7 +567,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             showAlertView(R.string.please_fill_in_the_right_phone_number);
             return;
         }
-        showAlertView(R.string.the_name_cannot_be_empty);
+        showAlertView(R.string.no_input_name);
 
     }
 
