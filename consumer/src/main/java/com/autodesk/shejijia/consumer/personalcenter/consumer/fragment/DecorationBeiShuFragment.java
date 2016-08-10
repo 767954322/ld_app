@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -143,6 +144,16 @@ public class DecorationBeiShuFragment extends Fragment {
             PolygonImageView piv_photo = holder.getView(R.id.ib_personal_b_photo_beishu);
 
             ImageUtils.displayAvatarImage(avatarUrl, piv_photo);
+
+            piv_photo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), SeekDesignerDetailActivity.class);
+                    intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, biddersEntity.getDesigner_id());
+                    intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, biddersEntity.getUid());
+                    startActivity(intent);
+                }
+            });
 
             user_name = TextUtils.isEmpty(user_name) ? "" : user_name;
             holder.setText(R.id.tv_designer_name_beishu, user_name);
