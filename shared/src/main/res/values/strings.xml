@@ -66,7 +66,7 @@
 
     <!--Tab-->
     <string name="tab_im">聊天</string>
-    <string name="tab_personalcenter">我</string>
+    <string name="tab_personalcenter">我的项目</string>
     <string name="tab_hall">应标大厅</string>
     <string name="tab_home">案例</string>
 

@@ -5,9 +5,6 @@
               android:background="@color/bg_eef1f4"
               android:orientation="vertical">
 
-    <include
-        android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
 
     <FrameLayout
         android:id="@+id/fl_commonorder_container"
