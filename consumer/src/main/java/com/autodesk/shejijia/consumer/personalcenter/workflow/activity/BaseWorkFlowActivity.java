@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
@@ -67,6 +68,9 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (memberEntity != null) {
+            mMemberType = memberEntity.getMember_type();
+        }
         getOrderDetailsInfo(needs_id, designer_id);
 
     }
@@ -177,5 +181,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected MPBidderBean mBiddersEntity;
     protected List<MPBidderBean> mBidders;
     protected MPDeliveryBean mDeliveryBean;
+    protected String mMemberType;
+    ;
 
 }

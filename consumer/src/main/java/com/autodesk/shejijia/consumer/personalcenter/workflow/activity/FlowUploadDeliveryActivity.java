@@ -23,7 +23,6 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanBea
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.DeliverySelector;
@@ -34,7 +33,6 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -87,10 +85,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         initAlertView();
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (memberEntity != null) {
-            mMemberType = memberEntity.getMember_type();
-        }
+
     }
 
     @Override
@@ -767,9 +762,29 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     private void alertMeasureOrDesign() {
         if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
-            mAlertViewMeasureDelivery.show();
+            switch (mMemberType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mAlertViewMeasureConsumerDelivery.show();
+                    break;
+
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mAlertViewMeasureDelivery.show();
+                    break;
+                default:
+                    break;
+            }
         } else if (Integer.valueOf(wk_cur_sub_node_id) >= 42) {
-            mAlertViewDesignDelivery.show();
+            switch (mMemberType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    mAlertViewDesignConsumerDelivery.show();
+                    break;
+
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    mAlertViewDesignDelivery.show();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -778,6 +793,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      *
      * @param delivery
      */
+
     private void deliveryFilesFormat(Wk3DPlanDelivery delivery) {
         String type;
         String usage_type;
@@ -1309,7 +1325,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private String design_asset_id;                                 /// 用于记录选中的设计图的id .
     private String community_name;
     private String design_asset_id_measure;
-    private String mMemberType;
+
     private String type;                                             /// 交付类型:0：量房交付,1： 设计交付 .
     private String commonTip = UIUtils.getString(R.string.tip);
     private String[] sureString = new String[]{UIUtils.getString(R.string.sure)};
