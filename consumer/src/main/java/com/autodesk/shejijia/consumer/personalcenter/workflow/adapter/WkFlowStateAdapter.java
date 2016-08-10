@@ -84,6 +84,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
          *12	confirm_measure	        设计师同意量房
          *13	decline_invite_measure 设计师拒绝量房
          */
+        if (mapWkFlowState.size() < 1) {
+            return convertView;
+        }
         mapWkFlowState.get("11").getDesignerMessage();
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) { // 消费者
 
@@ -145,18 +148,17 @@ public class WkFlowStateAdapter extends BaseAdapter {
 //                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.shejishoukuan_ico));
 //                    }
 
-                    if (stateCode >= 31){
+                    if (stateCode >= 31) {
 
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_zhifushejishoukuan));
-                    }else {
+                    } else {
 
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.shejishoukuan_ico));
                     }
 
                     viewHolder.tv_meal_title.setTextColor(textColor);
-
 
 
                     break;
@@ -175,11 +177,11 @@ public class WkFlowStateAdapter extends BaseAdapter {
 //                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.weikuan_ico));
 //                    }
 
-                    if (stateCode >= 41){
+                    if (stateCode >= 41) {
 
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_zhifushejiweikuan));
-                    }else {
+                    } else {
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.weikuan_ico));
                     }
@@ -200,11 +202,11 @@ public class WkFlowStateAdapter extends BaseAdapter {
 //                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.jiaofuwu_ico));
 //                    }
 
-                    if (stateCode >= 51){
+                    if (stateCode >= 51) {
 
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejijiaofuwu));
-                    }else {
+                    } else {
 
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.jiaofuwu_ico));
