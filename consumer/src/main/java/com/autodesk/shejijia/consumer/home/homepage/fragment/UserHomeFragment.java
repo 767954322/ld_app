@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
@@ -213,6 +214,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     ///事件监听 .
     @Override
     public void onClick(View view) {
+        if (!(view instanceof TextView))
         switch ((String) view.getTag()) {
             case REQUIREMENT_BUTTON_TAG:     /// 跳入 IssueDemandActivity .
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
