@@ -221,7 +221,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                         }
                         takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     } else {
-                        ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "请先安装微信");
+                        ToastUtil.showCustomToast(CaseLinraryNewActivity.this, getString(R.string.anzhuangweixin));
                     }
 
                 } else {
@@ -344,7 +344,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onResponse(JSONObject jsonObject) {
                 rlThumbUp.setOnClickListener(null);
-                ToastUtil.showCustomToast(CaseLinraryNewActivity.this, "点赞成功");
+                ToastUtil.showCustomToast(CaseLinraryNewActivity.this, getString(R.string.dianzhangchenggong));
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 tvThumbUp.setText(getString(R.string.thumbup_conunt) +(caseDetailBean.getFavorite_count()+1));
