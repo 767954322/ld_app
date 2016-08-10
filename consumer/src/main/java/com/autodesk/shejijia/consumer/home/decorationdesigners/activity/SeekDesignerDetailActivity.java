@@ -62,6 +62,8 @@ import java.util.ArrayList;
  */
 public class SeekDesignerDetailActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, SeekDesignerDetailAdapter.OnItemCaseLibraryClickListener {
 
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_seek_designer_detail;
@@ -265,6 +267,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onResponse(JSONObject jsonObject) {
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                if(null==jsonObject){
+                    return;
+                }
                 String info = GsonUtil.jsonToString(jsonObject);
                 seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
 
@@ -367,7 +372,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             }
 
             /**
-             * 如果当前没有acs_member_id,就是没有登录，点击跳转到登录页面
+             * 如果当前没有acs_member_id,就是没有登录
              */
             if (!TextUtils.isEmpty(mSelfAcsMemberId)) {
                 /**
@@ -376,7 +381,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 if (!mSelfAcsMemberId.equals(designer.getAcs_member_id())) {
                     setRightTitle(seekDesignerDetailHomeBean.is_following);
                 } else {
-                    setVisibilityForNavButton(ButtonType.LEFT, false);
+                    setVisibilityForNavButton(ButtonType.RIGHT, false);
                 }
             } else {
                 setRightTitle(false);
@@ -457,7 +462,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      * 判断是否显示在沟通按钮
      */
     private void showOrHideChatMeasure() {
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             member_id = memberEntity.getAcs_member_id();
             mMemberType = memberEntity.getMember_type();
@@ -547,6 +552,12 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
+    }
+
     /**
      * 案例库为空时候显示的提示框
      */
@@ -631,6 +642,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private int OFFSET = 0;
     private int width;
     private boolean isFirstIn = true;
+    private MemberEntity memberEntity;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
     private DesignerDetailHomeBean seekDesignerDetailHomeBean;
 }
