@@ -417,7 +417,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.ll_design_apply:          /// 渲染图设计 .
-                if (null != mDesignFileEntities3DPlanRendering) {
+                if (null != mDesignFileEntities3DPlanRendering && mDesignFileEntities3DPlanRendering.size() > 0) {
                     bundle = new Bundle();
                     putBundleValue(1, 1, bundle);
                     bundle.putSerializable(Constant.DeliveryBundleKey.THREE_PLAN, mDesignFileEntities3DPlanRendering);
@@ -427,7 +427,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.ll_design_pager:          /// 设计图纸 .
-                if (null != mDesignFileEntities3DPlanDesignBlueprint) {
+                if (null != mDesignFileEntities3DPlanDesignBlueprint && mDesignFileEntities3DPlanDesignBlueprint.size() > 0) {
                     bundle = new Bundle();
                     putBundleValue(2, 1, bundle);
                     bundle.putSerializable(Constant.DeliveryBundleKey.THREE_PLAN, mDesignFileEntities3DPlanDesignBlueprint);
@@ -437,7 +437,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.ll_material_list:         /// 材料清单 .
-                if (null != mDesignFileEntities3DPlanMaterialBill) {
+                if (null != mDesignFileEntities3DPlanMaterialBill && mDesignFileEntities3DPlanMaterialBill.size() > 0) {
                     bundle = new Bundle();
                     putBundleValue(3, 1, bundle);
                     bundle.putSerializable(Constant.DeliveryBundleKey.THREE_PLAN, mDesignFileEntities3DPlanMaterialBill);
