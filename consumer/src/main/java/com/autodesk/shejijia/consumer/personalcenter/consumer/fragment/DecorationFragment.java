@@ -24,6 +24,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
@@ -49,7 +50,6 @@ import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -67,6 +67,8 @@ import de.greenrobot.event.EventBus;
  * @brief 消费者：我的装修项目中的普通订单展示.
  */
 public class DecorationFragment extends Fragment implements View.OnClickListener, OnItemClickListener {
+
+
 
     public DecorationFragment() {
         super();
@@ -166,7 +168,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 Bundle bundle = new Bundle();
                 bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, needs_id);
                 intent.putExtras(bundle);
-                getActivity().startActivityForResult(intent, 0);
+                this.startActivityForResult(intent, RequestCode);
                 break;
         }
     }
@@ -565,15 +567,16 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    /**
-     * 修改需求回显的数据
-     *
-     * @param amendDemandBean 　回显数据的实体类
-     */
-    public void onEvent(AmendDemandBean amendDemandBean) {
+//    /**
+//     * 修改需求回显的数据
+//     *
+//     * @param amendDemandBean 　回显数据的实体类
+//     */
+    public void echoData(AmendDemandBean amendDemandBean) {
         if (null == amendDemandBean) {
             return;
         }
+
         String design_budget = amendDemandBean.getDesign_budget();
         String community_name = amendDemandBean.getCommunity_name();
         String province_name = amendDemandBean.getProvince_name();
@@ -589,7 +592,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         toilet = amendDemandBean.getToilet();
         decoration_style = amendDemandBean.getDecoration_style();
         house_type = amendDemandBean.getHouse_type();
-        custom_string_status = amendDemandBean.getCustom_string_status();
+        custom_string_status = amendDemandBean.getCustom_string_status() + "";
         if (Constant.NumKey.ONE.equals(custom_string_status) || Constant.NumKey.ZERO_ONE.equals(custom_string_status)) {
             /**
              * 审核中,可以修改需求
@@ -710,7 +713,6 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-
         mNeedsListEntity = (DecorationNeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY);
         if (mNeedsListEntity == null) {
             return;
@@ -724,16 +726,31 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+    /// 接收反回来的数据.
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(data == null){
+            return;
+        }
+        if(resultCode == AmendDemandActivity.ResultCode){
+            Bundle bundle = data.getExtras();
+            AmendDemandBean amendDemandBean = (AmendDemandBean) bundle.getSerializable(JsonConstants.AMENDEMANDBEAN);
+            if(mNeedsListEntity.getNeeds_id().equals(amendDemandBean.getNeeds_id()) ){
+
+                changeBean(amendDemandBean);
+            }
+            echoData(amendDemandBean);
+
+        }
+
+
         if (resultCode == Activity.RESULT_OK && data != null) {
             switch (requestCode) {
                 case WK_FLOW_STATE:
                 case BIDING_STATE:
                     String mwk_cur_sub_node_id = data.getStringExtra(Constant.BundleKey.BUNDLE_SUB_NODE_ID);
-                    KLog.d("FlowMeasureFormActivity", mwk_cur_sub_node_id);
                     if (!TextUtils.isEmpty(mwk_cur_sub_node_id)) {
                         bidders.get(mPosition).setWk_cur_sub_node_id(mwk_cur_sub_node_id);
                     }
@@ -773,10 +790,39 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
     }
 
+    /**
+     * 修改后的项目信息与之前的进行替换更新
+     * @param amendDemandBean
+     */
+    private void changeBean(AmendDemandBean amendDemandBean) {
+        mNeedsListEntity.setCommunity_name(amendDemandBean.getCommunity_name());
+        mNeedsListEntity.setCity(amendDemandBean.getCity());
+        mNeedsListEntity.setCity_name(amendDemandBean.getCity_name());
+        mNeedsListEntity.setClick_number(amendDemandBean.getClick_number());
+        mNeedsListEntity.setConsumer_mobile(amendDemandBean.getConsumer_mobile());
+        mNeedsListEntity.setConsumer_name(amendDemandBean.getConsumer_name());
+        mNeedsListEntity.setContacts_mobile(amendDemandBean.getContacts_mobile());
+        mNeedsListEntity.setContacts_name(amendDemandBean.getContacts_name());
+        mNeedsListEntity.setDecoration_style(amendDemandBean.getDecoration_style());
+        mNeedsListEntity.setDecoration_budget(amendDemandBean.getDecoration_budget());
+        mNeedsListEntity.setDesign_budget(amendDemandBean.getDesign_budget());
+        mNeedsListEntity.setDetail_desc(amendDemandBean.getDetail_desc());
+        mNeedsListEntity.setDistrict_name(amendDemandBean.getDistrict_name());
+        mNeedsListEntity.setDistrict(amendDemandBean.getDistrict());
+        mNeedsListEntity.setHouse_area(amendDemandBean.getHouse_area());
+        mNeedsListEntity.setHouse_type(amendDemandBean.getHouse_type());
+        mNeedsListEntity.setLiving_room(amendDemandBean.getLiving_room());
+        mNeedsListEntity.setProvince_name(amendDemandBean.getProvince_name());
+        mNeedsListEntity.setProvince(amendDemandBean.getProvince());
+        mNeedsListEntity.setToilet(amendDemandBean.getToilet());
+        mNeedsListEntity.setRoom(amendDemandBean.getRoom());
+    }
+
     private static final int WK_FLOW_STATE = 0;
     private static final int BIDING_STATE = 1;
     private static final String IS_PUBLIC = "1";
     private static final String NONE = "none";
+
 
     /**
      * this context activity
@@ -839,4 +885,5 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private MemberEntity mMemberEntity;
     private DecorationNeedsListBean mNeedsListEntity;
     private ArrayList<DecorationBiddersBean> bidders;
+    private int RequestCode = 101;
 }
