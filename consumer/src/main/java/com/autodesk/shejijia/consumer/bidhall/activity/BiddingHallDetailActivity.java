@@ -8,26 +8,26 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.entity.BidHallDetailEntity;
 import com.autodesk.shejijia.consumer.bidhall.entity.RealNameBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CertificationActivity;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -72,7 +72,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         super.initExtraBundle();
         Bundle bundle = getIntent().getExtras();
         needs_id = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID);
-        bid_status = bundle.getBoolean(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS);
         demand_type = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_TYPE);
     }
 
@@ -121,8 +120,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
                 mBidHallEntity = GsonUtil.jsonToBean(str, BidHallDetailEntity.class);
-                KLog.json(TAG, str);
-
+                bid_status = mBidHallEntity.getBidding_status();
                 updateViewFromBidHallDetailData();
             }
 
