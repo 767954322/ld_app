@@ -187,6 +187,7 @@
     <string name="deliver_measure_consumer">量房交付</string>
     <string name="deliver_measure_consumer_title">我量房交付</string>
     <string name="three_plan">3D设计方案</string>
+    <string name="three_plan_no_name">未命名</string>
     <string name="deliver_consumer">我的设计交付</string>
     <string name="deliver_designer">我要交付</string>
     <string name="flow_3d">我的3D方案</string>

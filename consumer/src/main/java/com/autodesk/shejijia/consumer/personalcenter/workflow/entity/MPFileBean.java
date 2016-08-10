@@ -20,6 +20,7 @@ public class MPFileBean implements Serializable {
     private String id;
     private String name;
 
+
     public String getUrl() {
         return url;
     }

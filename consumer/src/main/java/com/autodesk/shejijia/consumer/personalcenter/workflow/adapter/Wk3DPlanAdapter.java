@@ -52,7 +52,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
     }
 
     @Override
-    public void convert(CommonViewHolder holder, final MPDesignFileBean designFileEntity) {
+    public void convert(CommonViewHolder holder, final MPDesignFileBean mpDesignFileBean) {
         /// no_pic .
         final ImageView mImageVShow = holder.getView(R.id.iv_show_3dplan);
         mImageVShow.setImageDrawable(UIUtils.getDrawable(R.drawable.common_case_icon));
@@ -61,7 +61,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
         /**
          * 3D方案的缩略图
          */
-        String link = designFileEntity.getLink();
+        String link = mpDesignFileBean.getLink();
         String str = link.substring(link.lastIndexOf('.') + 1);
         if (Constant.DocumentTypeKey.TYPE_PNG.equals(str) || Constant.DocumentTypeKey.TYPE_JPG.equals(str)) {
             ImageUtils.displayIconImage(link, mImageVShow);
@@ -72,9 +72,9 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
         /**
          * 3D方案的名字
          */
-        String name = designFileEntity.getName();
+        String name = mpDesignFileBean.getName();
         if (TextUtils.isEmpty(name)) {
-            holder.setText(R.id.tv_3dplan_name, UIUtils.getString(R.string.three_plan));
+            holder.setText(R.id.tv_3dplan_name, UIUtils.getString(R.string.three_plan_no_name));
         } else {
             holder.setText(R.id.tv_3dplan_name, name);
         }
@@ -105,7 +105,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Wk3DPlanShowActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, designFileEntity);
+                bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mpDesignFileBean);
                 bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS);
                 bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
                 intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);

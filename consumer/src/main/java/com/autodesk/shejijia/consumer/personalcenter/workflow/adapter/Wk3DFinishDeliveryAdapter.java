@@ -6,12 +6,11 @@ import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
+import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 
 import java.util.ArrayList;
 
@@ -47,9 +46,9 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<MPFileBean> {
         /**
          * 方案的名字
          */
-        String name = deliveryFilesEntity.getName();
+        String name = deliveryFilesEntity.getFiled_name();
         if (TextUtils.isEmpty(name)) {
-            holder.setText(R.id.tv_3dplan_name, (UIUtils.getString(R.string.three_plan)));
+            holder.setText(R.id.tv_3dplan_name, (UIUtils.getString(R.string.three_plan_no_name)));
         } else {
             holder.setText(R.id.tv_3dplan_name, name);
         }

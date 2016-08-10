@@ -17,7 +17,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DFinishDeliveryAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DLevelZeroAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DPlanAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -219,8 +218,8 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
      */
     private void doneDelivery(Bundle level_bundle, int level) {
         mBtnSubmit3DPlan.setVisibility(View.GONE);
-        mDeliveryFilesEntities = (ArrayList<MPFileBean>) level_bundle.getSerializable(Constant.DeliveryBundleKey.DELIVERY_ENTITY);
-        if (null != mDeliveryFilesEntities) {
+        mMPFileBeanArrayList = (ArrayList<MPFileBean>) level_bundle.getSerializable(Constant.DeliveryBundleKey.DELIVERY_ENTITY);
+        if (null != mMPFileBeanArrayList) {
             switch (level) {
                 case 0:
                     setTitleForNavbar(UIUtils.getString(R.string.three_plan));
@@ -237,14 +236,14 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                 case 4:
                     setTitleForNavbar(UIUtils.getString(R.string.my_room_deliverable));
             }
-            Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(UIUtils.getContext(), mDeliveryFilesEntities);
+            Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(UIUtils.getContext(), mMPFileBeanArrayList);
             mGridView3DPlan.setAdapter(wk3DFinishDeliveryAdapter);
             mGridView3DPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(Wk3DPlanActivity.this, Wk3DPlanShowActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mDeliveryFilesEntities.get(position));
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mMPFileBeanArrayList.get(position));
                     bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, false);
                     intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
                     startActivity(intent);
@@ -352,11 +351,11 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
     private Button mBtnSubmit3DPlan;
     private GridView mGridView3DPlan;
 
-    private ArrayList<String> mDesignFileIdArrayList = new ArrayList();                  /// 用于存放选中的design_file_id的集合 .
+    private ArrayList<String> mDesignFileIdArrayList = new ArrayList();           /// 用于存放选中的design_file_id的集合 .
     private ArrayList<String> mDesignFileIdArrayListOthers;
-    private ArrayList<MPDesignFileBean> mDesignFileEntities;   /// 当前3D方案的所有设计图 .
+    private ArrayList<MPDesignFileBean> mDesignFileEntities;                      /// 当前3D方案的所有设计图 .
     private ArrayList<Wk3DPlanListBean> mWk3DPlanListBeanArrayList;               ///用于存储有不同design_asset_id的实体类的集合 .
-    private ArrayList<MPFileBean> mDeliveryFilesEntities;
+    private ArrayList<MPFileBean> mMPFileBeanArrayList;
 
     private Wk3DLevelZeroAdapter mWk3DLevelZeroAdapter;
     private Wk3DPlanAdapter mWk3DPlanAdapter;
