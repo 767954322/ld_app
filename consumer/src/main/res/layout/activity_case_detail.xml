@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <com.autodesk.shejijia.shared.components.common.uielements.ImageShowView
@@ -19,6 +20,11 @@
             android:layout_gravity="center"/>
 
     </LinearLayout>
+
+    <com.autodesk.shejijia.shared.components.common.uielements.photoview.HackyViewPager
+        android:id="@+id/case_librafy_detail_activity_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.autodesk.shejijia.shared.components.common.uielements.photoview.HackyViewPager>
 
 
 </LinearLayout>
