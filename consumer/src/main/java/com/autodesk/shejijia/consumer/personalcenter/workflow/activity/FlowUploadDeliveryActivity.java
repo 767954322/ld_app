@@ -940,7 +940,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (wk_sub_node_id_int >= 51) {
-            changeSubmitOk();
+            changeSubmitOkState();
         }
     }
 
@@ -956,7 +956,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     /**
      * 判断是否可以提交
      */
-    private void changeSubmitOk() {
+    private void changeSubmitOkState() {
         cancelSubmit();
         if (DeliverySelector.select_design_file_id_map.size() < 4) {
             return;
@@ -1220,13 +1220,13 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     cancelSubmit();
                 }
 
-            } else if (Integer.valueOf(wk_cur_sub_node_id) >= 42) {
+            } else if (Integer.valueOf(wk_cur_sub_node_id) >= 51) {
                 /**
                  * 设计交付
                  */
-                if (mFiles == null) {
+                if (mMemberType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) {
                     changeItemClickState();
-                    changeSubmitOk();
+                    changeSubmitOkState();
                 }
             }
         }
@@ -1247,8 +1247,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
     }
 
-    private static final int DELIVERED_STATE_FINISH = 0; /// 已完成交付 .
-    private static final int DELIVERED_STATE_UN_FINISH = 1;/// 尚未完成交付 .
     public static final String BIDDER_ENTITY = "mBiddersEntity";
     public static final int BIDDER_ENTITY_TAG = 2;
     public static String fileLink;
