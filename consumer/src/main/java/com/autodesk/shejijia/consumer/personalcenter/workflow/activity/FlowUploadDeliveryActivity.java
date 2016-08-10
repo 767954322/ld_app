@@ -103,22 +103,24 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+        Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
 
-        /// 尚未上传交付物，mDeliveryBen为null就不会朝下走 .
-        if (null == mDeliveryBean) {
-            alertMeasureOrDesign();
-            return;
+        /// TODO 尚未考虑量房交付物情况
+        alertMeasureOrDesign();
+        if (wk_sub_node_id_int == 51) {
+            handleDeliveryState(wk_sub_node_id_int, delivery);
+        } else {
+            if (null == mDeliveryBean) {
+                return;
+            }
+            mFiles = mDeliveryBean.getFiles();
+            if (null == mFiles) {
+                return;
+            }
+            delivery.setDeliveryFiles(mFiles);
+            handleDeliveryState(wk_sub_node_id_int, delivery);
         }
-        mFiles = mDeliveryBean.getFiles();
-        if (null == mFiles) {
-            return;
-        }
-
-        Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
-        delivery.setDeliveryFiles(mFiles);
-
-        handleDeliveryState(wk_sub_node_id_int, delivery);
 
         community_name = requirement.getCommunity_name();
         mTvCommunityName.setText(community_name);
@@ -775,7 +777,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 default:
                     break;
             }
-        } else if (wk_sub_node_id_int >= 42 && wk_sub_node_id_int < 61) {
+        } else if (wk_sub_node_id_int >= 42 && wk_sub_node_id_int < 51) {
             switch (mMemberType) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mAlertViewDesignConsumerDelivery.show();
