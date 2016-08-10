@@ -259,7 +259,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                                     /**
                                      * 设计师
                                      */
-                                    get3DPlan(needs_id, designer_id);
+                                    doingDesignDelivery(v, intent3DPlan);
                                 } else {
                                     /**
                                      * 消费者已经确认交付物
@@ -287,6 +287,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 || object == mAlertViewDesignConsumerDelivery
                 || object == mAlertViewMeasureDelivery
                 || object == mAlertViewMeasureConsumerDelivery
+                || object == mAlertViewDesignDelivery
                 && position != AlertView.CANCELPOSITION) {
             FlowUploadDeliveryActivity.this.finish();
         }
@@ -401,7 +402,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private void doingDesignDelivery(View v, Intent intent3DPlan) {
         Bundle bundle;
         switch (v.getId()) {
-            case R.id.ll_3d_plan:                   /// 3d方案 .
+            case R.id.ll_3d_plan:                 /// 3d方案 .
                 /**
                  *  进入3D方案，选择其中一个，并返回选中的3d_asset_id
                  */
@@ -413,7 +414,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     startActivityForResult(intent3DPlan, 0);
                 }
                 break;
-            case R.id.ll_design_apply:      /// 渲染图设计 .
+
+            case R.id.ll_design_apply:          /// 渲染图设计 .
                 if (null != mDesignFileEntities3DPlanRendering) {
                     bundle = new Bundle();
                     putBundleValue(1, 1, bundle);
@@ -423,7 +425,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
                 break;
 
-            case R.id.ll_design_pager:      /// 设计图纸 .
+            case R.id.ll_design_pager:          /// 设计图纸 .
                 if (null != mDesignFileEntities3DPlanDesignBlueprint) {
                     bundle = new Bundle();
                     putBundleValue(2, 1, bundle);
@@ -433,7 +435,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
                 break;
 
-            case R.id.ll_material_list:     /// 材料清单 .
+            case R.id.ll_material_list:         /// 材料清单 .
                 if (null != mDesignFileEntities3DPlanMaterialBill) {
                     bundle = new Bundle();
                     putBundleValue(3, 1, bundle);
@@ -737,9 +739,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 }
                 mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
                 design_asset_id_measure = design_asset_id;
-//                doingMeasureDelivery();
-
-
             } else {
                 clickLevel();
                 showAllLevel();
@@ -759,10 +758,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 if (mWk3DPlanListBeanArrayList.size() < 1) {
                     mAlertViewDesignDelivery.show();
                 }
-                return;
             }
-            mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
-//            doingDesignDelivery();
         }
     }
 
@@ -931,8 +927,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
     /**
      * 量房交付
+     * 判断量房交付时候确认按钮问题
      */
-    private void measureDelivery() {
+    private void changeSubmitOkFromMeasureDelivery() {
         if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
             ArrayList<String> design_file_id_measure_arrayList = DeliverySelector.select_design_file_id_map.get(4);
             if (design_file_id_measure_arrayList != null && design_file_id_measure_arrayList.size() > 0) {
@@ -943,7 +940,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (wk_sub_node_id_int >= 51) {
-            canSubmitOk();
+            changeSubmitOk();
         }
     }
 
@@ -959,7 +956,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     /**
      * 判断是否可以提交
      */
-    private void canSubmitOk() {
+    private void changeSubmitOk() {
         cancelSubmit();
         if (DeliverySelector.select_design_file_id_map.size() < 4) {
             return;
@@ -982,7 +979,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     /**
      * 判断是否可以点击选择
      */
-    private void canClickOk() {
+    private void changeItemClickState() {
 
         if (TextUtils.isEmpty(DeliverySelector.select_design_asset_id)) {
             cancelOnClick();
@@ -1149,7 +1146,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     if (!TextUtils.isEmpty(design_asset_id)) {
                         mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_3d_press));
                     }
-                    canClickOk();
+
                     /// 当重复选择某个3D方案时候，清空历史记录 .
                     if (!TextUtils.isEmpty(design_asset_id) || !DeliverySelector.select_design_asset_id.equals(design_asset_id)) {
                         clearDesignFileEntitiesLevel();
@@ -1184,6 +1181,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                             mDesignFileEntities3DPlanMaterialBill.add(designFileEntity);
                         }
                     }
+                    changeItemClickState();
                     break;
 
                 case BIDDER_ENTITY_TAG: /// 评价完成或者取消评价，隐藏评价 .
@@ -1193,7 +1191,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 default:
                     break;
             }
-            measureDelivery();
+            changeSubmitOkFromMeasureDelivery();
         }
     }
 
@@ -1227,8 +1225,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                  * 设计交付
                  */
                 if (mFiles == null) {
-                    canClickOk();
-                    canSubmitOk();
+                    changeItemClickState();
+                    changeSubmitOk();
                 }
             }
         }
