@@ -3,7 +3,7 @@
     package="com.autodesk.shejijia.consumer">
 
     <!-- 微信分享权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!-- 支付宝申请权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,21 +20,21 @@
     <!-- JPUSH权限 -->
     <permission
         android:name="com.autodesk.shejijia.consumer.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature"/>
+        android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.autodesk.shejijia.consumer.permission.JPUSH_MESSAGE"/>
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="com.autodesk.shejijia.consumer.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera" />
     <!-- 自动获取焦点的权限 -->
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <!-- 调用相机的权限 -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <supports-screens
         android:anyDensity="true"
@@ -59,9 +59,10 @@
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -76,14 +77,13 @@
             android:name=".home.decorationlibrarys.activity.SearchActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:label="@string/app_name"/>
-            android:theme="@android:style/Theme.Translucent"
             android:label="@string/app_name" />
-
+        android:theme="@android:style/Theme.Translucent"
+        android:label="@string/app_name" />
         <activity
             android:name=".personalcenter.consumer.activity.IssueDemandActivity"
             android:alwaysRetainTaskState="true"
@@ -113,32 +113,32 @@
             android:name=".bidhall.activity.BiddingHallDetailActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.designer.activity.DesignerEssentialInfoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutDesignerIntroducedActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutVersionIntroducedActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.consumer.activity.AmendDemandActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".home.homepage.activity.MPConsumerHomeActivity"
             android:alwaysRetainTaskState="true"
@@ -150,14 +150,14 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".home.homepage.activity.DesignerPersonalCenterActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
             android:screenOrientation="portrait" />
+        android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.designer.activity.CertificationActivity"
             android:alwaysRetainTaskState="true"
@@ -177,7 +177,7 @@
             android:name=".home.decorationdesigners.activity.SeekDesignerActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.designer.activity.DesignerOrderActivity"
             android:alwaysRetainTaskState="true"
@@ -233,7 +233,7 @@
             android:name=".home.decorationlibrarys.activity.CaseLibraryDetailsPageActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".home.decorationlibrarys.activity.GalleryUrlActivity"
             android:alwaysRetainTaskState="true"
@@ -373,8 +373,8 @@
             android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
             android:screenOrientation="portrait" />
+        android:screenOrientation="portrait" />
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -391,7 +391,7 @@
         <service
             android:name="com.autodesk.shejijia.shared.components.im.service.webSocketService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
@@ -423,9 +423,9 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
 
-                <category android:name="com.autodesk.shejijia.consumer"/>
+                <category android:name="com.autodesk.shejijia.consumer" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -463,16 +463,16 @@
         <!-- ＵＭ统计 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="574fdc8c67e58ef66300065b"/>
+            android:value="574fdc8c67e58ef66300065b" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="AnZhuoShiChang"/>
+            android:value="AnZhuoShiChang" />
 
-        <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity">
-        </activity>
-        <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity">
-        </activity>
+        <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity" />
+        <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity" />
         <activity android:name=".personalcenter.consumer.activity.AttentionActivity" />
+        <activity android:name=".home.decorationdesigners.activity.DesignerFiltrateActivity" />
+        <activity android:name=".home.decorationdesigners.activity.DesignerSearchActivity"></activity>
     </application>
 
 </manifest>
