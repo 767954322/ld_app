@@ -148,7 +148,10 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
     @Override
     public void onSendTextClicked(String msg) {
-        sendTextMsg(msg);
+        String filteredMessage = StringUtils.filterSpecialCharacters(msg);
+        assert (filteredMessage != null);
+
+        sendTextMsg(filteredMessage);
     }
 
 
