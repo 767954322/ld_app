@@ -194,7 +194,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
     private void setBtnCanpress() {
         btn_my_property_withdrawal.setOnClickListener(this);
         btn_my_property_withdrawal.setEnabled(true);
-        btn_my_property_withdrawal.setBackgroundResource(R.drawable.bg_common_btn_blue);
+        btn_my_property_withdrawal.setBackgroundResource(R.drawable.bg_common_btn_gap_blue);
         btn_my_property_withdrawal.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
     }
 
