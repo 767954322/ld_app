@@ -83,13 +83,13 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     protected void initView() {
         mClearEditText1 = (ClearEditText) findViewById(R.id.et_search);
         mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
+        mListView = (ListView) findViewById(R.id.content_view);
+        mSearchBack = (ImageView) findViewById(R.id.searchc_back);
+
         mFooterView = View.inflate(this, R.layout.view_empty_layout, null);
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
         mIvTemp = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
-        mListView = (ListView) findViewById(R.id.content_view);
-        mSearchBack = (ImageView) findViewById(R.id.searchc_back);
-
         mListView.addFooterView(mFooterView);
     }
 
@@ -101,7 +101,6 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
 
         custom_string_keywords = "";
         getSearchData(0, AppJsonFileReader.getRoomHall(this));
-
         getSearchData(1, AppJsonFileReader.getStyle(this));
         getSearchData(2, AppJsonFileReader.getArea(this));
 
@@ -259,7 +258,17 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     }
 
     /// 获取数据.
-    public void getCaseLibraryData(String custom_string_keywords, String taxonomy_id, String custom_string_area, String custom_string_form, String custom_string_style, String custom_string_type, String custom_string_restroom, String custom_string_bedroom, final int offset, final int limit, final int state) {
+    public void getCaseLibraryData(String custom_string_keywords,
+                                   String taxonomy_id,
+                                   String custom_string_area,
+                                   String custom_string_form,
+                                   String custom_string_style,
+                                   String custom_string_type,
+                                   String custom_string_restroom,
+                                   String custom_string_bedroom,
+                                   final int offset,
+                                   final int limit,
+                                   final int state) {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -390,8 +399,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
             @Override
             public void afterTextChanged(Editable s) {
                 mSearchHoverCaseBeanArrayList.clear();
-                String searchInPutString = s.toString();
-                searchInPutString = searchInPutString.trim();
+                String searchInPutString = s.toString().trim();
                 mSearchHoverCaseBeanArrayList.addAll(filterData(searchInPutString));
                 mFuzzySearchAdapter.notifyDataSetChanged();
             }
