@@ -197,6 +197,10 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
                     // 最后通知图库更新
                     try {
                         MediaStore.Images.Media.insertImage(CaseLibraryDetailActivity.this.getContentResolver(), file.getAbsolutePath(), fileName, null);
+                        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                        Uri uri = Uri.fromFile(new File("/sdcard/image.jpg"));
+                        intent.setData(uri);
+                        CaseLibraryDetailActivity.this.sendBroadcast(intent);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
