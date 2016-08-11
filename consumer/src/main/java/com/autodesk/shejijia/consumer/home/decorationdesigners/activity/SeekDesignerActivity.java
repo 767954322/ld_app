@@ -9,9 +9,11 @@ import android.widget.ListView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAdapter;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerFiltrateBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -250,6 +252,33 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         getFindDesignerData(OFFSET, LIMIT, 2);
     }
 
+    /// 刷新.
+    public void updateNotify(DesignerFiltrateBean content) {
+        this.mDesignerFiltrateBean = content;
+        mPullToRefreshLayout.autoRefresh();
+    }
+
+    /**
+     * 接收返回来的数据，并做出操作
+     *
+     * @param resultCode 条件码
+     * @param data       回来的数据
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null == data) {
+            return;
+        }
+        Bundle bundle = data.getExtras();
+        switch (resultCode) {
+            case DesignerFiltrateActivity.DF_RESULT_CODE:
+                DesignerFiltrateBean designerFiltrateBean = (DesignerFiltrateBean) bundle.getSerializable(Constant.CaseLibrarySearch.DESIGNER_FILTRATE);
+                updateNotify(designerFiltrateBean);
+                break;
+        }
+    }
+
     /// 控件.
     private ListView mListView;
     private PullToRefreshLayout mPullToRefreshLayout;
@@ -261,8 +290,10 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     private String member_id;
     private Intent intent;
 
+
     /// 集合，类.
     private SeekDesignerBean mSeekDesignerBean;
     private SeekDesignerAdapter mSeekDesignerAdapter;
+    private DesignerFiltrateBean mDesignerFiltrateBean;
     private ArrayList<SeekDesignerBean.DesignerListEntity> mDesignerListEntities = new ArrayList<>();
 }

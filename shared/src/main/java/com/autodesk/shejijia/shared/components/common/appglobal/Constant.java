@@ -172,6 +172,12 @@ public class Constant {
         public static final String STYLE_INDEX = "styleIdex";
         public static final String CONTENT_BEAN = "contentBean";
 
+        public static final String YEAR_INDEX = "yearIndex";
+        public static final String STYLEL_INDEX = "styleIndex";
+        public static final String PRICE_INDEX = "priceIndex";
+        public static final String DESIGNER_FILTRATE = "designerFiltrateBean";
+
+
     }
 
     /**

@@ -124,6 +124,7 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         mStyle = mStyleData.get(mStyleIndex);
         mStyle = ConvertUtils.getKeyByValue(style, mStyle);
         mStyle = mStyle.equals(all) ? BLANK : mStyle;
+
         FiltrateContentBean filtrateContentBean = new FiltrateContentBean();
         filtrateContentBean.setHousingType(mLivingRoom);
         filtrateContentBean.setArea(mArea);
@@ -131,6 +132,7 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         filtrateContentBean.setAreaIndex(mAreaIndex);
         filtrateContentBean.setHouseIndex(mHouseIndex);
         filtrateContentBean.setStyleIndex(mStyleIndex);
+
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constant.CaseLibrarySearch.CONTENT_BEAN, filtrateContentBean);
@@ -196,10 +198,10 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
     private NoScrollGridView aGridView;
 
     /// 变量.
-    private int mStyleIndex = 0;
     private String mArea;
     private String mLivingRoom;
     private String mStyle;
+    private int mStyleIndex = 0;
     private int mHouseIndex = 0;
     private int mAreaIndex = 0;
 
