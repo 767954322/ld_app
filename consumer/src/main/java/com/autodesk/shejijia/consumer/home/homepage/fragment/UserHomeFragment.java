@@ -217,7 +217,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     ///事件监听 .
     @Override
     public void onClick(View view) {
-        if (!(view instanceof TextView))
         switch ((String) view.getTag()) {
             case REQUIREMENT_BUTTON_TAG:     /// 跳入 IssueDemandActivity .
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -351,15 +350,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         /**
          * requirement btn发布设计需求
          */
-        requirementButton = new FloatingActionButton(activity);
-        requirementButton.setLabelText(UIUtils.getString(R.string.requirements));
-        requirementButton.setButtonSize(FloatingActionButton.SIZE_MINI);
-        requirementButton.setImageResource(R.drawable.icon_release_requirements_normal);
-        requirementButton.setColorNormal(Color.TRANSPARENT);
-        requirementButton.setColorPressed(Color.TRANSPARENT);
-        requirementButton.setTag(REQUIREMENT_BUTTON_TAG);
-        mFloatingActionsMenu.addMenuButton(requirementButton);
-        requirementButton.setOnClickListener(this);
+        initRequirementBtn();
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -372,29 +363,12 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         /**
          * find designer btn设计师
          */
-        findDesignerButton = new FloatingActionButton(activity);
-        findDesignerButton.setLabelText(UIUtils.getString(R.string.find_designer));
-        findDesignerButton.setButtonSize(FloatingActionButton.SIZE_MINI);
-        findDesignerButton.setImageResource(R.drawable.icon_find_designer_normal);
-        findDesignerButton.setColorNormal(Color.TRANSPARENT);
-        findDesignerButton.setColorPressed(Color.TRANSPARENT);
-        findDesignerButton.setTag(FIND_DESIGNER_BUTTON_TAG);
-        mFloatingActionsMenu.addMenuButton(findDesignerButton);
-        findDesignerButton.setOnClickListener(this);
+        initFindDesignerBtn();
 
         /**
          * case library btn案例库
          */
-        caseLibraryButton = new FloatingActionButton(activity);
-        caseLibraryButton.setLabelText(UIUtils.getString(R.string.case_library));
-        caseLibraryButton.setButtonSize(FloatingActionButton.SIZE_MINI);
-        caseLibraryButton.setImageResource(R.drawable.icon_case_library_normal);
-        caseLibraryButton.setColorNormal(Color.TRANSPARENT);
-        caseLibraryButton.setColorPressed(Color.TRANSPARENT);
-        mFloatingActionsMenu.addMenuButton(caseLibraryButton);
-        caseLibraryButton.setTag(CASE_LIBRARY_BUTTON_TAG);
-
-        caseLibraryButton.setOnClickListener(this);
+        initCaseLibraryBtn();
 
 
         mFloatingActionsMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
@@ -414,6 +388,49 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             }
         });
     }
+
+    private void initRequirementBtn() {
+        if (null == requirementButton)
+            requirementButton = new FloatingActionButton(activity);
+        requirementButton.setLabelText(UIUtils.getString(R.string.requirements));
+        requirementButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        requirementButton.setImageResource(R.drawable.icon_release_requirements_normal);
+        requirementButton.setColorNormal(Color.TRANSPARENT);
+        requirementButton.setColorPressed(Color.TRANSPARENT);
+        requirementButton.setTag(REQUIREMENT_BUTTON_TAG);
+        mFloatingActionsMenu.addMenuButton(requirementButton);
+        requirementButton.setOnClickListener(this);
+    }
+
+    private void initFindDesignerBtn() {
+        if (null == findDesignerButton)
+            findDesignerButton = new FloatingActionButton(activity);
+        findDesignerButton.setLabelText(UIUtils.getString(R.string.find_designer));
+        findDesignerButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        findDesignerButton.setImageResource(R.drawable.icon_find_designer_normal);
+        findDesignerButton.setColorNormal(Color.TRANSPARENT);
+        findDesignerButton.setColorPressed(Color.TRANSPARENT);
+        findDesignerButton.setTag(FIND_DESIGNER_BUTTON_TAG);
+        mFloatingActionsMenu.addMenuButton(findDesignerButton);
+        findDesignerButton.setOnClickListener(this);
+    }
+
+    private void initCaseLibraryBtn() {
+        if (null == caseLibraryButton)
+             caseLibraryButton = new FloatingActionButton(activity);
+        caseLibraryButton.setLabelText(UIUtils.getString(R.string.case_library));
+        caseLibraryButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        caseLibraryButton.setImageResource(R.drawable.icon_case_library_normal);
+        caseLibraryButton.setColorNormal(Color.TRANSPARENT);
+        caseLibraryButton.setColorPressed(Color.TRANSPARENT);
+        mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+        caseLibraryButton.setTag(CASE_LIBRARY_BUTTON_TAG);
+
+        caseLibraryButton.setOnClickListener(this);
+    }
+
+
+
 
     private void createCustomAnimation() {
         AnimatorSet set = new AnimatorSet();
@@ -499,29 +516,21 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     @Override
     public void onStart() {
         super.onStart();
-
+        mFloatingActionsMenu.removeAllMenuButtons();
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-            /// hide the requirement btn .
-            // mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.removeAllMenuButtons();
-            mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.addMenuButton(findDesignerButton);
-            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+            initRequirementBtn();
+            initFindDesignerBtn();
+            initCaseLibraryBtn();
 
         } else if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            /// hide the requirement btn .
-            // mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.removeAllMenuButtons();
-            mFloatingActionsMenu.addMenuButton(findDesignerButton);
-            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+            initFindDesignerBtn();
+            initCaseLibraryBtn();
 
         } else {
-
-            mFloatingActionsMenu.removeAllMenuButtons();
-            mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.addMenuButton(findDesignerButton);
-            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+            initRequirementBtn();
+            initFindDesignerBtn();
+            initCaseLibraryBtn();
 
         }
     }
