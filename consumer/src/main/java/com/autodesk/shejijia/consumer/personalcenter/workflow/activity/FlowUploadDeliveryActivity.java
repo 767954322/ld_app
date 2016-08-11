@@ -943,7 +943,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                  * 设计师上传量房交付物
                  */
                 cancelSubmit();
-                get3DPlan(needs_id, designer_id, DELIVERED_STATE_UN_FINISH, Constant.UerInfoKey.DESIGNER_TYPE);
+                get3DPlan(needs_id, designer_id);
             }
         } else if (wk_sub_node_id_int >= 42) {
             /**
@@ -969,7 +969,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                      * 设计师上传设计交付物
                      */
                     cancelSubmit();
-                    get3DPlan(needs_id, designer_id, DELIVERED_STATE_UN_FINISH, Constant.UerInfoKey.DESIGNER_TYPE);
+                    get3DPlan(needs_id, designer_id);
                 }
             }
         }
