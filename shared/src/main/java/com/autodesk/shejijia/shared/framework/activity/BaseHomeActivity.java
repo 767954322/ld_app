@@ -55,9 +55,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
         // retrieve the fragment handle from fragmentmanager
 
-        if (savedInstanceState != null)
-        {
-            mMPThreadListFragment = (MPThreadListFragment)getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
+        if (savedInstanceState != null) {
+            mMPThreadListFragment = (MPThreadListFragment) getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
             mFragmentArrayList.add(mMPThreadListFragment);
 
             showFragment(getCurrentCheckedRadioButtonId());
@@ -210,6 +209,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     protected void rightNavButtonClicked(View view) {
+
+
         if (isActiveFragment(MPThreadListFragment.class))
             openFileThreadActivity();
     }
@@ -230,7 +231,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return -1;
     }
 
-    private void openFileThreadActivity() {
+    public void openFileThreadActivity() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         Intent intent = new Intent(this, MPFileThreadListActivity.class);
         intent.putExtra(MPFileThreadListActivity.MEMBERID, memberEntity.getAcs_member_id());
@@ -359,7 +360,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             }
         };
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
+        if (null != memberEntity) {
+            MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
+        }
     }
 
 

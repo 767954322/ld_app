@@ -61,6 +61,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         tv_measure_fee = (TextView) findViewById(R.id.tv_exsit_measure_measurement_fee);
         explistview = (PinnedHeaderExpandableListView) findViewById(R.id.explistview);
         btn_send = (Button) findViewById(R.id.btn_exist_measure_order_send);
+        tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
     }
 
     @Override
@@ -102,6 +103,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     protected void initListener() {
         super.initListener();
         btn_send.setOnClickListener(this);
+        tvIllustrate.setOnClickListener(this);
         rl_measure_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +115,10 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tvIllustrate:
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null, new String[]{UIUtils.getString(R.string.finish_cur_pager)},ExistMeasureOrderActivity.this,
+                        AlertView.Style.Alert, null).show();
+                break;
             case R.id.btn_exist_measure_order_send:
                 /**
                  * 获取系统当前时间
@@ -325,6 +331,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     /// 控件.
     private RelativeLayout rl_measure_time;
     private TextView tv_measure_time;
+    private TextView tvIllustrate;
     private TextView tv_measure_fee;
     private Button btn_send;
     private TimePickerView pvTime;

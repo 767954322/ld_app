@@ -86,6 +86,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         btn_send_form = (Button) findViewById(R.id.btn_send_measure_house_form);
         tvc_measure_form_type = (TextView) findViewById(R.id.tvc_measure_form_type);
         tvc_measure_form_style = (TextView) findViewById(R.id.tvc_measure_form_style);
+        tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
         ll_time_restrict = (LinearLayout) findViewById(R.id.ll_time_restrict);
 
     }
@@ -194,6 +195,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         tvc_address.setOnClickListener(this);
         tvc_time.setOnClickListener(this);
         btn_send_form.setOnClickListener(this);
+        tvIllustrate.setOnClickListener(this);
     }
 
 
@@ -206,7 +208,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
-                if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
+                if(houseArea.equals("0.00")||houseArea.equals("0.0")||houseArea.equals("00.00")){
                     MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_housing_area));
                     return;
                 }
@@ -347,6 +349,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             case R.id.tvc_measure_form_address:
                 getPCDAddress();
 
+                break;
+            case R.id.tvIllustrate:
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null,new String[]{UIUtils.getString(R.string.finish_cur_pager)}, MeasureFormActivity.this,
+                        AlertView.Style.Alert, null).show();
                 break;
             default:
                 break;
@@ -704,7 +710,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     private void showAlertView(String content) {
-        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
+        new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
                 AlertView.Style.Alert, MeasureFormActivity.this).show();
     }
 
@@ -726,6 +732,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private TextView tvc_measure_form_type;
     private TextView tvc_measure_form_style;
     private Button btn_send_form;
+    private TextView tvIllustrate;
     private OptionsPickerView pvDesignBudgetOptions;
     private OptionsPickerView pvDecorationBudgetOptions;
     private OptionsPickerView pvStyleOptions;

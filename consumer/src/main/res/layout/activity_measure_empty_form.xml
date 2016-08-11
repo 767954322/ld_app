@@ -32,6 +32,28 @@
             android:layout_marginTop="@dimen/size_10"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:id="@+id/rlMeasureWarmTips"
+                android:layout_width="match_parent"
+                android:paddingLeft="@dimen/size_10"
+                android:background="@color/font_gray"
+                android:layout_height="@dimen/size_40"
+                android:paddingRight="@dimen/size_10"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/tvMeasureWarmTips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10"/>
+                <TextView
+                    android:id="@+id/tvMeasureWarmTipsContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_toRightOf="@+id/tvMeasureWarmTips"/>
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_40"
@@ -432,31 +454,69 @@
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_30"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:layout_height="@dimen/size_40"
                 android:paddingLeft="@dimen/size_10"
-                android:paddingRight="@dimen/size_10">
+                android:paddingRight="@dimen/size_10"
+                android:paddingBottom="@dimen/size_10"
+                android:gravity="center_vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_30"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/demand_measure_house_charge" />
+
+                    <TextView
+                        android:id="@+id/tv_measure_form_liangfangfei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/flow_monad_rmb" />
+
+                </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvIllustrate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_measure_house_charge" />
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_instruction"
+                    android:layout_marginRight="@dimen/size_10"
+                    android:textColor="@color/actionsheet_blue"
+                    android:visibility="gone"
+                    android:text="@string/illustrate" />
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rlWarmTips"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10"
+                android:paddingBottom="@dimen/size_10">
                 <TextView
-                    android:id="@+id/tv_measure_form_liangfangfei"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
+                    android:id="@+id/tvWarmTips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_monad_rmb" />
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/tvWarmTipsContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tvWarmTips"/>
 
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

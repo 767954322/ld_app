@@ -1,36 +1,46 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
-import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.ImageShowView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.socks.library.KLog;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.HackyViewPager;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.PhotoView;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.PhotoViewAttacher;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import org.json.JSONObject;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
+
 /**
- * @author DongXueQiu .
  * @version 1.0 .
  * @date 2016/3/25 0025 9:53 .
  * @filename CaseLibraryDetailActivity.
- * @brief 案例详情页面.
  */
-public class CaseLibraryDetailActivity extends NavigationBarActivity implements View.OnClickListener, ImageShowView.ImageShowViewListener {
+public class CaseLibraryDetailActivity extends NavigationBarActivity {
 
     @Override
     protected int getLayoutResId() {
@@ -40,110 +50,174 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity implements 
     @Override
     protected void initView() {
         super.initView();
-        mImageShowView = (ImageShowView) findViewById(R.id.ad_view);
-        mLookMore = (LinearLayout) findViewById(R.id.ll_case_detail_look_more);
+        mViewPager = (HackyViewPager) findViewById(R.id.case_librafy_detail_activity_vp);
     }
 
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        case_id = getIntent().getStringExtra(Constant.CaseLibraryDetail.CASE_ID);   /// 获取发过来的ID.
+        caseDetailBean = (CaseDetailBean) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
+        intExtra = getIntent().getIntExtra(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, 0);//获得点击的位置
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        getCaseDetailData(case_id);
-
-
-    }
-
-    @Override
-    protected void initListener() {
-        super.initListener();
-        mLookMore.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_case_detail_look_more:     /// 查看介绍页面.
-                Intent intent = new Intent(this, CaseDescriptionActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
-                intent.putExtras(bundle);
-                this.startActivity(intent);
-                this.overridePendingTransition(R.anim.activity_open, 0);
-                break;
-
-            default:
-                break;
-        }
+        updateViewFromData();
+        mViewPager.setAdapter(new SamplePagerAdapter(mImageUrl));
+        mViewPager.setCurrentItem(intExtra);
     }
 
     /**
-     * 查看大图监听
-     *
-     * @param position  　图片的索引
-     * @param imageView 控件
-     */
-    @Override
-    public void onImageClick(int position, View imageView) {
-        String url = (String) imageView.getTag();
-        Intent intent = new Intent(CaseLibraryDetailActivity.this, GalleryUrlActivity.class);
-        intent.putExtra(Constant.CaseLibraryDetail.CASE_URL, url);
-        startActivity(intent);
-        overridePendingTransition(R.anim.my_scale_action, R.anim.my_alpha_action);
-    }
-
-    /**
-     * 获取案例的数据
-     *
-     * @param case_id 该案例的ID
-     */
-    public void getCaseDetailData(String case_id) {
-        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String info = GsonUtil.jsonToString(jsonObject);
-                caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
-                updateViewFromData();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                mLookMore.setVisibility(View.GONE);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryDetailActivity.this,
-                        AlertView.Style.Alert, null).show();
-            }
-        };
-        MPServerHttpManager.getInstance().getCaseListDetail(case_id, okResponseCallback);
-    }
-
-    /**
-     * 网络获取数据，更新页面
+     * 获取所有图片的url地址
      */
     private void updateViewFromData() {
-        for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
-            if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
-                imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
-                mImageUrl.add(imageUrl);
+        if (caseDetailBean.getImages() != null) {
+            for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
+                if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
+                    imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
+                    mImageUrl.add(imageUrl);
+                }
             }
         }
-        mImageShowView.setImageResources(mImageUrl, this);
-        setTitleForNavbar(caseDetailBean.getTitle());
+
     }
 
-    /// 控件.
-    private ImageShowView mImageShowView;
-    private LinearLayout mLookMore;
 
-    /// 变量.
-    private String case_id;
+    class SamplePagerAdapter extends PagerAdapter {
+
+        private ArrayList<String> mImageUrl1;
+
+        public SamplePagerAdapter(ArrayList<String> mImageUrl1) {
+            this.mImageUrl1 = mImageUrl1;
+        }
+
+        @Override
+        public int getCount() {
+            return mImageUrl1.size();
+        }
+
+        @Override
+        public View instantiateItem(ViewGroup container, final int position) {
+            PhotoView photoView = new PhotoView(container.getContext());
+            ImageUtils.loadImage(photoView, mImageUrl1.get(position));
+            container.addView(photoView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            photoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+                @Override
+                public void onViewTap(View view, float x, float y) {
+                    CaseLibraryDetailActivity.this.finish();
+                }
+            });
+            photoView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    ActionSheetDialog actionSheetDialog = new ActionSheetDialog(CaseLibraryDetailActivity.this)
+                            .builder()
+                            .setCancelable(true)
+                            .setCanceledOnTouchOutside(true)
+                            .addSheetItem(getResources().getString(R.string.savelocal), ActionSheetDialog.SheetItemColor.Blue,
+                                    new ActionSheetDialog.OnSheetItemClickListener() {
+                                        @Override
+                                        public void onClick(int which) {
+
+                                            ImageLoader.getInstance().loadImage(mImageUrl.get(position), new ImageLoadingListener() {
+                                                @Override
+                                                public void onLoadingStarted(String imageUri, View view) {
+
+                                                }
+
+                                                @Override
+                                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                                                }
+
+                                                @Override
+                                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                                                    try {
+                                                        saveImageToGallery(loadedImage);
+                                                    } catch (IOException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                }
+
+                                                @Override
+                                                public void onLoadingCancelled(String imageUri, View view) {
+
+                                                }
+                                            });
+
+                                        }
+                                    });
+                    actionSheetDialog.setCancelTextColor(Color.GRAY);
+                    actionSheetDialog.show();
+
+                    return false;
+                }
+            });
+            return photoView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        /**
+         * 保存图片到本地
+         */
+        public void saveImageToGallery(Bitmap bmp) throws IOException {
+            if (bmp == null) {
+                ToastUtil.showCustomToast(CaseLibraryDetailActivity.this, getString(R.string.save_failure));
+                return;
+            }
+
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
+                if (!appDir.exists()) {
+                    appDir.mkdir();
+                }
+                String fileName = System.currentTimeMillis() + ".jpg";
+                File file = new File(appDir, fileName);
+
+                try {
+                    FileOutputStream fos = new FileOutputStream(file);
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.flush();
+                    fos.close();
+
+                    // 最后通知图库更新
+                    try {
+                        MediaStore.Images.Media.insertImage(CaseLibraryDetailActivity.this.getContentResolver(), file.getAbsolutePath(), fileName, null);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+//                    MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "title", "description");
+//                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//                    Uri uri = Uri.fromFile(file);
+//                    intent.setData(uri);
+//                    CaseLibraryDetailActivity.this.sendBroadcast(intent);
+                    ToastUtil.showCustomToast(CaseLibraryDetailActivity.this, getString(R.string.save_success));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ToastUtil.showCustomToast(CaseLibraryDetailActivity.this, getString(R.string.save_failure));
+                }
+            }
+        }
+
+    }
+
+    private HackyViewPager mViewPager;
+    private int intExtra;
     private String imageUrl;
-
-    /// 集合,类.
     private CaseDetailBean caseDetailBean;
     private ArrayList<String> mImageUrl = new ArrayList<>();
 }

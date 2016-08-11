@@ -11,6 +11,8 @@
     <string name="application_successful">申请成功</string>
     <string name="application_failure">申请失败</string>
     <string name="application_detail">你已成功申请提现\n请在提现记录中查看详情</string>
+    <string name="application_unbing">解除绑定成功</string>
+    <string name="application_unbing_fail">解除失败</string>
 
     <string name="tip_content_one">持卡人姓名不能为空</string>
     <string name="tip_content_two">支行名称不能为空</string>
@@ -353,6 +355,7 @@
     <string name="girl">女</string>
     <string name="essential_info">基本信息</string>
     <string name="photograph">拍照</string>
+    <string name="savelocal">保存图片</string>
     <string name="photo_album">从手机相册选择</string>
     <string name="information_on_the_cross">信息上传中...</string>
     <string name="autonym_sd_disabled">SD卡不可用！</string>
@@ -671,6 +674,7 @@
     <string name="withdrawal_branch_name">支行名称：</string>
     <string name="withdrawal_bank_card_number">银行卡号：</string>
     <string name="replace_rank_card">更换银行卡</string>
+    <string name="un_bind_rank_card">解除绑定</string>
     <string name="confirm_and_submit">确认并提交</string>
 
     <!-- CustomBidFragment-->
@@ -865,4 +869,9 @@
     <string name="chatroom_loadmore_text">查看更多记录</string>
     <string name="no_repeat_click">请勿重复点击</string>
 
+    <!-- 微信分享 -->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
 </resources>

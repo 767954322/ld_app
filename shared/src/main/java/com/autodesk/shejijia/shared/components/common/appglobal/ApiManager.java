@@ -18,8 +18,9 @@ public class ApiManager {
      * RUNNING_ALPHA：Alpha环境
      * RUNNING_PRODUCTION：正式(PRODUCTION)环境
      * RUNNING_DEV ：alpha dev境 .
+     * RUNNING_DOKER
      */
-    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_UAT;
+    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DOKER;
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
@@ -56,6 +57,9 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_DEV;
                 break;
+            default:
+                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_ALPHA;
+                break;
         }
         return login_path;
     }
@@ -91,6 +95,8 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_DEV;
                 break;
+
+
         }
         return logout_path;
     }
@@ -104,8 +110,10 @@ public class ApiManager {
 
     public static String getMPMain_Design(String runningDevelopment) {
         String main_design = null;
+        String tempMpMain = "http://192.168.120.123:8081";
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
+
                 main_design = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
@@ -118,6 +126,7 @@ public class ApiManager {
                 break;
 
             case UrlConstants.RUNNING_ALPHA:
+//                main_design = tempMpMain + UrlConstants.MP_MAIN_DESIGN;
                 main_design = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
 
@@ -127,6 +136,10 @@ public class ApiManager {
 
             case UrlConstants.RUNNING_DEV:
                 main_design = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
+                break;
+
+            case UrlConstants.RUNNING_DOKER:
+                main_design = UrlConstants.DOKER_MP_DESIGN + UrlConstants.MP_MAIN_DESIGN;
                 break;
         }
         return main_design;
@@ -164,6 +177,9 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 main_member = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_MEMBER;
                 break;
+            case UrlConstants.RUNNING_DOKER:
+                main_member = UrlConstants.DOKER_MP_MEMBER + UrlConstants.MP_MAIN_MEMBER;
+                break;
         }
         return main_member;
     }
@@ -199,6 +215,9 @@ public class ApiManager {
 
             case UrlConstants.RUNNING_DEV:
                 main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_TRANSACTION;
+                break;
+            case UrlConstants.RUNNING_DOKER:
+                main_transaction = UrlConstants.DOKER_MP_TRANSACTION + UrlConstants.MP_MAIN_TRANSACTION;
                 break;
         }
         return main_transaction;

@@ -62,6 +62,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         viewHolder.tvStyle = (TextView) container.findViewById(R.id.tv_customer_home_style);
         viewHolder.tvArea = (TextView) container.findViewById(R.id.tv_customer_home_area);
         viewHolder.tvAddress = (TextView) container.findViewById(R.id.iv_consume_home_designer_address);
+        viewHolder.tvThumbUp = (TextView) container.findViewById(R.id.tv_thumb_up);
         viewHolder.imgConsumeChat = (ImageView) container.findViewById(R.id.img_consume_home_chat);
         viewHolder.mLine = (TextView) container.findViewById(R.id.view_consume_home_line);
         return viewHolder;
@@ -71,6 +72,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
     public void initItem(View view, Holder holder, int position) {
         if (null != mDatas && mDatas.size() > 0) {
             CaseLibraryBean.CasesEntity casesEntity = mDatas.get(position);
+            ((ViewHolder) holder).tvThumbUp.setText("点赞数 "+casesEntity.getFavorite_count());
             List<CaseLibraryBean.CasesEntity.ImagesEntity> images = casesEntity.getImages();
             if (images != null && images.size() > 0) {
                 for (int i = 0; i < casesEntity.getImages().size(); i++) {
@@ -131,11 +133,11 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
-            ((ViewHolder) holder).mLine.setVisibility(View.GONE);
+           // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
 
         } else {
             ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
-            ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
+           // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
         }
 
         ((ViewHolder) holder).ivHeadIcon.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
@@ -145,6 +147,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         lp.width = screenWidth;
         lp.height = 197 * screenWidth / 320;
         ((ViewHolder) holder).ivCase.setLayoutParams(lp);
+
     }
 
     public class ViewHolder extends BaseAdapter.Holder {
@@ -154,6 +157,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         public TextView tvStyle;
         public TextView tvArea;
         public TextView tvAddress;
+        public TextView tvThumbUp;
         public ImageView imgConsumeChat;
         public TextView mLine;
     }

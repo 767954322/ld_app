@@ -40,6 +40,7 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.activity.MediaMessagesChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.IMQrEntity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
@@ -51,6 +52,7 @@ import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener{
 
@@ -65,7 +67,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void initView() {
         super.initView();
 
-        //hide navigation left button
         setVisibilityForNavButton(ButtonType.LEFT, false);
 
         designer_main_radio_group = (RadioGroup) findViewById(R.id.designer_main_radio_group);
@@ -81,17 +82,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout,null);
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
-       // contain.addView(contain_layout);
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
         construction = (TextView) contain_layout.findViewById(R.id.construction);
-       // choosevViewPointer.setInitCHooseVoewPoint(screenWidth);
 
 
         setMyProjectTitleColorChange(design,bidding,construction);
-       // setChooseViewWidth();
-
-        //getScreenWidth(this);
 
         user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
@@ -105,6 +101,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         if (savedInstanceState != null) {
             // retrieve the fragment handle from fragmentmanager
+
             mUserHomeFragment = (UserHomeFragment)getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
             if (mUserHomeFragment != null)
                 mFragmentArrayList.add(mUserHomeFragment);
@@ -260,8 +257,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     //监听筛选按钮，，，
     @Override
     protected void rightNavButtonClicked(View view) {
-        if (isActiveFragment(BidHallFragment.class))
+        if (isActiveFragment(BidHallFragment.class)){
+
             mBidHallFragment.handleFilterOption();
+        }
+
+        if (isActiveFragment(MPThreadListFragment.class))
+                openFileThreadActivity();
+
 
     }
 
@@ -722,6 +725,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private RadioButton mDesignerIndentListBtn;
     private RadioButton designer_main_radio_btn;
     private RadioGroup designer_main_radio_group;
+
 
     private MyDecorationProjectFragment mConsumerPersonalCenterFragment;
 

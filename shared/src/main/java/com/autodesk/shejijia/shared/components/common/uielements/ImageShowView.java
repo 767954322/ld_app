@@ -74,7 +74,7 @@ public class ImageShowView extends LinearLayout {
      * @param imageShowViewListener
      */
     public void setImageResources(ArrayList<String> imageUrlList,
-                                  ImageShowViewListener imageShowViewListener) {
+                                  ImageShowViewListener imageShowViewListener,int position) {
         // 图片广告数量
         int imageCount = imageUrlList.size();
         imageCount = (imageCount > 0)?imageCount:1;
@@ -92,7 +92,7 @@ public class ImageShowView extends LinearLayout {
         mAdvAdapter = new ImageCycleAdapter(mContext, imageUrlList,
                 imageShowViewListener);
         mAdvPager.setAdapter(mAdvAdapter);
-        mAdvPager.setCurrentItem(0);
+        mAdvPager.setCurrentItem(position);
     }
 
     private class ImageCycleAdapter extends PagerAdapter {
@@ -143,10 +143,17 @@ public class ImageShowView extends LinearLayout {
                 // test
                 imageView.setScaleType(ScaleType.CENTER_CROP);
                 // 设置图片点击监听
-                imageView.setOnClickListener(new OnClickListener() {
+//                imageView.setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                    }
+//                });
+                imageView.setOnLongClickListener(new OnLongClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public boolean onLongClick(View v) {
                         mImageShowViewListener.onImageClick(position, v);
+                        return false;
                     }
                 });
             } else {

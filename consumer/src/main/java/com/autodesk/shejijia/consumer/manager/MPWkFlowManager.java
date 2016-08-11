@@ -70,8 +70,8 @@ public class MPWkFlowManager {
 
         /// [2]获取对应订单节点的名字 .
         if (StringUtils.isNumeric(wk_cur_sub_node_id)) {
-            int wk_cur_sub_node_id_temp = Integer.parseInt(wk_cur_sub_node_id);
-            if (wk_cur_sub_node_id_temp >= 11 && wk_cur_sub_node_id_temp <= 62) {
+            int wk_cur_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
+            if (wk_cur_sub_node_id_int >= 11 && wk_cur_sub_node_id_int <= 63) {
                 int position = -1;
                 switch (templateIdPosition) {
                     case 0:     /// 应标 .
@@ -159,6 +159,9 @@ public class MPWkFlowManager {
             case 62:
                 subNodePosition = 13;
                 break;
+            case 63:
+                subNodePosition = 14;
+                break;
         }
         return subNodePosition;
     }
@@ -168,10 +171,10 @@ public class MPWkFlowManager {
      *
      * @param wk_cur_sub_node_id 全流程节点
      *                           11	 邀请量房
-     *
+     *                           <p/>
      *                           12	 设计师同意量房   13
      *                           13	 设计师拒绝量房   14
-     *
+     *                           <p/>
      *                           21	 支付量房费
      *                           22	 打开3d工具
      *                           31	 设计师发送合同
@@ -228,6 +231,9 @@ public class MPWkFlowManager {
                 break;
             case 62:
                 subNodePosition = 12;
+                break;
+            case 63:    /// 新增 .
+                subNodePosition = 13;
                 break;
         }
         return subNodePosition;

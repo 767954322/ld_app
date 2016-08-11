@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:textStyle="normal"
+        android:textSize="15sp"
+        android:layout_margin="@dimen/size_15"
+        android:textColor="@color/bg_66"
+        android:id="@+id/case_library_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="人文的东西并不是体现在你看得到的方面，它更多的体现在你看不到的那些方面，它会影响每一个功能，这才是最本质的。但是，对这点可能很多人没有思考过，以为人文的东西就是我们搞一个很小清新的图片什么的。”综合来看，人文的东西其实是贯穿整个产品的脉络，或者说是它的灵魂所在。"/>
+
+</RelativeLayout>

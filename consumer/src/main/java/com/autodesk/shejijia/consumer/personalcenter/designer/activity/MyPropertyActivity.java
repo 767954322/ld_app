@@ -23,6 +23,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -46,21 +47,26 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         btn_my_property_withdrawal = (Button) findViewById(R.id.btn_my_property_withdrawal);
         rl_my_property_transaction_record = (RelativeLayout) findViewById(R.id.rl_my_property_transaction_record);
         rl_my_property_withdrawal_record = (RelativeLayout) findViewById(R.id.rl_my_property_withdrawal_record);
+        rlTiXian = (RelativeLayout) findViewById(R.id.rl_tixian);
+
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.my_property));
-        initMenberEntity();
+        initMemberEntity();
     }
 
-    private void initMenberEntity() {
+    private void initMemberEntity() {
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             designer_id = memberEntity.getAcs_member_id();
             getMyPropertyData(designer_id);
+            String hs_uid = memberEntity.getHs_uid();
+            String acs_Member_Id =memberEntity.getMember_id();
+            ifIsLohoDesiner(acs_Member_Id,hs_uid);
         }
     }
 
@@ -80,7 +86,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
             case R.id.rl_my_property_withdrawal_record:  /// 提现记录页面 .
                 startActivity(new Intent(this, WithdrawalRecordActivity.class));
                 break;
-            case R.id.btn_my_property_withdrawal:   /// 我的提现页面 .
+            case R.id.btn_my_property_withdrawal:          /// 我的提现页面 .
                 Intent intent = new Intent(this, WithdrawalActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constant.DesignerMyPropertyKey.MY_PROPERTY_BEAN, myPropertyBean);
@@ -138,6 +144,40 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         });
     }
 
+
+    /**
+     * 判断设计师类型
+     * @param desiner_id
+     * @param hs_uid
+     */
+    private void ifIsLohoDesiner(String desiner_id, String hs_uid) {
+
+        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
+                    int is_loho = jsonObject1.getInt("is_loho");
+                    if (is_loho!=0){
+                        rlTiXian.setVisibility(View.GONE);
+                    }else {
+                        rlTiXian.setVisibility(View.VISIBLE);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+    }
+
     /**
      * 设置提现按钮不可点击
      */
@@ -163,6 +203,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
     private Button btn_my_property_withdrawal;
     private RelativeLayout rl_my_property_transaction_record;
     private RelativeLayout rl_my_property_withdrawal_record;
+    private RelativeLayout rlTiXian;
 
     private MyPropertyBean myPropertyBean;
 

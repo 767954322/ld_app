@@ -36,6 +36,16 @@ public class CaseDetailBean implements Serializable {
     private String room_type;
     private String thumbnails_ext;
     private String title;
+
+    public int getFavorite_count() {
+        return favorite_count;
+    }
+
+    public void setFavorite_count(int favorite_count) {
+        this.favorite_count = favorite_count;
+    }
+
+    private int favorite_count;
     private List<ImagesEntity> images;
 
     public void setCity(String city) {
