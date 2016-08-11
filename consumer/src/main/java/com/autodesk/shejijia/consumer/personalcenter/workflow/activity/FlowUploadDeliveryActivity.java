@@ -103,14 +103,34 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
-        Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
 
-        /// TODO 尚未考虑量房交付物情况
-        alertMeasureOrDesign();
+        /// [1]节点33，设计师尚未上传交付物，mDeliveryBean为null，提示：消费者等待，设计师上传 .
+        /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物体，消费者可以查看，需要隐藏延期及确认按钮.
+        if (33 == wk_sub_node_id_int) {
+            handleMeasureDelivery();
+        } else {
+            handleDesignDelivery();
+        }
+
+        community_name = requirement.getCommunity_name();
+        mTvCommunityName.setText(community_name);
+        /**
+         * 延期时间判断
+         */
+        getFlowUploadDeliveryDelayDate(needs_id, designer_id);
+    }
+
+    /**
+     * 处理设计交付的逻辑
+     */
+    private void handleDesignDelivery() {
+        Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
+        /// 尚未上传设计交付物的情况考虑 .
         if (wk_sub_node_id_int == 51) {
             handleDeliveryState(wk_sub_node_id_int, delivery);
         } else {
+            /// 已经上传设计交付物，包含重复提交的情况考虑 .
             if (null == mDeliveryBean) {
                 return;
             }
@@ -121,13 +141,22 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             delivery.setDeliveryFiles(mFiles);
             handleDeliveryState(wk_sub_node_id_int, delivery);
         }
+    }
 
-        community_name = requirement.getCommunity_name();
-        mTvCommunityName.setText(community_name);
-        /**
-         * 延期时间判断
-         */
-        getFlowUploadDeliveryDelayDate(needs_id, designer_id);
+    /**
+     * 处理量房交付的逻辑
+     */
+    private void handleMeasureDelivery() {
+        Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
+        if (mDeliveryBean == null) {
+            get3DPlan(needs_id, designer_id);
+        } else {
+            mFiles = mDeliveryBean.getFiles();
+            if (null == mFiles) {
+                return;
+            }
+            deliveryFilesFormat(delivery);
+        }
     }
 
     /**
@@ -295,7 +324,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
          * 确定延期
          */
         if (object == mDelayAlertView && position != AlertView.CANCELPOSITION) {
-            CustomProgress.show(FlowUploadDeliveryActivity.this, "", false, null);
             delayDelivery(needs_id, designer_id);
         }
         /**
@@ -516,11 +544,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * @param designer_id 　用户id
      */
     private void get3DPlan(final String needs_id, String designer_id) {
+        CustomProgress.show(FlowUploadDeliveryActivity.this, "", false, null);
         MPServerHttpManager.getInstance().get3DPlanInfoData(needs_id, designer_id, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 Wk3DPlanBean wk3DPlanBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanBean.class);
                 updateViewFrom3DPlanData(wk3DPlanBean);
@@ -544,7 +572,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         MPServerHttpManager.getInstance().get3DPlanList(needs_id, design_asset_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
+
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 KLog.json(TAG, userInfo);
 
@@ -618,7 +646,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * 消费者发送延期交付
      */
     public void delayDelivery(String demands_id, String designer_id) {
-
+        CustomProgress.show(FlowUploadDeliveryActivity.this, "", false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -676,6 +704,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 (ArrayList<MPThreeDimensBean>) wk3DPlanBean.getThree_dimensionals();
 
         if (null == threeDimensionalEntities || threeDimensionalEntities.size() < 1) {
+            CustomProgress.cancelDialog();
             alertMeasureOrDesign();
             return;
         }
@@ -718,6 +747,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             /**
              * [1]提示网页提交量房或者设计交付物
              */
+            CustomProgress.cancelDialog();
             alertMeasureOrDesign();
             return;
 
@@ -725,8 +755,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             /**
              * 量房交付
              */
+            CustomProgress.cancelDialog();
             mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
-
             if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
                 mLl3DPlan.setVisibility(View.VISIBLE);
                 mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
