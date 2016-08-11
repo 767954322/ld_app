@@ -94,9 +94,9 @@ public final class UrlConstants {
      */
 
 
-    public static final String DOKER_MP_TRANSACTION = "http://192.168.150.103:8080";
-    public static final String DOKER_MP_MEMBER = "http://192.168.150.104:8080";
-    public static final String DOKER_MP_DESIGN = "http://192.168.150.106:8080";
+    public static final String DOKER_MP_TRANSACTION = "http://192.168.88.172:8080";
+    public static final String DOKER_MP_MEMBER = "http://192.168.88.173:8080";
+    public static final String DOKER_MP_DESIGN = "http://192.168.88.175:8080";
 
     /// PRODUCTION .
     public static final String PRODUCTION_MP_MAIN = "http://api.shejijia.com";
