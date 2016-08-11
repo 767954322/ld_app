@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.alertview;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -140,7 +141,7 @@ public class AlertView {
         //标题和消息
         TextView tvAlertTitle = (TextView) viewGroup.findViewById(R.id.tvAlertTitle);
         TextView tvAlertMsg = (TextView) viewGroup.findViewById(R.id.tvAlertMsg);
-        if (title != null) {
+        if (!TextUtils.isEmpty(title)) {
             tvAlertTitle.setText(title);
         } else {
             tvAlertTitle.setVisibility(View.GONE);
