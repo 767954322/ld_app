@@ -328,6 +328,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         if (memberEntity != null) {
             showFragment(radioBtnId);
         } else {
+            mRadioGroup.check(R.id.consumer_main_radio_btn);
             AdskApplication.getInstance().doLogin(this);
         }
     }
