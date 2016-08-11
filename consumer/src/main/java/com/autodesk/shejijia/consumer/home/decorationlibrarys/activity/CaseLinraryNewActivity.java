@@ -173,6 +173,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         ivCustomerIm.setOnClickListener(this);
         ivGuanzu.setOnClickListener(this);
         rlThumbUp.setOnClickListener(this);
+        llThumbUp.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
 
     }
@@ -345,6 +346,8 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onResponse(JSONObject jsonObject) {
                 rlThumbUp.setOnClickListener(null);
+                llThumbUp.setOnClickListener(null);
+
                 ToastUtil.showCustomToast(CaseLinraryNewActivity.this, getString(R.string.dianzhangchenggong));
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
@@ -376,6 +379,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                     isMemberLike = jsonObject.getBoolean("is_member_like");
                     if (isMemberLike) {
                         rlThumbUp.setOnClickListener(null);
+                        llThumbUp.setOnClickListener(null);
                         ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                         ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                     }
