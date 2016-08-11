@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -43,6 +44,7 @@ public class DesignerSearchActivity extends NavigationBarActivity implements Vie
     @Override
     protected void initView() {
         super.initView();
+        mSearchLayout = LayoutInflater.from(this).inflate(R.layout.activity_search_popup, null);
         mLlSearch = (LinearLayout) findViewById(R.id.ll_search);
         mIvSearchBack = (ImageView) findViewById(R.id.iv_search_back);
         mCetSearch = (ClearEditText) findViewById(R.id.cet_search);
@@ -86,7 +88,7 @@ public class DesignerSearchActivity extends NavigationBarActivity implements Vie
      */
     private void openPopupWindow(String searchContent) {
 
-        mSearchLayout = LayoutInflater.from(this).inflate(R.layout.activity_search_popup, null);
+
         mSearchPopupWindow = new PopupWindow(mSearchLayout,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT);
@@ -99,11 +101,11 @@ public class DesignerSearchActivity extends NavigationBarActivity implements Vie
         mSearchPopupWindow.update();
 
 
-//        final ImageView ivSearchCBack = (ImageView) mPopupView.findViewById(R.id.ect_searchc_back);
-//        final TextView tvSearchCancel = (TextView) mPopupView.findViewById(R.id.tv_ect_search_cancel);
-//        PinnedHeaderListView pinnedHeaderListView = (PinnedHeaderListView) mPopupView.findViewById(R.id.tv_ect_search_listview);
-//        mClearEditText2 = (ClearEditText) mPopupView.findViewById(R.id.ect_et_search);
-//
+        final ImageView ivSearchCBack = (ImageView) mSearchLayout.findViewById(R.id.ect_searchc_back);
+        final TextView tvSearchCancel = (TextView) mSearchLayout.findViewById(R.id.tv_ect_search_cancel);
+        PinnedHeaderListView pinnedHeaderListView = (PinnedHeaderListView) mSearchLayout.findViewById(R.id.tv_ect_search_listview);
+//        mClearEditText2 = (ClearEditText) mSearchLayout.findViewById(R.id.ect_et_search);
+
 //        mClearEditText2.setText(searchTextData);
 //        setSelection(mClearEditText2);
 //        mSearchHoverCaseBeanArrayList.clear();
