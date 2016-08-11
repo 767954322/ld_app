@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -26,6 +27,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -120,7 +122,9 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         switch (v.getId()) {
             case R.id.btn_submit_appraisement:
                 String appeasementsContent = mEditEvaluationContent.getText().toString();
-                boolean isValidateSubmitContent = validateSubmitContent(appeasementsContent);
+                boolean regex_address_right = appeasementsContent.matches("^.{15,200}$");
+
+                boolean isValidateSubmitContent = validateSubmitContent(appeasementsContent, regex_address_right);
                 if (isValidateSubmitContent) {
                     CustomProgress.show(AppraiseDesignerActivity.this, "", false, null);
                     MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -155,14 +159,27 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
      *                            [1]可以为空;
      *                            [2]如果有数据时候最大200中文字符
      */
-    private boolean validateSubmitContent(String appeasementsContent) {
-        if (!TextUtils.isEmpty(appeasementsContent) && appeasementsContent.length() < 200) {
-            return true;
+    private boolean validateSubmitContent(String appeasementsContent, boolean regex_address_right) {
+
+        float rating = mRatingBarStar.getRating();
+        if((int)rating==0){
+            showAlertView(R.string.you_have_not_score);
+            return false;
         }
+        
+        if (!TextUtils.isEmpty(appeasementsContent) && !regex_address_right) {
+            showAlertView(R.string.please_enter_words);
+            return false;
+        }
+
         if (TextUtils.isEmpty(appeasementsContent)) {
             return true;
         }
         return false;
+    }
+
+    private void showAlertView(int content) {
+        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(content), null, null, new String[]{UIUtils.getString(R.string.sure)}, AppraiseDesignerActivity.this, AlertView.Style.Alert, null).show();
     }
 
     /**

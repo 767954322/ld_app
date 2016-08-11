@@ -55,4 +55,10 @@
     <string name="following_sure">确定</string>
     <string name="following_cancel">取消</string>
     <string name="following_no_data">您还没有关注的设计师</string>
+
+    <!--评价-->
+    <string name="please_enter_words">请输入15~200字</string>
+    <string name="you_have_not_score">您还没有评分哦</string>
+
+
 </resources>
