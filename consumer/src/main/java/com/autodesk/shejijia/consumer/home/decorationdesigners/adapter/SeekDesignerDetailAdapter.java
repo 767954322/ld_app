@@ -55,6 +55,7 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
         viewHolder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
         viewHolder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
         viewHolder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
+        viewHolder.tv_thumb_up = (TextView) container.findViewById(R.id.tv_thumb_up);
         return viewHolder;
     }
 
@@ -114,6 +115,9 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
             } else {
                 ((ViewHolder) holder).mSeekArea.setText(R.string.temporarily_no_data);
             }
+            if (null!=mDatas.get(position).getFavorite_count()){
+                        ((ViewHolder) holder).tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
+            }
         } else {
             ((ViewHolder) holder).mSeekCase.setImageResource(R.drawable.common_case_icon);
             ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
@@ -153,6 +157,7 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
         private TextView mSeekLivingRoom;
         private TextView mSeekStyle;
         private TextView mSeekArea;
+        private TextView tv_thumb_up;
 
     }
 
