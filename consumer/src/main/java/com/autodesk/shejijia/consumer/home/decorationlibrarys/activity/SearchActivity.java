@@ -81,16 +81,16 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
 
     @Override
     protected void initView() {
-        mClearEditText1 = (ClearEditText) findViewById(R.id.et_search);
-        mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
-        mListView = (ListView) findViewById(R.id.content_view);
+        mCetSearchClick = (ClearEditText) findViewById(R.id.et_search);
+        mPtrLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
+        mPlvContentView = (ListView) findViewById(R.id.content_view);
         mSearchBack = (ImageView) findViewById(R.id.searchc_back);
 
         mFooterView = View.inflate(this, R.layout.view_empty_layout, null);
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
-        mIvTemp = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
-        mListView.addFooterView(mFooterView);
+        mIvEmptyIcon = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
+        mPlvContentView.addFooterView(mFooterView);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         mCharacterParser = CharacterParser.getInstance();
 
-        custom_string_keywords = "";
+        mSearchKeywords = "";
         getSearchData(0, AppJsonFileReader.getRoomHall(this));
         getSearchData(1, AppJsonFileReader.getStyle(this));
         getSearchData(2, AppJsonFileReader.getArea(this));
@@ -107,14 +107,14 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         if (mUserHomeCaseAdapter == null) {
             mUserHomeCaseAdapter = new UserHomeCaseAdapter(this, mCasesEntities, this, screenWidth, screenHeight);
         }
-        mListView.setAdapter(mUserHomeCaseAdapter);
+        mPlvContentView.setAdapter(mUserHomeCaseAdapter);
         mUserHomeCaseAdapter.setOnItemImageHeadClickListener(this, this, this);
     }
 
     @Override
     protected void initListener() {
-        mPullToRefreshLayout.setOnRefreshListener(this);
-        mClearEditText1.setOnClickListener(this); /// cancel search.
+        mPtrLayout.setOnRefreshListener(this);
+        mCetSearchClick.setOnClickListener(this); /// cancel search.
         mSearchBack.setOnClickListener(this);
     }
 
@@ -122,7 +122,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.et_search:/// 搜索.
-                openPopupWindow(mClearEditText1.getText().toString());
+                openPopupWindow(mCetSearchClick.getText().toString());
                 break;
             case R.id.searchc_back:/// 返回.
                 finish();
@@ -219,10 +219,10 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchHoverCaseBean selectedHoverCaseBean = mSearchHoverCaseBeanArrayList.get(position - 1);
-                mClearEditText1.setText(selectedHoverCaseBean.getValue());
-                setSelection(mClearEditText1);
+                mCetSearchClick.setText(selectedHoverCaseBean.getValue());
+                setSelection(mCetSearchClick);
                 mFiltrateContentBean = new FiltrateContentBean();
-                custom_string_keywords = "";
+                mSearchKeywords = "";
                 switch (selectedHoverCaseBean.getType()) {
                     case 0:
                         mFiltrateContentBean.setHousingType(selectedHoverCaseBean.getKey());
@@ -237,7 +237,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
                         break;
                 }
                 isFirstIn = true;
-                cancelPopupWindowAndClearEditText();
+                cancelPopupWindowAndClearSearchContent();
             }
         });
     }
@@ -254,7 +254,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         String style = (mFiltrateContentBean != null && mFiltrateContentBean.getStyle() != null) ? mFiltrateContentBean.getStyle() : BLANK;
         String space = (mFiltrateContentBean != null && mFiltrateContentBean.getSpace() != null) ? mFiltrateContentBean.getSpace() : BLANK;
 
-        getCaseLibraryData(custom_string_keywords, "01", area, string_form, style, space, BLANK, BLANK, offset, LIMIT, state);
+        getCaseLibraryData(mSearchKeywords, "01", area, string_form, style, space, BLANK, BLANK, offset, LIMIT, state);
     }
 
     /// 获取数据.
@@ -279,7 +279,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                mPtrLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
 
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, SearchActivity.this,
                         AlertView.Style.Alert, null).show();
@@ -317,7 +317,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         super.onWindowFocusChanged(hasFocus);
         // 第一次进入自动刷新
         if (isFirstIn) {
-            mPullToRefreshLayout.autoRefresh();
+            mPtrLayout.autoRefresh();
             isFirstIn = false;
         }
     }
@@ -329,14 +329,14 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
      */
     private void openPopupWindow(String searchTextData) {
 
-        mPopupView = LayoutInflater.from(this).inflate(R.layout.activity_search_popup, null);
-        final ImageView ivSearchCBack = (ImageView) mPopupView.findViewById(R.id.ect_searchc_back);
-        final TextView tvSearchCancel = (TextView) mPopupView.findViewById(R.id.tv_ect_search_cancel);
-        PinnedHeaderListView pinnedHeaderListView = (PinnedHeaderListView) mPopupView.findViewById(R.id.tv_ect_search_listview);
-        mClearEditText2 = (ClearEditText) mPopupView.findViewById(R.id.ect_et_search);
+        mSearchLayout = LayoutInflater.from(this).inflate(R.layout.activity_search_popup, null);
+        final ImageView ivSearchCBack = (ImageView) mSearchLayout.findViewById(R.id.ect_searchc_back);
+        final TextView tvSearchCancel = (TextView) mSearchLayout.findViewById(R.id.tv_ect_search_cancel);
+        PinnedHeaderListView pinnedHeaderListView = (PinnedHeaderListView) mSearchLayout.findViewById(R.id.tv_ect_search_listview);
+        mCetSearchContent = (ClearEditText) mSearchLayout.findViewById(R.id.ect_et_search);
 
-        mClearEditText2.setText(searchTextData);
-        setSelection(mClearEditText2);
+        mCetSearchContent.setText(searchTextData);
+        setSelection(mCetSearchContent);
         mSearchHoverCaseBeanArrayList.clear();
         if (searchTextData != null && searchTextData.length() > 0) {
 
@@ -353,13 +353,13 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         addTextChangedListenerForClearEditText();
         setOnItemClickListenerForTvEctSearchListView(pinnedHeaderListView);
 
-        mPopupWindow = new PopupWindow(mPopupView, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-        mPopupWindow.setTouchable(true);
-        mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mPopupWindow.showAtLocation(mSearchBack, Gravity.CENTER, 0, 0);
-        mPopupWindow.setFocusable(true);
-        mPopupWindow.update();
+        mSearchPopupWindow = new PopupWindow(mSearchLayout, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
+        mSearchPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+        mSearchPopupWindow.setTouchable(true);
+        mSearchPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mSearchPopupWindow.showAtLocation(mSearchBack, Gravity.CENTER, 0, 0);
+        mSearchPopupWindow.setFocusable(true);
+        mSearchPopupWindow.update();
     }
 
     /**
@@ -372,13 +372,13 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelPopupWindowAndClearEditText();
+                cancelPopupWindowAndClearSearchContent();
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelPopupWindowAndClearEditText();
+                cancelPopupWindowAndClearSearchContent();
             }
         });
     }
@@ -387,7 +387,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
      * 搜索框内容改变监听.
      */
     private void addTextChangedListenerForClearEditText() {
-        mClearEditText2.addTextChangedListener(new TextWatcher() {
+        mCetSearchContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -410,27 +410,27 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
      * 搜索按键监听.
      */
     private void setOnKeyListenerForClearEditText() {
-        mClearEditText2.setOnKeyListener(new View.OnKeyListener() {
+        mCetSearchContent.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
-                    custom_string_keywords = mClearEditText2.getText().toString().trim();
-                    mClearEditText1.setText(custom_string_keywords);
-                    if (custom_string_keywords != null && custom_string_keywords.length() > 0) {
+                    mSearchKeywords = mCetSearchContent.getText().toString().trim();
+                    mCetSearchClick.setText(mSearchKeywords);
+                    if (mSearchKeywords != null && mSearchKeywords.length() > 0) {
                         try {
-                            custom_string_keywords = URLEncoder.encode(custom_string_keywords, Constant.NetBundleKey.UTF_8);
+                            mSearchKeywords = URLEncoder.encode(mSearchKeywords, Constant.NetBundleKey.UTF_8);
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
                     }
 
-                    setSelection(mClearEditText1);
+                    setSelection(mCetSearchClick);
                     mFiltrateContentBean = null;
                     isFirstIn = true;
-                    cancelPopupWindowAndClearEditText();
+                    cancelPopupWindowAndClearSearchContent();
                 }
                 return false;
             }
@@ -440,9 +440,11 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     /**
      * 弹框消失,搜索条件制空.
      */
-    private void cancelPopupWindowAndClearEditText() {
-        mPopupWindow.dismiss();
-        mClearEditText2.setText("");
+    private void cancelPopupWindowAndClearSearchContent() {
+        if (null != mSearchPopupWindow) {
+            mSearchPopupWindow.dismiss();
+        }
+        mCetSearchContent.setText("");
     }
 
     /**
@@ -508,7 +510,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         } finally {
             hideFooterView(mCasesEntities);
             mUserHomeCaseAdapter.notifyDataSetChanged();
-            mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+            mPtrLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
         }
     }
 
@@ -524,7 +526,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
             mRlEmpty.setVisibility(View.VISIBLE);
         }
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-        mIvTemp.setImageBitmap(bmp);
+        mIvEmptyIcon.setImageBitmap(bmp);
         WindowManager wm = (WindowManager) SearchActivity.this.getSystemService(SearchActivity.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         android.view.ViewGroup.LayoutParams mRlEmptyLayoutParams = mRlEmpty.getLayoutParams();
@@ -558,29 +560,29 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         mUserHomeCaseAdapter = null;
         mCharacterParser = null;
         mFiltrateContentBean = null;
-        custom_string_keywords = null;
-        if (mPopupWindow != null) {
-            mPopupWindow.dismiss();
+        mSearchKeywords = null;
+        if (mSearchPopupWindow != null) {
+            mSearchPopupWindow.dismiss();
         }
-        if (mPopupView != null) {
-            mPopupView = null;
+        if (mSearchLayout != null) {
+            mSearchLayout = null;
         }
     }
 
     public static final String BLANK = "";
 
     /// 控件.
-    private ClearEditText mClearEditText1;
-    private ClearEditText mClearEditText2;
-    private ListView mListView;
-    private PullToRefreshLayout mPullToRefreshLayout;
+    private ClearEditText mCetSearchClick;
+    private ClearEditText mCetSearchContent;
+    private ListView mPlvContentView;
+    private PullToRefreshLayout mPtrLayout;
     private ImageView mSearchBack;
     private RelativeLayout mRlEmpty;
     private TextView mTvEmptyMessage;
-    private ImageView mIvTemp;
+    private ImageView mIvEmptyIcon;
     /// 点击搜索框时弹出的popupWindow .
-    private PopupWindow mPopupWindow;
-    private View mPopupView;
+    private PopupWindow mSearchPopupWindow;
+    private View mSearchLayout;
     private View mFooterView;
 
     /// 常量.
@@ -588,7 +590,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     private int OFFSET = 0;
     private int screenWidth;
     private int screenHeight;
-    private String custom_string_keywords;
+    private String mSearchKeywords;
     private boolean isFirstIn = false;
 
     /// 集合,类.
