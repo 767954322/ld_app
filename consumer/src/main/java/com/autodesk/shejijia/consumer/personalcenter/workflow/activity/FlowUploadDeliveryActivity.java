@@ -157,6 +157,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 || object == mAlertViewMeasureConsumerDelivery
                 && position != AlertView.CANCELPOSITION) {
             FlowUploadDeliveryActivity.this.finish();
+        } else if (object == mAlertViewDesignDelivery) {
+            FlowUploadDeliveryActivity.this.finish();
         }
     }
 
@@ -664,7 +666,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         if (null != mDeliveryFilesEntities && mDeliveryFilesEntities.size() != 0) {
 
             for (Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity : mDeliveryFilesEntities) {
-                if(null != deliveryFilesEntity){
+                if (null != deliveryFilesEntity) {
                     type = deliveryFilesEntity.getType();
                     if (Constant.DeliveryTypeBundleKey.TYPE_MEASURE_DELIVERY.equals(type)) {
                         /**
