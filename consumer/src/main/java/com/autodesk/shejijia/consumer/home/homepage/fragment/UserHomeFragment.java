@@ -337,7 +337,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
          */
         requirementButton = new FloatingActionButton(activity);
         requirementButton.setTitle(UIUtils.getString(R.string.requirements));
-        requirementButton.setSize(FloatingActionButton.SIZE_MINI);
+        requirementButton.setSize(FloatingActionButton.SIZE_MORE_MINI);
         requirementButton.setBackgroundResource(R.drawable.icon_release_requirements_normal);
         requirementButton.setTag(REQUIREMENT_BUTTON_TAG);
         mFloatingActionsMenu.addButton(requirementButton);
@@ -356,7 +356,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
          */
         findDesignerButton = new FloatingActionButton(activity);
         findDesignerButton.setTitle(UIUtils.getString(R.string.find_designer));
-        findDesignerButton.setSize(FloatingActionButton.SIZE_MINI);
+        findDesignerButton.setSize(FloatingActionButton.SIZE_MORE_MINI);
         findDesignerButton.setBackgroundResource(R.drawable.icon_find_designer_normal);
         findDesignerButton.setTag(FIND_DESIGNER_BUTTON_TAG);
         findDesignerButton.setOnClickListener(this);
@@ -366,7 +366,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
          */
         caseLibraryButton = new FloatingActionButton(activity);
         caseLibraryButton.setTitle(UIUtils.getString(R.string.case_library));
-        caseLibraryButton.setSize(FloatingActionButton.SIZE_MINI);
+        caseLibraryButton.setSize(FloatingActionButton.SIZE_MORE_MINI);
         caseLibraryButton.setBackgroundResource(R.drawable.icon_case_library_normal);
         caseLibraryButton.setTag(CASE_LIBRARY_BUTTON_TAG);
         caseLibraryButton.setOnClickListener(this);

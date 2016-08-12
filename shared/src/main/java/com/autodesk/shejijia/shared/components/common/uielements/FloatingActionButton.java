@@ -45,9 +45,10 @@ public class FloatingActionButton extends ImageButton {
 
     public static final int SIZE_NORMAL = 0;
     public static final int SIZE_MINI = 1;
+    public static final int SIZE_MORE_MINI = 2;
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({SIZE_NORMAL, SIZE_MINI})
+    @IntDef({SIZE_NORMAL, SIZE_MINI,SIZE_MORE_MINI})
     public @interface FAB_SIZE {
     }
 
@@ -104,11 +105,20 @@ public class FloatingActionButton extends ImageButton {
     }
 
     private void updateCircleSize() {
-        mCircleSize = getDimension(mSize == SIZE_NORMAL ? R.dimen.fab_size_normal : R.dimen.fab_size_mini);
+        if (mSize == SIZE_NORMAL){
+            mCircleSize = getDimension(R.dimen.fab_size_normal);
+        }
+        if (mSize == SIZE_MINI){
+            mCircleSize = getDimension(R.dimen.fab_size_mini);
+        }
+        if (mSize == SIZE_MORE_MINI){
+            mCircleSize = getDimension(R.dimen.fab_icon_size);
+        }
+//        mCircleSize = getDimension(mSize == SIZE_NORMAL ? R.dimen.fab_size_normal : R.dimen.fab_size_mini);
     }
 
     public void setSize(@FAB_SIZE int size) {
-        if (size != SIZE_MINI && size != SIZE_NORMAL) {
+        if (size != SIZE_MINI && size != SIZE_NORMAL && size != SIZE_MORE_MINI) {
             throw new IllegalArgumentException("Use @FAB_SIZE constants only!");
         }
 
