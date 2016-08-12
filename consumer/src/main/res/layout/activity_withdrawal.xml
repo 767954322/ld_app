@@ -47,7 +47,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
-                android:background="@color/demand_color"></View>
+                android:background="@color/demand_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -116,7 +116,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
-                android:background="@color/demand_color"></View>
+                android:background="@color/demand_color" />
 
             <LinearLayout
                 android:id="@+id/ll_withdrawal_open_account_bank"
@@ -165,7 +165,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
-                android:background="@color/demand_color"></View>
+                android:background="@color/demand_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,7 +207,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
-                android:background="@color/demand_color"></View>
+                android:background="@color/demand_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -288,5 +288,5 @@
         android:layout_marginTop="@dimen/size_50"
         android:background="@drawable/bg_common_btn_blue"
         android:text="@string/confirm_and_submit"
-        android:textColor="@color/bg_ff"></Button>
+        android:textColor="@color/bg_ff" />
 </LinearLayout>
