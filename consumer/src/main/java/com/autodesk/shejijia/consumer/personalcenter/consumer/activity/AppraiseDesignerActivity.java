@@ -175,7 +175,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         if (TextUtils.isEmpty(appeasementsContent)) {
             return true;
         }
-        return false;
+        return true;
     }
 
     private void showAlertView(int content) {
