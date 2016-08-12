@@ -216,7 +216,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
              */
             final String user_name = bidder.getUser_name();
             if (TextUtils.isEmpty(user_name)) {
-                holder.setText(R.id.tv_designer_name, "");
+                holder.setText(R.id.tv_designer_name, getString(R.string.data_null));
             } else {
                 holder.setText(R.id.tv_designer_name, user_name);
             }
