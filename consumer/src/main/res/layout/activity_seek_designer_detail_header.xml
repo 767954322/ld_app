@@ -15,16 +15,15 @@
             android:layout_width="@dimen/size_130"
             android:layout_height="@dimen/size_100"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/size_10">
+            android:layout_marginTop="@dimen/size_18">
 
             <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
                 android:id="@+id/piv_seek_designer_head"
-                android:layout_width="@dimen/size_80"
-                android:layout_height="@dimen/size_80"
+                android:layout_width="@dimen/size_74"
+                android:layout_height="@dimen/size_74"
                 android:layout_gravity="center"
                 android:background="@drawable/icon_default_avator"
-                app:poly_vertices="0"
-                />
+                app:poly_vertices="0" />
 
             <ImageView
                 android:id="@+id/img_seek_designer_detail_certification"
@@ -35,50 +34,8 @@
                 android:layout_marginRight="@dimen/size_10"
                 android:src="@drawable/icon_certification_normal"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/size_24">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/designer_working_year" />
-
-            <TextView
-                android:id="@+id/tv_seek_designer_detail_yeas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="尚未填写" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_5"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/be_good_at" />
-
-            <TextView
-                android:id="@+id/tv_seek_designer_detail_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="尚未填写" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,32 +78,75 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_11"
+            android:layout_marginTop="@dimen/size_11"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/be_good_at" />
+
+            <TextView
+                android:id="@+id/tv_seek_designer_detail_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="尚未填写" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_11"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/designer_working_year" />
+
+            <TextView
+                android:id="@+id/tv_seek_designer_detail_yeas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="尚未填写" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_seek_designer_detail_chat_measure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginBottom="@dimen/size_16"
             android:layout_marginTop="@dimen/size_5"
-            android:layout_marginBottom="@dimen/size_5"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_seek_designer_detail_chat"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/size_100"
                 android:layout_height="@dimen/size_30"
-                android:layout_marginRight="@dimen/size_20"
+                android:layout_marginRight="@dimen/size_25"
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/designer_online_communication"
-                android:textSize="@dimen/font_12"
-                android:textColor="@color/bg_ff" />
+                android:textColor="@color/bg_ff"
+                android:textSize="@dimen/font_12" />
 
             <Button
                 android:id="@+id/btn_seek_designer_detail_optional_measure"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/size_100"
                 android:layout_height="@dimen/size_30"
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/optional_measure"
-                android:textSize="@dimen/font_12"
-                android:textColor="@color/bg_ff" />
+                android:textColor="@color/bg_ff"
+                android:textSize="@dimen/font_12" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
