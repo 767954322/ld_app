@@ -318,6 +318,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         for (String item : mBankName) {
             bankNameItems.add(item);
         }
+        pvBankNameOptions.setTitle("选择银行");
         pvBankNameOptions.setPicker(bankNameItems);
         pvBankNameOptions.setSelectOptions(0);
         pvBankNameOptions.setCyclic(false);
