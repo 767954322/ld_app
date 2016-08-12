@@ -29,7 +29,7 @@
             android:background="@drawable/bg_input_search_or"
             android:drawableLeft="@drawable/icon_search_or"
             android:hint="@string/search"
-            android:paddingLeft="@dimen/size_20"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_20"
             android:imeOptions="actionSearch"
             android:singleLine="true"

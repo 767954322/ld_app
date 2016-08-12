@@ -95,6 +95,8 @@ public class Constant {
         public static final String TOILET_JSON = "toilet.json";
         public static final String STYLE_JSON = "style.json";
         public static final String AREA_JSON = "area.json";
+        public static final String SEARCH_WORKING_TIME = "search_working_time.json";
+        public static final String SEARCH_PRICE = "search_price.json";
     }
 
     /**
@@ -353,19 +355,6 @@ public class Constant {
         public static final String USAGE_TYPE_READERING_DESIGN_DELIVERY_4 = "4";  ///渲染图设计2 .
         public static final String USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY = "3";  ///设计图纸 .
         public static final String USAGE_TYPE_MATERIAL_BILL_DELIVERY = "2";  ///材料清单 .
-    }
-
-    /**
-     * 全流程状态机
-     */
-    public static class WkFlowStatePath {
-        public static final String WF_NODE_ID_NAME_CONSUMER = "MPCurrentNodeConsumer.json";                                  /// wk_template_id对应节点 .
-        public static final String WF_NODE_ID_NAME_DESIGNER = "MPCurrentNodeDesigner.json";
-
-        public static final String WF_BID_SUB_NODE_ID_NAME_CONSUMER = "MPBidSubNodeConsumer.json";                  /// 应标消费者 .
-        public static final String WF_BID_SUB_NODE_ID_NAME_DESIGNER = "MPBidSubNodeDesigner.json";                       /// 应标设计师 .
-        public static final String WF_CHOOSE_SUB_NODE_ID_NAME_CONSUMER = "MPChooseSubNodeConsumer.json";  /// 量房消费者 .
-        public static final String WF_CHOOSE_SUB_NODE_ID_NAME_DESIGNER = "MPChooseSubNodeDesigner.json";       /// 量房设计师 .
     }
 
     /**
