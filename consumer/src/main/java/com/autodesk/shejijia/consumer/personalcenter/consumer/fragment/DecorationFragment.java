@@ -518,21 +518,25 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 /**
                  * 应标
                  */
-                if (Constant.NumKey.ONE.equals(custom_string_status) || Constant.NumKey.ZERO_ONE.equals(custom_string_status)) {
+                if (Constant.NumKey.ONE.equals(custom_string_status)
+                        || Constant.NumKey.ZERO_ONE.equals(custom_string_status)) {
                     /**
                      * 审核中,可以修改需求
                      */
                     approveState = UIUtils.getString(R.string.checking);
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setOnClickListener(this);
-                } else if (Constant.NumKey.TWO.equals(custom_string_status) || Constant.NumKey.ZERO_TWO.equals(custom_string_status)) {
+                } else if (Constant.NumKey.TWO.equals(custom_string_status)
+                        || Constant.NumKey.ZERO_TWO.equals(custom_string_status)) {
                     /**
                      * 审核未通过,可以修改需求表单.
                      */
                     approveState = UIUtils.getString(R.string.disapprove);
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setOnClickListener(this);
-                } else if (Constant.NumKey.THREE.equals(custom_string_status) || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
+
+                } else if (Constant.NumKey.THREE.equals(custom_string_status)
+                        || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
                     /**
                      * 审核通过,但是有设计师应标，隐藏修改需求.
                      */
@@ -611,6 +615,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
             return;
         }
         if (mNeedsListEntity != null) {
+            mNeedsListEntity.setIs_beishu(is_public);
             setBidState(is_public);
         }
     }

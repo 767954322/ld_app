@@ -79,38 +79,6 @@ public class CaseLibraryBean implements Serializable {
         private Object decoration_type;
         private String description;
         private String designer_id;
-        /**
-         * address : 北京-北京市-海淀区
-         * avatar : http://uat415img.gdfcx.net:8082/img/57173283ed50cc1782eb27b9.img
-         * birthday : 2013-03-08
-         * cases_list : null
-         * city : 北京市
-         * city_name : 北京
-         * designer : {"acs_member_id":20735688,"case_count":3,"design_price_max":60,"design_price_min":30,"diy_count":null,"experience":12,"graduate_from":null,"introduction":"4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444","is_loho":1,"is_real_name":2,"measurement_price":0.01,"personal_honour":"88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888555555555555555555555555555555555","studio":null,"style_long_names":"日式风格,韩式风格,混搭风格,欧式风格,新古典风格","style_names":"古典,欧式,混搭,韩式,日式","styles":"newClassical,european,mashup,kora,japanese","theme_pic":"3"}
-         * district : 海淀区
-         * district_name : 海淀区
-         * email : ld_uats001@sina.com
-         * first_name : 薄荷糖
-         * gender : 2
-         * has_secreted : null
-         * hitachi_account : ld_uats001
-         * home_phone : wo 你是什么
-         * hs_uid : null
-         * is_email_binding : null
-         * is_order_sms : 0
-         * is_validated_by_mobile : 2
-         * last_name : 薄荷糖
-         * member_id : 1398943
-         * mobile_number : null
-         * nick_name : 薄荷糖
-         * province : 北京
-         * province_name : 北京
-         * real_name : {"audit_date":null,"audit_status":null,"auditor":null,"auditor_opinion":null,"birthday":null,"certificate_no":"370786199103056221","certificate_type":null,"mobile_number":null,"photo_back_end":null,"photo_front_end":null,"photo_in_hand":null,"real_name":"习大大"}
-         * register_date : 2016-03-09 13:22:33
-         * user_name : ld_uats001
-         * zip_code : haaaaa
-         */
-
         private DesignerInfoEntity designer_info;
         private String district;
         private String district_name;

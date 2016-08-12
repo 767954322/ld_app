@@ -165,12 +165,10 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     }
 
 
-    /// 控件.
     private NoScrollGridView yGridView;
     private NoScrollGridView sGridView;
     private NoScrollGridView pGridView;
 
-    ///. 变量
     private int mYearIndex = 0;
     private int mStyleIndex = 0;
     private int mPriceIndex = 0;
@@ -181,7 +179,6 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     public static final int DF_RESULT_CODE = 0;
     public static final String BLANK = "";
 
-    /// 集合,类.
     private FiltrateAdapter mYAdapter;
     private FiltrateAdapter mSAdapter;
     private FiltrateAdapter mPAdapter;
