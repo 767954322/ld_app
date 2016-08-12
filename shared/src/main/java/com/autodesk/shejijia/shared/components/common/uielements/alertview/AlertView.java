@@ -144,7 +144,10 @@ public class AlertView {
         if (!TextUtils.isEmpty(title)) {
             tvAlertTitle.setText(title);
         } else {
-            tvAlertTitle.setVisibility(View.GONE);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) loAlertHeader.getLayoutParams();
+            layoutParams.topMargin=10;
+            tvAlertTitle.setLayoutParams(layoutParams);
+//            tvAlertTitle.setVisibility(View.GONE);
         }
         if (msg != null) {
             tvAlertMsg.setText(msg);
