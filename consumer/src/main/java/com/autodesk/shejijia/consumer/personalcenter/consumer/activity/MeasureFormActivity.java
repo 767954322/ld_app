@@ -330,7 +330,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
                         postSendMeasureForm(jsonObject);
                     } else {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -717,7 +717,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         if (error_AlertView != null) {
             error_AlertView = null;
         }
-        error_AlertView = new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, MeasureFormActivity.this,
+        error_AlertView = new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, MeasureFormActivity.this,
                 AlertView.Style.Alert, null);
         error_AlertView.show();
 
@@ -734,7 +734,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //            CustomProgress.show(this, "", false, null);
 //            sendStopDemand(needs_id, 1);
 //        }
-
         if (object != error_AlertView) {
             MeasureFormActivity.this.finish();
         }

@@ -126,7 +126,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     String date = sDateFormat.format(new Date());
 
                     if (TextUtils.isEmpty(currentTime)) {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowMeasureFormActivity.this,
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null,new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();
                     } else {
                         if (formatDate(date, currentTime)) {
@@ -157,7 +157,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
                             agreeResponseBid(jsonObject);
                         } else {
-                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowMeasureFormActivity.this,
+                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null,new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                     AlertView.Style.Alert, null).show();
                         }
                     }

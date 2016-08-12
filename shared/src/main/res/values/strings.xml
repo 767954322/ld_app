@@ -163,7 +163,7 @@
     <string name="flow_send">发送</string>
     <string name="agreed">同意</string>
     <string name="refuse">拒绝</string>
-    <string name="amount_of_time_is_empty">量房时间为空</string>
+    <string name="amount_of_time_is_empty">请选择量房时间</string>
     <string name="amount_of_time_than_current_time_one_hour">量房时间至少大于当前时间一小时</string>
     <string name="confirm_room_success">确认量房成功</string>
     <string name="confirm_room_fail">确认量房失败</string>
@@ -440,7 +440,7 @@
     <string name="no_designer_case">抱歉，暂无结果！</string>
 
     <!-- MeasureFormActivity -->
-    <string name="demand_send">发&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;送</string>
+    <string name="demand_send">发送</string>
     <string name="volume_rate_cannot_empty">量房费不能为空</string>
     <string name="please_fill_your_name">请正确填写姓名</string>
     <string name="please_fill_phone_number">请填写正确的电话号</string>

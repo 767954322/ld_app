@@ -521,7 +521,7 @@
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/demand_send"
                 android:textColor="@color/bg_ff"
-                android:textSize="@dimen/font_20"/>
+                android:textSize="@dimen/font_18"/>
 
         </LinearLayout>
     </ScrollView>
