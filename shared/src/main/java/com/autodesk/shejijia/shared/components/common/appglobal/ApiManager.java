@@ -299,7 +299,7 @@ public class ApiManager {
                 versionPrefix = "P";
                 break;
             case UrlConstants.RUNNING_DOCKER_DESIGN:
-                versionPrefix = "DOCKER";
+                versionPrefix = "_DOCKER";
                 break;
         }
         return versionPrefix;
