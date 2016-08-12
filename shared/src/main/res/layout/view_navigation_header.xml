@@ -143,8 +143,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
             android:textSize="15sp"
+            android:padding="@dimen/size_6"
             android:visibility="gone"/>
     </RelativeLayout>
 
