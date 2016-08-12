@@ -28,6 +28,7 @@
     <string name="please_select_bank">请选择您的开户银行</string>
     <string name="please_enter_the_name_of_the_branch">请输入支行名称</string>
     <string name="please_enter_the_bank_card_number">请输入银行卡号</string>
+    <string name="are_you_sure_unbundling">您确定要将此银行卡解除绑定吗？</string>
 
     <string name="warmTips">温馨提示：</string>
     <string name="Mrasuretips">提示：</string>

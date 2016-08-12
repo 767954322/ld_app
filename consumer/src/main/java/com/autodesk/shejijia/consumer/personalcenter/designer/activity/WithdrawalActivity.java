@@ -44,7 +44,7 @@ import java.util.List;
  * @file WithdrawalActivity.java  .
  * @brief 我的提现页面  .
  */
-public class WithdrawalActivity extends NavigationBarActivity implements View.OnClickListener {
+public class WithdrawalActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
 
     @Override
     protected int getLayoutResId() {
@@ -66,6 +66,8 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         et_withdrawal_branch_bank = (EditText) findViewById(R.id.et_withdrawal_branch_bank);
         btn_withdrawal_true = (Button) findViewById(R.id.btn_withdrawal_true);
         ll_withdrawal_replace_bank_card = (LinearLayout) findViewById(R.id.ll_withdrawal_replace_bank_card);
+
+        mStopDemandAlertView = new AlertView(UIUtils.getString(R.string.un_bind_rank_card), UIUtils.getString(R.string.are_you_sure_unbundling), UIUtils.getString(R.string.cancel), null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this).setCancelable(true);
     }
 
     @Override
@@ -103,7 +105,8 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 break;
             case R.id.ll_withdrawal_replace_bank_card:
                 designer_id = Long.parseLong(memberEntity.getAcs_member_id());
-                sendUnBindBankCard(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
+
+                mStopDemandAlertView.show();
 
 //                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
 //                tv_withdrawal_cardholder_name.setVisibility(View.GONE);
@@ -286,18 +289,26 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
-                        AlertView.Style.Alert, new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Object object, int position) {
-                        if (position != -1) {
+//                new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+//                        AlertView.Style.Alert, new OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(Object object, int position) {
+//                        if (position != -1) {
+//
+//                        }
+//                    }
+//                }).show();
 
-                            tv_withdrawal_cardholder_name.setText(" ");
-                            tv_withdrawal_branch_bank.setText("");
-                            tv_withdrawal_bank_card_number.setText("");
-                        }
-                    }
-                }).show();
+                tv_withdrawal_branch_bank.setVisibility(View.GONE);
+                tv_withdrawal_bank_card_number.setVisibility(View.GONE);
+
+                et_withdrawal_bank_card_number.setText("");
+                et_withdrawal_branch_bank.setText("");
+                tv_withdrawal_open_account_bank.setText("");
+
+                et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
+                et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
+                ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
             }
 
             @Override
@@ -436,6 +447,15 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         super.onDestroy();
     }
 
+    @Override
+    public void onItemClick(Object object, int position) {
+        if (object == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
+            sendUnBindBankCard(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
+            //mStopDemandAlertView.dismiss();
+            return;
+        }
+    }
+
     /// 控件.
     private TextView tv_withdrawal_account_balance;
     private TextView tv_withdrawal_account;
@@ -463,4 +483,5 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     private List<String> mBankName;
     private MyPropertyBean myPropertyBean;
     private ArrayList<String> bankNameItems = new ArrayList<>();
+    private AlertView mStopDemandAlertView;
 }
