@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -53,8 +54,11 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.bid_filter));
-        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
 
+        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
+        Resources rs = this.getResources();
+        setTextColorForRightNavButton(rs.getColor(R.color.bg_0084ff));
+        
         mStyleData.addAll(filledData(getResources().getStringArray(R.array.all)));
         mStyleData.addAll(filledData(getResources().getStringArray(R.array.style)));
         mHouseData.addAll(filledData(getResources().getStringArray(R.array.all)));
