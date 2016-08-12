@@ -23,7 +23,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -208,7 +207,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
                 if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_housing_area));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
                     return;
                 }
                 JSONObject jsonObject = new JSONObject();
@@ -254,62 +253,68 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 boolean bAddress = communityName.matches(RegexUtil.ADDRESS_REGEX);
 
                 if (name.length() < 2 || name.length() > 20 || !bName) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_your_name));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_your_name));
+
                     return;
                 }
 
                 if (!bMobile || mobileNumber.isEmpty()) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_phone_number));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_phone_number));
                     return;
                 }
 
                 if (housingType == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.demand_please_project_types));
+                    getErrorHintAlertView(UIUtils.getString(R.string.demand_please_project_types));
                     return;
                 }
 
                 if (!bArea || houseArea.isEmpty() || houseArea.equals("0")) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_housing_area));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
                     return;
                 }
 
                 if (designBudget == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_design_budget));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_design_budget));
                     return;
                 }
 
                 if (decorateBudget == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_decorate_budget));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_decorate_budget));
                     return;
                 }
 
                 if (mRoom == null || mHall == null || mToilet == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_form));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
                     return;
                 }
 
                 if (style == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_style));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_style));
                     return;
                 }
 
                 if (mCurrentProvince == null || mCurrentCity == null || mCurrentDistrict == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_addresses));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_addresses));
                     return;
                 }
 
                 if (!bAddress || communityName.isEmpty()) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_detailed_address));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_detailed_address));
                     return;
                 }
 
                 if (currentData == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_quantity_room_time));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_quantity_room_time));
                     return;
                 }
 
                 if (mFree.isEmpty()) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.volume_rate_cannot_empty));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.volume_rate_cannot_empty));
                     return;
                 }
 
@@ -708,11 +713,35 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         MPServerHttpManager.getInstance().agreeOneselfResponseBid(jsonObject, okResponseCallback);
     }
 
+    private void getErrorHintAlertView(String content) {
+        if (error_AlertView != null) {
+            error_AlertView = null;
+        }
+        error_AlertView = new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, MeasureFormActivity.this,
+                AlertView.Style.Alert, null);
+        error_AlertView.show();
+
+    }
+
     private void showAlertView(String content) {
         new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
                 AlertView.Style.Alert, MeasureFormActivity.this).show();
     }
 
+    @Override
+    public void onItemClick(Object object, int position) {
+//        if (object == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
+//            CustomProgress.show(this, "", false, null);
+//            sendStopDemand(needs_id, 1);
+//        }
+
+        if (object != error_AlertView) {
+            MeasureFormActivity.this.finish();
+        }
+
+    }
+
+    private AlertView error_AlertView;
     ///控件.
     private LinearLayout ll_time_restrict;
     private LinearLayout ll_type;
@@ -771,16 +800,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
-
-    @Override
-    public void onItemClick(Object object, int position) {
-//        if (object == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
-//            CustomProgress.show(this, "", false, null);
-//            sendStopDemand(needs_id, 1);
-//        }
-
-        MeasureFormActivity.this.finish();
-    }
 
 
     //    private void showState(String needs_id, String designer_id) {
