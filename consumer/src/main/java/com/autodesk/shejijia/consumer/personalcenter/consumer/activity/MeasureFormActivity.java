@@ -99,6 +99,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         designer_id = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_ID);
         hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
         mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
+        mThread_id = (String) extras.get(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);
     }
 
 
@@ -237,7 +238,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, mToilet);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                    if (null == mThread_id || "".equals(mThread_id)) {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                    } else {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -737,6 +742,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     /// 变量.
     private int flow_state;
     private String designer_id;
+    private String mThread_id;
     private String hs_uid;
     private String mFree;
     private String needs_id;

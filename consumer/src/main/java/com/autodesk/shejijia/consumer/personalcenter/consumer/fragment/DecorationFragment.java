@@ -386,9 +386,16 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 public void onClick(View v) {
                     alertDialog.dismiss();
                     if (!TextUtils.isEmpty(needs_id) && !TextUtils.isEmpty(designer_id_biding)) {
+                        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                        String designer_thread_id = mNeedsListEntity.getBidders().get(mPosition).getDesign_thread_id();
+                        if (TextUtils.isEmpty(designer_thread_id)) {
+                            designer_thread_id = "";
+                        }
+
                         Intent intent = new Intent(getActivity(), FlowMeasureFormActivity.class);
                         intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
                         intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id_biding);
+                        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, designer_thread_id);
                         /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
                         intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
                         startActivityForResult(intent, BIDING_STATE);
