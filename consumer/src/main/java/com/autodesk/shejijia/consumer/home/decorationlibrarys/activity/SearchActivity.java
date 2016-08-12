@@ -72,7 +72,10 @@ import java.util.Map;
  * @file SearchActivity  .
  * @brief 搜索页面 .
  */
-public class SearchActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener, View.OnClickListener, UserHomeCaseAdapter.OnItemImageHeadClickListener {
+public class SearchActivity extends NavigationBarActivity implements
+        PullToRefreshLayout.OnRefreshListener,
+        View.OnClickListener,
+        UserHomeCaseAdapter.OnItemImageHeadClickListener {
 
     @Override
     protected int getLayoutResId() {
@@ -100,12 +103,14 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
         mCharacterParser = CharacterParser.getInstance();
 
         mSearchKeywords = "";
-        getSearchData(0, AppJsonFileReader.getRoomHall(this));
-        getSearchData(1, AppJsonFileReader.getStyle(this));
-        getSearchData(2, AppJsonFileReader.getArea(this));
+        initSearchData(0, AppJsonFileReader.getRoomHall(this));
+        initSearchData(1, AppJsonFileReader.getStyle(this));
+        initSearchData(2, AppJsonFileReader.getArea(this));
 
         if (mUserHomeCaseAdapter == null) {
-            mUserHomeCaseAdapter = new UserHomeCaseAdapter(this, mCasesEntities, this, screenWidth, screenHeight);
+            mUserHomeCaseAdapter = new UserHomeCaseAdapter(this,
+                    mCasesEntities, this,
+                    screenWidth, screenHeight);
         }
         mPlvContentView.setAdapter(mUserHomeCaseAdapter);
         mUserHomeCaseAdapter.setOnItemImageHeadClickListener(this, this, this);
@@ -248,7 +253,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
      * @param offset
      * @param state
      */
-    private void requestManage(int offset, int state) {
+    private void requestSearchData(int offset, int state) {
         String area = (mFiltrateContentBean != null && mFiltrateContentBean.getArea() != null) ? mFiltrateContentBean.getArea() : BLANK;
         String string_form = (mFiltrateContentBean != null && mFiltrateContentBean.getHousingType() != null) ? mFiltrateContentBean.getHousingType() : BLANK;
         String style = (mFiltrateContentBean != null && mFiltrateContentBean.getStyle() != null) ? mFiltrateContentBean.getStyle() : BLANK;
@@ -287,9 +292,16 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
                 mUserHomeCaseAdapter.notifyDataSetChanged();
             }
         };
-        MPServerHttpManager.getInstance().getCaseListData(custom_string_style, custom_string_type, custom_string_keywords,
-                custom_string_area, custom_string_bedroom, taxonomy_id,
-                custom_string_restroom, custom_string_form, offset, limit, callback);
+        MPServerHttpManager.getInstance().getCaseListData(
+                custom_string_style,
+                custom_string_type,
+                custom_string_keywords,
+                custom_string_area,
+                custom_string_bedroom,
+                taxonomy_id,
+                custom_string_restroom,
+                custom_string_form,
+                offset, limit, callback);
     }
 
     /**
@@ -298,7 +310,7 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
      * @param type 类型
      * @param map  集合
      */
-    private void getSearchData(int type, Map<String, String> map) {
+    private void initSearchData(int type, Map<String, String> map) {
         for (Map.Entry mapString : map.entrySet()) {
             String key = (String) mapString.getKey();
             String value = (String) mapString.getValue();
@@ -472,13 +484,13 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     /// 加载更多.
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        requestManage(OFFSET, 1);
+        requestSearchData(OFFSET, 1);
     }
 
     /// 刷新.
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        requestManage(0, 0);
+        requestSearchData(0, 0);
     }
 
     /**
@@ -503,7 +515,9 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
                 default:
                     break;
             }
-            List<CaseLibraryBean.CasesEntity> casesEntity = mCaseLibraryBean.getCases();
+            List<CaseLibraryBean.CasesEntity> casesEntity =
+                    mCaseLibraryBean.getCases();
+
             if (casesEntity != null && casesEntity.size() > 0) {
                 mCasesEntities.addAll(casesEntity);
             }
@@ -585,7 +599,6 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     private View mSearchLayout;
     private View mFooterView;
 
-    /// 常量.
     private int LIMIT = 10;
     private int OFFSET = 0;
     private int screenWidth;
@@ -593,7 +606,6 @@ public class SearchActivity extends NavigationBarActivity implements PullToRefre
     private String mSearchKeywords;
     private boolean isFirstIn = false;
 
-    /// 集合,类.
     private List<SearchHoverCaseBean> mSearchHoverCaseBeenList = new ArrayList<>();
     private List<SearchHoverCaseBean> mSearchHoverCaseBeanArrayList = new ArrayList<>();
     private ArrayList<CaseLibraryBean.CasesEntity> mCasesEntities = new ArrayList<>();

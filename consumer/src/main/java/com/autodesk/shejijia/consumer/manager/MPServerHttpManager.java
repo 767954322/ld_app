@@ -91,9 +91,14 @@ public class MPServerHttpManager {
      * @param custom_string_form
      * @param callback
      */
-    public void getCaseListData(String custom_string_style, String custom_string_type,
-                                String custom_string_keywords, String custom_string_area, String custom_string_bedroom, String taxonomy_id,
-                                String custom_string_restroom, String custom_string_form,
+    public void getCaseListData(String custom_string_style,
+                                String custom_string_type,
+                                String custom_string_keywords,
+                                String custom_string_area,
+                                String custom_string_bedroom,
+                                String taxonomy_id,
+                                String custom_string_restroom,
+                                String custom_string_form,
                                 final int offset, final int limit,
                                 OkJsonRequest.OKResponseCallback callback) {
 

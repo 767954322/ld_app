@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.autodesk.shejijia.consumer.base.bean.AreaBean;
-import com.autodesk.shejijia.consumer.base.bean.RoomBean;
 import com.autodesk.shejijia.consumer.base.bean.LivingRoomBean;
+import com.autodesk.shejijia.consumer.base.bean.RoomBean;
 import com.autodesk.shejijia.consumer.base.bean.SpaceBean;
 import com.autodesk.shejijia.consumer.base.bean.StyleBean;
 import com.autodesk.shejijia.consumer.base.bean.ToiletBean;
@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -38,45 +39,18 @@ public class AppJsonFileReader {
     }
 
     public static String loadJSONFromAsset(Activity activity, String fileName) {
-        String json = null;
-        try {
-
-            InputStream is = activity.getAssets().open(fileName);
-
-            int size = is.available();
-
-            byte[] buffer = new byte[size];
-
-            is.read(buffer);
-
-            is.close();
-
-            json = new String(buffer, "UTF-8");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-
+        return loadJSONFromAsset(activity, fileName);
     }
 
     public static String loadJSONFromAsset(Context context, String fileName) {
         String json = null;
         try {
-
             InputStream is = context.getAssets().open(fileName);
-
             int size = is.available();
-
             byte[] buffer = new byte[size];
-
             is.read(buffer);
-
             is.close();
-
             json = new String(buffer, "UTF-8");
-
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
@@ -193,6 +167,30 @@ public class AppJsonFileReader {
     }
 
     /**
+     * 从业年限
+     *
+     * @param activity
+     * @return
+     */
+    public static Map<String, String> getWorkingTime(Activity activity) {
+        String fileName = Constant.JsonLocationKey.SEARCH_WORKING_TIME;
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
+    }
+
+    /**
+     * 价格
+     *
+     * @param activity
+     * @return
+     */
+    public static Map<String, String> getPrice(Activity activity) {
+        String fileName = Constant.JsonLocationKey.SEARCH_PRICE;
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
+    }
+
+    /**
      * one : 60㎡以下
      * two : 60-80㎡
      * three : 80-120㎡
@@ -264,82 +262,84 @@ public class AppJsonFileReader {
         return stringBuilder.toString();
     }
 
-    public static List<Map<String, String>> setData(String str) {
-        try {
-            List<Map<String, String>> data = new ArrayList<>();
-            JSONArray array = new JSONArray(str);
-            int len = array.length();
-            Map<String, String> map;
-            for (int i = 0; i < len; i++) {
-                JSONObject object = array.getJSONObject(i);
-                map = new HashMap<>();
-                map.put("operator", object.getString("operator"));
-                map.put("loginDate", object.getString("loginDate"));
-                map.put("logoutDate", object.getString("logoutDate"));
-                data.add(map);
-            }
-            return data;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-    }
-
-    public static List<Map<String, String>> setListData(String str) {
-        List<Map<String, String>> data = new ArrayList<>();
-        try {
-
-            JSONArray array = new JSONArray(str);
-            int len = array.length();
-            Map<String, String> map;
-            for (int i = 0; i < len; i++) {
-                JSONObject object = array.getJSONObject(i);
-                map = new HashMap<>();
-                map.put("imageId", object.getString("imageId"));
-                map.put("title", object.getString("title"));
-                map.put("subTitle", object.getString("subTitle"));
-                map.put("type", object.getString("type"));
-                data.add(map);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
 
     /**
-     * 获取应标类型订单消费者节点
+     * 将JsonString 转成JsonObject
      *
-     * @param context
-     * @return
-     * @throws JSONException
+     * @param context  上下文对象
+     * @param filename json文件asset名字
+     * @return JSONObject
      */
-    public static JSONObject getCurrentSubNodeNameArrayConsumer(Context context) throws JSONException {
-        String filename = Constant.WkFlowStatePath.WF_BID_SUB_NODE_ID_NAME_CONSUMER;
-        return AppJsonFileReader.getXmlJsonObject(context, filename);
-    }
-
-    public static JSONObject getCurrentNodeArrayDesigner(Context context) throws JSONException {
-        String filename = Constant.WkFlowStatePath.WF_NODE_ID_NAME_DESIGNER;
-        return AppJsonFileReader.getXmlJsonObject(context, filename);
-    }
-
-    public static JSONObject getCurrentSubNodeArrayDesigner(Context context) throws JSONException {
-        String filename = Constant.WkFlowStatePath.WF_BID_SUB_NODE_ID_NAME_DESIGNER;
-        return AppJsonFileReader.getXmlJsonObject(context, filename);
-    }
-
-    public static JSONObject getCurrentNodeArrayConsumer(Context context) throws JSONException {
-        String filename = Constant.WkFlowStatePath.WF_NODE_ID_NAME_CONSUMER;
-        return AppJsonFileReader.getXmlJsonObject(context, filename);
-    }
-
-
-    public static JSONObject getXmlJsonObject(Context context, String filename) throws JSONException {
-        String areaJSON = loadJSONFromAsset(context, filename);
-        JSONObject jsonObject = new JSONObject(areaJSON);
+    public static JSONObject getXmlJsonObject(Context context, String filename) {
+        String jsonString = loadJSONFromAsset(context, filename);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return jsonObject;
     }
 
+    /**
+     * JsonObject转成集合Map
+     *
+     * @param jsonObject
+     * @return
+     */
+    public static Map jsonObj2Map(JSONObject jsonObject) {
+        if (jsonObject == null) {
+            return null;
+        }
+
+        Map result = new HashMap();
+        Object key, value = null;
+        Iterator keyIterator = jsonObject.keys();
+        while (keyIterator.hasNext()) {
+            key = keyIterator.next();
+            try {
+                value = jsonObject.get(key.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (value instanceof JSONObject) {
+                result.put(key, jsonObj2Map((JSONObject) value));
+            } else if (value instanceof JSONArray) {
+                result.put(key, jsonArray2List((JSONArray) value));
+            } else {
+                result.put(key, value);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * JsonArray转成集合List
+     *
+     * @param jsonArray
+     * @return
+     */
+    public static List jsonArray2List(JSONArray jsonArray) {
+        if (jsonArray == null) {
+            return null;
+        }
+
+        List result = new ArrayList();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                if (jsonArray.get(i) instanceof JSONObject) {
+                    result.add(jsonObj2Map((JSONObject) jsonArray.get(i)));
+                } else if (jsonArray.get(i) instanceof JSONArray) {
+                    result.add(jsonArray2List((JSONArray) jsonArray.get(i)));
+                } else {
+                    result.add(jsonArray.get(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 }

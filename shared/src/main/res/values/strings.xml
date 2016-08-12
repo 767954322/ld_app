@@ -216,6 +216,7 @@
 
     <!-- SearchActivity -->
     <string name="search">搜索风格、户型、面积</string>
+    <string name="search_designer">搜索价格、风格、从业年限</string>
 
     <!-- Wk3DPlanActivity -->
     <string name="autonym_confirm">确定</string>
