@@ -39,7 +39,9 @@ public class FiltrateAdapter extends BaseAdapter {
         if (clickTemp != -1) {
             if (clickTemp == position) {
                 ((ViewHolder) holder).btn_filtrate.setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
+                ((ViewHolder) holder).btn_filtrate.setTextColor(mContext.getResources().getColor(R.color.tx_ef));
             } else {
+                ((ViewHolder) holder).btn_filtrate.setTextColor(mContext.getResources().getColor(R.color.bg_33));
                 ((ViewHolder) holder).btn_filtrate.setBackgroundResource(R.drawable.bg_btn_filtrate_normal);
             }
         }

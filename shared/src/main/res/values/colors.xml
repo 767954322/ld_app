@@ -123,6 +123,7 @@
     <color name="bg_eb">#EBEBEB</color>
     <color name="bg_ed">#EDEDED</color>
     <color name="bg_ef">#EFEFEF</color>
+    <color name="tx_ef">#0084ff</color>
     <color name="bg_f0">#F0F0F0</color>
     <color name="bg_f1">#F1F1F1</color>
     <color name="bg_f2">#F2F2F2</color>
