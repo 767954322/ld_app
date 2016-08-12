@@ -34,9 +34,11 @@
             android:hint="@string/search"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
+            android:drawablePadding="@dimen/size_10"
+            android:textSize="@dimen/size_16"
             android:imeOptions="actionSearch"
             android:singleLine="true"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/darker_gray" />
 
     </LinearLayout>
 

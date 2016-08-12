@@ -32,12 +32,14 @@
             android:layout_weight="1"
             android:background="@drawable/bg_input_search_or"
             android:drawableLeft="@drawable/icon_search_or"
+            android:drawablePadding="@dimen/size_10"
+            android:textSize="@dimen/size_16"
             android:hint="@string/search"
             android:paddingLeft="@dimen/size_20"
             android:paddingRight="@dimen/size_20"
             android:imeOptions="actionSearch"
             android:singleLine="true"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/darker_gray" />
 
         <TextView
             android:id="@+id/tv_ect_search_cancel"
