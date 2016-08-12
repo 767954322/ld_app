@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -26,8 +25,8 @@ import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateContainsBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateContainsBean;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -113,20 +112,26 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             // retrieve the fragment handle from fragmentmanager
 
             mUserHomeFragment = (UserHomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
-            if (mUserHomeFragment != null)
+            if (mUserHomeFragment != null) {
                 mFragmentArrayList.add(mUserHomeFragment);
+            }
 
-            mDesignerPersonalCenterFragment = (MyDecorationProjectDesignerFragment) getSupportFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
-            if (mDesignerPersonalCenterFragment != null)
+            mDesignerPersonalCenterFragment =
+                    (MyDecorationProjectDesignerFragment) getSupportFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
+            if (mDesignerPersonalCenterFragment != null) {
                 mFragmentArrayList.add(mDesignerPersonalCenterFragment);
+            }
 
-            mConsumerPersonalCenterFragment = (MyDecorationProjectFragment) getSupportFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
-            if (mConsumerPersonalCenterFragment != null)
+            mConsumerPersonalCenterFragment =
+                    (MyDecorationProjectFragment) getSupportFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
+            if (mConsumerPersonalCenterFragment != null) {
                 mFragmentArrayList.add(mConsumerPersonalCenterFragment);
+            }
 
             mBidHallFragment = (BidHallFragment) getSupportFragmentManager().findFragmentByTag(BID_FRAGMENT_TAG);
-            if (mBidHallFragment != null)
+            if (mBidHallFragment != null) {
                 mFragmentArrayList.add(mBidHallFragment);
+            }
         }
 
 
@@ -257,10 +262,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             f = mBidHallFragment;
         else if (id == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-            if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type()))
+            if (memberEntity != null
+                    && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
                 f = mDesignerPersonalCenterFragment;
-            else
+            } else {
                 f = mConsumerPersonalCenterFragment;
+            }
         } else if (id == getDesignerMainRadioBtnId()) {
             f = mUserHomeFragment;
         }
@@ -358,7 +365,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 //判断登陆的是设计师还是消费者，，，我的项目加载不同的信息
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 setChooseViewWidth(true);
-                if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+                if (memberEntity != null
+                        && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
 
 
                     setVisibilityForNavButton(ButtonType.middle, false);
@@ -370,7 +378,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     }
                 }
 
-                if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+                if (memberEntity != null
+                        && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
 
                     setTitleForNavbar(UIUtils.getString(R.string.consumer_decoration));
                 }
@@ -423,6 +432,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_NUMBER, POINTER_START_END_NUMBER);
                 mDesignerPersonalCenterFragment.setBidingFragment();
                 break;
+
             case R.id.design:
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER, POINTER_MIDDLE_END_NUMBER);
@@ -439,6 +449,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 }
 
                 break;
+
             case R.id.construction:
                 setMyProjectTitleColorChange(construction, design, bidding);
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER);
@@ -526,11 +537,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
      */
     private void updateViewFromData() {
 
-
         if (mConsumerEssentialInfoEntity != null && !TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar()) && MPConsumerHomeActivity.this != null) {
             ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), user_avatar);
         }
-
 
         if (designerInfoDetails != null && !TextUtils.isEmpty(designerInfoDetails.getAvatar()) && MPConsumerHomeActivity.this != null) {
             ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), user_avatar);
@@ -586,7 +595,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 Gson gson = new Gson();
                 WkFlowStateContainsBean wkFlowStateContainsBean = gson.fromJson(jsonString, WkFlowStateContainsBean.class);
 
-                Map<String,WkFlowStateBean> mapWkFlowStateBean = wkFlowStateContainsBean.getNodes_message();
+                Map<String, WkFlowStateBean> mapWkFlowStateBean = wkFlowStateContainsBean.getNodes_message();
                 WkFlowStateMap.map = mapWkFlowStateBean;
 
             }
