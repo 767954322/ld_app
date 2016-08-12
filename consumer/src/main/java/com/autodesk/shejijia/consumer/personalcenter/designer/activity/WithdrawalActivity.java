@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -37,8 +36,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author DongXueQue .
@@ -60,7 +57,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         tv_withdrawal_account_balance = (TextView) findViewById(R.id.tv_withdrawal_account_balance);
         tv_withdrawal_account = (TextView) findViewById(R.id.tv_withdrawal_account);
         tv_withdrawal_cardholder_name = (TextView) findViewById(R.id.tv_withdrawal_cardholder_name);
-        et_withdrawal_cardholder_name = (EditText) findViewById(R.id.et_withdrawal_cardholder_name);
+//        et_withdrawal_cardholder_name = (EditText) findViewById(R.id.et_withdrawal_cardholder_name);
         tv_withdrawal_open_account_bank = (TextView) findViewById(R.id.tv_withdrawal_open_account_bank);
         tv_withdrawal_bank_card_number = (TextView) findViewById(R.id.tv_withdrawal_bank_card_number);
         ll_withdrawal_open_account_bank = (LinearLayout) findViewById(R.id.ll_withdrawal_open_account_bank);
@@ -75,6 +72,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     protected void initExtraBundle() {
         super.initExtraBundle();
         myPropertyBean = (MyPropertyBean) getIntent().getSerializableExtra(Constant.DesignerMyPropertyKey.MY_PROPERTY_BEAN);
+        account_user_name = getIntent().getStringExtra("real_name");
     }
 
     @Override
@@ -85,7 +83,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         setBackName();
         showState();
     }
-
 
     @Override
     protected void initListener() {
@@ -119,7 +116,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 break;
             case R.id.btn_withdrawal_true:
                 String tv_user_name = getText(tv_withdrawal_cardholder_name);
-                account_user_name = (tv_user_name == null) ? getText(et_withdrawal_cardholder_name) : tv_user_name;
+//                account_user_name = (tv_user_name == null) ? getText(et_withdrawal_cardholder_name) : tv_user_name;
                 bank_name = getText(tv_withdrawal_open_account_bank);
                 String tv_branch_bank_ = getText(tv_withdrawal_branch_bank);
                 branch_bank_name = (tv_branch_bank_ == null) ? getText(et_withdrawal_branch_bank) : tv_branch_bank_;
@@ -343,18 +340,21 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
             tv_withdrawal_account_balance.setText("¥" + myPropertyBean.getAmount() + "");
             tv_withdrawal_account.setText("¥" + myPropertyBean.getAmount());
-            account_user_name = myPropertyBean.getAccount_user_name();
+//            account_user_name = myPropertyBean.getAccount_user_name();
             bank_name = myPropertyBean.getBank_name();
             deposit_card = myPropertyBean.getDeposit_card();
             branch_bank_name = myPropertyBean.getBranch_bank_name();
+
             if (null == bank_name || bank_name.equals("")) {
-                ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE);
+                ll_withdrawal_replace_bank_card.setVisibility(View.GONE); // 没有绑定银行卡隐藏解绑按钮
             } else {
-                ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE);
+                ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE); // 绑定后显示解绑按钮
+                et_withdrawal_bank_card_number.setVisibility(View.GONE);
+                et_withdrawal_branch_bank.setVisibility(View.GONE);
             }
 
             if (null == account_user_name || account_user_name.equals("")) {
-                et_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
+//                et_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
             } else {
                 tv_withdrawal_cardholder_name.setVisibility(View.VISIBLE);
                 tv_withdrawal_cardholder_name.setText(account_user_name);
@@ -378,7 +378,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         }
 
         et_withdrawal_branch_bank.setText(branch_bank_name);
-        et_withdrawal_cardholder_name.setText(account_user_name);
+//        et_withdrawal_cardholder_name.setText(account_user_name);
         et_withdrawal_bank_card_number.setText(deposit_card);
     }
 
@@ -444,7 +444,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     private TextView tv_withdrawal_open_account_bank;
     private TextView tv_withdrawal_bank_card_number;
     private Button btn_withdrawal_true;
-    private EditText et_withdrawal_cardholder_name;
+    //    private EditText et_withdrawal_cardholder_name;
     private EditText et_withdrawal_branch_bank;
     private EditText et_withdrawal_bank_card_number;
     private LinearLayout ll_withdrawal_open_account_bank;
@@ -458,7 +458,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     private String branch_bank_name;
     private String item_back_name;
     private long designer_id;
-
 
     /// 集合，类.
     private List<String> mBankName;
