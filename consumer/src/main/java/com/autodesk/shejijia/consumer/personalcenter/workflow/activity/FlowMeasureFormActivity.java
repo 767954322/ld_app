@@ -140,6 +140,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_NAME, user_name);
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_MOBILE_NUMBER, mobile_number);
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ORDER_TYPE, 0);
+
+                            if (TextUtils.isEmpty(mThreead_id)) {
+                                jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                            } else {
+                                jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThreead_id);
+                            }
+
                             if (TextUtils.isEmpty(amount) || "null".equals(amount)) {
                                 jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.00);
                             } else {
