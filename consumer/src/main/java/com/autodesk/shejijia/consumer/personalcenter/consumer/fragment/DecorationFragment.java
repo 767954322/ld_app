@@ -386,16 +386,9 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 public void onClick(View v) {
                     alertDialog.dismiss();
                     if (!TextUtils.isEmpty(needs_id) && !TextUtils.isEmpty(designer_id_biding)) {
-                        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                        String designer_thread_id = mNeedsListEntity.getBidders().get(mPosition).getDesign_thread_id();
-                        if (TextUtils.isEmpty(designer_thread_id)) {
-                            designer_thread_id = "";
-                        }
-
                         Intent intent = new Intent(getActivity(), FlowMeasureFormActivity.class);
                         intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
                         intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id_biding);
-                        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, designer_thread_id);
                         /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
                         intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
                         startActivityForResult(intent, BIDING_STATE);
@@ -574,7 +567,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
     }
 
-//    /**
+    //    /**
 //     * 修改需求回显的数据
 //     *
 //     * @param amendDemandBean 　回显数据的实体类
@@ -741,6 +734,20 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         if(data == null){
             return;
         }
+        if(resultCode == AmendDemandActivity.REFUSEResultCode){
+
+            String needs_id = data.getStringExtra(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID);
+            if(mNeedsListEntity.getNeeds_id().equals(needs_id)){
+                is_public = data.getStringExtra("is_public_amend");
+                custom_string_status = data.getStringExtra("custom_string_status");
+                wk_template_id = data.getStringExtra("wk_template_id");
+                mNeedsListEntity.setIs_public(is_public);
+                mNeedsListEntity.setCustom_string_status(custom_string_status);
+                mNeedsListEntity.setWk_template_id(wk_template_id);
+                setBidState(is_public);
+            }
+
+        }
         if(resultCode == AmendDemandActivity.ResultCode){
             Bundle bundle = data.getExtras();
             AmendDemandBean amendDemandBean = (AmendDemandBean) bundle.getSerializable(JsonConstants.AMENDEMANDBEAN);
@@ -802,6 +809,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      * @param amendDemandBean
      */
     private void changeBean(AmendDemandBean amendDemandBean) {
+
         mNeedsListEntity.setCommunity_name(amendDemandBean.getCommunity_name());
         mNeedsListEntity.setCity(amendDemandBean.getCity());
         mNeedsListEntity.setCity_name(amendDemandBean.getCity_name());
@@ -810,6 +818,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         mNeedsListEntity.setConsumer_name(amendDemandBean.getConsumer_name());
         mNeedsListEntity.setContacts_mobile(amendDemandBean.getContacts_mobile());
         mNeedsListEntity.setContacts_name(amendDemandBean.getContacts_name());
+
         mNeedsListEntity.setDecoration_style(amendDemandBean.getDecoration_style());
         mNeedsListEntity.setDecoration_budget(amendDemandBean.getDecoration_budget());
         mNeedsListEntity.setDesign_budget(amendDemandBean.getDesign_budget());
