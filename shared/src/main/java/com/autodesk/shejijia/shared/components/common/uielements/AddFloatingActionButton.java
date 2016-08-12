@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.shared.components.common.uielements;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.Shape;
@@ -73,15 +75,22 @@ public class AddFloatingActionButton extends FloatingActionButton {
         final float iconSize = getDimension(R.dimen.fab_icon_size);
         final float iconHalfSize = iconSize / 2f;
 
-        final float plusSize = getDimension(R.dimen.fab_plus_icon_size);
-        final float plusHalfStroke = getDimension(R.dimen.fab_plus_icon_stroke) / 2f;
+//        final float plusSize = getDimension(R.dimen.fab_plus_icon_size);
+        final float plusSize = getDimension(R.dimen.fab_icon_size28);
+//        final float plusHalfStroke = getDimension(R.dimen.fab_plus_icon_stroke) / 2f;
+        final float plusHalfStroke = getDimension(R.dimen.fab_shadow_offset) / 2f;
         final float plusOffset = (iconSize - plusSize) / 2f;
 
         final Shape shape = new Shape() {
             @Override
             public void draw(Canvas canvas, Paint paint) {
-                canvas.drawRect(plusOffset, iconHalfSize - plusHalfStroke, iconSize - plusOffset, iconHalfSize + plusHalfStroke, paint);
-                canvas.drawRect(iconHalfSize - plusHalfStroke, plusOffset, iconHalfSize + plusHalfStroke, iconSize - plusOffset, paint);
+//                canvas.drawRect(plusOffset, iconHalfSize - plusHalfStroke, iconSize - plusOffset, iconHalfSize + plusHalfStroke, paint);
+//                canvas.drawRect(iconHalfSize - plusHalfStroke, plusOffset, iconHalfSize + plusHalfStroke, iconSize - plusOffset, paint);
+
+                RectF rect1 = new RectF(plusOffset, iconHalfSize - plusHalfStroke, iconSize - plusOffset, iconHalfSize + plusHalfStroke);
+                RectF rect2 = new RectF(iconHalfSize - plusHalfStroke, plusOffset, iconHalfSize + plusHalfStroke, iconSize - plusOffset);
+                canvas.drawRoundRect(rect1,3f,3f,paint);
+                canvas.drawRoundRect(rect2,3f,3f,paint);
             }
         };
 

@@ -45,7 +45,7 @@
         android:layout_marginEnd="@dimen/size_16"
         android:layout_marginRight="@dimen/size_16"
         android:layout_marginTop="@dimen/size_16"
-        fab:fab_addButtonColorNormal="@android:color/holo_blue_dark"
+        fab:fab_addButtonColorNormal="@color/tx_ef"
         fab:fab_addButtonColorPressed="@color/floating_white_pressed"
         fab:fab_addButtonSize="normal"
         fab:fab_expandDirection="up"
