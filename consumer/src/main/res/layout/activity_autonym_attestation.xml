@@ -217,7 +217,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginTop="@dimen/size_20"
                 android:background="@drawable/bg_real_name_btn_blue"
                 android:text="@string/autonym_submit"
                 android:textColor="@color/bg_ff"
