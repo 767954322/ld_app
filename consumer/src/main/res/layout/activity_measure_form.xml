@@ -94,7 +94,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:ems="10"
-                    android:hint="@string/consume_phone_number_hint"
+                    android:hint="@string/please_enter_your_phone"
                     android:maxLength="11"
                     android:phoneNumber="true"
                     android:textSize="@dimen/font_12"/>
