@@ -213,7 +213,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 if (houseArea.contains(".")) {
                     subNum = houseArea.substring(0, houseArea.indexOf("."));
                 }
-                if (Float.valueOf(houseArea) == 0) {
+                if (TextUtils.isEmpty(houseArea)||Float.valueOf(houseArea) == 0) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
                     return;
                 } else {
@@ -346,16 +346,16 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点", Locale.getDefault());
                 String date = /*currentTime += */sdf.format(new Date());
 
-                try {
-                    if (formatDate(date, currentData)) {
+//                try {
+//                    if (formatDate(date, currentData)) {
                         CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
                         postSendMeasureForm(jsonObject);
-                    } else {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+//                    } else {
+//                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
+//                    }
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.tvc_measure_form_project_budget:
                 pvDesignBudgetOptions.show();
@@ -450,7 +450,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
-                tvc_time.setText(DateUtil.dateFormat(currentData,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点"));
+                currentData = DateUtil.dateFormat(currentData,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点");
+                tvc_time.setText(currentData);
             }
         });
     }

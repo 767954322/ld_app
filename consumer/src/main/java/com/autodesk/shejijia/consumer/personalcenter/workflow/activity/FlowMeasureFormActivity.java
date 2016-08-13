@@ -130,7 +130,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();
                     } else {
-                        if (formatDate(date, currentTime)) {
+//                        if (formatDate(date, currentTime)) {
 
                             CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
 
@@ -157,16 +157,17 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_CHANNEL_TYPE, "Android");
 
                             agreeResponseBid(jsonObject);
-                        } else {
-                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
-                                    AlertView.Style.Alert, null).show();
-                        }
+//                        } else {
+//                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
+//                                    AlertView.Style.Alert, null).show();
+//                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
+//                catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.btn_measure_form_accept: /// 同意量房 .
                 CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);

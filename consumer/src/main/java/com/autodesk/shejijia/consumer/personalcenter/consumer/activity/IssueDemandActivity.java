@@ -149,7 +149,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 if (area.contains(".")) {
                     subNum = area.substring(0, area.indexOf("."));
                 }
-                if (Float.valueOf(area) == 0) {
+                if (TextUtils.isEmpty(area)||Float.valueOf(area) == 0) {
                     showAlertView(R.string.please_input_correct_area);
                     return;
                 } else {
