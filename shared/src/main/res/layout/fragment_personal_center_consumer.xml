@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_20"
-                    android:src="@drawable/icon_issue_demand_normal" />
+                    android:src="@drawable/pic_hd" />
 
                 <TextView
                     android:layout_width="wrap_content"
