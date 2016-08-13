@@ -206,10 +206,30 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
-                if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
+
+                //.....................................
+                String subNum = "0";
+                if (houseArea.contains(".")) {
+                    subNum = houseArea.substring(0, houseArea.indexOf("."));
+                }
+                if (Float.valueOf(houseArea) == 0) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
                     return;
+                } else {
+                    if (subNum.length() > 1 && subNum.startsWith("0")){
+                        getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
+                        return;
+                    }else {
+                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
+                            getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
+                            return;
+                        }
+                    }
                 }
+//                if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
+//                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
+//                    return;
+//                }
                 JSONObject jsonObject = new JSONObject();
                 try {
 
@@ -312,7 +332,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                if (mFree.isEmpty()) {
+                if (TextUtils.isEmpty(mFree)) {
 
                     getErrorHintAlertView(UIUtils.getString(R.string.volume_rate_cannot_empty));
                     return;
@@ -322,7 +342,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                  * 获取系统当前时间,通过SimpleDateFormat获取24小时制时间
                  *
                  */
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点", Locale.getDefault());
                 String date = /*currentTime += */sdf.format(new Date());
 
                 try {
@@ -438,7 +458,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @brief 获取yyyy-MM-dd HH:mm:ss 格式的时间
      */
     public static String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年 MM月 dd日 HH点");
         return format.format(date);
     }
 
@@ -615,7 +635,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @brief yyyy-MM-dd HH:mm:ss格式转化成毫秒数(long)进行判断 .
      */
     public static boolean formatDate(String beforeDate, String afterDate) throws ParseException {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点");
         Date d1 = sf.parse(beforeDate);
         Date d2 = sf.parse(afterDate);
         long stamp = d2.getTime() - d1.getTime();

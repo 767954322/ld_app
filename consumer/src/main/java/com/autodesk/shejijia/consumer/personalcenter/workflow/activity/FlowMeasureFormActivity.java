@@ -126,7 +126,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     String date = sDateFormat.format(new Date());
 
                     if (TextUtils.isEmpty(currentTime)) {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null,new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();
                     } else {
                         if (formatDate(date, currentTime)) {
@@ -157,7 +157,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
                             agreeResponseBid(jsonObject);
                         } else {
-                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null,new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
+                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                     AlertView.Style.Alert, null).show();
                         }
                     }
@@ -201,15 +201,20 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             if (wk_cur_sub_node_id_i >= 11) {
                 ll_consumer_send.setVisibility(View.GONE);
                 tvc_measure_form_time.setClickable(false);
-                tvc_measure_form_time.setText(mBidders.get(0).getMeasure_time()); /// 量房时间 .
+                String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
+                String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
 
+                tvc_measure_form_time.setText(timer_form); /// 量房时间 .
             } else {
                 ll_consumer_send.setVisibility(View.VISIBLE);
                 tvc_measure_form_time.setText("");
             }
         } else if (memType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) { // 设计师
             tvc_measure_form_time.setClickable(false);
-            tvc_measure_form_time.setText(mBidders.get(0).getMeasure_time());
+            String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
+            String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
+
+            tvc_measure_form_time.setText(timer_form);
             switch (wk_cur_sub_node_id_i) {
                 case 11:
                     if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {

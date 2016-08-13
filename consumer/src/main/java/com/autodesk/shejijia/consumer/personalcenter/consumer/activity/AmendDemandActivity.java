@@ -118,6 +118,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 area = etAmendArea.getText().toString();
                 mobile = etIssueAmendMobile.getText().toString();
                 detail_address = etIssueDemandDetailAddress.getText().toString();
+                style = tvAmendStyle.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
                 boolean regex_address = String.valueOf(detail_address).matches(RegexUtil.ADDRESS_REGEX);
                 boolean regex_phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
@@ -146,6 +147,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, consumer_name);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONTACTS_MOBILE, mobile);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONTACTS_NAME, contacts_name);
+
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_STYLE, style);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, decoration_budget);
                     amendJson.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, design_budget);
@@ -212,7 +214,14 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
 
         if (obj == mStopDemandSuccessAlertView && position != AlertView.CANCELPOSITION) {
             if (!TextUtils.isEmpty(is_public_amend)) {
-                EventBus.getDefault().postSticky(is_public_amend);
+
+                Intent intent = new Intent();
+                intent.putExtra("is_public_amend",is_public_amend);
+                intent.putExtra("custom_string_status",custom_string_status_amend);
+                intent.putExtra("wk_template_id",wk_template_id_amend);
+                intent.putExtra(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, needs_id);
+                setResult(AmendDemandActivity.REFUSEResultCode,intent);
+
             }
             finish();
             return;
@@ -282,7 +291,10 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onResponse(JSONObject jsonObject) {
                 try {
                     CustomProgress.cancelDialog();
+                    String s = GsonUtil.jsonToString(jsonObject);
                     is_public_amend = jsonObject.getString(IS_PUBLIC);
+                    wk_template_id_amend = jsonObject.getString("wk_template_id");
+                    custom_string_status_amend = jsonObject.getString("custom_string_status");
                     mStopDemandSuccessAlertView.show();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -699,6 +711,9 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     private String room_convert, toilet_convert;
     private String style;
     private String is_public_amend = "0";
+    private String wk_template_id_amend = "0";
+    private String custom_string_status_amend = "0";
     public static final int ResultCode = 100101;
+    public static final int REFUSEResultCode = 1009;
 
 }
