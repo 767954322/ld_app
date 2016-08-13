@@ -6,30 +6,29 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerEssentialInfoActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.DecorationActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
 
@@ -51,7 +50,7 @@ public class ConsumerPersonalCenterFragment extends BaseFragment implements View
 
     @Override
     protected void initView() {
-        mLlPersonalDemand = (LinearLayout) rootView.findViewById(R.id.ll_personal_b_demand);
+        mLlPersonalDemand = (RelativeLayout) rootView.findViewById(R.id.ll_personal_b_demand);
         mRlPersonalCollect = (RelativeLayout) rootView.findViewById(R.id.rl_personal_b_collect);
         mRlPersonalSetting = (RelativeLayout) rootView.findViewById(R.id.rl_personal_b_setting);
         mRlPersonalFitment = (RelativeLayout) rootView.findViewById(R.id.rl_personal_b_fitment);
@@ -202,7 +201,7 @@ public class ConsumerPersonalCenterFragment extends BaseFragment implements View
     private static final int MORE_LOGOUT = 0;
 
     /// 控件.
-    private LinearLayout mLlPersonalDemand;
+    private RelativeLayout mLlPersonalDemand;
     private RelativeLayout mRlPersonalCollect, mRlPersonalSetting, mRlPersonalFitment;
     private PolygonImageView mPolygonImageView;
     private TextView mTvLoginOrRegister;
