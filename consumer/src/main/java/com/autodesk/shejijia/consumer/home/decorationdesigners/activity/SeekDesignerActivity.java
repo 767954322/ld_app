@@ -58,8 +58,8 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
         setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
 
-        setVisibilityForNavButton(ButtonType.RIGHT, false);
-        setVisibilityForNavButton(ButtonType.SECONDARY, false);
+        setVisibilityForNavButton(ButtonType.RIGHT, true);
+        setVisibilityForNavButton(ButtonType.SECONDARY, true);
     }
 
     /// 数据逻辑.
