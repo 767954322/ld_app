@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.entity;
 
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.RealNameBean;
 
 import java.io.Serializable;
@@ -13,7 +12,7 @@ import java.io.Serializable;
  * @brief 案例库首页获取的设计师基本信息 .
  */
 public class DesignerInfoBean implements Serializable {
-    private DesignerBean designer;
+    private com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean designer;
     private String email;
     private String avatar;
     private int gender;
@@ -55,11 +54,11 @@ public class DesignerInfoBean implements Serializable {
         this.real_name = real_name;
     }
 
-    public DesignerBean getDesigner() {
+    public com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean getDesigner() {
         return designer;
     }
 
-    public void setDesigner(DesignerBean designer) {
+    public void setDesigner(com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean designer) {
         this.designer = designer;
     }
 

@@ -165,13 +165,13 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     }
 
     /**
-     * 获取设计师信息.
+     * 获取设计师列表.
      *
      * @param offset 页数
      * @param limit  　每页数据条数
      * @param state  　刷新的状态
      */
-    public void getFindDesignerData(int offset, int limit, final int state) {
+    public void getDesignerListData(int offset, int limit, final int state) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -240,13 +240,13 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     /// 下拉刷新.
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        getFindDesignerData(0, LIMIT, 1);
+        getDesignerListData(0, LIMIT, 1);
     }
 
     /// 上拉加载.
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        getFindDesignerData(OFFSET, LIMIT, 2);
+        getDesignerListData(OFFSET, LIMIT, 2);
     }
 
     /// 刷新.

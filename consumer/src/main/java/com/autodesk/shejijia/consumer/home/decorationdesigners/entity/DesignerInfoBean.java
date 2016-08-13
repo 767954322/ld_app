@@ -1,14 +1,16 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
 
+import java.io.Serializable;
+
 /**
  * @author he.liu .
  * @version v1.0 .
  * @date 2016-8-2 .
- * @file DesignerBean.java .
+ * @file DesignerInfoBean.java .
  * @brief 设计师首页详情designer实体类 .
  */
-public class DesignerBean {
-    private Object studio;
+public class DesignerInfoBean implements Serializable {
+    private String studio;
     private String styles;
     private String introduction;
     private int experience;
@@ -24,13 +26,19 @@ public class DesignerBean {
     private int case_count;
     private String is_loho;
     private int is_real_name;
-    private Object theme_pic;
+    private String theme_pic;
+    private String type_code;
+    private String type_name;
+    private String store_id;
+    private String store_name;
+    private String company_id;
+    private String company_name;
 
-    public Object getStudio() {
+    public String getStudio() {
         return studio;
     }
 
-    public void setStudio(Object studio) {
+    public void setStudio(String studio) {
         this.studio = studio;
     }
 
@@ -122,7 +130,7 @@ public class DesignerBean {
         this.personal_honour = personal_honour;
     }
 
-    public Object getDiy_count() {
+    public String getDiy_count() {
         return diy_count;
     }
 
@@ -154,11 +162,59 @@ public class DesignerBean {
         this.is_real_name = is_real_name;
     }
 
-    public Object getTheme_pic() {
+    public String getTheme_pic() {
         return theme_pic;
     }
 
-    public void setTheme_pic(Object theme_pic) {
+    public void setTheme_pic(String theme_pic) {
         this.theme_pic = theme_pic;
+    }
+
+    public String getType_code() {
+        return type_code;
+    }
+
+    public void setType_code(String type_code) {
+        this.type_code = type_code;
+    }
+
+    public String getType_name() {
+        return type_name;
+    }
+
+    public void setType_name(String type_name) {
+        this.type_name = type_name;
+    }
+
+    public String getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(String store_id) {
+        this.store_id = store_id;
+    }
+
+    public String getStore_name() {
+        return store_name;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
+    }
+
+    public String getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(String company_id) {
+        this.company_id = company_id;
+    }
+
+    public String getCompany_name() {
+        return company_name;
+    }
+
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 }

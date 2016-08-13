@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FollowingDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
@@ -364,7 +364,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             } else {
                 ImageUtils.displayAvatarImage(seekDesignerDetailHomeBean.getAvatar(), mHeadIcon);
             }
-            DesignerBean designer = seekDesignerDetailHomeBean.getDesigner();
+            DesignerInfoBean designer = seekDesignerDetailHomeBean.getDesigner();
             if (null != designer.getIs_real_name() + "" && designer.getIs_real_name() == 2) {
                 mIvCertification.setVisibility(View.VISIBLE);
             } else {

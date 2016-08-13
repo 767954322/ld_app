@@ -7,12 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 
 import java.util.List;
 
@@ -61,48 +62,51 @@ public class SeekDesignerAdapter extends BaseAdapter<SeekDesignerBean.DesignerLi
     @Override
     public void initItem(View view, Holder holder, int position) {
         if (null != mDatas) {
+            SeekDesignerBean.DesignerListEntity designerListEntity = mDatas.get(position);
+            String nick_name = designerListEntity.getNick_name();
+            String avatar = designerListEntity.getAvatar();
+            String following_count = designerListEntity.getFollowing_count();
+            DesignerInfoBean designerInfoBean = designerListEntity.getDesigner();
 
-            String nick_name = mDatas.get(position).getNick_name();
-            if (null != nick_name) {
-                ((ViewHolder) holder).mTvName.setText(nick_name);
+            nick_name = TextUtils.isEmpty(nick_name) ? "暂无数据" : nick_name;
+            avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
+            following_count = TextUtils.isEmpty(following_count) ? "0" : following_count;
+
+            ((ViewHolder) holder).mTvName.setText(nick_name);
+            ((ViewHolder) holder).mTvAttentionNum.setText(UIUtils.getString(R.string.attention_num) + " : " + following_count);
+            ImageUtils.displayAvatarImage(avatar, ((ViewHolder) holder).mPolygonImageView);
+
+            if (null == designerInfoBean) {
+                return;
             }
+            String case_count = designerInfoBean.getCase_count() + "";
+            String style_long_names = designerInfoBean.getStyle_long_names();
+            String design_price_min = designerInfoBean.getDesign_price_min();
+            String design_price_max = designerInfoBean.getDesign_price_max();
+            int is_real_name = designerInfoBean.getIs_real_name();
 
-            String avatar = mDatas.get(position).getAvatar();
-            if (!TextUtils.isEmpty(avatar)) {
-                ImageUtils.displayAvatarImage(avatar, ((ViewHolder) holder).mPolygonImageView);
-            }
+            String case_count_prefix = UIUtils.getString(R.string.work);
+            String be_good_at_prefix = UIUtils.getString(R.string.be_good_at);
 
-            String case_count = mDatas.get(position).getDesigner().getCase_count() + "";
-            if (null != case_count) {
-                ((ViewHolder) holder).mTvProduction.setText(context.getResources().getString(R.string.work) + case_count);
-            } else {
-                ((ViewHolder) holder).mTvProduction.setText(context.getResources().getString(R.string.work) + "0");
-            }
+            case_count = TextUtils.isEmpty(case_count) ? "0" : case_count;
+            style_long_names = TextUtils.isEmpty(style_long_names) ?
+                    UIUtils.getString(R.string.has_yet_to_fill_out) : style_long_names;
 
-            String style_long_names = mDatas.get(position).getDesigner().getStyle_long_names();
-            if (null == style_long_names || style_long_names.trim().equals("")) {
+            ((ViewHolder) holder).mTvProduction.setText(case_count_prefix + case_count);
+            ((ViewHolder) holder).mTvAdept.setText(be_good_at_prefix + style_long_names);
 
-                ((ViewHolder) holder).mTvAdept.setText(context.getResources().getString(R.string.be_good_at) + UIUtils.getResources().getString(R.string.has_yet_to_fill_out));
-
-            } else {
-                ((ViewHolder) holder).mTvAdept.setText(context.getResources().getString(R.string.be_good_at) + style_long_names);
-            }
-
-            String design_price_min = mDatas.get(position).getDesigner().getDesign_price_min();
-            String design_price_max = mDatas.get(position).getDesigner().getDesign_price_max();
-            if (null != design_price_min && null != design_price_max) {
-                ((ViewHolder) holder).mTvCost.setText(design_price_min + "-" + design_price_max + "元/m²");
-            } else {
+            boolean costBoolean = TextUtils.isEmpty(design_price_max) || TextUtils.isEmpty(design_price_min);
+            if (costBoolean) {
                 ((ViewHolder) holder).mTvCost.setText(R.string.has_yet_to_fill_out);
+            } else {
+                ((ViewHolder) holder).mTvCost.setText(design_price_min + "-" + design_price_max + "元/m²");
             }
 
-            SeekDesignerBean.DesignerListEntity.DesignerEntity designer = mDatas.get(position).getDesigner();
-            if (null != designer && null != designer.getIs_real_name() + "" && designer.getIs_real_name() == 2) {
+            if (is_real_name == 2) {
                 ((ViewHolder) holder).mImageView.setVisibility(View.VISIBLE);
             } else {
                 ((ViewHolder) holder).mImageView.setVisibility(View.GONE);
             }
-            ((ViewHolder) holder).mTvAttentionNum.setText(UIUtils.getString(R.string.attention_num) + " : ");
 
         } else {
             ((ViewHolder) holder).mTvName.setText(R.string.has_yet_to_fill_out);
@@ -155,5 +159,6 @@ public class SeekDesignerAdapter extends BaseAdapter<SeekDesignerBean.DesignerLi
     }
 
     private Context context;
+
     private OnItemChatClickListener mOnItemChatClickListener;
 }

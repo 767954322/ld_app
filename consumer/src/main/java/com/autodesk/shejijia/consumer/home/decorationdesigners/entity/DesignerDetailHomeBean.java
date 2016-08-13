@@ -8,7 +8,7 @@ import java.util.List;
  * @version 1.0 .
  * @date 2016/4/22 0022 16:26 .
  * @file DesignerDetailHomeBean  .
- * @brief 查看设计师设计过的房子的bean.
+ * @brief 设计师列表设计师信息实体类.
  */
 public class DesignerDetailHomeBean implements Serializable {
     /**
@@ -20,7 +20,7 @@ public class DesignerDetailHomeBean implements Serializable {
      */
     public String following_count;
 
-    private DesignerBean designer;
+    private DesignerInfoBean designer;
     private RealNameBean real_name;
     private List<CasesListBean> cases_list;
 
@@ -52,6 +52,7 @@ public class DesignerDetailHomeBean implements Serializable {
     private String is_email_binding;
     private String has_secreted;
 
+
     public List<CasesListBean> getCases_list() {
         return cases_list;
     }
@@ -60,11 +61,11 @@ public class DesignerDetailHomeBean implements Serializable {
         this.cases_list = cases_list;
     }
 
-    public DesignerBean getDesigner() {
+    public DesignerInfoBean getDesigner() {
         return designer;
     }
 
-    public void setDesigner(DesignerBean designer) {
+    public void setDesigner(DesignerInfoBean designer) {
         this.designer = designer;
     }
 

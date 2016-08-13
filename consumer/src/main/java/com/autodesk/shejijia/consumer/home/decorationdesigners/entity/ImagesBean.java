@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
 
+import java.io.Serializable;
+
 /**
  * @author he.liu .
  * @version v1.0 .
@@ -7,7 +9,7 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
  * @file ImagesBean.java .
  * @brief 案例库图片实体类 .
  */
-public class ImagesBean {
+public class ImagesBean implements Serializable{
     private String file_id;
     private String file_name;
     private String file_url;

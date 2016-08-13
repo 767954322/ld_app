@@ -262,7 +262,7 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 获取设计师信息
+     * 获取设计师列表
      *
      * @param offset
      * @param limit
@@ -274,6 +274,12 @@ public class MPServerHttpManager {
                 "&sort_order=desc" +
                 "&sort_by=date" +
                 "&limit=" + limit;
+
+//        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
+//                "?offset=" + offset +
+//                "&sort_order=desc" +
+//                "&sort_by=date" +
+//                "&limit=" + limit;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1249,7 +1255,7 @@ public class MPServerHttpManager {
 
     /**
      * 获取设计师首页评价列表信息
-     * <p/>
+     * <p>
      */
     public void getEstimateList(String designer_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
         String estimateUrl = UrlConstants.MAIN_MEMBER + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;
