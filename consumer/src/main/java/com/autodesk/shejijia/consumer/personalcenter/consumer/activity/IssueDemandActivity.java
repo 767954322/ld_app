@@ -144,10 +144,30 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 }
                 String area = et_issue_demand_area.getText().toString();
 
-                if(area.equals("0.00")||area.equals("0.0")||area.equals("0000.00")||area.equals("000.00")||area.equals("00.00")){
+                //..................................
+                String subNum = "0";
+                if (area.contains(".")) {
+                    subNum = area.substring(0, area.indexOf("."));
+                }
+                if (Float.valueOf(area) == 0) {
                     showAlertView(R.string.please_input_correct_area);
                     return;
+                } else {
+                    if (subNum.length() > 1 && subNum.startsWith("0")){
+                        showAlertView(R.string.please_input_correct_area);
+                        return;
+                    }else {
+                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
+                            showAlertView(R.string.please_input_correct_area);
+                            return;
+                        }
+                    }
                 }
+
+//                if(area.equals("0.00")||area.equals("0.0")||area.equals("0000.00")||area.equals("000.00")||area.equals("00.00")){
+//                    showAlertView(R.string.please_input_correct_area);
+//                    return;
+//                }
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
@@ -162,10 +182,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(R.string.demand_please_project_types);
                     return;
                 }
-                if (TextUtils.isEmpty(area) || area.equals("0") || !regex_area_right) {
-                    showAlertView(R.string.please_input_correct_area);
-                    return;
-                }
+//                if (TextUtils.isEmpty(area) || area.equals("0") || !regex_area_right) {
+//                    showAlertView(R.string.please_input_correct_area);
+//                    return;
+//                }
                 if (TextUtils.isEmpty(mDesignBudget)) {
                     showAlertView(R.string.please_select_design_budget);
                     return;

@@ -206,10 +206,30 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
-                if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
+
+                //.....................................
+                String subNum = "0";
+                if (houseArea.contains(".")) {
+                    subNum = houseArea.substring(0, houseArea.indexOf("."));
+                }
+                if (Float.valueOf(houseArea) == 0) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
                     return;
+                } else {
+                    if (subNum.length() > 1 && subNum.startsWith("0")){
+                        getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
+                        return;
+                    }else {
+                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
+                            getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
+                            return;
+                        }
+                    }
                 }
+//                if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
+//                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_housing_area));
+//                    return;
+//                }
                 JSONObject jsonObject = new JSONObject();
                 try {
 
