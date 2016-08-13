@@ -266,4 +266,23 @@ public class DateUtil {
         String dateStr = dateFormat.format(date);
         return dateStr;
     }
+
+    /**
+     * 将指定时间字符串转换为对应的格式
+     * @param date 时间字符串 如："2008-10-19 10:11:30"
+     * @param fromFormat 与 date 对应的字符串格式 如："yyyy-MM-dd HH:mm:ss"
+     * @param toFormat 要转换成的格式 如："yyyy年MM月dd日 HH时mm分ss秒"
+     * @return  2008年10月19日 10时11分30秒
+     */
+    public static String dateFormat(String date, String fromFormat, String toFormat){
+        SimpleDateFormat sdf1 = new SimpleDateFormat(fromFormat) ; // 实例化模板对象
+        SimpleDateFormat sdf2 = new SimpleDateFormat(toFormat) ; // 实例化模板对象
+        Date d = null ;
+        try{
+            d = sdf1.parse(date) ; // 将给定的字符串中的日期提取出来
+        }catch(Exception e){ // 如果提供的字符串格式有错误，则进行异常处理
+            e.printStackTrace() ; // 打印异常信息
+        }
+        return sdf2.format(d);// 将日期变为新的格式
+    }
 }
