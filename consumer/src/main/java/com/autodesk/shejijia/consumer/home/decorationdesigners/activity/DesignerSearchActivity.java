@@ -73,7 +73,12 @@ import java.util.Map;
  * @brief 设计师搜索页面 .
  */
 public class DesignerSearchActivity extends NavigationBarActivity implements
-        View.OnClickListener, TextWatcher, View.OnKeyListener, AdapterView.OnItemClickListener, SeekDesignerAdapter.OnItemChatClickListener, PullToRefreshLayout.OnRefreshListener {
+        TextWatcher,
+        View.OnClickListener,
+        View.OnKeyListener,
+        AdapterView.OnItemClickListener,
+        SeekDesignerAdapter.OnItemChatClickListener,
+        PullToRefreshLayout.OnRefreshListener {
 
     private ImageView mIvSearchBack;
     private ClearEditText mCetSearchClick;
