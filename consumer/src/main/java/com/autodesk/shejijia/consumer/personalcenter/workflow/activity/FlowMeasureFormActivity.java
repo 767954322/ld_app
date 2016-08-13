@@ -21,6 +21,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -201,20 +202,30 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             if (wk_cur_sub_node_id_i >= 11) {
                 ll_consumer_send.setVisibility(View.GONE);
                 tvc_measure_form_time.setClickable(false);
-                String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
-                String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
+                String timerStr = mBidders.get(0).getMeasure_time();
+//                String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
+//                String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
 
-                tvc_measure_form_time.setText(timer_form); /// 量房时间 .
+                if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
+                    tvc_measure_form_time.setText("");
+                } else {
+                    tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
+                }
             } else {
                 ll_consumer_send.setVisibility(View.VISIBLE);
                 tvc_measure_form_time.setText("");
             }
         } else if (memType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) { // 设计师
             tvc_measure_form_time.setClickable(false);
-            String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
-            String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
-
-            tvc_measure_form_time.setText(timer_form);
+//            String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
+//            String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
+            String timerStr = mBidders.get(0).getMeasure_time();
+//            tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
+            if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
+                tvc_measure_form_time.setText("");
+            } else {
+                tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
+            }
             switch (wk_cur_sub_node_id_i) {
                 case 11:
                     if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
@@ -231,6 +242,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     }
 
     /// 将省市区Code改成汉字 .
+
     private void updateCityData() {
         String province_name = requirement.getProvince_name();
         String city_name = requirement.getCity_name();

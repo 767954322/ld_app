@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -295,7 +296,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
             @Override
             public void onTimeSelect(Date date) {
                 currentTime = getTime(date);
-                tv_measure_time.setText(currentTime);
+                tv_measure_time.setText(DateUtil.dateFormat(currentTime,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点"));
             }
         });
     }

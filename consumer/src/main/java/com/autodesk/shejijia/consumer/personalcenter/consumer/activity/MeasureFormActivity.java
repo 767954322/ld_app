@@ -29,6 +29,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
@@ -449,7 +450,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
-                tvc_time.setText(currentData);
+                tvc_time.setText(DateUtil.dateFormat(currentData,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点"));
             }
         });
     }
@@ -458,7 +459,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @brief 获取yyyy-MM-dd HH:mm:ss 格式的时间
      */
     public static String getTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年 MM月 dd日 HH点");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }
 
