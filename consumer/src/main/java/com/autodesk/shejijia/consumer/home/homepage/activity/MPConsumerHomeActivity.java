@@ -23,6 +23,7 @@ import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProject
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
@@ -247,6 +248,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     loadMainFragment(mDesignerPersonalCenterFragment, DESIGNER_PERSONAL_FRAGMENT_TAG);
                 }
             } else {
+
                 if (mConsumerPersonalCenterFragment == null) {
                     mConsumerPersonalCenterFragment = new MyDecorationProjectFragment();
                     loadMainFragment(mConsumerPersonalCenterFragment, CONSUMER_PERSONAL_FRAGMENT_TAG);
@@ -278,13 +280,19 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void rightNavButtonClicked(View view) {
         if (isActiveFragment(BidHallFragment.class)) {
-
             mBidHallFragment.handleFilterOption();
         }
 
-        if (isActiveFragment(MPThreadListFragment.class))
+        if (isActiveFragment(MPThreadListFragment.class)) {
             openFileThreadActivity();
+        }
 
+        if (isActiveFragment(MyDecorationProjectFragment.class)) {
+            Intent intent = new Intent(this, IssueDemandActivity.class);
+            mConsumerNickName = TextUtils.isEmpty(mConsumerNickName) ? UIUtils.getString(R.string.anonymity) : mConsumerNickName;
+            intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mConsumerNickName);
+            startActivity(intent);
+        }
 
     }
 
@@ -380,6 +388,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                 if (memberEntity != null
                         && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+                    setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_title_add);
 
                     setTitleForNavbar(UIUtils.getString(R.string.consumer_decoration));
                 }
@@ -536,8 +545,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
      * 网络获取数据并且更新
      */
     private void updateViewFromData() {
-
         if (mConsumerEssentialInfoEntity != null && !TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar()) && MPConsumerHomeActivity.this != null) {
+            mConsumerNickName = mConsumerEssentialInfoEntity.getNick_name();
             ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), user_avatar);
         }
 
@@ -771,7 +780,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private ChooseViewPointer chooseViewPointer;
     private int index;//判断所在fragment
     private int lastIndex;
-    private String mNickNameConsumer;
+    private String mConsumerNickName;
     private boolean isRefush = false;
     final int RESULT_CODE = 101;
     final float POINTER_START_NUMBER = 0F;
@@ -790,7 +799,5 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private BidHallFragment mBidHallFragment;
     private DesignerInfoDetails designerInfoDetails;
     private MyDecorationProjectDesignerFragment mDesignerPersonalCenterFragment;
-    private MyDecorationProjectDesignerFragment mMyDecorationProjectDesignerFragment;
-
 
 }
