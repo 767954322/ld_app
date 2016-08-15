@@ -121,7 +121,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
 //                boolean isName = account_user_name.trim().matches(regex_name);
                 boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
-                boolean isBankNum = branch_bank_name.trim().matches(RegexUtil.PHONE_BLANK);
+                boolean isBankNum = deposit_card.trim().matches(RegexUtil.PHONE_BLANK);
 //                if (!isName) {
 //                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
 //                    break;

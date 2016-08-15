@@ -42,4 +42,8 @@
     <string name="jiechubangding">解绑成功</string>
     <string name="anzhuangweixin">请先安装微信</string>
     <string name="dianzhangchenggong">点赞成功</string>
+
+    <string name="tixian_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态：</string>
+    <string name="tixian_number">提现金额：</string>
+    <string name="tixian_liushuihao">流&#160;&#160;水&#160;&#160;号：</string>
 </resources>
