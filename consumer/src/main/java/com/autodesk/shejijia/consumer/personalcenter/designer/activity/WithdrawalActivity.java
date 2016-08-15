@@ -383,7 +383,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
     //获取数据后操作
     private void updateViewFromData() {
-        new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_detail), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+        new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_detail), null, null, new String[]{UIUtils.getString(R.string.sure)}, WithdrawalActivity.this,
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object o, int position) {

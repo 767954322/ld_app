@@ -10,7 +10,7 @@
 
     <string name="application_successful">申请成功</string>
     <string name="application_failure">申请失败</string>
-    <string name="application_detail">你已成功申请提现\n请在提现记录中查看详情</string>
+    <string name="application_detail">请在提现记录中查看详情</string>
     <string name="application_unbing">解除绑定成功</string>
     <string name="application_unbing_fail">解除失败</string>
 

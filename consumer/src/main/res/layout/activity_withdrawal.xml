@@ -171,6 +171,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_40"
                 android:layout_marginLeft="@dimen/size_10"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 
                 <TextView
