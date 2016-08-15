@@ -35,9 +35,7 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
 
         mOrderContainer = (FrameLayout)rootView.findViewById(R.id.fl_designer_order_beishu_container);
         mBeishuOrder = (TextView) rootView.findViewById(R.id.tv_designer_order_beishu);
-
         mOrder = (TextView) rootView.findViewById(R.id.tv_designer_order);
-
     }
 
     @Override
