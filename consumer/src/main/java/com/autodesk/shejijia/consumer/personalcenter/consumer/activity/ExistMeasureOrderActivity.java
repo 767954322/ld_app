@@ -125,7 +125,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                 try {
                     if (expandFlag != -1) {
                         if (currentTime == null) {
-                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, new String[]{UIUtils.getString(R.string.sure)}, null, ExistMeasureOrderActivity.this,
+                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this,
                                     AlertView.Style.Alert, null).show();
                         } else {
                             if (formatDate(date, currentTime)) {
@@ -153,7 +153,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                             }
                         }
                     } else {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_select_a_project_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, ExistMeasureOrderActivity.this,
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_select_a_project_first), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this,
                                 AlertView.Style.Alert, null).show();
                     }
                 } catch (JSONException e) {
@@ -296,7 +296,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
             @Override
             public void onTimeSelect(Date date) {
                 currentTime = getTime(date);
-                tv_measure_time.setText(DateUtil.dateFormat(currentTime,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点"));
+                tv_measure_time.setText(DateUtil.dateFormat(currentTime, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
             }
         });
     }
