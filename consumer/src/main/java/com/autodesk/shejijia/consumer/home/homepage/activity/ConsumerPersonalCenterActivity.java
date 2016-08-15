@@ -16,12 +16,12 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerEssentialInfoActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -97,7 +97,9 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.rl_personal_b_collect:    /// 消息中心.
-                MyToast.show(ConsumerPersonalCenterActivity.this, UIUtils.getString(R.string.functional_development));
+//                MyToast.show(ConsumerPersonalCenterActivity.this, UIUtils.getString(R.string.functional_development));
+                Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
+                startActivity(intent_messagecenter);
                 break;
 
             case R.id.rl_personal_b_setting:    /// 查看更多设置.

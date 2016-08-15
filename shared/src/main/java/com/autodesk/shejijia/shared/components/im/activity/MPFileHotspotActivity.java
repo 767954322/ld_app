@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.constants.HotSpotsInfo;
@@ -53,6 +52,7 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MPFileHotspotActivity extends NavigationBarActivity
 {
@@ -71,7 +71,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         public int org_img_width;
         public int org_img_height;
         public float img_magnification;
-        public FrameLayout singHotSpotImageView_mask;
+        public RelativeLayout parentLayout;
     }
 
     @Override
@@ -87,7 +87,6 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         super.initView();
 
         mFileHotspotView = (MPFileHotspotView) findViewById(R.id.singHotSpotImageView);
-        singHotSpotImageView_mask = (FrameLayout) findViewById(R.id.singHotSpotImageView_mask);
         mAddHotSpotButton = (ImageButton) findViewById(R.id.add_hot_icon);
         mHotspotsContainer = (RelativeLayout) findViewById(R.id.hotSpots_frame);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -227,10 +226,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     {
         mSendButton = view;
         sendImage();
-        CustomProgress.show(MPFileHotspotActivity.this, "", false, null);
-//        mProgressDialog = new CustomProgressDialog(MPFileHotspotActivity.this);
-//        mProgressDialog.show();
-//        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
 
@@ -354,7 +350,24 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     private void clearHotspots()
     {
         mHotspotsContainer.setVisibility(View.GONE);
-        singHotSpotImageView_mask.removeAllViews();
+
+        RelativeLayout parentLayout = (RelativeLayout) findViewById(R.id.singHotSpotImageView_frame);
+        ArrayList<Integer> indices = new ArrayList<Integer>();
+
+        for (int i = 0; i < parentLayout.getChildCount(); i++) {
+
+            final View view = parentLayout.getChildAt(i);
+
+            Object object = view.getTag(view.getId());
+
+            if(object == null || !object.getClass().equals(Point.class))
+                continue;
+
+            indices.add(i);
+        }
+
+        if(!indices.isEmpty())
+            parentLayout.removeViews(indices.get(0), indices.size());
     }
 
 
@@ -366,8 +379,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         org_img_height = loadedImage.getHeight();
 
         HotspotImageData imageData = new HotspotImageData();
-        imageData.singHotSpotImageView_mask = singHotSpotImageView_mask;
-
+        imageData.parentLayout = (RelativeLayout) findViewById(R.id.singHotSpotImageView_frame);
         imageData.org_img_width = org_img_width;
         imageData.org_img_height = org_img_height;
 
@@ -513,7 +525,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
 
                         attachedImageToAsset();
                         MPFileUtility.removeFile(mLocalImageFileURL);
-                        CustomProgress.cancelDialog();
+                        mProgressBar.setVisibility(View.GONE);
                         MPFileHotspotActivity.this.finish();
                     }
 
@@ -521,7 +533,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
                     public void onFailure()
                     {
                         //TODO error out for resending
-                        CustomProgress.cancelDialog();
+                        mProgressBar.setVisibility(View.GONE);
                         MPFileHotspotActivity.this.finish();
                     }
                 });
@@ -620,6 +632,10 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         intent.putExtra(ImageChatRoomActivity.LOCALIMAGEURL, mLocalImageFileURL);
         intent.putExtra(ImageChatRoomActivity.PARENTTHREADID, mParentThreadId);
         intent.putExtra(BaseChatRoomActivity.MEMBER_TYPE, AdskApplication.getInstance().getMemberEntity().getMember_type());
+
+        if (mProjInfo != null) {
+            intent.putExtra(ImageChatRoomActivity.PROJECT_INFO, mProjInfo);
+        }
 
         startActivityForResult(intent, HotSpotsInfo.imgChatResultCode);
     }
@@ -770,8 +786,6 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     private ImageButton mAddHotSpotButton;
     private View mSendButton;
     private RelativeLayout mHotspotsContainer;
-    private FrameLayout singHotSpotImageView_mask;
-    //    private CustomProgressDialog mProgressDialog;
     private ProgressBar mProgressBar;
     private ViewGroup mOnBoardingLayout;
 

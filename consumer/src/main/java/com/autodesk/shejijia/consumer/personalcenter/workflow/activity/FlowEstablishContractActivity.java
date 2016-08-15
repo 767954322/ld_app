@@ -370,8 +370,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     @Override
-    public void onActivityReenter(int resultCode, Intent data) { // 判断IM跳转到合同，合同跳转支付首款后进行得操作
-        super.onActivityReenter(resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == FirstForContract) {
             finish();
         }
@@ -517,7 +517,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         boolean isMap = renderMap.matches(RegexUtil.POSITIVE_INTEGER_REGEX); //　验证渲染图张数
         boolean isPostNum = consumerPostcode.matches(RegexUtil.POST_NUMBER_REGEX);
 
-        if (!consumerName.isEmpty()) {
+        if (!consumerName.isEmpty() && consumerName.matches(RegexUtil.NAME_REGEX)) {
 
             if (isMobile) {
                 if (TextUtils.isEmpty(consumerPostcode) || isPostNum) {
@@ -567,7 +567,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             showAlertView(R.string.please_fill_in_the_right_phone_number);
             return;
         }
-        showAlertView(R.string.the_name_cannot_be_empty);
+        showAlertView(R.string.no_input_name);
 
     }
 

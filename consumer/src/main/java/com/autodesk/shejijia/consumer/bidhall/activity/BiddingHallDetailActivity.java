@@ -74,7 +74,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         super.initExtraBundle();
         Bundle bundle = getIntent().getExtras();
         needs_id = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID);
-        bid_status = bundle.getBoolean(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS);
         demand_type = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_TYPE);
     }
 
@@ -123,8 +122,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
                 mBidHallEntity = GsonUtil.jsonToBean(str, BidHallDetailEntity.class);
-                KLog.json(TAG, str);
-
+                bid_status = mBidHallEntity.getBidding_status();
                 updateViewFromBidHallDetailData();
             }
 

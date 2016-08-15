@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/size_10"
-                android:background="@drawable/icon_position_normal"/>
+                android:background="@drawable/address_ico"/>
 
             <TextView
                 android:id="@+id/tv_bin_go_address"

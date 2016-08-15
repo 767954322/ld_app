@@ -103,6 +103,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
 
+        offset = 0;
         showListView();
         getMessageData(REFRESH_STATUS);
 

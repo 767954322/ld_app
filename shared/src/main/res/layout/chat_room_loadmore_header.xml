@@ -17,9 +17,18 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="查看更多记录"
+            android:text="@string/chatroom_loadmore_text"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18" />
+
+        <ProgressBar
+            android:id="@+id/loadmore_progressbar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

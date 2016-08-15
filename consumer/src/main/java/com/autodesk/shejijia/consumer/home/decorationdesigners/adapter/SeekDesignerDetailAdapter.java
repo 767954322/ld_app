@@ -51,10 +51,11 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
     public Holder initHolder(View container) {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.mSeekCase = (ImageView) container.findViewById(R.id.img_seek_designer_detail_case);
-        viewHolder.mSeekAddress = (TextView) container.findViewById(R.id.img_seek_designer_detail_address);
+//        viewHolder.mSeekAddress = (TextView) container.findViewById(R.id.img_seek_designer_detail_address);
         viewHolder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
         viewHolder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
         viewHolder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
+        viewHolder.tv_thumb_up = (TextView) container.findViewById(R.id.tv_thumb_up);
         return viewHolder;
     }
 
@@ -79,11 +80,11 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
             } else {
                 ((ViewHolder) holder).mSeekCase.setImageResource(R.drawable.common_case_icon);
             }
-            if (null != mDatas.get(position).getTitle()) {
-                ((ViewHolder) holder).mSeekAddress.setText(mDatas.get(position).getTitle());
-            } else {
-                ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
-            }
+//            if (null != mDatas.get(position).getTitle()) {
+//                ((ViewHolder) holder).mSeekAddress.setText(mDatas.get(position).getTitle());
+//            } else {
+//                ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
+//            }
             if (null != mDatas.get(position).getRoom_type()) {
                 String room_type = mDatas.get(position).getRoom_type();
                 if (mRoom.containsKey(room_type)) {
@@ -114,9 +115,12 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
             } else {
                 ((ViewHolder) holder).mSeekArea.setText(R.string.temporarily_no_data);
             }
+            if (null!=mDatas.get(position).getFavorite_count()){
+                        ((ViewHolder) holder).tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
+            }
         } else {
             ((ViewHolder) holder).mSeekCase.setImageResource(R.drawable.common_case_icon);
-            ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
+//            ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
             ((ViewHolder) holder).mSeekLivingRoom.setText(R.string.temporarily_no_data);
             ((ViewHolder) holder).mSeekStyle.setText(R.string.temporarily_no_data);
             ((ViewHolder) holder).mSeekArea.setText(R.string.temporarily_no_data);
@@ -149,10 +153,11 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
 
     public class ViewHolder extends BaseAdapter.Holder {
         private ImageView mSeekCase;
-        private TextView mSeekAddress;
+//        private TextView mSeekAddress;
         private TextView mSeekLivingRoom;
         private TextView mSeekStyle;
         private TextView mSeekArea;
+        private TextView tv_thumb_up;
 
     }
 

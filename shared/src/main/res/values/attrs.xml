@@ -75,19 +75,19 @@
     </string-array>
 
     <string-array name="design_budget">
-        <item>3000以下</item>
-        <item>3000-6000</item>
-        <item>6000-10000</item>
-        <item>10000-50000</item>
-        <item>50000以上</item>
+        <item>3000元以下</item>
+        <item>3000元-6000元</item>
+        <item>6000元-10000元</item>
+        <item>10000元-50000元</item>
+        <item>50000元以上</item>
     </string-array>
 
     <string-array name="decoration_budget">
-        <item>5万以下</item>
-        <item>5万-10万</item>
-        <item>10万-20万</item>
-        <item>15万-20万</item>
-        <item>20万以上</item>
+        <item>5万元以下</item>
+        <item>5万元-10万元</item>
+        <item>10万元-20万元</item>
+        <item>15万元-20万元</item>
+        <item>20万元以上</item>
     </string-array>
 
     <!--房屋类型-->

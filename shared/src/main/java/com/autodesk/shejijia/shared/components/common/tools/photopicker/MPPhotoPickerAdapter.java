@@ -111,7 +111,7 @@ public class MPPhotoPickerAdapter extends BaseAdapter{
                         .cacheOnDisk(true)
                         .bitmapConfig(Bitmap.Config.RGB_565)
                         .preProcessor(rotator)
-                        .showImageOnLoading(R.drawable.photopicker_thumbnail_placeholder)
+                        .showImageOnLoading(R.drawable.photopicker_placeholder)
                         .build();
 
                 ImageSize imageSize = new ImageSize(imageSide, imageSide);
@@ -157,6 +157,9 @@ public class MPPhotoPickerAdapter extends BaseAdapter{
         @Override
         public Bitmap process(Bitmap bitmap)
         {
+            if (mRotateBy % 360 == 0)
+                return bitmap;
+
             return MPCameraUtils.getRotatedImage(bitmap, mRotateBy);
         }
     }

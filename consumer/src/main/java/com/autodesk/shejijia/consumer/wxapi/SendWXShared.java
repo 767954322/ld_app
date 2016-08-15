@@ -1,16 +1,10 @@
 package com.autodesk.shejijia.consumer.wxapi;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.ConsumerApplication;
-import com.autodesk.shejijia.consumer.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -18,18 +12,8 @@ import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 
-import junit.framework.Assert;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * @author allengu .
@@ -61,7 +45,9 @@ public class SendWXShared {
                 }
                 WXMediaMessage msg = new WXMediaMessage(webpage);
                 msg.title = title;
-                msg.description = description;
+                if (title!=null&&!title.equals("null")){
+                    msg.description = description;
+                }
                 Bitmap thumbBmp = Bitmap.createScaledBitmap(loadedImage, 150, 150, true);
                 byte[] bytes = bmpToByteArray(thumbBmp, true);
                 msg.thumbData = bytes;

@@ -22,6 +22,7 @@ public class ApiManager {
      */
     public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DOCKER_DESIGN;
 
+
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
 
@@ -49,7 +50,6 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_DEV;
                 break;
-
             case UrlConstants.RUNNING_UAT:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_UAT;
                 break;
@@ -90,7 +90,6 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_DEV;
                 break;
-
             case UrlConstants.RUNNING_ALPHA:
             default:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_ALPHA;
@@ -136,6 +135,9 @@ public class ApiManager {
             //xin
             case UrlConstants.RUNNING_DOCKER_DESIGN:
                 main_design = UrlConstants.DOCKER_HAWKEYE_DESIGN + UrlConstants.MP_MAIN_DESIGN;
+break;
+            case UrlConstants.RUNNING_DOKER:
+                main_design = UrlConstants.DOKER_MP_DESIGN + UrlConstants.MP_MAIN_DESIGN;
                 break;
         }
         return main_design;
@@ -178,6 +180,9 @@ public class ApiManager {
                 main_member = UrlConstants.DOCKER_HAWKEYE_MEMBER + UrlConstants.MP_MAIN_MEMBER;
                 break;
 
+            case UrlConstants.RUNNING_DOKER:
+                main_member = UrlConstants.DOKER_MP_MEMBER + UrlConstants.MP_MAIN_MEMBER;
+                break;
         }
         return main_member;
     }
@@ -218,7 +223,9 @@ public class ApiManager {
             case UrlConstants.RUNNING_DOCKER_DESIGN:
                 main_transaction = UrlConstants.DOCKER_HAWKEYE_TRANSCATION + UrlConstants.MP_MAIN_TRANSACTION;
                 break;
-
+            case UrlConstants.RUNNING_DOKER:
+                main_transaction = UrlConstants.DOKER_MP_TRANSACTION + UrlConstants.MP_MAIN_TRANSACTION;
+                break;
         }
         return main_transaction;
     }
@@ -306,5 +313,43 @@ public class ApiManager {
     }
 
     private ApiManager() {
+    }
+
+    /**
+     * 获得html5分享界面的url
+     *
+     * @return 我的资产url公共部分
+     */
+    public static String getHtml5Url(String runningDevelopment,String caseId) {
+        String main_transaction = null;
+        switch (runningDevelopment) {
+            case UrlConstants.RUNNING_DEVELOP:
+                main_transaction = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_QA:
+                main_transaction = UrlConstants.QA_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_UAT:
+                main_transaction = UrlConstants.UAT_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_ALPHA:
+                main_transaction = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_PRODUCTION:
+                main_transaction = UrlConstants.PRODUCTION_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_DEV:
+                main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+            case UrlConstants.RUNNING_DOKER:
+                main_transaction = UrlConstants.DOKER_MP_TRANSACTION + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+        }
+        return main_transaction;
     }
 }

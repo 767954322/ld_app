@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/chat_command_row_rootlayout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_horizontal"
@@ -20,6 +22,7 @@
         android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/chat_command_row_ll1"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/chat_room_commandcell_avatarparent_margin"
         android:layout_height="wrap_content"
@@ -34,9 +37,12 @@
             android:layout_marginTop="@dimen/chat_room_commandcell_avatar_margintop"
             android:layout_marginLeft="@dimen/chat_room_commandcell_avatar_marginleft"
             android:src="@drawable/default_useravatar"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            custom:border_width="@dimen/chat_room_cell_avatar_borderwidth"
+            custom:border_color="@color/chat_room_commandcell_background"/>
 
         <LinearLayout
+            android:id="@+id/chat_command_row_ll2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -51,6 +57,7 @@
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/chat_room_commandcell_text_margintop"
                 android:layout_marginRight="@dimen/chat_room_commandcell_text_marginright"
+                android:textColor="@color/black"
                 android:textSize="@dimen/chat_room_cell_message_fontsize"/>
 
             <Button

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_msg_chat_activity_detile_rootlayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-    >
+                android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/ll_im_all"
@@ -24,6 +24,7 @@
             android:dividerHeight="@dimen/size_4"/>
 
         <LinearLayout
+            android:id="@+id/activity_msg_chat_activity_detile_ll1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

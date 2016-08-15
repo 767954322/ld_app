@@ -56,7 +56,7 @@ public class MPFileHotspotView extends ImageView {
 
     private Activity activity;
     private RelativeLayout hotSpots_frame;
-    private FrameLayout singHotSpotImageView_mask;
+    private RelativeLayout mParentLayout;
 
     private boolean isMoving = false;
     private boolean isEnableTouch = false;
@@ -404,7 +404,7 @@ public class MPFileHotspotView extends ImageView {
         this.org_img_width = imageData.org_img_width;
         this.org_img_height = imageData.org_img_height;
         this.img_magnification = imageData.img_magnification;
-        this.singHotSpotImageView_mask = imageData.singHotSpotImageView_mask;
+        this.mParentLayout = imageData.parentLayout;
 
         hot_icon_width = getResources().getDimension(R.dimen.size_42);
         hotSpots_frame = (RelativeLayout) activity.findViewById(R.id.hotSpots_frame);
@@ -1999,11 +1999,8 @@ public class MPFileHotspotView extends ImageView {
         if (originalImageInfo.isEmpty())
             originalImageInfo.set(currentImageInfo.left,currentImageInfo.top,currentImageInfo.right,currentImageInfo.bottom);
 
-
         int currentLeft = (int) currentImageInfo.left;
         int currentTop = (int) currentImageInfo.top;
-        int width = (int) currentImageInfo.width();
-        int height = (int) currentImageInfo.height();
 
         float currentScale = MathUtils.getMatrixScale(mOuterMatrix)[0];
         int current_hot_icon_width = getHotSpotWH(currentScale);
@@ -2013,22 +2010,15 @@ public class MPFileHotspotView extends ImageView {
         tempPt.y = (int) (((float) pt.y / (float) org_img_height) * originalImageInfo.height());
         view.setTag(view.getId(), new Point(tempPt.x, tempPt.y));
 
-        FrameLayout.LayoutParams ll = new FrameLayout.LayoutParams((int) (hot_icon_width), (int) (hot_icon_width));
-        ll.leftMargin = (int) (tempPt.x * currentScale - current_hot_icon_width / 2);
-        ll.topMargin = (int) (tempPt.y * currentScale - current_hot_icon_width);
-        view.setLayoutParams(ll);
+        RelativeLayout.LayoutParams tmpLL = new RelativeLayout.LayoutParams((int) (hot_icon_width), (int) (hot_icon_width));
+        tmpLL.leftMargin = (int) (tempPt.x * currentScale - current_hot_icon_width / 2);
+        tmpLL.topMargin = (int) (tempPt.y * currentScale - current_hot_icon_width);
 
-        RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) singHotSpotImageView_mask.getLayoutParams();
+        tmpLL.topMargin += currentTop;
+        tmpLL.leftMargin += currentLeft;
 
-        rl.leftMargin = currentLeft;
-        rl.topMargin = currentTop;
-
-        rl.width = width;
-        rl.height = height;
-
-        singHotSpotImageView_mask.setLayoutParams(rl);
-
-        singHotSpotImageView_mask.addView(view);
+        view.setLayoutParams(tmpLL);
+        mParentLayout.addView(view);
 
         view.setOnClickListener(new OnClickListener() {
             @Override
@@ -2052,42 +2042,30 @@ public class MPFileHotspotView extends ImageView {
 
         getImageBound(currentImageInfo);
 
-        RelativeLayout.LayoutParams rl = (RelativeLayout.LayoutParams) singHotSpotImageView_mask.getLayoutParams();
-
-        rl.leftMargin = (int) currentImageInfo.left;
-        rl.topMargin = (int) currentImageInfo.top;
-
-        rl.width = (int) currentImageInfo.width();
-        rl.height = (int) currentImageInfo.height();
-
-        singHotSpotImageView_mask.setLayoutParams(rl);
-
-
         float currentScale = MathUtils.getMatrixScale(mOuterMatrix)[0];
 
-        for (int i = 0; i < singHotSpotImageView_mask.getChildCount(); i++) {
+        for (int i = 0; i < mParentLayout.getChildCount(); i++) {
 
-            final View view = singHotSpotImageView_mask.getChildAt(i);
+            final View view = mParentLayout.getChildAt(i);
 
-            Point tempPt = (Point) view.getTag(view.getId());
-//            tempPt.x = (int) (((float) entity.getX_coordinate() / (float) org_img_width) * currentImageInfo.width());
-//            tempPt.y = (int) (((float) entity.getY_coordinate() / (float) org_img_height) * currentImageInfo.height());
+            Object object = view.getTag(view.getId());
 
-            FrameLayout.LayoutParams ll = (FrameLayout.LayoutParams) view.getLayoutParams();
+            if(object == null || !object.getClass().equals(Point.class))
+                continue;
+
+            Point tempPt = (Point) object;
+            RelativeLayout.LayoutParams ll = (RelativeLayout.LayoutParams) view.getLayoutParams();
 
             int current_hot_icon_width = getHotSpotWH(currentScale);
-
-//            KLog.d("afdsfdsafdasf", currentScale + " : " + current_hot_icon_width + " : " + hot_icon_width);
-
             ll.leftMargin = (int) (tempPt.x * currentScale) - current_hot_icon_width / 2;
             ll.topMargin = (int) (tempPt.y * currentScale) - current_hot_icon_width;
 
             ll.width = current_hot_icon_width;
             ll.height = current_hot_icon_width;
 
+            ll.topMargin += currentImageInfo.top;
+            ll.leftMargin += currentImageInfo.left;
             view.setLayoutParams(ll);
-
-//            singHotSpotImageView_mask.addView(view);
         }
 
     }
@@ -2114,34 +2092,6 @@ public class MPFileHotspotView extends ImageView {
 
         animatorSet.start();
 
-    }
-
-    /**
-     * 判断点击座标位置是否靠近热点
-     *
-     * @param pt 点击座标
-     */
-    private boolean isTouchingHotSpot(Point pt) {
-
-        float currentScale = MathUtils.getMatrixScale(mOuterMatrix)[0];
-
-        float shiftY = (hot_icon_width / currentScale) / 2;
-
-        for (int i = 0; i < singHotSpotImageView_mask.getChildCount(); i++) {
-
-            final View view = singHotSpotImageView_mask.getChildAt(i);
-
-            Point tempPt = (Point) view.getTag(view.getId());
-            float deltaX = (tempPt.x - pt.x) * img_magnification;
-            float deltaY = (tempPt.y - pt.y) * img_magnification - shiftY;
-
-            int dist = (int) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-            if (dist < shiftY)
-                return true;
-        }
-
-        return false;
     }
 
     public void setHotSpotImageViewListener(HotSpotImageViewListender listener) {

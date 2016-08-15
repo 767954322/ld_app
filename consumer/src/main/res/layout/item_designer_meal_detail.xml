@@ -49,4 +49,10 @@
         </LinearLayout>
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/ll_designer_meal_detail"
+        android:background="#e3e3e3"
+        />
 </RelativeLayout>

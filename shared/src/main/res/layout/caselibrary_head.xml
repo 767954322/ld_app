@@ -34,6 +34,7 @@
         </LinearLayout>
 
         <ImageView
+            android:layout_marginBottom="@dimen/size_4"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_20"
             android:layout_gravity="center"
@@ -65,7 +66,7 @@
     <ImageView
         android:layout_below="@id/ll_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_0.5"
+        android:layout_height="0.1dp"
         android:layout_gravity="center"
         android:background="@color/bg_d7"/>
 </RelativeLayout>

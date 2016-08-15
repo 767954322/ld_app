@@ -4,6 +4,7 @@
                 android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_marginTop="@dimen/size_2"
         android:scaleType="fitXY"
         android:id="@+id/case_library_item_iv"
         android:layout_width="match_parent"

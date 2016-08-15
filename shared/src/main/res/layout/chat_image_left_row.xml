@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/chat_image_left_row_rootlayout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
@@ -18,6 +20,7 @@
         android:visibility="gone"/>
 
     <LinearLayout
+        android:id="@+id/chat_image_left_row_ll1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -30,9 +33,12 @@
             android:layout_height="@dimen/chat_room_cell_avatar_side"
             android:layout_marginLeft="@dimen/chat_room_imagecell_avatar_sidemargin"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_useravatar"/>
+            android:src="@drawable/default_useravatar"
+            custom:border_width="@dimen/chat_room_cell_avatar_borderwidth"
+            custom:border_color="@color/chat_room_background"/>
 
         <RelativeLayout
+            android:id="@+id/chat_image_left_row_rl1"
             android:layout_marginTop="@dimen/chat_room_imagecell_image_margintop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -81,6 +87,7 @@
                 android:layout_marginTop="@dimen/chat_room_imagecell_progressbar_margintop"/>
         </RelativeLayout>
         <LinearLayout
+            android:id="@+id/chat_image_left_row_ll2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>

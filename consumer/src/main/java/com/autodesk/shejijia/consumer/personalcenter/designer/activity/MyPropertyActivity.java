@@ -13,9 +13,11 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -23,6 +25,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -46,6 +49,8 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         btn_my_property_withdrawal = (Button) findViewById(R.id.btn_my_property_withdrawal);
         rl_my_property_transaction_record = (RelativeLayout) findViewById(R.id.rl_my_property_transaction_record);
         rl_my_property_withdrawal_record = (RelativeLayout) findViewById(R.id.rl_my_property_withdrawal_record);
+        rlTiXian = (RelativeLayout) findViewById(R.id.rl_tixian);
+
     }
 
     @Override
@@ -61,6 +66,10 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         if (null != memberEntity) {
             designer_id = memberEntity.getAcs_member_id();
             getMyPropertyData(designer_id);
+            String hs_uid = memberEntity.getHs_uid();
+            String acs_Member_Id = memberEntity.getMember_id();
+            ifIsLohoDesiner(acs_Member_Id, hs_uid);
+            getRealNameAuditStatus(designer_id, hs_uid);
         }
     }
 
@@ -83,6 +92,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
             case R.id.btn_my_property_withdrawal:          /// 我的提现页面 .
                 Intent intent = new Intent(this, WithdrawalActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString("real_name", real_name);
                 bundle.putSerializable(Constant.DesignerMyPropertyKey.MY_PROPERTY_BEAN, myPropertyBean);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 0);
@@ -138,6 +148,67 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
         });
     }
 
+
+    /**
+     * 判断设计师类型
+     *
+     * @param desiner_id
+     * @param hs_uid
+     */
+    private void ifIsLohoDesiner(String desiner_id, String hs_uid) {
+
+        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
+                    int is_loho = jsonObject1.getInt("is_loho");
+                    if (is_loho != 0) {
+                        rlTiXian.setVisibility(View.GONE);
+                    } else {
+                        rlTiXian.setVisibility(View.VISIBLE);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+    }
+
+
+    /**
+     * 是否进行了实名认证
+     *
+     * @param designer_id
+     * @param hs_uid
+     */
+    public void getRealNameAuditStatus(String designer_id, String hs_uid) {
+        MPServerHttpManager.getInstance().getRealNameAuditStatus(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String auditInfo = GsonUtil.jsonToString(jsonObject);
+                RealName realNameBean = GsonUtil.jsonToBean(auditInfo, RealName.class);
+                real_name = realNameBean.getReal_name();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                if (MyPropertyActivity.this != null) {
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MyPropertyActivity.this,
+                            AlertView.Style.Alert, null).show();
+                }
+            }
+        });
+    }
+
+
     /**
      * 设置提现按钮不可点击
      */
@@ -154,8 +225,8 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
     private void setBtnCanpress() {
         btn_my_property_withdrawal.setOnClickListener(this);
         btn_my_property_withdrawal.setEnabled(true);
-        btn_my_property_withdrawal.setBackgroundResource(R.drawable.bg_common_btn_blue);
-        btn_my_property_withdrawal.setTextColor(UIUtils.getColor(R.color.white));
+        btn_my_property_withdrawal.setBackgroundResource(R.drawable.bg_common_btn_gap_blue);
+        btn_my_property_withdrawal.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
     }
 
 
@@ -163,8 +234,10 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
     private Button btn_my_property_withdrawal;
     private RelativeLayout rl_my_property_transaction_record;
     private RelativeLayout rl_my_property_withdrawal_record;
+    private RelativeLayout rlTiXian;
 
     private MyPropertyBean myPropertyBean;
+    private String real_name;
 
     private String designer_id;
     private String amount;

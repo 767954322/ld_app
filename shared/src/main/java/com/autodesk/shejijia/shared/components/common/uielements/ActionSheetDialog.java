@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author   Malidong .
- * @version  v1.0 .
- * @date       2016-6-13 .
- * @file          ActionSheetDialog.java .
- * @brief      At the bottom of the pop-up  .
+ * @author Malidong .
+ * @version v1.0 .
+ * @date 2016-6-13 .
+ * @file ActionSheetDialog.java .
+ * @brief At the bottom of the pop-up  .
  */
 public class ActionSheetDialog {
     private Context context;
@@ -191,6 +191,12 @@ public class ActionSheetDialog {
 
             lLayout_content.addView(textView);
         }
+    }
+
+    public void setCancelTextColor(int color) {
+
+        txt_cancel.setTextColor(color);
+
     }
 
     public void show() {

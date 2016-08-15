@@ -211,11 +211,14 @@
     <dimen name="chat_bottombar_textfield_marginright">60dp</dimen>
     <dimen name="chat_bottombar_hinttext_fontsize">16sp</dimen>
     <dimen name="chat_bottombar_toolview_marginright">15dp</dimen>
+    <dimen name="chat_bottombar_toolview_edittext_sidepadding">4dp</dimen>
+    <dimen name="chat_bottombar_toolview_edittext_verticalpadding">8dp</dimen>
     <dimen name="chat_bottombar_sendbutton_height">30dp</dimen>
     <dimen name="chat_bottombar_sendbutton_width">45dp</dimen>
     <dimen name="chat_bottombar_sendbutton_marginright">7dp</dimen>
 
-    <dimen name="chat_toolview_button_side">40dp</dimen>
+    <dimen name="chat_toolview_minheight">50dp</dimen>
+    <dimen name="chat_toolview_button_side">30dp</dimen>
     <dimen name="chat_toolview_button_verticalmargin">5dp</dimen>
     <dimen name="chat_toolview_button_sidemargin">40dp</dimen>
 
@@ -226,6 +229,7 @@
     <dimen name="chat_room_cell_avatar_side">60dp</dimen>
     <dimen name="chat_room_cell_message_fontsize">15sp</dimen>
     <dimen name="chat_room_cell_messagetime_fontsize">12sp</dimen>
+    <dimen name="chat_room_cell_avatar_borderwidth">1dp</dimen>
 
     <dimen name="chat_room_textcell_sidemargin">2dp</dimen>
     <dimen name="chat_room_textcell_content_margin">10dp</dimen>
@@ -287,7 +291,8 @@
     <dimen name="chat_list_common_minheight">80dp</dimen>
     <dimen name="chat_list_common_sidemargin">10dp</dimen>
     <dimen name="chat_list_common_title_margintop">20dp</dimen>
-    <dimen name="chat_list_common_title_fontsize">15sp</dimen>
+    <dimen name="chat_list_common_title_fontsize">17sp</dimen>
+    <dimen name="chat_list_common_content_fontsize">16sp</dimen>
     <dimen name="chat_list_common_message_margintop">4dp</dimen>
     <dimen name="chat_list_common_message_marginbottom">10dp</dimen>
     <dimen name="chat_list_common_message_paddingright">15dp</dimen>
@@ -301,6 +306,8 @@
 
     <dimen name="chat_list_filelist_avatar_side">70dp</dimen>
     <dimen name="chat_list_filelist_avatar_verticalmargin">5dp</dimen>
+
+    <dimen name="navbar_icon_padding">8dp</dimen>
 
     <!--标题文字大小-->
     <dimen name="textSize_alert_title">22sp</dimen>

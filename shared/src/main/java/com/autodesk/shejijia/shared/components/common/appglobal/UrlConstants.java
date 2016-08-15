@@ -29,6 +29,9 @@ public final class UrlConstants {
 //    public static final String RUNNING_DOCKER_MENBER = "RUNNING_DOCKER_MENBER";
 //    /// DOCKER_TRANSACTION
 //    public static final String RUNNING_DOCKER_TRANSACTION = "RUNNING_DOCKER_TRANSACTION";
+    //
+    public static final String RUNNING_DOKER = "RUNNING_DOKER";
+
 
     /**
      * 如需更改环境，需到ApiManager中修改RUNNING_DEVLEOPMENT的值
@@ -100,6 +103,18 @@ public final class UrlConstants {
     /// alpha-dev环境 .
     public static final String DEV_MP_MAIN = "http://dev-api.gdfcx.net";
 
+    /**
+     * willson本地测试环境
+     * transaction-app  192.168.150.103:8080
+     * member-app 192.168.150.104:8080
+     * design-app :   192.168.150.106:8080
+     */
+
+
+    public static final String DOKER_MP_TRANSACTION = "http://192.168.88.172:8080";
+    public static final String DOKER_MP_MEMBER = "http://192.168.88.173:8080";
+    public static final String DOKER_MP_DESIGN = "http://192.168.88.175:8080";
+
     /// PRODUCTION .
     public static final String PRODUCTION_MP_MAIN = "http://api.shejijia.com";
 
@@ -112,6 +127,9 @@ public final class UrlConstants {
     public static final String MP_MAIN_TRANSACTION = "/transaction-app/v1/api";
     public static final String MP_MAIN_DESIGN = "/design-app/v1/api";
     public static final String MP_MAIN_MEMBER = "/member-app/v1/api";
+
+    //分享界面的url
+    public static final String MP_MAIN_SHARE= "/share/2dcase.html?caseid=";
 
     /**
      * 搜索.
@@ -144,7 +162,7 @@ public final class UrlConstants {
      * 点赞接口
      * http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/{asset_id}    
      */
-    public static final String URL_GET_CASE_DETAILS_LIKE = MAIN_DESIGN + "/cases/like/";
+    public static final String URL_GET_CASE_DETAILS_LIKE = MAIN_DESIGN + "/designers/d2/cases/like/";
 
     /**
      * 实名认证.
@@ -288,6 +306,10 @@ public final class UrlConstants {
      * 提现确认并提交 .
      */
     public static final String URL_WITHDRAW_BALANCE = MAIN_TRANSACTION + "/withdraw/balance/";
+    //String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+    //           http://192.168.150.103:8080/transaction-app/v1/api/withdraw/balance/0
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+    public static final String URL_WITHDRAW_MEMBERS = MAIN_TRANSACTION + "/members/";
 
     /**
      * 北舒套餐聊天入口

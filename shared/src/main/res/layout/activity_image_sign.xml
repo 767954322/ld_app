@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_image_sign_rootlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipChildren="false">
@@ -18,12 +19,6 @@
             android:id="@+id/singHotSpotImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-        <FrameLayout
-            android:id="@+id/singHotSpotImageView_mask"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
 
         <ImageButton
             android:id="@+id/add_hot_icon"

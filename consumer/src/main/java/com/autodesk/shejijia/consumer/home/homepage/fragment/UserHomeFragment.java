@@ -18,12 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
-import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
@@ -34,10 +28,13 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHomeCaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
+import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
@@ -45,13 +42,15 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
-
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -109,6 +108,9 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
     }
 
+
+
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -164,7 +166,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                    Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                    final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
@@ -176,14 +178,31 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                         int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                    } else {
-
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                        getActivity().startActivity(intent);
 
+                    } else {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
+                            }
+
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String thread_id = jsonObject.getString("thread_id");
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                    getActivity().startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
-                    getActivity().startActivity(intent);
                 }
             });
         } else {
@@ -328,15 +347,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         /**
          * requirement btn发布设计需求
          */
-        requirementButton = new FloatingActionButton(activity);
-        requirementButton.setLabelText(UIUtils.getString(R.string.requirements));
-        requirementButton.setButtonSize(FloatingActionButton.SIZE_MINI);
-        requirementButton.setImageResource(R.drawable.icon_release_requirements_normal);
-        requirementButton.setColorNormal(Color.TRANSPARENT);
-        requirementButton.setColorPressed(Color.TRANSPARENT);
-        requirementButton.setTag(REQUIREMENT_BUTTON_TAG);
-        mFloatingActionsMenu.addMenuButton(requirementButton);
-        requirementButton.setOnClickListener(this);
+        initRequirementBtn();
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -349,29 +360,12 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         /**
          * find designer btn设计师
          */
-        findDesignerButton = new FloatingActionButton(activity);
-        findDesignerButton.setLabelText(UIUtils.getString(R.string.find_designer));
-        findDesignerButton.setButtonSize(FloatingActionButton.SIZE_MINI);
-        findDesignerButton.setImageResource(R.drawable.icon_find_designer_normal);
-        findDesignerButton.setColorNormal(Color.TRANSPARENT);
-        findDesignerButton.setColorPressed(Color.TRANSPARENT);
-        findDesignerButton.setTag(FIND_DESIGNER_BUTTON_TAG);
-        mFloatingActionsMenu.addMenuButton(findDesignerButton);
-        findDesignerButton.setOnClickListener(this);
+        initFindDesignerBtn();
 
         /**
          * case library btn案例库
          */
-        caseLibraryButton = new FloatingActionButton(activity);
-        caseLibraryButton.setLabelText(UIUtils.getString(R.string.case_library));
-        caseLibraryButton.setButtonSize(FloatingActionButton.SIZE_MINI);
-        caseLibraryButton.setImageResource(R.drawable.icon_case_library_normal);
-        caseLibraryButton.setColorNormal(Color.TRANSPARENT);
-        caseLibraryButton.setColorPressed(Color.TRANSPARENT);
-        mFloatingActionsMenu.addMenuButton(caseLibraryButton);
-        caseLibraryButton.setTag(CASE_LIBRARY_BUTTON_TAG);
-
-        caseLibraryButton.setOnClickListener(this);
+        initCaseLibraryBtn();
 
 
         mFloatingActionsMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
@@ -391,6 +385,49 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             }
         });
     }
+
+    private void initRequirementBtn() {
+        if (null == requirementButton)
+            requirementButton = new FloatingActionButton(activity);
+        requirementButton.setLabelText(UIUtils.getString(R.string.requirements));
+        requirementButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        requirementButton.setImageResource(R.drawable.icon_release_requirements_normal);
+        requirementButton.setColorNormal(Color.TRANSPARENT);
+        requirementButton.setColorPressed(Color.TRANSPARENT);
+        requirementButton.setTag(REQUIREMENT_BUTTON_TAG);
+        mFloatingActionsMenu.addMenuButton(requirementButton);
+        requirementButton.setOnClickListener(this);
+    }
+
+    private void initFindDesignerBtn() {
+        if (null == findDesignerButton)
+            findDesignerButton = new FloatingActionButton(activity);
+        findDesignerButton.setLabelText(UIUtils.getString(R.string.find_designer));
+        findDesignerButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        findDesignerButton.setImageResource(R.drawable.icon_find_designer_normal);
+        findDesignerButton.setColorNormal(Color.TRANSPARENT);
+        findDesignerButton.setColorPressed(Color.TRANSPARENT);
+        findDesignerButton.setTag(FIND_DESIGNER_BUTTON_TAG);
+        mFloatingActionsMenu.addMenuButton(findDesignerButton);
+        findDesignerButton.setOnClickListener(this);
+    }
+
+    private void initCaseLibraryBtn() {
+        if (null == caseLibraryButton)
+             caseLibraryButton = new FloatingActionButton(activity);
+        caseLibraryButton.setLabelText(UIUtils.getString(R.string.case_library));
+        caseLibraryButton.setButtonSize(FloatingActionButton.SIZE_MINI);
+        caseLibraryButton.setImageResource(R.drawable.icon_case_library_normal);
+        caseLibraryButton.setColorNormal(Color.TRANSPARENT);
+        caseLibraryButton.setColorPressed(Color.TRANSPARENT);
+        mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+        caseLibraryButton.setTag(CASE_LIBRARY_BUTTON_TAG);
+
+        caseLibraryButton.setOnClickListener(this);
+    }
+
+
+
 
     private void createCustomAnimation() {
         AnimatorSet set = new AnimatorSet();
@@ -476,29 +513,21 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     @Override
     public void onStart() {
         super.onStart();
-
+        mFloatingActionsMenu.removeAllMenuButtons();
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-            /// hide the requirement btn .
-            // mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.removeAllMenuButtons();
-            mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.addMenuButton(findDesignerButton);
-            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+            initRequirementBtn();
+            initFindDesignerBtn();
+            initCaseLibraryBtn();
 
         } else if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            /// hide the requirement btn .
-            // mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.removeAllMenuButtons();
-            mFloatingActionsMenu.addMenuButton(findDesignerButton);
-            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+            initFindDesignerBtn();
+            initCaseLibraryBtn();
 
         } else {
-
-            mFloatingActionsMenu.removeAllMenuButtons();
-            mFloatingActionsMenu.addMenuButton(requirementButton);
-            mFloatingActionsMenu.addMenuButton(findDesignerButton);
-            mFloatingActionsMenu.addMenuButton(caseLibraryButton);
+            initRequirementBtn();
+            initFindDesignerBtn();
+            initCaseLibraryBtn();
 
         }
     }

@@ -111,12 +111,15 @@ public class MPPhotoAlbumAdapter extends BaseAdapter
 
             int numPhotos = album.albumSize;
 
+            // Set visible by default; needed because we are recycling views
+            row.subtitleLabel.setVisibility(View.VISIBLE);
+
             if (numPhotos > 1)
-                row.subtitleLabel.setText(numPhotos + " " +
-                        mContext.getString(R.string.photopicker_album_subtitle_multiple));
+                row.subtitleLabel.setText(String.format("%d %s", numPhotos,
+                        mContext.getString(R.string.photopicker_album_subtitle_multiple)));
             else if (numPhotos == 1)
-                row.subtitleLabel.setText(numPhotos + " " +
-                        mContext.getString(R.string.photopicker_album_subtitle_single));
+                row.subtitleLabel.setText(String.format("%d %s", numPhotos,
+                        mContext.getString(R.string.photopicker_album_subtitle_single)));
             else
                 row.subtitleLabel.setVisibility(View.GONE);
 
@@ -141,7 +144,7 @@ public class MPPhotoAlbumAdapter extends BaseAdapter
                         new ImageViewAware(row.thumbnail), options, imageSize, null, null);
             else
                 row.thumbnail.setImageDrawable(mContext.getResources().getDrawable(
-                        R.drawable.photopicker_thumbnail_placeholder));
+                        R.drawable.photopicker_placeholder));
         }
         catch (Exception e)
         {

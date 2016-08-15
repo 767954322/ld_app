@@ -13,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -56,7 +58,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     protected void initView() {
         super.initView();
 
-        mBottomCustomLayout = (RelativeLayout) findViewById(R.id.chat_tool_parentlayout);
+        mBottomCustomLayout = (LinearLayout) findViewById(R.id.chat_tool_parentlayout);
         mSelectImageButton = (ImageView) findViewById(R.id.chat_selectphoto);
         mSelectTakeImageButton = (ImageView) findViewById(R.id.chat_takephoto);
         mWorkflowButton = (ImageView) findViewById(R.id.chat_custom_button);
@@ -75,7 +77,6 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mIsToolViewOpen = false;
-
 
 
     }
@@ -185,20 +186,39 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.chat_selectphoto) {
-            onSelectPhotoClicked();
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                onSelectPhotoClicked();
+            }
 
         } else if (i == R.id.chat_takephoto) {
-            onTakeSnapshotClicked();
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                onTakeSnapshotClicked();
+            }
 
         } else if (i == R.id.chat_custom_button) {
-            if (mIWorkflowDelegate != null)
-            {
-                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId);
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                if (mIWorkflowDelegate != null) {
+                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId, mReceiverHsUid);
+                }
             }
+
         } else if (i == R.id.nav_secondary_imageButton) {
-            if (mIWorkflowDelegate != null)
-            {
-            	mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, designerId);
+
+            if (SingleClickUtils.isFastDoubleClick()) {
+                Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
+            } else {
+                if (mIWorkflowDelegate != null) {
+                    mIWorkflowDelegate.onChatRoomSupplementryButtonClicked(this, mAssetId, designerId);
+                }
             }
         }
     }
@@ -491,7 +511,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) { //消费者
             mWorkflowButton.setVisibility(View.VISIBLE);
-            mWorkflowButton.setBackgroundResource(R.drawable.amount_room_ico);
+            mWorkflowButton.setImageDrawable(getResources().getDrawable(R.drawable.amount_room_ico));
         }
 
     }
@@ -510,11 +530,11 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
                 wk_cur_sub_node_idi = Integer.valueOf(projectInfo.current_subNode);
 
             if (mIWorkflowDelegate != null) {
-                int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo,ifIsDesiner);
+                int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo, ifIsDesiner);
 
                 if (imageResId > 0) {
                     mWorkflowButton.setVisibility(View.VISIBLE);
-                    mWorkflowButton.setBackgroundResource(imageResId);
+                    mWorkflowButton.setImageDrawable(getResources().getDrawable(imageResId));
                 } else if (imageResId == -1) {
                     mWorkflowButton.setVisibility(View.GONE);
                 }
@@ -528,7 +548,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
 
     private RelativeLayout mAudioParentView;
-    private RelativeLayout mBottomCustomLayout;
+    private LinearLayout mBottomCustomLayout;
     private ImageView mSelectImageButton;
     private ImageView mSelectTakeImageButton;
     private ImageView mWorkflowButton;

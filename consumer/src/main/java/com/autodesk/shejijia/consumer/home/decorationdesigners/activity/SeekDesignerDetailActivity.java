@@ -16,24 +16,22 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FollowingDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -49,6 +47,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -61,7 +60,6 @@ import java.util.ArrayList;
  * @brief 查看设计师详情页面 .
  */
 public class SeekDesignerDetailActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, SeekDesignerDetailAdapter.OnItemCaseLibraryClickListener {
-
 
 
     @Override
@@ -84,16 +82,16 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mIvCertification = (ImageView) mHeader.findViewById(R.id.img_seek_designer_detail_certification);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
         mTvYeas = (TextView) mHeader.findViewById(R.id.tv_seek_designer_detail_yeas);
-        mTvStyle = (TextView) mHeader.findViewById(R.id.tv_seek_designer_detail_style);
         mTvDesignFee = (TextView) mHeader.findViewById(R.id.tv_seek_designer_design_fee);
         mTvMeasureFee = (TextView) mHeader.findViewById(R.id.tv_seek_designer_detail_measure_fee);
         mBtnChat = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_chat);
         mBtnMeasure = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_optional_measure);
+        mTvStyle = (TextView) mHeader.findViewById(R.id.tv_seek_designer_detail_style);
 
-        case_2d_btn = (TextView) mHeader.findViewById(R.id.case_2d_btn);
-        case_3d_btn = (TextView) mHeader.findViewById(R.id.case_3d_btn);
-        consumer_appraise = (TextView) mHeader.findViewById(R.id.consumer_appraise);
-        chooseViewPointer = (ChooseViewPointer) mHeader.findViewById(R.id.choose_point);
+//        case_2d_btn = (TextView) mHeader.findViewById(R.id.case_2d_btn);
+//        case_3d_btn = (TextView) mHeader.findViewById(R.id.case_3d_btn);
+//        consumer_appraise = (TextView) mHeader.findViewById(R.id.consumer_appraise);
+//        chooseViewPointer = (ChooseViewPointer) mHeader.findViewById(R.id.choose_point);
 
         width = getWindowWidth();
 
@@ -128,9 +126,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mBtnMeasure.setOnClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
         mBtnChat.setOnClickListener(this);
-        case_3d_btn.setOnClickListener(this);
-        case_2d_btn.setOnClickListener(this);
-        consumer_appraise.setOnClickListener(this);
+//        case_3d_btn.setOnClickListener(this);
+//        case_2d_btn.setOnClickListener(this);
+//        consumer_appraise.setOnClickListener(this);
     }
 
     @Override
@@ -179,13 +177,14 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                             @Override
                             public void onResponse(String s) {
+
                                 MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                                Intent intent = new Intent(SeekDesignerDetailActivity.this, ChatRoomActivity.class);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                                final Intent intent = new Intent(SeekDesignerDetailActivity.this, ChatRoomActivity.class);
                                 intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
 
                                 if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
 
@@ -193,14 +192,32 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                                     int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                                     intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                                    intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                                } else {
-
                                     intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    SeekDesignerDetailActivity.this.startActivity(intent);
 
+                                } else {
+                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError volleyError) {
+                                            MPNetworkUtils.logError(TAG, volleyError);
+                                        }
+
+                                        @Override
+                                        public void onResponse(String s) {
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(s);
+                                                String thread_id = jsonObject.getString("thread_id");
+                                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                                intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                                SeekDesignerDetailActivity.this.startActivity(intent);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
                                 }
-                                startActivity(intent);
+
                             }
                         });
                     } else {
@@ -211,20 +228,20 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
-            case R.id.case_2d_btn:
-                chooseViewPointer.setDecreaseWidth(50f);
-                chooseViewPointer.setWidthOrHeight(width, 0, 0f, 1 / 3f);
-                chooseViewPointer.invalidate();
-                break;
-            case R.id.case_3d_btn:
-                chooseViewPointer.setDecreaseWidth(50f);
-                chooseViewPointer.setWidthOrHeight(width, 0, 1 / 3f, 2 / 3f);
-                break;
-            case R.id.consumer_appraise:
-
-                chooseViewPointer.setDecreaseWidth(50f);
-                chooseViewPointer.setWidthOrHeight(width, 0, 2 / 3f, 1f);
-                break;
+//            case R.id.case_2d_btn:
+//                chooseViewPointer.setDecreaseWidth(50f);
+//                chooseViewPointer.setWidthOrHeight(width, 0, 0f, 1 / 3f);
+//                chooseViewPointer.invalidate();
+//                break;
+//            case R.id.case_3d_btn:
+//                chooseViewPointer.setDecreaseWidth(50f);
+//                chooseViewPointer.setWidthOrHeight(width, 0, 1 / 3f, 2 / 3f);
+//                break;
+//            case R.id.consumer_appraise:
+//
+//                chooseViewPointer.setDecreaseWidth(50f);
+//                chooseViewPointer.setWidthOrHeight(width, 0, 2 / 3f, 1f);
+//                break;
 
         }
     }
@@ -237,7 +254,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     @Override
     public void OnItemCaseLibraryClick(int position) {
         String case_id = mCasesEntityArrayList.get(position).getId();
-        Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
+        Intent intent = new Intent(this, CaseLibraryNewActivity.class);
         intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(intent);
     }
@@ -267,7 +284,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onResponse(JSONObject jsonObject) {
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                if(null==jsonObject){
+                if (null == jsonObject) {
                     return;
                 }
                 String info = GsonUtil.jsonToString(jsonObject);
@@ -625,11 +642,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private Button mBtnChat, mBtnMeasure;
     private AlertView unFollowedAlertView;
     private TextView mTvFollowedNum;    /// 关注人数 .
-    private LinearLayout ll_case_choose_contain;//容器
-    private TextView case_2d_btn;//2d案例
-    private TextView case_3d_btn;//3d案例
-    private TextView consumer_appraise;//评价按钮
-    private ChooseViewPointer chooseViewPointer;//滚动条
+//    private LinearLayout ll_case_choose_contain;//容器
+//    private TextView case_2d_btn;//2d案例
+//    private TextView case_3d_btn;//3d案例
+//    private TextView consumer_appraise;//评价按钮
+//    private ChooseViewPointer chooseViewPointer;//滚动条
 
     private String mNickName;
     private String mSelfAcsMemberId;

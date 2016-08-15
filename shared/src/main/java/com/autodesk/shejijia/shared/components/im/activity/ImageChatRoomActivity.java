@@ -172,7 +172,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
     @Override
     protected String getActivityTitle()
     {
-        return getResources().getString(R.string.mychat);
+        return getResources().getString(R.string.imagechatroom_title);
     }
 
 
@@ -243,12 +243,16 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
         }
         else if (mFileId != null) //is file already uploaded
         {
+            disableUserInteraction();
             showLoadingIndicator();
+
             initiateNewThreadSequenceWithTextMessage(body);
         }
         else //neither file is uploaded nor thread exist
         {
+            disableUserInteraction();
             showLoadingIndicator();
+
             final String mediaType = "IMAGE"; //important, this should be only for image not audio
             MPChatHttpManager.getInstance().sendMediaMessage(mAcsMemberId, mRecieverUserId, "Subject",
                     mParentThreadId, new File(mSourceImagePath), mediaType, new MPChatHttpManager.ResponseHandler()
@@ -274,6 +278,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                             {
                                 mShouldHideLoadindIndicator = true;
                                 hideLoadingIndicator();
+                                enableUserInteraction();
                             }
                         }
 
@@ -283,6 +288,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                             mShouldHideLoadindIndicator = true;
                             hideLoadingIndicator();
                             MPNetworkUtils.logError(TAG, "initiateAudioMessageSendSequence failed");
+                            enableUserInteraction();
                         }
                     });
         }
@@ -358,6 +364,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                         MPNetworkUtils.logError(TAG, volleyError);
                         mShouldHideLoadindIndicator = true;
                         hideLoadingIndicator();
+                        enableUserInteraction();
                     }
 
                     @Override
@@ -404,7 +411,6 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
     private void initiateAudioMessageSendSequence(final String url, final CallBack errorCallback)
     {
         showLoadingIndicator();
-        disableUserInteraction();
 
         if (mThreadId != null)
         {
@@ -418,7 +424,6 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
                             MPFileUtility.removeFile(url);
                             mShouldHideLoadindIndicator = true;
                             hideLoadingIndicator();
-                            enableUserInteraction();
                         }
 
                         @Override
@@ -429,16 +434,19 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
                             mShouldHideLoadindIndicator = true;
                             hideLoadingIndicator();
-                            enableUserInteraction();
                         }
                     });
         }
         else if (mFileId != null)
         {
+            disableUserInteraction();
+
             initiateNewThreadSequenceWithAudioMessage(url, errorCallback);
         }
         else
         {
+            disableUserInteraction();
+
             String mediaType = "IMAGE"; //Important, we are sending image here, that too in parent thread
             MPChatHttpManager.getInstance().sendMediaMessage(mAcsMemberId, mRecieverUserId, "New", mParentThreadId,
                     new File(mSourceImagePath), mediaType, new MPChatHttpManager.ResponseHandler()
@@ -660,40 +668,13 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
 
     private void disableUserInteraction()
     {
-        ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
-
-        if(layout != null)
-            setEnableStateForBottombar(layout,false);
+        mHandler.disableUserInteraction();
     }
 
     private void enableUserInteraction()
     {
-        ViewGroup layout = (ViewGroup) findViewById(R.id.chat_parent_layout);
-
-        if(layout != null)
-            setEnableStateForBottombar(layout,true);
+        mHandler.enableUserInteraction();
     }
-
-
-    private void setEnableStateForBottombar(ViewGroup viewGroup, boolean bEnable)
-    {
-        for (int i = 0; i < viewGroup.getChildCount(); i++)
-        {
-            View child = viewGroup.getChildAt(i);
-            child.setEnabled(bEnable);
-            child.setClickable(bEnable);
-            if (child instanceof ViewGroup)
-            {
-                ViewGroup group = (ViewGroup) child;
-                for (int j = 0; j < group.getChildCount(); j++)
-                {
-                    group.getChildAt(j).setEnabled(bEnable);
-                    group.getChildAt(j).setClickable(bEnable);
-                }
-            }
-        }
-    }
-
 
     private RelativeLayout mAudioParentView;
     private RoundProgressBar mAudioProgressBar;

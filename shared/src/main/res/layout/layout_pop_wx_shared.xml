@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/pop_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/font_200"
+        android:layout_height="@dimen/size_120"
         android:layout_alignParentBottom="true"
         android:background="@color/white">
 
@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/font_55"
             android:drawablePadding="@dimen/font_7"
-            android:drawableTop="@drawable/icon_admin"
+            android:drawableTop="@drawable/weixinhaoyou_ico"
             android:gravity="center"
             android:text="微信好友"
             android:textSize="@dimen/font_14" />
@@ -34,7 +34,7 @@
             android:layout_marginRight="@dimen/font_55"
             android:layout_marginTop="@dimen/font_20"
             android:drawablePadding="@dimen/font_7"
-            android:drawableTop="@drawable/icon_admin"
+            android:drawableTop="@drawable/pengyouquan_ico"
             android:gravity="center"
             android:text="微信朋友圈"
             android:textSize="@dimen/font_14" />

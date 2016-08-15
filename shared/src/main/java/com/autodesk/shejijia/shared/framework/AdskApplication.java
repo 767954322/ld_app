@@ -255,8 +255,8 @@ public class AdskApplication extends Application {
     /**
      * 开启聊天室服务
      */
-    private void openChatConnection() {
-        if (isChatServiceRunning())
+    public void openChatConnection() {
+        if (isChatServiceRunning(webSocketService.class))
             closeChatConnection();
 
         if (memberEntity != null) {
@@ -272,12 +272,10 @@ public class AdskApplication extends Application {
         stopService(stopIntent);
     }
 
-    private boolean isChatServiceRunning() {
+    private boolean isChatServiceRunning(Class<?> websocketServiceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            // KLog.d("yxw","run  service  "  +service.service.getClassName());
-            if ("com.autodesk.shejijia.shared.components.im.service.webSocketService".equals(service.service.getClassName())) {
-                // KLog.d("yxw","run  service  true "  +service.service.getClassName());
+            if (websocketServiceClass.getName().equals(service.service.getClassName())) {
                 return true;
             }
         }

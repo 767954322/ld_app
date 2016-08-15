@@ -10,8 +10,9 @@
 
     <string name="application_successful">申请成功</string>
     <string name="application_failure">申请失败</string>
-    <string name="application_detail">你已成功申请提现\n请在提现记录中查看详情</string>
+    <string name="application_detail">请在提现记录中查看详情</string>
     <string name="application_unbing">解除绑定成功</string>
+    <string name="application_unbing_fail">解除失败</string>
 
     <string name="tip_content_one">持卡人姓名不能为空</string>
     <string name="tip_content_two">支行名称不能为空</string>
@@ -306,8 +307,10 @@
     <string name="version">Version BQ0.0.0.1</string>
     <string name="designer_home_about">关于设计家</string>
     <string name="designer_introduced">设计家介绍</string>
+
+
     <string name="contact">联系方式</string>
-    <string name="version_introduced">版本说明</string>
+    <string name="version_introduced">版权说明</string>
     <string name="version_detail">版本</string>
 
     <!-- AmendDemandActivity -->
@@ -357,7 +360,7 @@
     <string name="girl">女</string>
     <string name="essential_info">基本信息</string>
     <string name="photograph">拍照</string>
-    <string name="savelocal">保存到本地</string>
+    <string name="savelocal">保存图片</string>
     <string name="photo_album">从手机相册选择</string>
     <string name="information_on_the_cross">信息上传中...</string>
     <string name="autonym_sd_disabled">SD卡不可用！</string>
@@ -612,8 +615,8 @@
     <string name="dialog_hint">支持2-10个中、英文、数字</string>
 
     <!--DesignerOrderBeiShuActivity -->
-    <string name="my_project_bei_shu">套餐项目</string>
-    <string name="my_project_common">普通项目</string>
+    <string name="my_project_bei_shu">北舒套餐</string>
+    <string name="my_project_common">普通订单</string>
     <string name="decoration_order">我的订单</string>
 
     <!-- MyBidActivity -->
@@ -721,6 +724,8 @@
     <string name="querenliangfang">确认量房</string>
 
     <string name="mychat">我的聊天</string>
+    <string name="file_thread_list_title">图片聊天</string>
+    <string name="imagechatroom_title">热点聊天</string>
     <string name="there_is_no_data">没有数据了</string>
     <string name="the_data_load_failure">数据加载失败</string>
     <string name="im_succes_sendvoice">语音发送成功</string>
@@ -750,8 +755,8 @@
     <string name="normal">按住 说话</string>
     <string name="sd_imgs">本地图片</string>
     <string name="determine">完成</string>
-    <string name="picture_msg">图片</string>
-    <string name="audio_msg">语音</string>
+    <string name="picture_msg">[图片]</string>
+    <string name="audio_msg">[语音]</string>
     <string name="other_msg">系统消息</string>
     <string name="audio_recording_started">錄音開始</string>
 
@@ -829,11 +834,10 @@
 
     <string name="share">分享</string>
 
-    <string name="photopicker_camera_roll">Camera Roll</string>
-    <string name="photopicker_album_subtitle_single">photo</string>
-    <string name="photopicker_album_subtitle_multiple">photos</string>
-    <string name="photopicker_source_text">Source</string>
-    <string name="photopicker_cloud_album">Cloud Files</string>
+    <string name="photopicker_album_subtitle_single">照片</string>
+    <string name="photopicker_album_subtitle_multiple">照片</string>
+    <string name="photopicker_source_text">资源</string>
+    <string name="photopicker_cloud_album">云储存</string>
     <string name="no_support_emojo">不支持输入表情符号</string>
     <string name="empty_order_fitment_add">您还没有订单项目，请去应标大厅接单。</string>
 
@@ -866,6 +870,10 @@
     <string name="pickerview_hours">时</string>
     <string name="pickerview_minutes">分</string>
     <string name="pickerview_seconds">秒</string>
+
+    <string name="chatroom_loadmore_text">查看更多记录</string>
+    <string name="no_repeat_click">请勿重复点击</string>
+
     <!-- 微信分享 -->
     <string name="errcode_success">发送成功</string>
     <string name="errcode_cancel">发送取消</string>

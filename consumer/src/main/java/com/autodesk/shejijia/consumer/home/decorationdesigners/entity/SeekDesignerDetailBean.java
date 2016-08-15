@@ -83,6 +83,8 @@ public class SeekDesignerDetailBean implements Serializable {
         private String room_type;
         private String thumbnails_ext;
         private String title;
+        private String favorite_count;
+
 
         private List<ImagesEntity> images;
 
@@ -276,6 +278,14 @@ public class SeekDesignerDetailBean implements Serializable {
 
         public List<ImagesEntity> getImages() {
             return images;
+        }
+
+        public String getFavorite_count() {
+            return favorite_count;
+        }
+
+        public void setFavorite_count(String favorite_count) {
+            this.favorite_count = favorite_count;
         }
 
         public static class DesignerInfoEntity implements Serializable {

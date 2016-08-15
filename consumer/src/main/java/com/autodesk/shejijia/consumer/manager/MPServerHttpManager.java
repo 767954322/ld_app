@@ -528,9 +528,8 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void sendThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
-        String url = "http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/" + assetId;
-//        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
-        Log.d("yxw", url);
+        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
+        Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -550,9 +549,9 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
-        String url = "http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/" + assetId;
-//        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
-        Log.d("yxw", url);
+//        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
+        String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
+        Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1141,6 +1140,8 @@ public class MPServerHttpManager {
      */
     public void getMyPropertyData(String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MY_PROPERTY + designer_id;
+//        http://192.168.120.90:8010
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/withdraw/20730531";
         KLog.d(TAG, "url:" + url + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
@@ -1240,9 +1241,10 @@ public class MPServerHttpManager {
     }
 
     public void sendUnBindBankCard(final long designer_id,
-                                   JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, UrlConstants.URL_WITHDRAW_BALANCE + designer_id, jsonObject, callback) {
+                                       JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+        String url = UrlConstants.URL_WITHDRAW_MEMBERS + designer_id+"/balances/delete";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT,url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();

@@ -25,9 +25,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FuzzySearchAdapter;
@@ -35,28 +32,31 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibrary
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.SearchHoverCaseBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHomeCaseAdapter;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.CharacterParser;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -160,7 +160,7 @@ public class SearchActivity extends NavigationBarActivity implements
     @Override
     public void OnItemCaseClick(int position) {
         String case_id = mCasesEntities.get(position).getId();
-        mIntent = new Intent(this, CaseLibraryDetailActivity.class);
+        mIntent = new Intent(this, CaseLibraryNewActivity.class);
         mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(mIntent);
     }
@@ -185,13 +185,14 @@ public class SearchActivity extends NavigationBarActivity implements
 
                 @Override
                 public void onResponse(String s) {
+
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                    Intent intent = new Intent(SearchActivity.this, ChatRoomActivity.class);
-                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                    final Intent intent = new Intent(SearchActivity.this, ChatRoomActivity.class);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
 
                     if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
 
@@ -199,14 +200,31 @@ public class SearchActivity extends NavigationBarActivity implements
                         int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                    } else {
-
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                        SearchActivity.this.startActivity(intent);
 
+                    } else {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
+                            }
+
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String thread_id = jsonObject.getString("thread_id");
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                    SearchActivity.this.startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
-                    SearchActivity.this.startActivity(intent);
                 }
             });
         } else {
