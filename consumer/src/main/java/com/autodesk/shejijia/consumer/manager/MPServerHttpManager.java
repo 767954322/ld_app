@@ -290,9 +290,68 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 获取设计师从业年限列表
+     *
+     * @param callback
+     */
+    public void getDesignerExperiences(OkJsonRequest.OKResponseCallback callback) {
+//        String url = UrlConstants.URL_FIND_DESIGNER +
+//                "/experiences";
+
+        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
+                "/experiences";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 获取设计师设计费区间
+     *
+     * @param callback
+     */
+    public void getDesignerCost(OkJsonRequest.OKResponseCallback callback) {
+//        String url = UrlConstants.URL_FIND_DESIGNER +
+//                "/costs";
+
+        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
+                "/costs";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 获取设计师风格列表
+     *
+     * @param callback
+     */
+    public void getDesignerStyles(OkJsonRequest.OKResponseCallback callback) {
+//        String url = UrlConstants.URL_FIND_DESIGNER +
+//                "/styles ";
+
+        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
+                "/styles ";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 全流程节点信息获取
      */
-
     public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback) {
 
         OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_WkFlowState_pointe_Information, null, callback) {
@@ -302,7 +361,6 @@ public class MPServerHttpManager {
                 return super.getHeaders();
             }
         };
-
         queue.add(okJsonRequest);
     }
 
