@@ -295,11 +295,9 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getDesignerExperiences(OkJsonRequest.OKResponseCallback callback) {
-//        String url = UrlConstants.URL_FIND_DESIGNER +
-//                "/experiences";
-
-        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
+        String url = UrlConstants.URL_FIND_DESIGNER +
                 "/experiences";
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -315,11 +313,9 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getDesignerCost(OkJsonRequest.OKResponseCallback callback) {
-//        String url = UrlConstants.URL_FIND_DESIGNER +
-//                "/costs";
-
-        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
+        String url = UrlConstants.URL_FIND_DESIGNER +
                 "/costs";
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -335,11 +331,9 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getDesignerStyles(OkJsonRequest.OKResponseCallback callback) {
-//        String url = UrlConstants.URL_FIND_DESIGNER +
-//                "/styles ";
-
-        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
+        String url = UrlConstants.URL_FIND_DESIGNER +
                 "/styles ";
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
