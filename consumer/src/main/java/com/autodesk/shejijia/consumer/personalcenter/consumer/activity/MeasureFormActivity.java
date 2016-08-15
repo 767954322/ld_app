@@ -208,25 +208,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
 
-                //.....................................
-                String subNum = "0";
-                if (houseArea.contains(".")) {
-                    subNum = houseArea.substring(0, houseArea.indexOf("."));
-                }
-                if (TextUtils.isEmpty(houseArea)||Float.valueOf(houseArea) == 0) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
-                    return;
-                } else {
-                    if (subNum.length() > 1 && subNum.startsWith("0")){
-                        getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
-                        return;
-                    }else {
-                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
-                            getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
-                            return;
-                        }
-                    }
-                }
+
 //                if (houseArea.equals("0.00") || houseArea.equals("0.0") || houseArea.equals("00.00")) {
 //                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
 //                    return;
@@ -291,11 +273,33 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                if (!bArea || houseArea.isEmpty() || houseArea.equals("0")) {
+//                if (!bArea || houseArea.isEmpty() || houseArea.equals("0")) {
+//
+//                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+//                    return;
+//                }
 
+                //.....................................
+                String subNum = "0";
+                if (houseArea.contains(".")) {
+                    subNum = houseArea.substring(0, houseArea.indexOf("."));
+                }
+                if (TextUtils.isEmpty(houseArea)||Float.valueOf(houseArea) == 0) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                     return;
+                } else {
+                    if (subNum.length() > 1 && subNum.startsWith("0")){
+                        getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+                        return;
+                    }else {
+                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
+                            getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+                            return;
+                        }
+                    }
                 }
+
+
 
                 if (designBudget == null) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_select_design_budget));

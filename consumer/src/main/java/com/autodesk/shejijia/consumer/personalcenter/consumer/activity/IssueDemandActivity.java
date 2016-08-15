@@ -144,25 +144,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 }
                 String area = et_issue_demand_area.getText().toString();
 
-                //..................................
-                String subNum = "0";
-                if (area.contains(".")) {
-                    subNum = area.substring(0, area.indexOf("."));
-                }
-                if (TextUtils.isEmpty(area)||Float.valueOf(area) == 0) {
-                    showAlertView(R.string.please_input_correct_area);
-                    return;
-                } else {
-                    if (subNum.length() > 1 && subNum.startsWith("0")){
-                        showAlertView(R.string.please_input_correct_area);
-                        return;
-                    }else {
-                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
-                            showAlertView(R.string.please_input_correct_area);
-                            return;
-                        }
-                    }
-                }
+
 
 //                if(area.equals("0.00")||area.equals("0.0")||area.equals("0000.00")||area.equals("000.00")||area.equals("00.00")){
 //                    showAlertView(R.string.please_input_correct_area);
@@ -186,6 +168,27 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                    showAlertView(R.string.please_input_correct_area);
 //                    return;
 //                }
+
+                //..................................
+                String subNum = "0";
+                if (area.contains(".")) {
+                    subNum = area.substring(0, area.indexOf("."));
+                }
+                if (TextUtils.isEmpty(area)||Float.valueOf(area) == 0) {
+                    showAlertView(R.string.please_input_correct_area);
+                    return;
+                } else {
+                    if (subNum.length() > 1 && subNum.startsWith("0")){
+                        showAlertView(R.string.please_input_correct_area);
+                        return;
+                    }else {
+                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
+                            showAlertView(R.string.please_input_correct_area);
+                            return;
+                        }
+                    }
+                }
+
                 if (TextUtils.isEmpty(mDesignBudget)) {
                     showAlertView(R.string.please_select_design_budget);
                     return;

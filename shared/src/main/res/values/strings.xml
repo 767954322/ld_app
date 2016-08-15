@@ -443,7 +443,7 @@
     <string name="demand_send">发送</string>
     <string name="volume_rate_cannot_empty">量房费不能为空</string>
     <string name="please_fill_your_name">请正确填写姓名</string>
-    <string name="please_fill_phone_number">请填写正确的电话号</string>
+    <string name="please_fill_phone_number">请填写正确的手机号码</string>
     <string name="please_fill_housing_area">请正确填写面积（整数位不超过四位，小数不超过两位）</string>
     <string name="please_fill_housing_area_point">整数部位不允许全为0</string>
 
