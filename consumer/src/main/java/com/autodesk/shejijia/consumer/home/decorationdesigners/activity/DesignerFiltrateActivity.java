@@ -5,15 +5,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerCostBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerFiltrateBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerStyleBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateAdapter;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,6 +173,68 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
         return mSortList;
     }
 
+    /**
+     * 获取设计师从业年限.
+     */
+    public void getDesignerWorkTime() {
+        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonToString = GsonUtil.jsonToString(jsonObject);
+                DesignerWorkTimeBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerWorkTimeBean.class);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }
+        };
+        MPServerHttpManager.getInstance().getDesignerExperiences(okResponseCallback);
+    }
+
+    /**
+     * 获取设计师设计费区间.
+     */
+    public void getDesignerCost() {
+        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonToString = GsonUtil.jsonToString(jsonObject);
+                DesignerCostBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerCostBean.class);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }
+        };
+        MPServerHttpManager.getInstance().getDesignerCost(okResponseCallback);
+    }
+
+    /**
+     * 获取设计师设计风格.
+     */
+    public void getDesignerStyles() {
+        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonToString = GsonUtil.jsonToString(jsonObject);
+                DesignerStyleBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerStyleBean.class);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }
+        };
+        MPServerHttpManager.getInstance().getDesignerStyles(okResponseCallback);
+    }
 
     private NoScrollGridView yGridView;
     private NoScrollGridView sGridView;
