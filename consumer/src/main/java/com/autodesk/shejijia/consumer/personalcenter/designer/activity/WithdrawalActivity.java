@@ -26,6 +26,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -57,7 +58,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         tv_withdrawal_account_balance = (TextView) findViewById(R.id.tv_withdrawal_account_balance);
         tv_withdrawal_account = (TextView) findViewById(R.id.tv_withdrawal_account);
         tv_withdrawal_cardholder_name = (TextView) findViewById(R.id.tv_withdrawal_cardholder_name);
-//        et_withdrawal_cardholder_name = (EditText) findViewById(R.id.et_withdrawal_cardholder_name);
         tv_withdrawal_open_account_bank = (TextView) findViewById(R.id.tv_withdrawal_open_account_bank);
         tv_withdrawal_bank_card_number = (TextView) findViewById(R.id.tv_withdrawal_bank_card_number);
         ll_withdrawal_open_account_bank = (LinearLayout) findViewById(R.id.ll_withdrawal_open_account_bank);
@@ -110,29 +110,30 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
                 break;
             case R.id.btn_withdrawal_true:
-                String tv_user_name = getText(tv_withdrawal_cardholder_name);
-//                account_user_name = (tv_user_name == null) ? getText(et_withdrawal_cardholder_name) : tv_user_name;
                 bank_name = getText(tv_withdrawal_open_account_bank);
                 String tv_branch_bank_ = getText(tv_withdrawal_branch_bank);
                 branch_bank_name = (tv_branch_bank_ == null) ? getText(et_withdrawal_branch_bank) : tv_branch_bank_;
                 String tv_card_number = getText(tv_withdrawal_bank_card_number);
                 deposit_card = (tv_card_number == null) ? getText(et_withdrawal_bank_card_number) : tv_card_number;
 
+//                String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
+//                String regex_bank = "[\\u4e00-\\u9fa5]{2,32}";
 
-                String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
-                String regex_bank = "[\\u4e00-\\u9fa5]{2,32}";
-
-                boolean isName = account_user_name.trim().matches(regex_name);
-                boolean isBank = branch_bank_name.trim().matches(regex_bank);
-                if (!isName) {
-                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
-                    break;
-                }
+//                boolean isName = account_user_name.trim().matches(regex_name);
+                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
+                boolean isBankNum = branch_bank_name.trim().matches(RegexUtil.PHONE_BLANK);
+//                if (!isName) {
+//                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
                 if (!isBank) {
                     Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                     break;
                 }
-
+                if (!isBankNum) {
+                    Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                    break;
+                }
 
                 boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
 
