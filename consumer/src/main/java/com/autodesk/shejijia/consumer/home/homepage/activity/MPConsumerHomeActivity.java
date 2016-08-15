@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.ConsumerDecorationFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
@@ -124,7 +125,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
 
             mConsumerPersonalCenterFragment =
-                    (MyDecorationProjectFragment) getSupportFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
+//                    (MyDecorationProjectFragment) getSupportFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
+                    (ConsumerDecorationFragment) getSupportFragmentManager().findFragmentByTag(CONSUMER_PERSONAL_FRAGMENT_TAG);
             if (mConsumerPersonalCenterFragment != null) {
                 mFragmentArrayList.add(mConsumerPersonalCenterFragment);
             }
@@ -250,7 +252,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             } else {
 
                 if (mConsumerPersonalCenterFragment == null) {
-                    mConsumerPersonalCenterFragment = new MyDecorationProjectFragment();
+//                    mConsumerPersonalCenterFragment = new MyDecorationProjectFragment();
+                    mConsumerPersonalCenterFragment = new ConsumerDecorationFragment();
                     loadMainFragment(mConsumerPersonalCenterFragment, CONSUMER_PERSONAL_FRAGMENT_TAG);
                 }
             }
@@ -785,7 +788,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private RadioGroup designer_main_radio_group;
 
 
-    private MyDecorationProjectFragment mConsumerPersonalCenterFragment;
+//    private MyDecorationProjectFragment mConsumerPersonalCenterFragment;
+    private ConsumerDecorationFragment mConsumerPersonalCenterFragment;
 
     private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
     private static final String BID_FRAGMENT_TAG = "BID_FRAGMENT_TAG";

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scrollView_decoration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_consumer_decoration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_parting_line"></include>
+
+        <include
+            layout="@layout/layout_evaluation_popup"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
+
+            <ImageView
+                android:id="@+id/iv_consumer_decoration_ref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_position_normal"/>
+
+            <TextView
+                android:id="@+id/tv_decoration_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_16"/>
+
+            <TextView
+                android:id="@+id/tv_consumer_decoration_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bg_0d74bc"
+                android:textSize="@dimen/font_14"/>
+        </LinearLayout>
+
+        <include layout="@layout/view_parting_line"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/size_5"
+            android:textColor="@color/black">
+
+            <!--项目编号-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/common_order_project_number"
+                    android:textColor="@color/bg_9E"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_decoration_needs_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/bg_9E"
+                    android:textSize="@dimen/font_15"/>
+            </LinearLayout>
+
+            <!--项目地址-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/demand_project_address"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_decoration_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <!--联系电话-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/user_phone"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_decoration_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_unfold_normal"/>
+
+            </LinearLayout>
+
+            <!--房屋类型-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/demand_project_types"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_decoration_house_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+            </LinearLayout>
+
+            <!--风格-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/fitment_style"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_decoration_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+            </LinearLayout>
+
+            <!--应标人数-->
+            <LinearLayout
+                android:id="@+id/rl_bidder_count"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_25"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/bid_num"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_bidder_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/tv_decoration_end_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/icon_unfold_normal"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/view_parting_line"></include>
+
+        <com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView
+            android:id="@+id/lv_decoration_bid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</ScrollView>
