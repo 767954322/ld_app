@@ -147,7 +147,6 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     protected void initExtraBundle() {
         super.initExtraBundle();
         case_id = getIntent().getStringExtra(Constant.CaseLibraryDetail.CASE_ID);   /// 获取发过来的ID.
-
     }
 
     @Override
@@ -305,7 +304,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl = "http://alpha-www.gdfcx.net/share/2dcase.html?caseid=1588939";
+            String webUrl =ApiManager.getHtml5Url(ApiManager.RUNNING_DEVELOPMENT,case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:

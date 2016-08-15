@@ -110,6 +110,9 @@ public final class UrlConstants {
     public static final String MP_MAIN_DESIGN = "/design-app/v1/api";
     public static final String MP_MAIN_MEMBER = "/member-app/v1/api";
 
+    //分享界面的url
+    public static final String MP_MAIN_SHARE= "/share/2dcase.html?caseid=";
+
     /**
      * 搜索.
      */
