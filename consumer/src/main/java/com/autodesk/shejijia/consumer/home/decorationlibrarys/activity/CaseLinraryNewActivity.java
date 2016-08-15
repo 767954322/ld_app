@@ -306,16 +306,13 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
         @Override
         public void onClick(View v) {
             String webUrl = "http://alpha-www.gdfcx.net/share/2dcase.html?caseid=1588939";
-//            String imageUrl = firstCaseLibraryImageUrl;
-            String imageUrl = "http://img1.imgtn.bdimg.com/it/u=3731860233,1648607528&fm=21&gp=0.jpg";
-
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
 
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -323,7 +320,7 @@ public class CaseLinraryNewActivity extends NavigationBarActivity implements Ada
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, imageUrl);
+                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
