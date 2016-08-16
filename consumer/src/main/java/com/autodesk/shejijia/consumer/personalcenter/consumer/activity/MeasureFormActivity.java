@@ -88,6 +88,18 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         tvc_measure_form_style = (TextView) findViewById(R.id.tvc_measure_form_style);
         ll_time_restrict = (LinearLayout) findViewById(R.id.ll_time_restrict);
 
+
+        tvc_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String area = tvc_area.getText().toString().trim();
+                    area = String.format("%.2f",Double.valueOf(area));
+                    tvc_area.setText(area);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -280,6 +292,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //.....................................
+                houseArea = String.format("%.2f",Double.valueOf(houseArea));
+                tvc_area.setText(houseArea);
                 String subNum = "0";
                 if (houseArea.contains(".")) {
                     subNum = houseArea.substring(0, houseArea.indexOf("."));

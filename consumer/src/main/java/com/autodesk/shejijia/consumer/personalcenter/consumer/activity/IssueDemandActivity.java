@@ -72,6 +72,19 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         tv_issue_style = (TextView) findViewById(R.id.tv_issue_style);
         tv_issue_address = (TextView) findViewById(R.id.tv_issue_address);
         tv_issue_demand_detail_address = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
+
+
+        et_issue_demand_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String area = et_issue_demand_area.getText().toString().trim();
+                    area = String.format("%.2f",Double.valueOf(area));
+                    et_issue_demand_area.setText(area);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -117,34 +130,40 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         switch (v.getId()) {
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_room: /// 请选择户型：室 厅 卫 .
                 pvRoomTypeOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.ll_issue_style: /// 风格 .
                 pvStyleOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_budget: /// 请选择装修预算 .
                 pvDecorationBudgetOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_design_budget: /// 请选择设计预算 .
                 pvDesignBudgetOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_address: /// 请选择地址：省 市 区 .
                 getPCDAddress();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.btn_send_demand: /// 提交 .
                 if (!isSendState) {
                     return;
                 }
+                et_issue_demand_area.clearFocus();
                 String area = et_issue_demand_area.getText().toString();
-
 
 
 //                if(area.equals("0.00")||area.equals("0.0")||area.equals("0000.00")||area.equals("000.00")||area.equals("00.00")){
@@ -171,19 +190,20 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //..................................
-                Log.i("aaa",""+Float.valueOf(area));
+                area = String.format("%.2f",Double.valueOf(area));
+                et_issue_demand_area.setText(area);
                 String subNum = "0";
                 if (area.contains(".")) {
                     subNum = area.substring(0, area.indexOf("."));
                 }
-                if (TextUtils.isEmpty(area)||Float.valueOf(area) == 0) {
+                if (TextUtils.isEmpty(area) || Float.valueOf(area) == 0) {
                     showAlertView(R.string.please_input_correct_area);
                     return;
                 } else {
-                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4){
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
                         showAlertView(R.string.please_input_correct_area);
                         return;
-                    }else {
+                    } else {
                         if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || area.length() > 4) {
                             showAlertView(R.string.please_input_correct_area);
                             return;
@@ -312,8 +332,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 }
                 isSendState = true;
                 Intent intent = new Intent();
-                intent.putExtra("SUCCESS",success);
-                setResult(RESULT_CODE,intent);
+                intent.putExtra("SUCCESS", success);
+                setResult(RESULT_CODE, intent);
             }
 
             @Override
@@ -565,5 +585,5 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String room, living_room, toilet;
     private boolean isSendState = true;
     private String success = "";
-    final int RESULT_CODE=101;
+    final int RESULT_CODE = 101;
 }
