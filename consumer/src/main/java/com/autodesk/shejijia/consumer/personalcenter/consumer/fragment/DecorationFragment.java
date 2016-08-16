@@ -570,6 +570,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     approveState = "设计中";
                 }
 
+/// TODO 九月任务，暂时屏蔽 .
 //                if (max == 63) {
 //
 //                    mLlEvaluate.setVisibility(View.VISIBLE);
@@ -619,7 +620,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
     }
 
-//    /**
+    //    /**
 //     * 修改需求回显的数据
 //     *
 //     * @param amendDemandBean 　回显数据的实体类
@@ -783,13 +784,13 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data == null){
+        if (data == null) {
             return;
         }
-        if(resultCode == AmendDemandActivity.ResultCode){
+        if (resultCode == AmendDemandActivity.ResultCode) {
             Bundle bundle = data.getExtras();
             AmendDemandBean amendDemandBean = (AmendDemandBean) bundle.getSerializable(JsonConstants.AMENDEMANDBEAN);
-            if(mNeedsListEntity.getNeeds_id().equals(amendDemandBean.getNeeds_id()) ){
+            if (mNeedsListEntity.getNeeds_id().equals(amendDemandBean.getNeeds_id())) {
 
                 changeBean(amendDemandBean);
             }
@@ -847,6 +848,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
     /**
      * 修改后的项目信息与之前的进行替换更新
+     *
      * @param amendDemandBean
      */
     private void changeBean(AmendDemandBean amendDemandBean) {

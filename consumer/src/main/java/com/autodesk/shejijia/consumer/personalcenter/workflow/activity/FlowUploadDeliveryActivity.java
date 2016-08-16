@@ -678,7 +678,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                mDeliverySureAlertView.show();
+                /// TODO 九月份任务，暂时屏蔽评价入口 .
+                mLinerDelayedShow.setVisibility(View.GONE);
+//                mDeliverySureAlertView.show();
             }
 
             @Override
@@ -869,109 +871,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     mDeliveryFilesEntitiesDesignBlueprint.add(fileBean);
                 } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_MATERIAL_BILL_DELIVERY.equals(usage_type)) {
                     mDeliveryFilesEntitiesMaterialBill.add(fileBean);
-                }
-            }
-        }
-    }
-
-    /**
-     * 处理设计交付的不同状态
-     * wk_sub_node_id
-     * <61 : 消费者，等待设计师上传设计交付物
-     * 设计师，上传设计交付物
-     * =61: 消费者，确认或者延期的操作 .
-     * 　　设计师：可以重新发送设计交付物（显示发送按钮）
-     * =63:
-     * 　　消费者进行了确认操作
-     * =64
-     * 　　消费者做了延期操作
-     * >64(71,72)
-     * 　　消费者需要进行评价
-     */
-    private void doDeliveryDelayed() {
-        if (61 == wk_sub_node_id_int) {
-            switch (mMemberType) {
-                case Constant.UerInfoKey.CONSUMER_TYPE:
-                    mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-                    mLinerDelayedShow.setVisibility(View.VISIBLE);
-                    break;
-                case Constant.UerInfoKey.DESIGNER_TYPE:
-                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
-                    mLinerDelayedShow.setVisibility(View.GONE);
-                    break;
-            }
-        } else if (wk_sub_node_id_int == 64) {
-            switch (mMemberType) {
-                case Constant.UerInfoKey.CONSUMER_TYPE:
-                    mLinerDelayedShow.setVisibility(View.VISIBLE);
-                    mBtnDelay.setEnabled(false);
-                    mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-                    mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
-                    break;
-                case Constant.UerInfoKey.DESIGNER_TYPE:
-                    mBtnUploadSubmit3DPlan.setVisibility(View.VISIBLE);
-                    mLinerDelayedShow.setVisibility(View.GONE);
-                    break;
-            }
-        } else if (wk_sub_node_id_int == 63) {
-            mLinerDelayedShow.setVisibility(View.GONE);
-            mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-        } else if (wk_sub_node_id_int > 64) {
-            mLinerDelayedShow.setVisibility(View.GONE);
-            mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * 正在上传量房或者设计交付物
-     */
-    private void uploadingDelivery() {
-        /**
-         * [0]量房交付
-         */
-        if (wk_sub_node_id_int >= 21 && wk_sub_node_id_int < 41) {
-            mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_unselect));
-
-            setTitleForNavbar(UIUtils.getString(R.string.deliver_designer));
-            mTvDelivery.setText(UIUtils.getString(R.string.deliver_measure_consumer));
-
-            if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
-                mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-                CustomProgress.cancelDialog();
-                mAlertViewMeasureConsumerDelivery.show();
-                return;
-            } else if (Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberType)) {
-                /**
-                 * 设计师上传量房交付物
-                 */
-                cancelSubmit();
-                get3DPlan(needs_id, designer_id);
-            }
-        } else if (wk_sub_node_id_int >= 42) {
-            /**
-             * [1]设计交付
-             */
-            showAllLevel();
-            if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
-                mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-                setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
-            } else {
-                cancelSubmit();
-                setTitleForNavbar(UIUtils.getString(R.string.deliver_designer));
-            }
-            mTvDelivery.setText(UIUtils.getString(R.string.flow_3d));
-
-            if (wk_sub_node_id_int < 61) {
-                if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) {
-                    mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
-                    CustomProgress.cancelDialog();
-                    mAlertViewDesignConsumerDelivery.show();
-                } else if (Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberType)) {
-                    /**
-                     * 设计师上传设计交付物
-                     */
-                    cancelSubmit();
-                    get3DPlan(needs_id, designer_id);
                 }
             }
         }
