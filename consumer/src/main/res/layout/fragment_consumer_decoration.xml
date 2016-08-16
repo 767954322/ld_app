@@ -11,11 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/view_parting_line"></include>
-
-        <include
-            layout="@layout/layout_evaluation_popup"></include>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +36,7 @@
                 android:textSize="@dimen/font_16"/>
 
             <TextView
-                android:id="@+id/tv_consumer_decoration_state"
+                android:id="@+id/tv_decoration_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/bg_0d74bc"
@@ -99,17 +94,15 @@
                 <TextView
                     android:id="@+id/tv_decoration_address"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
             </LinearLayout>
 
             <!--联系电话-->
             <LinearLayout
-
-
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_30"
                 android:orientation="horizontal">
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,19 +113,19 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:layout_gravity="center_vertical"
                     android:id="@+id/tv_decoration_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"
                     />
 
                 <TextView
-                    android:layout_gravity="center"
                     android:id="@+id/tv_decoration_detail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginRight="@dimen/size_10"
                     android:layout_weight="1"
                     android:drawableRight="@drawable/icon_unfold_normal"
@@ -186,11 +179,23 @@
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
-            <!--应标人数-->
+        </LinearLayout>
+
+        <include layout="@layout/view_parting_line"></include>
+
+        <!--应标人数-->
+        <RelativeLayout
+            android:id="@+id/rl_bidder_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/size_10"
+            android:paddingTop="@dimen/size_10">
+
             <LinearLayout
-                android:id="@+id/rl_bidder_count"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -198,34 +203,59 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/bid_num"
-                    android:textColor="@color/bg_33"
+                    android:textColor="@color/bg_99"
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:layout_gravity="center"
                     android:id="@+id/tv_bidder_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textColor="@color/bg_33"
+                    android:layout_gravity="center"
+                    android:textColor="@color/bg_99"
+                    android:textSize="@dimen/font_15"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_day_prefix"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:layout_gravity="center"
                     android:id="@+id/tv_decoration_end_day"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginRight="@dimen/size_10"
                     android:layout_weight="1"
-                    android:drawableRight="@drawable/icon_unfold_normal"/>
-
+                    android:drawablePadding="@dimen/size_5"
+                    android:drawableRight="@drawable/icon_unfold_normal"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
-        </LinearLayout>
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_parting_line"></include>
 
         <com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView
             android:id="@+id/lv_decoration_bid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:background="@color/light_blue_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>

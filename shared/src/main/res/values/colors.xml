@@ -157,6 +157,7 @@
     <color name="green">#FF34A350</color>
     <color name="gray">#aaaaaa</color>
     <color name="light_blue">#6593cb</color>
+    <color name="light_blue_2">#226593cb</color>
     <color name="bg_77_00">#77000000</color>
 
     <color name="listview_refresh_head_title">#787878</color>

@@ -78,4 +78,11 @@
     <string name="tixian_liushuihao">流&#160;&#160;水&#160;&#160;号：</string>
     <string name="user_phone">联系电话：</string>
     <string name="decoration_style">风&nsp;格：</string>
+    <string name="end_day_prefix">距离结束还有</string>
+    <string name="title_designer_count">应标人数</string>
+    <string name="title_bidder_introduce">应标说明</string>
+    <string name="alert_bidder_introduce">为了保障您的权益，我们允许3位设计
+        \n师前来应标。如果您不满意应标的设
+        \n计师，您可以拒绝TA，以允许其他设
+        \n计师可以来应标。</string>
 </resources>
