@@ -91,6 +91,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                 mActivity.startActivity(mIntent);
             }
         });
+
         holder.setOnClickListener(R.id.tv_decoration_detail, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

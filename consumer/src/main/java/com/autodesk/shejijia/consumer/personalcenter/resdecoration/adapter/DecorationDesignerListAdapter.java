@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
@@ -65,6 +66,13 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designerId);
                 intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
                 mActivity.startActivityForResult(intent, 0);
+            }
+        });
+
+        holder.setOnClickListener(R.id.piv_consumer_order_photo, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mActivity, "设计师主页", Toast.LENGTH_SHORT).show();
             }
         });
     }

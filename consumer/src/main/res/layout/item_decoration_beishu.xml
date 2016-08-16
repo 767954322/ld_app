@@ -21,7 +21,7 @@
             android:src="@drawable/icon_bei_normal"/>
 
         <TextView
-            android:id="@+id/tv_consumer_decoration_beishu_tag"
+            android:id="@+id/tv_decoration_beishu_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -63,7 +63,7 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:id="@+id/tv_consumer_decoration_beishu_projectid"
+                    android:id="@+id/tv_decoration_beishu_needs_id"
                     android:layout_width="@dimen/size_1"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
@@ -89,11 +89,10 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:id="@+id/tv_consumer_decoration_beishu_name"
+                    android:id="@+id/tv_decoration_beishu_consumer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/no_color"
-                    android:gravity="center_vertical"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
@@ -114,7 +113,7 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:id="@+id/tv_consumer_decoration_beishu_phone"
+                    android:id="@+id/tv_decoration_beishu_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/no_color"
@@ -140,7 +139,7 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:id="@+id/tv_consumer_decoration_beishu_address"
+                    android:id="@+id/tv_decoration_beishu_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/no_color"
@@ -168,7 +167,7 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
-                    android:id="@+id/tv_consumer_decoration_beishu_homeaddress"
+                    android:id="@+id/tv_decoration_beishu_community_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/no_color"
