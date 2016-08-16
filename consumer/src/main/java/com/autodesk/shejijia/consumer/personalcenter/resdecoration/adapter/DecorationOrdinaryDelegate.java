@@ -65,15 +65,25 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String city_name = decorationNeedsListBean.getCity_name();
         String district_name = decorationNeedsListBean.getDistrict_name();
 
+        String bidder_count = decorationNeedsListBean.getBidder_count();
+
         holder.setText(R.id.tv_decoration_name, contacts_name + "/" + community_name);
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
         holder.setText(R.id.tv_decoration_house_type, decorationNeedsListBean.getHouse_type());
         holder.setText(R.id.tv_decoration_address, province_name + city_name + district_name);
         holder.setText(R.id.tv_decoration_phone, decorationNeedsListBean.getContacts_mobile());
         holder.setText(R.id.tv_decoration_style, decorationNeedsListBean.getDecoration_style());
-        holder.setText(R.id.tv_bidder_count, decorationNeedsListBean.getBidder_count() + "人");
+        holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
 
+        /**
+         * 如果应标人数为0,就隐藏应标人数布局
+         */
+        if (TextUtils.isEmpty(bidder_count) || "0".equals(bidder_count)) {
+            holder.setVisible(R.id.rl_bidder_count, false);
+        } else {
+            holder.setVisible(R.id.rl_bidder_count, true);
+        }
 
         /**
          * 当前家装订单状态
@@ -105,7 +115,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         mDesignerListView.setAdapter(mDecorationDesignerListAdapter);
 
         /**
-         * 应标人数
+         * 应标人数详情页面
          */
         holder.setOnClickListener(R.id.rl_bidder_count, new View.OnClickListener() {
             @Override
@@ -118,7 +128,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         });
 
         /**
-         * 需求详情
+         * 需求详情页面
          */
         holder.setOnClickListener(R.id.tv_decoration_detail, new View.OnClickListener() {
             @Override
