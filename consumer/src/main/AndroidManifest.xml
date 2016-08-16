@@ -474,6 +474,8 @@
         <activity android:name=".home.decorationdesigners.activity.DesignerSearchActivity"/>
         <activity android:name=".personalcenter.consumer.activity.DecorationBidderActivity">
         </activity>
+        <activity android:name=".personalcenter.consumer.activity.DecorationDetailActivity">
+        </activity>
     </application>
 
 </manifest>

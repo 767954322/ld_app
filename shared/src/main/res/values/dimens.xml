@@ -311,8 +311,8 @@
     <dimen name="navbar_icon_padding">8dp</dimen>
 
     <!--标题文字大小-->
-    <dimen name="textSize_alert_title">22sp</dimen>
-    <dimen name="textSize_actionsheet_title">14sp</dimen><!--标题文字高度-->
+    <dimen name="textSize_alert_title">14sp</dimen>
+    <dimen name="textSize_actionsheet_title">15sp</dimen><!--标题文字高度-->
     <dimen name="height_alert_title">60dp</dimen>
     <dimen name="height_actionsheet_title">40dp</dimen><!--消息文字大小-->
     <dimen name="textSize_alert_msg">15sp</dimen>

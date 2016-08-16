@@ -85,4 +85,9 @@
         \n师前来应标。如果您不满意应标的设
         \n计师，您可以拒绝TA，以允许其他设
         \n计师可以来应标。</string>
+    <string name="title_decoration_detail">需求详情</string>
+    <string name="button_decoration_stop">终止需求</string>
+    <string name="alert_decoration_title">确认要终止需求？</string>
+    <string name="alert_decoration_message">终止需求后项目就会结束</string>
+    <string name="button_decoration_amend">修改需求</string>
 </resources>
