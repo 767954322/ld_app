@@ -24,6 +24,11 @@ public class RegexUtil {
     public static final String PHONE_REGEX = "^1[3|4|5|7|8]\\d{9}$";
 
     /**
+     * 银行卡号验证
+     */
+    public static final String PHONE_BLANK = "^(\\d{16}|\\d{19})$";
+
+    /**
      * 量房面积校验： 整数四位，小数2位
      */
     public static final String AREA_REGEX = "^[0-9]{1,4}?(\\.[0-9]{0,2})?$";
