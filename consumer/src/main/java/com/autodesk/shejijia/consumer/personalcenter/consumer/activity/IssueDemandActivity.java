@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -170,6 +171,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //..................................
+                Log.i("aaa",""+Float.valueOf(area));
                 String subNum = "0";
                 if (area.contains(".")) {
                     subNum = area.substring(0, area.indexOf("."));
@@ -178,11 +180,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(R.string.please_input_correct_area);
                     return;
                 } else {
-                    if (subNum.length() > 1 && subNum.startsWith("0")){
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4){
                         showAlertView(R.string.please_input_correct_area);
                         return;
                     }else {
-                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
+                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || area.length() > 4) {
                             showAlertView(R.string.please_input_correct_area);
                             return;
                         }

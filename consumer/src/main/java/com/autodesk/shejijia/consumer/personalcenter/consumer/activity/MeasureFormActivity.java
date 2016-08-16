@@ -288,11 +288,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                     return;
                 } else {
-                    if (subNum.length() > 1 && subNum.startsWith("0")){
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4){
                         getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                         return;
                     }else {
-                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$")) {
+                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || houseArea.length() > 4) {
                             getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                             return;
                         }
