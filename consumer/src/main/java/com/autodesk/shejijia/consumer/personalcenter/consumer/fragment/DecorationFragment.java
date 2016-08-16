@@ -28,7 +28,7 @@ import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AppraiseDesignerActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploadDeliveryActivity;
@@ -701,7 +701,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      */
     private void refreshListView() {
         if (bidders != null && bidders.size() > 0) {
-            mDecorationAdapter = new MyDecorationAdapter(getActivity(), bidders, R.layout.item_lv_decoration);
+            mDecorationAdapter = new MyDecorationAdapter(getActivity(), bidders, R.layout.item_decoration_designer_list);
             mListView.setAdapter(mDecorationAdapter);
         }
     }

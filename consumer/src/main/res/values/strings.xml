@@ -90,4 +90,5 @@
     <string name="alert_decoration_title">确认要终止需求？</string>
     <string name="alert_decoration_message">终止需求后项目就会结束</string>
     <string name="button_decoration_amend">修改需求</string>
+    <string name="content_designer_good_at">擅长：</string>
 </resources>

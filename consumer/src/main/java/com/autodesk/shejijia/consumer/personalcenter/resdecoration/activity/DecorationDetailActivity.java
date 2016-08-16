@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
+package com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DemandDetailBean;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationDetailBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -26,12 +28,14 @@ import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.util
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
@@ -129,7 +133,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
                 CustomProgress.dialog.cancel();
 
                 String info = GsonUtil.jsonToString(jsonObject);
-                demandDetailBean = GsonUtil.jsonToBean(info, DemandDetailBean.class);
+                demandDetailBean = GsonUtil.jsonToBean(info, DecorationDetailBean.class);
                 updateViewFromData(demandDetailBean);
             }
 
@@ -176,7 +180,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     /**
      * 　网络获取数据，更新页面
      */
-    private void updateViewFromData(DemandDetailBean demandDetailBean) {
+    private void updateViewFromData(DecorationDetailBean demandDetailBean) {
         house_type = demandDetailBean.getHouse_type();
         room = demandDetailBean.getRoom();
         toilet = demandDetailBean.getToilet();
@@ -198,6 +202,17 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             btnFitmentAmendDemand.setClickable(false);
             btnFitmentAmendDemand.setPressed(false);
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
+        }
+        List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
+        if (null != bidders) {
+            DecorationBiddersBean biddersBean = bidders.get(bidders.size() - 1);
+            String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
+            if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) > 33) {
+                btnFitmentStopDemand.setClickable(false);
+                btnFitmentStopDemand.setPressed(false);
+                btnFitmentStopDemand.setTextColor(UIUtils.getColor(R.color.white));
+                btnFitmentStopDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
+            }
         }
 
         district_name = TextUtils.isEmpty(district) || "none".equals(district) || TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
@@ -520,7 +535,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private String house_type, house_area, needs_id;
     private String contacts_mobile, contacts_name;
     private String decoration_budget, design_budget, custom_string_status;
-    private DemandDetailBean demandDetailBean;
+    private DecorationDetailBean demandDetailBean;
     private Map<String, String> styleJson, spaceJson, livingRoomJson, roomJson, toiletJson;
     private String decoration_style_convert, house_type_convert, living_room_convert;
     private String room_convert, toilet_convert;

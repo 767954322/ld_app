@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.autodesk.shejijia.consumer.personalcenter.consumer.activity.DecorationBidderActivity">
+    tools:context=".personalcenter.resdecoration.activity.DecorationBidderActivity">
 
     <include layout="@layout/view_navigation_header"></include>
 

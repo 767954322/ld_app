@@ -1,18 +1,17 @@
-package com.autodesk.shejijia.consumer.home.homepage.fragment;
+package com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment;
 
 import android.view.View;
+import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.ConsumerDecorationAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -28,25 +27,24 @@ import java.util.List;
  * @author he.liu .
  * @version v1.0 .
  * @date 2016-8-15 .
- * @file ConsumerDecorationFragment.java .
- * @brief 消费者家装订单 .
+ * @file DecorationConsumerFragment.java .
+ * @brief 消费者家装订单主页面 .
  */
-public class ConsumerDecorationFragment extends BaseFragment implements
-        View.OnClickListener,
-        PullToRefreshLayout.OnRefreshListener {
+public class DecorationConsumerFragment extends BaseFragment implements
+        View.OnClickListener {
 
     ///is_beishu:0 北舒套餐 1 非北舒.
     private static final String IS_NOT_BEI_SHU = "1";
+    private static final String DECORATION_NEEDS_ID = "DecorationConsumerFragment";
 
     private String TAG = getClass().getSimpleName();
     private int LIMIT = 10;
     private int OFFSET = 0;
 
-    private PullToRefreshLayout mPtrRefreshLayout;
-    private PullListView mPlvConsumerDecoration;
+    private ListView mPlvConsumerDecoration;
 
     private DecorationListBean mDecorationListBean;
-    private ConsumerDecorationAdapter mConsumerDecorationAdapter;
+    private DecorationConsumerAdapter mDecorationConsumerAdapter;
     private List<DecorationNeedsListBean> mDecorationNeedsList = new ArrayList<>();
 
     @Override
@@ -56,24 +54,22 @@ public class ConsumerDecorationFragment extends BaseFragment implements
 
     @Override
     protected void initView() {
-        mPtrRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.ptr_refresh_layout);
-        mPlvConsumerDecoration = (PullListView) rootView.findViewById(R.id.plv_consumer_decoration);
+        mPlvConsumerDecoration = (ListView) rootView.findViewById(R.id.plv_consumer_decoration);
     }
 
     @Override
     protected void initData() {
-        if (null == mConsumerDecorationAdapter) {
-            mConsumerDecorationAdapter = new ConsumerDecorationAdapter(getActivity(), mDecorationNeedsList);
+        if (null == mDecorationConsumerAdapter) {
+            mDecorationConsumerAdapter = new DecorationConsumerAdapter(getActivity(), mDecorationNeedsList);
         }
 
-        mPlvConsumerDecoration.setAdapter(mConsumerDecorationAdapter);
+        mPlvConsumerDecoration.setAdapter(mDecorationConsumerAdapter);
         getMyDecorationData(OFFSET, LIMIT, 1);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-        mPtrRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -106,30 +102,7 @@ public class ConsumerDecorationFragment extends BaseFragment implements
     }
 
     private void updateViewFromData(int state) {
-        switch (state) {
-            case 1:
-                OFFSET = 10;
-                mDecorationNeedsList.clear();
-                break;
-            case 2:
-                OFFSET += 10;
-                break;
-            default:
-                break;
-        }
         mDecorationNeedsList.addAll(mDecorationListBean.getNeeds_list());
-        mConsumerDecorationAdapter.notifyDataSetChanged();
-    }
-
-    /// 刷新.
-    @Override
-    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        getMyDecorationData(0, LIMIT, 1);
-    }
-
-    /// 加载更多.
-    @Override
-    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        getMyDecorationData(OFFSET, LIMIT, 2);
+        mDecorationConsumerAdapter.notifyDataSetChanged();
     }
 }

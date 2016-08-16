@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.personalcenter.consumer.adapter;
+package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,48 +7,51 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.DecorationBidderActivity;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.DecorationDetailActivity;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationBidderActivity;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author he.liu .
  * @version v1.0 .
  * @date 2016-8-15 .
- * @file ConsumerDecorationAdapter.java .
+ * @file DecorationConsumerAdapter.java .
  * @brief 消费者家装订单适配器 .
  */
-public class ConsumerDecorationAdapter extends CommonAdapter<DecorationNeedsListBean> implements
+public class DecorationConsumerAdapter extends CommonAdapter<DecorationNeedsListBean> implements
         View.OnClickListener {
 
-    private Activity mActivity;
     private List<DecorationNeedsListBean> mDecorationNeedsList;
-    private String mNeeds_id;
     private ListView mDesignerListView;
     private DecorationDesignerListAdapter mDecorationDesignerListAdapter;
+    private ArrayList<DecorationBiddersBean> mBidders = new ArrayList<>();
+
+    private Activity mActivity;
+    private String mNeeds_id;
     private Intent mIntent;
 
-    public ConsumerDecorationAdapter(Activity activity, List<DecorationNeedsListBean> datas) {
-        super(activity, datas, R.layout.fragment_consumer_decoration);
+    public DecorationConsumerAdapter(Activity activity, List<DecorationNeedsListBean> datas) {
+        super(activity, datas, R.layout.item_decoration_list);
         mActivity = activity;
         mDecorationNeedsList = datas;
     }
 
     @Override
     public void convert(CommonViewHolder holder, DecorationNeedsListBean decorationNeedsListBean) {
-        String province_name = decorationNeedsListBean.getProvince_name();
-
-        String city_name = decorationNeedsListBean.getCity_name();
-        String district_name = decorationNeedsListBean.getDistrict_name();
+        ArrayList<DecorationBiddersBean>  mBidders = (ArrayList<DecorationBiddersBean>) decorationNeedsListBean.getBidders();
         mNeeds_id = decorationNeedsListBean.getNeeds_id();
 
-        List<DecorationBiddersBean> bidders = decorationNeedsListBean.getBidders();
+        String province_name = decorationNeedsListBean.getProvince_name();
+        String city_name = decorationNeedsListBean.getCity_name();
+        String district_name = decorationNeedsListBean.getDistrict_name();
+
         holder.setText(R.id.tv_decoration_name, decorationNeedsListBean.getCommunity_name());
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
         holder.setText(R.id.tv_decoration_house_type, decorationNeedsListBean.getHouse_type());
@@ -68,7 +71,7 @@ public class ConsumerDecorationAdapter extends CommonAdapter<DecorationNeedsList
          */
         mDesignerListView = holder.getView(R.id.lv_decoration_bid);
         if (null == mDecorationDesignerListAdapter) {
-            mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, bidders);
+            mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, mBidders, mNeeds_id);
         }
         mDesignerListView.setAdapter(mDecorationDesignerListAdapter);
 
@@ -76,12 +79,13 @@ public class ConsumerDecorationAdapter extends CommonAdapter<DecorationNeedsList
         holder.setOnClickListener(R.id.tv_decoration_detail, this);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_bidder_count:
                 mIntent = new Intent(mContext, DecorationBidderActivity.class);
+                mIntent.putExtra(DecorationBidderActivity.BIDDER_KEY, mBidders);
+                mIntent.putExtra(Constant.ConsumerDecorationFragment.NEED_ID, mNeeds_id);
                 mActivity.startActivity(mIntent);
                 break;
 

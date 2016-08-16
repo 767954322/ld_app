@@ -4,22 +4,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout
-        android:id="@+id/ptr_refresh_layout"
+    <ListView
+        android:id="@+id/plv_consumer_decoration"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/view_refresh_head"/>
-
-        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
-            android:id="@+id/plv_consumer_decoration"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:scrollbars="none"/>
-
-        <include layout="@layout/view_load_more"/>
-    </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
-
-    <include layout="@layout/view_empty_layout"></include>
+        android:layout_height="match_parent"></ListView>
 </RelativeLayout>

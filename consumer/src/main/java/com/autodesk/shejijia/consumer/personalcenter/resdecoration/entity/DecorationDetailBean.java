@@ -1,26 +1,17 @@
-package com.autodesk.shejijia.consumer.personalcenter.consumer.entity;
-
-import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+package com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author he.liu .
- * @version 1.0 .
- * @date 16-6-7 上午11:20
- * @file DecorationListBean.java  .
- * @brief 家装订单信息的实体类 .
+ * @version v1.0 .
+ * @date 2016-8-16 .
+ * @file DecorationDetailBean.java .
+ * @brief 获取当前需求返回数据的实体类 .
  */
-public class DecorationNeedsListBean implements Serializable {
-    /**
-     * 删除了
-     * private String contract;
-     * private Object delivery;
-     * <p/>
-     * 增加了
-     * private String avatar;
-     */
+public class DecorationDetailBean implements Serializable {
+
     private String city;
     private String district;
     private String province;
@@ -28,11 +19,12 @@ public class DecorationNeedsListBean implements Serializable {
     private String toilet;
     private String avatar;
     private String after_bidding_status;
+    private String consumer_uid;
     private String beishu_thread_id;
     private String bidder_count;
     private boolean bidding_status;
     private String city_name;
-    private int click_number;
+    private String click_number;
     private String community_name;
     private String consumer_mobile;
     private String consumer_name;
@@ -50,11 +42,10 @@ public class DecorationNeedsListBean implements Serializable {
     private String is_beishu;
     private String is_public;
     private String living_room;
-    private String needs_id;
+    private int needs_id;
     private String province_name;
     private String publish_time;
     private String wk_template_id;
-    private String contract;
     private List<DecorationBiddersBean> bidders;
 
     public String getCity() {
@@ -113,6 +104,14 @@ public class DecorationNeedsListBean implements Serializable {
         this.after_bidding_status = after_bidding_status;
     }
 
+    public String getConsumer_uid() {
+        return consumer_uid;
+    }
+
+    public void setConsumer_uid(String consumer_uid) {
+        this.consumer_uid = consumer_uid;
+    }
+
     public String getBeishu_thread_id() {
         return beishu_thread_id;
     }
@@ -145,11 +144,11 @@ public class DecorationNeedsListBean implements Serializable {
         this.city_name = city_name;
     }
 
-    public int getClick_number() {
+    public String getClick_number() {
         return click_number;
     }
 
-    public void setClick_number(int click_number) {
+    public void setClick_number(String click_number) {
         this.click_number = click_number;
     }
 
@@ -289,11 +288,11 @@ public class DecorationNeedsListBean implements Serializable {
         this.living_room = living_room;
     }
 
-    public String getNeeds_id() {
+    public int getNeeds_id() {
         return needs_id;
     }
 
-    public void setNeeds_id(String needs_id) {
+    public void setNeeds_id(int needs_id) {
         this.needs_id = needs_id;
     }
 
@@ -319,14 +318,6 @@ public class DecorationNeedsListBean implements Serializable {
 
     public void setWk_template_id(String wk_template_id) {
         this.wk_template_id = wk_template_id;
-    }
-
-    public String getContract() {
-        return contract;
-    }
-
-    public void setContract(String contract) {
-        this.contract = contract;
     }
 
     public List<DecorationBiddersBean> getBidders() {
