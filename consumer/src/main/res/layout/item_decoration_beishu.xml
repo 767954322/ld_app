@@ -232,4 +232,10 @@
 
         <include layout="@layout/view_common_line"></include>
     </RelativeLayout>
+    android:layout_height="wrap_content"/>
+
+    <TextView
+        android:background="@color/light_blue_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.text.Html;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -21,34 +20,36 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
- * @author   he.liu .
- * @version  v1.0 .
- * @date       2016-6-6 .
- * @file          CommonViewHolder.java .
- * @brief       公用的适配器句柄 .
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-6-6 .
+ * @file CommonViewHolder.java .
+ * @brief 公用的适配器句柄 .
  */
 public class CommonViewHolder {
     private SparseArray<View> mViews;
-    private int mPosition;
+    public int mPosition;
     private View mConvertView;
     private Context mContext;
-    private int mLayoutId;
+    public int mLayoutId;
 
-    public CommonViewHolder(Context context, ViewGroup parent, int layoutId,
-                            int position) {
+    public CommonViewHolder(Context context, View itemView, ViewGroup parent, int position) {
         mContext = context;
-        mLayoutId = layoutId;
-        this.mPosition = position;
-        this.mViews = new SparseArray<View>();
-        mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
-                false);
+        mConvertView = itemView;
+        mPosition = position;
+        mViews = new SparseArray<View>();
         mConvertView.setTag(this);
     }
+
 
     public static CommonViewHolder get(Context context, View convertView,
                                        ViewGroup parent, int layoutId, int position) {
         if (convertView == null) {
-            return new CommonViewHolder(context, parent, layoutId, position);
+            View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
+                    false);
+            CommonViewHolder holder = new CommonViewHolder(context, itemView, parent, position);
+            holder.mLayoutId = layoutId;
+            return holder;
         } else {
             CommonViewHolder holder = (CommonViewHolder) convertView.getTag();
             holder.mPosition = position;
@@ -56,13 +57,6 @@ public class CommonViewHolder {
         }
     }
 
-    public int getPosition() {
-        return mPosition;
-    }
-
-    public int getLayoutId() {
-        return mLayoutId;
-    }
 
     /**
      * 通过viewId获取控件
@@ -83,6 +77,21 @@ public class CommonViewHolder {
         return mConvertView;
     }
 
+    public int getLayoutId() {
+        return mLayoutId;
+    }
+
+    public void updatePosition(int position) {
+        mPosition = position;
+    }
+
+    public int getPosition() {
+        return mPosition;
+    }
+
+
+    /****以下为辅助方法*****/
+
     /**
      * 设置TextView的值
      *
@@ -93,11 +102,6 @@ public class CommonViewHolder {
     public CommonViewHolder setText(int viewId, String text) {
         TextView tv = getView(viewId);
         tv.setText(text);
-        return this;
-    }
-    public CommonViewHolder setTextHtml(int viewId, String text) {
-        TextView tv = getView(viewId);
-        tv.setText(Html.fromHtml(text));
         return this;
     }
 
@@ -223,7 +227,7 @@ public class CommonViewHolder {
     }
 
     public CommonViewHolder setChecked(int viewId, boolean checked) {
-        Checkable view = getView(viewId);
+        Checkable view = (Checkable) getView(viewId);
         view.setChecked(checked);
         return this;
     }
@@ -251,4 +255,5 @@ public class CommonViewHolder {
         view.setOnLongClickListener(listener);
         return this;
     }
+
 }
