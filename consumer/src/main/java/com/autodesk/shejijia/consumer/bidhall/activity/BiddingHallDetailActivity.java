@@ -8,26 +8,26 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.entity.BidHallDetailEntity;
 import com.autodesk.shejijia.consumer.bidhall.entity.RealNameBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CertificationActivity;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -43,6 +43,8 @@ import java.util.Map;
  * @brief 应标大厅详情.
  */
 public class BiddingHallDetailActivity extends NavigationBarActivity implements View.OnClickListener {
+
+    private static final int BIDDER_MAX = 3; /// 最大应标人数 .
 
     @Override
     protected int getLayoutResId() {
@@ -72,7 +74,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         super.initExtraBundle();
         Bundle bundle = getIntent().getExtras();
         needs_id = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID);
-        bid_status = bundle.getBoolean(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS);
         demand_type = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_TYPE);
     }
 
@@ -121,8 +122,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
                 mBidHallEntity = GsonUtil.jsonToBean(str, BidHallDetailEntity.class);
-                KLog.json(TAG, str);
-
+                bid_status = mBidHallEntity.getBidding_status();
                 updateViewFromBidHallDetailData();
             }
 
@@ -137,6 +137,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
     /**
      * 我要应标
+     *
      * @param declaration
      * @param user_name
      * @param needs_id
@@ -202,7 +203,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      */
     private void updateViewFromRealNameData() {
         if (mRealNameBean.getDesigner().getIs_real_name() == 2) {
-            if (bidder_count >= 5) {
+            if (bidder_count >= BIDDER_MAX) {
                 bidCountFullDialog();
             } else {
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -254,7 +255,10 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String toilet_cn = ConvertUtils.getConvert2CN(toiletJson, toilet);
         String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
         String livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_cn) + UIUtils.getNodataIfEmpty(living_room_cn) + UIUtils.getNodataIfEmpty(toilet_cn);
-        district_name = TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
+        district_name = TextUtils.isEmpty(mBidHallEntity.getDistrict())
+                || "none".equals(mBidHallEntity.getDistrict())
+                || TextUtils.isEmpty(district_name)
+                || district_name.equals("none") ? "" : district_name;
         String projectAddress = UIUtils.getNodataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNodataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
         setTitleForNavbar(community_name);
@@ -283,6 +287,15 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         if (Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT.equals(demand_type)) {
             mBtnSendBid.setVisibility(View.GONE);
         }
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        //判断是消费者，还是设计师，，从而区分消费者和设计师
+        if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+
+            mBtnSendBid.setVisibility(View.GONE);
+
+        }
+
     }
 
     /**

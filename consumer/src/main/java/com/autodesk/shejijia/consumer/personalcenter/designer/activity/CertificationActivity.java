@@ -159,18 +159,18 @@ public class CertificationActivity extends NavigationBarActivity implements View
                     if (isMobile) {
                         if (isPaper) {
                             if (ObjPositive != null) {
-                                if (ObjHead != null) {
-                                    if (ObjBack != null) {
+                                if (ObjBack != null) {
+                                    if (ObjHead != null) {
                                         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                                         postRealNameData(getName, getPhone, getIdentity, "0", ObjPositive, ObjBack, ObjHead, memberEntity.getHs_uid());
                                     } else {
-                                        MyToast.show(CertificationActivity.this, UIUtils.getString(R.string.no_upload_id_opposite));
+                                        MyToast.show(CertificationActivity.this, UIUtils.getString(R.string.no_holder_upload_my_front));
                                     }
                                 } else {
-                                    MyToast.show(CertificationActivity.this, UIUtils.getString(R.string.no_upload_id_positive));
+                                    MyToast.show(CertificationActivity.this, UIUtils.getString(R.string.no_upload_id_opposite));
                                 }
                             } else {
-                                MyToast.show(CertificationActivity.this, UIUtils.getString(R.string.no_holder_upload_my_front));
+                                MyToast.show(CertificationActivity.this, UIUtils.getString(R.string.no_upload_id_positive));
                             }
                         } else {
                             MyToast.show(CertificationActivity.this, UIUtils.getString(R.string.id_number_input_is_not_correct));

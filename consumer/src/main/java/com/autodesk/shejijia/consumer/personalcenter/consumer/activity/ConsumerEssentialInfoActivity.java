@@ -196,14 +196,16 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 所在地
          */
-        if (TextUtils.isEmpty(province_name)) {
-            mTvConsumeAddress.setText(getResources().getString(R.string.no_data));
+        if (TextUtils.isEmpty(province_name)
+                || TextUtils.isEmpty(city_name)) {
+            mTvConsumeAddress.setText(getResources().getString(R.string.has_yet_to_fill_out));
         } else {
-            if (district_name.isEmpty() || "none".equals(district_name)) {
-                mTvConsumeAddress.setText(province_name + " " + city_name + " ");
-            } else {
-                mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
+            if (TextUtils.isEmpty(district_name)
+                    || "none".equals(district_name)
+                    || "null".equals(district_name)) {
+                district_name = "";
             }
+            mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
         }
 
         /**
@@ -300,15 +302,16 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         mChangeAddressDialog
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
-                    public void onClick(String province_name_1, String province, String city_name_1, String city_1, String district_name_1, String district_1) {
+                    public void onClick(String province_name_1, String province_1, String city_name_1, String city_1, String district_name_1, String district_1) {
                         province_name = province_name_1;
-                        ConsumerEssentialInfoActivity.this.province = province;
-
                         city_name = city_name_1;
+                        province = province_1;
                         city = city_1;
 
                         district_name = TextUtils.isEmpty(district_name_1) ? "" : district_name_1;
-                        district = TextUtils.isEmpty(district_1) || TextUtils.isEmpty(district_name) || "none".equals(district_name) ? "" : district_1;
+                        district = TextUtils.isEmpty(district_1)
+                                || TextUtils.isEmpty(district_name)
+                                || "none".equals(district_name) ? "" : district_1;
 
                         JSONObject jsonObject = new JSONObject();
                         int intSex;

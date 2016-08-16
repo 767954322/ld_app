@@ -18,8 +18,10 @@ public class ApiManager {
      * RUNNING_ALPHA：Alpha环境
      * RUNNING_PRODUCTION：正式(PRODUCTION)环境
      * RUNNING_DEV ：alpha dev境 .
+     * RUNNING_DOCKER_DESIGN：DOCKER 环境
      */
     public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_ALPHA;
+
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
@@ -41,20 +43,20 @@ public class ApiManager {
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH;
                 break;
 
-            case UrlConstants.RUNNING_UAT:
-                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_UAT;
-                break;
-
-            case UrlConstants.RUNNING_ALPHA:
-                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_ALPHA;
-                break;
-
             case UrlConstants.RUNNING_PRODUCTION:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_PRODUCTION;
                 break;
 
             case UrlConstants.RUNNING_DEV:
                 login_path = UrlConstants.MP_MAIN_LOGIN_PATH_DEV;
+                break;
+            case UrlConstants.RUNNING_UAT:
+                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_UAT;
+                break;
+
+            case UrlConstants.RUNNING_ALPHA:
+            default:
+                login_path = UrlConstants.MP_MAIN_LOGIN_PATH_ALPHA;
                 break;
         }
         return login_path;
@@ -81,15 +83,16 @@ public class ApiManager {
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_UAT;
                 break;
 
-            case UrlConstants.RUNNING_ALPHA:
-                logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_ALPHA;
-                break;
-
             case UrlConstants.RUNNING_PRODUCTION:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_PRODUCTION;
                 break;
+
             case UrlConstants.RUNNING_DEV:
                 logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_DEV;
+                break;
+            case UrlConstants.RUNNING_ALPHA:
+            default:
+                logout_path = UrlConstants.MP_MAIN_LOGOUT_PATH_ALPHA;
                 break;
         }
         return logout_path;
@@ -128,6 +131,14 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 main_design = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_DESIGN;
                 break;
+
+            //xin
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                main_design = UrlConstants.DOCKER_HAWKEYE_DESIGN + UrlConstants.MP_MAIN_DESIGN;
+break;
+            case UrlConstants.RUNNING_DOKER:
+                main_design = UrlConstants.DOKER_MP_DESIGN + UrlConstants.MP_MAIN_DESIGN;
+                break;
         }
         return main_design;
     }
@@ -163,6 +174,14 @@ public class ApiManager {
 
             case UrlConstants.RUNNING_DEV:
                 main_member = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_MEMBER;
+                break;
+            //xin
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                main_member = UrlConstants.DOCKER_HAWKEYE_MEMBER + UrlConstants.MP_MAIN_MEMBER;
+                break;
+
+            case UrlConstants.RUNNING_DOKER:
+                main_member = UrlConstants.DOKER_MP_MEMBER + UrlConstants.MP_MAIN_MEMBER;
                 break;
         }
         return main_member;
@@ -200,6 +219,13 @@ public class ApiManager {
             case UrlConstants.RUNNING_DEV:
                 main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_TRANSACTION;
                 break;
+            //XIN
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                main_transaction = UrlConstants.DOCKER_HAWKEYE_TRANSCATION + UrlConstants.MP_MAIN_TRANSACTION;
+                break;
+            case UrlConstants.RUNNING_DOKER:
+                main_transaction = UrlConstants.DOKER_MP_TRANSACTION + UrlConstants.MP_MAIN_TRANSACTION;
+                break;
         }
         return main_transaction;
     }
@@ -222,7 +248,7 @@ public class ApiManager {
             case UrlConstants.RUNNING_PRODUCTION:
                 return false;
             default:
-                return false;
+                return true;
         }
     }
 
@@ -279,10 +305,51 @@ public class ApiManager {
             case UrlConstants.RUNNING_PRODUCTION:
                 versionPrefix = "P";
                 break;
+            case UrlConstants.RUNNING_DOCKER_DESIGN:
+                versionPrefix = "_DOCKER";
+                break;
         }
         return versionPrefix;
     }
 
     private ApiManager() {
+    }
+
+    /**
+     * 获得html5分享界面的url
+     *
+     * @return 我的资产url公共部分
+     */
+    public static String getHtml5Url(String runningDevelopment,String caseId) {
+        String main_transaction = null;
+        switch (runningDevelopment) {
+            case UrlConstants.RUNNING_DEVELOP:
+                main_transaction = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_QA:
+                main_transaction = UrlConstants.QA_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_UAT:
+                main_transaction = UrlConstants.UAT_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_ALPHA:
+                main_transaction = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_PRODUCTION:
+                main_transaction = UrlConstants.PRODUCTION_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+
+            case UrlConstants.RUNNING_DEV:
+                main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+            case UrlConstants.RUNNING_DOKER:
+                main_transaction = UrlConstants.DOKER_MP_TRANSACTION + UrlConstants.MP_MAIN_SHARE+caseId;
+                break;
+        }
+        return main_transaction;
     }
 }

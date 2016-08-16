@@ -157,11 +157,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
                 MyToast.show(this, UIUtils.getString(R.string.no_cache));
             } else {
                 CustomProgress.show(MPMoreSettingActivity.this, "清除缓存中...", false, null);
-                DataCleanManager.cleanInternalCache(UIUtils.getContext());
-                DataCleanManager.cleanCustomCache(cacheDir.getAbsolutePath());
-                MPFileUtility.clearCacheContent(this);
-                ImageLoader.getInstance().clearDiskCache();
-                ImageLoader.getInstance().clearMemoryCache();
+                CommonUtils.clearAppCache(this);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

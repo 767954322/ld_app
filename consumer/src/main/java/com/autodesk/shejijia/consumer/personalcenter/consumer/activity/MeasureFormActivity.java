@@ -13,30 +13,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
@@ -59,7 +57,6 @@ import java.util.Locale;
  */
 
 public class MeasureFormActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
-
 
     @Override
     protected int getLayoutResId() {
@@ -89,7 +86,20 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         btn_send_form = (Button) findViewById(R.id.btn_send_measure_house_form);
         tvc_measure_form_type = (TextView) findViewById(R.id.tvc_measure_form_type);
         tvc_measure_form_style = (TextView) findViewById(R.id.tvc_measure_form_style);
+        tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
         ll_time_restrict = (LinearLayout) findViewById(R.id.ll_time_restrict);
+
+
+        tvc_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String area = tvc_area.getText().toString().trim();
+                    area = String.format("%.2f",Double.valueOf(area));
+                    tvc_area.setText(area);
+                }
+            }
+        });
 
     }
 
@@ -102,6 +112,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         designer_id = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_ID);
         hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
         mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
+        mThread_id = (String) extras.get(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);
     }
 
 
@@ -177,7 +188,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         }
 
         String has_yet_to_fill_out = UIUtils.getString(R.string.has_yet_to_fill_out);
-        if (mFree.equals(has_yet_to_fill_out)) {
+        if (has_yet_to_fill_out.equals(mFree)) {
             tv_measure_fee.setText("0.00");
             mFree = "0";
         } else {
@@ -197,6 +208,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         tvc_address.setOnClickListener(this);
         tvc_time.setOnClickListener(this);
         btn_send_form.setOnClickListener(this);
+        tvIllustrate.setOnClickListener(this);
     }
 
 
@@ -236,7 +248,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, mToilet);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                    if (null == mThread_id || "".equals(mThread_id)) {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                    } else {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -248,62 +264,92 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 boolean bAddress = communityName.matches(RegexUtil.ADDRESS_REGEX);
 
                 if (name.length() < 2 || name.length() > 20 || !bName) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_your_name));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_your_name));
+
                     return;
                 }
 
                 if (!bMobile || mobileNumber.isEmpty()) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_phone_number));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_phone_number));
                     return;
                 }
 
                 if (housingType == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.demand_please_project_types));
+                    getErrorHintAlertView(UIUtils.getString(R.string.demand_please_project_types));
                     return;
                 }
 
-                if (!bArea || houseArea.isEmpty() || houseArea.equals("0")) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_housing_area));
-                    return;
+//                if (!bArea || houseArea.isEmpty() || houseArea.equals("0")) {
+//
+//                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+//                    return;
+//                }
+
+                //.....................................
+                houseArea = String.format("%.2f",Double.valueOf(houseArea));
+                tvc_area.setText(houseArea);
+                String subNum = "0";
+                if (houseArea.contains(".")) {
+                    subNum = houseArea.substring(0, houseArea.indexOf("."));
                 }
+                if (TextUtils.isEmpty(houseArea)||Float.valueOf(houseArea) == 0) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+                    return;
+                } else {
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4){
+                        getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+                        return;
+                    }else {
+                        if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                            getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
+                            return;
+                        }
+                    }
+                }
+
+
 
                 if (designBudget == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_design_budget));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_design_budget));
                     return;
                 }
 
                 if (decorateBudget == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_decorate_budget));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_decorate_budget));
                     return;
                 }
 
                 if (mRoom == null || mHall == null || mToilet == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_form));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
                     return;
                 }
 
                 if (style == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_style));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_style));
                     return;
                 }
 
                 if (mCurrentProvince == null || mCurrentCity == null || mCurrentDistrict == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_addresses));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_addresses));
                     return;
                 }
 
                 if (!bAddress || communityName.isEmpty()) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_fill_detailed_address));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_detailed_address));
                     return;
                 }
 
                 if (currentData == null) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.please_select_quantity_room_time));
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_quantity_room_time));
                     return;
                 }
 
-                if (mFree.isEmpty()) {
-                    MyToast.show(MeasureFormActivity.this, UIUtils.getString(R.string.volume_rate_cannot_empty));
+                if (TextUtils.isEmpty(mFree)) {
+
+                    getErrorHintAlertView(UIUtils.getString(R.string.volume_rate_cannot_empty));
                     return;
                 }
 
@@ -311,19 +357,19 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                  * 获取系统当前时间,通过SimpleDateFormat获取24小时制时间
                  *
                  */
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点", Locale.getDefault());
                 String date = /*currentTime += */sdf.format(new Date());
 
-                try {
-                    if (formatDate(date, currentData)) {
+//                try {
+//                    if (formatDate(date, currentData)) {
                         CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
                         postSendMeasureForm(jsonObject);
-                    } else {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
-                    }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+//                    } else {
+//                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
+//                    }
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.tvc_measure_form_project_budget:
                 pvDesignBudgetOptions.show();
@@ -347,6 +393,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 getPCDAddress();
 
                 break;
+            case R.id.tvIllustrate:
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null,new String[]{UIUtils.getString(R.string.finish_cur_pager)}, MeasureFormActivity.this,
+                        AlertView.Style.Alert, null).show();
+                break;
             default:
                 break;
         }
@@ -358,17 +408,16 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
             if (split.length == 1) {
                 if (split[0].length() <= 4) {
-                    if (area.matches(RegexUtil.AREA_REGEX)) {
+                    if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
                         return true;
                     }
                 }
-
             }
             if (split.length == 2) {
-
                 if (split[0].length() <= 4 && split[1].length() <= 2) {
 
-                    if (area.matches(RegexUtil.AREA_REGEX)) {
+                    if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
+
                         return true;
                     }
                 }
@@ -419,6 +468,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
+                currentData = DateUtil.dateFormat(currentData,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点");
                 tvc_time.setText(currentData);
             }
         });
@@ -589,6 +639,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         mCurrentCityCode = cityCode;
                         mCurrentDistrict = district;
                         mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) ? "" : areaCode;
+                        if ("null".equals(district) || "none".equals(district) || TextUtils.isEmpty(district)) {
+                            district = "";
+                        }
                         tvc_address.setText(province + city + district);
                         mChangeAddressDialog.dismiss();
                     }
@@ -602,7 +655,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @brief yyyy-MM-dd HH:mm:ss格式转化成毫秒数(long)进行判断 .
      */
     public static boolean formatDate(String beforeDate, String afterDate) throws ParseException {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点");
         Date d1 = sf.parse(beforeDate);
         Date d2 = sf.parse(afterDate);
         long stamp = d2.getTime() - d1.getTime();
@@ -674,6 +727,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             }
         });
     }
+
     /**
      * 提交量房数据
      *
@@ -699,11 +753,34 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         MPServerHttpManager.getInstance().agreeOneselfResponseBid(jsonObject, okResponseCallback);
     }
 
+    private void getErrorHintAlertView(String content) {
+        if (error_AlertView != null) {
+            error_AlertView = null;
+        }
+        error_AlertView = new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, MeasureFormActivity.this,
+                AlertView.Style.Alert, null);
+        error_AlertView.show();
+
+    }
+
     private void showAlertView(String content) {
         new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.sure)}, null, MeasureFormActivity.this,
                 AlertView.Style.Alert, MeasureFormActivity.this).show();
     }
 
+    @Override
+    public void onItemClick(Object object, int position) {
+//        if (object == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
+//            CustomProgress.show(this, "", false, null);
+//            sendStopDemand(needs_id, 1);
+//        }
+        if (object != error_AlertView) {
+            MeasureFormActivity.this.finish();
+        }
+
+    }
+
+    private AlertView error_AlertView;
     ///控件.
     private LinearLayout ll_time_restrict;
     private LinearLayout ll_type;
@@ -722,6 +799,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private TextView tvc_measure_form_type;
     private TextView tvc_measure_form_style;
     private Button btn_send_form;
+    private TextView tvIllustrate;
     private OptionsPickerView pvDesignBudgetOptions;
     private OptionsPickerView pvDecorationBudgetOptions;
     private OptionsPickerView pvStyleOptions;
@@ -733,6 +811,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     /// 变量.
     private int flow_state;
     private String designer_id;
+    private String mThread_id;
     private String hs_uid;
     private String mFree;
     private String needs_id;
@@ -761,16 +840,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
-
-    @Override
-    public void onItemClick(Object object, int position) {
-//        if (object == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
-//            CustomProgress.show(this, "", false, null);
-//            sendStopDemand(needs_id, 1);
-//        }
-
-        MeasureFormActivity.this.finish();
-    }
 
 
     //    private void showState(String needs_id, String designer_id) {

@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 
 /**
  * @author Malidong .
@@ -40,6 +42,18 @@ public class CommonUtils {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();
         CookieSyncManager.getInstance().sync();
+    }
+
+    /**
+     * 清除应用缓存
+     * @param context
+     */
+    public static void clearAppCache(Context context) {
+        DataCleanManager.cleanInternalCache(UIUtils.getContext());
+        DataCleanManager.cleanCustomCache(context.getCacheDir().getAbsolutePath());
+        MPFileUtility.clearCacheContent(context);
+        ImageLoader.getInstance().clearDiskCache();
+        ImageLoader.getInstance().clearMemoryCache();
     }
 
     /**

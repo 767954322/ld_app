@@ -71,7 +71,15 @@ public class AmendDemandBean implements Serializable {
      * needs_id : null
      */
 
-    private Object needs_id;
+    private String needs_id;
+
+    public String getNeeds_id() {
+        return needs_id;
+    }
+
+    public void setNeeds_id(String needs_id) {
+        this.needs_id = needs_id;
+    }
 
     public void setCity(String city) {
         this.city = city;
@@ -300,6 +308,7 @@ public class AmendDemandBean implements Serializable {
                 ", province_name='" + province_name + '\'' +
                 ", publish_time='" + publish_time + '\'' +
                 ", room='" + room + '\'' +
+                ", needs_id='" + needs_id + '\'' +
                 ", toilet='" + toilet + '\'' +
                 '}';
     }

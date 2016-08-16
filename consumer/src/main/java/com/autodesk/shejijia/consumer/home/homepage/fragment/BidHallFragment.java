@@ -90,11 +90,9 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                 return;
             }
             needs_id = String.valueOf(mNeedsListEntities.get(position).getNeeds_id());
-            bid_status = mNeedsListEntities.get(position).isBidding_status();
             Intent intent = new Intent(activity, BiddingHallDetailActivity.class);
             intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_CUSTOMBID_FRAGMENT);
             intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
-            intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, bid_status);
             startActivity(intent);
         }
     }
@@ -211,6 +209,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         }
         return needsLis;
     }
+
 
     /// 刷新.
     @Override

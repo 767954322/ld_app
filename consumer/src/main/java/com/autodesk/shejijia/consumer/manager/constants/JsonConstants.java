@@ -117,6 +117,8 @@ public class JsonConstants {
     public static final String JSON_REAL_NAME_FILE_URL = "file_url";
     public static final String JSON_REAL_NAME_FILE_NAME = "file_name";
 
+    public static final String AMENDEMANDBEAN = "amendDemandBean";
+
     /// Q1.4 Measure House Form .
 
 

@@ -1,7 +1,5 @@
 package com.autodesk.shejijia.shared.framework.activity;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +8,13 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -53,9 +54,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.initData(savedInstanceState);
 
         // retrieve the fragment handle from fragmentmanager
-        if (savedInstanceState != null)
-        {
-            mMPThreadListFragment = (MPThreadListFragment)getFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
+
+        if (savedInstanceState != null) {
+            mMPThreadListFragment = (MPThreadListFragment) getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
             mFragmentArrayList.add(mMPThreadListFragment);
 
             showFragment(getCurrentCheckedRadioButtonId());
@@ -182,9 +183,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected void loadMainFragment(Fragment fragment, String tag) {
         mFragmentArrayList.add(fragment);
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(getMainContentId(), fragment, tag);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -208,6 +209,8 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     protected void rightNavButtonClicked(View view) {
+
+
         if (isActiveFragment(MPThreadListFragment.class))
             openFileThreadActivity();
     }
@@ -228,7 +231,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return -1;
     }
 
-    private void openFileThreadActivity() {
+    public void openFileThreadActivity() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         Intent intent = new Intent(this, MPFileThreadListActivity.class);
         intent.putExtra(MPFileThreadListActivity.MEMBERID, memberEntity.getAcs_member_id());
@@ -254,9 +257,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         MPThreadListFragment threadListFragment = null;
         BaseFragment f = null;
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
+            if (null != fragment && fragment.getClass().equals(clazz)) {
                 fragmentTransaction.show(fragment);
 
                 if (fragment.getClass().equals(MPThreadListFragment.class))
@@ -266,7 +269,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             } else
                 fragmentTransaction.hide(fragment);
         }
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
 
         if (threadListFragment != null) {
             threadListFragment.onFragmentShown();
@@ -315,7 +318,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         Fragment currentFragment = null;
 
         for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
+            if (null != fragment && fragment.getClass().equals(clazz)) {
                 currentFragment = fragment;
                 break;
             }
@@ -328,11 +331,12 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         if (memberEntity != null) {
             showFragment(radioBtnId);
         } else {
+            mRadioGroup.check(R.id.consumer_main_radio_btn);
             AdskApplication.getInstance().doLogin(this);
         }
     }
 
-    private void getFileThreadUnreadCount() {
+    public void getFileThreadUnreadCount() {
         OkStringRequest.OKResponseCallback callback = new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -357,7 +361,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             }
         };
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
+        if (null != memberEntity) {
+            MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(memberEntity.getAcs_member_id(), false, callback);
+        }
     }
 
 

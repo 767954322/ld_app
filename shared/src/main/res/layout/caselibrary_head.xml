@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_case_library_head"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/size_10"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40">
+
+        <LinearLayout
+            android:id="@+id/ll_fenxiang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_8"
+                android:background="@drawable/fenxiang_ico"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_marginBottom="@dimen/size_4"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_20"
+            android:layout_gravity="center"
+            android:layout_weight="0.1"
+            android:background="@color/bg_d7"/>
+
+        <LinearLayout
+            android:id="@+id/rl_thumb_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_thumb_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_8"
+                android:background="@drawable/dianzan_ico"/>
+
+            <TextView
+                android:id="@+id/tv_thumb_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点赞"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_below="@id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_gravity="center"
+        android:background="@color/bg_d7"/>
+</RelativeLayout>

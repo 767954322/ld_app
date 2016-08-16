@@ -4,13 +4,14 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class HoverCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity> {
         ViewHolder viewHolder = new ViewHolder();
 
         viewHolder.hoverCase = (ImageView) container.findViewById(R.id.img_hover_case);
+        viewHolder.tvThumbUp = (TextView) container.findViewById(R.id.tv_thumb_up);
         return viewHolder;
     }
 
@@ -57,6 +59,8 @@ public class HoverCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity> {
     public void initItem(View view, Holder holder, int position) {
 
         List<CaseLibraryBean.CasesEntity.ImagesEntity> images = mDatas.get(position).getImages();
+
+
         if (images != null && images.size() > 0) {
             for (int i = 0; i < images.size(); i++) {
                 CaseLibraryBean.CasesEntity.ImagesEntity imagesEntity = images.get(i);
@@ -71,8 +75,10 @@ public class HoverCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity> {
         } else {
             ((ViewHolder) holder).hoverCase.setImageResource(R.drawable.common_case_icon);
         }
+
+        ((ViewHolder) holder).tvThumbUp.setText(context.getString(R.string.dianzanshu)+mDatas.get(position).getFavorite_count());
         ((ViewHolder) holder).hoverCase.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ((ViewHolder) holder).hoverCase.getLayoutParams();
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) ((ViewHolder) holder).hoverCase.getLayoutParams();
         layoutParams.width = screenWidth;
         layoutParams.height = 197 * screenWidth / 320;
         ((ViewHolder) holder).hoverCase.setLayoutParams(layoutParams);
@@ -80,6 +86,7 @@ public class HoverCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity> {
 
     public class ViewHolder extends BaseAdapter.Holder {
         public ImageView hoverCase;
+        public TextView tvThumbUp;
     }
 
     class MyOnClickListener implements View.OnClickListener {

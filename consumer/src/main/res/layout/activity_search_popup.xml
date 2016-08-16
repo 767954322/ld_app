@@ -9,16 +9,20 @@
         android:id="@+id/ll_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:background="@drawable/public_search_view_bg_or"
         android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/ect_searchc_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_15"
-            android:background="@drawable/icon_back_normal_z"/>
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/transparent"
+            android:src="@drawable/icon_back_normal_z"
+            android:padding="@dimen/navbar_icon_padding"
+            android:scaleType="centerInside"/>
 
         <com.autodesk.shejijia.shared.components.common.uielements.ClearEditText
             android:id="@+id/ect_et_search"
@@ -29,7 +33,7 @@
             android:background="@drawable/bg_input_search_or"
             android:drawableLeft="@drawable/icon_search_or"
             android:hint="@string/search"
-            android:paddingLeft="@dimen/size_20"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_20"
             android:imeOptions="actionSearch"
             android:singleLine="true"

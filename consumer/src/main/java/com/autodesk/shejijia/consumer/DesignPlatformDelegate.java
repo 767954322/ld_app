@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailHomeBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowFirstDesignActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowLastDesignActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureCostActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
@@ -37,37 +36,39 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
     }
 
 
-    public void onCommandCellClicked(Context context, MPChatCommandInfo mpChatCommandInfo) {
+    //聊天内容里按钮坚挺
+    public void onCommandCellClicked(Context context, MPChatCommandInfo mpChatCommandInfo, String mThreadId) {
         int subNodeId = Integer.parseInt(mpChatCommandInfo.sub_node_id);
+
 
         switch (subNodeId) {
             case 13:
-                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, mpChatCommandInfo, MPStatusMachine.NODE__MEANSURE_PAY, mThreadId);
 
                 break;
 
             case 11:
             case 12:
             case 14:
-                jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, mpChatCommandInfo, mThreadId);
 
                 break;
 
             case 21:
             case 22:
             case 31:
-                jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, mpChatCommandInfo, mThreadId);
 
                 break;
 
             case 33:
-                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, mpChatCommandInfo, mThreadId);
 
                 break;
 
             case 41:
             case 42:
-                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, mpChatCommandInfo, MPStatusMachine.NODE__DESIGN_BALANCE_PAY, mThreadId);
 
                 break;
 
@@ -75,7 +76,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
             case 52:
             case 61:
             case 62:
-                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, mpChatCommandInfo);
+                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, mpChatCommandInfo, mThreadId);
 
                 break;
 
@@ -89,50 +90,58 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         return getWorkflowButtonIco(OrderDetailsInfo, ifIsDesiner);
     }
 
-    public void onChatRoomSupplementryButtonClicked(Context context, String assetId, String recieverId) {
+    public void onChatRoomSupplementryButtonClicked(Context context, String assetId, String designerId) {
         Intent maIntent = new Intent(context, ProjectMaterialActivity.class);
         maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, recieverId);
+        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designerId);
         maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, assetId);
         context.startActivity(maIntent);
 
     }
 
 
-    public void onChatRoomWorkflowButtonClicked(Context context, int wk_cur_sub_node_idi, String assetId, String recieverId, String receiverUserName, String designerId) {
+    //全流程，聊天下面小图标
+    public void onChatRoomWorkflowButtonClicked(Context context, int wk_cur_sub_node_idi, String assetId, String recieverId, String receiverUserName, String designerId, String hs_uid, String mThreadId) {
 
         if (wk_cur_sub_node_idi != 0) {
             if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == -1) {
-                jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, assetId, recieverId);
+                jumpToOtherProcessesThree(context, FlowMeasureFormActivity.class, assetId, designerId, mThreadId);
 
             } else if (wk_cur_sub_node_idi == 13) {
-                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, recieverId);
+                jumpToOtherProcessesFour(context, FlowMeasureCostActivity.class, assetId, designerId, MPStatusMachine.NODE__MEANSURE_PAY, mThreadId);
 
             } else if (wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
-                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, recieverId);
+                jumpToOtherProcessesFour(context, FlowMeasureFormActivity.class, assetId, designerId, MPStatusMachine.NODE__MEANSURE_PAY, mThreadId);
 
-            } else if (wk_cur_sub_node_idi == 21) {
-                jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, assetId, recieverId);
+            } else if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 22) {
+                jumpToOtherProcessesThree(context, FlowEstablishContractActivity.class, assetId, designerId, mThreadId);
 
             } else if (wk_cur_sub_node_idi == 31) {
-                jumpToOtherProcessesFour(context, FlowFirstDesignActivity.class, assetId, recieverId);
+                jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId, MPStatusMachine.NODE__MEANSURE_PAY, mThreadId);
 
-            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51) {
-                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, recieverId);
+            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51 || wk_cur_sub_node_idi == 61 || wk_cur_sub_node_idi == 52 || wk_cur_sub_node_idi == 62) {
+                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId, mThreadId);
 
-            } else if (wk_cur_sub_node_idi == 41) {
-                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, recieverId);
+            } else if (wk_cur_sub_node_idi == 41 || wk_cur_sub_node_idi == 42) {
+                jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, designerId, MPStatusMachine.NODE__DESIGN_BALANCE_PAY, mThreadId);
 
             }
         } else {
 
-            String spStr[] = new String[0];
-            if (receiverUserName != null && !receiverUserName.equals("")) {
-                spStr = receiverUserName.split("_");
-            }
-            String flow_hs_uid = spStr[1];
+            String flow_hs_uid;
 
-            getSeekDesignerDetailHomeData(context, designerId, flow_hs_uid, assetId, recieverId);
+            if (null == hs_uid || "".equals(hs_uid)) {
+                String spStr[] = new String[0];
+                if (receiverUserName != null && !receiverUserName.equals("")) {
+                    spStr = receiverUserName.split("_");
+                }
+                flow_hs_uid = spStr[1];
+            } else {
+                flow_hs_uid = hs_uid;
+            }
+
+
+            getSeekDesignerDetailHomeData(context, designerId, flow_hs_uid, assetId, mThreadId);
 
         }
     }
@@ -145,7 +154,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
      * @param hsUid
      */
     public void getSeekDesignerDetailHomeData(
-            final Context context, final String designer_id, final String hsUid, final String assetId, final String recieverId) {
+            final Context context, final String designer_id, final String hsUid, final String assetId, final String mThreadId) {
 
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
 
@@ -153,7 +162,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
             public void onResponse(JSONObject jsonObject) {
 
                 String info = GsonUtil.jsonToString(jsonObject);
-                SeekDesignerDetailHomeBean seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, SeekDesignerDetailHomeBean.class);
+                DesignerDetailHomeBean seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
                 final String measureFee = seekDesignerDetailHomeBean.getDesigner().getMeasurement_price();
 
                 Intent intent = new Intent(context, MeasureFormActivity.class);
@@ -162,6 +171,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 intent.putExtra(Constant.SeekDesignerDetailKey.FLOW_STATE, Constant.WorkFlowStateKey.STEP_IM);
                 intent.putExtra(Constant.SeekDesignerDetailKey.HS_UID, hsUid);
                 intent.putExtra(Constant.SeekDesignerDetailKey.MEASURE_FREE, measureFee);
+                intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, mThreadId);
                 context.startActivity(intent);
 
             }
@@ -174,38 +184,42 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hsUid, okResponseCallback);
     }
 
-    private void jumpToOtherProcessesThree(Context context, Class activity, MPChatCommandInfo info) {
+    private void jumpToOtherProcessesThree(Context context, Class activity, MPChatCommandInfo info, String mThreadId) {
 
         Intent intent_check_room = new Intent(context, activity);
         intent_check_room.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
         intent_check_room.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, info.need_id);
+        intent_check_room.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, mThreadId);
         intent_check_room.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
         context.startActivity(intent_check_room);
     }
 
-    private void jumpToOtherProcessesFour(Context context, Class activity, MPChatCommandInfo info) {
+    private void jumpToOtherProcessesFour(Context context, Class activity, MPChatCommandInfo info, int pay_state, String mThreadId) {
 
         Intent intent_measure_room_cost = new Intent(context, activity);
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, info.designer_id);
         intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, info.need_id);
         intent_measure_room_cost.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
+        intent_measure_room_cost.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, mThreadId);
+        intent_measure_room_cost.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, pay_state);
         context.startActivity(intent_measure_room_cost);
     }
 
-    private void jumpToOtherProcessesThree(Context context, Class activity, String assetId, String recieverId) {
+    private void jumpToOtherProcessesThree(Context context, Class activity, String assetId, String recieverId, String mThreadId) {
         Intent intent = new Intent(context, activity);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, assetId);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, recieverId);
+        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, mThreadId);
         intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
         context.startActivity(intent);
     }
 
-    private void jumpToOtherProcessesFour(Context context, Class activity, String assetId, String recieverId) {
+    private void jumpToOtherProcessesFour(Context context, Class activity, String assetId, String recieverId, int pay_state, String mThreadId) {
         Intent intent = new Intent(context, activity);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, assetId);
         intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, recieverId);
-        intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
+        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, mThreadId);
+        intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, pay_state);
         intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
         context.startActivity(intent);
     }
@@ -239,13 +253,13 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                     case 21: // 合同
                     case 22: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                     case 31: // 首款
-                        return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                     case 33: // 量房交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     case 41: // 支付设计首款
                     case 42: // 打开3D工具
@@ -253,11 +267,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                     case 51: // 支付尾款
                     case 52: // 打开3D工具
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     case 61: // 上传支付交付物
                     case 62: // 编辑交付物
-                        return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                        return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                     default:
                         return -1;
@@ -277,22 +291,22 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                 case 11: // 量房
                     return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
 
-                case 12: // 消费者同意设计师
+                case 13: // 消费者同意设计师
                     return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
 
-                case 13: // 消费者拒绝设计师
-                    return -1;
+                case 14: // 消费者拒绝设计师
+                    return (com.autodesk.shejijia.shared.R.drawable.amount_room_ico);
 
                 case 21: // 合同
                 case 22: // 打开3D工具
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_contract);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
                 case 31: // 首款
-                    return (com.autodesk.shejijia.shared.R.drawable.pay_ico);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofu);
 
 
                 case 33: // 量房交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 case 41: // 支付设计首款
                 case 42: // 打开3D工具
@@ -300,11 +314,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                 case 51: // 支付尾款
                 case 52: // 打开3D工具
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 case 61: // 上传支付交付物
                 case 62: // 编辑交付物
-                    return (com.autodesk.shejijia.shared.R.drawable.icon_design_drawings);
+                    return (com.autodesk.shejijia.shared.R.drawable.jiaofg);
 
                 default:
                     return -1;
@@ -321,24 +335,19 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
 
     public void getCloudFilesAsync(final String X_Token, final String assetId, final String memberId,
-                                    final OkJsonRequest.OKResponseCallback callback)
-    {
-        MPServerHttpManager.getInstance().getCloudFiles(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback()
-        {
+                                   final OkJsonRequest.OKResponseCallback callback) {
+        MPServerHttpManager.getInstance().getCloudFiles(X_Token, assetId, memberId, new OkJsonRequest.OKResponseCallback() {
             @Override
-            public void onErrorResponse(VolleyError volleyError)
-            {
+            public void onErrorResponse(VolleyError volleyError) {
                 callback.onErrorResponse(volleyError);
             }
 
             @Override
-            public void onResponse(JSONObject jsonObject)
-            {
+            public void onResponse(JSONObject jsonObject) {
                 callback.onResponse(jsonObject);
             }
         });
     }
-
 
 
 }

@@ -14,8 +14,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/chat_list_avatar_marginleft"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_useravatar"
-        custom:border_width="1dp"
+        android:src="@drawable/icon_default_avator" />
         custom:border_color="@color/chat_list_background"/>
 
     <TextView

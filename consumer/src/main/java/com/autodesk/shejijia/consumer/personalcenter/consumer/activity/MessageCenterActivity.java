@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -104,6 +103,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
 
+        offset = 0;
         showListView();
         getMessageData(REFRESH_STATUS);
 
@@ -125,7 +125,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     //获取消息数据
     public void getMessageData(final String state) {
 
-        MPServerHttpManager.getInstance().getMessageCentermsgs(offset, limit, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().getMessageCenterMessages(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);

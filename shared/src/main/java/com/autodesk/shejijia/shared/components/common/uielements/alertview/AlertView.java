@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.alertview;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -57,8 +58,8 @@ public class AlertView {
 
     private Context context;
     private ViewGroup contentContainer;
-    private ViewGroup decorView;//activity的根View
-    private ViewGroup rootView;//AlertView 的 根View
+    private ViewGroup decorView;    //activity的根View
+    private ViewGroup rootView;     //AlertView 的 根View
     private ViewGroup loAlertHeader;//窗口headerView
 
     private Style style = Style.Alert;
@@ -140,10 +141,13 @@ public class AlertView {
         //标题和消息
         TextView tvAlertTitle = (TextView) viewGroup.findViewById(R.id.tvAlertTitle);
         TextView tvAlertMsg = (TextView) viewGroup.findViewById(R.id.tvAlertMsg);
-        if (title != null) {
+        if (!TextUtils.isEmpty(title)) {
             tvAlertTitle.setText(title);
         } else {
-            tvAlertTitle.setVisibility(View.GONE);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) loAlertHeader.getLayoutParams();
+            layoutParams.topMargin=10;
+            tvAlertTitle.setLayoutParams(layoutParams);
+//            tvAlertTitle.setVisibility(View.GONE);
         }
         if (msg != null) {
             tvAlertMsg.setText(msg);
@@ -228,8 +232,9 @@ public class AlertView {
 
                 //取消按钮的样式
                 if (data == cancel) {
-                    tvAlert.setTypeface(Typeface.DEFAULT_BOLD);
-                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_cancel));
+//                    tvAlert.setTypeface(Typeface.DEFAULT_BOLD);
+//                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_cancel));
+                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_actionsheet_title));
                     tvAlert.setOnClickListener(new OnTextClickListener(CANCELPOSITION));
                     position = position - 1;
                 }

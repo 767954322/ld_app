@@ -10,16 +10,17 @@
         android:layout_width="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:maxEms="7"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:layout_marginTop="@dimen/chat_list_common_title_margintop"
         android:gravity="left"
         android:textSize="@dimen/chat_list_common_title_fontsize"
         android:textColor="@color/black"
         android:layout_marginRight="5dp"
         android:lines="1"
-        android:ellipsize="end"
         android:text="@string/xiao_wu"
         android:layout_toStartOf="@+id/tv_time"/>
-
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
@@ -35,7 +36,6 @@
         android:textColor="@color/chat_list_common_message_textcolor"
         android:textSize="@dimen/chat_list_common_content_fontsize"
         android:text="@string/hello" />
-
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"

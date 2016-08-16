@@ -5,12 +5,12 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
+import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 
 import java.util.ArrayList;
 
@@ -21,16 +21,16 @@ import java.util.ArrayList;
  * @file Wk3DFinishDeliveryAdapter.java .
  * @brief 交付完成含有分享页面的适配器 .
  */
-public class Wk3DFinishDeliveryAdapter extends CommonAdapter<Wk3DPlanDelivery.DeliveryFilesEntity> {
+public class Wk3DFinishDeliveryAdapter extends CommonAdapter<MPFileBean> {
 
-    public Wk3DFinishDeliveryAdapter(Context context, ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> deliveryFilesEntities) {
+    public Wk3DFinishDeliveryAdapter(Context context, ArrayList<MPFileBean> deliveryFilesEntities) {
         super(context, deliveryFilesEntities, R.layout.item_gridview_3dplan);
         this.context = context;
         this.deliveryFilesEntities = deliveryFilesEntities;
     }
 
     @Override
-    public void convert(final CommonViewHolder holder, final Wk3DPlanDelivery.DeliveryFilesEntity deliveryFilesEntity) {
+    public void convert(final CommonViewHolder holder, final MPFileBean deliveryFilesEntity) {
         final ImageView mShowImageView = holder.getView(R.id.iv_show_3dplan);
         /**
          * 方案的缩略图
@@ -46,9 +46,9 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<Wk3DPlanDelivery.De
         /**
          * 方案的名字
          */
-        String name = deliveryFilesEntity.getName();
+        String name = deliveryFilesEntity.getFiled_name();
         if (TextUtils.isEmpty(name)) {
-            holder.setText(R.id.tv_3dplan_name, (UIUtils.getString(R.string.three_plan)));
+            holder.setText(R.id.tv_3dplan_name, (UIUtils.getString(R.string.three_plan_no_name)));
         } else {
             holder.setText(R.id.tv_3dplan_name, name);
         }
@@ -66,6 +66,6 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<Wk3DPlanDelivery.De
         }
     }
 
-    private ArrayList<Wk3DPlanDelivery.DeliveryFilesEntity> deliveryFilesEntities;
+    private ArrayList<MPFileBean> deliveryFilesEntities;
     private Context context;
 }

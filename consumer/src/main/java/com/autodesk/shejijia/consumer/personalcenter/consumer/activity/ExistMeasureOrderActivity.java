@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -61,6 +62,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         tv_measure_fee = (TextView) findViewById(R.id.tv_exsit_measure_measurement_fee);
         explistview = (PinnedHeaderExpandableListView) findViewById(R.id.explistview);
         btn_send = (Button) findViewById(R.id.btn_exist_measure_order_send);
+        tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
     }
 
     @Override
@@ -89,10 +91,9 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     }
 
     private void showState() {
-
-        if (!fee.isEmpty()&& !fee.equals("0")) {
+        if (!fee.isEmpty() && !fee.equals("0")) {
             double dFee = Double.valueOf(fee);
-            DecimalFormat df1 = new DecimalFormat("#####.00");
+            DecimalFormat df1 = new DecimalFormat("0.00");
             tv_measure_fee.setText(df1.format(dFee) + "元");
         } else {
             tv_measure_fee.setText("0.00");
@@ -103,6 +104,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     protected void initListener() {
         super.initListener();
         btn_send.setOnClickListener(this);
+        tvIllustrate.setOnClickListener(this);
         rl_measure_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +116,10 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tvIllustrate:
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null, new String[]{UIUtils.getString(R.string.finish_cur_pager)},ExistMeasureOrderActivity.this,
+                        AlertView.Style.Alert, null).show();
+                break;
             case R.id.btn_exist_measure_order_send:
                 /**
                  * 获取系统当前时间
@@ -125,7 +131,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                 try {
                     if (expandFlag != -1) {
                         if (currentTime == null) {
-                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, new String[]{UIUtils.getString(R.string.sure)}, null, ExistMeasureOrderActivity.this,
+                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this,
                                     AlertView.Style.Alert, null).show();
                         } else {
                             if (formatDate(date, currentTime)) {
@@ -153,7 +159,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                             }
                         }
                     } else {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_select_a_project_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, ExistMeasureOrderActivity.this,
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_select_a_project_first), null, null, new String[]{UIUtils.getString(R.string.sure)}, ExistMeasureOrderActivity.this,
                                 AlertView.Style.Alert, null).show();
                     }
                 } catch (JSONException e) {
@@ -296,7 +302,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
             @Override
             public void onTimeSelect(Date date) {
                 currentTime = getTime(date);
-                tv_measure_time.setText(currentTime);
+                tv_measure_time.setText(DateUtil.dateFormat(currentTime, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
             }
         });
     }
@@ -326,6 +332,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     /// 控件.
     private RelativeLayout rl_measure_time;
     private TextView tv_measure_time;
+    private TextView tvIllustrate;
     private TextView tv_measure_fee;
     private Button btn_send;
     private TimePickerView pvTime;

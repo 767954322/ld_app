@@ -23,6 +23,15 @@ public final class UrlConstants {
     public static final String RUNNING_PRODUCTION = "RUNNING_PRODUCTION";
     /// alpha dev境 .
     public static final String RUNNING_DEV = "RUNNING_DEV";
+    /// DOCKER_DESIGN环境
+    public static final String RUNNING_DOCKER_DESIGN = "RUNNING_DOCKER_DESIGN";
+//    /// DOCKER_MEMBER
+//    public static final String RUNNING_DOCKER_MENBER = "RUNNING_DOCKER_MENBER";
+//    /// DOCKER_TRANSACTION
+//    public static final String RUNNING_DOCKER_TRANSACTION = "RUNNING_DOCKER_TRANSACTION";
+    //
+    public static final String RUNNING_DOKER = "RUNNING_DOKER";
+
 
     /**
      * 如需更改环境，需到ApiManager中修改RUNNING_DEVLEOPMENT的值
@@ -73,6 +82,16 @@ public final class UrlConstants {
     /// QA环境地址 .
     public static final String QA_MP_MAIN = "http://192.168.6.25:8080";
 
+    //新环境
+    public static final String DOCKER_HAWKEYE_DESIGN = "http://192.168.88.155:8080";
+
+    //新环境
+    public static final String DOCKER_HAWKEYE_MEMBER = "http://192.168.88.153:8080";
+
+    //新环境
+    public static final String DOCKER_HAWKEYE_TRANSCATION = "http://192.168.88.152:8080";
+
+
     /// UAT = UAT331环境地址 .
 //    public static final String UAT_MP_MAIN = "http://uat331api.gdfcx.net:8080";
     public static final String UAT_MP_MAIN = "http://uat-api.gdfcx.net:8080";
@@ -84,6 +103,18 @@ public final class UrlConstants {
     /// alpha-dev环境 .
     public static final String DEV_MP_MAIN = "http://dev-api.gdfcx.net";
 
+    /**
+     * willson本地测试环境
+     * transaction-app  192.168.150.103:8080
+     * member-app 192.168.150.104:8080
+     * design-app :   192.168.150.106:8080
+     */
+
+
+    public static final String DOKER_MP_TRANSACTION = "http://192.168.88.172:8080";
+    public static final String DOKER_MP_MEMBER = "http://192.168.88.173:8080";
+    public static final String DOKER_MP_DESIGN = "http://192.168.88.175:8080";
+
     /// PRODUCTION .
     public static final String PRODUCTION_MP_MAIN = "http://api.shejijia.com";
 
@@ -92,9 +123,13 @@ public final class UrlConstants {
     /// 开发环境user_id .
     public static final int UAT_ADMIN_USER_ID = 20730165;
 
+
     public static final String MP_MAIN_TRANSACTION = "/transaction-app/v1/api";
     public static final String MP_MAIN_DESIGN = "/design-app/v1/api";
     public static final String MP_MAIN_MEMBER = "/member-app/v1/api";
+
+    //分享界面的url
+    public static final String MP_MAIN_SHARE= "/share/2dcase.html?caseid=";
 
     /**
      * 搜索.
@@ -123,6 +158,11 @@ public final class UrlConstants {
      * 案例库详情.
      */
     public static final String URL_GET_CASE_DETAILS = MAIN_DESIGN + "/cases/";
+    /**
+     * 点赞接口
+     * http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/{asset_id}    
+     */
+    public static final String URL_GET_CASE_DETAILS_LIKE = MAIN_DESIGN + "/designers/d2/cases/like/";
 
     /**
      * 实名认证.
@@ -266,6 +306,10 @@ public final class UrlConstants {
      * 提现确认并提交 .
      */
     public static final String URL_WITHDRAW_BALANCE = MAIN_TRANSACTION + "/withdraw/balance/";
+    //String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+    //           http://192.168.150.103:8080/transaction-app/v1/api/withdraw/balance/0
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+    public static final String URL_WITHDRAW_MEMBERS = MAIN_TRANSACTION + "/members/";
 
     /**
      * 北舒套餐聊天入口
@@ -275,5 +319,22 @@ public final class UrlConstants {
     /**
      * 消息中心接口
      */
-    public static final String URL_MESSAGE_CENTER = ALPHA_MP_MAIN + "/member-app/v1/api/member/";
+    public static final String URL_MESSAGE_CENTER = MAIN_MEMBER + "/member/";
+
+    /**
+     * 获取全流程节点信息网址
+     */
+
+    public static final String URL_WkFlowState_pointe_Information = MAIN_DESIGN + "/fullflow/message";
+
+    /**
+     * 交付物延期时间
+     */
+    public static final String URL_DELIVERY_DELAY_DATA = MAIN_DESIGN + "/demands/";
+    public static final String URL_DELIVERY_DELAY = MAIN_DESIGN + "/demands/";
+    /**
+     * 关注列表
+     * "http://dev-www.gdfcx.net/member-app/v1/api"
+     */
+    public static final String URL_DELETE_ATTENTION = MAIN_MEMBER + "/members/";
 }

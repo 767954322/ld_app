@@ -35,22 +35,24 @@
         </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
     </RelativeLayout>
 
-    <com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu
+    <com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu
         android:id="@+id/add_menu_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="@dimen/size_16"
         android:layout_marginRight="@dimen/size_16"
         android:layout_marginTop="@dimen/size_16"
-        fab:fab_addButtonColorNormal="@android:color/holo_blue_dark"
-        fab:fab_addButtonColorPressed="@color/floating_white_pressed"
-        fab:fab_addButtonSize="normal"
-        fab:fab_expandDirection="up"
-        fab:fab_labelStyle="@style/Floating_action_button_style">
+        fab:menu_icon="@drawable/openfloat"
+        fab:menu_colorNormal="@android:color/transparent"
+        fab:menu_colorPressed="@android:color/transparent"
+        fab:menu_shadowRadius="@dimen/size_0"
+        fab:menu_labels_maxLines="2"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_style="@style/MenuLabelsStyle">
 
-    </com.autodesk.shejijia.shared.components.common.uielements.FloatingActionsMenu>
+  </com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu>
 
 </RelativeLayout>

@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.Wk3DPlanShowActivity;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean.DesignFileEntity;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * @file Wk3DPlanAdapter.java .
  * @brief 3d设计方案适配器 .
  */
-public class Wk3DPlanAdapter extends CommonAdapter<DesignFileEntity> {
+public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
 
     public interface OnItemCheckListener {
         void onItemCheck(ToggleButton view, int position,
@@ -44,7 +44,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<DesignFileEntity> {
      * @param context
      * @param designFileEntities_3DPlan
      */
-    public Wk3DPlanAdapter(Context context, ArrayList<DesignFileEntity> designFileEntities_3DPlan, ArrayList<String> selectedDataList) {
+    public Wk3DPlanAdapter(Context context, ArrayList<MPDesignFileBean> designFileEntities_3DPlan, ArrayList<String> selectedDataList) {
         super(context, designFileEntities_3DPlan, R.layout.item_gridview_zero_3dplan);
         this.context = context;
         this.designFileEntities_3DPlan = designFileEntities_3DPlan;
@@ -52,7 +52,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<DesignFileEntity> {
     }
 
     @Override
-    public void convert(CommonViewHolder holder, final DesignFileEntity designFileEntity) {
+    public void convert(CommonViewHolder holder, final MPDesignFileBean mpDesignFileBean) {
         /// no_pic .
         final ImageView mImageVShow = holder.getView(R.id.iv_show_3dplan);
         mImageVShow.setImageDrawable(UIUtils.getDrawable(R.drawable.common_case_icon));
@@ -61,7 +61,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<DesignFileEntity> {
         /**
          * 3D方案的缩略图
          */
-        String link = designFileEntity.getLink();
+        String link = mpDesignFileBean.getLink();
         String str = link.substring(link.lastIndexOf('.') + 1);
         if (Constant.DocumentTypeKey.TYPE_PNG.equals(str) || Constant.DocumentTypeKey.TYPE_JPG.equals(str)) {
             ImageUtils.displayIconImage(link, mImageVShow);
@@ -72,9 +72,9 @@ public class Wk3DPlanAdapter extends CommonAdapter<DesignFileEntity> {
         /**
          * 3D方案的名字
          */
-        String name = designFileEntity.getName();
+        String name = mpDesignFileBean.getName();
         if (TextUtils.isEmpty(name)) {
-            holder.setText(R.id.tv_3dplan_name, UIUtils.getString(R.string.three_plan));
+            holder.setText(R.id.tv_3dplan_name, UIUtils.getString(R.string.three_plan_no_name));
         } else {
             holder.setText(R.id.tv_3dplan_name, name);
         }
@@ -105,7 +105,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<DesignFileEntity> {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Wk3DPlanShowActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, designFileEntity);
+                bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mpDesignFileBean);
                 bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS);
                 bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
                 intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
@@ -147,6 +147,6 @@ public class Wk3DPlanAdapter extends CommonAdapter<DesignFileEntity> {
     private final String TAG = getClass().getSimpleName();
     private OnItemCheckListener mOnItemCheckListener;
     private ArrayList<String> selectedDataList = new ArrayList<>();
-    private ArrayList<DesignFileEntity> designFileEntities_3DPlan;
+    private ArrayList<MPDesignFileBean> designFileEntities_3DPlan;
     private Context context;
 }

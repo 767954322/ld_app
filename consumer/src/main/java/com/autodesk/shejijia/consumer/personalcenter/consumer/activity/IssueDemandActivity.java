@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,22 +16,22 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
+import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -70,6 +71,19 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         tv_issue_style = (TextView) findViewById(R.id.tv_issue_style);
         tv_issue_address = (TextView) findViewById(R.id.tv_issue_address);
         tv_issue_demand_detail_address = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
+
+
+        et_issue_demand_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String area = et_issue_demand_area.getText().toString().trim();
+                    area = String.format("%.2f",Double.valueOf(area));
+                    et_issue_demand_area.setText(area);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -115,33 +129,41 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         switch (v.getId()) {
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_room: /// 请选择户型：室 厅 卫 .
                 pvRoomTypeOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.ll_issue_style: /// 风格 .
                 pvStyleOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_budget: /// 请选择装修预算 .
                 pvDecorationBudgetOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_design_budget: /// 请选择设计预算 .
                 pvDesignBudgetOptions.show();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.tv_issue_address: /// 请选择地址：省 市 区 .
                 getPCDAddress();
+                et_issue_demand_area.clearFocus();
                 break;
 
             case R.id.btn_send_demand: /// 提交 .
                 if (!isSendState) {
                     return;
                 }
+                et_issue_demand_area.clearFocus();
                 String area = et_issue_demand_area.getText().toString();
+
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
@@ -156,10 +178,33 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(R.string.demand_please_project_types);
                     return;
                 }
-                if (TextUtils.isEmpty(area) || area.equals("0") || !regex_area_right) {
+//                if (TextUtils.isEmpty(area) || area.equals("0") || !regex_area_right) {
+//                    showAlertView(R.string.please_input_correct_area);
+//                    return;
+//                }
+
+                //..................................
+                area = String.format("%.2f",Double.valueOf(area));
+                et_issue_demand_area.setText(area);
+                String subNum = "0";
+                if (area.contains(".")) {
+                    subNum = area.substring(0, area.indexOf("."));
+                }
+                if (TextUtils.isEmpty(area) || Float.valueOf(area) == 0) {
                     showAlertView(R.string.please_input_correct_area);
                     return;
+                } else {
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
+                        showAlertView(R.string.please_input_correct_area);
+                        return;
+                    } else {
+                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                            showAlertView(R.string.please_input_correct_area);
+                            return;
+                        }
+                    }
                 }
+
                 if (TextUtils.isEmpty(mDesignBudget)) {
                     showAlertView(R.string.please_select_design_budget);
                     return;
@@ -188,7 +233,6 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 JSONObject jsonObject = new JSONObject();
                 try {
                     String click_number = "0";
-                    /// TODO  contacts_name  ,contacts_mobile .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY, mCurrentCityCode);/// city = 110100; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY_NAME, mCurrentCity);/// "city_name" = "\U5317\U4eac\U5e02"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CLICK_NUMBER, click_number);/// "click_number" = 0; .
@@ -282,8 +326,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 }
                 isSendState = true;
                 Intent intent = new Intent();
-                intent.putExtra("SUCCESS",success);
-                setResult(RESULT_CODE,intent);
+                intent.putExtra("SUCCESS", success);
+                setResult(RESULT_CODE, intent);
             }
 
             @Override
@@ -535,5 +579,5 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String room, living_room, toilet;
     private boolean isSendState = true;
     private String success = "";
-    final int RESULT_CODE=101;
+    final int RESULT_CODE = 101;
 }

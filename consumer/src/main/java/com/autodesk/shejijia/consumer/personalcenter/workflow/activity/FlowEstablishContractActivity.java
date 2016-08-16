@@ -19,8 +19,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -32,7 +32,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.utility.DbUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
@@ -164,6 +163,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+        /**
+         * 如果超过了33节点，就隐藏上传量房按钮
+         */
+        if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= 33) {
+            btn_send.setVisibility(View.GONE);
+            ll_agree_establish_contract.setVisibility(View.GONE);
+        }
+
         getDesignerInfoData(designer_id, hs_uid);
         int wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
         if (memberEntity != null) {
@@ -179,17 +186,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 tvc_consumer_name.setText(requirement.getContacts_name());
                 tvc_consumer_phone.setText(requirement.getContacts_mobile());
 
-                String province_name = requirement.getProvince();
-                String city_name = requirement.getCity();
-                String district_name = requirement.getDistrict();
-                if (StringUtils.isNumeric(province_name)) {
-                    province_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.PROVINCE, province_name);
-                }
-                if (StringUtils.isNumeric(city_name)) {
-                    city_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.CITY, city_name);
-                }
-                if (StringUtils.isNumeric(district_name)) {
-                    district_name = DbUtils.getCodeName(UIUtils.getContext(), Constant.DbTag.DISTRICT, district_name);
+                String province_name = requirement.getProvince_name();
+                String city_name = requirement.getCity_name();
+                String district_name = requirement.getDistrict_name();
+                if ("none".equals(requirement.getDistrict())
+                        || "null".equals(district_name)
+                        || "none".equals(district_name)
+                        || TextUtils.isEmpty(district_name)) {
+                    district_name = "";
                 }
                 tvc_consumer_decorate_address.setText(province_name + " " + city_name + " " + district_name);
                 tvc_consumer_detail_address.setText(requirement.getCommunity_name());
@@ -233,8 +237,16 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 tv_contract_number.setText(designContractEntity.getContract_no());
                 tvc_consumer_name.setText(designContractBean.getName());
                 tvc_consumer_phone.setText(designContractBean.getMobile());
-                tvc_consumer_postcode.setText(zip);
-                tvc_consumer_email.setText(email);
+                if (!"null".equals(zip)) {
+                    tvc_consumer_postcode.setText(zip);
+                } else {
+                    tvc_consumer_postcode.setText("");
+                }
+                if (!"null".equals(email)) {
+                    tvc_consumer_email.setText(email);
+                } else {
+                    tvc_consumer_email.setText("");
+                }
                 tvc_consumer_decorate_address.setText(designContractBean.getAddr());
                 tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
                 tvc_design_sketch.setText(designContractBean.getDesign_sketch());
@@ -269,7 +281,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         } else if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberType)) { /// 消费者 .
             setTvcCannotClickable();                                                                  /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
-            if (null == designContractEntity) {
+            if (null == designContractEntity) { // 如果设计师没有发送设计合同 .
+                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(Object o) {
+                        finish();
+                    }
+                });
+                mDesignContract.show();
                 return;
             }
             String contractData = designContractEntity.getContract_data();
@@ -283,8 +302,17 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tv_contract_number.setText(designContractEntity.getContract_no());
             tvc_consumer_name.setText(designContractBean.getName());
             tvc_consumer_phone.setText(designContractBean.getMobile());
-            tvc_consumer_postcode.setText(zip);
-            tvc_consumer_email.setText(email);
+            if (!"null".equals(zip)) {
+                tvc_consumer_postcode.setText(zip);
+            } else {
+                tvc_consumer_postcode.setText("");
+            }
+            if (!"null".equals(email)) {
+                tvc_consumer_email.setText(email);
+            } else {
+                tvc_consumer_email.setText("");
+            }
+
             tvc_consumer_decorate_address.setText(designContractBean.getAddr());
             tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
             tvc_design_sketch.setText(designContractBean.getDesign_sketch());
@@ -322,14 +350,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                                     intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
                                     intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
                                     intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
-                                    startActivity(intent);
+                                    startActivityForResult(intent, ContractForFirst);
                                 }
                             });
                         }
                         isAgree = !isAgree;
                     }
                 });
-                btn_send.setText(R.string.agree_and_send_design_first);
+                btn_send.setText(R.string.agree_and_send_design_first_new);
             } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) {
                 ll_send.setVisibility(View.GONE);
                 ll_agree_establish_contract.setVisibility(View.GONE);
@@ -338,6 +366,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 ll_agree_establish_contract.setVisibility(View.GONE);
                 btn_send.setText(R.string.receiving_room_deliverable);
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == FirstForContract) {
+            finish();
         }
     }
 
@@ -414,7 +450,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 KLog.d(TAG, jsonObject.toString());
                 ContractState = 0;
                 CustomProgress.cancelDialog();
-//                new CustomDialog(FlowEstablishContractActivity.this, this).showCustomViewDialog(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), true, true, true, false);
                 mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
                 mDesignContract.show();
             }
@@ -431,6 +466,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     /**
+     * 修改:         consumer/src/main/res/layout/activity_flow_establish_contract.xml
+     *
      * @brief 发送设计合同内容 .
      */
     private void sendEstablishContractCon() {
@@ -476,55 +513,62 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         boolean isMobile = consumerPhone.matches(RegexUtil.PHONE_REGEX);
         boolean isEmail = consumerEmail.matches(RegexUtil.EMAIL_REGEX);
-        boolean isAddress = detailAddress.matches(RegexUtil.ADDRESS_REGEX);
+        boolean isSketch = designSketch.matches(RegexUtil.POSITIVE_INTEGER_REGEX); // 验证效果图张数
+        boolean isMap = renderMap.matches(RegexUtil.POSITIVE_INTEGER_REGEX); //　验证渲染图张数
+        boolean isPostNum = consumerPostcode.matches(RegexUtil.POST_NUMBER_REGEX);
 
-        if (!consumerName.isEmpty()) {
+        if (!consumerName.isEmpty() && consumerName.matches(RegexUtil.NAME_REGEX)) {
 
             if (isMobile) {
+                if (TextUtils.isEmpty(consumerPostcode) || isPostNum) {
 
-                if (isEmail || consumerEmail.isEmpty()) {
+                    if (isEmail || consumerEmail.isEmpty()) {
 
-                    if (isAddress) {
+                        if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
 
-                        if (!designSketch.isEmpty()) {
+                            if (isSketch) {
 
-                            if (!renderMap.isEmpty()) {
+                                if (isMap) {
 
-                                if (!sketchPlus.isEmpty() && Double.parseDouble(sketchPlus) >= 0) {
+                                    if (!sketchPlus.isEmpty() && Double.parseDouble(sketchPlus) >= 0) {
 
-                                    if (!total_cost.isEmpty() && Double.parseDouble(total_cost) >= 0) {
+                                        if (!total_cost.isEmpty() && Double.parseDouble(total_cost) >= 0) {
 
-                                        sendEstablishConContent(jsonO);
+                                            sendEstablishConContent(jsonO);
 
-                                    } else if (total_cost.isEmpty()) {
-                                        showAlertView(R.string.please_fill_in_the_total_project_design);
-                                    } else if (Double.parseDouble(total_cost) < 0) {
+                                        } else if (total_cost.isEmpty()) {
+                                            showAlertView(R.string.please_fill_in_the_total_project_design);
+                                        } else if (Double.parseDouble(total_cost) < 0) {
+                                            showAlertView(R.string.costs_cannot_be_negative);
+                                        }
+                                        return;
+                                    } else if (sketchPlus.isEmpty()) {
+                                        showAlertView(R.string.please_fill_out_each_increases_the_cost_of_a);
+                                    } else if (Double.parseDouble(sketchPlus) < 0) {
                                         showAlertView(R.string.costs_cannot_be_negative);
                                     }
                                     return;
-                                } else if (sketchPlus.isEmpty()) {
-                                    showAlertView(R.string.please_fill_out_each_increases_the_cost_of_a);
-                                } else if (Double.parseDouble(sketchPlus) < 0) {
-                                    showAlertView(R.string.costs_cannot_be_negative);
                                 }
+                                showAlertView(R.string.please_fill_in_the_number_of_rendering);
                                 return;
                             }
-                            showAlertView(R.string.please_fill_in_the_number_of_rendering);
+                            showAlertView(R.string.please_fill_in_the_number_of_drawing);
                             return;
                         }
-                        showAlertView(R.string.please_fill_in_the_number_of_drawing);
+                        showAlertView(R.string.detailed_address_cannot_be_empty);
                         return;
                     }
-                    showAlertView(R.string.detailed_address_cannot_be_empty);
+                    showAlertView(R.string.please_fill_in_the_right_phone_email);
                     return;
                 }
-                showAlertView(R.string.please_fill_in_the_right_phone_email);
+                showAlertView(R.string.please_fill_in_the_right_post_number);
                 return;
             }
             showAlertView(R.string.please_fill_in_the_right_phone_number);
             return;
         }
-        showAlertView(R.string.the_name_cannot_be_empty);
+        showAlertView(R.string.no_input_name);
+
     }
 
     /// 发送设计合同方法 .
@@ -548,9 +592,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
 
             if (firstCost >= discountCost && firstCost <= totalCost) {
-                String measurement_price = list.getDesigner().getMeasurement_price();
-                measurement_price = TextUtils.isEmpty(measurement_price) ? "0" : measurement_price;
-                if (firstCost > Double.valueOf(measurement_price)) {
+                String measurement_fee = mBiddersEntity.getMeasurement_fee();
+                measurement_fee = TextUtils.isEmpty(measurement_fee) ? "0" : measurement_fee;
+                if (firstCost > Double.valueOf(measurement_fee)) {
                     CustomProgress.show(FlowEstablishContractActivity.this, UIUtils.getString(R.string.in_contract_sent), false, null);
                     sendEstablishContract(needs_id, ((memberEntity != null) ? memberEntity.getMember_type() : null), acsToken, jsonO);
                 } else {
@@ -580,8 +624,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         mChangeAddressDialog
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
-                    public void onClick(String province, String proviceCode, String city, String cityCode, String area, String areaCode) {
-
+                    public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
+                        if ("null".equals(area)
+                                || "none".equals(area)
+                                || TextUtils.isEmpty(area)) {
+                            area = "";
+                        }
                         tvc_consumer_decorate_address.setText(province + city + area);
                         mChangeAddressDialog.dismiss();
                     }
@@ -789,5 +837,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private String first_cost;
     private String memberType = null;
     private int ContractState = -1; // 判断合同是否发送成功弹出框的点击事件
+    private int ContractForFirst = 0; //　从合同跳转到设计首款
+    private int FirstForContract = 1; // 首款调到设计合同
     private boolean isAgree = false;
 }

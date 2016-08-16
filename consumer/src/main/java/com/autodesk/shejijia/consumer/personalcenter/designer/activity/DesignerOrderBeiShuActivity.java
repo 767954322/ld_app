@@ -1,10 +1,10 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -126,7 +126,7 @@ public class DesignerOrderBeiShuActivity extends NavigationBarActivity implement
      */
     public void setDefaultFragment() {
         mBeishuMealFragment = new OrderBeiShuFragment();
-        fragmentManager = getFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         /*  fragmentManager.beginTransaction().add(R.id.fl_designer_order_beishu_container, mBeishuMealFragment)
                 .commit();*/
         fragmentManager.beginTransaction().replace(R.id.fl_designer_order_beishu_container, mBeishuMealFragment)

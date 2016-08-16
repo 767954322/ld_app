@@ -1,27 +1,24 @@
 package com.autodesk.shejijia.shared.components.im.activity;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
-public class MPFileThreadListActivity extends NavigationBarActivity
-{
+public class MPFileThreadListActivity extends NavigationBarActivity {
     public static final String MEMBERID = "Memeber_Id";
     public static final String MEMBERTYPE = "Memeber_Type";
 
     @Override
-    protected int getLayoutResId()
-    {
+    protected int getLayoutResId() {
         return R.layout.activity_thread_list_file;
     }
 
     @Override
-    protected void initView()
-    {
+    protected void initView() {
         super.initView();
         Intent intent = getIntent();
 
@@ -32,41 +29,35 @@ public class MPFileThreadListActivity extends NavigationBarActivity
         bundle.putString(MPThreadListFragment.MEMBERTYPE, intent.getStringExtra(MPFileThreadListActivity.MEMBERTYPE));
         threadListFragment.setArguments(bundle);
 
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.thread_fragment, threadListFragment);
         fragmentTransaction.show(threadListFragment);
         fragmentTransaction.commit();
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState)
-    {
+    protected void initData(Bundle savedInstanceState) {
 
     }
 
     @Override
-    protected void initListener()
-    {
+    protected void initListener() {
         super.initListener();
     }
 
 
-
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
     }
 
     @Override
-    protected String getActivityTitle()
-    {
+    protected String getActivityTitle() {
         return getResources().getString(R.string.file_thread_list_title);
     }
 }

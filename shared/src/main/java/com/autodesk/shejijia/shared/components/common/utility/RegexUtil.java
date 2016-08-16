@@ -24,11 +24,20 @@ public class RegexUtil {
     public static final String PHONE_REGEX = "^1[3|4|5|7|8]\\d{9}$";
 
     /**
-     * 量房面积校验： 整数四位，小数2位，且不能为0
+     * 银行卡号验证
      */
-//    public static final String AREA_REGEX = "^[0-9]{1,4}?(\\.[0-9]{0,2})?$";
+    public static final String PHONE_BLANK = "^(\\d{16}|\\d{19})$";
 
-    public static final String AREA_REGEX = "^(?!0{2,})(?:\\d{1,4}(\\.\\d+)?|10000)$";
+    /**
+     * 量房面积校验： 整数四位，小数2位
+     */
+    public static final String AREA_REGEX = "^[0-9]{1,4}?(\\.[0-9]{0,2})?$";
+
+    /**
+     * 量房面积校验： 整数四位,不能全部为0
+     */
+
+    public static final String AREA_REGEX_ZERO = "^(?!0{2,})(?:\\d{1,4}(\\.\\d+)?|10000)$";
 
     /**
      * 量房费验证：整数位可以有0
@@ -41,6 +50,11 @@ public class RegexUtil {
     public static final String NAME_REGEX = "^([\u4e00-\u9fa5]{2,10})$";
 
     /**
+     * 验证邮编
+     */
+    public static final String POST_NUMBER_REGEX = "^[0-9]{6}$";
+
+    /**
      * 验证昵称
      */
     public static final String NICK_NAME_REGEX = "^[\\u4e00-\\u9fa5a-zA-Z0-9\\-]{2,10}$";
@@ -49,6 +63,11 @@ public class RegexUtil {
      * 验证邮箱
      */
     public static final String EMAIL_REGEX = "^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$";
+
+    /**
+     * 验证正整数
+     */
+    public static final String POSITIVE_INTEGER_REGEX = "^[1-9]\\d*|0";
 
     /**
      * 身份号码

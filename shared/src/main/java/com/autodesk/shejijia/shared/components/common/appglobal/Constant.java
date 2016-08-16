@@ -48,6 +48,7 @@ public class Constant {
         public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
         public static final String IM_TO_FLOW_NEEDS_ID = "imToFlowNeeds";
         public static final String IM_TO_FLOW_NODE_ID = "imToFlowNode";
+        public static final String IM_TO_FLOW_THREAD_ID = "imToFlowThreadId";
     }
 
     /**
@@ -95,6 +96,8 @@ public class Constant {
         public static final String TOILET_JSON = "toilet.json";
         public static final String STYLE_JSON = "style.json";
         public static final String AREA_JSON = "area.json";
+        public static final String SEARCH_WORKING_TIME = "search_working_time.json";
+        public static final String SEARCH_PRICE = "search_price.json";
     }
 
     /**
@@ -157,6 +160,7 @@ public class Constant {
     public static class CaseLibraryDetail {
         public static final String CASE_URL = "url";
         public static final String CASE_DETAIL_BEAN = "CASE_DETAIL_BEAN";
+        public static final String CASE_DETAIL_POSTION = "CASE_DETAIL_POSTION";
         public static final String JPG = "HD.jpg";
         public static final String CASE_ID = "case_id";
     }
@@ -170,6 +174,12 @@ public class Constant {
         public static final String HOUSING_INDEX = "housingIdex";
         public static final String STYLE_INDEX = "styleIdex";
         public static final String CONTENT_BEAN = "contentBean";
+
+        public static final String YEAR_INDEX = "yearIndex";
+        public static final String STYLEL_INDEX = "styleIndex";
+        public static final String PRICE_INDEX = "priceIndex";
+        public static final String DESIGNER_FILTRATE = "designerFiltrateBean";
+
 
     }
 
@@ -349,19 +359,6 @@ public class Constant {
     }
 
     /**
-     * 全流程状态机
-     */
-    public static class WkFlowStatePath {
-        public static final String WF_NODE_ID_NAME_CONSUMER = "MPCurrentNodeConsumer.json";                                  /// wk_template_id对应节点 .
-        public static final String WF_NODE_ID_NAME_DESIGNER = "MPCurrentNodeDesigner.json";
-
-        public static final String WF_BID_SUB_NODE_ID_NAME_CONSUMER = "MPBidSubNodeConsumer.json";                  /// 应标消费者 .
-        public static final String WF_BID_SUB_NODE_ID_NAME_DESIGNER = "MPBidSubNodeDesigner.json";                       /// 应标设计师 .
-        public static final String WF_CHOOSE_SUB_NODE_ID_NAME_CONSUMER = "MPChooseSubNodeConsumer.json";  /// 量房消费者 .
-        public static final String WF_CHOOSE_SUB_NODE_ID_NAME_DESIGNER = "MPChooseSubNodeDesigner.json";       /// 量房设计师 .
-    }
-
-    /**
      * 数据库转码
      */
     public static class DbTag {
@@ -393,6 +390,7 @@ public class Constant {
         //        public static final String X_TOKEN = "X-Token";
         public static final String X_TOKEN_PREFIX = "Basic ";
         public static final String X_TOKEN = "Authorization";
+        public static final String X_XTOKEN = "X-Token";
         public static final String CONTENT_TYPE = "Content-Type";
         public static final String MEMBER_TYPE = "Member-Type";
         public static final String ACS_TOKEN = "ACS-Token";

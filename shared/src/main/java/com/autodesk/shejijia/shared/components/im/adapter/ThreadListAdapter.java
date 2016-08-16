@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.im.datamodel.Body;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
@@ -17,6 +20,8 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.common.uielements.CircleImageView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.google.gson.Gson;
 
 import java.util.Date;
 
@@ -118,10 +123,10 @@ public class ThreadListAdapter extends BaseAdapter
 
         (holder).name.setText(getDisplayName(thread));
 
-        Date date =  DateUtil.acsDateToDate(thread.latest_message.sent_time);
+        Date date = DateUtil.acsDateToDate(thread.latest_message.sent_time);
 
         if (date != null)
-            (holder).time.setText(DateUtil.formattedStringFromDateForChatList(mContext,date));
+            (holder).time.setText(DateUtil.formattedStringFromDateForChatList(mContext, date));
         else
             (holder).time.setText(DateUtil.getTimeMY(thread.latest_message.sent_time));
 
@@ -141,7 +146,6 @@ public class ThreadListAdapter extends BaseAdapter
             {
                 if (thread.latest_message.command.equalsIgnoreCase("command"))
                 {
-
                     MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(thread.latest_message);
                     if (isUserConsumer())
                         (holder).description.setText(info.for_consumer);
@@ -155,6 +159,31 @@ public class ThreadListAdapter extends BaseAdapter
                 else if (thread.latest_message.command.equalsIgnoreCase("CHAT_ROLE_REMOVE"))
                 {
                     (holder).description.setText(thread.latest_message.body);
+                }
+                else
+                {
+                    //thread.latest_message.command为NULL
+                    if (thread.latest_message.body != null)
+                    {
+                        String user_type = AdskApplication.getInstance().getMemberEntity().getMember_type();
+                        String body = thread.latest_message.body;
+                        try
+                        {
+                            Body body_entity = GsonUtil.jsonToBean(body, Body.class);
+                            if (user_type.equals(Constant.UerInfoKey.DESIGNER_TYPE))
+                            {
+                                (holder).description.setText(body_entity.getFor_designer() + "");
+                            }
+                            else if (user_type.equals(Constant.UerInfoKey.CONSUMER_TYPE))
+                            {
+                                (holder).description.setText(body_entity.getFor_consumer() + "");
+                            }
+                        }
+                        catch (Exception ignored)
+                        {
+
+                        }
+                    }
                 }
 
             }
@@ -184,7 +213,7 @@ public class ThreadListAdapter extends BaseAdapter
         String userName = MPChatUtility.getUserDisplayNameFromUser(sender.name);
         String displayName = null;
 
-        assert(userName != null && !userName.isEmpty());
+        assert (userName != null && !userName.isEmpty());
 
         if (!isUserConsumer())
         {

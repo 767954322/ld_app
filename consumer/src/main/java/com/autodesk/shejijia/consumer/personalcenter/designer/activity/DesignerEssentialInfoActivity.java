@@ -18,30 +18,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
+import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -162,47 +162,83 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         } else {
             tvNickName.setText(mConsumerEssentialInfoEntity.getNick_name() + "");
         }
-
-        if (mConsumerEssentialInfoEntity.getProvince_name() == null || mConsumerEssentialInfoEntity.getCity_name() == null || mConsumerEssentialInfoEntity.getDistrict_name() == null) {
-            tvLocation.setText(getResources().getString(R.string.no_data));
+        String province_name = mConsumerEssentialInfoEntity.getProvince_name();
+        String city_name = mConsumerEssentialInfoEntity.getCity_name();
+        String district_name = mConsumerEssentialInfoEntity.getDistrict_name();
+        if (TextUtils.isEmpty(province_name)
+                || TextUtils.isEmpty(city_name)
+                ) {
+            tvLocation.setText(getResources().getString(R.string.has_yet_to_fill_out));
         } else {
-            tvLocation.setText(mConsumerEssentialInfoEntity.getProvince_name() + mConsumerEssentialInfoEntity.getCity_name() + mConsumerEssentialInfoEntity.getDistrict_name());
+            if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
+                district_name = "";
+            }
+            tvLocation.setText(province_name + city_name + district_name);
         }
 
-        if (mConsumerEssentialInfoEntity.getMobile_number() == null) {
+        if (mConsumerEssentialInfoEntity.getMobile_number() == null)
+
+        {
             tvTel.setText(getResources().getString(R.string.no_mobile));
-        } else {
+        } else
+
+        {
             tvTel.setText(mConsumerEssentialInfoEntity.getMobile_number() + "");
         }
 
-        if (mConsumerEssentialInfoEntity.getEmail() == null) {
+        if (mConsumerEssentialInfoEntity.getEmail() == null)
+
+        {
             tvEmail.setText(getResources().getString(R.string.no_data));
-        } else {
+        } else
+
+        {
             tvEmail.setText(mConsumerEssentialInfoEntity.getEmail() + "");
         }
 
-        if (mConsumerEssentialInfoEntity.getGender() == 0) {
+        if (mConsumerEssentialInfoEntity.getGender() == 0)
+
+        {
             tvSex.setText(getResources().getString(R.string.secret));
-        } else if (mConsumerEssentialInfoEntity.getGender() == 1) {
+        } else if (mConsumerEssentialInfoEntity.getGender() == 1)
+
+        {
             tvSex.setText(getResources().getString(R.string.girl));
-        } else {
+        } else
+
+        {
             tvSex.setText(getResources().getString(R.string.boy));
         }
+
         DesignerInfoDetails.DesignerEntity designer = mDesignerInfoDetails.getDesigner();
-        if (null == designer) {
+        if (null == designer)
+
+        {
             return;
         }
-        if (designer.getMeasurement_price() == null) {
+
+        if (designer.getMeasurement_price() == null)
+
+        {
             tvMeasureHouse.setText(getResources().getString(R.string.not_filled));
-        } else {
+        } else
+
+        {
             tvMeasureHouse.setText(designer.getMeasurement_price() + getResources().getString(R.string.flow_monad_rmb));
         }
-        if (designer.getDesign_price_min() == null || designer.getDesign_price_max() == null) {
+
+        if (designer.getDesign_price_min() == null || designer.getDesign_price_max() == null)
+
+        {
             tvProjectCost.setText(getResources().getString(R.string.not_filled));
-        } else {
+        } else
+
+        {
             tvProjectCost.setText(designer.getDesign_price_min() + "-" + designer.getDesign_price_max() + getResources().getString(R.string.monad_rmb_meters));
         }
+
         getGender();
+
     }
 
     @Override

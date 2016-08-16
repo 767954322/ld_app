@@ -10,7 +10,9 @@
 
     <string name="application_successful">申请成功</string>
     <string name="application_failure">申请失败</string>
-    <string name="application_detail">你已成功申请提现\n请在提现记录中查看详情</string>
+    <string name="application_detail">请在提现记录中查看详情</string>
+    <string name="application_unbing">解除绑定成功</string>
+    <string name="application_unbing_fail">解除失败</string>
 
     <string name="tip_content_one">持卡人姓名不能为空</string>
     <string name="tip_content_two">支行名称不能为空</string>
@@ -29,7 +31,7 @@
     <string name="designer_bid_detail_realy_name">请先到个人中心完成实名认证</string>
     <string name="designer_bid_detail_realy_immediately_validation">立即验证</string>
     <string name="designer_bid_detail_success">应标成功</string>
-    <string name="consume_send_success">选它量房成功</string>
+    <string name="consume_send_success">选TA量房成功</string>
     <!--<string name="consume_send_success">选他量房成功</string>-->
     <string name="welcome_dialog">需要登陆后，进行后续操作</string>
     <string name="alipay_error">支付失败！</string>
@@ -66,7 +68,7 @@
 
     <!--Tab-->
     <string name="tab_im">聊天</string>
-    <string name="tab_personalcenter">我</string>
+    <string name="tab_personalcenter">我的项目</string>
     <string name="tab_hall">应标大厅</string>
     <string name="tab_home">案例</string>
 
@@ -76,6 +78,7 @@
     <string name="uploaded_deliverable">上传量房交付物</string>
     <string name="in_contract_sent">合同发送中...</string>
     <string name="agree_and_send_design_first">同意并支付设计首款</string>
+    <string name="agree_and_send_design_first_new">立即付款</string>
     <string name="receiving_room_deliverable">接收量房交付物</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款少于设计总额的80%</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>
@@ -88,6 +91,7 @@
     <string name="please_fill_in_the_number_of_drawing">请填写效果图的张数</string>
     <string name="detailed_address_cannot_be_empty">请正确填写小区名称</string>
     <string name="please_fill_in_the_right_phone_number">请正确填写手机号</string>
+    <string name="please_fill_in_the_right_post_number">请正确填写邮编</string>
     <string name="please_fill_in_the_right_phone_email">请正确填写邮箱</string>
     <string name="the_name_cannot_be_empty">姓名不能为空</string>
     <string name="the_contract_sent_successfully">合同发送成功</string>
@@ -142,7 +146,7 @@
     <string name="demand_planning_budget">设计预算：</string>
     <string name="demand_project_budget">装修预算：</string>
     <string name="please_enter_your_name">请输入姓名</string>
-    <string name="please_enter_your_phone">请输入手机号码</string>
+    <string name="please_enter_your_phone">请输入联系电话</string>
     <string name="please_select_design_budget">请选择设计预算</string>
     <string name="please_select_decorate_budget">请选择装修预算</string>
     <string name="demand_project_area">项目面积：</string>
@@ -153,15 +157,17 @@
     <string name="please_select_style">请选择风格</string>
     <string name="demand_measure_house_time">量房时间：</string>
     <string name="please_select_quantity_room_time">请选择量房时间</string>
-    <string name="demand_measure_house_address">量房地址：</string>
+    <string name="europe_and_america_style">欧美风</string>
+    <string name="demand_measure_house_address">项目地址：</string>
     <string name="please_select_address">请选择省市区</string>
     <string name="demand_village_name">小区名称：</string>
     <string name="please_select_community_name">请输入小区名称</string>
     <string name="demand_measure_house_charge">量&#160;&#160;房&#160;&#160;费：</string>
     <string name="flow_send">发送</string>
     <string name="agreed">同意</string>
+    <string name="agreed_home">确定量房</string>
     <string name="refuse">拒绝</string>
-    <string name="amount_of_time_is_empty">量房时间为空</string>
+    <string name="amount_of_time_is_empty">请选择量房时间</string>
     <string name="amount_of_time_than_current_time_one_hour">量房时间至少大于当前时间一小时</string>
     <string name="confirm_room_success">确认量房成功</string>
     <string name="confirm_room_fail">确认量房失败</string>
@@ -169,9 +175,10 @@
     <string name="refused_room_success">拒绝量房成功</string>
     <string name="choose_ta_room_success">选TA量房成功</string>
     <string name="choose_ta_room_fail">选TA量房失败</string>
+    <string name="agree_measure_house_time">请选择量房时间</string>
     <string name="the_designer_rejected_quantity">WkFlowMea.设计师拒绝量房</string>
     <string name="consumer_should_agree_with_mark">WkFlowMea.消费者同意应标</string>
-    <string name="phone">电&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;话：</string>
+    <string name="phone">手机号码：</string>
 
     <!--  FlowUploadDeliveryActivity -->
     <string name="data_null">暂无数据</string>
@@ -181,6 +188,7 @@
     <string name="deliver_measure_consumer">量房交付</string>
     <string name="deliver_measure_consumer_title">我量房交付</string>
     <string name="three_plan">3D设计方案</string>
+    <string name="three_plan_no_name">未命名</string>
     <string name="deliver_consumer">我的设计交付</string>
     <string name="deliver_designer">我要交付</string>
     <string name="flow_3d">我的3D方案</string>
@@ -209,6 +217,7 @@
 
     <!-- SearchActivity -->
     <string name="search">搜索风格、户型、面积</string>
+    <string name="search_designer">搜索价格、风格、从业年限</string>
 
     <!-- Wk3DPlanActivity -->
     <string name="autonym_confirm">确定</string>
@@ -238,10 +247,10 @@
     <string name="designers_send_contract">已有设计师发送合同，请同意付首款或拒绝</string>
     <string name="receive_designer_from_deliverables">请接收设计师发来的量房交付物</string>
     <string name="your_contract_agreed_designer">您已同意设计师发来的合同</string>
-    <string name="choose_designer_online_payment_first">选择设计师线上支付设计首款</string>
-    <string name="designers_pay_design_first">线上支付设计首款</string>
-    <string name="choose_designer_online_payment_balance_payment">选择设计师线上支付设计尾款</string>
-    <string name="payment_designers_make_design">线上支付设计尾款</string>
+    <string name="choose_designer_online_payment_first">选择设计师线上支付设计费首款</string>
+    <string name="designers_pay_design_first">线上支付设计费首款</string>
+    <string name="choose_designer_online_payment_balance_payment">选择设计师线上支付设计费尾款</string>
+    <string name="payment_designers_make_design">线上支付设计费尾款</string>
     <string name="receive_designer_send_design_deliverables">请接收设计师发送的设计交付物</string>
     <string name="you_receiving_designer_sent_design_deliverables">您已接收设计师发送的设计交付物</string>
     <string name="receiving_designer_sent_design_deliverables">接收设计师发送的设计交付物</string>
@@ -298,8 +307,10 @@
     <string name="version">Version BQ0.0.0.1</string>
     <string name="designer_home_about">关于设计家</string>
     <string name="designer_introduced">设计家介绍</string>
+
+
     <string name="contact">联系方式</string>
-    <string name="version_introduced">版本说明</string>
+    <string name="version_introduced">版权说明</string>
     <string name="version_detail">版本</string>
 
     <!-- AmendDemandActivity -->
@@ -349,6 +360,7 @@
     <string name="girl">女</string>
     <string name="essential_info">基本信息</string>
     <string name="photograph">拍照</string>
+    <string name="savelocal">保存图片</string>
     <string name="photo_album">从手机相册选择</string>
     <string name="information_on_the_cross">信息上传中...</string>
     <string name="autonym_sd_disabled">SD卡不可用！</string>
@@ -395,7 +407,7 @@
     <string name="fitment_area">房屋面积：</string>
     <string name="fitment_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
     <string name="fitment_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
-    <string name="are">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
+    <string name="are">房屋面积：</string>
     <string name="fitment_address">项目地址：</string>
     <string name="fitment_specific_address">具体地址：</string>
     <string name="fitment_release_time">发布时间：</string>
@@ -423,7 +435,7 @@
     <string name="refuse_measure_house_alertview">是否拒绝量房？</string>
     <string name="requirements">发布设计需求</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
-    <string name="please_input_correct_area">请填写正确的面积（整数部分不超过四位，小数不大于两位）</string>
+    <string name="please_input_correct_area">请填写正确的面积（整数部分不超过四位，小数部分不超过两位）</string>
     <string name="please_input_correct_area_point">整数部分不允许全部为0</string>
 
     <string name="please_select_form">请选择户型</string>
@@ -436,17 +448,17 @@
     <string name="no_designer_case">抱歉，暂无结果！</string>
 
     <!-- MeasureFormActivity -->
-    <string name="demand_send">发&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;送</string>
+    <string name="demand_send">发送</string>
     <string name="volume_rate_cannot_empty">量房费不能为空</string>
     <string name="please_fill_your_name">请正确填写姓名</string>
-    <string name="please_fill_phone_number">请填写正确的电话号</string>
+    <string name="please_fill_phone_number">请填写正确的手机号码</string>
     <string name="please_fill_housing_area">请正确填写面积（整数位不超过四位，小数不超过两位）</string>
     <string name="please_fill_housing_area_point">整数部位不允许全为0</string>
 
     <string name="please_fill_detailed_address">请正确填写小区名称</string>
     <string name="data_send">数据发送中...</string>
     <string name="demand_house_area">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
-    <string name="demand_measure_house_form">量房表单</string>
+    <string name="demand_measure_house_form">量房资料</string>
     <string name="exist_measure_order_information">已有量房资料</string>
 
 
@@ -522,7 +534,7 @@
     <string name="autonym_no_uploading">未上传</string>
     <string name="autonym_title">实名认证</string>
     <string name="no_upload_id_opposite">没有上传身份证反面照</string>
-    <string name="no_upload_id_positive">没有上传省份证正面照</string>
+    <string name="no_upload_id_positive">没有上传身份证正面照</string>
     <string name="no_holder_upload_my_front">没有上传本人持证正面照</string>
     <string name="id_number_input_is_not_correct">身份证号输入不正确</string>
     <string name="mobile_phone_number_input_is_not_correct">手机号输入不正确</string>
@@ -532,7 +544,7 @@
 
     <!-- BeiShuMealActivity -->
     <string name="consuer_data">客户资料</string>
-    <string name="consume_phone">手机号码：</string>
+    <string name="consume_phone">联系电话：</string>
     <string name="consume_phone_hint">手机号码</string>
     <string name="consume_phone_number_hint">请输入手机号码</string>
     <string name="consume_adress">房屋地址：</string>
@@ -604,7 +616,7 @@
 
     <!--DesignerOrderBeiShuActivity -->
     <string name="my_project_bei_shu">北舒套餐</string>
-    <string name="my_project_common">普通项目</string>
+    <string name="my_project_common">普通订单</string>
     <string name="decoration_order">我的订单</string>
 
     <!-- MyBidActivity -->
@@ -667,6 +679,7 @@
     <string name="withdrawal_branch_name">支行名称：</string>
     <string name="withdrawal_bank_card_number">银行卡号：</string>
     <string name="replace_rank_card">更换银行卡</string>
+    <string name="un_bind_rank_card">解除绑定</string>
     <string name="confirm_and_submit">确认并提交</string>
 
     <!-- CustomBidFragment-->
@@ -742,8 +755,8 @@
     <string name="normal">按住 说话</string>
     <string name="sd_imgs">本地图片</string>
     <string name="determine">完成</string>
-    <string name="picture_msg">图片</string>
-    <string name="audio_msg">语音</string>
+    <string name="picture_msg">[图片]</string>
+    <string name="audio_msg">[语音]</string>
     <string name="other_msg">系统消息</string>
     <string name="audio_recording_started">錄音開始</string>
 
@@ -854,10 +867,17 @@
     <string name="pickerview_year">年</string>
     <string name="pickerview_month">月</string>
     <string name="pickerview_day">日</string>
-    <string name="pickerview_hours">时</string>
+    <string name="pickerview_hours">点</string>
     <string name="pickerview_minutes">分</string>
     <string name="pickerview_seconds">秒</string>
 
     <string name="chatroom_loadmore_text">查看更多记录</string>
+    <string name="no_repeat_click">请勿重复点击</string>
 
+    <!-- 微信分享 -->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+    <string name="my_attention">我的关注</string>
 </resources>

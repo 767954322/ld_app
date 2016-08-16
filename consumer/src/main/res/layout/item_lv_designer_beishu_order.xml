@@ -57,6 +57,7 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
+                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/consumer_decoration_project_id"
@@ -84,6 +85,7 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
+                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_bid_name"
@@ -112,6 +114,7 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
+                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/consume_phone"
@@ -140,6 +143,7 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
+                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/project_address"
@@ -173,6 +177,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/consume_detail_address"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15" />

@@ -4,16 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.WkFlowStateAdapter;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+
+import java.util.ArrayList;
 
 import cn.finalteam.loadingviewfinal.ListViewFinal;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
@@ -27,7 +34,8 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  * @file WkFlowStateActivity.java  .
  * @brief 全流程状态机类（就是六个状态类） .
  */
-public class WkFlowStateActivity extends BaseWorkFlowActivity implements AdapterView.OnItemClickListener {
+public class WkFlowStateActivity extends BaseWorkFlowActivity implements AdapterView.OnItemClickListener,View.OnClickListener {
+
 
     @Override
     protected int getLayoutResId() {
@@ -40,8 +48,15 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         context = this;
         mListView = (ListViewFinal) findViewById(R.id.lv_designer_meal_detail);
         mPtrLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
-        setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_project_material); /// 设置公用得头式图得标题 .
-        setVisibilityForNavButton(ButtonType.RIGHT, true); /// 公用得头式图将右边的图片显示 .
+        //右上角三个按钮设置；
+        right_contain = (LinearLayout) findViewById(R.id.right_contain);
+        View view = LayoutInflater.from(this).inflate(R.layout.addview_wkflow_state,null);
+        right_contain.addView(view);
+        right_contain.setVisibility(View.VISIBLE);
+
+        demandDetails = (ImageView) right_contain.findViewById(R.id.demand_details);
+        projectInformation = (ImageView) right_contain.findViewById(R.id.project_information);
+
     }
 
     @Override
@@ -51,12 +66,26 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         updateViewFromData();
     }
 
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+
+        Bundle bundle = getIntent().getExtras();
+//        needs_id = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID);
+        bid_status = bundle.getBoolean(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS);
+        demand_type = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_TYPE);
+
+    }
+
     /**
      * 监听方法
      */
     @Override
     protected void initListener() {
         super.initListener();
+        projectInformation.setOnClickListener(this);
+        demandDetails.setOnClickListener(this);
+
         mListView.setOnItemClickListener(this);
         mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
                                             @Override
@@ -72,6 +101,43 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     protected void leftNavButtonClicked(View view) {
         refreshWkFlowState();
         super.leftNavButtonClicked(view);
+    }
+    //监听标题栏三个按钮
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.demand_details:
+                /**
+                 * 需求详情 .
+                 */
+                Intent intent = new Intent(WkFlowStateActivity.this, BiddingHallDetailActivity.class);
+                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
+                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, demand_type);
+                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, bid_status);
+                startActivity(intent);
+
+                break;
+
+            case R.id.project_information:
+
+                /**
+                 * 点击右上角资料进行的操作
+                 *
+                 * @param view 右上角的控件
+                 */
+
+                //designer_id = bundle.getString(Constant.BundleKey.BUNDLE_DESIGNER_ID);
+                Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
+                maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
+                maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
+                maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
+                startActivity(maIntent);
+
+                break;
+
+        }
     }
 
     /**
@@ -96,7 +162,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 case 0:
                     if (wk_cur_sub_node_idi >= 11) {
                         Intent mIntent = new Intent(WkFlowStateActivity.this, FlowMeasureFormActivity.class);
-                        mIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, WkFlowStateActivity.this.needs_id);
+                        mIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
                         mIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, WkFlowStateActivity.this.designer_id);
                         mIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                         startActivity(mIntent);
@@ -119,17 +185,15 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                         }
                     } else if (wk_template_idi == 2) {    /// 自选量房阶段 .
 
-                        /// 12	confirm_measure	设计师同意量房 .
-                        /// 13	decline_invite_measure 设计师拒绝量房.
-                        if (wk_cur_sub_node_idi >= 12 && wk_cur_sub_node_idi != 13) {
+                        if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
+                            view.setClickable(false);
+                        } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
                             Intent mcIntent = new Intent(WkFlowStateActivity.this, FlowMeasureCostActivity.class);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, WkFlowStateActivity.this.needs_id);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, WkFlowStateActivity.this.designer_id);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
                             mcIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                             startActivity(mcIntent);
-                        } else {
-                            view.setClickable(false);
                         }
                     }
                     break;
@@ -239,9 +303,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                         }
                     } else if (wk_template_idi == 2) {
                         // 自选或北舒
-                        /// 12	confirm_measure	设计师同意量房 .
-                        /// 13	decline_invite_measure 设计师拒绝量房.
-                        if (wk_cur_sub_node_idi >= 12 && wk_cur_sub_node_idi != 13) {
+                        if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
                             Intent mcIntent = new Intent(WkFlowStateActivity.this, FlowMeasureCostActivity.class);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, WkFlowStateActivity.this.needs_id);
                             mcIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, WkFlowStateActivity.this.designer_id);
@@ -324,19 +386,19 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         }
     }
 
-    /**
-     * 点击右上角资料进行的操作
-     *
-     * @param view 右上角的控件
-     */
-    @Override
-    protected void rightNavButtonClicked(View view) {
-        Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
-        maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
-        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
-        startActivity(maIntent);
-    }
+//    /**
+//     * 点击右上角资料进行的操作
+//     *
+//     * @param view 右上角的控件
+//     */
+//    @Override
+//    protected void rightNavButtonClicked(View view) {
+//        Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
+//        maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
+//        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
+//        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
+//        startActivity(maIntent);
+//    }
 
     @Override
     protected void onWorkFlowData() {
@@ -528,7 +590,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                                     view.setClickable(false);
                                 }
                             } else { // 自选或北舒
-                                if (wk_cur_sub_node_idi >= 12 && wk_cur_sub_node_idi != 13) {
+                                if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
                                     Intent mcIntent = new Intent(WkFlowStateActivity.this, FlowMeasureCostActivity.class);
                                     mcIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, WkFlowStateActivity.this.needs_id);
                                     mcIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, WkFlowStateActivity.this.designer_id);
@@ -632,9 +694,19 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
+    private LinearLayout right_contain;
+    private ImageView demandDetails;
+    private ImageView projectInformation;
+
+    private String demand_type;
+    private boolean bid_status;
 
     private String strMemberType = null;
     private Intent intent;
     private Context context;
     private WkFlowStateAdapter mAdapter;
+    private OrderCommonEntity mOrderCommonEntity;
+    private ArrayList<OrderCommonEntity.OrderListEntity> commonOrderListEntities = new ArrayList<>();
+
+
 }

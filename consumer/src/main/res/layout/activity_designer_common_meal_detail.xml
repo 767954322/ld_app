@@ -8,12 +8,6 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_1"
-        android:layout_marginTop="@dimen/size_50"
-        android:background="@color/bg_d5" />
-
     <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
         android:id="@+id/ptr_layout"
         android:layout_width="match_parent"

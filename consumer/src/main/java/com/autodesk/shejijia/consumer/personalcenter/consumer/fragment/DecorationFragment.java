@@ -24,12 +24,16 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AppraiseDesignerActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploadDeliveryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -49,7 +53,6 @@ import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -115,6 +118,11 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         mTvBuildTime = (TextView) mRootView.findViewById(R.id.consumer_decoration_buildtime);
         mIbnDecorationShow = (ImageButton) mRootView.findViewById(R.id.ibn_decoration_show);
         mIbnDecorationModify = (ImageButton) mRootView.findViewById(R.id.ibn_decoration_modify);
+        /**
+         * 立即评价
+         */
+        mLlEvaluate = (LinearLayout) mRootView.findViewById(R.id.ll_evaluate_tip);
+        mTvEvaluate = (TextView) mRootView.findViewById(R.id.tv_appraise_designer);
     }
 
     private void initData() {
@@ -141,6 +149,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
     private void initListener() {
         mIbnDecorationShow.setOnClickListener(this);
+        mTvEvaluate.setOnClickListener(this);
     }
 
     @Override
@@ -166,13 +175,21 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 Bundle bundle = new Bundle();
                 bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, needs_id);
                 intent.putExtras(bundle);
-                getActivity().startActivityForResult(intent, 0);
+                this.startActivityForResult(intent, RequestCode);
+                break;
+
+            case R.id.tv_appraise_designer: /// 立即评价 .
+                Intent evaluateIntent = new Intent(getActivity(), AppraiseDesignerActivity.class);
+                evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
+                evaluateIntent.putExtra(FlowUploadDeliveryActivity.BIDDER_ENTITY, mMPBidderBean);
+                evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id_evaluate);
+                startActivityForResult(evaluateIntent, EVALUATE_STATE);
                 break;
         }
     }
 
     /**
-     * 弹出应表中的dialog
+     * 弹出应标中的dialog
      */
     @Override
     public void onItemClick(Object obj, int position) {
@@ -214,7 +231,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
              */
             final String user_name = bidder.getUser_name();
             if (TextUtils.isEmpty(user_name)) {
-                holder.setText(R.id.tv_designer_name, "");
+                holder.setText(R.id.tv_designer_name, getString(R.string.data_null));
             } else {
                 holder.setText(R.id.tv_designer_name, user_name);
             }
@@ -355,7 +372,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     String member_id = memberEntity.getAcs_member_id();
                     String memType = memberEntity.getMember_type();
                     String designer_thread_id = mNeedsListEntity.getBidders().get(mPosition).getDesign_thread_id();
-                    String userName = mNeedsListEntity.getConsumer_name();
+                    String userName = mNeedsListEntity.getBidders().get(mPosition).getUser_name();
+//                  String userName = mNeedsListEntity.getConsumer_name();
                     String needs_id = mNeedsListEntity.getNeeds_id() + "";
 
                     if (TextUtils.isEmpty(designer_thread_id)) {
@@ -500,31 +518,36 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 /**
                  * 应标
                  */
-                if (Constant.NumKey.ONE.equals(custom_string_status) || Constant.NumKey.ZERO_ONE.equals(custom_string_status)) {
+                if (Constant.NumKey.ONE.equals(custom_string_status)
+                        || Constant.NumKey.ZERO_ONE.equals(custom_string_status)) {
                     /**
                      * 审核中,可以修改需求
                      */
                     approveState = UIUtils.getString(R.string.checking);
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setOnClickListener(this);
-                } else if (Constant.NumKey.TWO.equals(custom_string_status) || Constant.NumKey.ZERO_TWO.equals(custom_string_status)) {
+                } else if (Constant.NumKey.TWO.equals(custom_string_status)
+                        || Constant.NumKey.ZERO_TWO.equals(custom_string_status)) {
                     /**
                      * 审核未通过,可以修改需求表单.
                      */
                     approveState = UIUtils.getString(R.string.disapprove);
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setOnClickListener(this);
-                } else if (Constant.NumKey.THREE.equals(custom_string_status) || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
+
+                } else if (Constant.NumKey.THREE.equals(custom_string_status)
+                        || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
                     /**
                      * 审核通过,但是有设计师应标，隐藏修改需求.
                      */
-                    approveState = UIUtils.getString(R.string.approve);
+                    approveState = "应标中";
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setClickable(true);
                 }
             }
         }
         if (bidders != null && bidders.size() > 0) {
+
             ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
             for (DecorationBiddersBean bidder : bidders) {
                 if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
@@ -533,7 +556,39 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
             }
             if (mWk_cur_node_id_array.size() > 0) {
                 Integer max = Collections.max(mWk_cur_node_id_array);
-                approveState = MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, String.valueOf(max));
+                if (max < 41) {
+                    approveState = "应标中";
+                }
+                if (max >= 41) {
+                    approveState = "设计中";
+                }
+
+                if (max >= 63 && max != 64) {
+                    approveState = "项目完成";
+                }
+
+                if (max == 64) {
+                    approveState = "设计中";
+                }
+
+/// TODO 九月任务，暂时屏蔽 .
+//                if (max == 63) {
+//
+//                    mLlEvaluate.setVisibility(View.VISIBLE);
+//                    for (DecorationBiddersBean biddersBean : bidders) {
+//                        if ((max + "").equals(biddersBean.getWk_cur_sub_node_id())) {
+//                            designer_id_evaluate = biddersBean.getDesigner_id();
+//                            mMPBidderBean.setAvatar(biddersBean.getAvatar());
+//                            mMPBidderBean.setUser_name(biddersBean.getUser_name());
+//                            mMPBidderBean.setDesigner_id(biddersBean.getDesigner_id());
+//                        }
+//                    }
+//                    if (is_evaluated) {
+//                        mLlEvaluate.setVisibility(View.GONE);
+//                    }
+//                } else {
+//                    mLlEvaluate.setVisibility(View.GONE);
+//                }
                 mIbnDecorationModify.setVisibility(View.GONE);
                 mIbnDecorationModify.setClickable(false);
             }
@@ -561,19 +616,21 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
             return;
         }
         if (mNeedsListEntity != null) {
+            mNeedsListEntity.setIs_beishu(is_public);
             setBidState(is_public);
         }
     }
 
-    /**
-     * 修改需求回显的数据
-     *
-     * @param amendDemandBean 　回显数据的实体类
-     */
-    public void onEvent(AmendDemandBean amendDemandBean) {
+    //    /**
+//     * 修改需求回显的数据
+//     *
+//     * @param amendDemandBean 　回显数据的实体类
+//     */
+    public void echoData(AmendDemandBean amendDemandBean) {
         if (null == amendDemandBean) {
             return;
         }
+
         String design_budget = amendDemandBean.getDesign_budget();
         String community_name = amendDemandBean.getCommunity_name();
         String province_name = amendDemandBean.getProvince_name();
@@ -589,7 +646,13 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         toilet = amendDemandBean.getToilet();
         decoration_style = amendDemandBean.getDecoration_style();
         house_type = amendDemandBean.getHouse_type();
-
+        custom_string_status = amendDemandBean.getCustom_string_status() + "";
+        if (Constant.NumKey.ONE.equals(custom_string_status) || Constant.NumKey.ZERO_ONE.equals(custom_string_status)) {
+            /**
+             * 审核中,可以修改需求
+             */
+            mTvBidState.setText(UIUtils.getString(R.string.checking));
+        }
         convertEn2Cn();
 
         livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_convert) + UIUtils.getNodataIfEmpty(living_room_convert) + UIUtils.getNodataIfEmpty(toilet_convert);
@@ -704,7 +767,6 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
-
         mNeedsListEntity = (DecorationNeedsListBean) getArguments().getSerializable(Constant.DecorationBundleKey.DECORATION_NEEDS_KEY);
         if (mNeedsListEntity == null) {
             return;
@@ -718,16 +780,44 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+    /// 接收反回来的数据.
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        if (resultCode == AmendDemandActivity.REFUSEResultCode) {
+
+            String needs_id = data.getStringExtra(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID);
+            if (mNeedsListEntity.getNeeds_id().equals(needs_id)) {
+                is_public = data.getStringExtra("is_public_amend");
+                custom_string_status = data.getStringExtra("custom_string_status");
+                wk_template_id = data.getStringExtra("wk_template_id");
+                mNeedsListEntity.setIs_public(is_public);
+                mNeedsListEntity.setCustom_string_status(custom_string_status);
+                mNeedsListEntity.setWk_template_id(wk_template_id);
+                setBidState(is_public);
+            }
+
+        }
+        if (resultCode == AmendDemandActivity.ResultCode) {
+            Bundle bundle = data.getExtras();
+            AmendDemandBean amendDemandBean = (AmendDemandBean) bundle.getSerializable(JsonConstants.AMENDEMANDBEAN);
+            if (mNeedsListEntity.getNeeds_id().equals(amendDemandBean.getNeeds_id())) {
+
+                changeBean(amendDemandBean);
+            }
+            echoData(amendDemandBean);
+        }
+
+
         if (resultCode == Activity.RESULT_OK && data != null) {
             switch (requestCode) {
                 case WK_FLOW_STATE:
                 case BIDING_STATE:
                     String mwk_cur_sub_node_id = data.getStringExtra(Constant.BundleKey.BUNDLE_SUB_NODE_ID);
-                    KLog.d("FlowMeasureFormActivity", mwk_cur_sub_node_id);
                     if (!TextUtils.isEmpty(mwk_cur_sub_node_id)) {
                         bidders.get(mPosition).setWk_cur_sub_node_id(mwk_cur_sub_node_id);
                     }
@@ -761,16 +851,53 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     }
                     mDecorationAdapter.notifyDataSetChanged();
                     break;
+
+                case EVALUATE_STATE:
+                    is_evaluated = data.getBooleanExtra(AppraiseDesignerActivity.IS_EVALUATE, false);
+                    break;
                 default:
                     break;
             }
         }
     }
 
+    /**
+     * 修改后的项目信息与之前的进行替换更新
+     *
+     * @param amendDemandBean
+     */
+    private void changeBean(AmendDemandBean amendDemandBean) {
+
+        mNeedsListEntity.setCommunity_name(amendDemandBean.getCommunity_name());
+        mNeedsListEntity.setCity(amendDemandBean.getCity());
+        mNeedsListEntity.setCity_name(amendDemandBean.getCity_name());
+        mNeedsListEntity.setClick_number(amendDemandBean.getClick_number());
+        mNeedsListEntity.setConsumer_mobile(amendDemandBean.getConsumer_mobile());
+        mNeedsListEntity.setConsumer_name(amendDemandBean.getConsumer_name());
+        mNeedsListEntity.setContacts_mobile(amendDemandBean.getContacts_mobile());
+        mNeedsListEntity.setContacts_name(amendDemandBean.getContacts_name());
+
+        mNeedsListEntity.setDecoration_style(amendDemandBean.getDecoration_style());
+        mNeedsListEntity.setDecoration_budget(amendDemandBean.getDecoration_budget());
+        mNeedsListEntity.setDesign_budget(amendDemandBean.getDesign_budget());
+        mNeedsListEntity.setDetail_desc(amendDemandBean.getDetail_desc());
+        mNeedsListEntity.setDistrict_name(amendDemandBean.getDistrict_name());
+        mNeedsListEntity.setDistrict(amendDemandBean.getDistrict());
+        mNeedsListEntity.setHouse_area(amendDemandBean.getHouse_area());
+        mNeedsListEntity.setHouse_type(amendDemandBean.getHouse_type());
+        mNeedsListEntity.setLiving_room(amendDemandBean.getLiving_room());
+        mNeedsListEntity.setProvince_name(amendDemandBean.getProvince_name());
+        mNeedsListEntity.setProvince(amendDemandBean.getProvince());
+        mNeedsListEntity.setToilet(amendDemandBean.getToilet());
+        mNeedsListEntity.setRoom(amendDemandBean.getRoom());
+    }
+
     private static final int WK_FLOW_STATE = 0;
     private static final int BIDING_STATE = 1;
+    private static final int EVALUATE_STATE = 2;
     private static final String IS_PUBLIC = "1";
     private static final String NONE = "none";
+
 
     /**
      * this context activity
@@ -796,6 +923,12 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private ImageButton mIbnDecorationShow;
     private ImageButton mIbnDecorationModify;
     private AlertView mAlertViewRefuse;
+
+    private LinearLayout mLlEvaluate;
+    private TextView mTvEvaluate;
+    private String designer_id_evaluate; /// 进行设计交付的设计师的designer_id .
+    private MPBidderBean mMPBidderBean = new MPBidderBean();
+    private boolean is_evaluated = false;
 
     private int mPosition; /// 获取对应的item的position .
     private boolean isShowStub;
@@ -833,4 +966,5 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private MemberEntity mMemberEntity;
     private DecorationNeedsListBean mNeedsListEntity;
     private ArrayList<DecorationBiddersBean> bidders;
+    private int RequestCode = 101;
 }

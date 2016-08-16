@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,14 +64,19 @@ public class MessageCenterAdapter extends BaseAdapter {
             myHolder = (MyHolder) convertView.getTag();
         }
         String body = mCasesEntities.get(position).getBody();
-        MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
+        if (!TextUtils.isEmpty(body)&&body.contains("&quot;")){
+            MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
 
-        Log.d("test",messageCenterBody.toString());
-        if (ifIsDesiner) {
-            myHolder.item_msg_content.setText(messageCenterBody.getFor_designer());
-        } else {
-            myHolder.item_msg_content.setText(messageCenterBody.getFor_consumer());
+            Log.d("test",messageCenterBody.toString());
+            if (ifIsDesiner) {
+                myHolder.item_msg_content.setText(messageCenterBody.getFor_designer());
+            } else {
+                myHolder.item_msg_content.setText(messageCenterBody.getFor_consumer());
+            }
+        }else {
+            myHolder.item_msg_content.setText(body);
         }
+
 
 
         return convertView;

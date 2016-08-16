@@ -65,7 +65,7 @@ public class AttestationInfoActivity extends NavigationBarActivity {
             tv_pic_audit_status_one.setBackground(UIUtils.getDrawable(R.drawable.bg_attestation_info_pressed));
             tv_txt_audit_status_one.setTextColor(UIUtils.getColor(R.color.bg_ed8e00));
             img_audit_describe.setVisibility(View.GONE);
-            tv_audit_describe.setText(UIUtils.getString(R.string.information_has_been_submitted));
+            tv_audit_describe.setText(UIUtils.getString(R.string.data_sent_please_patience_wait_audit));
 
         } else if (Constant.NumKey.ZERO.equals(audit_status)) {
             setTitleForNavbar(UIUtils.getString(R.string.autonym_message_moderationa));

@@ -276,18 +276,8 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_CODE) {
-
-            String success = data.getStringExtra("SUCCESS");
-            if (success.equals("SUCCESS")) {
-
-                isRefush = true;
-                getMyDecorationData(0, limit);
-            }
-        }
     }
 
     ///is_beishu:0 北舒套餐 1 非北舒.
@@ -320,4 +310,6 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
     private List<DecorationNeedsListBean> mNeedsListEntityArrayList;
     private ArrayList<Fragment> mFragmentArrayList = new ArrayList<>();
     private ArrayList<DecorationNeedsListBean> mNeedsListEntities = new ArrayList<>();
+
+
 }

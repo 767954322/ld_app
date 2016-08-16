@@ -129,7 +129,7 @@
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
-                    android:phoneNumber="true"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
@@ -290,7 +290,7 @@
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
-                    android:phoneNumber="true"
+                    android:inputType="number"
                     android:singleLine="true"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
@@ -426,7 +426,7 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
-                        android:inputType="phone"
+                        android:inputType="number"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
@@ -460,7 +460,7 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
-                        android:inputType="phone"
+                        android:inputType="number"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>

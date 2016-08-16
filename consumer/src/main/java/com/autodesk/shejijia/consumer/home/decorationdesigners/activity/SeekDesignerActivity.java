@@ -2,35 +2,35 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAdapter;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerFiltrateBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -54,6 +54,15 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         super.initView();
         mListView = (ListView) findViewById(R.id.xlv_seek_designer);
         mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
+
+        setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
+        setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
+
+//        setVisibilityForNavButton(ButtonType.RIGHT, true);
+//        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+
+        setVisibilityForNavButton(ButtonType.RIGHT, false);
+        setVisibilityForNavButton(ButtonType.SECONDARY, false);
     }
 
     /// 数据逻辑.
@@ -73,13 +82,28 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         mPullToRefreshLayout.setOnRefreshListener(this);
     }
 
+    @Override
+    protected void secondaryNavButtonClicked(View view) {
+        super.secondaryNavButtonClicked(view);
+        intent = new Intent(this, DesignerFiltrateActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+        intent = new Intent(this, DesignerSearchActivity.class);
+        startActivity(intent);
+    }
+
+
     /**
      * 选中某一个设计师进入详情页面
      *
      * @param adapterView 　某一个ListView
      * @param view        　item的view的句柄
      * @param position    　position是适配器里的位置
-     * @param l           　　在listview里的第几行的位置
+     * @param l           　在listview里的第几行的位置
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -112,11 +136,11 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                 }
 
                 @Override
-                public void onResponse(String s) {
+                public void onResponse(final String s) {
 
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                    Intent intent = new Intent(SeekDesignerActivity.this, ChatRoomActivity.class);
+                    final Intent intent = new Intent(SeekDesignerActivity.this, ChatRoomActivity.class);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
@@ -128,14 +152,31 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                         int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
+                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                        SeekDesignerActivity.this.startActivity(intent);
 
                     } else {
-                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                    }
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
+                            }
 
-                    startActivity(intent);
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String thread_id = jsonObject.getString("thread_id");
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                    SeekDesignerActivity.this.startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
                 }
             });
         } else {
@@ -144,13 +185,13 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     }
 
     /**
-     * 获取设计师信息.
+     * 获取设计师列表.
      *
      * @param offset 页数
      * @param limit  　每页数据条数
      * @param state  　刷新的状态
      */
-    public void getFindDesignerData(int offset, int limit, final int state) {
+    public void getDesignerListData(int offset, int limit, final int state) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -167,7 +208,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerActivity.this,
                         AlertView.Style.Alert, null).show();
             }
@@ -219,13 +260,40 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     /// 下拉刷新.
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        getFindDesignerData(0, LIMIT, 1);
+        getDesignerListData(0, LIMIT, 1);
     }
 
     /// 上拉加载.
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        getFindDesignerData(OFFSET, LIMIT, 2);
+        getDesignerListData(OFFSET, LIMIT, 2);
+    }
+
+    /// 刷新.
+    public void updateNotify(DesignerFiltrateBean content) {
+        this.mDesignerFiltrateBean = content;
+        mPullToRefreshLayout.autoRefresh();
+    }
+
+    /**
+     * 接收返回来的数据，并做出操作
+     *
+     * @param resultCode 条件码
+     * @param data       回来的数据
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null == data) {
+            return;
+        }
+        Bundle bundle = data.getExtras();
+        switch (resultCode) {
+            case DesignerFiltrateActivity.DF_RESULT_CODE:
+                DesignerFiltrateBean designerFiltrateBean = (DesignerFiltrateBean) bundle.getSerializable(Constant.CaseLibrarySearch.DESIGNER_FILTRATE);
+                updateNotify(designerFiltrateBean);
+                break;
+        }
     }
 
     /// 控件.
@@ -237,9 +305,12 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     private int OFFSET = 0;
     private boolean isFirstIn = true;
     private String member_id;
+    private Intent intent;
+
 
     /// 集合，类.
     private SeekDesignerBean mSeekDesignerBean;
     private SeekDesignerAdapter mSeekDesignerAdapter;
+    private DesignerFiltrateBean mDesignerFiltrateBean;
     private ArrayList<SeekDesignerBean.DesignerListEntity> mDesignerListEntities = new ArrayList<>();
 }

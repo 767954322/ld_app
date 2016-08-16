@@ -3,7 +3,7 @@
     <solid android:color="@color/comment_write" />
     <corners android:radius="@dimen/size_3"/>
     <solid android:color="#FFFFFF" />
-    <stroke
-    android:width="@dimen/size_1"
-        android:color="@color/line_color" />
+    <!--<stroke-->
+    <!--android:width="@dimen/size_1"-->
+        <!--android:color="@color/line_color" />-->
 </shape>

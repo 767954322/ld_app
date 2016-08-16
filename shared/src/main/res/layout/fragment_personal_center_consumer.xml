@@ -6,6 +6,10 @@
     android:background="@color/bg_impression"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -56,7 +60,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="@string/login"
-                    android:textColor="@color/white"
+                    android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_18" />
             </LinearLayout>
 
@@ -80,7 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="@string/my_fitment" />
+                    android:text="@string/my_fitment"
+                    android:textColor="@color/bg_33" />
             </LinearLayout>
 
             <LinearLayout
@@ -92,40 +97,39 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="60dp"
                     android:background="@color/bg_impression" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_personal_b_fitment"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rl_personal_b_fitment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:background="@color/white">-->
 
-                <ImageView
-                    android:id="@+id/img_fitment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/icon_my_bid_normal" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/img_fitment"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:src="@drawable/icon_my_bid_normal" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/img_fitment"
-                    android:text="@string/my_family_order" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_toRightOf="@+id/img_fitment"-->
+                    <!--android:text="@string/my_family_order" />-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/icon_unfold_normal" />
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:src="@drawable/icon_unfold_normal" />-->
+            <!--</RelativeLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -136,9 +140,47 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="60dp"
                     android:background="@color/bg_impression" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_personal_designer_attention"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_50"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:src="@drawable/ic_following"/>
+
+                <TextView
+                    android:text="@string/my_attention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/bg_51"/>
+
+                <TextView
+                    android:layout_width="@dimen/size_1"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:src="@drawable/icon_unfold_normal"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/view_common_line"/>
+
 
             <RelativeLayout
                 android:id="@+id/rl_personal_b_collect"
@@ -160,7 +202,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_my_collect"
-                    android:text="@string/message_center" />
+                    android:text="@string/message_center"
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -180,7 +223,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="60dp"
                     android:background="@color/bg_impression" />
             </LinearLayout>
 
@@ -204,7 +246,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_essential_setting"
-                    android:text="@string/consumer_more" />
+                    android:text="@string/consumer_more"
+                    android:textColor="@color/bg_33" />
 
                 <ImageView
                     android:layout_width="wrap_content"

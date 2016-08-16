@@ -49,7 +49,7 @@ public class AboutVersionIntroducedActivity extends NavigationBarActivity{
         webSettings.setDefaultTextEncodingName(Constant.NetBundleKey.UTF_8);
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-        webView.loadUrl("file:///android_asset/about/legal/legal1.html");
+        webView.loadUrl("file:///android_asset/about/legal/legelAndroid.html");
         webView.setWebViewClient(new webViewClient());
     }
 

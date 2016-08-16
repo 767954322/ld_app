@@ -63,7 +63,7 @@ public class Wk3DLevelZeroAdapter extends CommonAdapter<Wk3DPlanListBean> {
          */
         String name = wk3DPlanListBean.getDesign_name();
         if (TextUtils.isEmpty(name)) {
-            holder.setText(R.id.tv_3dplan_name, UIUtils.getString(R.string.three_plan));
+            holder.setText(R.id.tv_3dplan_name, UIUtils.getString(R.string.three_plan_no_name));
         } else {
             holder.setText(R.id.tv_3dplan_name, name);
         }

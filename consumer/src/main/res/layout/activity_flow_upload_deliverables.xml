@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_e7"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_e7"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
+        layout="@layout/view_navigation_header"/>
 
     <TextView
         android:id="@+id/tv_community_name"
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:padding="@dimen/size_10"
-        android:singleLine="true" />
+        android:singleLine="true"/>
 
     <LinearLayout
         android:id="@+id/ll_3d_plan"
@@ -34,7 +34,8 @@
             android:id="@+id/iv_3d_plan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_flow_3d" />
+            android:src="@drawable/default_design_scheme_ico" />
+
 
         <TextView
             android:id="@+id/tv_delivery"
@@ -43,7 +44,7 @@
             android:layout_marginLeft="@dimen/size_10"
             android:layout_weight="1"
             android:drawableRight="@drawable/icon_unfold_normal"
-            android:text="@string/three_plan" />
+            android:text="@string/three_plan"/>
 
     </LinearLayout>
 
@@ -65,7 +66,8 @@
             android:id="@+id/iv_design_apply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_flow_rendering" />
+            android:src="@drawable/default_rendering_design_ico" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,7 +75,7 @@
             android:layout_marginLeft="@dimen/size_10"
             android:layout_weight="1"
             android:drawableRight="@drawable/icon_unfold_normal"
-            android:text="@string/flow_rendering_design" />
+            android:text="@string/flow_rendering_design"/>
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +96,8 @@
             android:id="@+id/iv_design_pager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_flow_drawing" />
+            android:background="@drawable/default_design_drawings_ico" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,7 +105,7 @@
             android:layout_marginLeft="@dimen/size_10"
             android:layout_weight="1"
             android:drawableRight="@drawable/icon_unfold_normal"
-            android:text="@string/flow_design_blueprint" />
+            android:text="@string/flow_design_blueprint"/>
 
 
     </LinearLayout>
@@ -125,7 +128,7 @@
             android:id="@+id/iv_material_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_flow_inventory" />
+            android:src="@drawable/default_materials_list_ico" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -133,14 +136,9 @@
             android:layout_marginLeft="@dimen/size_10"
             android:layout_weight="1"
             android:drawableRight="@drawable/icon_unfold_normal"
-            android:text="@string/flow_bill_of_materials" />
+            android:text="@string/flow_bill_of_materials"/>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_0"
-        android:layout_weight="1" />
 
     <Button
         android:id="@+id/btn_upload_submit_3dplan"
@@ -153,7 +151,77 @@
         android:background="@drawable/bg_common_btn_pressed"
         android:text="@string/flow_send"
         android:textColor="@color/bg_ff"
-        android:visibility="gone" />
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/ll_delayed_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delivery_delayed_days"/>
+
+                <TextView
+                    android:id="@+id/tv_delayed_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7天"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_delayed_instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:drawableLeft="@drawable/icon_instruction"
+                android:drawablePadding="5dp"
+                android:text="@string/title_introduce"
+                android:textColor="@color/bg_0084ff"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            >
+
+            <Button
+                android:id="@+id/btn_flow_upload_deliverable_delay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/textview_border_beishu"
+                android:text="@string/delivery_delayed"
+                android:textColor="@color/bg_0084ff"/>
+
+            <Button
+                android:id="@+id/btn_delivery_consumer_sure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_common_btn_blue"
+                android:text="@string/delivery_sure"
+                android:textColor="@color/bg_ff"/>
+        </LinearLayout>
+    </LinearLayout>
+
     <!--android:background="@drawable/bg_common_btn_blue"-->
 
 </LinearLayout>

@@ -94,7 +94,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:ems="10"
-                    android:hint="@string/consume_phone_number_hint"
+                    android:hint="@string/please_enter_your_phone"
                     android:maxLength="11"
                     android:phoneNumber="true"
                     android:textSize="@dimen/font_12"/>
@@ -170,15 +170,16 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:hint="请输入面积（平米）"
-                    android:phoneNumber="true"
+                    android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12"/>
 
-                <!--<TextView-->
 
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginRight="@dimen/size_20"-->
-                    <!--android:text="m²" />-->
+                <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_20"
+                android:text="m²" />
             </LinearLayout>
 
             <LinearLayout
@@ -487,30 +488,48 @@
                     android:background="@drawable/icon_unfold_normal"/>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_30"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:layout_height="@dimen/size_40"
                 android:paddingLeft="@dimen/size_10"
-                android:paddingRight="@dimen/size_10">
+                android:paddingRight="@dimen/size_10"
+                android:paddingBottom="@dimen/size_10"
+                android:gravity="center_vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_30"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/demand_measure_house_charge" />
+
+                    <TextView
+                        android:id="@+id/tv_measure_form_liangfangfei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/flow_monad_rmb" />
+
+                </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvIllustrate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_measure_house_charge"/>
-
-                <TextView
-                    android:id="@+id/tv_measure_form_liangfangfei"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/flow_monad_rmb"/>
-            </LinearLayout>
-
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/icon_instruction"
+                    android:layout_marginRight="@dimen/size_10"
+                    android:textColor="@color/actionsheet_blue"
+                    android:text="@string/illustrate" />
+            </RelativeLayout>
             <Button
                 android:id="@+id/btn_send_measure_house_form"
                 android:layout_width="match_parent"
@@ -522,7 +541,7 @@
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/demand_send"
                 android:textColor="@color/bg_ff"
-                android:textSize="@dimen/font_20"/>
+                android:textSize="@dimen/font_18"/>
 
         </LinearLayout>
     </ScrollView>

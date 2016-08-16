@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/size_10"
-                android:background="@drawable/icon_position_normal"/>
+                android:background="@drawable/address_ico"/>
 
             <TextView
                 android:id="@+id/tv_bin_go_address"
@@ -40,12 +40,14 @@
                 android:layout_weight="1"/>
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/icon_times_ormal"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -55,6 +57,7 @@
                 android:textSize="@dimen/font_10"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_bin_go_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,6 +67,7 @@
                 android:textSize="@dimen/font_10"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

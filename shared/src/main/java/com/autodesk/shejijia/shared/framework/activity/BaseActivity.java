@@ -1,11 +1,10 @@
 package com.autodesk.shejijia.shared.framework.activity;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-import java.io.IOException;
 
 /**
  * @author luchongbin .
@@ -14,7 +13,7 @@ import java.io.IOException;
  * @file BaseActivity.java .
  * @brief Activity的基类 .
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends FragmentActivity {
     protected String TAG = getClass().getSimpleName();
     private boolean destroyed = false;
 
