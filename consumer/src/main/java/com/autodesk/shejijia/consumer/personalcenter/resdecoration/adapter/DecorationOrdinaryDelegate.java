@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
@@ -14,8 +15,11 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdeleg
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>Description:家装订单:普通家装订单 </p>
@@ -70,10 +74,28 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         holder.setText(R.id.tv_bidder_count, decorationNeedsListBean.getBidder_count() + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
 
+
         /**
-         * 订单状态
+         * 当前家装订单状态
          */
-        holder.setText(R.id.tv_decoration_state, decorationNeedsListBean.getIs_public());
+        String is_public = decorationNeedsListBean.getIs_public();
+        String wk_template_id = decorationNeedsListBean.getWk_template_id();
+        String custom_string_status = decorationNeedsListBean.getCustom_string_status();
+        Integer wk_cur_node_id_max = -1;
+        if (mBidders != null && mBidders.size() > 0) {
+
+            ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
+            for (DecorationBiddersBean bidder : mBidders) {
+                if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
+                    mWk_cur_node_id_array.add(Integer.parseInt(bidder.getWk_cur_sub_node_id()));
+                }
+            }
+            if (mWk_cur_node_id_array.size() > 0) {
+                wk_cur_node_id_max = Collections.max(mWk_cur_node_id_array);
+            }
+        }
+        String needsState = getNeedsState(is_public, wk_template_id, custom_string_status, wk_cur_node_id_max);
+        holder.setText(R.id.tv_decoration_state, needsState);
 
         /**
          * 应标设计师列表
@@ -82,6 +104,9 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         DecorationDesignerListAdapter mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, mBidders, mNeeds_id);
         mDesignerListView.setAdapter(mDecorationDesignerListAdapter);
 
+        /**
+         * 应标人数
+         */
         holder.setOnClickListener(R.id.rl_bidder_count, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +117,9 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             }
         });
 
+        /**
+         * 需求详情
+         */
         holder.setOnClickListener(R.id.tv_decoration_detail, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,4 +132,90 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         });
     }
 
+
+    /**
+     * 返回当前订单的状态信息
+     *
+     * @param is_public              当前订单是否终止,为1时,当前需求终止。
+     * @param wk_template_id         模版节点
+     *                               1		应标
+     *                               2		自选
+     *                               3		北舒
+     * @param custom_string_status   审核状态判断字段
+     * @param wk_cur_sub_node_id_int 当前应标设计师中wk_cur_sub_node_id的最大值
+     * @return
+     */
+    private String getNeedsState(String is_public,
+                                 String wk_template_id,
+                                 String custom_string_status,
+                                 int wk_cur_sub_node_id_int) {
+        String needsState = "未知状态";
+
+        if (Constant.NumKey.ONE.equals(is_public)) {
+            /**
+             * is_public=1,需求终止
+             */
+            needsState = UIUtils.getString(R.string.canceled);
+        } else {
+            if (Constant.NumKey.ONE.equals(wk_template_id)) {
+                /**
+                 * 自选:wk_template_id=2,直接审核通过
+                 * 应标:wk_template_id=1
+                 */
+                switch (custom_string_status) {
+                    case Constant.NumKey.ONE:
+                    case Constant.NumKey.ZERO_ONE:
+                        /**
+                         * 审核中,可以修改需求
+                         */
+                        needsState = UIUtils.getString(R.string.checking);
+                        break;
+
+                    case Constant.NumKey.TWO:
+                    case Constant.NumKey.ZERO_TWO:
+                        /**
+                         * 审核失败,可以修改需求.
+                         */
+                        needsState = UIUtils.getString(R.string.disapprove);
+                        break;
+
+                    case Constant.NumKey.THREE:
+                    case Constant.NumKey.ZERO_THREE:
+                        /**
+                         * 审核通过,但是没有设计师应标.??
+                         */
+                        needsState = "审核通过";
+                        break;
+                }
+            }
+
+            if (wk_cur_sub_node_id_int >= 11) {
+                if (wk_cur_sub_node_id_int < 41) {
+                    needsState = "应标中";
+                }
+                if (wk_cur_sub_node_id_int >= 41) {
+                    needsState = "设计中";
+                }
+
+                if (wk_cur_sub_node_id_int >= 63 && wk_cur_sub_node_id_int != 64) {
+                    needsState = "项目完成";
+                }
+
+                if (wk_cur_sub_node_id_int == 64) {
+                    needsState = "设计中";
+                }
+            }
+        }
+        return needsState;
+    }
+
+    /**
+     * 订单状态判断:
+     * [1]应标人数为0:
+     * 审核中,审核通过,审核失败;
+     * <p/>
+     * [2]应标人数大于0:
+     * 显示应标人数布局;
+     * 全流程节点信息;
+     */
 }
