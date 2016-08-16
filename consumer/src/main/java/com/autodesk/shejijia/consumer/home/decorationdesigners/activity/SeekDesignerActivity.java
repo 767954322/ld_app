@@ -15,7 +15,6 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -59,8 +58,11 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
         setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
 
-        setVisibilityForNavButton(ButtonType.RIGHT, true);
-        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+//        setVisibilityForNavButton(ButtonType.RIGHT, true);
+//        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+
+        setVisibilityForNavButton(ButtonType.RIGHT, false);
+        setVisibilityForNavButton(ButtonType.SECONDARY, false);
     }
 
     /// 数据逻辑.
