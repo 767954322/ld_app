@@ -1,6 +1,9 @@
 package com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
@@ -8,7 +11,9 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -31,10 +36,9 @@ import java.util.List;
  * @brief 消费者家装订单主页面 .
  */
 public class DecorationConsumerFragment extends BaseFragment implements
-        View.OnClickListener {
+        View.OnClickListener, AdapterView.OnItemClickListener {
 
     ///is_beishu:0 北舒套餐 1 非北舒.
-    private static final String IS_NOT_BEI_SHU = "1";
     private static final String DECORATION_NEEDS_ID = "DecorationConsumerFragment";
 
     private String TAG = getClass().getSimpleName();
@@ -70,10 +74,24 @@ public class DecorationConsumerFragment extends BaseFragment implements
     @Override
     protected void initListener() {
         super.initListener();
+        mPlvConsumerDecoration.setOnItemClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (view.getId()) {
+            case R.id.tv_decoration_detail:
+                Intent mIntent = new Intent(getActivity(), DecorationDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, mDecorationNeedsList.get(position).getNeeds_id());
+                mIntent.putExtras(bundle);
+                getActivity().startActivityForResult(mIntent, 0);
+                break;
+        }
     }
 
     /**
@@ -105,4 +123,5 @@ public class DecorationConsumerFragment extends BaseFragment implements
         mDecorationNeedsList.addAll(mDecorationListBean.getNeeds_list());
         mDecorationConsumerAdapter.notifyDataSetChanged();
     }
+
 }

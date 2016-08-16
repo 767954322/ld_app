@@ -181,13 +181,14 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
      * 　网络获取数据，更新页面
      */
     private void updateViewFromData(DecorationDetailBean demandDetailBean) {
+        String contacts_name = demandDetailBean.getContacts_name();
         house_type = demandDetailBean.getHouse_type();
         room = demandDetailBean.getRoom();
         toilet = demandDetailBean.getToilet();
         living_room = demandDetailBean.getLiving_room();
         house_area = demandDetailBean.getHouse_area();
         contacts_mobile = demandDetailBean.getContacts_mobile();
-        contacts_name = demandDetailBean.getContacts_name();
+        this.contacts_name = demandDetailBean.getContacts_name();
         custom_string_status = demandDetailBean.getCustom_string_status();
         decoration_budget = demandDetailBean.getDecoration_budget();
         province_name = demandDetailBean.getProvince_name();
@@ -203,17 +204,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             btnFitmentAmendDemand.setPressed(false);
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
         }
-        List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
-        if (null != bidders) {
-            DecorationBiddersBean biddersBean = bidders.get(bidders.size() - 1);
-            String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
-            if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) > 33) {
-                btnFitmentStopDemand.setClickable(false);
-                btnFitmentStopDemand.setPressed(false);
-                btnFitmentStopDemand.setTextColor(UIUtils.getColor(R.color.white));
-                btnFitmentStopDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
-            }
-        }
+
 
         district_name = TextUtils.isEmpty(district) || "none".equals(district) || TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
         String address = province_name + city_name + district_name;
@@ -225,7 +216,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         tvAmendRoomType.setText(TextUtils.isEmpty(livingRoom_room_toilet) ? UIUtils.getString(R.string.no_data) : livingRoom_room_toilet);
         tvAmendStyle.setText(TextUtils.isEmpty(decoration_style_convert) ? UIUtils.getString(R.string.no_data) : decoration_style_convert);
         tvAmendHouseType.setText(TextUtils.isEmpty(house_type_convert) ? UIUtils.getString(R.string.no_data) : house_type_convert);
-        etAmendAmendName.setText(TextUtils.isEmpty(contacts_name) ? UIUtils.getString(R.string.no_data) : contacts_name);
+        etAmendAmendName.setText(TextUtils.isEmpty(this.contacts_name) ? UIUtils.getString(R.string.no_data) : this.contacts_name);
         etIssueAmendMobile.setText(TextUtils.isEmpty(contacts_mobile) ? UIUtils.getString(R.string.no_data) : contacts_mobile);
         tvAmendDesignBudget.setText(TextUtils.isEmpty(design_budget) ? UIUtils.getString(R.string.no_data) : design_budget);
         tvAmendBudget.setText(TextUtils.isEmpty(decoration_budget) ? UIUtils.getString(R.string.no_data) : decoration_budget);
@@ -234,7 +225,26 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         etIssueDemandDetailAddress.setText(TextUtils.isEmpty(community_name) ? UIUtils.getString(R.string.no_data) : community_name);
         tvPublicTime.setText(TextUtils.isEmpty(publish_time) ? UIUtils.getString(R.string.no_data) : publish_time);
 
-        mTvDecorationName.setText(community_name);
+        mTvDecorationName.setText(contacts_name + "/" + community_name);
+
+        List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
+        DecorationBiddersBean biddersBean = null;
+        if (null != bidders) {
+            if (bidders.size() == 1) {
+                biddersBean = bidders.get(0);
+            } else if (bidders.size() > 1) {
+                biddersBean = bidders.get(bidders.size() - 1);
+            } else if (bidders.size() < 1) {
+                return;
+            }
+            String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
+            if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) > 33) {
+                btnFitmentStopDemand.setClickable(false);
+                btnFitmentStopDemand.setPressed(false);
+                btnFitmentStopDemand.setTextColor(UIUtils.getColor(R.color.white));
+                btnFitmentStopDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
+            }
+        }
     }
 
     /**

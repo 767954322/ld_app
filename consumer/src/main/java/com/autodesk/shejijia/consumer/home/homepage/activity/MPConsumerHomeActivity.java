@@ -681,7 +681,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     //判断是否聊过天，跳转到之前聊天室或新聊天室
     private void jumpToChatRoom(String scanResult) {
 
-        if (scanResult.contains(Constant.ConsumerDecorationFragment.hs_uid) && scanResult.contains(Constant.DesignerCenterBundleKey.MEMBER)) {
+        if (scanResult.contains(Constant.ConsumerDecorationFragment.hs_uid)
+                && scanResult.contains(Constant.DesignerCenterBundleKey.MEMBER)) {
 
             IMQrEntity consumerQrEntity = GsonUtil.jsonToBean(scanResult, IMQrEntity.class);
             if (null != consumerQrEntity && !TextUtils.isEmpty(consumerQrEntity.getName())) {
@@ -771,7 +772,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                     Bundle bundle = data.getExtras();
                     String scanResult = bundle.getString(Constant.QrResultKey.SCANNER_RESULT);
-                    jumpToChatRoom(scanResult);
+                    if (null !=scanResult){
+                        jumpToChatRoom(scanResult);
+                    }
 
                     break;
             }
