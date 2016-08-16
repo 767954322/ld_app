@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -27,7 +26,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -179,7 +177,10 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
     }
 
     private void showAlertView(int content) {
-        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(content), null, null, new String[]{UIUtils.getString(R.string.sure)}, AppraiseDesignerActivity.this, AlertView.Style.Alert, null).show();
+        new AlertView(UIUtils.getString(R.string.tip),
+                UIUtils.getString(content), null, null,
+                new String[]{UIUtils.getString(R.string.sure)},
+                AppraiseDesignerActivity.this, AlertView.Style.Alert, null).show();
     }
 
     /**

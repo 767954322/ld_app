@@ -570,23 +570,23 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     approveState = "设计中";
                 }
 
-                if (max == 63) {
-
-                    mLlEvaluate.setVisibility(View.VISIBLE);
-                    for (DecorationBiddersBean biddersBean : bidders) {
-                        if ((max + "").equals(biddersBean.getWk_cur_sub_node_id())) {
-                            designer_id_evaluate = biddersBean.getDesigner_id();
-                            mMPBidderBean.setAvatar(biddersBean.getAvatar());
-                            mMPBidderBean.setUser_name(biddersBean.getUser_name());
-                            mMPBidderBean.setDesigner_id(biddersBean.getDesigner_id());
-                        }
-                    }
-                    if (is_evaluated) {
-                        mLlEvaluate.setVisibility(View.GONE);
-                    }
-                } else {
-                    mLlEvaluate.setVisibility(View.GONE);
-                }
+//                if (max == 63) {
+//
+//                    mLlEvaluate.setVisibility(View.VISIBLE);
+//                    for (DecorationBiddersBean biddersBean : bidders) {
+//                        if ((max + "").equals(biddersBean.getWk_cur_sub_node_id())) {
+//                            designer_id_evaluate = biddersBean.getDesigner_id();
+//                            mMPBidderBean.setAvatar(biddersBean.getAvatar());
+//                            mMPBidderBean.setUser_name(biddersBean.getUser_name());
+//                            mMPBidderBean.setDesigner_id(biddersBean.getDesigner_id());
+//                        }
+//                    }
+//                    if (is_evaluated) {
+//                        mLlEvaluate.setVisibility(View.GONE);
+//                    }
+//                } else {
+//                    mLlEvaluate.setVisibility(View.GONE);
+//                }
                 mIbnDecorationModify.setVisibility(View.GONE);
                 mIbnDecorationModify.setClickable(false);
             }
@@ -794,7 +794,6 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 changeBean(amendDemandBean);
             }
             echoData(amendDemandBean);
-
         }
 
 
