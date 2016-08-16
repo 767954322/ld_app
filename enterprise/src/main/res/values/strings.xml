@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SheJiJia-Enterprise</string>
+
+    <!--bottom tab-->
+    <string name="main_tab_task">任务</string>
+    <string name="main_tab_issue">问题</string>
+    <string name="main_tab_session">群聊</string>
+
 </resources>

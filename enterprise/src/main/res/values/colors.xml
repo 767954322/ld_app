@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="main_bottom_textView_normal">#999999</color>
+    <color name="main_bottom_textView_pressed">#5AB5EE</color>
+    
+    <color name="rectangle_gray">#999999</color>
 </resources>
