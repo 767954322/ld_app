@@ -69,7 +69,6 @@ import de.greenrobot.event.EventBus;
 public class DecorationFragment extends Fragment implements View.OnClickListener, OnItemClickListener {
 
 
-
     public DecorationFragment() {
         super();
     }
@@ -357,7 +356,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     String member_id = memberEntity.getAcs_member_id();
                     String memType = memberEntity.getMember_type();
                     String designer_thread_id = mNeedsListEntity.getBidders().get(mPosition).getDesign_thread_id();
-                    String userName = mNeedsListEntity.getConsumer_name();
+                    String userName = mNeedsListEntity.getBidders().get(mPosition).getUser_name();
+//                  String userName = mNeedsListEntity.getConsumer_name();
                     String needs_id = mNeedsListEntity.getNeeds_id() + "";
 
                     if (TextUtils.isEmpty(designer_thread_id)) {
@@ -731,13 +731,13 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data == null){
+        if (data == null) {
             return;
         }
-        if(resultCode == AmendDemandActivity.REFUSEResultCode){
+        if (resultCode == AmendDemandActivity.REFUSEResultCode) {
 
             String needs_id = data.getStringExtra(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID);
-            if(mNeedsListEntity.getNeeds_id().equals(needs_id)){
+            if (mNeedsListEntity.getNeeds_id().equals(needs_id)) {
                 is_public = data.getStringExtra("is_public_amend");
                 custom_string_status = data.getStringExtra("custom_string_status");
                 wk_template_id = data.getStringExtra("wk_template_id");
@@ -748,10 +748,10 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
             }
 
         }
-        if(resultCode == AmendDemandActivity.ResultCode){
+        if (resultCode == AmendDemandActivity.ResultCode) {
             Bundle bundle = data.getExtras();
             AmendDemandBean amendDemandBean = (AmendDemandBean) bundle.getSerializable(JsonConstants.AMENDEMANDBEAN);
-            if(mNeedsListEntity.getNeeds_id().equals(amendDemandBean.getNeeds_id()) ){
+            if (mNeedsListEntity.getNeeds_id().equals(amendDemandBean.getNeeds_id())) {
 
                 changeBean(amendDemandBean);
             }
@@ -806,6 +806,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
     /**
      * 修改后的项目信息与之前的进行替换更新
+     *
      * @param amendDemandBean
      */
     private void changeBean(AmendDemandBean amendDemandBean) {
