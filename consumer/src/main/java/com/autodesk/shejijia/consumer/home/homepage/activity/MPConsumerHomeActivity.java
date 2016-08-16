@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,7 +21,6 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
@@ -35,7 +33,6 @@ import com.autodesk.shejijia.shared.components.im.datamodel.IMQrEntity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
@@ -178,7 +175,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
         }
 
-        if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
+        if (index == R.id.designer_indent_list_btn) {
             mBidHallFragment = new BidHallFragment();
             loadMainFragment(mBidHallFragment, BID_FRAGMENT_TAG);
         }

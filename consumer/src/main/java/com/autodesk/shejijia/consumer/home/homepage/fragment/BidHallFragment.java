@@ -210,6 +210,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         return needsLis;
     }
 
+
     /// 刷新.
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
