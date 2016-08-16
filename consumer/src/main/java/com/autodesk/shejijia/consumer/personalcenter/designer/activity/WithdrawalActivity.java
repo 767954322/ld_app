@@ -19,12 +19,14 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -73,15 +75,18 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        myPropertyBean = (MyPropertyBean) getIntent().getSerializableExtra(Constant.DesignerMyPropertyKey.MY_PROPERTY_BEAN);
-        account_user_name = getIntent().getStringExtra("real_name");
+//        myPropertyBean = (MyPropertyBean) getIntent().getSerializableExtra(Constant.DesignerMyPropertyKey.MY_PROPERTY_BEAN);
+//        account_user_name = getIntent().getStringExtra("real_name");
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
         mBankName = filledData(getResources().getStringArray(R.array.mBank));
         setTitleForNavbar(UIUtils.getString(R.string.my_property_withdrawal));
+        getMyPropertyData(memberEntity.getAcs_member_id());
+        getRealNameAuditStatus(memberEntity.getAcs_member_id(),memberEntity.getHs_uid());
         setBackName();
         showState();
     }
@@ -97,7 +102,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     @Override
     public void onClick(View v) {
 
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         switch (v.getId()) {
             case R.id.ll_withdrawal_open_account_bank:
                 pvBankNameOptions.show();
@@ -146,6 +150,47 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 break;
         }
     }
+
+
+    /**
+     * 获取我的资产信息
+     *
+     * @param designer_id
+     */
+    public void getMyPropertyData(String designer_id) {
+        MPServerHttpManager.getInstance().getMyPropertyData(designer_id, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                myPropertyBean = GsonUtil.jsonToBean(jsonString, MyPropertyBean.class);
+                tv_withdrawal_open_account_bank.setText(myPropertyBean.getBank_name());
+                et_withdrawal_branch_bank.setText(myPropertyBean.getBranch_bank_name());
+                et_withdrawal_bank_card_number.setText(myPropertyBean.getDeposit_card());
+                tv_withdrawal_account_balance.setText(myPropertyBean.getAmount());
+                tv_withdrawal_account.setText(myPropertyBean.getAmount());
+
+//                KLog.json(TAG, jsonString);
+//                amount = myPropertyBean.getAmount();
+//                if (null == myPropertyBean || TextUtils.isEmpty(amount) || "0".equals(amount)) {
+//                    amount = "0.00";
+//                    setBtnUnpress();
+//                    tv_my_property_account_balance.setText("¥ " + amount);
+//                    return;
+//                }
+//                setBtnCanpress();
+//                tv_my_property_account_balance.setText("¥ " + amount);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+//                setBtnUnpress();
+//                tv_my_property_account_balance.setText("¥ " + "0.00");
+//                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
+    }
+
+
 
     /**
      * @param isNumber
@@ -332,6 +377,34 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         });
     }
 
+    /**
+     * 是否进行了实名认证
+     *
+     * @param designer_id
+     * @param hs_uid
+     */
+    public void getRealNameAuditStatus(String designer_id, String hs_uid) {
+        MPServerHttpManager.getInstance().getRealNameAuditStatus(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String auditInfo = GsonUtil.jsonToString(jsonObject);
+                RealName realNameBean = GsonUtil.jsonToBean(auditInfo, RealName.class);
+                account_user_name = realNameBean.getReal_name();
+                tv_withdrawal_cardholder_name.setText(account_user_name);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                if (WithdrawalActivity.this != null) {
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+                            AlertView.Style.Alert, null).show();
+                }
+            }
+        });
+    }
+
+
     //控件，内容，状态判断
     private void showState() {
 
@@ -457,14 +530,15 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     private LinearLayout ll_withdrawal_open_account_bank;
     private OptionsPickerView pvBankNameOptions;
     private LinearLayout ll_withdrawal_replace_bank_card;
+    private MemberEntity memberEntity;
 
     /// 变量.
     private String bank_name;
     private String deposit_card;
-    private String account_user_name;
     private String branch_bank_name;
     private String item_back_name;
     private long designer_id;
+    private String account_user_name;
 
     /// 集合，类.
     private List<String> mBankName;
