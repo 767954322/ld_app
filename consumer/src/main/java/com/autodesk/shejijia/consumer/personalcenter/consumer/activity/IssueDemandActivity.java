@@ -204,7 +204,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                         showAlertView(R.string.please_input_correct_area);
                         return;
                     } else {
-                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || area.length() > 4) {
+                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
                             showAlertView(R.string.please_input_correct_area);
                             return;
                         }
