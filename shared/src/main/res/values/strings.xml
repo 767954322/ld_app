@@ -146,7 +146,7 @@
     <string name="demand_planning_budget">设计预算：</string>
     <string name="demand_project_budget">装修预算：</string>
     <string name="please_enter_your_name">请输入姓名</string>
-    <string name="please_enter_your_phone">请输入手机号码</string>
+    <string name="please_enter_your_phone">请输入联系电话</string>
     <string name="please_select_design_budget">请选择设计预算</string>
     <string name="please_select_decorate_budget">请选择装修预算</string>
     <string name="demand_project_area">项目面积：</string>
@@ -167,7 +167,7 @@
     <string name="agreed">同意</string>
     <string name="agreed_home">确定量房</string>
     <string name="refuse">拒绝</string>
-    <string name="amount_of_time_is_empty">量房时间为空</string>
+    <string name="amount_of_time_is_empty">请选择量房时间</string>
     <string name="amount_of_time_than_current_time_one_hour">量房时间至少大于当前时间一小时</string>
     <string name="confirm_room_success">确认量房成功</string>
     <string name="confirm_room_fail">确认量房失败</string>
@@ -435,7 +435,7 @@
     <string name="refuse_measure_house_alertview">是否拒绝量房？</string>
     <string name="requirements">发布设计需求</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
-    <string name="please_input_correct_area">请填写正确的面积（整数部分不超过四位，小数不大于两位）</string>
+    <string name="please_input_correct_area">请填写正确的面积（整数部分不超过四位，小数部分不超过两位）</string>
     <string name="please_input_correct_area_point">整数部分不允许全部为0</string>
 
     <string name="please_select_form">请选择户型</string>
@@ -448,10 +448,10 @@
     <string name="no_designer_case">抱歉，暂无结果！</string>
 
     <!-- MeasureFormActivity -->
-    <string name="demand_send">发&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;送</string>
+    <string name="demand_send">发送</string>
     <string name="volume_rate_cannot_empty">量房费不能为空</string>
     <string name="please_fill_your_name">请正确填写姓名</string>
-    <string name="please_fill_phone_number">请填写正确的电话号</string>
+    <string name="please_fill_phone_number">请填写正确的手机号码</string>
     <string name="please_fill_housing_area">请正确填写面积（整数位不超过四位，小数不超过两位）</string>
     <string name="please_fill_housing_area_point">整数部位不允许全为0</string>
 
@@ -544,7 +544,7 @@
 
     <!-- BeiShuMealActivity -->
     <string name="consuer_data">客户资料</string>
-    <string name="consume_phone">手机号码：</string>
+    <string name="consume_phone">联系电话：</string>
     <string name="consume_phone_hint">手机号码</string>
     <string name="consume_phone_number_hint">请输入手机号码</string>
     <string name="consume_adress">房屋地址：</string>
@@ -867,7 +867,7 @@
     <string name="pickerview_year">年</string>
     <string name="pickerview_month">月</string>
     <string name="pickerview_day">日</string>
-    <string name="pickerview_hours">时</string>
+    <string name="pickerview_hours">点</string>
     <string name="pickerview_minutes">分</string>
     <string name="pickerview_seconds">秒</string>
 

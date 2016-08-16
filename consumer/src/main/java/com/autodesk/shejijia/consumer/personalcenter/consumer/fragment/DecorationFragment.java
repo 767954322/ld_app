@@ -231,7 +231,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
              */
             final String user_name = bidder.getUser_name();
             if (TextUtils.isEmpty(user_name)) {
-                holder.setText(R.id.tv_designer_name, "");
+                holder.setText(R.id.tv_designer_name, getString(R.string.data_null));
             } else {
                 holder.setText(R.id.tv_designer_name, user_name);
             }
@@ -372,7 +372,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     String member_id = memberEntity.getAcs_member_id();
                     String memType = memberEntity.getMember_type();
                     String designer_thread_id = mNeedsListEntity.getBidders().get(mPosition).getDesign_thread_id();
-                    String userName = mNeedsListEntity.getConsumer_name();
+                    String userName = mNeedsListEntity.getBidders().get(mPosition).getUser_name();
+//                  String userName = mNeedsListEntity.getConsumer_name();
                     String needs_id = mNeedsListEntity.getNeeds_id() + "";
 
                     if (TextUtils.isEmpty(designer_thread_id)) {
@@ -787,6 +788,20 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         if (data == null) {
             return;
         }
+        if (resultCode == AmendDemandActivity.REFUSEResultCode) {
+
+            String needs_id = data.getStringExtra(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID);
+            if (mNeedsListEntity.getNeeds_id().equals(needs_id)) {
+                is_public = data.getStringExtra("is_public_amend");
+                custom_string_status = data.getStringExtra("custom_string_status");
+                wk_template_id = data.getStringExtra("wk_template_id");
+                mNeedsListEntity.setIs_public(is_public);
+                mNeedsListEntity.setCustom_string_status(custom_string_status);
+                mNeedsListEntity.setWk_template_id(wk_template_id);
+                setBidState(is_public);
+            }
+
+        }
         if (resultCode == AmendDemandActivity.ResultCode) {
             Bundle bundle = data.getExtras();
             AmendDemandBean amendDemandBean = (AmendDemandBean) bundle.getSerializable(JsonConstants.AMENDEMANDBEAN);
@@ -852,6 +867,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      * @param amendDemandBean
      */
     private void changeBean(AmendDemandBean amendDemandBean) {
+
         mNeedsListEntity.setCommunity_name(amendDemandBean.getCommunity_name());
         mNeedsListEntity.setCity(amendDemandBean.getCity());
         mNeedsListEntity.setCity_name(amendDemandBean.getCity_name());
@@ -860,6 +876,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         mNeedsListEntity.setConsumer_name(amendDemandBean.getConsumer_name());
         mNeedsListEntity.setContacts_mobile(amendDemandBean.getContacts_mobile());
         mNeedsListEntity.setContacts_name(amendDemandBean.getContacts_name());
+
         mNeedsListEntity.setDecoration_style(amendDemandBean.getDecoration_style());
         mNeedsListEntity.setDecoration_budget(amendDemandBean.getDecoration_budget());
         mNeedsListEntity.setDesign_budget(amendDemandBean.getDesign_budget());

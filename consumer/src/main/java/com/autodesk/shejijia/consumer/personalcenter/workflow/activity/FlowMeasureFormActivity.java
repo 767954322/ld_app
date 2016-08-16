@@ -2,9 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -15,7 +13,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -30,7 +27,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -158,10 +155,10 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     String date = sDateFormat.format(new Date());
 
                     if (TextUtils.isEmpty(currentTime)) {
-                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowMeasureFormActivity.this,
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();
                     } else {
-                        if (formatDate(date, currentTime)) {
+//                        if (formatDate(date, currentTime)) {
 
                             CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
 
@@ -172,6 +169,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_NAME, user_name);
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_MOBILE_NUMBER, mobile_number);
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ORDER_TYPE, 0);
+
+                            if (TextUtils.isEmpty(mThreead_id)) {
+                                jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                            } else {
+                                jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThreead_id);
+                            }
+
                             if (TextUtils.isEmpty(amount) || "null".equals(amount)) {
                                 jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.00);
                             } else {
@@ -181,16 +185,17 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_CHANNEL_TYPE, "Android");
 
                             agreeResponseBid(jsonObject);
-                        } else {
-                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowMeasureFormActivity.this,
-                                    AlertView.Style.Alert, null).show();
-                        }
+//                        } else {
+//                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
+//                                    AlertView.Style.Alert, null).show();
+//                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
+//                catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case R.id.tvIllustrate: /// 量房费说明 .
                 new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null, null, new String[]{UIUtils.getString(R.string.finish_cur_pager)}, FlowMeasureFormActivity.this,
@@ -238,8 +243,15 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 ll_consumer_send.setVisibility(View.GONE);
                 tvIllustrate.setVisibility(View.GONE);
                 tvc_measure_form_time.setClickable(false);
-                tvc_measure_form_time.setText(mBidders.get(0).getMeasure_time()); /// 量房时间 .
+                String timerStr = mBidders.get(0).getMeasure_time();
+//                String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
+//                String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
 
+                if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
+                    tvc_measure_form_time.setText("");
+                } else {
+                    tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
+                }
             } else {
                 ll_consumer_send.setVisibility(View.VISIBLE);
                 tvIllustrate.setVisibility(View.VISIBLE);
@@ -254,6 +266,17 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             tvc_measure_form_time.setClickable(false);
             tvc_measure_form_time.setText(mBidders.get(0).getMeasure_time());
           //  consumer_house_charge_show.setVisibility(View.GONE);
+
+//            String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
+//            String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
+            String timerStr = mBidders.get(0).getMeasure_time();
+//            tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
+            if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
+                tvc_measure_form_time.setText("");
+            } else {
+                tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
+            }
+
             designer_house_charge_show.setVisibility(View.VISIBLE);
             setViewAnimation(rlMeasureWarmTips);
             switch (wk_cur_sub_node_id_i) {
@@ -338,6 +361,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     }
 
     /// 将省市区Code改成汉字 .
+
     private void updateCityData() {
         String province_name = requirement.getProvince_name();
         String city_name = requirement.getCity_name();

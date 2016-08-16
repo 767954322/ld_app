@@ -164,8 +164,9 @@
         <attr name="fab_addButtonColorNormal" format="color" />
 
         <attr name="fab_addButtonSize" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="mini" value="1" />
+            <enum name="normal" value="0"/>
+            <enum name="mini" value="1"/>
+            <enum name="more_mini" value="2"/>
         </attr>
         <attr name="fab_addButtonPlusIconColor" format="color" />
         <attr name="fab_addButtonStrokeVisible" format="boolean" />

@@ -94,7 +94,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:ems="10"
-                    android:hint="@string/consume_phone_number_hint"
+                    android:hint="@string/please_enter_your_phone"
                     android:maxLength="11"
                     android:phoneNumber="true"
                     android:textSize="@dimen/font_12"/>
@@ -173,11 +173,13 @@
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12"/>
 
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="@dimen/size_20"-->
-                <!--android:text="m²" />-->
+
+                <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_20"
+                android:text="m²" />
             </LinearLayout>
 
             <LinearLayout
@@ -539,7 +541,7 @@
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/demand_send"
                 android:textColor="@color/bg_ff"
-                android:textSize="@dimen/font_20"/>
+                android:textSize="@dimen/font_18"/>
 
         </LinearLayout>
     </ScrollView>

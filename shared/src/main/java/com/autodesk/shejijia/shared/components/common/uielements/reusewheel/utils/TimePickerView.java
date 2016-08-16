@@ -60,6 +60,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         month = (WheelView) findViewById(R.id.month);
         minute = (WheelView) findViewById(R.id.min);
         hour = (WheelView) findViewById(R.id.hour);
+        minute.setVisibility(View.GONE);
         /**
          * 检查flying后的选中是否为合适的
          * */

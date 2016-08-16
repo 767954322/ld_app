@@ -231,7 +231,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
                 case eCOMMAND:
                     if (mIWorkflowDelegate != null) {
                         MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(msg);
-                        mIWorkflowDelegate.onCommandCellClicked(this, info);
+                        mIWorkflowDelegate.onCommandCellClicked(this, info,mThreadId);
                     }
                     break;
 

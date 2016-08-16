@@ -48,6 +48,7 @@ public class Constant {
         public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
         public static final String IM_TO_FLOW_NEEDS_ID = "imToFlowNeeds";
         public static final String IM_TO_FLOW_NODE_ID = "imToFlowNode";
+        public static final String IM_TO_FLOW_THREAD_ID = "imToFlowThreadId";
     }
 
     /**

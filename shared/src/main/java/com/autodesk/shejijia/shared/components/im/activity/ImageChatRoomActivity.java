@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.im.constants.HotSpotsInfo;
 import com.autodesk.shejijia.shared.components.im.manager.ChatEventHandler;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
@@ -132,7 +133,10 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
     @Override
     public void onSendTextClicked(String msg)
     {
-        initiateTextMessageSendSequence(msg);
+        String filteredMessage = StringUtils.filterSpecialCharacters(msg);
+        assert (filteredMessage != null);
+
+        initiateTextMessageSendSequence(filteredMessage);
     }
 
     @Override

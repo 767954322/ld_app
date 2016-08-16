@@ -62,6 +62,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             designer_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID);
             needs_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID);
         }
+        mThreead_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);//thread_id
         wk_cur_ActionNode_id = bundle.getInt(Constant.BundleKey.BUNDLE_ACTION_NODE_ID);                                         /// 获取wk_cur_ActionNode_id以此来判断状态 .
     }
 
@@ -172,6 +173,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected int wk_cur_ActionNode_id;
     protected String hs_uid;
     protected String designer_id;
+    protected String mThreead_id;
     protected String wk_template_id;
     protected String community_name;
     protected String wk_cur_sub_node_id;
