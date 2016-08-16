@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
@@ -29,7 +28,6 @@ public class DecorationConsumerAdapter extends android.widget.BaseAdapter {
 
     private LayoutInflater mInflater;
     private List<DecorationNeedsListBean> mDecorationNeedsList;
-    private ListView mDesignerListView;
     private DecorationDesignerListAdapter mDecorationDesignerListAdapter;
 
     private Activity mActivity;
@@ -77,7 +75,7 @@ public class DecorationConsumerAdapter extends android.widget.BaseAdapter {
 //        /**
 //         * 应标设计师列表
 //         */
-//        mDesignerListView = holder.getView(R.id.lv_decoration_bid);
+//        ListView mDesignerListView = holder.getView(R.id.lv_decoration_bid);
 //        if (null == mDecorationDesignerListAdapter) {
 //            mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, mBidders, mNeeds_id);
 //        }
@@ -117,6 +115,11 @@ public class DecorationConsumerAdapter extends android.widget.BaseAdapter {
                     viewHolder = new ViewHolder();
                     convertView = mInflater.inflate(R.layout.item_decoration_beishu,
                             parent, false);
+
+
+
+
+
                     convertView.setTag(viewHolder);
                     break;
                 case TYPE_IS_BEI_SHU:
