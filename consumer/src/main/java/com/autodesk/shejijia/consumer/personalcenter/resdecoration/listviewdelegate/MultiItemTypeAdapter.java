@@ -52,15 +52,15 @@ public class MultiItemTypeAdapter<T> extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ItemViewDelegate itemViewDelegate = mItemViewDelegateManager.getItemViewDelegate(mDatas.get(position), position);
         int layoutId = itemViewDelegate.getItemViewLayoutId();
-        CommonViewHolder viewHolder = null;
+        MultiItemViewHolder viewHolder = null;
         if (convertView == null) {
             View itemView = LayoutInflater.from(mContext).inflate(layoutId, parent,
                     false);
-            viewHolder = new CommonViewHolder(mContext, itemView, parent, position);
+            viewHolder = new MultiItemViewHolder(mContext, itemView, parent, position);
             viewHolder.mLayoutId = layoutId;
             onViewHolderCreated(viewHolder, viewHolder.getConvertView());
         } else {
-            viewHolder = (CommonViewHolder) convertView.getTag();
+            viewHolder = (MultiItemViewHolder) convertView.getTag();
             viewHolder.mPosition = position;
         }
 
@@ -69,11 +69,11 @@ public class MultiItemTypeAdapter<T> extends BaseAdapter {
         return viewHolder.getConvertView();
     }
 
-    protected void convert(CommonViewHolder viewHolder, T item, int position) {
+    protected void convert(MultiItemViewHolder viewHolder, T item, int position) {
         mItemViewDelegateManager.convert(viewHolder, item, position);
     }
 
-    public void onViewHolderCreated(CommonViewHolder holder, View itemView) {
+    public void onViewHolderCreated(MultiItemViewHolder holder, View itemView) {
     }
 
     @Override

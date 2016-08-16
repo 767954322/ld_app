@@ -24,28 +24,26 @@ import java.util.List;
  * @file DecorationDesignerListAdapter.java .
  * @brief 消费者家装订单设计师列表适配器.
  */
-public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBiddersBean> implements
-        View.OnClickListener {
+public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBiddersBean> {
 
     private Activity mActivity;
     private ArrayList<DecorationBiddersBean> biddersEntities;
-    private String mBidderUid;
-    private String mDesignerId;
+
     private String mNeedsId;
 
 
     public DecorationDesignerListAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id) {
         super(activity, datas, R.layout.item_decoration_designer_list);
-        mActivity = activity;
         this.biddersEntities = (ArrayList<DecorationBiddersBean>) datas;
+        mActivity = activity;
         mNeedsId = needs_id;
     }
 
     @Override
     public void convert(CommonViewHolder holder, DecorationBiddersBean bidder) {
 
-        mDesignerId = bidder.getDesigner_id();
-        mBidderUid = bidder.getUid();
+        final String designerId = bidder.getDesigner_id();
+        String bidderUid = bidder.getUid();
         String user_name = bidder.getUser_name();
         String avatarUrl = bidder.getAvatar();
 
@@ -58,21 +56,16 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_order_photo);
         ImageUtils.displayAvatarImage(avatarUrl, polygonImageView);
 
-        holder.setOnClickListener(R.id.rl_item_decoration, this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.rl_item_decoration:
+        holder.setOnClickListener(R.id.rl_item_decoration, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(mActivity, WkFlowStateActivity.class);
                 intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeedsId);
-                intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, mDesignerId);
+                intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designerId);
                 intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
                 mActivity.startActivityForResult(intent, 0);
-                break;
-        }
-
+            }
+        });
     }
 }

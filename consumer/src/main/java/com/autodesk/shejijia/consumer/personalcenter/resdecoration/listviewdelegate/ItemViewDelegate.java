@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate;
 
 
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-
 /**
  * <p>Description:用于区分不同布局的特定方法 </p>
  *
@@ -16,7 +14,7 @@ public interface ItemViewDelegate<T> {
 
     public abstract boolean isForViewType(T item, int position);
 
-    public abstract void convert(CommonViewHolder holder, T t, int position);
+    public abstract void convert(MultiItemViewHolder holder, T t, int position);
 
 
 }

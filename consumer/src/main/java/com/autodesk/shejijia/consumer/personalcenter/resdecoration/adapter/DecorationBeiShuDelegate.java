@@ -5,7 +5,9 @@ import android.app.Activity;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 /**
  * <p>Description:家装订单,北舒套餐布局 </p>
@@ -36,7 +38,10 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
     }
 
     @Override
-    public void convert(CommonViewHolder holder, DecorationNeedsListBean decorationNeedsListBean, int position) {
+    public void convert(MultiItemViewHolder holder, DecorationNeedsListBean decorationNeedsListBean, int position) {
+        String avatar = decorationNeedsListBean.getAvatar();
 
+        PolygonImageView polygonImageView = holder.getView(R.id.poly_designer_photo_beishu);
+        ImageUtils.displayAvatarImage(avatar, polygonImageView);
     }
 }

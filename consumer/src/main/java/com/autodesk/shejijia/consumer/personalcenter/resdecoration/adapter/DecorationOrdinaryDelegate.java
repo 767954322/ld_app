@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
@@ -12,8 +11,9 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.Deco
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,6 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
     ///is_beishu:0 北舒套餐 1 非北舒.
     private static final String IS_NOT_BEI_SHU = "1";
-    private DecorationDesignerListAdapter mDecorationDesignerListAdapter;
     private Activity mActivity;
     private Intent mIntent;
 
@@ -48,9 +47,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
     }
 
     @Override
-    public void convert(CommonViewHolder holder, DecorationNeedsListBean decorationNeedsListBean, int position) {
+    public void convert(MultiItemViewHolder holder, DecorationNeedsListBean decorationNeedsListBean, int position) {
 
-        final ArrayList<DecorationBiddersBean> mBidders = (ArrayList<DecorationBiddersBean>) decorationNeedsListBean.getBidders();
+        final ArrayList<DecorationBiddersBean> mBidders =
+                (ArrayList<DecorationBiddersBean>) decorationNeedsListBean.getBidders();
 
         final String mNeeds_id = decorationNeedsListBean.getNeeds_id();
 
@@ -78,10 +78,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 应标设计师列表
          */
-        ListView mDesignerListView = holder.getView(R.id.lv_decoration_bid);
-        if (null == mDecorationDesignerListAdapter) {
-            mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, mBidders, mNeeds_id);
-        }
+        ListViewForScrollView mDesignerListView = holder.getView(R.id.lv_decoration_bid);
+        DecorationDesignerListAdapter mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, mBidders, mNeeds_id);
         mDesignerListView.setAdapter(mDecorationDesignerListAdapter);
 
         holder.setOnClickListener(R.id.rl_bidder_count, new View.OnClickListener() {
