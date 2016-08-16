@@ -62,7 +62,7 @@
             <!--项目编号-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_25"
+                android:layout_height="@dimen/size_30"
                 android:orientation="horizontal">
 
                 <TextView
@@ -85,7 +85,7 @@
             <!--项目地址-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_25"
+                android:layout_height="@dimen/size_30"
                 android:orientation="horizontal">
 
                 <TextView
@@ -104,36 +104,46 @@
 
             <!--联系电话-->
             <LinearLayout
+
+
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_25"
+                android:layout_height="@dimen/size_30"
                 android:orientation="horizontal">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:text="@string/user_phone"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/tv_decoration_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"
                     />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
                     android:layout_gravity="center"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:id="@+id/tv_decoration_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/size_10"
+                    android:layout_weight="1"
+                    android:drawableRight="@drawable/icon_unfold_normal"
+                    />
 
             </LinearLayout>
 
             <!--房屋类型-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_25"
+                android:layout_height="@dimen/size_30"
                 android:orientation="horizontal">
 
                 <TextView
@@ -156,7 +166,7 @@
             <!--风格-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_25"
+                android:layout_height="@dimen/size_30"
                 android:orientation="horizontal">
 
                 <TextView
@@ -180,18 +190,19 @@
             <LinearLayout
                 android:id="@+id/rl_bidder_count"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_25"
+                android:layout_height="@dimen/size_30"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
                     android:text="@string/bid_num"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
+                    android:layout_gravity="center"
                     android:id="@+id/tv_bidder_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -200,15 +211,16 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
+                    android:layout_gravity="center"
                     android:id="@+id/tv_decoration_end_day"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/size_10"
+                    android:layout_weight="1"
                     android:drawableRight="@drawable/icon_unfold_normal"/>
 
             </LinearLayout>
         </LinearLayout>
-
-        <include layout="@layout/view_parting_line"></include>
 
         <com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView
             android:id="@+id/lv_decoration_bid"

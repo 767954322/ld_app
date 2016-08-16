@@ -45,6 +45,7 @@ public class ConsumerDecorationAdapter extends CommonAdapter<DecorationNeedsList
 
 
         holder.setOnClickListener(R.id.rl_bidder_count, this);
+        holder.setOnClickListener(R.id.tv_decoration_detail, this);
 
     }
 
@@ -52,6 +53,10 @@ public class ConsumerDecorationAdapter extends CommonAdapter<DecorationNeedsList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_bidder_count:
+                Toast.makeText(mContext, "应标人数详情", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.tv_decoration_detail:
                 Toast.makeText(mContext, "应标人数详情", Toast.LENGTH_SHORT).show();
                 break;
         }
