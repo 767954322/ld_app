@@ -215,22 +215,20 @@ public class PullToRefreshLayout extends RelativeLayout {
      */
     public void refreshFinish(int refreshResult) {
         refreshingView.clearAnimation();
-        refreshingView.setVisibility(View.GONE);
+        refreshingView.setVisibility(View.VISIBLE);
         switch (refreshResult) {
             case SUCCEED:
                 // 刷新成功
-                refreshStateImageView.setVisibility(View.VISIBLE);
-                refreshStateTextView.setText(R.string.refresh_succeed);
-                refreshStateImageView
-                        .setBackgroundResource(R.drawable.refresh_succeed);
+//                refreshStateImageView.setVisibility(View.VISIBLE);
+//                refreshStateTextView.setText(R.string.refresh_succeed);
+//                refreshStateImageView.setBackgroundResource(R.drawable.refresh_succeed);
                 break;
             case FAIL:
             default:
                 // 刷新失败
-                refreshStateImageView.setVisibility(View.VISIBLE);
-                refreshStateTextView.setText(R.string.refresh_fail);
-                refreshStateImageView
-                        .setBackgroundResource(R.drawable.refresh_failed);
+//                refreshStateImageView.setVisibility(View.VISIBLE);
+//                refreshStateTextView.setText(R.string.refresh_fail);
+//                refreshStateImageView.setBackgroundResource(R.drawable.refresh_failed);
                 break;
         }
         if (pullDownY > 0) {
