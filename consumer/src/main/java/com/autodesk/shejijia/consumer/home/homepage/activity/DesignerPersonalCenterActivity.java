@@ -145,7 +145,6 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
-//                KLog.json(TAG, jsonString);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
                 nick_name = mConsumerEssentialInfoEntity.getNick_name();
                 mTvDesignerNickname.setText(nick_name);
@@ -290,19 +289,21 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 }
                 break;
 
+            case R.id.ll_personal_designer_attention: /// 我的关注 .
+
+                if (memberEntity != null) {
+                    Intent intent2 = new Intent(DesignerPersonalCenterActivity.this, AttentionActivity.class);
+                    startActivity(intent2);
+                } else {
+                    AdskApplication.getInstance().doLogin(this);
+                }
+                break;
+
             case R.id.ll_personal_designer_msg_center:/// 消息中心页面.
                 MyToast.show(DesignerPersonalCenterActivity.this, UIUtils.getString(R.string.functional_development));
                 break;
 
-            case R.id.ll_personal_designer_attention: /// 我的关注 .
 
-                if (memberEntity != null) {
-                    Intent intent2 = new Intent(DesignerPersonalCenterActivity.this,AttentionActivity.class);
-                    startActivity(intent2);
-                }else{
-                    AdskApplication.getInstance().doLogin(this);
-                }
-                break;
         }
     }
 

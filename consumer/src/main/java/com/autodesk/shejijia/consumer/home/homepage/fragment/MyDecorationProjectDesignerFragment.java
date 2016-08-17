@@ -28,7 +28,6 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  */
 public class MyDecorationProjectDesignerFragment extends BaseFragment{
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_my_decoration_project_designer;
@@ -36,7 +35,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
 
     @Override
     protected void initView() {
-
         llFragmentContain = (LinearLayout) rootView.findViewById(R.id.ll_contain);
         setDefaultFragment();
 

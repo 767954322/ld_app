@@ -7,11 +7,12 @@ import android.widget.AdapterView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerCostBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerFiltrateBean;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerStyleBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateAdapter;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean.RelateInformationListBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateCostAdapter;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateStyleAdapter;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateWorkYearAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -64,24 +65,28 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
         setTitleForNavbar(UIUtils.getString(R.string.bid_filter));
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
 
-        mYearData.addAll(filledData(getResources().getStringArray(R.array.all)));
-        mYearData.addAll(filledData(getResources().getStringArray(R.array.year)));
-        mStyleData.addAll(filledData(getResources().getStringArray(R.array.all)));
-        mStyleData.addAll(filledData(getResources().getStringArray(R.array.style)));
-        mPriceData.addAll(filledData(getResources().getStringArray(R.array.all)));
-        mPriceData.addAll(filledData(getResources().getStringArray(R.array.price)));
+        allListBean = new RelateInformationListBean();
+        allListBean.setName("全部");
+        allListBean.setCode("");
+        allListBean.setDescription("");
+        allListBean.setExtension("");
 
-        mYAdapter = new FiltrateAdapter(this, mYearData);
-        mSAdapter = new FiltrateAdapter(this, mStyleData);
-        mPAdapter = new FiltrateAdapter(this, mPriceData);
+        getDesignerWorkTime();
+        getDesignerCost();
+        getDesignerStyles();
+
+
+        mYAdapter = new FiltrateWorkYearAdapter(this, mWorkTimeList);
+        mSAdapter = new FiltrateStyleAdapter(this, mStyleList);
+        mPAdapter = new FiltrateCostAdapter(this, mCostList);
 
         yGridView.setAdapter(mYAdapter);
         sGridView.setAdapter(mSAdapter);
         pGridView.setAdapter(mPAdapter);
 
-        setSelection(mYAdapter, mYearIndex);
-        setSelection(mSAdapter, mStyleIndex);
-        setSelection(mPAdapter, mPriceIndex);
+        setWorkYearSelection(mYAdapter, mYearIndex);
+        setStyleSelection(mSAdapter, mStyleIndex);
+        setCostSelection(mPAdapter, mPriceIndex);
 
     }
 
@@ -102,16 +107,11 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
 
-        String all = UIUtils.getString(R.string.my_bid_all);
+        mYear = mWorkTimeList.get(mYearIndex).getCode();
 
-        mYear = mYearData.get(mYearIndex);
-        mYear = mYear.equals(all) ? BLANK : mYear;
+        mStyle = mStyleList.get(mStyleIndex).getCode();
 
-        mStyle = mStyleData.get(mStyleIndex);
-        mStyle = mStyle.equals(all) ? BLANK : mStyle;
-
-        mPrice = mPriceData.get(mPriceIndex);
-        mPrice = mPrice.equals(all) ? BLANK : mPrice;
+        mPrice = mCostList.get(mPriceIndex).getCode();
 
         DesignerFiltrateBean designerFiltrateBean = new DesignerFiltrateBean();
 
@@ -134,15 +134,15 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (parent.equals(yGridView)) {
-            mYAdapter.setSelection(position);
+            mYAdapter.setWorkYearSelection(position);
             mYearIndex = position;
             mYAdapter.notifyDataSetChanged();
         } else if (parent.equals(sGridView)) {
-            mSAdapter.setSelection(position);
+            mSAdapter.setStyleSelection(position);
             mStyleIndex = position;
             mSAdapter.notifyDataSetChanged();
         } else if (parent.equals(pGridView)) {
-            mPAdapter.setSelection(position);
+            mPAdapter.setCostSelection(position);
             mPriceIndex = position;
             mPAdapter.notifyDataSetChanged();
         }
@@ -154,23 +154,31 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
      * @param adapter  筛选适配器
      * @param position 点击位置
      */
-    private void setSelection(FiltrateAdapter adapter, int position) {
-        adapter.setSelection(position);
+    private void setWorkYearSelection(FiltrateWorkYearAdapter adapter, int position) {
+        adapter.setWorkYearSelection(position);
         adapter.notifyDataSetChanged();
     }
 
     /**
-     * 数组转成集合
+     * 选择某项,并刷新
      *
-     * @param date 　数组
-     * @return 数组转成的集合
+     * @param adapter  筛选适配器
+     * @param position 点击位置
      */
-    private List<String> filledData(String[] date) {
-        List<String> mSortList = new ArrayList<String>();
-        for (String str : date) {
-            mSortList.add(str);
-        }
-        return mSortList;
+    private void setStyleSelection(FiltrateStyleAdapter adapter, int position) {
+        adapter.setStyleSelection(position);
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 选择某项,并刷新
+     *
+     * @param adapter  筛选适配器
+     * @param position 点击位置
+     */
+    private void setCostSelection(FiltrateCostAdapter adapter, int position) {
+        adapter.setCostSelection(position);
+        adapter.notifyDataSetChanged();
     }
 
     /**
@@ -181,7 +189,12 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonToString = GsonUtil.jsonToString(jsonObject);
-                DesignerWorkTimeBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerWorkTimeBean.class);
+                designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerWorkTimeBean.class);
+                if (!mWorkTimeList.contains(allListBean)) {
+                    mWorkTimeList.addAll(designerWorkTimeBean.getRelate_information_list());
+                    mWorkTimeList.add(0, allListBean);
+                    mYAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -202,7 +215,11 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonToString = GsonUtil.jsonToString(jsonObject);
-                DesignerCostBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerCostBean.class);
+                designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerWorkTimeBean.class);
+                mCostList.addAll(designerWorkTimeBean.getRelate_information_list());
+
+                mCostList.add(0, allListBean);
+                mPAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -223,7 +240,10 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonToString = GsonUtil.jsonToString(jsonObject);
-                DesignerStyleBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerStyleBean.class);
+                designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerWorkTimeBean.class);
+                mStyleList.addAll(designerWorkTimeBean.getRelate_information_list());
+                mStyleList.add(0, allListBean);
+                mSAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -247,16 +267,17 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     private String mStyle;
     private String mPrice;
 
-    public static final int DF_RESULT_CODE = 0;
-    public static final String BLANK = "";
+    public static final int DF_RESULT_CODE = 0x93;
 
-    private FiltrateAdapter mYAdapter;
-    private FiltrateAdapter mSAdapter;
-    private FiltrateAdapter mPAdapter;
+    private FiltrateWorkYearAdapter mYAdapter;
+    private FiltrateStyleAdapter mSAdapter;
+    private FiltrateCostAdapter mPAdapter;
 
-    private List<String> mYearData = new ArrayList<>();
-    private List<String> mStyleData = new ArrayList<>();
-    private List<String> mPriceData = new ArrayList<>();
+    private DesignerWorkTimeBean designerWorkTimeBean;
+    private List<RelateInformationListBean> mWorkTimeList = new ArrayList<>();
+    private List<RelateInformationListBean> mStyleList = new ArrayList<>();
+    private List<RelateInformationListBean> mCostList = new ArrayList<>();
+    private RelateInformationListBean allListBean;
 
 
 }

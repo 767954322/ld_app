@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean;
 import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 
 import java.util.List;
@@ -15,11 +16,11 @@ import java.util.List;
  * @version 1.0 .
  * @date 2016/8/15 0023 11:05 .
  * @file FiltrateCostAdapter  .
- * @brief 筛选Adapter .
+ * @brief 筛选价格Adapter .
  */
-public class FiltrateAdapter extends BaseAdapter {
+public class FiltrateCostAdapter extends BaseAdapter<DesignerWorkTimeBean.RelateInformationListBean> {
 
-    public FiltrateAdapter(Context context, List datas) {
+    public FiltrateCostAdapter(Context context, List<DesignerWorkTimeBean.RelateInformationListBean> datas) {
         super(context, datas);
     }
 
@@ -40,17 +41,15 @@ public class FiltrateAdapter extends BaseAdapter {
         if (clickTemp != -1) {
             if (clickTemp == position) {
                 ((ViewHolder) holder).btn_filtrate.setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
-                ((ViewHolder) holder).btn_filtrate.setTextColor(mContext.getResources().getColor(R.color.tx_ef));
             } else {
-                ((ViewHolder) holder).btn_filtrate.setTextColor(mContext.getResources().getColor(R.color.bg_33));
                 ((ViewHolder) holder).btn_filtrate.setBackgroundResource(R.drawable.bg_btn_filtrate_normal);
             }
         }
-        ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).toString());
+        ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).getName()+mDatas.get(position).getDescription());
     }
 
     /// 选中,并更新.
-    public void setSelection(int position) {
+    public void setCostSelection(int position) {
         clickTemp = position;
         notifyDataSetChanged();
     }
