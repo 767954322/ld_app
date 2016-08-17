@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_f3"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_10"
+        android:background="@color/bg_ff"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@drawable/address_ico"/>
+
+            <TextView
+                android:id="@+id/tv_be_being_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size_5"
+                android:text="居然大厦"
+                android:textColor="@color/zxing_corner"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_times_ormal"/>
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/size_5"
+                android:text="距结束还有"
+                android:textColor="@color/bg_f000"
+                android:textSize="@dimen/font_10"/>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_be_being_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="10"
+                android:textColor="@color/zxing_corner"
+                android:textSize="@dimen/font_10"/>
+
+            <TextView
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/size_10"
+                android:text="天"
+                android:textColor="@color/bg_f000"
+                android:textSize="@dimen/font_10"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/line_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/size_280"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/size_5">
+
+                    <TextView
+                        android:id="@+id/tv_be_being_room"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_bid_living_room"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+
+                    <TextView
+                        android:id="@+id/tv_be_being_living_room"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_bid_hall"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_be_being_toilet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_bid_toilet"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+
+                    <TextView
+                        android:id="@+id/tv_be_being_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:text="120m²"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/size_5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bidding_room_shape"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+
+                    <TextView
+                        android:id="@+id/tv_be_being_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:text="@string/bidding_room_space"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/size_5">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/designer_order_style"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+
+                    <TextView
+                        android:id="@+id/tv_be_being_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:text="@string/designer_order_style_detail"
+                        android:textColor="@color/bg_f000"
+                        android:textSize="@dimen/font_10"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/size_5">
+
+                    <!--  <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="应标人数:"
+                          android:textColor="@color/bg_f000"
+                          android:textSize="@dimen/font_10"/>
+
+                      <TextView
+                          android:id="@+id/tv_be_being_bid_count"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="@dimen/size_5"
+                          android:text="3位设计师"
+                          android:textColor="@color/zxing_corner"
+                          android:textSize="@dimen/font_10"/>-->
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_be_being_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/my_bid_budget_money"
+                    android:textColor="@color/zxing_corner"
+                    android:textSize="@dimen/font_12"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_bid_budget"
+                    android:textColor="@color/bg_00"
+                    android:textSize="@dimen/font_10"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/line_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/into_charRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_30"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bg_common_btn_blue"
+                android:text="@string/designer_online_communication"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_11"/>
+
+            <Button
+                android:id="@+id/btn_be_being_demand_details"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_30"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/size_20"
+                android:layout_marginRight="@dimen/size_10"
+                android:background="@drawable/bg_common_btn_blue"
+                android:text="@string/my_bid_demand_particulars"
+                android:textColor="@color/bg_ff"
+                android:textSize="@dimen/font_11"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

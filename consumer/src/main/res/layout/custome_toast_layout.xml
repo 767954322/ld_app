@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               >
+    <!--android:background="@drawable/toast_shape"-->
+    <RelativeLayout
+        android:alpha="100"
+        android:background="@drawable/gradient_reflect"
+        android:layout_width="@dimen/size_130"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+
+
+        <TextView
+            android:id="@+id/tvForToast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingTop="@dimen/size_30"
+            android:paddingBottom="@dimen/size_30"
+            android:text="关注成功"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,16 @@
+{
+  "house": "住宅空间",
+  "catering": "餐饮空间",
+  "office": "办公空间",
+  "hotel": "酒店空间",
+  "business": "商业展示",
+  "entertainment": "娱乐空间",
+  "leisure": "休闲场所",
+  "culture": "文化空间",
+  "healthcare": " 医疗机构",
+  "sale": " 售楼中心",
+  "finace": "金融场所",
+  "sport": " 运动场所",
+  "education": "教育机构",
+  "other": "其它"
+}
