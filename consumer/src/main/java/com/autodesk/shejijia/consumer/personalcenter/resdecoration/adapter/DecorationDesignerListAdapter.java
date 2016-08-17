@@ -3,9 +3,9 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
@@ -44,7 +44,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
     public void convert(CommonViewHolder holder, DecorationBiddersBean bidder) {
 
         final String designerId = bidder.getDesigner_id();
-        String bidderUid = bidder.getUid();
+        final String bidderUid = bidder.getUid();
         String user_name = bidder.getUser_name();
         String avatarUrl = bidder.getAvatar();
 
@@ -78,7 +78,10 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         holder.setOnClickListener(R.id.piv_consumer_order_photo, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mActivity, "设计师主页", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
+                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designerId);
+                intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, bidderUid);
+                mActivity.startActivity(intent);
             }
         });
     }
