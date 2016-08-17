@@ -57,6 +57,9 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_order_photo);
         ImageUtils.displayAvatarImage(avatarUrl, polygonImageView);
 
+        /**
+         * 进入全流程逻辑
+         */
         holder.setOnClickListener(R.id.rl_item_decoration, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +72,9 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
             }
         });
 
+        /**
+         * 设计师主页
+         */
         holder.setOnClickListener(R.id.piv_consumer_order_photo, new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="@dimen/size_80"
               android:orientation="horizontal">
 
     <FrameLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="@dimen/size_60"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/size_10"
@@ -109,31 +109,61 @@
             android:textColor="@color/black"/>
     </LinearLayout>
 
+    <include layout="@layout/view_common_line"></include>
+
     <LinearLayout
         android:id="@+id/ll_bidder_biding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="visible">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
+        <LinearLayout
+            android:id="@+id/ll_demand_modify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/size_10">
 
+            <Button
+                android:id="@+id/btn_designer_measure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/textview_border_beishu"
+                android:text="@string/optional_measure"
+                android:textColor="@color/bg_0084ff"
+                />
+
+            <Button
+                android:id="@+id/btn_designer_refuse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:layout_weight="1"
+                android:background="@drawable/textview_border_beishu"
+                android:text="@string/decoration_choose_refuse"
+                android:textColor="@color/bg_0084ff"/>
+        </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/ll_bidder_after_biding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
-            android:drawableRight="@drawable/icon_unfold_normal"
+            android:id="@+id/tv_workflow_state"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/icon_unfold_normal"/>
 
     </LinearLayout>
 

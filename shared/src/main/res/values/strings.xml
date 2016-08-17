@@ -278,7 +278,7 @@
 
     <!-- SeekDesignerDetailActivity -->
     <string name="work">作品：</string>
-    <string name="be_good_at">擅长风格：</string>
+    <string name="be_good_at">擅长选风格：</string>
     <string name="has_yet_to_fill_out">尚未填写</string>
     <string name="temporarily_no_data">暂无数据</string>
     <string name="find_designer">设计师</string>
@@ -287,7 +287,6 @@
     <string name="designer_design_fee">设计费：</string>
     <string name="designer_measure_fee">量房费：</string>
     <string name="optional_measure">选TA量房</string>
-
     <!-- WK3DPlanActivity -->
     <string name="three_plan_name">设计方案名字</string>
     <string name="select_finish">完成</string>

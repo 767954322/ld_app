@@ -37,7 +37,6 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
     public DecorationOrdinaryDelegate(Activity activity) {
         mActivity = activity;
-
     }
 
     @Override
@@ -117,6 +116,12 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         mDesignerListView.setAdapter(mDecorationDesignerListAdapter);
 
 
+//        /**
+//         * 控制是否在当前ListView显示当前设计师
+//         */
+//        if (!showCurrentDesigner(bidder.getWk_cur_sub_node_id())) {
+//            mBidders.remove(bidder);
+//        }
         /**
          * 应标人数详情页面
          *
@@ -245,5 +250,20 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             }
         }
         return needsState;
+    }
+
+
+    /**
+     * 是否已经选择了当前设计师量房
+     *
+     * @param wk_cur_sub_node_id 流程节点,如果为-1，审核通过，但是尚未选TA量房，处于应标状态
+     * @return 如果已经选择该设计师应标，返回true
+     */
+    private boolean showCurrentDesigner(String wk_cur_sub_node_id) {
+        if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) > -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
