@@ -337,7 +337,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -345,7 +345,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -618,7 +618,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     protected void onRestart() {
         super.onRestart();
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null!=memberEntity){
+        if (null != memberEntity) {
             getThumbUp(caseDetailBean.getId());
         }
         showOrHideChatBtn();
