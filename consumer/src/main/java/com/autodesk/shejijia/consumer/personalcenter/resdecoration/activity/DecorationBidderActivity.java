@@ -64,7 +64,6 @@ public class DecorationBidderActivity extends NavigationBarActivity {
         setTitleForNavbar(UIUtils.getString(R.string.title_designer_count));
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.title_bidder_introduce));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
-
     }
 
     @Override
@@ -81,6 +80,4 @@ public class DecorationBidderActivity extends NavigationBarActivity {
                 UIUtils.getString(R.string.alert_bidder_introduce),
                 null, null, new String[]{"确定"}, this, AlertView.Style.Alert, null).show();
     }
-
-
 }

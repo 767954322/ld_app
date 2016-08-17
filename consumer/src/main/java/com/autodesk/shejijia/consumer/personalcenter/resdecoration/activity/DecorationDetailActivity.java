@@ -22,7 +22,6 @@ import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
@@ -64,15 +63,15 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     protected void initView() {
         super.initView();
         etAmendAmendName = (TextView) findViewById(R.id.et_amend_amend_name);
-        etIssueAmendMobile = (EditText) findViewById(R.id.et_issue_amend_mobile);
+        etIssueAmendMobile = (TextView) findViewById(R.id.et_issue_amend_mobile);
         tvAmendDesignBudget = (TextView) findViewById(R.id.tv_amend_design_budget);
         tvAmendBudget = (TextView) findViewById(R.id.tv_aemand_budget);
         tvAmendHouseType = (TextView) findViewById(R.id.tv_amend_house_type);
-        etAmendArea = (EditText) findViewById(R.id.et_ademand_area);
+        etAmendArea = (TextView) findViewById(R.id.et_ademand_area);
         tvAmendRoomType = (TextView) findViewById(R.id.tv_amend_room_type);
         tvAmendStyle = (TextView) findViewById(R.id.tv_amend_style);
         tvIssueAddress = (TextView) findViewById(R.id.tv_issue_address);
-        etIssueDemandDetailAddress = (TextViewContent) findViewById(R.id.et_issue_demand_detail_address);
+        etIssueDemandDetailAddress = (TextView) findViewById(R.id.et_issue_demand_detail_address);
         tvPublicTime = (TextView) findViewById(R.id.tv_public_time);
         btnFitmentAmendDemand = (Button) findViewById(R.id.btn_fitment_amend_demand);
         btnFitmentStopDemand = (Button) findViewById(R.id.btn_fitment_stop_demand);
@@ -540,10 +539,10 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
     /// 控件　.
     private TextView etAmendAmendName, tvAmendDesignBudget, tvAmendBudget, tvAmendHouseType;
-    private EditText etIssueAmendMobile, etAmendArea;
+    private TextView etIssueAmendMobile, etAmendArea;
     private TextView tvAmendRoomType, tvAmendStyle, tvIssueAddress, tvPublicTime;
     private Button btnFitmentAmendDemand, btnFitmentStopDemand;
-    private TextViewContent etIssueDemandDetailAddress;
+    private TextView etIssueDemandDetailAddress;
     private OptionsPickerView pvDesignBudgetOptions;
     private OptionsPickerView pvDecorationBudgetOptions;
     private OptionsPickerView pvStyleOptions;

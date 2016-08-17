@@ -64,6 +64,8 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     @Override
     public void convert(CommonViewHolder holder, DecorationBiddersBean biddersBean) {
         this.biddersBean = biddersBean;
+        mDesigner_id = biddersBean.getDesigner_id();
+
         String avatar = biddersBean.getAvatar();
         String nick_name = biddersBean.getUser_name();
         nick_name = TextUtils.isEmpty(nick_name) ? "暂无数据" : nick_name;
@@ -118,7 +120,6 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
             /// 设计师主页 .
             case R.id.piv_designer_photo:
-                mDesigner_id = biddersBean.getDesigner_id();
                 String uid = biddersBean.getUid();
                 intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
                 intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, mDesigner_id);
@@ -134,7 +135,6 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
             /// 确认量房 .
             case R.id.btn_designer_measure:
-                mDesigner_id = biddersBean.getDesigner_id();
                 if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(mDesigner_id)) {
                     intent = new Intent(mActivity, FlowMeasureFormActivity.class);
                     intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeeds_id);
@@ -187,6 +187,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 new AlertView(UIUtils.getString(R.string.tip),
                         UIUtils.getString(R.string.network_error),
                         null, new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,

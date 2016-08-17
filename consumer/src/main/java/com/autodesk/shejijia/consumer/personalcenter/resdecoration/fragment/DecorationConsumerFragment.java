@@ -1,7 +1,5 @@
 package com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment;
 
-import android.widget.ListView;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -11,6 +9,8 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.Decor
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -29,7 +29,7 @@ import java.util.List;
  * @file DecorationConsumerFragment.java .
  * @brief 消费者家装订单主页面 .
  */
-public class DecorationConsumerFragment extends BaseFragment {
+public class DecorationConsumerFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener{
 
     ///is_beishu:0 北舒套餐 1 非北舒.
     private static final String DECORATION_NEEDS_ID = "DecorationConsumerFragment";
@@ -37,8 +37,10 @@ public class DecorationConsumerFragment extends BaseFragment {
     private String TAG = getClass().getSimpleName();
     private int LIMIT = 10;
     private int OFFSET = 0;
+    private boolean isRefreshOrLoadMore = true;
 
-    private ListView mPlvConsumerDecoration;
+    private PullListView mPlvConsumerDecoration;
+    private PullToRefreshLayout mPullToRefreshLayout;
 
     private DecorationListBean mDecorationListBean;
     private DecorationConsumerAdapter mDecorationConsumerAdapter;
@@ -51,7 +53,8 @@ public class DecorationConsumerFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        mPlvConsumerDecoration = (ListView) rootView.findViewById(R.id.plv_consumer_decoration);
+        mPlvConsumerDecoration = (PullListView) rootView.findViewById(R.id.plv_consumer_decoration);
+        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.refresh_view);
     }
 
     @Override
@@ -61,14 +64,15 @@ public class DecorationConsumerFragment extends BaseFragment {
         }
 
         mPlvConsumerDecoration.setAdapter(mDecorationConsumerAdapter);
-        getMyDecorationData(OFFSET, LIMIT, 1);
+
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-    }
+        mPullToRefreshLayout.setOnRefreshListener(this);
 
+    }
 
     /**
      * 获取消费者家装订单
@@ -81,13 +85,26 @@ public class DecorationConsumerFragment extends BaseFragment {
                 CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
-                updateViewFromData(state);
+
+                if (isRefreshOrLoadMore){
+                    mDecorationNeedsList.clear();
+                    updateViewFromData(state);
+                    mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                }else {
+
+                    updateViewFromData(state);
+                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                }
+
+
                 KLog.json(TAG, userInfo);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 CustomProgress.cancelDialog();
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
                         AlertView.Style.Alert, null).show();
@@ -99,5 +116,25 @@ public class DecorationConsumerFragment extends BaseFragment {
         mDecorationNeedsList.addAll(mDecorationListBean.getNeeds_list());
         mDecorationConsumerAdapter.notifyDataSetChanged();
     }
+    //刷新数据
+    @Override
+    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+        isRefreshOrLoadMore = true;
+        getMyDecorationData(0, LIMIT, 1);
+        OFFSET = 0;
+    }
+    //加载数据
+    @Override
+    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
 
+        isRefreshOrLoadMore = false;
+        OFFSET = OFFSET + 10;
+        getMyDecorationData(OFFSET, LIMIT, 1);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMyDecorationData(OFFSET, LIMIT, 1);
+    }
 }
