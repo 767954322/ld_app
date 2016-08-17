@@ -56,15 +56,15 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                 (ArrayList<DecorationBiddersBean>) decorationNeedsListBean.getBidders();
 
         final String mNeeds_id = decorationNeedsListBean.getNeeds_id();
-
         String contacts_name = decorationNeedsListBean.getContacts_name();
         String community_name = decorationNeedsListBean.getCommunity_name();
-
         String province_name = decorationNeedsListBean.getProvince_name();
         String city_name = decorationNeedsListBean.getCity_name();
         String district_name = decorationNeedsListBean.getDistrict_name();
-
         String bidder_count = decorationNeedsListBean.getBidder_count();
+        String is_public = decorationNeedsListBean.getIs_public();
+        String wk_template_id = decorationNeedsListBean.getWk_template_id();
+        String custom_string_status = decorationNeedsListBean.getCustom_string_status();
 
         holder.setText(R.id.tv_decoration_name, contacts_name + "/" + community_name);
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
@@ -75,26 +75,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
 
-
         /**
          * 当前家装订单状态
          */
-        String is_public = decorationNeedsListBean.getIs_public();
-        String wk_template_id = decorationNeedsListBean.getWk_template_id();
-        String custom_string_status = decorationNeedsListBean.getCustom_string_status();
-        Integer wk_cur_node_id_max = -1;
-        if (mBidders != null && mBidders.size() > 0) {
-
-            ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
-            for (DecorationBiddersBean bidder : mBidders) {
-                if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
-                    mWk_cur_node_id_array.add(Integer.parseInt(bidder.getWk_cur_sub_node_id()));
-                }
-            }
-            if (mWk_cur_node_id_array.size() > 0) {
-                wk_cur_node_id_max = Collections.max(mWk_cur_node_id_array);
-            }
-        }
+        Integer wk_cur_node_id_max = getWk_cur_sub_node_id_max(mBidders);
         String needsState = getNeedsState(is_public, wk_template_id, custom_string_status, wk_cur_node_id_max);
         holder.setText(R.id.tv_decoration_state, needsState);
 
@@ -149,6 +133,28 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         });
     }
 
+    /**
+     * 获取应标设计师中流程节点的最大值
+     *
+     * @param mBidders 应标设计师列表
+     * @return wk_cur_node_id_max最大值
+     */
+    private Integer getWk_cur_sub_node_id_max(ArrayList<DecorationBiddersBean> mBidders) {
+        Integer wk_cur_node_id_max = -1;
+        if (mBidders != null && mBidders.size() > 0) {
+
+            ArrayList<Integer> mWk_cur_node_id_array = new ArrayList<>();
+            for (DecorationBiddersBean bidder : mBidders) {
+                if (!TextUtils.isEmpty(bidder.getWk_cur_sub_node_id()) && StringUtils.isNumeric(bidder.getWk_cur_sub_node_id())) {
+                    mWk_cur_node_id_array.add(Integer.parseInt(bidder.getWk_cur_sub_node_id()));
+                }
+            }
+            if (mWk_cur_node_id_array.size() > 0) {
+                wk_cur_node_id_max = Collections.max(mWk_cur_node_id_array);
+            }
+        }
+        return wk_cur_node_id_max;
+    }
 
     /**
      * 当前订单是否处于应标状态
@@ -175,18 +181,12 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      * 返回当前订单的状态信息
      *
      * @param is_public              当前订单是否终止,为1时,当前需求终止。
-     * @param wk_template_id         模版节点
-     *                               1		应标
-     *                               2		自选
-     *                               3		北舒
+     * @param wk_template_id         模版节点，1-应标;2-自选;3-北舒
      * @param custom_string_status   审核状态判断字段
      * @param wk_cur_sub_node_id_int 当前应标设计师中wk_cur_sub_node_id的最大值
-     * @return
+     * @return 节点状态
      */
-    private String getNeedsState(String is_public,
-                                 String wk_template_id,
-                                 String custom_string_status,
-                                 int wk_cur_sub_node_id_int) {
+    private String getNeedsState(String is_public, String wk_template_id, String custom_string_status, int wk_cur_sub_node_id_int) {
         String needsState = "未知状态";
 
         if (Constant.NumKey.ONE.equals(is_public)) {
