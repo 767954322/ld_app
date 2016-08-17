@@ -177,6 +177,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/size_15"
             android:textSize="@dimen/font_13"
             />
@@ -184,10 +185,10 @@
     </RelativeLayout>
 
     <TextView
-        android:background="@color/pickerview_bg_topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_5"
+        android:background="@color/pickerview_bg_topbar"
         />
 
 </LinearLayout>
