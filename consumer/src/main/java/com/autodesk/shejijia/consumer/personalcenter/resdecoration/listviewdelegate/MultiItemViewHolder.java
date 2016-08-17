@@ -19,6 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+/**
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-8-17 .
+ * @file MultiItemViewHolder.java .
+ * @brief 多种布局ViewHolder.
+ */
 public class MultiItemViewHolder {
     private SparseArray<View> mViews;
     protected int mPosition;
@@ -36,7 +43,7 @@ public class MultiItemViewHolder {
 
 
     public static MultiItemViewHolder get(Context context, View convertView,
-                                 ViewGroup parent, int layoutId, int position) {
+                                          ViewGroup parent, int layoutId, int position) {
         if (convertView == null) {
             View itemView = LayoutInflater.from(context).inflate(layoutId, parent,
                     false);
@@ -229,21 +236,21 @@ public class MultiItemViewHolder {
      * 关于事件的
      */
     public MultiItemViewHolder setOnClickListener(int viewId,
-                                         View.OnClickListener listener) {
+                                                  View.OnClickListener listener) {
         View view = getView(viewId);
         view.setOnClickListener(listener);
         return this;
     }
 
     public MultiItemViewHolder setOnTouchListener(int viewId,
-                                         View.OnTouchListener listener) {
+                                                  View.OnTouchListener listener) {
         View view = getView(viewId);
         view.setOnTouchListener(listener);
         return this;
     }
 
     public MultiItemViewHolder setOnLongClickListener(int viewId,
-                                             View.OnLongClickListener listener) {
+                                                      View.OnLongClickListener listener) {
         View view = getView(viewId);
         view.setOnLongClickListener(listener);
         return this;

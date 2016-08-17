@@ -6,10 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-
 import java.util.List;
 
+/**
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-8-17 .
+ * @file MultiItemTypeAdapter.java .
+ * @brief ListView不同布局的adapter .
+ */
 public class MultiItemTypeAdapter<T> extends BaseAdapter {
     protected Context mContext;
     protected List<T> mDatas;
