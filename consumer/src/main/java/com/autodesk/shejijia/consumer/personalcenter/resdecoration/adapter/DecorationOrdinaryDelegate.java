@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.Deco
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
+import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
@@ -20,6 +21,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 /**
  * <p>Description:家装订单:普通家装订单 </p>
@@ -37,8 +39,13 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
     private Activity mActivity;
     private Intent mIntent;
 
+    private Map<String, String> spaceMap;
+    private Map<String, String> styleMap;
+
     public DecorationOrdinaryDelegate(Activity activity) {
         mActivity = activity;
+        spaceMap = AppJsonFileReader.getSpace(activity);
+        styleMap = AppJsonFileReader.getStyle(activity);
     }
 
     @Override
@@ -70,10 +77,27 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
         holder.setText(R.id.tv_decoration_name, contacts_name + "/" + community_name);
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
-        holder.setText(R.id.tv_decoration_house_type, decorationNeedsListBean.getHouse_type());
+
+        String house_type = decorationNeedsListBean.getHouse_type();
+
+        if (spaceMap.containsKey(house_type)) {
+            holder.setText(R.id.tv_decoration_house_type, spaceMap.get(house_type));
+        } else {
+            holder.setText(R.id.tv_decoration_house_type, house_type);
+        }
+
+
+
         holder.setText(R.id.tv_decoration_address, province_name + city_name + district_name);
         holder.setText(R.id.tv_decoration_phone, decorationNeedsListBean.getContacts_mobile());
-        holder.setText(R.id.tv_decoration_style, decorationNeedsListBean.getDecoration_style());
+
+        String decoration_style = decorationNeedsListBean.getDecoration_style();
+
+        if (styleMap.containsKey(decoration_style)) {
+            holder.setText(R.id.tv_decoration_style, styleMap.get(decoration_style));
+        } else {
+            holder.setText(R.id.tv_decoration_style, decoration_style);
+        }
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
 
