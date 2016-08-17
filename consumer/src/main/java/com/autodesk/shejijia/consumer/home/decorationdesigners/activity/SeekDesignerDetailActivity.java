@@ -61,7 +61,6 @@ import java.util.ArrayList;
  */
 public class SeekDesignerDetailActivity extends NavigationBarActivity implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener, SeekDesignerDetailAdapter.OnItemCaseLibraryClickListener {
 
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_seek_designer_detail;
@@ -87,13 +86,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mBtnChat = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_chat);
         mBtnMeasure = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_optional_measure);
         mTvStyle = (TextView) mHeader.findViewById(R.id.tv_seek_designer_detail_style);
-
-//        case_2d_btn = (TextView) mHeader.findViewById(R.id.case_2d_btn);
-//        case_3d_btn = (TextView) mHeader.findViewById(R.id.case_3d_btn);
-//        consumer_appraise = (TextView) mHeader.findViewById(R.id.consumer_appraise);
-//        chooseViewPointer = (ChooseViewPointer) mHeader.findViewById(R.id.choose_point);
-
-        width = getWindowWidth();
 
         mListView.addHeaderView(mHeader);
         mListView.addFooterView(mFooterView);
@@ -126,9 +118,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mBtnMeasure.setOnClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
         mBtnChat.setOnClickListener(this);
-//        case_3d_btn.setOnClickListener(this);
-//        case_2d_btn.setOnClickListener(this);
-//        consumer_appraise.setOnClickListener(this);
     }
 
     @Override
@@ -228,21 +217,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
-//            case R.id.case_2d_btn:
-//                chooseViewPointer.setDecreaseWidth(50f);
-//                chooseViewPointer.setWidthOrHeight(width, 0, 0f, 1 / 3f);
-//                chooseViewPointer.invalidate();
-//                break;
-//            case R.id.case_3d_btn:
-//                chooseViewPointer.setDecreaseWidth(50f);
-//                chooseViewPointer.setWidthOrHeight(width, 0, 1 / 3f, 2 / 3f);
-//                break;
-//            case R.id.consumer_appraise:
-//
-//                chooseViewPointer.setDecreaseWidth(50f);
-//                chooseViewPointer.setWidthOrHeight(width, 0, 2 / 3f, 1f);
-//                break;
-
         }
     }
 
@@ -265,9 +239,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
         int width = metric.widthPixels;     // 屏幕宽度（像素）
-//        int height = metric.heightPixels;   // 屏幕高度（像素）
-//        float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
-//        int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
         return width;
     }
 
@@ -388,6 +359,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mIvCertification.setVisibility(View.GONE);
             }
 
+
             /**
              * 如果当前没有acs_member_id,就是没有登录
              */
@@ -403,6 +375,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             } else {
                 setRightTitle(false);
             }
+
             mTvFollowedNum.setText(" : " + seekDesignerDetailHomeBean.following_count);
             mNickName = seekDesignerDetailHomeBean.getNick_name();
             mNickName = TextUtils.isEmpty(mNickName) ? "" : mNickName;
@@ -492,39 +465,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         }
     }
 
-    /**
-     * 设置title栏，关注的显示问题
-     * true :关注状态-->对应取消关注
-     * false : 取消关注-->对应关注
-     */
-    private void setRightTitle(boolean follows_type) {
-
-        if (follows_type) {
-            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_cancel));
-
-        } else {
-            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
-        }
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
-    }
-
-    /**
-     * [1]是否登录状态，未登录，先登录
-     * [2]如果判断字段is_following为true，就是关注中，点击取消关注
-     */
-    @Override
-    protected void rightNavButtonClicked(View view) {
-        super.rightNavButtonClicked(view);
-        if (TextUtils.isEmpty(mSelfAcsMemberId)) {
-            AdskApplication.getInstance().doLogin(this);
-        } else {
-            if (seekDesignerDetailHomeBean.is_following) {
-                unFollowedAlertView.show();
-            } else {
-                followingOrUnFollowedDesigner(true);
-            }
-        }
-    }
 
     /**
      * 关注或者取消关注设计师
@@ -562,6 +502,59 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         });
     }
 
+    /**
+     * [1]是否登录状态，未登录，先登录
+     * [2]如果判断字段is_following为true，就是关注中，点击取消关注
+     */
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+        if (TextUtils.isEmpty(mSelfAcsMemberId)) {
+            AdskApplication.getInstance().doLogin(this);
+        } else {
+            if (seekDesignerDetailHomeBean.is_following) {
+                unFollowedAlertView.show();
+            } else {
+                followingOrUnFollowedDesigner(true);
+            }
+        }
+    }
+
+    /**
+     * 设置title栏，关注的显示问题
+     * true :关注状态-->对应取消关注
+     * false : 取消关注-->对应关注
+     */
+    private void setRightTitle(boolean follows_type) {
+
+        if (follows_type) {
+            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_cancel));
+
+        } else {
+            setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
+        }
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
+    }
+
+    /**
+     * 取消关注提示框
+     */
+    private void unFollowedAlertView() {
+        unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
+                UIUtils.getString(R.string.following_cancel), null,
+                new String[]{UIUtils.getString(R.string.following_sure)},
+                SeekDesignerDetailActivity.this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    followingOrUnFollowedDesigner(false);
+                }
+            }
+        }).setCancelable(true);
+    }
+
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -581,24 +574,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private AlertView getEmptyAlertView(String content) {
         return new AlertView(UIUtils.getString(R.string.tip), content, null, null, null, SeekDesignerDetailActivity.this,
                 AlertView.Style.Alert, null).setCancelable(true);
-    }
-
-    /**
-     * 取消关注提示框
-     */
-    private void unFollowedAlertView() {
-        unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
-                UIUtils.getString(R.string.following_cancel), null,
-                new String[]{UIUtils.getString(R.string.following_sure)},
-                SeekDesignerDetailActivity.this,
-                AlertView.Style.Alert, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Object object, int position) {
-                if (position != AlertView.CANCELPOSITION) {
-                    followingOrUnFollowedDesigner(false);
-                }
-            }
-        }).setCancelable(true);
     }
 
     /**
@@ -642,11 +617,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private Button mBtnChat, mBtnMeasure;
     private AlertView unFollowedAlertView;
     private TextView mTvFollowedNum;    /// 关注人数 .
-//    private LinearLayout ll_case_choose_contain;//容器
-//    private TextView case_2d_btn;//2d案例
-//    private TextView case_3d_btn;//3d案例
-//    private TextView consumer_appraise;//评价按钮
-//    private ChooseViewPointer chooseViewPointer;//滚动条
 
     private String mNickName;
     private String mSelfAcsMemberId;
@@ -657,7 +627,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private SeekDesignerDetailBean mSeekDesignerDetailBean;
     private int LIMIT = 10;
     private int OFFSET = 0;
-    private int width;
     private boolean isFirstIn = true;
     private MemberEntity memberEntity;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
