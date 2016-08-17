@@ -32,6 +32,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
     ///is_beishu:0 北舒套餐 1 非北舒.
     private static final String IS_NOT_BEI_SHU = "1";
+    /// 支付了设计首款的节点 .
+    private static final int PAYED_FIRST_COST = 41;
     private Activity mActivity;
     private Intent mIntent;
 
@@ -83,11 +85,15 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         holder.setText(R.id.tv_decoration_state, needsState);
 
         /**
-         * 如果处于审核状态，隐藏应标人数布局
+         * 如果处于审核状态或者有人支付了设计首款，隐藏应标人数布局
          */
         boolean isBidding = isBiding(custom_string_status);
         if (isBidding) {
-            holder.setVisible(R.id.rl_bidder_count, true);
+            if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
+                holder.setVisible(R.id.rl_bidder_count, false);
+            } else {
+                holder.setVisible(R.id.rl_bidder_count, true);
+            }
         } else {
             holder.setVisible(R.id.rl_bidder_count, false);
         }
