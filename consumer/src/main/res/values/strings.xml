@@ -67,7 +67,7 @@
     <string name="please_enter_words">请输入15~200字</string>
     <string name="you_have_not_score">您还没有评分哦</string>
 
-    <string name="save_success">图片保存成功</string>
+    <string name="save_success">已保存到本地相册</string>
     <string name="save_failure">保存失败</string>
     <string name="jiechubangding">解绑成功</string>
     <string name="anzhuangweixin">请先安装微信</string>
