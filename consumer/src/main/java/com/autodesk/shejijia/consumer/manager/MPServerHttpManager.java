@@ -275,11 +275,6 @@ public class MPServerHttpManager {
                 "&sort_by=date" +
                 "&limit=" + limit;
 
-//        String url = "http://192.168.120.123:8081/member-app/v1/api/designers" +
-//                "?offset=" + offset +
-//                "&sort_order=desc" +
-//                "&sort_by=date" +
-//                "&limit=" + limit;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -342,6 +337,7 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
+
 
     /**
      * 全流程节点信息获取
@@ -513,9 +509,6 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-
-               // HashMap<String, String> header = new HashMap<>();
-               // header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return super.getHeaders();
             }
         };
@@ -542,6 +535,8 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
+
+
 
     /**
      * 获得点赞状态
