@@ -290,13 +290,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             openFileThreadActivity();
         }
 
-        if (isActiveFragment(MyDecorationProjectFragment.class)) {
+        if (isActiveFragment(MyDecorationProjectFragment.class) || isActiveFragment(DecorationConsumerFragment.class)) {
             Intent intent = new Intent(this, IssueDemandActivity.class);
             mConsumerNickName = TextUtils.isEmpty(mConsumerNickName) ? UIUtils.getString(R.string.anonymity) : mConsumerNickName;
             intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mConsumerNickName);
             startActivity(intent);
         }
-
     }
 
     //判断圆形按钮跳入不同的个人中心界面
@@ -772,7 +771,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                     Bundle bundle = data.getExtras();
                     String scanResult = bundle.getString(Constant.QrResultKey.SCANNER_RESULT);
-                    if (null !=scanResult){
+                    if (null != scanResult) {
                         jumpToChatRoom(scanResult);
                     }
 
@@ -791,7 +790,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private RadioGroup designer_main_radio_group;
 
 
-//    private MyDecorationProjectFragment mConsumerPersonalCenterFragment;
+    //    private MyDecorationProjectFragment mConsumerPersonalCenterFragment;
     private DecorationConsumerFragment mConsumerPersonalCenterFragment;
 
     private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";

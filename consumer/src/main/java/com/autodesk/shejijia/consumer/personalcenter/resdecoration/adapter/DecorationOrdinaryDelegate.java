@@ -76,14 +76,6 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
 
-        /**
-         * 如果应标人数为0,就隐藏应标人数布局
-         */
-        if (TextUtils.isEmpty(bidder_count) || "0".equals(bidder_count)) {
-            holder.setVisible(R.id.rl_bidder_count, false);
-        } else {
-            holder.setVisible(R.id.rl_bidder_count, true);
-        }
 
         /**
          * 当前家装订单状态
@@ -107,6 +99,17 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String needsState = getNeedsState(is_public, wk_template_id, custom_string_status, wk_cur_node_id_max);
         holder.setText(R.id.tv_decoration_state, needsState);
 
+        /**
+         * 如果应标人数为0,就隐藏应标人数布局
+         */
+        if (TextUtils.isEmpty(bidder_count) || "0".equals(bidder_count)) {
+            holder.setVisible(R.id.rl_bidder_count, false);
+        } else {
+            holder.setVisible(R.id.rl_bidder_count, true);
+        }
+//        if (wk_template_id) {
+//
+//        }
         /**
          * 应标设计师列表
          */
@@ -194,7 +197,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                         /**
                          * 审核通过,但是没有设计师应标.??
                          */
-                        needsState = "审核通过";
+                        needsState = "应标中";
                         break;
                 }
             }

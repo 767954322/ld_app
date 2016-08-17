@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -52,6 +53,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private static final String IS_PUBLIC = "is_public";
     private TextView mTvNeedsId;
     private TextView mTvDecorationName;
+    private LinearLayout mLlDemandModify;
 
     @Override
     protected int getLayoutResId() {
@@ -76,6 +78,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         btnFitmentStopDemand = (Button) findViewById(R.id.btn_fitment_stop_demand);
         mTvNeedsId = (TextView) findViewById(R.id.tv_decoration_needs_id);
         mTvDecorationName = (TextView) findViewById(R.id.tv_decoration_name);
+
+        mLlDemandModify = (LinearLayout) findViewById(R.id.ll_demand_modify);
     }
 
     @Override
@@ -182,22 +186,32 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
      */
     private void updateViewFromData(DecorationDetailBean demandDetailBean) {
         String contacts_name = demandDetailBean.getContacts_name();
+        String district_name = demandDetailBean.getDistrict_name();
+        String publish_time = demandDetailBean.getPublish_time();
+        String community_name = demandDetailBean.getCommunity_name();
         house_type = demandDetailBean.getHouse_type();
         room = demandDetailBean.getRoom();
         toilet = demandDetailBean.getToilet();
         living_room = demandDetailBean.getLiving_room();
         house_area = demandDetailBean.getHouse_area();
         contacts_mobile = demandDetailBean.getContacts_mobile();
-        this.contacts_name = demandDetailBean.getContacts_name();
         custom_string_status = demandDetailBean.getCustom_string_status();
         decoration_budget = demandDetailBean.getDecoration_budget();
         province_name = demandDetailBean.getProvince_name();
         city_name = demandDetailBean.getCity_name();
-        String district_name = demandDetailBean.getDistrict_name();
         district = demandDetailBean.getDistrict();
         design_budget = demandDetailBean.getDesign_budget();
-        String publish_time = demandDetailBean.getPublish_time();
-        String community_name = demandDetailBean.getCommunity_name();
+
+        /**
+         * 当is_public为1,表示当前需求已经终止，隐藏修改终止需求按钮
+         */
+        String is_public = demandDetailBean.getIs_public();
+        if (Constant.NumKey.ONE.equals(is_public)) {
+            mLlDemandModify.setVisibility(View.GONE);
+        } else {
+            mLlDemandModify.setVisibility(View.VISIBLE);
+        }
+
         if (custom_string_status.equals(Constant.NumKey.THREE)
                 || custom_string_status.equals(Constant.NumKey.ZERO_THREE)) {
             btnFitmentAmendDemand.setClickable(false);
@@ -216,7 +230,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         tvAmendRoomType.setText(TextUtils.isEmpty(livingRoom_room_toilet) ? UIUtils.getString(R.string.no_data) : livingRoom_room_toilet);
         tvAmendStyle.setText(TextUtils.isEmpty(decoration_style_convert) ? UIUtils.getString(R.string.no_data) : decoration_style_convert);
         tvAmendHouseType.setText(TextUtils.isEmpty(house_type_convert) ? UIUtils.getString(R.string.no_data) : house_type_convert);
-        etAmendAmendName.setText(TextUtils.isEmpty(this.contacts_name) ? UIUtils.getString(R.string.no_data) : this.contacts_name);
+        etAmendAmendName.setText(TextUtils.isEmpty(contacts_name) ? UIUtils.getString(R.string.no_data) : contacts_name);
         etIssueAmendMobile.setText(TextUtils.isEmpty(contacts_mobile) ? UIUtils.getString(R.string.no_data) : contacts_mobile);
         tvAmendDesignBudget.setText(TextUtils.isEmpty(design_budget) ? UIUtils.getString(R.string.no_data) : design_budget);
         tvAmendBudget.setText(TextUtils.isEmpty(decoration_budget) ? UIUtils.getString(R.string.no_data) : decoration_budget);
@@ -543,7 +557,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private String province_name, city_name;
     private String living_room, room, toilet;
     private String house_type, house_area, needs_id;
-    private String contacts_mobile, contacts_name;
+    private String contacts_mobile;
     private String decoration_budget, design_budget, custom_string_status;
     private DecorationDetailBean demandDetailBean;
     private Map<String, String> styleJson, spaceJson, livingRoomJson, roomJson, toiletJson;
