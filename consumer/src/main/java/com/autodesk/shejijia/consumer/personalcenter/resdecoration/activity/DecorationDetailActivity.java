@@ -45,11 +45,14 @@ import de.greenrobot.event.EventBus;
  * @version 1.0 .
  * @date 16-6-7 上午9:15
  * @file AmendDemandActivity.java  .
- * @brief 修改需求.
+ * @brief 需求详情页面.
  */
 public class DecorationDetailActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
 
     private static final String IS_PUBLIC = "is_public";
+    /// 节点11,邀请量房状态 .
+    private static final int IS_BIDING = 11;
+
     private TextView mTvNeedsId;
     private TextView mTvDecorationName;
     private LinearLayout mLlDemandModify;
@@ -241,6 +244,10 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         mTvDecorationName.setText(contacts_name + "/" + community_name);
 
         List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
+
+        /**
+         * 控制修改和终止按钮是否可以点击
+         */
         DecorationBiddersBean biddersBean = null;
         if (null != bidders) {
             if (bidders.size() == 1) {
@@ -251,13 +258,28 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
                 return;
             }
             String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
-            if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) > 33) {
-                btnFitmentStopDemand.setClickable(false);
-                btnFitmentStopDemand.setPressed(false);
-                btnFitmentStopDemand.setTextColor(UIUtils.getColor(R.color.white));
-                btnFitmentStopDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
+            if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= IS_BIDING) {
+                setButtonGray(btnFitmentStopDemand);
+                setButtonGray(btnFitmentAmendDemand);
             }
         }
+
+        if (null != bidders && bidders.size() > 0) {
+            setButtonGray(btnFitmentStopDemand);
+            setButtonGray(btnFitmentAmendDemand);
+        }
+    }
+
+    /**
+     * 按钮置灰，不可点击
+     *
+     * @param btn
+     */
+    private void setButtonGray(Button btn) {
+        btn.setClickable(false);
+        btn.setPressed(false);
+        btn.setTextColor(UIUtils.getColor(R.color.white));
+        btn.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
     }
 
     /**
