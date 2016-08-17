@@ -264,12 +264,12 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         biddersShow.addAll(mBidders);
 
         if (biddersShow != null && biddersShow.size() > 0) {
-            for (DecorationBiddersBean bidder : biddersShow) {
+            for (int i = biddersShow.size()-1;i>=0;i--){
                 /**
                  * 控制是否在当前ListView显示当前设计师
                  */
-                if (!showCurrentDesigner(bidder.getWk_cur_sub_node_id())) {
-                    biddersShow.remove(bidder);
+                if (!showCurrentDesigner(biddersShow.get(i).getWk_cur_sub_node_id())) {
+                    biddersShow.remove(i);
                 }
             }
         }
