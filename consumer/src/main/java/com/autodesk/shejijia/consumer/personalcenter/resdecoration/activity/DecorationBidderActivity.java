@@ -54,6 +54,7 @@ public class DecorationBidderActivity extends NavigationBarActivity {
         if (null == mDecorationBidderAdapter) {
             mDecorationBidderAdapter = new DecorationBidderAdapter(this, mBidders, mNeeds_id);
         }
+        mListView.setDivider(null);
         mListView.setAdapter(mDecorationBidderAdapter);
     }
 

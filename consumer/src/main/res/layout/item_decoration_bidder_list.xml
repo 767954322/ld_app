@@ -4,10 +4,10 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/size_80"
-                  android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_80"
+        android:orientation="horizontal">
 
         <FrameLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -113,66 +113,62 @@
                 android:layout_gravity="right|bottom"
                 android:textColor="@color/black"/>
         </LinearLayout>
-
-        <include layout="@layout/view_common_line"></include>
-
     </LinearLayout>
 
-    <LinearLayout
+    <include layout="@layout/view_parting_line"></include>
+
+    <RelativeLayout
         android:id="@+id/ll_bidder_biding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
         <LinearLayout
             android:id="@+id/ll_demand_modify"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_5"
             android:orientation="horizontal"
-            android:padding="@dimen/size_10">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/btn_designer_measure"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/textview_border_beishu"
-                    android:text="@string/optional_measure"
-                    android:textColor="@color/bg_0084ff"
-                    />
+                android:layout_height="@dimen/size_35">
 
                 <Button
                     android:id="@+id/btn_designer_refuse"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_filtrate_pressed"
+                    android:text="@string/decoration_choose_refuse"
+                    android:textColor="@color/bg_0084ff"
+                    android:textSize="@dimen/font_13"/>
+
+                <Button
+                    android:id="@+id/btn_designer_measure"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_20"
                     android:layout_weight="1"
-                    android:background="@drawable/textview_border_beishu"
-                    android:text="@string/decoration_choose_refuse"
-                    android:textColor="@color/bg_0084ff"/>
+                    android:background="@drawable/bg_btn_filtrate_pressed"
+                    android:text="@string/optional_measure"
+                    android:textColor="@color/bg_0084ff"
+                    android:textSize="@dimen/font_13"
+                    />
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/ll_bidder_after_biding"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_35"
+        android:layout_marginRight="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_5"
         android:orientation="horizontal"
         android:visibility="visible">
 
@@ -182,8 +178,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/size_15"
+            android:textSize="@dimen/font_13"
             />
 
     </RelativeLayout>
+
+    <TextView
+        android:background="@color/pickerview_bg_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_5"
+        />
 
 </LinearLayout>
