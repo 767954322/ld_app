@@ -496,6 +496,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         //查找是否是封面图片  若是就添加到头部
         for (int i = 0; i < images.size(); i++) {
             if (images.get(i).is_primary() == true) {
+                firstCaseLibraryImageUrl = images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
                 ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
             }
         }
