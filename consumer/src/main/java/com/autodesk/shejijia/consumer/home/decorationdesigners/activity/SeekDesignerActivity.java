@@ -86,7 +86,10 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     protected void secondaryNavButtonClicked(View view) {
         super.secondaryNavButtonClicked(view);
         intent = new Intent(this, DesignerFiltrateActivity.class);
-        startActivity(intent);
+        intent.putExtra(Constant.CaseLibrarySearch.YEAR_INDEX, mDesignerFiltrateBean == null ? 0 : mDesignerFiltrateBean.getYearIndex());
+        intent.putExtra(Constant.CaseLibrarySearch.STYLEL_INDEX, mDesignerFiltrateBean == null ? 0 : mDesignerFiltrateBean.getStyleIndex());
+        intent.putExtra(Constant.CaseLibrarySearch.PRICE_INDEX, mDesignerFiltrateBean == null ? 0 : mDesignerFiltrateBean.getPriceIndex());
+        this.startActivityForResult(intent, FILTRATE_REQUEST_CODE);
     }
 
     @Override
@@ -296,6 +299,9 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         }
     }
 
+    /// 静态常量,常量,静态上下文.
+    public static final int FILTRATE_REQUEST_CODE = 0x92;
+    public static final String BLANK = "";
     /// 控件.
     private ListView mListView;
     private PullToRefreshLayout mPullToRefreshLayout;
