@@ -188,6 +188,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         rlThumbUp.setOnClickListener(this);
         llThumbUp.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
+        mTvFollowedDesigner.setOnClickListener(this);
 
     }
 
@@ -264,6 +265,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
                 startActivity(intent);
                 break;
+
             case R.id.img_look_more_detail_chat:    /// 进入聊天页面,如果没有登陆则进入登陆注册页面.
                 if (memberEntity != null) {
                     member_id = memberEntity.getAcs_member_id();
@@ -328,7 +330,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl =ApiManager.getHtml5Url(ApiManager.RUNNING_DEVELOPMENT,case_id);
+            String webUrl = ApiManager.getHtml5Url(ApiManager.RUNNING_DEVELOPMENT, case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
@@ -533,44 +535,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     }
 
     /**
-     * 设置title栏，关注的显示问题
-     * true :关注状态-->对应取消关注
-     * false : 取消关注-->对应关注
-     */
-    private void setFollowedTitle(boolean is_following) {
-
-        if (is_following) {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
-            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_border_beishu));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
-
-        } else {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
-            mTvFollowedDesigner.setBackgroundColor(UIUtils.getColor(R.color.actionsheet_blue));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
-        }
-    }
-
-    /**
-     * 取消关注提示框
-     */
-    private void initUnFollowedAlertView() {
-        unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
-                UIUtils.getString(R.string.following_cancel), null,
-                new String[]{UIUtils.getString(R.string.following_sure)},
-                CaseLibraryNewActivity.this,
-                AlertView.Style.Alert, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Object object, int position) {
-                if (position != AlertView.CANCELPOSITION) {
-                    followingOrUnFollowedDesigner(false);
-                }
-            }
-        }).setCancelable(true);
-    }
-
-
-    /**
      * 关注或者取消关注设计师
      *
      * @param followsType true 为关注，false 取消关注
@@ -605,6 +569,44 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             }
         });
     }
+
+    /**
+     * 取消关注提示框
+     */
+    private void initUnFollowedAlertView() {
+        unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
+                UIUtils.getString(R.string.following_cancel), null,
+                new String[]{UIUtils.getString(R.string.following_sure)},
+                CaseLibraryNewActivity.this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    followingOrUnFollowedDesigner(false);
+                }
+            }
+        }).setCancelable(true);
+    }
+
+    /**
+     * 设置title栏，关注的显示问题
+     * true :关注状态-->对应取消关注
+     * false : 取消关注-->对应关注
+     */
+    private void setFollowedTitle(boolean is_following) {
+
+        if (is_following) {
+            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
+            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_border_beishu));
+            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
+
+        } else {
+            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
+            mTvFollowedDesigner.setBackgroundColor(UIUtils.getColor(R.color.actionsheet_blue));
+            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
+        }
+    }
+
 
     @Override
     protected void onResume() {
