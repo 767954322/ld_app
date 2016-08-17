@@ -615,6 +615,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     @Override
     protected void onRestart() {
         super.onRestart();
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null!=memberEntity){
+            getThumbUp(caseDetailBean.getId());
+        }
         showOrHideChatBtn();
     }
 
