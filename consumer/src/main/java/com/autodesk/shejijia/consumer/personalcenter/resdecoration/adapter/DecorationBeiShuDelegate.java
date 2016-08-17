@@ -93,47 +93,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                    if (memberEntity != null) {
-                        final String member_id = memberEntity.getAcs_member_id();
-                        final String hs_uid = uid;
-                        final String mMemberType = memberEntity.getMember_type();
-                        final String receiver_name = user_name;
-                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
-                        MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                            }
-
-                            @Override
-                            public void onResponse(String s) {
-                                MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                                Intent intent = new Intent(mActivity, ChatRoomActivity.class);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-
-
-                                if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-                                    MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-
-                                    int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                    intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
-                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                                    intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                                } else {
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                                }
-                                mActivity.startActivity(intent);
-                            }
-                        });
-
-                    } else {
-                        AdskApplication.getInstance().doLogin(mActivity);
-                    }
+                    openChatRoom(uid,user_name,designer_id,beishu_thread_id);
                 }
             });
 
@@ -146,6 +106,58 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
                     mActivity.startActivity(intent);
                 }
             });
+        }
+
+    }
+
+    /**
+     * 进入聊天室
+     * @param uid
+     * @param user_name
+     * @param designer_id
+     * @param beishu_thread_id
+     */
+    private void openChatRoom(String uid, String user_name, final String designer_id, final String beishu_thread_id) {
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (memberEntity != null) {
+            final String member_id = memberEntity.getAcs_member_id();
+            final String hs_uid = uid;
+            final String mMemberType = memberEntity.getMember_type();
+            final String receiver_name = user_name;
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+            MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                }
+
+                @Override
+                public void onResponse(String s) {
+                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                    Intent intent = new Intent(mActivity, ChatRoomActivity.class);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+
+
+                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+
+                        int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                        intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
+                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
+                    } else {
+                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                    }
+                    mActivity.startActivity(intent);
+                }
+            });
+
+        } else {
+            AdskApplication.getInstance().doLogin(mActivity);
         }
     }
 }

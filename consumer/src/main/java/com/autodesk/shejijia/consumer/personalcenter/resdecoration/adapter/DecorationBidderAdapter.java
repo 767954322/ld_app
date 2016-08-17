@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
@@ -70,14 +72,24 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         holder.setText(R.id.tv_attention_num, "关注人数：" + "0");
 
         holder.setOnClickListener(R.id.img_designer_chat, this);
+        holder.setOnClickListener(R.id.piv_designer_photo, this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            /// 聊天 .
             case R.id.img_designer_chat:
-                Toast.makeText(mActivity, "聊天", Toast.LENGTH_SHORT).show();
                 openChatRoom();
+                break;
+            /// 头像 .
+            case R.id.piv_designer_photo:
+                String designer_id = biddersBean.getDesigner_id();
+                String uid = biddersBean.getUid();
+                Intent intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
+                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
+                intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, uid);
+                mActivity.startActivity(intent);
                 break;
         }
     }
