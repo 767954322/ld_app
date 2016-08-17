@@ -100,16 +100,15 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         holder.setText(R.id.tv_decoration_state, needsState);
 
         /**
-         * 如果应标人数为0,就隐藏应标人数布局
+         * 如果处于审核状态，隐藏应标人数布局
          */
-        if (TextUtils.isEmpty(bidder_count) || "0".equals(bidder_count)) {
-            holder.setVisible(R.id.rl_bidder_count, false);
-        } else {
+        boolean isBidding = isBiding(custom_string_status);
+        if (isBidding) {
             holder.setVisible(R.id.rl_bidder_count, true);
+        } else {
+            holder.setVisible(R.id.rl_bidder_count, false);
         }
-//        if (wk_template_id) {
-//
-//        }
+
         /**
          * 应标设计师列表
          */
@@ -117,18 +116,24 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         DecorationDesignerListAdapter mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, mBidders, mNeeds_id);
         mDesignerListView.setAdapter(mDecorationDesignerListAdapter);
 
+
         /**
          * 应标人数详情页面
+         *
+         * 只有应标人数大于0时，才能进入应标人数详情页面
          */
-        holder.setOnClickListener(R.id.rl_bidder_count, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mIntent = new Intent(mActivity, DecorationBidderActivity.class);
-                mIntent.putExtra(DecorationBidderActivity.BIDDER_KEY, mBidders);
-                mIntent.putExtra(Constant.ConsumerDecorationFragment.NEED_ID, mNeeds_id);
-                mActivity.startActivity(mIntent);
-            }
-        });
+        boolean isNumeric = StringUtils.isNumeric(bidder_count);
+        if (isNumeric && Integer.valueOf(bidder_count) > 0) {
+            holder.setOnClickListener(R.id.rl_bidder_count, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mIntent = new Intent(mActivity, DecorationBidderActivity.class);
+                    mIntent.putExtra(DecorationBidderActivity.BIDDER_KEY, mBidders);
+                    mIntent.putExtra(Constant.ConsumerDecorationFragment.NEED_ID, mNeeds_id);
+                    mActivity.startActivity(mIntent);
+                }
+            });
+        }
 
         /**
          * 需求详情页面
@@ -143,6 +148,26 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                 mActivity.startActivityForResult(mIntent, 0);
             }
         });
+    }
+
+    /**
+     * 当前订单是否处于应标状态
+     *
+     * @param custom_string_status 审核状态判断字段
+     * @return 已经进入订单的应标、设计、项目完成阶段，返回true
+     */
+    private boolean isBiding(String custom_string_status) {
+        boolean isBiding;
+        switch (custom_string_status) {
+            case Constant.NumKey.THREE:
+            case Constant.NumKey.ZERO_THREE:
+                isBiding = true;
+                break;
+            default:
+                isBiding = false;
+                break;
+        }
+        return isBiding;
     }
 
 
@@ -221,14 +246,4 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         }
         return needsState;
     }
-
-    /**
-     * 订单状态判断:
-     * [1]应标人数为0:
-     * 审核中,审核通过,审核失败;
-     * <p/>
-     * [2]应标人数大于0:
-     * 显示应标人数布局;
-     * 全流程节点信息;
-     */
 }
