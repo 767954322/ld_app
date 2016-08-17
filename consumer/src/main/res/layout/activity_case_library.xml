@@ -8,22 +8,16 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"/>
 
-    <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout
-        android:id="@+id/refresh_view"
+    <com.autodesk.shejijia.shared.components.common.uielements.mtab.MaterialTabs
+        android:id="@+id/caseMtab"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="@dimen/size_50"/>
 
-        <include layout="@layout/view_refresh_head"/>
+    <com.autodesk.shejijia.shared.components.common.slippingviewpager.NoSlippingViewPager
+        android:id="@+id/slippingViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
-            android:id="@+id/hover_case_list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:scrollbars="none"/>
-
-        <include layout="@layout/view_load_more"/>
-    </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
 </LinearLayout>
 
 
