@@ -74,7 +74,6 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     }
 
 
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -120,19 +119,20 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 }
                 break;
 
+            case R.id.ll_personal_designer_attention: /// 我的关注 .
+                if (mMemberEntity != null) {
+                    Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this, AttentionActivity.class);
+                    startActivity(intent2);
+                } else {
+                    AdskApplication.getInstance().doLogin(this);
+                }
+                break;
 //            case R.id.rl_personal_b_fitment:    /// 我的装修项目 .
 //                intent = new Intent(ConsumerPersonalCenterActivity.this, DecorationActivity.class);
 //                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
 //                startActivity(intent);
 //                break;
-            case R.id.ll_personal_designer_attention: /// 我的关注 .
-                if (mMemberEntity != null) {
-                    Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this,AttentionActivity.class);
-                    startActivity(intent2);
-                }else{
-                    AdskApplication.getInstance().doLogin(this);
-                }
-                break;
+
         }
     }
 

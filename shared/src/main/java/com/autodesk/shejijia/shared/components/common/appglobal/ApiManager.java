@@ -20,7 +20,7 @@ public class ApiManager {
      * RUNNING_DEV ：alpha dev境 .
      * RUNNING_DOCKER_DESIGN：DOCKER 环境
      */
-    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_DOCKER_DESIGN;
+    public static String RUNNING_DEVELOPMENT = UrlConstants.RUNNING_ALPHA;
 
 
     /// 供给聊天使用的userId .

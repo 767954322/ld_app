@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -47,7 +46,7 @@ import java.util.List;
  * @file DesignerOrderBeiShuActivity.java  .
  * @brief 我的装修项目--消费者 .
  */
-public class MyDecorationProjectFragment extends BaseFragment implements View.OnClickListener{
+public class MyDecorationProjectFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_consumer_decoration;
@@ -75,7 +74,6 @@ public class MyDecorationProjectFragment extends BaseFragment implements View.On
         mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_order_empty));
         initPagerNum();
 
-        CustomProgress.show(getActivity(), "", false, null);
         getMyDecorationData(0, limit);
 
     }
@@ -136,6 +134,7 @@ public class MyDecorationProjectFragment extends BaseFragment implements View.On
      * 获取消费者家装订单
      */
     public void getMyDecorationData(final int offset, final int limit) {
+        CustomProgress.show(getActivity(), "", false, null);
         MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -200,8 +199,6 @@ public class MyDecorationProjectFragment extends BaseFragment implements View.On
      * 设置viewpager适配器及动画效果
      */
     public void startRoll() {
-
-//        getFragmentManager();
         if (mRollFragAdapter == null) {
             mRollFragAdapter = new RollFragAdapter(getFragmentManager(), mFragmentArrayList);
             mViewPager.setAdapter(mRollFragAdapter);
