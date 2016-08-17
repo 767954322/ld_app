@@ -328,14 +328,14 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl =ApiManager.getHtml5Url(ApiManager.RUNNING_DEVELOPMENT,case_id);
+            String webUrl = ApiManager.getHtml5Url(ApiManager.RUNNING_DEVELOPMENT, case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
 
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -343,7 +343,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -616,7 +616,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     protected void onRestart() {
         super.onRestart();
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null!=memberEntity){
+        if (null != memberEntity) {
             getThumbUp(caseDetailBean.getId());
         }
         showOrHideChatBtn();
