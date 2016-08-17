@@ -1,17 +1,31 @@
 package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.List;
 
@@ -44,7 +58,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
     }
 
     @Override
-    public void convert(MultiItemViewHolder holder, DecorationNeedsListBean decorationNeedsListBean, int position) {
+    public void convert(final MultiItemViewHolder holder, final DecorationNeedsListBean decorationNeedsListBean, final int position) {
         String community_name = decorationNeedsListBean.getCommunity_name();
         String needs_id = decorationNeedsListBean.getNeeds_id();
         String contacts_name = decorationNeedsListBean.getContacts_name();
@@ -65,9 +79,12 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
         List<DecorationBiddersBean> bidders = decorationNeedsListBean.getBidders();
         if (null != bidders && bidders.size() > 0) {
 
-            DecorationBiddersBean decorationBiddersBean = bidders.get(0);
+            final DecorationBiddersBean decorationBiddersBean = bidders.get(0);
             String avatar = decorationBiddersBean.getAvatar();
-            String user_name = decorationBiddersBean.getUser_name();
+            final String user_name = decorationBiddersBean.getUser_name();
+            final String uid = decorationBiddersBean.getUid();
+            final String designer_id = decorationBiddersBean.getDesigner_id();
+            final String beishu_thread_id = decorationNeedsListBean.getBeishu_thread_id();
 
             PolygonImageView polygonImageView = holder.getView(R.id.poly_designer_photo_beishu);
             ImageUtils.displayAvatarImage(avatar, polygonImageView);
@@ -76,14 +93,57 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mActivity, "聊天", Toast.LENGTH_SHORT).show();
+                    MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                    if (memberEntity != null) {
+                        final String member_id = memberEntity.getAcs_member_id();
+                        final String hs_uid = uid;
+                        final String mMemberType = memberEntity.getMember_type();
+                        final String receiver_name = user_name;
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                        MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                            }
+
+                            @Override
+                            public void onResponse(String s) {
+                                MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                                Intent intent = new Intent(mActivity, ChatRoomActivity.class);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+
+
+                                if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+                                    MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+
+                                    int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                                    intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
+                                } else {
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                }
+                                mActivity.startActivity(intent);
+                            }
+                        });
+
+                    } else {
+                        AdskApplication.getInstance().doLogin(mActivity);
+                    }
                 }
             });
 
             holder.setOnClickListener(R.id.poly_designer_photo_beishu, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(mActivity, "设计师主页", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
+                    intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
+                    intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, uid);
+                    mActivity.startActivity(intent);
                 }
             });
         }
