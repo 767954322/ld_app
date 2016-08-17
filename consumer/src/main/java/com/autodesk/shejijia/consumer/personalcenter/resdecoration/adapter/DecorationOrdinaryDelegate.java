@@ -111,17 +111,11 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 应标设计师列表
          */
+        ArrayList<DecorationBiddersBean> biddersShow = removeBidingDesigner(mBidders);
         ListViewForScrollView mDesignerListView = holder.getView(R.id.lv_decoration_bid);
-        DecorationDesignerListAdapter mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, mBidders, mNeeds_id);
+        DecorationDesignerListAdapter mDecorationDesignerListAdapter = new DecorationDesignerListAdapter(mActivity, biddersShow, mNeeds_id);
         mDesignerListView.setAdapter(mDecorationDesignerListAdapter);
 
-
-//        /**
-//         * 控制是否在当前ListView显示当前设计师
-//         */
-//        if (!showCurrentDesigner(bidder.getWk_cur_sub_node_id())) {
-//            mBidders.remove(bidder);
-//        }
         /**
          * 应标人数详情页面
          *
@@ -154,6 +148,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             }
         });
     }
+
 
     /**
      * 当前订单是否处于应标状态
@@ -252,6 +247,28 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         return needsState;
     }
 
+    /**
+     * 移除设计师列表中处于应标中的设计师
+     *
+     * @param mBidders 应标列表结合
+     * @return 筛选后的应标列表
+     */
+    private ArrayList<DecorationBiddersBean> removeBidingDesigner(ArrayList<DecorationBiddersBean> mBidders) {
+        ArrayList<DecorationBiddersBean> biddersShow = new ArrayList<>();
+        biddersShow.addAll(mBidders);
+
+        if (biddersShow != null && biddersShow.size() > 0) {
+            for (DecorationBiddersBean bidder : biddersShow) {
+                /**
+                 * 控制是否在当前ListView显示当前设计师
+                 */
+                if (!showCurrentDesigner(bidder.getWk_cur_sub_node_id())) {
+                    biddersShow.remove(bidder);
+                }
+            }
+        }
+        return biddersShow;
+    }
 
     /**
      * 是否已经选择了当前设计师量房
