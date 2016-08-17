@@ -97,7 +97,7 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
     @Override
     public void OnItemHoverCaseClick(int position) {
         String case_id = mCasesEntities.get(position).getId();
-        Intent intent = new Intent(mContext, CaseLibraryNewActivity.class);
+        Intent intent = new Intent(getActivity(), CaseLibraryNewActivity.class);
         intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(intent);
     }
@@ -122,7 +122,7 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, mContext,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
                         AlertView.Style.Alert, null).show();
                 hideFooterView(mCasesEntities);
             }
@@ -248,7 +248,6 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
     private int screenWidth;
     private int screenHeight;
     private boolean isFirstIn = true;
-    private Context mContext;
     private FiltrateContentBean mFiltrateContentBean;
     /// 集合,类.
     private HoverCaseAdapter mHoverCaseAdapter;
