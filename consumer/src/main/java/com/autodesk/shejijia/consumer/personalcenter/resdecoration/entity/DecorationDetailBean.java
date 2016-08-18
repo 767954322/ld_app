@@ -48,6 +48,8 @@ public class DecorationDetailBean implements Serializable {
     private String wk_template_id;
     private List<DecorationBiddersBean> bidders;
 
+
+
     public String getCity() {
         return city;
     }

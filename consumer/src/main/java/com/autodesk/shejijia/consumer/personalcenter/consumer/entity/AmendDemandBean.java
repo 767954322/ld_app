@@ -1,42 +1,16 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.entity;
 
 import java.io.Serializable;
+
 /**
- * @author  DongXueQiu .
+ * @author DongXueQiu .
  * @version 1.0 .
- * @date    16-6-7 上午11:19
- * @file    AmendDemandBean.java  .
- * @brief    修改需求的实体类.
+ * @date 16-6-7 上午11:19
+ * @file AmendDemandBean.java  .
+ * @brief 修改需求的实体类.
  */
 public class AmendDemandBean implements Serializable {
 
-    /**
-     * city : 110100
-     * city_name : 北京市
-     * click_number : 0
-     * community_name : she's
-     * consumer_mobile : 11012011900
-     * consumer_name : APP端发布需求-此字段不用
-     * contacts_mobile : 13718601763
-     * contacts_name : 发广告
-     * custom_string_status : 1
-     * decoration_budget : 5万以下
-     * decoration_style : 日式
-     * detail_desc : desc
-     * district : she's
-     * district_name : 东城区
-     * house_area : 12334
-     * house_type : 住宅空间
-     * is_beishu : 1
-     * is_deleted : 0
-     * is_public : 0
-     * living_room : 一室
-     * province : 110000
-     * province_name : 北京
-     * publish_time : 1458870895137
-     * room : 一厅
-     * toilet : 一卫
-     */
     private String city;
     private String city_name;
     private int click_number;
@@ -62,14 +36,8 @@ public class AmendDemandBean implements Serializable {
     private String publish_time;
     private String room;
     private String toilet;
-    /**
-     * design_budget : 3000以下
-     */
 
     private String design_budget;
-    /**
-     * needs_id : null
-     */
 
     private String needs_id;
 

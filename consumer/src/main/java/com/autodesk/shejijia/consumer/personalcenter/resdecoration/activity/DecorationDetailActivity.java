@@ -32,6 +32,8 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * @author he.liu .
  * @version v1.0 .
@@ -54,7 +56,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private TextView mTvAmendArea;
     private TextView mTvAmendRoomType;
     private TextView mTvAmendStyle;
-    private TextView mTvDetailAddress;
+    private TextView mTvCommunityName;
     private TextView mTvAddress;
     private TextView mTvPublicTime;
     private Button mBtnAmendDemand;
@@ -84,7 +86,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         mTvAmendRoomType = (TextView) findViewById(R.id.tv_amend_room_type);
         mTvAmendStyle = (TextView) findViewById(R.id.tv_amend_style);
         mTvAddress = (TextView) findViewById(R.id.tv_issue_address);
-        mTvDetailAddress = (TextView) findViewById(R.id.et_issue_demand_detail_address);
+        mTvCommunityName = (TextView) findViewById(R.id.et_issue_demand_detail_address);
         mTvPublicTime = (TextView) findViewById(R.id.tv_public_time);
         mBtnAmendDemand = (Button) findViewById(R.id.btn_fitment_amend_demand);
         mBtnStopDemand = (Button) findViewById(R.id.btn_fitment_stop_demand);
@@ -97,6 +99,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
+        EventBus.getDefault().registerSticky(this);
         Bundle extras = getIntent().getExtras();
         needs_id = (String) extras.get(Constant.ConsumerDecorationFragment.NEED_ID);
     }
@@ -104,13 +107,19 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        setTitleForNavbar(UIUtils.getString(R.string.title_decoration_detail));
 
-        getAmendDemand(needs_id);
+        setTitleForNavbar(UIUtils.getString(R.string.title_decoration_detail));
+        mTvNeedsId.setText(needs_id);
+
         getJsonFileReader();
-        setFormViewData();
 
         initAlertView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAmendDemand(needs_id);
     }
 
     @Override
@@ -145,8 +154,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.dialog.cancel();
-
+                CustomProgress.cancelDialog();
                 String info = GsonUtil.jsonToString(jsonObject);
                 mDecorationDetailBean = GsonUtil.jsonToBean(info, DecorationDetailBean.class);
                 updateViewFromData(mDecorationDetailBean);
@@ -155,9 +163,11 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.dialog.cancel();
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, DecorationDetailActivity.this,
-                        AlertView.Style.Alert, null).show();
+                CustomProgress.cancelDialog();
+                if (!CustomProgress.dialog.isShowing()){
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, DecorationDetailActivity.this,
+                            AlertView.Style.Alert, null).show();
+                }
             }
         };
         MPServerHttpManager.getInstance().getAmendDemand(need_id, okResponseCallback);
@@ -192,7 +202,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
 
     /**
-     * 　网络获取数据，更新页面
+     * 　获取数据，更新页面
      */
     private void updateViewFromData(DecorationDetailBean demandDetailBean) {
         String contacts_name = demandDetailBean.getContacts_name();
@@ -224,13 +234,6 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             mLlDemandModify.setVisibility(View.VISIBLE);
         }
 
-        if (custom_string_status.equals(Constant.NumKey.THREE)
-                || custom_string_status.equals(Constant.NumKey.ZERO_THREE)) {
-            mBtnAmendDemand.setClickable(false);
-            mBtnAmendDemand.setPressed(false);
-            mBtnAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
-        }
-
         district_name = TextUtils.isEmpty(district)
                 || "none".equals(district) ||
                 TextUtils.isEmpty(district_name)
@@ -255,16 +258,23 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         mTvAmendBudget.setText(TextUtils.isEmpty(decoration_budget) ? UIUtils.getString(R.string.no_data) : decoration_budget);
         mTvAmendArea.setText(TextUtils.isEmpty(house_area) ? UIUtils.getString(R.string.no_data) : house_area);
         mTvAddress.setText(TextUtils.isEmpty(address) ? UIUtils.getString(R.string.no_data) : address);
-        mTvDetailAddress.setText(TextUtils.isEmpty(community_name) ? UIUtils.getString(R.string.no_data) : community_name);
+        mTvCommunityName.setText(TextUtils.isEmpty(community_name) ? UIUtils.getString(R.string.no_data) : community_name);
         mTvPublicTime.setText(TextUtils.isEmpty(publish_time) ? UIUtils.getString(R.string.no_data) : publish_time);
 
         mTvDecorationName.setText(contacts_name + "/" + community_name);
 
-        List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
+        /**
+         * custom_string_status 审核状态
+         */
+        if (Constant.NumKey.THREE.equals(custom_string_status)
+                || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
+            setButtonGray(mBtnAmendDemand);
+        }
 
         /**
          * 控制修改和终止按钮是否可以点击
          */
+        List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
         DecorationBiddersBean biddersBean = null;
         if (null != bidders) {
             if (bidders.size() == 1) {
@@ -297,12 +307,6 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         btn.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
     }
 
-    /**
-     * 设置表单的写入逻辑
-     */
-    private void setFormViewData() {
-        mTvNeedsId.setText(needs_id);
-    }
 
     /**
      * 终止需求提示

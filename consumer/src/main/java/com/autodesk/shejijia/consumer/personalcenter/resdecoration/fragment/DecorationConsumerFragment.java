@@ -88,10 +88,10 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
                 if (isRefreshOrLoadMore){
                     mDecorationNeedsList.clear();
-                    updateViewFromData(state);
+                    updateViewFromData();
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }else {
-                    updateViewFromData(state);
+                    updateViewFromData();
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
 
@@ -110,7 +110,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
         });
     }
 
-    private void updateViewFromData(int state) {
+    private void updateViewFromData() {
         mDecorationNeedsList.addAll(mDecorationListBean.getNeeds_list());
         mDecorationConsumerAdapter.notifyDataSetChanged();
     }

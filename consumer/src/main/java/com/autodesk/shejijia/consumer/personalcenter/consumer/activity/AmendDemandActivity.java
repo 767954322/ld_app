@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DemandDetailBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationDetailBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -88,7 +89,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.amend_demand));
-        CustomProgress.show(this, "", false, null);
         getAmendDemand(needs_id);
 
         getJsonFileReader();
@@ -161,11 +161,15 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE_NAME, province_name);
                     amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, room);
                     amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_TOILET, toilet);
+
+
+                    /// TODO 九月份迭代 .
+                    mDecorationDetailBean = GsonUtil.jsonToBean(amendJson.toString(), DecorationDetailBean.class);
+
                     amendDemandBean = GsonUtil.jsonToBean(amendJson.toString(), AmendDemandBean.class);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                CustomProgress.show(this, "", false, null);
                 KLog.e("AmendDemandActivity", "amendJson:" + amendJson);
                 sendAmendDemand(needs_id, amendJson);
                 break;
@@ -247,6 +251,10 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
 
 
             }
+
+            if (null != mDecorationDetailBean) {
+                EventBus.getDefault().postSticky(mDecorationDetailBean);
+            }
             finish();
             return;
         }
@@ -261,10 +269,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
      * 获取当前需求
      */
     public void getAmendDemand(String need_id) {
+        CustomProgress.show(this, "", false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.dialog.cancel();
+                CustomProgress.cancelDialog();
 
                 String info = GsonUtil.jsonToString(jsonObject);
                 demandDetailBean = GsonUtil.jsonToBean(info, DemandDetailBean.class);
@@ -274,7 +283,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.dialog.cancel();
+                CustomProgress.cancelDialog();
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
                         AlertView.Style.Alert, null).show();
             }
@@ -317,11 +326,15 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
      * 修改需求
      */
     private void sendAmendDemand(String needs_id, JSONObject amendJson) {
+        CustomProgress.show(this, "", false, null);
+
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                mAmendDemandSuccessAlertView.show();
+                if (!CustomProgress.dialog.isShowing()) {
+                    mAmendDemandSuccessAlertView.show();
+                }
             }
 
             @Override
@@ -706,6 +719,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     private String detail_desc, decoration_budget, design_budget, custom_string_status;
     private DemandDetailBean demandDetailBean;
     private AmendDemandBean amendDemandBean;
+    private DecorationDetailBean mDecorationDetailBean;
     private Map<String, String> styleJson, spaceJson, livingRoomJson, roomJson, toiletJson;
     private String decoration_style_convert, house_type_convert, living_room_convert;
     private String room_convert, toilet_convert;
