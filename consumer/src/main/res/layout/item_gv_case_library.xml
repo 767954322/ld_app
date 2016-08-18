@@ -16,7 +16,7 @@
         android:layout_height="@dimen/size_35"
         android:layout_alignBottom="@+id/img_hover_case"
         android:layout_alignParentStart="true"
-        android:background="@drawable/gradient_reflect">
+        android:background="@drawable/gradient">
 
         <LinearLayout
             android:layout_width="wrap_content"
