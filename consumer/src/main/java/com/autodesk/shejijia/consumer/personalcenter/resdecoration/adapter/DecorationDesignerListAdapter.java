@@ -9,6 +9,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -29,8 +30,8 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
 
     private String mNeedsId;
     private Activity mActivity;
+    private MPBidderBean mMPBidderBean = new MPBidderBean();
     private ArrayList<DecorationBiddersBean> biddersEntities;
-
 
     public DecorationDesignerListAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id) {
         super(activity, datas, R.layout.item_decoration_designer_list);
@@ -44,8 +45,9 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
 
         final String designerId = bidder.getDesigner_id();
         final String bidderUid = bidder.getUid();
-        String user_name = bidder.getUser_name();
-        String avatarUrl = bidder.getAvatar();
+        final String user_name = bidder.getUser_name();
+        final String avatarUrl = bidder.getAvatar();
+
 
         String wk_cur_sub_node_id = bidder.getWk_cur_sub_node_id();
         String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, null, wk_cur_sub_node_id);
@@ -57,6 +59,30 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         ImageUtils.displayAvatarImage(avatarUrl, polygonImageView);
 
         /**
+         * TODO 九月份内容，暂时屏蔽
+         * 判断进入全流程逻辑还是进入评价页面
+         * 节点63,进入评价页面;其它节点，进入全流程逻辑
+         */
+//        if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63) {
+//            /**
+//             * 进入评价页面
+//             */
+//            holder.setOnClickListener(R.id.rl_item_decoration, new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mMPBidderBean.setAvatar(avatarUrl);
+//                    mMPBidderBean.setUser_name(user_name);
+//                    mMPBidderBean.setDesigner_id(designerId);
+//
+//                    Intent evaluateIntent = new Intent(mActivity, AppraiseDesignerActivity.class);
+//                    evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeedsId);
+//                    evaluateIntent.putExtra(FlowUploadDeliveryActivity.BIDDER_ENTITY, mMPBidderBean);
+//                    evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designerId);
+//                    mActivity.startActivity(evaluateIntent);
+//                }
+//            });
+//        } else {
+        /**
          * 进入全流程逻辑
          */
         holder.setOnClickListener(R.id.rl_item_decoration, new View.OnClickListener() {
@@ -67,9 +93,10 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeedsId);
                 intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designerId);
                 intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
-                mActivity.startActivityForResult(intent, 0);
+                mActivity.startActivity(intent);
             }
         });
+//        }
 
         /**
          * 设计师主页
