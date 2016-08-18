@@ -12,16 +12,28 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file('key/shejijia.jks')
+            storePassword "juranzhijia"
+            keyAlias "juranzhijia"
+            keyPassword "juranzhijia"
+        }
+    }
     buildTypes {
         debug {
+            signingConfig signingConfigs.release
             buildConfigField "boolean", "LOG_DEBUG", "true"
             minifyEnabled false
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
     productFlavors {
     }
 }
