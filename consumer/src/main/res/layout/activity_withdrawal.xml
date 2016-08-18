@@ -241,7 +241,7 @@
                     android:background="@drawable/bg_edit_text_shape"
                     android:hint="@string/please_enter_the_bank_card_number"
                     android:inputType="number"
-                    android:maxLength="19"
+                    android:maxLength="23"
                     android:singleLine="true"
                     android:textColor="@color/bg_66"
                     android:textSize="@dimen/size_14" />
