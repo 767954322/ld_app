@@ -40,18 +40,15 @@ import java.util.List;
  * @file DecorationBidderAdapter.java .
  * @brief 应标人数页面适配器 .
  */
-public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean> implements
-        View.OnClickListener, OnItemClickListener {
+public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean> {
 
     /// 节点11,邀请量房状态 .
     private static final int IS_BIDING = 11;
 
     private String mNeeds_id;
-    private String mDesigner_id;
     private Activity mActivity;
     private DecorationBiddersBean biddersBean;
     private ArrayList<DecorationBiddersBean> mBidders;
-    private AlertView mAlertViewRefuse;
 
     public DecorationBidderAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id) {
         super(activity, datas, R.layout.item_decoration_bidder_list);
@@ -61,9 +58,10 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     }
 
     @Override
-    public void convert(CommonViewHolder holder, DecorationBiddersBean biddersBean) {
+    public void convert(CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
         this.biddersBean = biddersBean;
-        mDesigner_id = biddersBean.getDesigner_id();
+        final String designer_id = biddersBean.getDesigner_id();
+        final String uid = biddersBean.getUid();
 
         String avatar = biddersBean.getAvatar();
         String nick_name = biddersBean.getUser_name();
@@ -102,49 +100,61 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
         holder.setText(R.id.tv_workflow_state, MPWkFlowManager.getWkSubNodeName(mActivity, null, wk_cur_sub_node_id));
 
-        holder.setOnClickListener(R.id.img_designer_chat, this);
-        holder.setOnClickListener(R.id.piv_designer_photo, this);
-        holder.setOnClickListener(R.id.btn_designer_refuse, this);
-        holder.setOnClickListener(R.id.btn_designer_measure, this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent;
-        switch (v.getId()) {
-            /// 聊天 .
-            case R.id.img_designer_chat:
+        /// 聊天 .
+        holder.setOnClickListener(R.id.img_designer_chat, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 openChatRoom();
-                break;
+            }
+        });
 
-            /// 设计师主页 .
-            case R.id.piv_designer_photo:
-                String uid = biddersBean.getUid();
-                intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
-                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, mDesigner_id);
+        /// 设计师主页 .
+        holder.setOnClickListener(R.id.piv_designer_photo, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mActivity, SeekDesignerDetailActivity.class);
+                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
                 intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, uid);
                 mActivity.startActivity(intent);
-                break;
+            }
+        });
 
-            /// 拒绝量房 .
-            case R.id.btn_designer_refuse:
-                mAlertViewRefuse = showAlertView();
-                mAlertViewRefuse.show();
-                break;
+        /// 拒绝量房 .
+        holder.setOnClickListener(R.id.btn_designer_refuse, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertView(UIUtils.getString(R.string.tip),
+                        UIUtils.getString(R.string.select_Ta_refuse),
+                        UIUtils.getString(R.string.cancel),
+                        new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
+                        AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        if (position != AlertView.CANCELPOSITION) {
+                            refuseDesignerMeasure(mNeeds_id, designer_id);
+                        }
+                    }
+                }).setCancelable(false).show();
+            }
+        });
 
-            /// 确认量房 .
-            case R.id.btn_designer_measure:
-                if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(mDesigner_id)) {
+        /// 确认量房 .
+        holder.setOnClickListener(R.id.btn_designer_measure, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(designer_id)) {
                     intent = new Intent(mActivity, FlowMeasureFormActivity.class);
                     intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeeds_id);
-                    intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, mDesigner_id);
+                    intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
                     /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
                     intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
                     mActivity.startActivity(intent);
                 }
-                break;
-        }
+            }
+        });
     }
+
 
     /**
      * 打开聊天室
@@ -210,19 +220,5 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             return false;
         }
     }
-
-
-    private AlertView showAlertView() {
-        return new AlertView(UIUtils.getString(R.string.tip),
-                UIUtils.getString(R.string.select_Ta_refuse),
-                UIUtils.getString(R.string.cancel),
-                new String[]{UIUtils.getString(R.string.sure)}, null, mActivity, AlertView.Style.Alert, this).setCancelable(false);
-    }
-
-    @Override
-    public void onItemClick(Object object, int position) {
-        if (object == mAlertViewRefuse && position != AlertView.CANCELPOSITION) {
-            refuseDesignerMeasure(mNeeds_id, mDesigner_id);
-        }
-    }
 }
+

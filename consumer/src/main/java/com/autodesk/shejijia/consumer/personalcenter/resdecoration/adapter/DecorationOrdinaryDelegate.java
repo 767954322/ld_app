@@ -145,6 +145,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                     mActivity.startActivity(mIntent);
                 }
             });
+        } else {
+            holder.setOnClickListener(R.id.rl_bidder_count, null);
         }
 
         /**
