@@ -86,7 +86,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         mBankName = filledData(getResources().getStringArray(R.array.mBank));
         setTitleForNavbar(UIUtils.getString(R.string.my_property_withdrawal));
         getMyPropertyData(memberEntity.getAcs_member_id());
-        getRealNameAuditStatus(memberEntity.getAcs_member_id(),memberEntity.getHs_uid());
+        getRealNameAuditStatus(memberEntity.getAcs_member_id(), memberEntity.getHs_uid());
         setBackName();
         showState();
     }
@@ -130,13 +130,33 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 //                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
 //                    break;
 //                }
+                if (!checkNameChese(branch_bank_name)) {
+                    Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if (!isBank) {
                     Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (!isBankNum) {
-                    Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                    break;
+
+                if (myPropertyBean == null) {
+
+                    if (!isBankNum) {
+                        Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                } else {
+
+                    if(!myPropertyBean.getDeposit_card().trim().equals(deposit_card)){
+
+                        if (!isBankNum) {
+                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+
+                    }
+
                 }
 
                 boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
@@ -151,6 +171,43 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         }
     }
 
+
+    /**
+     * 检测String是否全是中文
+     *
+     * @param name
+     * @return
+     */
+    public boolean checkNameChese(String name) {
+        boolean res = true;
+        char[] cTemp = name.toCharArray();
+        for (int i = 0; i < name.length(); i++) {
+            if (!isChinese(cTemp[i])) {
+                res = false;
+                break;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 判定输入汉字
+     *
+     * @param c
+     * @return
+     */
+    public boolean isChinese(char c) {
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * 获取我的资产信息
@@ -189,7 +246,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             }
         });
     }
-
 
 
     /**
