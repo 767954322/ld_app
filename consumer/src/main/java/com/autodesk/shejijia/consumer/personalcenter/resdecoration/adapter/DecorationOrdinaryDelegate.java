@@ -36,9 +36,9 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
     private static final String IS_NOT_BEI_SHU = "1";
     /// 支付了设计首款的节点 .
     private static final int PAYED_FIRST_COST = 41;
-    private Activity mActivity;
-    private Intent mIntent;
 
+    private Intent mIntent;
+    private Activity mActivity;
     private Map<String, String> spaceMap;
     private Map<String, String> styleMap;
 
@@ -85,7 +85,6 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         } else {
             holder.setText(R.id.tv_decoration_house_type, house_type);
         }
-
 
 
         holder.setText(R.id.tv_decoration_address, province_name + city_name + district_name);
@@ -288,7 +287,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         biddersShow.addAll(mBidders);
 
         if (biddersShow != null && biddersShow.size() > 0) {
-            for (int i = biddersShow.size()-1;i>=0;i--){
+            for (int i = biddersShow.size() - 1; i >= 0; i--) {
                 /**
                  * 控制是否在当前ListView显示当前设计师
                  */

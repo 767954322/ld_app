@@ -23,13 +23,14 @@ import java.util.ArrayList;
  * @brief 应标人数页面 .
  */
 public class DecorationBidderActivity extends NavigationBarActivity {
+
     public static final String BIDDER_KEY = "DecorationBidderActivity";
 
-    private ArrayList<DecorationBiddersBean> mBidders;
-    private DecorationBidderAdapter mDecorationBidderAdapter;
+    private ListView mListView;
 
     private String mNeeds_id;
-    private ListView mListView;
+    private ArrayList<DecorationBiddersBean> mBidders;
+    private DecorationBidderAdapter mDecorationBidderAdapter;
 
     @Override
     protected int getLayoutResId() {

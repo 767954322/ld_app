@@ -20,7 +20,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -47,12 +46,12 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     /// 节点11,邀请量房状态 .
     private static final int IS_BIDING = 11;
 
-    private Activity mActivity;
     private String mNeeds_id;
+    private String mDesigner_id;
+    private Activity mActivity;
     private DecorationBiddersBean biddersBean;
     private ArrayList<DecorationBiddersBean> mBidders;
     private AlertView mAlertViewRefuse;
-    private String mDesigner_id;
 
     public DecorationBidderAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id) {
         super(activity, datas, R.layout.item_decoration_bidder_list);
@@ -182,7 +181,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                String userInfo = GsonUtil.jsonToString(jsonObject);
+                mActivity.finish();
             }
 
             @Override

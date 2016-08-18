@@ -27,10 +27,9 @@ import java.util.List;
  */
 public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBiddersBean> {
 
+    private String mNeedsId;
     private Activity mActivity;
     private ArrayList<DecorationBiddersBean> biddersEntities;
-
-    private String mNeedsId;
 
 
     public DecorationDesignerListAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id) {

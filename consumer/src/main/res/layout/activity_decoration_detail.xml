@@ -104,12 +104,12 @@
 
                 <TextView
                     android:id="@+id/et_amend_amend_name"
-                    android:layout_width="@dimen/size_1"
-                    android:layout_height="match_parent"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:gravity="center_vertical"
-                    android:textColorHint="#999"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
@@ -132,13 +132,12 @@
 
                 <TextView
                     android:id="@+id/et_issue_amend_mobile"
-                    android:layout_width="@dimen/size_1"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
+                    android:layout_width="@dimen/size_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:gravity="center_vertical"
-                    android:inputType="phone"
-                    android:maxLength="11"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
@@ -192,7 +191,6 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:ellipsize="end"
-                    android:hint="@string/demand_please_address"
                     android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
@@ -230,7 +228,6 @@
                     android:ems="10"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:hint="@string/demand_design_budget_hint"
                     android:inputType="numberDecimal"
                     android:textColor="@color/black"
                     android:textColorHint="#999"
@@ -264,17 +261,10 @@
                     android:ems="10"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:hint="@string/demand_budget_hint"
                     android:inputType="numberDecimal"
                     android:textColor="@color/black"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_14"/>
-
-                <!--<TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/size_8"
-                    android:text="元"/>-->
 
             </LinearLayout>
 
@@ -302,7 +292,6 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:gravity="center_vertical"
-                    android:hint="@string/demand_please_project_types"
                     android:textColor="@color/black"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_14"/>
@@ -340,7 +329,6 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:hint="@string/issue_room"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
 
@@ -370,7 +358,6 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:ems="10"
-                    android:hint="@string/demand_import_area"
                     android:inputType="numberDecimal"
                     android:textColor="@color/black"
                     android:textColorHint="#999"
@@ -405,7 +392,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:hint="@string/demand_please_style"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>

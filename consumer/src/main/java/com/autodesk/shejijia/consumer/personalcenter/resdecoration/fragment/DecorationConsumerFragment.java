@@ -91,11 +91,9 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     updateViewFromData(state);
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }else {
-
                     updateViewFromData(state);
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
-
 
                 KLog.json(TAG, userInfo);
             }
