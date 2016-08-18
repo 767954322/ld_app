@@ -48,7 +48,7 @@ public class CaseLibraryActivity extends NavigationBarActivity {
         super.initView();
         caseMtab = ((MaterialTabs) findViewById(R.id.caseMtab));
         slippingViewPager = ((NoSlippingViewPager) findViewById(R.id.slippingViewPager));
-        fragmentList = new ArrayList<Fragment>();
+        fragmentList = new ArrayList<>();
 
         initTab();
         mFooterView = View.inflate(this, R.layout.view_empty_layout, null);
@@ -72,9 +72,9 @@ public class CaseLibraryActivity extends NavigationBarActivity {
         slippingViewPager.setAdapter(massiveCasesAdapter);
         caseMtab.setSameWeightTabs(true);
         caseMtab.setBackgroundColor(Color.WHITE);//Tab的背景色
-        caseMtab.setIndicatorColor(Color.RED);//下滑指示器的颜色
+        caseMtab.setIndicatorColor(Color.BLUE);//下滑指示器的颜色
         caseMtab.setIndicatorHeight(DensityUtil.dip2px(this, 2));//下滑指示器的高度
-        caseMtab.setTextColorSelected(Color.RED);//设置选中的tab字体颜色
+        caseMtab.setTextColorSelected(Color.BLUE);//设置选中的tab字体颜色
         caseMtab.setTextColorUnselected(Color.BLACK);//设置未选中的tab字体颜色
         caseMtab.setTabPaddingLeftRight(40);//设置tab距离左右的padding值
         caseMtab.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
