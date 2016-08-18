@@ -85,7 +85,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mBtnChat = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_chat);
         mBtnMeasure = (Button) mHeader.findViewById(R.id.btn_seek_designer_detail_optional_measure);
         mTvStyle = (TextView) mHeader.findViewById(R.id.tv_seek_designer_detail_style);
-        mTvFollowedNum= (TextView) mHeader.findViewById(R.id.tv_followed_num);
+        mTvFollowedNum = (TextView) mHeader.findViewById(R.id.tv_followed_num);
         mListView.addHeaderView(mHeader);
         mListView.addFooterView(mFooterView);
     }
@@ -105,6 +105,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(SeekDesignerDetailActivity.this, mCasesEntityArrayList, this);
         mListView.setAdapter(mSeekDesignerDetailAdapter);
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
+        getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0,
+                SeekDesignerDetailActivity.this.LIMIT, 0);
     }
 
     @Override
@@ -154,7 +156,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                                     bundle.putString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, "");
                                 }
                                 intent.putExtras(bundle);
-                               SeekDesignerDetailActivity.this.startActivity(intent);
+                                SeekDesignerDetailActivity.this.startActivity(intent);
                             }
                         });
                     } else {
@@ -314,9 +316,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onResponse(JSONObject jsonObject) {
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0,
-                        SeekDesignerDetailActivity.this.LIMIT, 0);
 
+                if (null == jsonObject) {
+                    return;
+                }
                 String info = GsonUtil.jsonToString(jsonObject);
                 seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
                 KLog.json(TAG, info);
@@ -469,6 +472,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             mMemberType = memberEntity.getMember_type();
+            mSelfAcsMemberId = memberEntity.getAcs_member_id();
             if (mMemberType.equals((Constant.UerInfoKey.CONSUMER_TYPE))) {
                 mLlChatMeasure.setVisibility(View.VISIBLE);
             } else {
@@ -588,7 +592,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     }
 
     /**
->>>>>>> d78ab47fb646527d6c8d282ca53025fa815035a6
      * 第一次进入要刷新页面
      *
      * @param hasFocus 判断是否刷新

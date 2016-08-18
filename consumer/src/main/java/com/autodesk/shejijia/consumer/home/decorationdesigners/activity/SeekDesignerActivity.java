@@ -202,7 +202,6 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                 try {
                     String info = GsonUtil.jsonToString(jsonObject);
                     mSeekDesignerBean = GsonUtil.jsonToBean(info, SeekDesignerBean.class);
-
                     updateViewFromData(state);
                 } finally {
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
