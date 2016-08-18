@@ -679,8 +679,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 /// TODO 九月份任务，暂时屏蔽评价入口 .
-//                mLinerDelayedShow.setVisibility(View.GONE);
-                mDeliverySureAlertView.show();
+                mLinerDelayedShow.setVisibility(View.GONE);
+//                mDeliverySureAlertView.show();
             }
 
             @Override
