@@ -29,15 +29,12 @@ import java.util.List;
  * @file DecorationConsumerFragment.java .
  * @brief 消费者家装订单主页面 .
  */
-public class DecorationConsumerFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener{
-
-    ///is_beishu:0 北舒套餐 1 非北舒.
-    private static final String DECORATION_NEEDS_ID = "DecorationConsumerFragment";
+public class DecorationConsumerFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
 
     private String TAG = getClass().getSimpleName();
     private int LIMIT = 10;
     private int OFFSET = 0;
-    private boolean isRefreshOrLoadMore = true;
+    private boolean isRefreshOrLoadMore = false;
 
     private PullListView mPlvConsumerDecoration;
     private PullToRefreshLayout mPullToRefreshLayout;
@@ -82,19 +79,18 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
         MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
-
-                if (isRefreshOrLoadMore){
+                if (isRefreshOrLoadMore) {
+                    updateViewFromData();
+                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                } else {
                     mDecorationNeedsList.clear();
                     updateViewFromData();
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                }else {
-                    updateViewFromData();
-                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
 
+                CustomProgress.cancelDialog();
                 KLog.json(TAG, userInfo);
             }
 
@@ -104,8 +100,10 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 CustomProgress.cancelDialog();
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-                        AlertView.Style.Alert, null).show();
+                if (!CustomProgress.dialog.isShowing()) {
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
+                            AlertView.Style.Alert, null).show();
+                }
             }
         });
     }
@@ -114,18 +112,20 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
         mDecorationNeedsList.addAll(mDecorationListBean.getNeeds_list());
         mDecorationConsumerAdapter.notifyDataSetChanged();
     }
+
     //刷新数据
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        isRefreshOrLoadMore = true;
+        isRefreshOrLoadMore = false;
         getMyDecorationData(0, LIMIT, 1);
         OFFSET = 0;
     }
+
     //加载数据
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
 
-        isRefreshOrLoadMore = false;
+        isRefreshOrLoadMore = true;
         OFFSET = OFFSET + 10;
         getMyDecorationData(OFFSET, LIMIT, 1);
     }

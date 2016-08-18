@@ -99,7 +99,6 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        EventBus.getDefault().registerSticky(this);
         Bundle extras = getIntent().getExtras();
         needs_id = (String) extras.get(Constant.ConsumerDecorationFragment.NEED_ID);
     }
