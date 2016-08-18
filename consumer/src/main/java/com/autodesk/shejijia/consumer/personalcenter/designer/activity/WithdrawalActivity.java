@@ -124,15 +124,15 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 String tv_card_number = getText(tv_withdrawal_bank_card_number);
                 deposit_card = (tv_card_number == null) ? getText(et_withdrawal_bank_card_number) : tv_card_number;
 
+                if (!"".equals(deposit_card)) {
+                    deposit_card = deposit_card.replace(" ", "").trim();
+                }
 //                String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
 //                String regex_bank = "[\\u4e00-\\u9fa5]{2,32}";
 
 //                boolean isName = account_user_name.trim().matches(regex_name);
                 boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
-                boolean isBankNum = false;
-                if (!TextUtils.isEmpty(deposit_card)) {
-                    isBankNum = deposit_card.replace(" ", "").trim().matches(RegexUtil.PHONE_BLANK);
-                }
+                boolean isBankNum = deposit_card.matches(RegexUtil.PHONE_BLANK);
 
 //                if (!isName) {
 //                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
@@ -147,7 +147,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     break;
                 }
 
-                if (myPropertyBean == null) {
+                if (   myPropertyBean == null) {
 
                     if (!isBankNum) {
                         Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
@@ -155,8 +155,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     }
 
                 } else {
-
-                    if (!myPropertyBean.getDeposit_card().trim().equals(deposit_card)) {
+                    if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
 
                         if (!isBankNum) {
                             Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
