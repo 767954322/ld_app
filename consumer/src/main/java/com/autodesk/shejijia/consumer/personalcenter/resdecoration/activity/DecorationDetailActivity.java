@@ -32,8 +32,6 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * @author he.liu .
  * @version v1.0 .
@@ -263,6 +261,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         mTvDecorationName.setText(contacts_name + "/" + community_name);
 
         /**
+         * 控制修改按钮置灰
          * custom_string_status 审核状态
          */
         if (Constant.NumKey.THREE.equals(custom_string_status)
