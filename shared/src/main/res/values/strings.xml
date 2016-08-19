@@ -530,7 +530,7 @@
     <string name="no_holder_upload_my_front">没有上传本人持证正面照</string>
     <string name="id_number_input_is_not_correct">身份证号输入不正确</string>
     <string name="mobile_phone_number_input_is_not_correct">手机号输入不正确</string>
-    <string name="no_input_name">姓名格式输入不正确（长度为二到十个汉字）</string>
+    <string name="no_input_name">姓名格式输入不正确（长度为二到十位中英文）</string>
     <string name="xingming_xianzhi">长度为二到十个汉字</string>
     <string name="id_size">请输入18位身份证号码</string>
 
