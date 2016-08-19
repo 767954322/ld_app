@@ -110,13 +110,10 @@ public class DecorationBidderActivity extends NavigationBarActivity implements D
             for (int i = size - 1; i >= 0; i--) {
                 String designer_id1 = mBidders.get(i).getDesigner_id();
                 if (designer_id.equals(designer_id1)) {
-                    mBidders.get(i).setWk_cur_node_id(wk_cur_sub_node_id);
-                    mDecorationBidderAdapter = new DecorationBidderAdapter(this, mBidders, mNeeds_id);
-                    mListView.setAdapter(mDecorationBidderAdapter);
-                    mListView.setDivider(null);
-                    mDecorationBidderAdapter.notifyDataSetChanged();
+                    mBidders.get(i).setWk_cur_sub_node_id(wk_cur_sub_node_id);
                 }
             }
+            mDecorationBidderAdapter.notifyDataSetChanged();
         }
     }
 }

@@ -48,6 +48,8 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     private Activity mActivity;
     private DecorationBiddersBean biddersBean;
     private ArrayList<DecorationBiddersBean> mBidders;
+    private OnItemViewClickCallback mOnItemViewClickCallback;
+
 
     public DecorationBidderAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id) {
         super(activity, datas, R.layout.item_decoration_bidder_list);
@@ -180,7 +182,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
      * [1]如果只有一个设计师应标，就关闭当前页面
      * [2]如果有多个设计师应标，就移除当前设计师，并更新页面
      */
-    public void refuseDesignerMeasure(String needs_id, final String designer_id, final int position, final String wk_cur_sub_node_id) {
+    private void refuseDesignerMeasure(String needs_id, final String designer_id, final int position, final String wk_cur_sub_node_id) {
         CustomProgress.show(mActivity, "", false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -219,7 +221,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
      * @param wk_cur_sub_node_id 当前全流程节点
      * @return 如果为true, 表示进入全流程逻辑;如果为false,表示在应标进行中
      */
-    public boolean isNOtBiding(String wk_cur_sub_node_id) {
+    private boolean isNOtBiding(String wk_cur_sub_node_id) {
         boolean isNotBiding = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= IS_BIDING;
         if (isNotBiding) {
             return true;
@@ -229,14 +231,17 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     }
 
 
-    public interface OnItemViewClickCallback {
-        void setOnItemViewClickCallback(String designer_id);
-    }
-
-    private OnItemViewClickCallback mOnItemViewClickCallback;
-
     public void setOnItemViewClickCallback(OnItemViewClickCallback onItemViewClickCallback) {
         mOnItemViewClickCallback = onItemViewClickCallback;
     }
+
+    public interface OnItemViewClickCallback {
+        /**
+         * 点击选TA量房的回调
+         */
+        void setOnItemViewClickCallback(String designer_id);
+
+    }
+
 }
 

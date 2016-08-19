@@ -156,7 +156,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_is_empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
                                 AlertView.Style.Alert, null).show();
                     } else {
-//                        if (formatDate(date, currentTime)) {
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_SERVICE_DATE, currentTime);
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_ID, user_id);
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_DESIGNER_ID, designer_id);
@@ -192,12 +191,15 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                         AlertView.Style.Alert, null).show();
 
                 break;
+
             case R.id.btn_measure_form_accept: /// 同意量房 .
                 agreeMeasureHouse(needs_id);
                 break;
+
             case R.id.btn_measure_form_refuse: /// 拒绝量房 .
                 mRefuseMeasureHouseAlertView.show();
                 break;
+
             case R.id.tvc_measure_form_time: /// 设置量房时间 .
                 pvTime.show();
                 break;
@@ -586,7 +588,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private RelativeLayout rlMeasureWarmTips;
     private RelativeLayout rl_house_charge_show;
     private RelativeLayout rlWarmTips;
-    private LinearLayout consumer_designer_house_charge_show;
     private LinearLayout consumer_house_charge_show;
     private LinearLayout designer_house_charge_show;
     private EditText tv_measure_form_designer_liangfangfeit;
