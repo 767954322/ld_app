@@ -62,7 +62,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
         mIvTemp = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
-
         mPullListView.addFooterView(mFooterView);
     }
 
@@ -95,6 +94,15 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
             intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
             startActivity(intent);
         }
+    }
+
+    public void handleFilterOption1() {
+        mFiltrateContentBean = null;
+        OFFSET = 0;
+        getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
+//        mPullToRefreshLayout.autoRefresh();
+
+
     }
 
     public void handleFilterOption() {
@@ -261,8 +269,8 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
 
     private void updateNotify(FiltrateContentBean content) {
         this.mFiltrateContentBean = content;
-//        mPullToRefreshLayout.autoRefresh();
-        getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
+        mPullToRefreshLayout.autoRefresh();
+//        getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
     /// 静态常量,网址.
