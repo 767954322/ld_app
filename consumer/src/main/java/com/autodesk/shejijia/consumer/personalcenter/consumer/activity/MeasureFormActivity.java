@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -96,20 +95,18 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = tvc_area.getText().toString().trim();
-                    area = String.format("%.2f",Double.valueOf(area));
+                    area = String.format("%.2f", Double.valueOf(area));
                     tvc_area.setText(area);
                 }
             }
         });
-        Log.i("aaa","bbbcreate");
-
     }
 
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
 
-        if (first){
+        if (first) {
             first = false;
             Bundle extras = getIntent().getExtras();
             flow_state = (int) extras.get(Constant.SeekDesignerDetailKey.FLOW_STATE);
@@ -119,12 +116,16 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
             String styleAll = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
             // String styleAll = getIntent().getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
-            String Style[] = styleAll.split(",");
-            styles = new ArrayList<String>();
-            for (int i = 0; i < Style.length; i++){
+            if (styleAll != null) {
 
-                String styleItem = Style[i];
-                styles.add(styleItem);
+                String s = styleAll.replace('，', ',');
+                String Style[] = s.split(",");
+                styles = new ArrayList<String>();
+                for (int i = 0; i < Style.length; i++) {
+
+                    String styleItem = Style[i];
+                    styles.add(styleItem);
+                }
 
             }
         }
@@ -135,9 +136,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         if (flow_state == 1) {
-
             getRealNameAuditStatus(designer_id, hs_uid);
-
         }
 
         setTitleForNavbar(UIUtils.getString(R.string.demand_measure_house_form));
@@ -303,27 +302,26 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //.....................................
-                houseArea = String.format("%.2f",Double.valueOf(houseArea));
+                houseArea = String.format("%.2f", Double.valueOf(houseArea));
                 tvc_area.setText(houseArea);
                 String subNum = "0";
                 if (houseArea.contains(".")) {
                     subNum = houseArea.substring(0, houseArea.indexOf("."));
                 }
-                if (TextUtils.isEmpty(houseArea)||Float.valueOf(houseArea) == 0) {
+                if (TextUtils.isEmpty(houseArea) || Float.valueOf(houseArea) == 0) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                     return;
                 } else {
-                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4){
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
                         getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                         return;
-                    }else {
+                    } else {
                         if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
                             getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                             return;
                         }
                     }
                 }
-
 
 
                 if (designBudget == null) {
@@ -377,8 +375,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
 //                try {
 //                    if (formatDate(date, currentData)) {
-                        CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
-                        postSendMeasureForm(jsonObject);
+                CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
+                postSendMeasureForm(jsonObject);
 //                    } else {
 //                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
 //                    }
@@ -409,7 +407,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
                 break;
             case R.id.tvIllustrate:
-                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null,new String[]{UIUtils.getString(R.string.finish_cur_pager)}, MeasureFormActivity.this,
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null, null, new String[]{UIUtils.getString(R.string.finish_cur_pager)}, MeasureFormActivity.this,
                         AlertView.Style.Alert, null).show();
                 break;
             default:
@@ -483,7 +481,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
-                currentData = DateUtil.dateFormat(currentData,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点");
+                currentData = DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点");
                 tvc_time.setText(currentData);
             }
         });
@@ -621,7 +619,15 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      */
     private void setStyleType() {
         final ArrayList<String> styleItems = new ArrayList<>();
-//        List<String> styles = filledData(getResources().getStringArray(R.array.style));
+
+        if (styles != null) {
+
+
+        } else {
+
+            styles = filledData(getResources().getStringArray(R.array.style));
+
+        }
         pvStyleOptions = new OptionsPickerView(this);
         for (String item : styles) {
             styleItems.add(item);

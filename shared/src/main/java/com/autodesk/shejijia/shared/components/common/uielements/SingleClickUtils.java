@@ -1,10 +1,6 @@
 package com.autodesk.shejijia.shared.components.common.uielements;
 
 /**
- * Created by  on .
- */
-
-/**
  * @author allengu .
  * @version v1.0 .
  * @date 16-8-4 .
@@ -19,7 +15,7 @@ public class SingleClickUtils {
     public static boolean isFastDoubleClick() {
         long time = System.currentTimeMillis();
         long timeD = time - lastClickTime;
-        if (0 < timeD && timeD < 800) {
+        if (0 < timeD && timeD < 2000) {
             return true;
         }
         lastClickTime = time;

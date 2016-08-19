@@ -11,7 +11,6 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
@@ -138,18 +137,12 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             }
         });
 
-        /// 确认量房 .
+        /// 选TA量房 .
         holder.setOnClickListener(R.id.btn_designer_measure, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(designer_id)) {
-                    intent = new Intent(mActivity, FlowMeasureFormActivity.class);
-                    intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeeds_id);
-                    intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
-                    /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
-                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
-                    mActivity.startActivity(intent);
+                if (null != mOnItemViewClickCallback) {
+                    mOnItemViewClickCallback.setOnItemViewClickCallback(designer_id);
                 }
             }
         });
@@ -219,6 +212,17 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         } else {
             return false;
         }
+    }
+
+
+    public interface OnItemViewClickCallback {
+        void setOnItemViewClickCallback(String designer_id);
+    }
+
+    private OnItemViewClickCallback mOnItemViewClickCallback;
+
+    public void setOnItemViewClickCallback(OnItemViewClickCallback onItemViewClickCallback) {
+        mOnItemViewClickCallback = onItemViewClickCallback;
     }
 }
 

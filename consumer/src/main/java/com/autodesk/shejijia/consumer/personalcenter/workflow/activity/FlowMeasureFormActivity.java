@@ -63,9 +63,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvName = (TextView) findViewById(R.id.tvc_measure_form_name);
         tvPhone = (TextView) findViewById(R.id.tvc_measure_form_phone);
 
-        consumer_designer_house_charge_show = (LinearLayout) findViewById(R.id.consumer_house_charge_show);
         designer_house_charge_show = (LinearLayout) findViewById(R.id.designer_house_charge_show);
-        tv_measure_form_designer_liangfangfeit = (EditText) findViewById(R.id.tv_measure_form_designer_liangfangfeit);
         consumer_rmb_show = (TextView) findViewById(R.id.consumer_rmb_show);
         rl_house_charge_show = (RelativeLayout) findViewById(R.id.rl_house_charge_show);
         consumer_house_charge_show = (LinearLayout) findViewById(R.id.consumer_house_charge_show);
@@ -92,7 +90,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvWarmTips = (TextView) findViewById(R.id.tvWarmTips);
         tvWarmTipsContent = (TextView) findViewById(R.id.tvWarmTipsContent);
         rlMeasureWarmTips = (RelativeLayout) findViewById(R.id.rlMeasureWarmTips);
-        rlWarmTips= (RelativeLayout) findViewById(R.id.rlWarmTips);
+        rlWarmTips = (RelativeLayout) findViewById(R.id.rlWarmTips);
         tvMeasureWarmTips = (TextView) findViewById(R.id.tvMeasureWarmTips);
         tvMeasureWarmTipsContent = (TextView) findViewById(R.id.tvMeasureWarmTipsContent);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
@@ -160,31 +158,32 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     } else {
 //                        if (formatDate(date, currentTime)) {
 
-                            CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
+                        CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
 
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_SERVICE_DATE, currentTime);
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_ID, user_id);
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_DESIGNER_ID, designer_id);
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, needs_id);
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_NAME, user_name);
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_MOBILE_NUMBER, mobile_number);
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ORDER_TYPE, 0);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_SERVICE_DATE, currentTime);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_ID, user_id);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_DESIGNER_ID, designer_id);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, needs_id);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_NAME, user_name);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_MOBILE_NUMBER, mobile_number);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ORDER_TYPE, 0);
 
-                            if (TextUtils.isEmpty(mThreead_id)) {
-                                jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
-                            } else {
-                                jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThreead_id);
-                            }
+                        if (TextUtils.isEmpty(mThreead_id)) {
+                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                        } else {
+                            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThreead_id);
+                        }
 
-                            if (TextUtils.isEmpty(amount) || "null".equals(amount)) {
-                                jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.00);
-                            } else {
-                                jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, amount);
-                            }
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ADJUSTMENT, 600);
-                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_CHANNEL_TYPE, "Android");
+                        amount = tv_measure_form_designer_liangfangfeit.getText().toString();
+                        if (TextUtils.isEmpty(amount) || "null".equals(amount)) {
+                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.00);
+                        } else {
+                            jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, amount);
+                        }
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_ADJUSTMENT, 600);
+                        jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_CHANNEL_TYPE, "Android");
 
-                            agreeResponseBid(jsonObject);
+                        agreeResponseBid(jsonObject);
 //                        } else {
 //                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
 //                                    AlertView.Style.Alert, null).show();
@@ -238,14 +237,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             designer_house_charge_show.setVisibility(View.GONE);
             rlWarmTips.setVisibility(View.GONE);
             if (wk_cur_sub_node_id_i >= 11) {
-                consumer_designer_house_charge_show.setVisibility(View.GONE);
                 consumer_house_charge_show.setVisibility(View.VISIBLE);
                 ll_consumer_send.setVisibility(View.GONE);
                 tvIllustrate.setVisibility(View.GONE);
                 tvc_measure_form_time.setClickable(false);
                 String timerStr = mBidders.get(0).getMeasure_time();
-//                String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
-//                String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
 
                 if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
                     tvc_measure_form_time.setText("");
@@ -259,16 +255,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 tvWarmTips.setText(R.string.warmTips);
                 tvWarmTipsContent.setText(R.string.warm_tips_content);
                 tvc_measure_form_time.setText("");
-                consumer_house_charge_show.setVisibility(View.VISIBLE);
-                consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
+                consumer_house_charge_show.setVisibility(View.GONE);
             }
         } else if (memType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) { // 设计师
             tvc_measure_form_time.setClickable(false);
             tvc_measure_form_time.setText(mBidders.get(0).getMeasure_time());
-          //  consumer_house_charge_show.setVisibility(View.GONE);
+            //  consumer_house_charge_show.setVisibility(View.GONE);
 
-//            String timeStr = mBidders.get(0).getMeasure_time().replace("-", "").replace(":", "").replaceAll(" ","").trim();
-//            String timer_form = timeStr.substring(0, 4) + "年 " + timeStr.substring(4, 6) + "月 " + timeStr.substring(6, 8) + "日 " + timeStr.substring(8, 10) + "点";
             String timerStr = mBidders.get(0).getMeasure_time();
 //            tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
             if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
@@ -278,16 +271,16 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             }
 
             designer_house_charge_show.setVisibility(View.VISIBLE);
-            setViewAnimation(rlMeasureWarmTips);
             switch (wk_cur_sub_node_id_i) {
                 case 11:
+                    setViewAnimation(rlMeasureWarmTips);
                     if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
                         ll_designer_send.setVisibility(View.GONE);
                         designer_house_charge_show.setVisibility(View.VISIBLE);
                         setViewAnimation(rlMeasureWarmTips);
-                       // rlMeasureWarmTips.setVisibility(View.GONE);
+                        // rlMeasureWarmTips.setVisibility(View.GONE);
                     } else {
-                       // rlMeasureWarmTips.setVisibility(View.VISIBLE);
+                        // rlMeasureWarmTips.setVisibility(View.VISIBLE);
                         ll_designer_send.setVisibility(View.VISIBLE);
                         tvWarmTips.setText(R.string.Mrasuretips);
                         tvWarmTipsContent.setText(R.string.update_measure_house_cost);
@@ -300,19 +293,19 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     rlMeasureWarmTips.setVisibility(View.GONE);
                     ll_designer_send.setVisibility(View.GONE);
                     designer_house_charge_show.setVisibility(View.GONE);
-                   // consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
+                    // consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
                     break;
             }
         }
     }
 
     //动画效果,增加温馨提示，出现与消失的动画效果
-    private void setViewAnimation(final ViewGroup viewAnimation){
+    private void setViewAnimation(final ViewGroup viewAnimation) {
 
         final AnimationSet animationSetShow = new AnimationSet(true);
         final AnimationSet animationSetHide = new AnimationSet(true);
-        AlphaAnimation alphaAnimationShow = new AlphaAnimation(0,1);
-        AlphaAnimation alphaAnimationHide = new AlphaAnimation(1,0);
+        AlphaAnimation alphaAnimationShow = new AlphaAnimation(0, 1);
+        AlphaAnimation alphaAnimationHide = new AlphaAnimation(1, 0);
         alphaAnimationShow.setDuration(3000);
         alphaAnimationHide.setDuration(3000);
         animationSetShow.addAnimation(alphaAnimationShow);
@@ -357,7 +350,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         });
 
 
-
     }
 
     /// 将省市区Code改成汉字 .
@@ -389,12 +381,12 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             amount = "0.00";
             tvc_measure_form_fee.setText(amount);
             tv_measure_form_designer_liangfangfeit.setText(amount);
-            consumer_rmb_show.setText(amount+"元");
+            consumer_rmb_show.setText(amount + "元");
         } else {
             String measurement_fee = mBidders.get(0).getMeasurement_fee();
             tvc_measure_form_fee.setText(SplitStringUtils.splitStringDot(measurement_fee));
             tv_measure_form_designer_liangfangfeit.setText(SplitStringUtils.splitStringDot(measurement_fee));
-            consumer_rmb_show.setText(SplitStringUtils.splitStringDot(measurement_fee)+"元");
+            consumer_rmb_show.setText(SplitStringUtils.splitStringDot(measurement_fee) + "元");
         }
     }
 
@@ -427,19 +419,19 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             toilet_convert = toilet;
         }
         //将风格转换成汉字
-        if (styleJson.containsKey(requirement.getDecoration_style())){
+        if (styleJson.containsKey(requirement.getDecoration_style())) {
 
             house_style = styleJson.get(requirement.getDecoration_style());
 
-        }else {
+        } else {
 
             house_style = requirement.getDecoration_style();
         }
         //将房屋类型转换成汉字
-        if (spaceJson.containsKey(requirement.getHouse_type())){
+        if (spaceJson.containsKey(requirement.getHouse_type())) {
 
             house_type_content = spaceJson.get(requirement.getHouse_type());
-        }else {
+        } else {
 
             house_type_content = requirement.getHouse_type();
         }
@@ -615,7 +607,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private TextView tvMeasureWarmTips;
     private TextView tvMeasureWarmTipsContent;
     private TextView consumer_rmb_show;
-
 
 
     private Button btn_measure_form_accept;
