@@ -57,7 +57,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     }
 
     @Override
-    public void convert(CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
+    public void convert(final CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
         this.biddersBean = biddersBean;
         final String designer_id = biddersBean.getDesigner_id();
         final String uid = biddersBean.getUid();
@@ -87,7 +87,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         /**
          *控制显示拒绝、选TA量房，还是显示全流程状态
          */
-        String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
+        final String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
         boolean isNotBiding = isNOtBiding(wk_cur_sub_node_id);
         if (isNotBiding) {
             holder.setVisible(R.id.ll_bidder_after_biding, true);
@@ -130,7 +130,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
                     @Override
                     public void onItemClick(Object object, int position) {
                         if (position != AlertView.CANCELPOSITION) {
-                            refuseDesignerMeasure(mNeeds_id, designer_id);
+                            refuseDesignerMeasure(mNeeds_id, designer_id, holder.getPosition(), wk_cur_sub_node_id);
                         }
                     }
                 }).setCancelable(false).show();
@@ -177,14 +177,28 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
     /**
      * 消费者拒绝设计师量房
+     * [1]如果只有一个设计师应标，就关闭当前页面
+     * [2]如果有多个设计师应标，就移除当前设计师，并更新页面
      */
-    public void refuseDesignerMeasure(String needs_id, String designer_id) {
+    public void refuseDesignerMeasure(String needs_id, final String designer_id, final int position, final String wk_cur_sub_node_id) {
         CustomProgress.show(mActivity, "", false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                mActivity.finish();
+
+                if (null != mBidders && mBidders.size() == 1) {
+                    mActivity.finish();
+                } else {
+                    int size = mBidders.size();
+                    for (int i = size - 1; i >= 0; i--) {
+                        String designer_id1 = mBidders.get(i).getDesigner_id();
+                        if (designer_id.equals(designer_id1)) {
+                            mBidders.remove(i);
+                            notifyDataSetChanged();
+                        }
+                    }
+                }
             }
 
             @Override

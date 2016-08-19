@@ -36,7 +36,6 @@ import com.socks.library.KLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -117,6 +116,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         if (object == mAgreeResponseBidSuccessAlertView && position == 0) {
             Intent intent = new Intent();
             intent.putExtra(Constant.BundleKey.BUNDLE_SUB_NODE_ID, wk_cur_sub_node_id);
+            intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
             setResult(RESULT_OK, intent);
             finish();
         }
@@ -157,9 +157,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                                 AlertView.Style.Alert, null).show();
                     } else {
 //                        if (formatDate(date, currentTime)) {
-
-                        CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
-
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_SERVICE_DATE, currentTime);
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_USER_ID, user_id);
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_DESIGNER_ID, designer_id);
@@ -174,7 +171,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                             jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThreead_id);
                         }
 
-                        amount = tv_measure_form_designer_liangfangfeit.getText().toString();
                         if (TextUtils.isEmpty(amount) || "null".equals(amount)) {
                             jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_AMOUNT, 0.00);
                         } else {
@@ -184,17 +180,12 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                         jsonObject.put(JsonConstants.JSON_FLOW_MEASURE_FORM_CHANNEL_TYPE, "Android");
 
                         agreeResponseBid(jsonObject);
-//                        } else {
-//                            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowMeasureFormActivity.this,
-//                                    AlertView.Style.Alert, null).show();
-//                        }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
+
                 break;
             case R.id.tvIllustrate: /// 量房费说明 .
                 new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null, null, new String[]{UIUtils.getString(R.string.finish_cur_pager)}, FlowMeasureFormActivity.this,
@@ -202,7 +193,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
                 break;
             case R.id.btn_measure_form_accept: /// 同意量房 .
-                CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
                 agreeMeasureHouse(needs_id);
                 break;
             case R.id.btn_measure_form_refuse: /// 拒绝量房 .
@@ -441,24 +431,20 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvc_measure_form_style.setText(house_style);
     }
 
-    /**
-     * @param beforeDate
-     * @param afterDate
-     * @brief yyyy-MM-dd HH:mm:ss格式转化成毫秒数(long)进行判断 .
-     */
-    public static boolean formatDate(String beforeDate, String afterDate) throws ParseException {
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date d1 = sf.parse(beforeDate);
-        Date d2 = sf.parse(afterDate);
-        long stamp = d2.getTime() - d1.getTime();
-        return stamp >= (3600 * 1000);
-    }
 
     /**
      * @param needs_id
      * @brief 设计师同意量房 .
      */
     public void agreeMeasureHouse(String needs_id) {
+        CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
+        JSONObject jsonObject = new JSONObject();
+        String fee = tv_measure_form_designer_liangfangfeit.getText().toString().trim();
+        try {
+            jsonObject.put("measurement_fee", fee);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -473,7 +459,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 mAgreeMeasureHouseFailAlertView.show();
             }
         };
-        MPServerHttpManager.getInstance().agreeMeasureHouse(needs_id, okResponseCallback);
+        MPServerHttpManager.getInstance().agreeMeasureHouse(needs_id, designer_id, jsonObject, okResponseCallback);
     }
 
     /**
@@ -502,9 +488,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
      * 消费者同意应标 .
      */
     public void agreeResponseBid(JSONObject jsonObject) {
+        CustomProgress.show(FlowMeasureFormActivity.this, null, false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 MPMeasureFormBean mMPMeasureFormBean = GsonUtil.jsonToBean(userInfo, MPMeasureFormBean.class);
                 updateViewFromData(mMPMeasureFormBean);
@@ -521,8 +509,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     }
 
     private void updateViewFromData(MPMeasureFormBean mMPMeasureFormBean) {
-        CustomProgress.cancelDialog();
-
         List<MPMeasureFormBean.BiddersBean> bidders = mMPMeasureFormBean.getBidders();
         if (bidders != null && bidders.size() > 0) {
             wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();

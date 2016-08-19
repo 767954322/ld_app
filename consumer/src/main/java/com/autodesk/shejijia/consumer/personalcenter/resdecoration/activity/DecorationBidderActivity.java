@@ -14,7 +14,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 
@@ -91,7 +90,7 @@ public class DecorationBidderActivity extends NavigationBarActivity implements D
         Intent intent;
         if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(designer_id)) {
             /***
-             * 如果消费者选TA量房，就关闭当前页面
+             * 如果消费者选TA量房，根据量房表单打操作，进行逻辑操作
              */
             intent = new Intent(DecorationBidderActivity.this, FlowMeasureFormActivity.class);
             intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeeds_id);
@@ -105,9 +104,19 @@ public class DecorationBidderActivity extends NavigationBarActivity implements D
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && null != data) {
-            String string = data.getExtras().getString(Constant.BundleKey.BUNDLE_SUB_NODE_ID);
-            KLog.d(TAG, string);
-            finish();
+            String designer_id = data.getExtras().getString(Constant.BundleKey.BUNDLE_DESIGNER_ID);
+            String wk_cur_sub_node_id = data.getExtras().getString(Constant.BundleKey.BUNDLE_SUB_NODE_ID);
+            int size = mBidders.size();
+            for (int i = size - 1; i >= 0; i--) {
+                String designer_id1 = mBidders.get(i).getDesigner_id();
+                if (designer_id.equals(designer_id1)) {
+                    mBidders.get(i).setWk_cur_node_id(wk_cur_sub_node_id);
+                    mDecorationBidderAdapter = new DecorationBidderAdapter(this, mBidders, mNeeds_id);
+                    mListView.setAdapter(mDecorationBidderAdapter);
+                    mListView.setDivider(null);
+                    mDecorationBidderAdapter.notifyDataSetChanged();
+                }
+            }
         }
     }
 }
