@@ -39,7 +39,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     private PullListView mPlvConsumerDecoration;
     private PullToRefreshLayout mPullToRefreshLayout;
 
-    private DecorationListBean mDecorationListBean;
     private DecorationConsumerAdapter mDecorationConsumerAdapter;
     private List<DecorationNeedsListBean> mDecorationNeedsList = new ArrayList<>();
 
@@ -59,16 +58,13 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
         if (null == mDecorationConsumerAdapter) {
             mDecorationConsumerAdapter = new DecorationConsumerAdapter(getActivity(), mDecorationNeedsList);
         }
-
         mPlvConsumerDecoration.setAdapter(mDecorationConsumerAdapter);
-
     }
 
     @Override
     protected void initListener() {
         super.initListener();
         mPullToRefreshLayout.setOnRefreshListener(this);
-
     }
 
     /**
@@ -80,13 +76,13 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
+                DecorationListBean mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
                 if (isRefreshOrLoadMore) {
-                    updateViewFromData();
+                    updateViewFromData(mDecorationListBean);
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 } else {
                     mDecorationNeedsList.clear();
-                    updateViewFromData();
+                    updateViewFromData(mDecorationListBean);
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
 
@@ -108,7 +104,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
         });
     }
 
-    private void updateViewFromData() {
+    private void updateViewFromData(DecorationListBean mDecorationListBean) {
         mDecorationNeedsList.addAll(mDecorationListBean.getNeeds_list());
         mDecorationConsumerAdapter.notifyDataSetChanged();
     }
@@ -133,6 +129,8 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onResume() {
         super.onResume();
-        getMyDecorationData(OFFSET, LIMIT, 1);
+        isRefreshOrLoadMore = false;
+        getMyDecorationData(0, LIMIT, 1);
+        OFFSET = 0;
     }
 }
