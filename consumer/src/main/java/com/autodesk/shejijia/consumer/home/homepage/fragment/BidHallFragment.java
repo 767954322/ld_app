@@ -261,7 +261,8 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
 
     private void updateNotify(FiltrateContentBean content) {
         this.mFiltrateContentBean = content;
-        mPullToRefreshLayout.autoRefresh();
+//        mPullToRefreshLayout.autoRefresh();
+        getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
     /// 静态常量,网址.
