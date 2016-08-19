@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author DongXueQiu .
@@ -201,8 +202,8 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
             public void onResponse(JSONObject jsonObject) {
                 try {
                     String info = GsonUtil.jsonToString(jsonObject);
-                    mSeekDesignerBean = GsonUtil.jsonToBean(info, SeekDesignerBean.class);
-                    updateViewFromData(state);
+                    SeekDesignerBean mSeekDesignerBean = GsonUtil.jsonToBean(info, SeekDesignerBean.class);
+                    updateViewFromData(state, mSeekDesignerBean);
                 } finally {
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
@@ -222,9 +223,10 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     /**
      * 获取数据，更新页面
      *
-     * @param state 　刷新用到的状态
+     * @param state             　刷新用到的状态
+     * @param mSeekDesignerBean
      */
-    private void updateViewFromData(int state) {
+    private void updateViewFromData(int state, SeekDesignerBean mSeekDesignerBean) {
         switch (state) {
             case 0:
                 OFFSET = 0;
@@ -240,7 +242,11 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
             default:
                 break;
         }
-        mDesignerListEntities.addAll(this.mSeekDesignerBean.getDesigner_list());
+        List<SeekDesignerBean.DesignerListEntity> designer_list = mSeekDesignerBean.getDesigner_list();
+        if (null == designer_list) {
+            return;
+        }
+        mDesignerListEntities.addAll(mSeekDesignerBean.getDesigner_list());
         mSeekDesignerAdapter.notifyDataSetChanged();
     }
 
@@ -315,7 +321,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
 
 
     /// 集合，类.
-    private SeekDesignerBean mSeekDesignerBean;
+//    private SeekDesignerBean mSeekDesignerBean;
     private SeekDesignerAdapter mSeekDesignerAdapter;
     private DesignerFiltrateBean mDesignerFiltrateBean;
     private ArrayList<SeekDesignerBean.DesignerListEntity> mDesignerListEntities = new ArrayList<>();

@@ -1,8 +1,11 @@
 package com.autodesk.shejijia.shared.components.common.tools.about;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -58,8 +61,7 @@ public class AboutDesignerContactActivity extends NavigationBarActivity implemen
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.ll_about_designer_contact)
-        {
+        if (i == R.id.ll_about_designer_contact) {
             mAlertView.show();
 
         }
@@ -75,6 +77,16 @@ public class AboutDesignerContactActivity extends NavigationBarActivity implemen
     public void onItemClick(Object o, int position) {
         if (o == mAlertView && position != AlertView.CANCELPOSITION) {
             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "400-650-3333"));
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             startActivity(intent);
         }
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -100,19 +101,33 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 }
             }
         });
+        Log.i("aaa","bbbcreate");
 
     }
 
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        Bundle extras = getIntent().getExtras();
-        flow_state = (int) extras.get(Constant.SeekDesignerDetailKey.FLOW_STATE);
-        needs_id = (String) extras.get(Constant.SeekDesignerDetailKey.NEEDS_ID);
-        designer_id = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
-        mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
-        mThread_id = (String) extras.get(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);
+
+        if (first){
+            first = false;
+            Bundle extras = getIntent().getExtras();
+            flow_state = (int) extras.get(Constant.SeekDesignerDetailKey.FLOW_STATE);
+            needs_id = (String) extras.get(Constant.SeekDesignerDetailKey.NEEDS_ID);
+            designer_id = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+            hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
+            mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
+            String styleAll = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
+            // String styleAll = getIntent().getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
+            String Style[] = styleAll.split(",");
+            styles = new ArrayList<String>();
+            for (int i = 0; i < Style.length; i++){
+
+                String styleItem = Style[i];
+                styles.add(styleItem);
+
+            }
+        }
     }
 
 
@@ -606,7 +621,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      */
     private void setStyleType() {
         final ArrayList<String> styleItems = new ArrayList<>();
-        List<String> styles = filledData(getResources().getStringArray(R.array.style));
+//        List<String> styles = filledData(getResources().getStringArray(R.array.style));
         pvStyleOptions = new OptionsPickerView(this);
         for (String item : styles) {
             styleItems.add(item);
@@ -810,6 +825,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
     /// 变量.
     private int flow_state;
+    private boolean first = true;
     private String designer_id;
     private String mThread_id;
     private String hs_uid;
@@ -838,71 +854,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private ArrayList<String> roomsList = new ArrayList<>();
     private ArrayList<ArrayList<String>> hallsList = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
+    private List<String> styles;
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
 
-
-    //    private void showState(String needs_id, String designer_id) {
-//        /**
-//         * @brief complete flow scheme .
-//         */
-//        if (flow_state == 1) {
-//            CustomProgress.show(MeasureFormActivity.this, "", false, null);
-//            getOrderDetailsInfo(needs_id, designer_id);
-//            tvc_name.setEnabled(false);
-//            tvc_phone.setEnabled(false);
-//            tvc_project_budget.setEnabled(false);
-//            tvc_fitment_budget.setEnabled(false);
-//            tvc_area.setEnabled(false);
-//            tvc_house_type.setEnabled(false);
-//            tvc_time.setEnabled(false);
-//            tvc_address.setEnabled(false);
-//            tvc_estate.setEnabled(false);
-//            ll_style.setVisibility(View.GONE);
-//            ll_type.setVisibility(View.GONE);
-//            btn_send_form.setVisibility(View.GONE);
-//        }
-//    }
-
-    //    /**
-//     * @param needs_id
-//     * @param designer_id
-//     * @brief 获取个人信息详情
-//     */
-//    public void getOrderDetailsInfo(String needs_id, String designer_id) {
-//        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                CustomProgress.cancelDialog();
-//                String userInfo = GsonUtil.jsonToString(jsonObject);
-//                wkFlowDetailsBean = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
-//                WkFlowDetailsBean.RequirementEntity requirement = wkFlowDetailsBean.getRequirement();
-//                if (requirement == null) {
-//                    return;
-//                }
-//                tvc_name.setText(requirement.getContacts_name());
-//                tvc_phone.setText(requirement.getContacts_mobile());
-//                tvc_project_budget.setText(requirement.getDesign_budget() + "");
-//                tvc_fitment_budget.setText(requirement.getDecoration_budget());
-//                tvc_area.setText(requirement.getHouse_area() + "m²");
-//                tvc_house_type.setText(requirement.getHouse_type());
-//                tvc_time.setText(requirement.getPublish_time());
-//                tvc_address.setText(requirement.getCity() + requirement.getProvince() + requirement.getDistrict());
-//                tvc_estate.setText(requirement.getCommunity_name());
-//                List<WkFlowDetailsBean.RequirementEntity.BiddersEntity> bidders = requirement.getBidders();
-//                if (null != bidders && bidders.size() > 0) {
-//                    String measurement_fee = bidders.get(0).getMeasurement_fee();
-//                    measurement_fee = UIUtils.getNodataIfEmpty(measurement_fee);
-//                    tv_measure_fee.setText(measurement_fee);
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                MPNetworkUtils.logError(TAG, volleyError);
-//                CustomProgress.cancelDialog();
-//            }
-//        };
-//        MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, designer_id, okResponseCallback);
-//    }
 }

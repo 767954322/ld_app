@@ -146,6 +146,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                                 bundle.putString(Constant.SeekDesignerDetailKey.DESIGNER_ID, mDesignerId);
                                 bundle.putString(Constant.SeekDesignerDetailKey.SEEK_TYPE, Constant.SeekDesignerDetailKey.SEEK_DESIGNER_DETAIL);
                                 bundle.putString(Constant.SeekDesignerDetailKey.HS_UID, mHsUid);
+                                bundle.putString(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL,seekDesignerDetailHomeBean.getDesigner().getStyle_names());
                                 bundle.putInt(Constant.SeekDesignerDetailKey.FLOW_STATE, 0);
 
                                 if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {

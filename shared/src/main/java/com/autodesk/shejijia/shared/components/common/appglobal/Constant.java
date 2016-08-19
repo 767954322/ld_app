@@ -152,6 +152,7 @@ public class Constant {
         public static String SEEK_DESIGNER_DETAIL = "SEEK_DESIGNER_DETAIL";
         public static String HS_UID = "HS_UID";
         public static String FLOW_STATE = "FLOW_STATE";
+        public static String DESIGNER_STYLE_ALL = "DESIGNERSTYLEALL";
     }
 
     /**
@@ -265,6 +266,7 @@ public class Constant {
         public static final String DIY_COUNT = "diy_count";
         public static final String CASE_COUNT = "case_count";
         public static final String THEME_PIC = "theme_pic";
+        public static final String DESIGN_PRICE_CODE = "design_price_code";
     }
 
     /**
