@@ -252,36 +252,39 @@ public class PullToRefreshLayout extends RelativeLayout {
      * @param refreshResult PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
      */
     public void loadmoreFinish(int refreshResult) {
-        loadingView.clearAnimation();
-        loadingView.setVisibility(View.GONE);
-        switch (refreshResult) {
-            case SUCCEED:
-                // 加载成功
-                loadStateImageView.setVisibility(View.VISIBLE);
-                loadStateTextView.setText(R.string.load_succeed);
-                loadStateImageView.setBackgroundResource(R.drawable.load_succeed);
-                break;
-            case FAIL:
-            default:
-                // 加载失败
-                loadStateImageView.setVisibility(View.VISIBLE);
-                loadStateTextView.setText(R.string.load_fail);
-                loadStateImageView.setBackgroundResource(R.drawable.load_failed);
-                break;
+        if (loadingView!=null){
+            loadingView.clearAnimation();
+            loadingView.setVisibility(View.GONE);
+            switch (refreshResult) {
+                case SUCCEED:
+                    // 加载成功
+                    loadStateImageView.setVisibility(View.VISIBLE);
+                    loadStateTextView.setText(R.string.load_succeed);
+                    loadStateImageView.setBackgroundResource(R.drawable.load_succeed);
+                    break;
+                case FAIL:
+                default:
+                    // 加载失败
+                    loadStateImageView.setVisibility(View.VISIBLE);
+                    loadStateTextView.setText(R.string.load_fail);
+                    loadStateImageView.setBackgroundResource(R.drawable.load_failed);
+                    break;
+            }
+            if (pullUpY < 0) {
+                // 刷新结果停留1秒
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        changeState(DONE);
+                        hide();
+                    }
+                }.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                changeState(DONE);
+                hide();
+            }
         }
-        if (pullUpY < 0) {
-            // 刷新结果停留1秒
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    changeState(DONE);
-                    hide();
-                }
-            }.sendEmptyMessageDelayed(0, 1000);
-        } else {
-            changeState(DONE);
-            hide();
-        }
+
     }
 
     ///改变状态.
