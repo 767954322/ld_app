@@ -74,15 +74,14 @@ public class ApiStatusUtil {
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
-//                if (tag == 0) {
-//                    AdskApplication.getInstance().doLogout(mContext);
-//                    AdskApplication.getInstance().doLogin(mContext);
-//
-//                }else {
-//
-//                }
-                AdskApplication.getInstance().doLogout(mContext);
-                AdskApplication.getInstance().doLogin(mContext);
+                if (tag == 0) {
+                    AdskApplication.getInstance().doLogout(mContext);
+                    AdskApplication.getInstance().doLogin(mContext);
+
+                }else {
+
+                }
+
 
             }
         }).show();
