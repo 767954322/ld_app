@@ -69,25 +69,25 @@ public class OkJsonRequest extends JsonObjectRequest {
         return super.setCacheEntry(entry);
     }
 
-    /*@Override
-    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-        try {
-            String jsonString = new String(response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
-
-            JSONObject result = null;
-
-            if (jsonString != null && jsonString.length() > 0)
-                result = new JSONObject(jsonString);
-
-            return Response.success(result,
-                    HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
-            return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
-        }
-    }*/
+//    @Override
+//    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+//        try {
+//            String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+//
+//            int statusCode = response.statusCode;
+//            Log.d("OkJsonRequest", "statusCode:" + statusCode);
+//            JSONObject result = null;
+//
+//            if (jsonString != null && jsonString.length() > 0)
+//                result = new JSONObject(jsonString);
+//
+//            return Response.success(result, HttpHeaderParser.parseCacheHeaders(response));
+//        } catch (UnsupportedEncodingException e) {
+//            return Response.error(new ParseError(e));
+//        } catch (JSONException je) {
+//            return Response.error(new ParseError(je));
+//        }
+//    }
 
     /**
      * 取消请求
