@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,23 +15,22 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
+import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -79,6 +77,9 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = et_issue_demand_area.getText().toString().trim();
+                    if (TextUtils.isEmpty(area)){
+                        area = "0";
+                    }
                     area = String.format("%.2f",Double.valueOf(area));
                     et_issue_demand_area.setText(area);
                 }
@@ -131,31 +132,37 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_room: /// 请选择户型：室 厅 卫 .
                 pvRoomTypeOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.ll_issue_style: /// 风格 .
                 pvStyleOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_budget: /// 请选择装修预算 .
                 pvDecorationBudgetOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_design_budget: /// 请选择设计预算 .
                 pvDesignBudgetOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_address: /// 请选择地址：省 市 区 .
                 getPCDAddress();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.btn_send_demand: /// 提交 .
@@ -163,6 +170,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     return;
                 }
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 String area = et_issue_demand_area.getText().toString();
 
 
@@ -190,6 +198,9 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //..................................
+                if (TextUtils.isEmpty(area)){
+                    area = "0";
+                }
                 area = String.format("%.2f",Double.valueOf(area));
                 et_issue_demand_area.setText(area);
                 String subNum = "0";
