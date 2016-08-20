@@ -524,7 +524,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
                     if (isEmail || consumerEmail.isEmpty()) {
 
-                        if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
+                        if (!detailAddress.isEmpty() && detailAddress.length() >= 2 && decorateAddress.length() <= 32) {
 
                             if (isSketch) {
 
