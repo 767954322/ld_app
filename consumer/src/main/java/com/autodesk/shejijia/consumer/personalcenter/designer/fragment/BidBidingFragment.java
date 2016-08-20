@@ -9,27 +9,28 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
+import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -59,6 +60,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
         mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
         rl_empty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         tv_empty_message = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
+        CustomProgress.show(getActivity(), "", false, null);
     }
 
     @Override
@@ -84,7 +86,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
     private void onWindowFocusChanged() {
         // 第一次进入自动刷新
         if (isFirstIn) {
-            mPullToRefreshLayout.autoRefresh();
+            onRefresh(mPullToRefreshLayout);
             isFirstIn = false;
         }
     }
@@ -267,6 +269,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
                 MyBidBean myBidBean = GsonUtil.jsonToBean(str, MyBidBean.class);
                 onFragmentShown(myBidBean.getBidding_needs_list());
@@ -276,6 +279,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                CustomProgress.cancelDialog();
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
                         AlertView.Style.Alert, null).show();
