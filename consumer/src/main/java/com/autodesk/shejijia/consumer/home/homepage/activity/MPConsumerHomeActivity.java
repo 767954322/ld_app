@@ -24,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -175,7 +176,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
             loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
         }
 
-        if (index == R.id.designer_indent_list_btn) {
+        if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
             mBidHallFragment = new BidHallFragment();
             loadMainFragment(mBidHallFragment, BID_FRAGMENT_TAG);
         }
@@ -230,6 +231,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                 setTitleForNavbar(UIUtils.getString(R.string.app_name));
                 break;
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
+                mBidHallFragment.handleFilterOption1();
                 TextView textView = (TextView) findViewById(R.id.nav_left_textView);
                 textView.setVisibility(View.VISIBLE);
                 Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
@@ -237,6 +239,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity {
                 textView.setCompoundDrawables(null, null, drawable, null);
                 textView.setText(UIUtils.getString(R.string.bid_filter));
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
+
+
+
                 break;
 
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
