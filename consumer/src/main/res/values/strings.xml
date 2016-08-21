@@ -2,4 +2,8 @@
     <string name="app_name">设计家</string>
     <string name="title_messagecenter">消息中心</string>
     <string name="item_messagecenter_tital">消息中心</string>
+    <string name="loginguoqi">登陆过期</string>
+    <string name="canshuyichang">参数错误</string>
+    <string name="caozuoerror">当前操作不合法</string>
+    <string name="apierrror">API内部异常</string>
 </resources>
