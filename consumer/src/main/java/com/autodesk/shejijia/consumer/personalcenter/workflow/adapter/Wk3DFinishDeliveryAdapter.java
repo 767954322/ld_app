@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -42,7 +41,6 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<Wk3DPlanDelivery.De
          * 方案的缩略图
          */
         final String url = deliveryFilesEntity.getUrl();
-        Log.i("aaa",""+url);
         String str = url.substring(url.lastIndexOf('.') + 1);
         /**
          * 方案的名字
@@ -121,6 +119,18 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<Wk3DPlanDelivery.De
             });
         } else {
             imageView.setImageDrawable(UIUtils.getDrawable(R.drawable.common_case_icon));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(url);
+                    intent.setData(content_url);
+
+                    mContext.startActivity(intent);
+                }
+            });
 
         }
     }
