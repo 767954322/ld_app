@@ -80,14 +80,7 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<Wk3DPlanDelivery.De
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent("android.intent.action.VIEW");
-//                    intent.addCategory("android.intent.category.DEFAULT");
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    Uri uri = Uri.fromFile(file);
-//                    intent.setDataAndType(uri, "application/msword");
-//                    Intent intent = new Intent(mContext, OfficeWebViewActivity.class);
-//                    intent.putExtra("url",url);
-//                    intent.putExtra("title",name);
+//
 
                     Intent intent = new Intent();
                     intent.setAction("android.intent.action.VIEW");
@@ -99,8 +92,33 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<Wk3DPlanDelivery.De
             });
         } else if (Constant.DocumentTypeKey.TYPE_XLSX.equals(str) || Constant.DocumentTypeKey.TYPE_XLS.equals(str)) {
             imageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_excel));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(url);
+                    intent.setData(content_url);
+
+                    mContext.startActivity(intent);
+                }
+            });
         } else if (Constant.DocumentTypeKey.TYPE_PDF.equals(str)) {
             imageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_pdf));
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(url);
+                    intent.setData(content_url);
+
+                    mContext.startActivity(intent);
+                }
+            });
         } else {
             imageView.setImageDrawable(UIUtils.getDrawable(R.drawable.common_case_icon));
 
