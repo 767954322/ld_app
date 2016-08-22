@@ -14,6 +14,7 @@ import com.autodesk.shejijia.consumer.bidhall.entity.RealNameBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CertificationActivity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -128,6 +129,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,BiddingHallDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getBidHallDetailData(needs_id, okResponseCallback);
@@ -157,13 +159,18 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 String info = GsonUtil.jsonToString(jsonObject);
                 KLog.json(info);
                 getAlertView(UIUtils.getString(R.string.designer_bid_detail_success), null, false).show();
+                mBtnSendBid.setEnabled(false);
+                mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+                mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+                mBtnSendBid.setText(UIUtils.getString(R.string.bided));
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-                getAlertView(UIUtils.getString(R.string.designer_bid_detail_fail), null, false).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,BiddingHallDetailActivity.this);
+              //  getAlertView(UIUtils.getString(R.string.designer_bid_detail_fail), null, false).show();
             }
         };
         MPServerHttpManager.getInstance().sendBidDemand(jsonObject, needs_id, designer_id, okResponseCallback);
