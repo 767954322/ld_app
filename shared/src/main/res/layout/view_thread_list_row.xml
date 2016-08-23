@@ -29,7 +29,8 @@
         android:gravity="center"
         android:text="11"
         android:textColor="@color/white"
-        android:textSize="@dimen/chat_list_unread_fontsize" />
+        android:textSize="@dimen/chat_list_unread_fontsize"
+        android:visibility="gone"/>
 
     <include layout="@layout/view_thread_list_common_content"
              android:layout_width="match_parent"
