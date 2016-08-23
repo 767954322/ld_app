@@ -35,7 +35,7 @@
         android:ellipsize="end"
         android:textColor="@color/chat_list_common_message_textcolor"
         android:textSize="@dimen/chat_list_common_content_fontsize"
-        android:text="@string/hello" />
+        android:text="" />
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
