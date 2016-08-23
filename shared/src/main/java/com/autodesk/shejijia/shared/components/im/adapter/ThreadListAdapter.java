@@ -74,6 +74,15 @@ public class ThreadListAdapter extends BaseAdapter
             return R.layout.view_thread_list_row;
     }
 
+    public void hideUnreadCountForRow(View view)
+    {
+        View unreadMessageCountView = view.findViewById(R.id.tv_unread_message_count);
+
+        if (unreadMessageCountView != null)
+            unreadMessageCountView.setVisibility(View.GONE);
+
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {

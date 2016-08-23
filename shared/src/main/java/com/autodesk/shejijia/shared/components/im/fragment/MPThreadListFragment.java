@@ -180,6 +180,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         else
             intent = new Intent(mActivity, ChatRoomActivity.class);
 
+        mThreadListAdapter.hideUnreadCountForRow(view);
         MPChatThread thread = getThreadObjectForIndex(position);
         MPChatUser user = MPChatUtility.getComplimentryUserFromThread(thread, mMemberId);
         intent.putExtra(ChatRoomActivity.THREAD_ID, thread.thread_id);
