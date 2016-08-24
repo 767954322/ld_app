@@ -24,17 +24,12 @@ android {
         }
     }
     lintOptions {
-
         abortOnError false
 
     }
 
     dataBinding {
         enabled = true
-    }
-
-    lintOptions {
-        abortOnError false
     }
 }
 
