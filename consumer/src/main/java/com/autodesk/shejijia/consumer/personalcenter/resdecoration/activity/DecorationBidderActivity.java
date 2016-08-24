@@ -90,7 +90,7 @@ public class DecorationBidderActivity extends NavigationBarActivity implements D
         Intent intent;
         if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(designer_id)) {
             /***
-             * 如果消费者选TA量房，根据量房表单打操作，进行逻辑操作
+             * 如果消费者选TA量房，根据量房表单的操作，进行逻辑操作
              */
             intent = new Intent(DecorationBidderActivity.this, FlowMeasureFormActivity.class);
             intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeeds_id);

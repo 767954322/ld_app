@@ -121,11 +121,12 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         });
 
         /// 拒绝量房 .
+        final String finalNick_name = nick_name;
         holder.setOnClickListener(R.id.btn_designer_refuse, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.select_Ta_refuse),
+                        "确认拒绝" + finalNick_name + "设计师？",
                         UIUtils.getString(R.string.cancel),
                         new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
                         AlertView.Style.Alert, new OnItemClickListener() {

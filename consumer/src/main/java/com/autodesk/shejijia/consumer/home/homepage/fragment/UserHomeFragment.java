@@ -104,10 +104,8 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             return;
         }
         member_id = mMemberEntity.getAcs_member_id();
-        getConsumerInfoData(member_id);
 
     }
-
 
 
 
@@ -528,7 +526,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             initRequirementBtn();
             initFindDesignerBtn();
             initCaseLibraryBtn();
-
         }
     }
 
@@ -538,6 +535,9 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         if (null != mFloatingActionsMenu) {
             mFloatingActionsMenu.close(true);
         }
+
+        getConsumerInfoData(member_id);
+
 
     }
 

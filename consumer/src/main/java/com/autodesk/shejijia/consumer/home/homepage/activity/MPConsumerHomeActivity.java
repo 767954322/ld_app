@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
-import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.DecorationConsumerFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
@@ -27,13 +24,13 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.DecorationConsumerFragment;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateContainsBean;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
@@ -83,8 +80,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
         contain = (LinearLayout) findViewById(R.id.ll_contain);
-
-        screenWidth = getScreenWidth(this);
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout, null);
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
@@ -292,8 +287,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         if (isActiveFragment(MyDecorationProjectFragment.class) || isActiveFragment(DecorationConsumerFragment.class)) {
             Intent intent = new Intent(this, IssueDemandActivity.class);
-            mConsumerNickName = TextUtils.isEmpty(mConsumerNickName) ? UIUtils.getString(R.string.anonymity) : mConsumerNickName;
-            intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mConsumerNickName);
+            String nickName = TextUtils.isEmpty(mConsumerNickName) ? UIUtils.getString(R.string.anonymity) : mConsumerNickName;
+            intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nickName);
             startActivity(intent);
         }
     }
@@ -419,17 +414,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
-    /**
-     * 获取屏幕的宽
-     */
-    public static int getScreenWidth(Context context) {
 
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        int width = wm.getDefaultDisplay().getWidth();
-
-        return width;
-    }
 
     //切换fragment 改变指针
     @Override
@@ -547,12 +532,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
      * 网络获取数据并且更新
      */
     private void updateViewFromData() {
-        if (mConsumerEssentialInfoEntity != null && !TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar()) && MPConsumerHomeActivity.this != null) {
-            mConsumerNickName = mConsumerEssentialInfoEntity.getNick_name();
+        if (mConsumerEssentialInfoEntity != null
+                && !TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar())
+                && MPConsumerHomeActivity.this != null) {
             ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), user_avatar);
         }
 
-        if (designerInfoDetails != null && !TextUtils.isEmpty(designerInfoDetails.getAvatar()) && MPConsumerHomeActivity.this != null) {
+        if (designerInfoDetails != null
+                && !TextUtils.isEmpty(designerInfoDetails.getAvatar())
+                && MPConsumerHomeActivity.this != null) {
             ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), user_avatar);
         }
 
@@ -571,7 +559,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-
+                mConsumerNickName = mConsumerEssentialInfoEntity.getNick_name();
                 updateViewFromData();
             }
 
@@ -643,24 +631,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     //设置头像
     private void setConsumerOrDesignerPicture() {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-
+        if (mMemberEntity != null &&
+                Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             getConsumerInfoData(mMemberEntity.getAcs_member_id());
-
             return;
-
         }
 
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-
             getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
-
             return;
-
         }
-
         setImageForNavCircleView(ButtonType.LEFTCIRCLE, R.drawable.icon_default_avator);
-
     }
 
 
@@ -750,15 +731,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
 
         } else {
-
             new AlertView(UIUtils.getString(com.autodesk.shejijia.shared.R.string.tip)
                     , UIUtils.getString(com.autodesk.shejijia.shared.R.string.unable_create_beishu_meal)
                     , null, null, new String[]{UIUtils.getString(com.autodesk.shejijia.shared.R.string.sure)}
                     , MPConsumerHomeActivity.this
                     , AlertView.Style.Alert, null).show();
-
         }
-
     }
 
     @Override
@@ -774,7 +752,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     if (null != scanResult) {
                         jumpToChatRoom(scanResult);
                     }
-
                     break;
             }
         }
@@ -803,27 +780,19 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private TextView design;
     private TextView construction;
     private LinearLayout contain;
-    private LinearLayout contain_point;
     private View contain_layout;
     private ChooseViewPointer chooseViewPointer;
     private int index;//判断所在fragment
-    private int lastIndex;
     private String mConsumerNickName;
-    private boolean isRefush = false;
-    final int RESULT_CODE = 101;
     final float POINTER_START_NUMBER = 0F;
     final float POINTER_START_END_NUMBER = 1 / 3F;
     final float POINTER_MIDDLE_END_NUMBER = 2 / 3F;
     final float POINTER_END_NUMBER = 1F;
     private int btWidth;
     private int btHeight;
-    private int screenWidth;
 
     private UserHomeFragment mUserHomeFragment;
-
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
-    private WkFlowStateBean wkFlowStateBean;
-
     private BidHallFragment mBidHallFragment;
     private DesignerInfoDetails designerInfoDetails;
     private MyDecorationProjectDesignerFragment mDesignerPersonalCenterFragment;
