@@ -14,4 +14,8 @@ public class Constants {
     //用户登陆成功后存在sp中的key
     public static final String USER_INFO = "user_info";
 
+    //服务器端url地址:
+    public static final String BASE_URL = "http://cp-alpha-plan.homestyler.com/api/v1";
+//    public static final String BASE_URL = "http://ec2-54-223-58-121.cn-north-1.compute.amazonaws.com.cn:8080/api/v1";
+
 }

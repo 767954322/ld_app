@@ -6,4 +6,9 @@
     <string name="main_tab_issue">问题</string>
     <string name="main_tab_session">群聊</string>
 
+    <!-- 弹出框里的文字内容 -->
+    <string name="popup_save_update_save">保存修改</string>
+    <string name="popup_save_update_delete">删除修改</string>
+    <string name="popup_save_update_cancel">取消</string>
+
 </resources>

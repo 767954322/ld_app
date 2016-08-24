@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/linearlayout_divider_shape"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <TextView
+                android:id="@+id/save_update"
+                style="@style/popup_save_update_textview_style"
+                android:background="@drawable/popup_textview_topradius_bg_selector"
+                android:text="@string/popup_save_update_save"
+                android:textColor="@color/blue"
+                tools:text="保存修改" />
+
+            <TextView
+                android:id="@+id/delete_update"
+                style="@style/popup_save_update_textview_style"
+                android:background="@drawable/popup_textview_bottomradius_bg_selector"
+                android:text="@string/popup_save_update_delete"
+                android:textColor="@color/red"
+                tools:text="删除修改" />
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+        <TextView
+            android:id="@+id/cancel_update"
+            style="@style/popup_save_update_textview_style"
+            android:background="@drawable/popup_textview_allradius_bg_selector"
+            android:text="@string/popup_save_update_cancel"
+            android:textColor="@color/blue"
+            tools:text="取消" />
+
+    </LinearLayout>
+
+
+</FrameLayout>

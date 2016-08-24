@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_margin="@dimen/spacing_padding_double"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_padding_double"
+            android:divider="@drawable/linearlayout_divider_shape"
+            android:showDividers="middle"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_padding_double"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/spacing_margin_third"
+                    android:layout_marginStart="@dimen/spacing_margin_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_project_name"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/font_gray"
+                        android:ellipsize="end"
+                        android:textSize="@dimen/font_normal"
+                        android:lines="1"
+                        tools:text="李成成 四季雅韵28号1101室李成成 四季雅韵28号1101室李成成 四季雅韵28号1101室"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="有问题"/>
+                </LinearLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_padding_micro" />
+
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/spacing_margin_third"
+                    android:layout_marginStart="@dimen/spacing_margin_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_project_status"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/font_gray"
+                        android:textSize="@dimen/font_normal"
+                        tools:text="开工交底"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="有问题"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/ry_project_list"
+                android:layout_marginTop="@dimen/spacing_padding_double"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="2dp"
+        android:layout_width="30dp"
+        android:layout_height="50dp" />
+</RelativeLayout>

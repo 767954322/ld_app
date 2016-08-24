@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.socks.library.KLog;
+
 /**
  * Created by t_xuz on 8/15/16.
  *
@@ -24,6 +26,8 @@ public abstract class BaseActivity extends AppCompatActivity{
         initViews();
 
         initEvents();
+
+        KLog.e("BaseActivity--",getClass().getSimpleName());
     }
 
     protected abstract int getContentViewId();

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/colorPrimaryDark"> <!-- android 5.0 以后水波纹的颜色 -->
+    <item>
+        <selector>
+            <item
+                android:drawable="@mipmap/question_a"
+                android:state_pressed="true" />
+            <item
+                android:drawable="@mipmap/question_b"
+                android:state_checked="true" />
+            <item android:drawable="@mipmap/question_a" />
+        </selector>
+    </item>
+</ripple>
+
+

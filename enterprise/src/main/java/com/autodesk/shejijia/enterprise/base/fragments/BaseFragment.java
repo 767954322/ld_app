@@ -9,25 +9,50 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
+import com.autodesk.shejijia.enterprise.base.activitys.BaseFragmentActivity;
 
 /**
  * Created by t_xuz on 8/15/16.
  *
  */
-public class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment{
 
-    protected BaseActivity mContext;
+    protected BaseFragmentActivity mContext;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = (BaseActivity)context;
+        mContext = (BaseFragmentActivity)context;
     }
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(getLayoutId(),container,false);
+        initViews(view,savedInstanceState);
+        return view;
     }
+
+    protected abstract int getLayoutId();
+
+    protected abstract int initViews(View view,Bundle savedInstanceState);
+
+    //获取宿主Activity
+    protected BaseFragmentActivity getHoldingActivity(){
+        return mContext;
+    }
+
+    //添加fragment
+    protected void addFragment(BaseFragment fragment){
+        if (null != fragment){
+            getHoldingActivity().addFragment(fragment);
+        }
+    }
+
+    //移除fragment
+    protected void removeFragment(){
+       getHoldingActivity().removeFragment();
+    }
+
 }

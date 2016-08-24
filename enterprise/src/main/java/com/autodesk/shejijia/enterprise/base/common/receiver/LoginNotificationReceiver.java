@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
+import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.base.common.utils.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -26,7 +27,7 @@ public class LoginNotificationReceiver extends BroadcastReceiver{
             LoginUtils.doLogout(context);
         }else if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(Constants.LOGIN_IN_ACTIVITY_FINISHED)){
             String strToken = intent.getStringExtra(BroadCastInfo.LOGIN_TOKEN);
-
+            LogUtils.e("login-result",strToken);
             MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
 
             String ZERO = "0";
@@ -38,6 +39,7 @@ public class LoginNotificationReceiver extends BroadcastReceiver{
                 entity.setAcs_member_id(acs_member_id);
             }
             KLog.d("APPLICATION", "memberEntity:" + entity);
+            LogUtils.e("login-success",entity.toString());
 
             LoginUtils.onLoginSuccess(entity,context);
         }
