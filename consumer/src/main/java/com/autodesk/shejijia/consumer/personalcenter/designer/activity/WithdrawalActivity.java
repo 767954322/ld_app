@@ -91,7 +91,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         getMyPropertyData(memberEntity.getAcs_member_id());
         getRealNameAuditStatus(memberEntity.getAcs_member_id(), memberEntity.getHs_uid());
         setBackName();
-        showState();
+
     }
 
     @Override
@@ -123,21 +123,19 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 branch_bank_name = (tv_branch_bank_ == null) ? getText(et_withdrawal_branch_bank) : tv_branch_bank_;
                 String tv_card_number = getText(tv_withdrawal_bank_card_number);
                 deposit_card = (tv_card_number == null) ? getText(et_withdrawal_bank_card_number) : tv_card_number;
-
                 if (!"".equals(deposit_card)) {
                     deposit_card = deposit_card.replace(" ", "").trim();
                 }
-//                String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
-//                String regex_bank = "[\\u4e00-\\u9fa5]{2,32}";
+                String bank_name = tv_withdrawal_open_account_bank.getText().toString().trim();
 
-//                boolean isName = account_user_name.trim().matches(regex_name);
+                if (TextUtils.isEmpty(bank_name)) {
+                    Toast.makeText(WithdrawalActivity.this, "请选择您的开户银行", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
                 boolean isBankNum = deposit_card.matches(RegexUtil.PHONE_BLANK);
 
-//                if (!isName) {
-//                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
                 if (!checkNameChese(branch_bank_name)) {
                     Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                     break;
@@ -147,7 +145,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     break;
                 }
 
-                if (   myPropertyBean == null) {
+                if (myPropertyBean == null) {
 
                     if (!isBankNum) {
                         Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
@@ -161,9 +159,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                             Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
                             break;
                         }
-
                     }
-
                 }
 
                 boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
@@ -228,28 +224,16 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 myPropertyBean = GsonUtil.jsonToBean(jsonString, MyPropertyBean.class);
                 tv_withdrawal_open_account_bank.setText(myPropertyBean.getBank_name());
-                et_withdrawal_branch_bank.setText(myPropertyBean.getBranch_bank_name());
-                et_withdrawal_bank_card_number.setText(myPropertyBean.getDeposit_card());
-                tv_withdrawal_account_balance.setText(myPropertyBean.getAmount());
-                tv_withdrawal_account.setText(myPropertyBean.getAmount());
-
-//                KLog.json(TAG, jsonString);
-//                amount = myPropertyBean.getAmount();
-//                if (null == myPropertyBean || TextUtils.isEmpty(amount) || "0".equals(amount)) {
-//                    amount = "0.00";
-//                    setBtnUnpress();
-//                    tv_my_property_account_balance.setText("¥ " + amount);
-//                    return;
-//                }
-//                setBtnCanpress();
-//                tv_my_property_account_balance.setText("¥ " + amount);
+//                et_withdrawal_branch_bank.setText(myPropertyBean.getBranch_bank_name());
+//                et_withdrawal_bank_card_number.setText(myPropertyBean.getDeposit_card());
+                tv_withdrawal_account_balance.setText("￥：" + myPropertyBean.getAmount());
+                tv_withdrawal_account.setText("￥：" + myPropertyBean.getAmount());
+                showBindingIDCardState();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                setBtnUnpress();
-//                tv_my_property_account_balance.setText("¥ " + "0.00");
-//                MPNetworkUtils.logError(TAG, volleyError);
+                MPNetworkUtils.logError(TAG, volleyError);
             }
         });
     }
@@ -387,15 +371,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-//                new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
-//                        AlertView.Style.Alert, new OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(Object object, int position) {
-//                        if (position != -1) {
-//
-//                        }
-//                    }
-//                }).show();
 
                 tv_withdrawal_branch_bank.setVisibility(View.GONE);
                 tv_withdrawal_bank_card_number.setVisibility(View.GONE);
@@ -403,6 +378,10 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 et_withdrawal_bank_card_number.setText("");
                 et_withdrawal_branch_bank.setText("");
                 tv_withdrawal_open_account_bank.setText("");
+
+                /// 解除绑定后，解决不可点击 .
+                ll_withdrawal_open_account_bank.setEnabled(true);
+
 
                 et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
                 et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
@@ -469,7 +448,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
 
     //控件，内容，状态判断
-    private void showState() {
+    private void showBindingIDCardState() {
 
         if (null == myPropertyBean || myPropertyBean.equals("")) {
 
@@ -482,7 +461,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             deposit_card = myPropertyBean.getDeposit_card();
             branch_bank_name = myPropertyBean.getBranch_bank_name();
 
-            if (null == bank_name || bank_name.equals("")) {
+            if (TextUtils.isEmpty(bank_name)) {
                 ll_withdrawal_replace_bank_card.setVisibility(View.GONE); // 没有绑定银行卡隐藏解绑按钮
             } else {
                 ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE); // 绑定后显示解绑按钮

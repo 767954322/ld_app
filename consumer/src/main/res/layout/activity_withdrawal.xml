@@ -143,16 +143,6 @@
                     android:textColor="@color/bg_66"
                     android:textSize="@dimen/size_14" />
 
-                <!--<EditText-->
-                <!--android:id="@+id/et_withdrawal_open_account_bank"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/size_30"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginLeft="@dimen/size_10"-->
-                <!--android:layout_marginRight="@dimen/size_40"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@drawable/bg_edit_text_shape"-->
-                <!--android:visibility="gone" />-->
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -262,7 +252,7 @@
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
