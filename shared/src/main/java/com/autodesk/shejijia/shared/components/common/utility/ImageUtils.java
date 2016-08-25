@@ -179,7 +179,8 @@ public class ImageUtils {
      * @param imageView
      */
     public static void displayIconImage(String imageUrl, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(imageUrl, imageView, iconOptions);
+        if (imageView != null)
+          ImageLoader.getInstance().displayImage(imageUrl, imageView, iconOptions);
     }
 
     public static void loadImageRound(ImageView target, String imageUrl) {
