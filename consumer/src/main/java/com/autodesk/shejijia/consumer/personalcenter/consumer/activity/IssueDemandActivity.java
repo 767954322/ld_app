@@ -78,8 +78,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = et_issue_demand_area.getText().toString().trim();
-                    area = String.format("%.2f",Double.valueOf(area));
-                    et_issue_demand_area.setText(area);
+                    if(!TextUtils.isEmpty(area)){
+                        area = String.format("%.2f",Double.valueOf(area));
+                        et_issue_demand_area.setText(area);
+                    }
+
                 }
             }
         });
@@ -183,25 +186,32 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                    return;
 //                }
 
-                area = String.format("%.2f",Double.valueOf(area));
-                et_issue_demand_area.setText(area);
-                String subNum = "0";
-                if (area.contains(".")) {
-                    subNum = area.substring(0, area.indexOf("."));
-                }
-                if (TextUtils.isEmpty(area) || Float.valueOf(area) == 0) {
-                    showAlertView(R.string.please_input_correct_area);
-                    return;
-                } else {
-                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
+                if(!TextUtils.isEmpty(area)){
+
+                    area = String.format("%.2f",Double.valueOf(area));
+                    et_issue_demand_area.setText(area);
+                    String subNum = "0";
+                    if (area.contains(".")) {
+                        subNum = area.substring(0, area.indexOf("."));
+                    }
+                    if (TextUtils.isEmpty(area) || Float.valueOf(area) == 0) {
                         showAlertView(R.string.please_input_correct_area);
                         return;
                     } else {
-                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                        if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
                             showAlertView(R.string.please_input_correct_area);
                             return;
+                        } else {
+                            if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                                showAlertView(R.string.please_input_correct_area);
+                                return;
+                            }
                         }
                     }
+                }
+                else{
+                    showAlertView(R.string.please_input_correct_area);
+                    return;
                 }
 
                 if (TextUtils.isEmpty(mDesignBudget)) {
@@ -580,3 +590,4 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String success = "";
     final int RESULT_CODE = 101;
 }
+
