@@ -135,7 +135,7 @@ public class OrderBeiShuFragment extends BaseFragment {
             holder.setText(R.id.tv_desinger_beishuorder_contact_name, contacts_name);
             holder.setText(R.id.tv_desinger_beishuorder_phone, contacts_mobile);
 
-            String address = UIUtils.getNodataIfEmpty(province_name) + " " + UIUtils.getNodataIfEmpty(city_name) + " " + district_name;
+            String address = UIUtils.getNoDataIfEmpty(province_name) + " " + UIUtils.getNoDataIfEmpty(city_name) + " " + district_name;
             holder.setText(R.id.tv_desinger_beishuorder_projectaddress, address);
             holder.setText(R.id.tv_desinger_beishuorder_homeaddress, community_name_cut);
             holder.setText(R.id.tv_designer_name_beishu, contacts_name);

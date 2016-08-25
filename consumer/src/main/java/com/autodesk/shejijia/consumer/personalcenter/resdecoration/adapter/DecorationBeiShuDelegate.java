@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -20,6 +19,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesConta
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
@@ -69,12 +69,17 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
         String district_name = TextUtils.isEmpty(decorationNeedsListBean.getDistrict_name()) ? "" : decorationNeedsListBean.getDistrict_name();
 
 
-        holder.setText(R.id.tv_decoration_beishu_name, community_name);
+        holder.setText(R.id.tv_decoration_beishu_name, UIUtils.getNoDataIfEmpty(community_name));
         holder.setText(R.id.tv_decoration_beishu_needs_id, needs_id);
-        holder.setText(R.id.tv_decoration_beishu_consumer_name, contacts_name);
-        holder.setText(R.id.tv_decoration_beishu_phone, contacts_mobile);
-        holder.setText(R.id.tv_decoration_beishu_address, province_name + city_name + district_name);
-        holder.setText(R.id.tv_decoration_beishu_community_name, community_name);
+        holder.setText(R.id.tv_decoration_beishu_consumer_name, UIUtils.getNoDataIfEmpty(contacts_name));
+        holder.setText(R.id.tv_decoration_beishu_phone, UIUtils.getNoDataIfEmpty(contacts_mobile));
+
+        if (TextUtils.isEmpty(city_name)) {
+            holder.setText(R.id.tv_decoration_beishu_address, UIUtils.getString(R.string.nodata));
+        } else {
+            holder.setText(R.id.tv_decoration_beishu_address, province_name + city_name + district_name);
+        }
+        holder.setText(R.id.tv_decoration_beishu_community_name, UIUtils.getNoDataIfEmpty(community_name));
 
         List<DecorationBiddersBean> bidders = decorationNeedsListBean.getBidders();
         if (null != bidders && bidders.size() > 0) {
@@ -93,7 +98,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openChatRoom(uid,user_name,designer_id,beishu_thread_id);
+                    openChatRoom(uid, user_name, designer_id, beishu_thread_id);
                 }
             });
 
@@ -112,6 +117,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
     /**
      * 进入聊天室
+     *
      * @param uid
      * @param user_name
      * @param designer_id
