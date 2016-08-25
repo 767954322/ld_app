@@ -1,18 +1,10 @@
 package com.autodesk.shejijia.consumer.utils;
 
-import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
@@ -22,19 +14,14 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
 
 /**
  */
 public class UserPictureUtil {
-
-    private static ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
-    private static DesignerInfoDetails designerInfoDetails;
 
     //设置头像
     public static void setConsumerOrDesignerPicture(Context context,ImageView iv) {
@@ -63,7 +50,7 @@ public class UserPictureUtil {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
-                mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+                ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
                 ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), iv);
             }
 
@@ -89,7 +76,7 @@ public class UserPictureUtil {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
-                designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+                DesignerInfoDetails designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), iv);
 
             }
