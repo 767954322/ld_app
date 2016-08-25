@@ -13,15 +13,15 @@
         android:elevation="5dp">
 
         <LinearLayout
+            android:id="@+id/lv_project_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_padding_double"
-            android:divider="@drawable/linearlayout_divider_shape"
-            android:showDividers="middle"
             android:orientation="vertical">
 
 
             <LinearLayout
+                android:id="@+id/lv_project_details"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_marginBottom="@dimen/spacing_padding_double"
@@ -76,9 +76,14 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:id="@+id/view_taskItem_line"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@drawable/linearlayout_divider_hor_shape"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/ry_project_list"
+                android:id="@+id/rcy_task_list"
                 android:layout_marginTop="@dimen/spacing_padding_double"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -90,6 +95,7 @@
     </android.support.v7.widget.CardView>
 
     <Button
+        android:id="@+id/btn_star_label"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="2dp"
         android:layout_width="30dp"

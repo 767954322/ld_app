@@ -29,14 +29,24 @@ public abstract class BaseFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(),container,false);
+        return inflater.inflate(getLayoutId(),container,false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initData();
         initViews(view,savedInstanceState);
-        return view;
+        initEvents();
     }
 
     protected abstract int getLayoutId();
 
-    protected abstract int initViews(View view,Bundle savedInstanceState);
+    protected abstract void initViews(View view,Bundle savedInstanceState);
+
+    protected abstract void initData();
+
+    protected abstract void initEvents();
 
     //获取宿主Activity
     protected BaseFragmentActivity getHoldingActivity(){

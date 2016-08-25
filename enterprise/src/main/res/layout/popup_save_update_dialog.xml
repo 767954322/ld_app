@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/linearlayout_divider_shape"
+            android:divider="@drawable/linearlayout_divider_hor_shape"
             android:orientation="vertical"
             android:showDividers="middle">
 

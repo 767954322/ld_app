@@ -19,7 +19,7 @@ public class TaskListBean implements Serializable{
 
     public class TaskList implements Serializable {
 
-        private boolean likes;
+        private List<Like> likes;
         private List<ProjectListBean.ProjectList.Member> members;
         private ProjectListBean.ProjectList.Building building;
         private long owner;
@@ -31,6 +31,27 @@ public class TaskListBean implements Serializable{
         private String create_time;
         private String group_chat_thread_id;
 
+
+        public class Like implements Serializable {
+            private String uid;
+            private boolean like;
+
+            public String getUid() {
+                return uid;
+            }
+
+            public void setUid(String uid) {
+                this.uid = uid;
+            }
+
+            public boolean isLike() {
+                return like;
+            }
+
+            public void setLike(boolean like) {
+                this.like = like;
+            }
+        }
 
         public class Plan implements Serializable {
             //7个字段
@@ -399,11 +420,11 @@ public class TaskListBean implements Serializable{
             }
         }
 
-        public boolean isLikes() {
+        public List<Like> getLikes() {
             return likes;
         }
 
-        public void setLikes(boolean likes) {
+        public void setLikes(List<Like> likes) {
             this.likes = likes;
         }
 

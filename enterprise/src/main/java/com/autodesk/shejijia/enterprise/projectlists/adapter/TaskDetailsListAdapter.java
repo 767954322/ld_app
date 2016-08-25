@@ -16,12 +16,12 @@ import java.util.List;
  * Created by t_xuz on 8/23/16.
  *
  */
-public class TaskListReAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<TaskListBean.TaskList.Plan.Task> taskIdLists ;
     private int resId;
 
-    public TaskListReAdapter(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int resId){
+    public TaskDetailsListAdapter(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int resId){
         this.taskIdLists = taskIdLists;
         this.resId = resId;
     }
@@ -38,33 +38,33 @@ public class TaskListReAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TaskListVH taskListVH = (TaskListVH)holder;
         LogUtils.e("taskId--name",taskIdLists.get(position).getName());
         if (!TextUtils.isEmpty(taskIdLists.get(position).getName())) {
-            taskListVH.tv_task_name.setText(taskIdLists.get(position).getName());
+            taskListVH.mTaskName.setText(taskIdLists.get(position).getName());
         }
 
         if (!TextUtils.isEmpty(taskIdLists.get(position).getStatus())) {
             String status = taskIdLists.get(position).getStatus();
             if (status.equalsIgnoreCase("open")) {
-                taskListVH.tv_task_status.setText("未开始");
+                taskListVH.mTaskStatus.setText("未开始");
             }else if (status.equalsIgnoreCase("reserving")){
-                taskListVH.tv_task_status.setText("待预约");
+                taskListVH.mTaskStatus.setText("待预约");
             }else if (status.equalsIgnoreCase("inProgress")){
-                taskListVH.tv_task_status.setText("进行中");
+                taskListVH.mTaskStatus.setText("进行中");
             }else if (status.equalsIgnoreCase("delayed")){
-                taskListVH.tv_task_status.setText("已延期");
+                taskListVH.mTaskStatus.setText("已延期");
             }else if (status.equalsIgnoreCase("qualified")){
-                taskListVH.tv_task_status.setText("合格");
+                taskListVH.mTaskStatus.setText("合格");
             }else if (status.equalsIgnoreCase("unqualified")){
-                taskListVH.tv_task_status.setText("不合格");
+                taskListVH.mTaskStatus.setText("不合格");
             }else if (status.equalsIgnoreCase("resolved")){
-                taskListVH.tv_task_status.setText("验收拒绝");
+                taskListVH.mTaskStatus.setText("验收拒绝");
             }else if (status.equalsIgnoreCase("reinspection")){
-                taskListVH.tv_task_status.setText("强制复验");
+                taskListVH.mTaskStatus.setText("强制复验");
             }else if (status.equalsIgnoreCase("rectification")){
-                taskListVH.tv_task_status.setText("监督整改");
+                taskListVH.mTaskStatus.setText("监督整改");
             }else if (status.equalsIgnoreCase("reinspecting")){
-                taskListVH.tv_task_status.setText("复验中");
+                taskListVH.mTaskStatus.setText("复验中");
             }else {
-                taskListVH.tv_task_status.setText(status);
+                taskListVH.mTaskStatus.setText(status);
             }
         }
     }

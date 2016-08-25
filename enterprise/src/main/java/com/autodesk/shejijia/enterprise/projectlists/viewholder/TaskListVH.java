@@ -3,6 +3,7 @@ package com.autodesk.shejijia.enterprise.projectlists.viewholder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
@@ -13,12 +14,13 @@ import com.autodesk.shejijia.enterprise.R;
  */
 public class TaskListVH extends RecyclerView.ViewHolder{
 
-    public TextView tv_task_name;
-    public TextView tv_task_status;
+    public TextView mTaskName;
+    public TextView mTaskStatus;
 
     public TaskListVH(View itemView) {
         super(itemView);
-        tv_task_name = (TextView) itemView.findViewById(R.id.tv_task_name);
-        tv_task_status = (TextView)itemView.findViewById(R.id.tv_task_status);
+
+        mTaskName = (TextView) itemView.findViewById(R.id.tv_task_name);
+        mTaskStatus = (TextView)itemView.findViewById(R.id.tv_task_status);
     }
 }

@@ -8,6 +8,8 @@ import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.Logger;
 import com.socks.library.KLog;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -34,7 +36,8 @@ public class EnterpriseApplication extends Application{
         UrlMessagesContants.init(imServer);
 
         //初始化log打印工具
-        KLog.init(BuildConfig.LOG_DEBUG);
+//        KLog.init(BuildConfig.LOG_DEBUG);
+        initLog();
 
         //初始化imageLoader
         ImageUtils.initImageLoader(this);
@@ -46,5 +49,15 @@ public class EnterpriseApplication extends Application{
 
     public static synchronized EnterpriseApplication getInstance(){
         return application;
+    }
+
+    private void initLog(){
+        Logger
+                .init("enterprise")                 // default PRETTYLOGGER or use just init()
+                .methodCount(3)                 // default 2
+                .hideThreadInfo()               // default shown
+                .logLevel(LogLevel.FULL)        // default LogLevel.FULL(LogLevel.NONE for release)
+                .methodOffset(2)                // default 0
+                ; //default AndroidLogAdapter
     }
 }

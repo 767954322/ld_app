@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">SheJiJia-Enterprise</string>
 
-    <!--bottom tab-->
+    <!--projectList bottom tab-->
     <string name="main_tab_task">任务</string>
     <string name="main_tab_issue">问题</string>
     <string name="main_tab_session">群聊</string>
+    
+    <!-- projectDetails bottom tab-->
+    <string name="project_details_tab_patrol">巡查</string>
+    <string name="project_details_tab_issue">问题</string>
+    <string name="project_details_tab_session">群聊</string>
 
     <!-- 弹出框里的文字内容 -->
     <string name="popup_save_update_save">保存修改</string>
