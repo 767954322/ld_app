@@ -189,7 +189,8 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
      * designer_id 设计师编号
      */
     private void submitEvaluation(JSONObject jsonObject) {
-        MPServerHttpManager.getInstance().submitAppraisement(needs_id, designer_id, jsonObject, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().submitAppraisement(needs_id, designer_id, jsonObject,
+                new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();

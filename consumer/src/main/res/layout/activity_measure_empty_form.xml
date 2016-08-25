@@ -355,7 +355,6 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/europe_and_america_style"
                     android:textSize="@dimen/font_15" />
             </LinearLayout>
 

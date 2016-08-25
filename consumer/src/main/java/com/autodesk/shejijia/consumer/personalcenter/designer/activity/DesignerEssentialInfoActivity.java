@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
@@ -58,6 +59,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
@@ -132,7 +134,6 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     }
 
     private void initInfo() {
-        setProjectCost();
         if (mConsumerEssentialInfoEntity == null) {
             return;
         }
@@ -238,6 +239,8 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         }
 
         getGender();
+        //获取设计师个人设计费用区间
+        getDesignerDesignCostRange();
 
     }
 
@@ -318,6 +321,20 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 strProjectCost = projectCostItems.get(options1);
+
+//                String designPriceCode;
+//                for (int i = 0; i <relate_information_list.size(); i++){
+//                    String costStringName = relate_information_list.get(i).getName();
+////                    String costStringUnit = relate_information_list.get(i).getDescription();
+////                    String costString = costStringName + costStringUnit;
+//                    if (costStringName.equals(strProjectCost)){
+//
+//                        designPriceCode = relate_information_list.get(i).getCode();
+//                    }
+//
+//                }
+
+
                 String temp[];
                 temp = strProjectCost.split("-");
                 JSONObject jsonObj = new JSONObject();
@@ -343,6 +360,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                     jsonObj.put(Constant.DesignerBasicInfoKey.DIY_COUNT, mDesignerInfoDetails.getDesigner().getDiy_count());
                     jsonObj.put(Constant.DesignerBasicInfoKey.CASE_COUNT, mDesignerInfoDetails.getDesigner().getCase_count());
                     jsonObj.put(Constant.DesignerBasicInfoKey.THEME_PIC, mDesignerInfoDetails.getDesigner().getTheme_pic());
+                    jsonObj.put(Constant.DesignerBasicInfoKey.DESIGN_PRICE_CODE,options1);//上传选择的设计费用价格code
                     CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.design_fees_on_cross), false, null);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -628,7 +646,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
      * @return
      * @biref 解决小米手机上获取图片路径为null的情况
      */
-    public Uri getUri(android.content.Intent intent) {
+    public Uri getUri(Intent intent) {
         Uri uri = intent.getData();
         String type = intent.getType();
         if (uri.getScheme().equals("file") && (type.contains("image/"))) {
@@ -785,6 +803,37 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         return bitmap;
     }
 
+
+    //获取量房费用设计区间，
+    public void getDesignerDesignCostRange(){
+
+        MPServerHttpManager.getInstance().getDesignerCost(new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                String designerDesignCostData = GsonUtil.jsonToString(jsonObject);
+                DesignerWorkTimeBean mDecorationListBean =GsonUtil.jsonToBean(designerDesignCostData, DesignerWorkTimeBean.class);
+                relate_information_list = mDecorationListBean.getRelate_information_list();
+                //projectCosts
+                projectCosts = new String[relate_information_list.size()];
+                for (int i = 0; i <relate_information_list.size(); i++){
+                    String costStringName = relate_information_list.get(i).getName();
+//                    String costStringUnit = relate_information_list.get(i).getDescription();
+//                    String costString = costStringName + costStringUnit;
+                    projectCosts[i] = costStringName;
+
+                }
+                setProjectCost();
+            }
+        });
+
+
+    }
     /**
      * @param strDesignerId
      * @param hs_uid
@@ -872,13 +921,16 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     private String strCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String pTag;
     private String[] genderString = {"保密", "女", "男"};
-    private String[] projectCosts = {"30-60", "61-120", "121-200", "201-600", "601-1000"};
+    //private String[] projectCosts = {"30-60", "61-120", "121-200", "201-600", "601-1000"};
+    private String[] projectCosts;
     private ArrayList<String> projectCostItems = new ArrayList<>();
     private ArrayList<String> genderList = new ArrayList<>();
 
     private DesignerInfoDetails mDesignerInfoDetails;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
+    private List<DesignerWorkTimeBean.RelateInformationListBean> relate_information_list;
 
     private PictureProcessingUtil mPictureProcessingUtil;
     private ImageProcessingUtil mImageProcessingUtil;
 }
+

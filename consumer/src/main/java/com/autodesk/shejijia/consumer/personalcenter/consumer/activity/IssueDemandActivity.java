@@ -183,7 +183,6 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                    return;
 //                }
 
-                //..................................
                 area = String.format("%.2f",Double.valueOf(area));
                 et_issue_demand_area.setText(area);
                 String subNum = "0";

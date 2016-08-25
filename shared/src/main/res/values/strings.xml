@@ -278,7 +278,7 @@
 
     <!-- SeekDesignerDetailActivity -->
     <string name="work">作品：</string>
-    <string name="be_good_at">擅长风格：</string>
+    <string name="be_good_at">擅长选风格：</string>
     <string name="has_yet_to_fill_out">尚未填写</string>
     <string name="temporarily_no_data">暂无数据</string>
     <string name="find_designer">设计师</string>
@@ -287,7 +287,6 @@
     <string name="designer_design_fee">设计费：</string>
     <string name="designer_measure_fee">量房费：</string>
     <string name="optional_measure">选TA量房</string>
-
     <!-- WK3DPlanActivity -->
     <string name="three_plan_name">设计方案名字</string>
     <string name="select_finish">完成</string>
@@ -394,6 +393,7 @@
     <string name="anonymity">匿名</string>
     <string name="end_day">已结束</string>
     <string name="canceled">已取消</string>
+    <string name="project_stop">项目结束</string>
     <string name="checking">审核中</string>
     <string name="unchecking">未审核</string>
     <string name="approve">审核通过</string>
@@ -822,7 +822,7 @@
 
     <!-- DesignerPersonalCenterFragment -->
     <string name="immediately_go_to_certification">您还未进行实名认证，马上去认证吧</string>
-    <string name="set_meal">北舒套餐</string>
+    <string name="set_meal">套餐项目</string>
     <string name="my_home">我的主页</string>
     <string name="camera_is_not_available">相机不可用</string>
     <string name="unable_create_beishu_meal">二维码格式错误，无法创建北舒套餐</string>

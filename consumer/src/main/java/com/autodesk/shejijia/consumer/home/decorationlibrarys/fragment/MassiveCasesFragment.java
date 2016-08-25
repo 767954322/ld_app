@@ -1,16 +1,9 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -32,7 +25,6 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author DongXueQiu .
@@ -52,13 +44,13 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
     @Override
     protected void initView() {
         mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view));
-        mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
-        mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
-        mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
+//        mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
+//        mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
+//        mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
         mListView = (ListView) rootView.findViewById(R.id.hover_case_list_view);
-        mIvEmpty = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
+//        mIvEmpty = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
 
-        mListView.addFooterView(mFooterView);
+//        mListView.addFooterView(mFooterView);
 //        setImageForNavButton(NavigationBarActivity.ButtonType.RIGHT, R.drawable.icon_search);
 //        setImageForNavButton(NavigationBarActivity.ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
 //
@@ -124,7 +116,7 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
                         AlertView.Style.Alert, null).show();
-                hideFooterView(mCasesEntities);
+//                hideFooterView(mCasesEntities);
             }
         };
         MPServerHttpManager.getInstance().getCaseListData(custom_string_style, custom_string_type, custom_string_keywords,
@@ -150,7 +142,7 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
                 break;
         }
         mCasesEntities.addAll(mCaseLibraryBean.getCases());
-        hideFooterView(mCasesEntities);
+//        hideFooterView(mCasesEntities);
         mHoverCaseAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
@@ -158,30 +150,30 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
     /**
      * 是否隐藏底部布局
      *
-     * @param list 传入案例库数据集合
+//     * @param 传入案例库数据集合
      */
-    private void hideFooterView(List<CaseLibraryBean.CasesEntity> list) {
-        if (list != null && list.size() > 0) {
-            mRlEmpty.setVisibility(View.GONE);
-        } else {
-            mRlEmpty.setVisibility(View.VISIBLE);
-        }
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-        mIvEmpty.setImageBitmap(bmp);
-        mTvEmptyMessage.setText(R.string.no_designer_case);
-        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
-        mRlEmpty.getLayoutParams();
-        layoutParams.height = height - 10;
-        mRlEmpty.setLayoutParams(layoutParams);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
-    }
+//    private void hideFooterView(List<CaseLibraryBean.CasesEntity> list) {
+//        if (list != null && list.size() > 0) {
+//            mRlEmpty.setVisibility(View.GONE);
+//        } else {
+//            mRlEmpty.setVisibility(View.VISIBLE);
+//        }
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+//        mIvEmpty.setImageBitmap(bmp);
+//        mTvEmptyMessage.setText(R.string.no_designer_case);
+//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+//        int height = wm.getDefaultDisplay().getHeight();
+//        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
+//        mRlEmpty.getLayoutParams();
+//        layoutParams.height = height - 10;
+//        mRlEmpty.setLayoutParams(layoutParams);
+//        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+//    }
 
     /// 是否显示ListView.
     private void showListView() {
         mPullToRefreshLayout.setVisibility(View.VISIBLE);
-        mRlEmpty.setVisibility(View.GONE);
+//        mRlEmpty.setVisibility(View.GONE);
     }
 
 
@@ -237,11 +229,11 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
 
     /// 控件.
     private PullToRefreshLayout mPullToRefreshLayout;
-    private RelativeLayout mRlEmpty;
-    private TextView mTvEmptyMessage;
+//    private RelativeLayout mRlEmpty;
+//    private TextView mTvEmptyMessage;
     private ListView mListView;
-    private ImageView mIvEmpty;
-    private View mFooterView;
+//    private ImageView mIvEmpty;
+//    private View mFooterView;
 
     private int LIMIT = 10;
     private int OFFSET = 0;

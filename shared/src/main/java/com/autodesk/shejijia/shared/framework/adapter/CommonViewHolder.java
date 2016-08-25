@@ -21,11 +21,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
- * @author   he.liu .
- * @version  v1.0 .
- * @date       2016-6-6 .
- * @file          CommonViewHolder.java .
- * @brief       公用的适配器句柄 .
+ * @author he.liu .
+ * @version v1.0 .
+ * @date 2016-6-6 .
+ * @file CommonViewHolder.java .
+ * @brief 公用的适配器句柄 .
  */
 public class CommonViewHolder {
     private SparseArray<View> mViews;

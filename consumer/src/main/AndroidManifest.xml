@@ -373,7 +373,6 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
-        android:screenOrientation="portrait" />
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -471,7 +470,11 @@
         <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity"/>
         <activity android:name=".personalcenter.consumer.activity.AttentionActivity"/>
         <activity android:name=".home.decorationdesigners.activity.DesignerFiltrateActivity"/>
-        <activity android:name=".home.decorationdesigners.activity.DesignerSearchActivity"></activity>
+        <activity android:name=".home.decorationdesigners.activity.DesignerSearchActivity"/>
+        <activity android:name=".personalcenter.resdecoration.activity.DecorationBidderActivity">
+        </activity>
+        <activity android:name=".personalcenter.resdecoration.activity.DecorationDetailActivity">
+        </activity>
     </application>
 
 </manifest>

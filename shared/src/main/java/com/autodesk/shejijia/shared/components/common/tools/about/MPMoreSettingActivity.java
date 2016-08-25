@@ -90,7 +90,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
         }
         else if (i == R.id.bt_consumer_exit)
         {
-            CommonUtils.clearCookie(this);
+            CommonUtils.clearAppCache(this);
 
             intentLogout.putExtra(Constant.LOGOUT, Constant.LOGOUT);
             setResult(RESULT_OK, intentLogout);

@@ -381,7 +381,7 @@ public class UIUtils {
         return sdf.format(new Date());
     }
 
-    public static String getNodataIfEmpty(String some) {
+    public static String getNoDataIfEmpty(String some) {
         return TextUtils.isEmpty(some) ? UIUtils.getString(R.string.no_data) : some;
     }
 

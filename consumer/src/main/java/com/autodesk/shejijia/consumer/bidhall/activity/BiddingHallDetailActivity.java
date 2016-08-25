@@ -254,12 +254,12 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String room_cn = ConvertUtils.getConvert2CN(roomJson, room);
         String toilet_cn = ConvertUtils.getConvert2CN(toiletJson, toilet);
         String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
-        String livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_cn) + UIUtils.getNodataIfEmpty(living_room_cn) + UIUtils.getNodataIfEmpty(toilet_cn);
+        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
         district_name = TextUtils.isEmpty(mBidHallEntity.getDistrict())
                 || "none".equals(mBidHallEntity.getDistrict())
                 || TextUtils.isEmpty(district_name)
                 || district_name.equals("none") ? "" : district_name;
-        String projectAddress = UIUtils.getNodataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNodataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
+        String projectAddress = UIUtils.getNoDataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNoDataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
         setTitleForNavbar(community_name);
         mTvProjectNeedsId.setText(needs_id);
@@ -268,7 +268,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         mTvHouseModel.setText(livingRoom_room_toilet);
         mTvName.setText(mBidHallEntity.getContacts_name());
         mTvDecorationBudget.setText(decoration_budget);
-        mTvDesignBudget.setText(UIUtils.getNodataIfEmpty(mBidHallEntity.getDesign_budget()));
+        mTvDesignBudget.setText(UIUtils.getNoDataIfEmpty(mBidHallEntity.getDesign_budget()));
         mTvHouseArea.setText(mBidHallEntity.getHouse_area() + "m²");
         mTvProjectAddress.setText(projectAddress);
         mTvPublishTime.setText(mBidHallEntity.getPublish_time());

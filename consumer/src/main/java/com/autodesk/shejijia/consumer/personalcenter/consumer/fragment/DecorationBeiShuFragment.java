@@ -15,12 +15,11 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -84,7 +83,7 @@ public class DecorationBeiShuFragment extends Fragment {
         city_name = need.getCity_name();
         district_name = TextUtils.isEmpty(need.getDistrict_name()) ? "" : need.getDistrict_name();
 
-        String address = UIUtils.getNodataIfEmpty(province_name) + " " + UIUtils.getNodataIfEmpty(city_name) + " " + UIUtils.getNodataIfEmpty(district_name);
+        String address = UIUtils.getNoDataIfEmpty(province_name) + " " + UIUtils.getNoDataIfEmpty(city_name) + " " + UIUtils.getNoDataIfEmpty(district_name);
         mProjectAddress.setText(address);
 
         mBeiShuTag.setText(community_name);

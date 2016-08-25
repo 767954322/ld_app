@@ -24,10 +24,12 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
+import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHomeCaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -104,11 +106,8 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             return;
         }
         member_id = mMemberEntity.getAcs_member_id();
-        getConsumerInfoData(member_id);
 
     }
-
-
 
 
     @Override
@@ -414,7 +413,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
     private void initCaseLibraryBtn() {
         if (null == caseLibraryButton)
-             caseLibraryButton = new FloatingActionButton(activity);
+            caseLibraryButton = new FloatingActionButton(activity);
         caseLibraryButton.setLabelText(UIUtils.getString(R.string.case_library));
         caseLibraryButton.setButtonSize(FloatingActionButton.SIZE_MINI);
         caseLibraryButton.setImageResource(R.drawable.icon_case_library_normal);
@@ -425,8 +424,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
         caseLibraryButton.setOnClickListener(this);
     }
-
-
 
 
     private void createCustomAnimation() {
@@ -496,9 +493,9 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                 if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
                     /// hide the requirement btn .
                     mFloatingActionsMenu.removeMenuButton(requirementButton);
-
-                } else {
                 }
+
+                UserPictureUtil.setConsumerOrDesignerPicture(getActivity(), ((MPConsumerHomeActivity) getActivity()).getUserAvatar());
 
                 setSwipeRefreshInfo();
                 if (null == mMemberEntity) {
@@ -528,7 +525,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             initRequirementBtn();
             initFindDesignerBtn();
             initCaseLibraryBtn();
-
         }
     }
 
@@ -538,6 +534,9 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         if (null != mFloatingActionsMenu) {
             mFloatingActionsMenu.close(true);
         }
+
+        getConsumerInfoData(member_id);
+
 
     }
 

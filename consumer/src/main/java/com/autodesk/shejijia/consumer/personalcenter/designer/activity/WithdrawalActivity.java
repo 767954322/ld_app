@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -86,9 +89,9 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         mBankName = filledData(getResources().getStringArray(R.array.mBank));
         setTitleForNavbar(UIUtils.getString(R.string.my_property_withdrawal));
         getMyPropertyData(memberEntity.getAcs_member_id());
-        getRealNameAuditStatus(memberEntity.getAcs_member_id(),memberEntity.getHs_uid());
+        getRealNameAuditStatus(memberEntity.getAcs_member_id(), memberEntity.getHs_uid());
         setBackName();
-        showState();
+
     }
 
     @Override
@@ -97,6 +100,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         btn_withdrawal_true.setOnClickListener(this);
         ll_withdrawal_open_account_bank.setOnClickListener(this);
         ll_withdrawal_replace_bank_card.setOnClickListener(this);
+        et_withdrawal_bank_card_number.addTextChangedListener(new MyWatcher());
     }
 
     @Override
@@ -119,24 +123,43 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 branch_bank_name = (tv_branch_bank_ == null) ? getText(et_withdrawal_branch_bank) : tv_branch_bank_;
                 String tv_card_number = getText(tv_withdrawal_bank_card_number);
                 deposit_card = (tv_card_number == null) ? getText(et_withdrawal_bank_card_number) : tv_card_number;
+                if (!"".equals(deposit_card)) {
+                    deposit_card = deposit_card.replace(" ", "").trim();
+                }
+                String bank_name = tv_withdrawal_open_account_bank.getText().toString().trim();
 
-//                String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
-//                String regex_bank = "[\\u4e00-\\u9fa5]{2,32}";
+                if (TextUtils.isEmpty(bank_name)) {
+                    Toast.makeText(WithdrawalActivity.this, "请选择您的开户银行", Toast.LENGTH_SHORT).show();
+                    break;
+                }
 
-//                boolean isName = account_user_name.trim().matches(regex_name);
                 boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
-                boolean isBankNum = deposit_card.trim().matches(RegexUtil.PHONE_BLANK);
-//                if (!isName) {
-//                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
+                boolean isBankNum = deposit_card.matches(RegexUtil.PHONE_BLANK);
+
+                if (!checkNameChese(branch_bank_name)) {
+                    Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if (!isBank) {
                     Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (!isBankNum) {
-                    Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                    break;
+
+                if (myPropertyBean == null) {
+
+                    if (!isBankNum) {
+                        Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                } else {
+                    if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
+
+                        if (!isBankNum) {
+                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
                 }
 
                 boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
@@ -153,6 +176,43 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
 
     /**
+     * 检测String是否全是中文
+     *
+     * @param name
+     * @return
+     */
+    public boolean checkNameChese(String name) {
+        boolean res = true;
+        char[] cTemp = name.toCharArray();
+        for (int i = 0; i < name.length(); i++) {
+            if (!isChinese(cTemp[i])) {
+                res = false;
+                break;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 判定输入汉字
+     *
+     * @param c
+     * @return
+     */
+    public boolean isChinese(char c) {
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 获取我的资产信息
      *
      * @param designer_id
@@ -164,32 +224,19 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 myPropertyBean = GsonUtil.jsonToBean(jsonString, MyPropertyBean.class);
                 tv_withdrawal_open_account_bank.setText(myPropertyBean.getBank_name());
-                et_withdrawal_branch_bank.setText(myPropertyBean.getBranch_bank_name());
-                et_withdrawal_bank_card_number.setText(myPropertyBean.getDeposit_card());
-                tv_withdrawal_account_balance.setText(myPropertyBean.getAmount());
-                tv_withdrawal_account.setText(myPropertyBean.getAmount());
-
-//                KLog.json(TAG, jsonString);
-//                amount = myPropertyBean.getAmount();
-//                if (null == myPropertyBean || TextUtils.isEmpty(amount) || "0".equals(amount)) {
-//                    amount = "0.00";
-//                    setBtnUnpress();
-//                    tv_my_property_account_balance.setText("¥ " + amount);
-//                    return;
-//                }
-//                setBtnCanpress();
-//                tv_my_property_account_balance.setText("¥ " + amount);
+//                et_withdrawal_branch_bank.setText(myPropertyBean.getBranch_bank_name());
+//                et_withdrawal_bank_card_number.setText(myPropertyBean.getDeposit_card());
+                tv_withdrawal_account_balance.setText("￥：" + myPropertyBean.getAmount());
+                tv_withdrawal_account.setText("￥：" + myPropertyBean.getAmount());
+                showBindingIDCardState();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                setBtnUnpress();
-//                tv_my_property_account_balance.setText("¥ " + "0.00");
-//                MPNetworkUtils.logError(TAG, volleyError);
+                MPNetworkUtils.logError(TAG, volleyError);
             }
         });
     }
-
 
 
     /**
@@ -324,15 +371,6 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-//                new AlertView(UIUtils.getString(R.string.application_successful), UIUtils.getString(R.string.application_unbing), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
-//                        AlertView.Style.Alert, new OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(Object object, int position) {
-//                        if (position != -1) {
-//
-//                        }
-//                    }
-//                }).show();
 
                 tv_withdrawal_branch_bank.setVisibility(View.GONE);
                 tv_withdrawal_bank_card_number.setVisibility(View.GONE);
@@ -340,6 +378,10 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 et_withdrawal_bank_card_number.setText("");
                 et_withdrawal_branch_bank.setText("");
                 tv_withdrawal_open_account_bank.setText("");
+
+                /// 解除绑定后，解决不可点击 .
+                ll_withdrawal_open_account_bank.setEnabled(true);
+
 
                 et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
                 et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
@@ -406,7 +448,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
 
     //控件，内容，状态判断
-    private void showState() {
+    private void showBindingIDCardState() {
 
         if (null == myPropertyBean || myPropertyBean.equals("")) {
 
@@ -419,7 +461,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             deposit_card = myPropertyBean.getDeposit_card();
             branch_bank_name = myPropertyBean.getBranch_bank_name();
 
-            if (null == bank_name || bank_name.equals("")) {
+            if (TextUtils.isEmpty(bank_name)) {
                 ll_withdrawal_replace_bank_card.setVisibility(View.GONE); // 没有绑定银行卡隐藏解绑按钮
             } else {
                 ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE); // 绑定后显示解绑按钮
@@ -514,6 +556,100 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
         if (object == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
             sendUnBindBankCard(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
             return;
+        }
+    }
+
+
+    class MyWatcher implements TextWatcher {
+        int beforeTextLength = 0;
+        int onTextLength = 0;
+        boolean isChanged = false;
+        int location = 0;// 记录光标的位置
+        private char[] tempChar;
+        private StringBuffer buffer = new StringBuffer();
+        int konggeNumberB = 0;
+
+        @Override
+        public void beforeTextChanged(CharSequence text, int start, int count, int after) {
+
+            // TODO Auto-generated method stub
+            beforeTextLength = text.length();
+            if (buffer.length() > 0) {
+                buffer.delete(0, buffer.length());
+            }
+            konggeNumberB = 0;
+            for (int i = 0; i < text.length(); i++) {
+                if (text.charAt(i) == ' ') {
+                    konggeNumberB++;
+                }
+            }
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence text, int start, int before, int count) {
+
+            // TODO Auto-generated method stub
+            onTextLength = text.length();
+            buffer.append(text.toString());
+            if (onTextLength == beforeTextLength || onTextLength <= 3 || isChanged) {
+                isChanged = false;
+                return;
+            }
+            isChanged = true;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+            if (isChanged) {
+                location = et_withdrawal_bank_card_number.getSelectionEnd();
+                int index = 0;
+                while (index < buffer.length()) {
+                    if (buffer.charAt(index) == ' ') {
+                        buffer.deleteCharAt(index);
+                    } else {
+                        index++;
+                    }
+                }
+                index = 0;
+                int konggeNumberC = 0;
+                while (index < buffer.length()) {
+
+                    if ((index + 1) % 5 == 0) {// if ((index == 4 || index == 9 || index == 14 || index// == 19)) {
+
+                        buffer.insert(index, ' ');
+                        konggeNumberC++;
+                    }
+                    index++;
+                }
+
+                if (konggeNumberC > konggeNumberB) {
+
+                    location += (konggeNumberC - konggeNumberB);
+                }
+
+                tempChar = new char[buffer.length()];
+
+                buffer.getChars(0, buffer.length(), tempChar, 0);
+
+                String str = buffer.toString();
+
+                if (location > str.length()) {
+
+                    location = str.length();
+
+                } else if (location < 0) {
+
+                    location = 0;
+
+                }
+                et_withdrawal_bank_card_number.setText(str);
+                Editable etable = et_withdrawal_bank_card_number.getText();
+                Selection.setSelection(etable, location);
+                isChanged = false;
+            }
+
         }
     }
 

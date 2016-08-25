@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_80"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="@dimen/size_60"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:gravity="center_vertical">
+
+            <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+                android:id="@+id/piv_designer_photo"
+                android:layout_width="@dimen/size_50"
+                android:layout_height="@dimen/size_50"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_commen_head_normal"
+                app:poly_corner_radius="5"
+                app:poly_vertices="0"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="@dimen/size_5"
+                android:src="@drawable/icon_real_name_small"
+                android:visibility="visible"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/size_160"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/size_10"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_designer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="姓名"
+                android:textColor="@color/bg_51"
+                android:textSize="@dimen/font_15"
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_designer_production"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_5"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:text="作品"
+                    android:textColor="@color/bg_85"/>
+
+                <TextView
+                    android:id="@+id/tv_attention_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_5"
+                    android:layout_marginLeft="@dimen/size_5"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:textColor="@color/bg_85"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_designer_good"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="擅长："
+                android:textColor="@color/bg_85"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/size_10"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/img_designer_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/icon_chat_common_normal"/>
+
+            <TextView
+                android:id="@+id/tv_designer_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/view_parting_line"></include>
+
+    <RelativeLayout
+        android:id="@+id/ll_bidder_biding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_demand_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_5"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_35">
+
+                <Button
+                    android:id="@+id/btn_designer_refuse"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_filtrate_pressed"
+                    android:text="@string/decoration_choose_refuse"
+                    android:textColor="@color/bg_0084ff"
+                    android:textSize="@dimen/font_13"/>
+
+                <Button
+                    android:id="@+id/btn_designer_measure"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_filtrate_pressed"
+                    android:text="@string/optional_measure"
+                    android:textColor="@color/bg_0084ff"
+                    android:textSize="@dimen/font_13"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_bidder_after_biding"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_35"
+        android:layout_marginRight="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_5"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_workflow_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_8"
+            android:textSize="@dimen/font_13"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_5"
+        android:background="@color/pickerview_bg_topbar"
+        />
+
+</LinearLayout>

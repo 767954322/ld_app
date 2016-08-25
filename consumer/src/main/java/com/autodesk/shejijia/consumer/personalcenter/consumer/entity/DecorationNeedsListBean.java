@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.entity;
 
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+
 import java.io.Serializable;
 import java.util.List;
 
