@@ -315,7 +315,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         Fragment currentFragment = null;
 
         for (Fragment fragment : mFragmentArrayList) {
-            if (fragment.getClass().equals(clazz)) {
+            if (fragment!= null && fragment.getClass().equals(clazz)) {
                 currentFragment = fragment;
                 break;
             }
