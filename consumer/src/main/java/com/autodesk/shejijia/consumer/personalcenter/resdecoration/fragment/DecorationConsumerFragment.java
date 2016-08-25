@@ -71,7 +71,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
      * 获取消费者家装订单
      */
     public void getMyDecorationData(final int offset, final int limit, final int state) {
-        CustomProgress.show(getActivity(), "", true, null);
         MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -113,6 +112,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         isRefreshOrLoadMore = false;
+        CustomProgress.show(getActivity(), "", false, null);
         getMyDecorationData(0, LIMIT, 1);
         OFFSET = 0;
     }
@@ -123,6 +123,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
         isRefreshOrLoadMore = true;
         OFFSET = OFFSET + 10;
+        CustomProgress.show(getActivity(), "", false, null);
         getMyDecorationData(OFFSET, LIMIT, 1);
     }
 

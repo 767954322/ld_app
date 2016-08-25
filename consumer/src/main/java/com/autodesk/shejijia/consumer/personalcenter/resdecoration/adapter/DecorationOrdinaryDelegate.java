@@ -115,16 +115,20 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
          * 如果处于审核状态或者有人支付了设计首款，隐藏应标人数布局
          */
         boolean isBidding = isBiding(custom_string_status);
-//        if (is_public)
-        if (isBidding) {
-            if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
-                holder.setVisible(R.id.rl_bidder_count, false);
-            } else {
-                holder.setVisible(R.id.rl_bidder_count, true);
-            }
-        } else {
+        if (IS_PUBLIC.equals(is_public)) {
             holder.setVisible(R.id.rl_bidder_count, false);
+        } else {
+            if (isBidding) {
+                if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
+                    holder.setVisible(R.id.rl_bidder_count, false);
+                } else {
+                    holder.setVisible(R.id.rl_bidder_count, true);
+                }
+            } else {
+                holder.setVisible(R.id.rl_bidder_count, false);
+            }
         }
+
 
         /**
          * 应标设计师列表

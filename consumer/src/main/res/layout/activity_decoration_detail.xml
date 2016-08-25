@@ -68,9 +68,9 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:background="@color/bg_ff"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/bg_ff"
                     android:text="@string/common_order_project_number"
                     android:textColor="@color/bg_9E"
                     android:textSize="@dimen/font_15"/>
@@ -504,7 +504,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_common_btn_blue"
                     android:text="@string/button_decoration_amend"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
