@@ -110,7 +110,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     }
 
 
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -414,7 +413,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
     private void initCaseLibraryBtn() {
         if (null == caseLibraryButton)
-             caseLibraryButton = new FloatingActionButton(activity);
+            caseLibraryButton = new FloatingActionButton(activity);
         caseLibraryButton.setLabelText(UIUtils.getString(R.string.case_library));
         caseLibraryButton.setButtonSize(FloatingActionButton.SIZE_MINI);
         caseLibraryButton.setImageResource(R.drawable.icon_case_library_normal);
@@ -425,8 +424,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
         caseLibraryButton.setOnClickListener(this);
     }
-
-
 
 
     private void createCustomAnimation() {
@@ -493,13 +490,12 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             if (action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)) {
 
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                UserPictureUtil.setConsumerOrDesignerPicture(getActivity(),((MPConsumerHomeActivity)getActivity()).getUserAvatar());
                 if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
                     /// hide the requirement btn .
                     mFloatingActionsMenu.removeMenuButton(requirementButton);
-
-                } else {
                 }
+
+                UserPictureUtil.setConsumerOrDesignerPicture(getActivity(), ((MPConsumerHomeActivity) getActivity()).getUserAvatar());
 
                 setSwipeRefreshInfo();
                 if (null == mMemberEntity) {
