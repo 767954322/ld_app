@@ -98,14 +98,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mListView.setAdapter(mAdapter);
 
         setSwipeRefreshInfo();
-
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity == null) {
-            return;
-        }
-        member_id = mMemberEntity.getAcs_member_id();
-        getConsumerInfoData(member_id);
-
     }
 
 
@@ -263,8 +255,8 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                mNickNameConsumer = mConsumerEssentialInfoEntity.getNick_name();
-                mNickNameConsumer = TextUtils.isEmpty(mNickNameConsumer) ? UIUtils.getString(R.string.anonymity) : mNickNameConsumer;
+                String nickName = mConsumerEssentialInfoEntity.getNick_name();
+                mNickNameConsumer = TextUtils.isEmpty(nickName) ? UIUtils.getString(R.string.anonymity) : nickName;
             }
 
             @Override
@@ -479,7 +471,20 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         msg.obj = offset;
         handler.sendMessage(msg);
     }
-
+//TODO MERGE 825
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (mFloatingActionsMenu != null) {
+//            mFloatingActionsMenu.collapse();
+//        }
+//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (mMemberEntity == null) {
+//            return;
+//        }
+//        member_id = mMemberEntity.getAcs_member_id();
+//        getConsumerInfoData(member_id);
+//    }
 
     /**
      * 全局的广播接收者,用于处理登录后数据的操作
@@ -501,11 +506,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                 }
 
                 setSwipeRefreshInfo();
-                if (null == mMemberEntity) {
-                    return;
-                }
-                member_id = mMemberEntity.getAcs_member_id();
-                getConsumerInfoData(member_id);
+
             }
         }
     }

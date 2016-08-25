@@ -76,4 +76,8 @@
     <string name="tixian_status">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态：</string>
     <string name="tixian_number">提现金额：</string>
     <string name="tixian_liushuihao">流&#160;&#160;水&#160;&#160;号：</string>
+    <string name="loginguoqi">登陆过期</string>
+    <string name="canshuyichang">参数错误</string>
+    <string name="caozuoerror">当前操作不合法</string>
+    <string name="apierrror">API内部异常</string>
 </resources>

@@ -354,6 +354,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setVisibilityForNavButton(ButtonType.middle, true);
                 break;
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
+                //TODO MERGE 825
+//<<<<<<< HEAD
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
@@ -366,7 +368,19 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 //                textView.setText(UIUtils.getString(R.string.bid_filter));
 
 
+//=======
+//                mBidHallFragment.handleFilterOption1();
+//                TextView textView = (TextView) findViewById(R.id.nav_left_textView);
+//                textView.setVisibility(View.VISIBLE);
+//                Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
+//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//                textView.setCompoundDrawables(null, null, drawable, null);
+//                textView.setText(UIUtils.getString(R.string.bid_filter));
+//>>>>>>> release/July/Android-UAT
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
+
+
+
                 break;
 
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.

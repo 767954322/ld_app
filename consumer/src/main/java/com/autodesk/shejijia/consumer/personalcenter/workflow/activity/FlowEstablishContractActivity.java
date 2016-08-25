@@ -517,14 +517,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         boolean isMap = renderMap.matches(RegexUtil.POSITIVE_INTEGER_REGEX); //　验证渲染图张数
         boolean isPostNum = consumerPostcode.matches(RegexUtil.POST_NUMBER_REGEX);
 
-        if (!consumerName.isEmpty() && consumerName.matches(RegexUtil.NAME_REGEX)) {
+        if (!consumerName.isEmpty() && consumerName.matches(RegexUtil.NAME_REGEX1)) {
 
             if (isMobile) {
                 if (TextUtils.isEmpty(consumerPostcode) || isPostNum) {
 
                     if (isEmail || consumerEmail.isEmpty()) {
 
-                        if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
+                        if (!detailAddress.isEmpty() && detailAddress.length() >= 2 && decorateAddress.length() <= 32) {
 
                             if (isSketch) {
 

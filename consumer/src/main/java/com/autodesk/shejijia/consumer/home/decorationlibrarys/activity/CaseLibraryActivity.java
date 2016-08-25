@@ -2,29 +2,42 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.HoverCaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.MassiveCasesAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.fragment.MassiveCasesFragment;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.slippingviewpager.NoSlippingViewPager;
 import com.autodesk.shejijia.shared.components.common.uielements.mtab.MaterialTabs;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author DongXueQiu .
@@ -121,6 +134,85 @@ public class CaseLibraryActivity extends NavigationBarActivity {
         startActivity(search);
     }
 
+    /**
+     * 获取案例库数据并刷新
+     */
+    public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
+                                   final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
+                                   final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                CaseLibraryBean mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
+
+                updateViewFromData(mCaseLibraryBean, state);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                //TODO MERGE 825
+//                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryActivity.this);
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, mContext,
+//                        AlertView.Style.Alert, null).show();
+                hideFooterView(mCasesEntities);
+            }
+        };
+        MPServerHttpManager.getInstance().getCaseListData(custom_string_style, custom_string_type, custom_string_keywords,
+                custom_string_area, custom_string_bedroom, taxonomy_id,
+               custom_string_restroom, custom_string_form, offset, limit,  callback);
+    }
+
+    /**
+     * @param mCaseLibraryBean
+     * @param state
+     */
+    private void updateViewFromData(CaseLibraryBean mCaseLibraryBean, int state) {
+
+        switch (state) {
+            case 0:
+                //TODO MERGE 825
+//                OFFSET = 10;
+                mCasesEntities.clear();
+                break;
+            case 1:
+                //TODO MERGE 825
+//                OFFSET += 10;
+                break;
+            default:
+                break;
+        }
+        mCasesEntities.addAll(mCaseLibraryBean.getCases());
+        hideFooterView(mCasesEntities);
+        mHoverCaseAdapter.notifyDataSetChanged();
+        //TODO MERGE 825
+//        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+    }
+
+    /**
+     * 是否隐藏底部布局
+     *
+     * @param list 传入案例库数据集合
+     */
+    private void hideFooterView(List<CaseLibraryBean.CasesEntity> list) {
+        if (list != null && list.size() > 0) {
+            mRlEmpty.setVisibility(View.GONE);
+        } else {
+            mRlEmpty.setVisibility(View.VISIBLE);
+        }
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+        mIvEmpty.setImageBitmap(bmp);
+        mTvEmptyMessage.setText(R.string.no_designer_case);
+        WindowManager wm = (WindowManager) CaseLibraryActivity.this.getSystemService(CaseLibraryActivity.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
+        mRlEmpty.getLayoutParams();
+        layoutParams.height = height - 10;
+        mRlEmpty.setLayoutParams(layoutParams);
+        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+    }
 
 
 
