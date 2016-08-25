@@ -1255,26 +1255,4 @@ public class StringUtils {
     {
         return !(str == null || str.isEmpty() || str.equalsIgnoreCase("0"));
     }
-
-    public static String filterSpecialCharacters(String original)
-    {
-        String filtered = null;
-
-        final String disallowedCharacters = "[&%]";
-        final String replaceWith = "-";
-
-        try
-        {
-            filtered = original.replaceAll(disallowedCharacters, replaceWith);
-        }
-        catch (Exception e)
-        {
-            Log.e("StringUtils", "Could not filter special characters, check your regex! : " +
-                    e.getMessage());
-
-            filtered = null;
-        }
-
-        return filtered;
-    }
 }
