@@ -135,7 +135,7 @@ public class ApiManager {
             //xin
             case UrlConstants.RUNNING_DOCKER_DESIGN:
                 main_design = UrlConstants.DOCKER_HAWKEYE_DESIGN + UrlConstants.MP_MAIN_DESIGN;
-break;
+                break;
             case UrlConstants.RUNNING_DOKER:
                 main_design = UrlConstants.DOKER_MP_DESIGN + UrlConstants.MP_MAIN_DESIGN;
                 break;
@@ -320,34 +320,34 @@ break;
      *
      * @return 我的资产url公共部分
      */
-    public static String getHtml5Url(String runningDevelopment,String caseId) {
+    public static String getHtml5Url(String runningDevelopment, String caseId) {
         String main_transaction = null;
         switch (runningDevelopment) {
             case UrlConstants.RUNNING_DEVELOP:
-                main_transaction = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                main_transaction = UrlConstants.DEVELOPMENT_MP_MAIN + UrlConstants.MP_MAIN_SHARE + caseId;
                 break;
 
             case UrlConstants.RUNNING_QA:
-                main_transaction = UrlConstants.QA_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                main_transaction = UrlConstants.QA_MP_MAIN + UrlConstants.MP_MAIN_SHARE + caseId;
                 break;
 
             case UrlConstants.RUNNING_UAT:
-                main_transaction = UrlConstants.UAT_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                main_transaction = UrlConstants.UAT_MP_MAIN + UrlConstants.MP_MAIN_SHARE + caseId;
                 break;
 
             case UrlConstants.RUNNING_ALPHA:
-                main_transaction = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                main_transaction = UrlConstants.ALPHA_MP_MAIN + UrlConstants.MP_MAIN_SHARE + caseId;
                 break;
 
             case UrlConstants.RUNNING_PRODUCTION:
-                main_transaction = UrlConstants.PRODUCTION_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                main_transaction = UrlConstants.PRODUCTION_MP_MAIN + UrlConstants.MP_MAIN_SHARE + caseId;
                 break;
 
             case UrlConstants.RUNNING_DEV:
-                main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_SHARE+caseId;
+                main_transaction = UrlConstants.DEV_MP_MAIN + UrlConstants.MP_MAIN_SHARE + caseId;
                 break;
             case UrlConstants.RUNNING_DOKER:
-                main_transaction = UrlConstants.DOKER_MP_TRANSACTION + UrlConstants.MP_MAIN_SHARE+caseId;
+                main_transaction = UrlConstants.DOKER_MP_TRANSACTION + UrlConstants.MP_MAIN_SHARE + caseId;
                 break;
         }
         return main_transaction;

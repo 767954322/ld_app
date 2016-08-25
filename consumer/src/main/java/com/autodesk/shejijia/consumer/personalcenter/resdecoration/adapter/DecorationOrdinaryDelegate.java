@@ -36,6 +36,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
     private static final String IS_NOT_BEI_SHU = "1";
     /// 支付了设计首款的节点 .
     private static final int PAYED_FIRST_COST = 41;
+    /**
+     * is_public=1,表示终止了需求
+     */
+    private static final String IS_PUBLIC = "1";
 
     private Intent mIntent;
     private Activity mActivity;
@@ -111,6 +115,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
          * 如果处于审核状态或者有人支付了设计首款，隐藏应标人数布局
          */
         boolean isBidding = isBiding(custom_string_status);
+//        if (is_public)
         if (isBidding) {
             if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
                 holder.setVisible(R.id.rl_bidder_count, false);
