@@ -57,7 +57,10 @@ public class PushNotificationHttpManager
         Map<String, String> map = new HashMap<>();
         map.put("Content-Type", "application/x-www-form-urlencoded");
         map.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
-        map.put("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
+        if(AdskApplication.getInstance().getMemberEntity() != null){
+            map.put("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
+        }
+
         return map;
     }
 }

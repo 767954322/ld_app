@@ -155,6 +155,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         caseLibraryNew.addHeaderView(view);
         caseLibraryNew.addHeaderView(viewHead);
         caseLibraryNew.addHeaderView(viewText);
+
+        showOrHideChatBtn();
     }
 
 
@@ -617,10 +619,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     @Override
     protected void onRestart() {
         super.onRestart();
-        memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null != memberEntity) {
-            getThumbUp(caseDetailBean.getId());
-        }
         showOrHideChatBtn();
     }
 
@@ -651,6 +649,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
      */
     private void showOrHideChatBtn() {
 
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             member_type = memberEntity.getMember_type();
             if (member_type.equals(Constant.UerInfoKey.CONSUMER_TYPE)) {

@@ -60,6 +60,7 @@ public class CaseDescriptionActivity extends NavigationBarActivity implements Vi
         mIvCase = (ImageView) findViewById(R.id.img_look_more_detail_case);
         mIvFinish = (ImageView) findViewById(R.id.img_look_more_detail_finish);
         mIvChat = (ImageView) findViewById(R.id.img_look_more_detail_chat);
+        showOrHideChatBtn();
     }
 
     @Override
