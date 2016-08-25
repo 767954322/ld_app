@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,6 +26,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.DecorationConsumerFragment;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateContainsBean;
+import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -90,7 +90,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         setMyProjectTitleColorChange(design, bidding, construction);
 
-        user_avatar = (ImageView) findViewById(R.id.user_avatar);
+//        user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
         addRadioButtons(mDesignerMainRadioBtn);
         addRadioButtons(mDesignerIndentListBtn);
@@ -107,7 +107,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         if (savedInstanceState != null) {
             // retrieve the fragment handle from fragmentmanager
-
             mUserHomeFragment = (UserHomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
             if (mUserHomeFragment != null) {
                 mFragmentArrayList.add(mUserHomeFragment);
@@ -151,6 +150,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     @Override
     protected void onResume() {
+        UserPictureUtil.setConsumerOrDesignerPicture(this,getUserAvatar());
         Intent intent = getIntent();
         setChooseViewWidth(true);
         int id = intent.getIntExtra(Constant.DesignerBeiShuMeal.SKIP_DESIGNER_PERSONAL_CENTER, -1);
@@ -172,8 +172,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void onRestart() {
         super.onRestart();
         showDesignerOrConsumerRadioGroup();
-        setConsumerOrDesignerPicture();//设置头像
-
+        UserPictureUtil.setConsumerOrDesignerPicture(this,getUserAvatar());
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -225,7 +224,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void initAndAddFragments(int index) {
         super.initAndAddFragments(index);
         this.index = index;
-
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
             mUserHomeFragment = new UserHomeFragment();
             loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
@@ -341,7 +339,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         super.configureNavigationBar(index);
 
-        setConsumerOrDesignerPicture();//设置头像
+//        setConsumerOrDesignerPicture();//设置头像
         setVisibilityForNavButton(ButtonType.LEFTCIRCLE, true);
 
         switch (index) {
@@ -535,44 +533,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (mConsumerEssentialInfoEntity != null
                 && !TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar())
                 && MPConsumerHomeActivity.this != null) {
-            ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), user_avatar);
+            ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), getUserAvatar());
         }
 
         if (designerInfoDetails != null
                 && !TextUtils.isEmpty(designerInfoDetails.getAvatar())
                 && MPConsumerHomeActivity.this != null) {
-            ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), user_avatar);
+            ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), getUserAvatar());
         }
 
     }
 
-    /**
-     * 获取个人基本信息
-     *
-     * @param member_id
-     * @brief For details on consumers .
-     */
-    public void getConsumerInfoData(String member_id) {
-        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                mConsumerNickName = mConsumerEssentialInfoEntity.getNick_name();
-                updateViewFromData();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                if (MPConsumerHomeActivity.this != null) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
-                            AlertView.Style.Alert, null).show();
-                }
-            }
-        });
-    }
 
     /**
      * 获取全流程节点信息；
@@ -602,47 +573,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
 
-    /**
-     * 设计师个人信息
-     *
-     * @param designer_id
-     * @param hs_uid
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-
-                updateViewFromData();
-
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
-                        AlertView.Style.Alert, null).show();
-            }
-        });
-    }
-
-    //设置头像
-    private void setConsumerOrDesignerPicture() {
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity != null &&
-                Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-            getConsumerInfoData(mMemberEntity.getAcs_member_id());
-            return;
-        }
-
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
-            return;
-        }
-        setImageForNavCircleView(ButtonType.LEFTCIRCLE, R.drawable.icon_default_avator);
-    }
 
 
     private void showDesignerOrConsumerRadioGroup() {
@@ -775,7 +705,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private static final String DESIGNER_PERSONAL_FRAGMENT_TAG = "DESIGNER_FRAGMENT_TAG";
     private static final String CONSUMER_PERSONAL_FRAGMENT_TAG = "CONSUMER_FRAGMENT_TAG";
 
-    private ImageView user_avatar;
     private TextView bidding;
     private TextView design;
     private TextView construction;

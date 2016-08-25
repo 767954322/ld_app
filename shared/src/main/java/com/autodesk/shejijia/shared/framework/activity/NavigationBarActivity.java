@@ -42,6 +42,10 @@ public class NavigationBarActivity extends BaseActivity {
 
     }
 
+   public ImageView getUserAvatar(){
+        return (ImageView) findViewById(R.id.user_avatar);
+    }
+
     @Override
     protected void initListener() {
         ImageButton leftImageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
@@ -49,7 +53,7 @@ public class NavigationBarActivity extends BaseActivity {
         ImageButton rightImageButton = (ImageButton) findViewById(R.id.nav_right_imageButton);
         TextView rightTextView = (TextView) findViewById(R.id.nav_right_textView);
         TextView leftTextView = (TextView) findViewById(R.id.nav_left_textView);
-        ImageView userAvatar = (ImageView) findViewById(R.id.user_avatar);
+        userAvatar = (ImageView) findViewById(R.id.user_avatar);
 
         //2. hook up events
 
@@ -274,7 +278,8 @@ public class NavigationBarActivity extends BaseActivity {
 
         // first setup left button
         ImageButton leftImageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
-        ImageView user_avatar = (ImageView) findViewById(R.id.user_avatar);
+
+        userAvatar = (ImageView) findViewById(R.id.user_avatar);
 
         if (leftImageButton != null) {
 
@@ -391,4 +396,5 @@ public class NavigationBarActivity extends BaseActivity {
 
         return viewGroup;
     }
+    private  ImageView userAvatar;
 }
