@@ -23,7 +23,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -41,8 +40,10 @@ import java.util.Map;
  */
 public class DecorationDetailActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
 
-    /// 节点11,邀请量房状态 .
-    private static final int IS_BIDING = 11;
+    /**
+     * is_public=1,表示终止了需求
+     */
+    private static final String IS_PUBLIC = "1";
 
     private TextView mTvNeedsId;
     private TextView mTvDecorationName;
@@ -161,7 +162,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                if (!CustomProgress.dialog.isShowing()){
+                if (!CustomProgress.dialog.isShowing()) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, DecorationDetailActivity.this,
                             AlertView.Style.Alert, null).show();
                 }
@@ -221,16 +222,6 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         String toilet = demandDetailBean.getToilet();
         String living_room = demandDetailBean.getLiving_room();
 
-        /**
-         * 当is_public为1,表示当前需求已经终止，隐藏修改终止需求按钮
-         */
-        String is_public = demandDetailBean.getIs_public();
-        if (Constant.NumKey.ONE.equals(is_public)) {
-            mLlDemandModify.setVisibility(View.GONE);
-        } else {
-            mLlDemandModify.setVisibility(View.VISIBLE);
-        }
-
         district_name = TextUtils.isEmpty(district)
                 || "none".equals(district) ||
                 TextUtils.isEmpty(district_name)
@@ -260,38 +251,37 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
         mTvDecorationName.setText(contacts_name + "/" + community_name);
 
-        /**
-         * 控制修改按钮置灰
-         * custom_string_status 审核状态
-         */
-        if (Constant.NumKey.THREE.equals(custom_string_status)
-                || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
-            setButtonGray(mBtnAmendDemand);
-        }
 
         /**
-         * 控制修改和终止按钮是否可以点击
+         * 审核通过，考虑应标人数情况,大于0时候，隐藏修改终止按钮
+         *
          */
         List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
-        DecorationBiddersBean biddersBean = null;
-        if (null != bidders) {
-            if (bidders.size() == 1) {
-                biddersBean = bidders.get(0);
-            } else if (bidders.size() > 1) {
-                biddersBean = bidders.get(bidders.size() - 1);
-            } else if (bidders.size() < 1) {
-                return;
+        if (Constant.NumKey.THREE.equals(custom_string_status)
+                || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
+
+            if (null != bidders) {
+                if (bidders.size() <= 0) {
+                    mLlDemandModify.setVisibility(View.VISIBLE);
+                    mBtnAmendDemand.setVisibility(View.VISIBLE);
+                    mBtnStopDemand.setVisibility(View.VISIBLE);
+                    setButtonGray(mBtnAmendDemand);
+                } else {
+                    mLlDemandModify.setVisibility(View.GONE);
+                }
             }
-            String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
-            if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= IS_BIDING) {
-                setButtonGray(mBtnStopDemand);
-                setButtonGray(mBtnAmendDemand);
-            }
+        } else {
+            mLlDemandModify.setVisibility(View.VISIBLE);
+            mBtnAmendDemand.setVisibility(View.VISIBLE);
+            mBtnStopDemand.setVisibility(View.VISIBLE);
         }
 
-        if (null != bidders && bidders.size() > 0) {
-            setButtonGray(mBtnStopDemand);
-            setButtonGray(mBtnAmendDemand);
+        /**
+         * 当is_public为1,表示需求终止
+         */
+        String is_public = demandDetailBean.getIs_public();
+        if (IS_PUBLIC.equals(is_public)) {
+            mLlDemandModify.setVisibility(View.GONE);
         }
     }
 
@@ -302,7 +292,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         btn.setClickable(false);
         btn.setPressed(false);
         btn.setTextColor(UIUtils.getColor(R.color.white));
-        btn.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
+        btn.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_gray));
     }
 
 

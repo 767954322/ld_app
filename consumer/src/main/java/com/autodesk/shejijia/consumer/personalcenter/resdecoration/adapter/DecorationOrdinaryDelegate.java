@@ -36,6 +36,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
     private static final String IS_NOT_BEI_SHU = "1";
     /// 支付了设计首款的节点 .
     private static final int PAYED_FIRST_COST = 41;
+    /**
+     * is_public=1,表示终止了需求
+     */
+    private static final String IS_PUBLIC = "1";
 
     private Intent mIntent;
     private Activity mActivity;
@@ -75,7 +79,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String wk_template_id = decorationNeedsListBean.getWk_template_id();
         String custom_string_status = decorationNeedsListBean.getCustom_string_status();
 
-        holder.setText(R.id.tv_decoration_name, contacts_name + "/" + community_name);
+        holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name) + "/" + community_name);
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
 
         String house_type = decorationNeedsListBean.getHouse_type();
@@ -83,11 +87,15 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (spaceMap.containsKey(house_type)) {
             holder.setText(R.id.tv_decoration_house_type, spaceMap.get(house_type));
         } else {
-            holder.setText(R.id.tv_decoration_house_type, house_type);
+            holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? "其它" : house_type);
         }
 
+        if (TextUtils.isEmpty(city_name)) {
+            holder.setText(R.id.tv_decoration_address, UIUtils.getString(R.string.nodata));
+        } else {
+            holder.setText(R.id.tv_decoration_address, province_name + city_name + district_name);
+        }
 
-        holder.setText(R.id.tv_decoration_address, province_name + city_name + district_name);
         holder.setText(R.id.tv_decoration_phone, decorationNeedsListBean.getContacts_mobile());
 
         String decoration_style = decorationNeedsListBean.getDecoration_style();
@@ -95,7 +103,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (styleMap.containsKey(decoration_style)) {
             holder.setText(R.id.tv_decoration_style, styleMap.get(decoration_style));
         } else {
-            holder.setText(R.id.tv_decoration_style, decoration_style);
+            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? "其它" : decoration_style);
         }
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
@@ -111,15 +119,22 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
          * 如果处于审核状态或者有人支付了设计首款，隐藏应标人数布局
          */
         boolean isBidding = isBiding(custom_string_status);
-        if (isBidding) {
-            if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
-                holder.setVisible(R.id.rl_bidder_count, false);
-            } else {
-                holder.setVisible(R.id.rl_bidder_count, true);
-            }
-        } else {
+        if (IS_PUBLIC.equals(is_public)) {
             holder.setVisible(R.id.rl_bidder_count, false);
+        } else {
+            holder.setVisible(R.id.rl_bidder_count, true);
+
+//            if (isBidding) {
+//                if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
+//                    holder.setVisible(R.id.rl_bidder_count, false);
+//                } else {
+//                    holder.setVisible(R.id.rl_bidder_count, true);
+//                }
+//            } else {
+//                holder.setVisible(R.id.rl_bidder_count, false);
+//            }
         }
+
 
         /**
          * 应标设计师列表
@@ -194,15 +209,17 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      * @return 已经进入订单的应标、设计、项目完成阶段，返回true
      */
     private boolean isBiding(String custom_string_status) {
-        boolean isBiding;
-        switch (custom_string_status) {
-            case Constant.NumKey.THREE:
-            case Constant.NumKey.ZERO_THREE:
-                isBiding = true;
-                break;
-            default:
-                isBiding = false;
-                break;
+        boolean isBiding = false;
+        if (!TextUtils.isEmpty(custom_string_status)) {
+            switch (custom_string_status) {
+                case Constant.NumKey.THREE:
+                case Constant.NumKey.ZERO_THREE:
+                    isBiding = true;
+                    break;
+                default:
+                    isBiding = false;
+                    break;
+            }
         }
         return isBiding;
     }
@@ -224,7 +241,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             /**
              * is_public=1,需求终止
              */
-            needsState = UIUtils.getString(R.string.canceled);
+            needsState = UIUtils.getString(R.string.project_stop);
         } else {
             if (Constant.NumKey.ONE.equals(wk_template_id)) {
                 /**

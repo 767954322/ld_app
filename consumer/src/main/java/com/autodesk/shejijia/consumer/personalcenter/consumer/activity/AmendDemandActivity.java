@@ -23,7 +23,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -75,7 +74,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         etIssueDemandDetailAddress = (TextViewContent) findViewById(R.id.et_issue_demand_detail_address);
         tvPublicTime = (TextView) findViewById(R.id.tv_public_time);
         btnFitmentAmendDemand = (Button) findViewById(R.id.btn_fitment_amend_demand);
-        btnFitmentStopDemand = (Button) findViewById(R.id.btn_fitment_stop_demand);
     }
 
     @Override
@@ -102,7 +100,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     protected void initListener() {
         super.initListener();
         btnFitmentAmendDemand.setOnClickListener(this);
-        btnFitmentStopDemand.setOnClickListener(this);
         tvAmendDesignBudget.setOnClickListener(this);
         tvAmendBudget.setOnClickListener(this);
         tvAmendHouseType.setOnClickListener(this);
@@ -174,9 +171,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 sendAmendDemand(needs_id, amendJson);
                 break;
 
-            case R.id.btn_fitment_stop_demand: /// 终止应标 .
-                mStopDemandAlertView.show();
-                break;
 
             case R.id.tv_amend_house_type: /// 修改房屋类型 .
                 pvHouseTypeOptions.show();
@@ -694,7 +688,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     private TextView etAmendAmendName, tvAmendDesignBudget, tvAmendBudget, tvAmendHouseType;
     private EditText etIssueAmendMobile, etAmendArea;
     private TextView tvAmendRoomType, tvAmendStyle, tvIssueAddress, tvPublicTime;
-    private Button btnFitmentAmendDemand, btnFitmentStopDemand;
+    private Button btnFitmentAmendDemand;
     private AddressDialog mChangeAddressDialog;
     private TextViewContent etIssueDemandDetailAddress;
     private OptionsPickerView pvDesignBudgetOptions;

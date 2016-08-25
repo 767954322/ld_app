@@ -70,11 +70,12 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     /**
      * 获取消费者家装订单
      */
-    public void getMyDecorationData(final int offset, final int limit, final int state) {
-        CustomProgress.show(getActivity(), "", true, null);
+    public void getMyDecorationData(final int offset, final int limit) {
         MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 DecorationListBean mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
                 if (isRefreshOrLoadMore) {
@@ -86,7 +87,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
 
-                CustomProgress.cancelDialog();
                 KLog.json(TAG, userInfo);
             }
 
@@ -113,7 +113,8 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         isRefreshOrLoadMore = false;
-        getMyDecorationData(0, LIMIT, 1);
+        CustomProgress.show(getActivity(), "", false, null);
+        getMyDecorationData(0, LIMIT);
         OFFSET = 0;
     }
 
@@ -123,14 +124,15 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
         isRefreshOrLoadMore = true;
         OFFSET = OFFSET + 10;
-        getMyDecorationData(OFFSET, LIMIT, 1);
+        CustomProgress.show(getActivity(), "", false, null);
+        getMyDecorationData(OFFSET, LIMIT);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         isRefreshOrLoadMore = false;
-        getMyDecorationData(0, LIMIT, 1);
+        getMyDecorationData(0, LIMIT);
         OFFSET = 0;
     }
 }

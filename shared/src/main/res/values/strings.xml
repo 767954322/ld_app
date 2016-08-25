@@ -393,6 +393,7 @@
     <string name="anonymity">匿名</string>
     <string name="end_day">已结束</string>
     <string name="canceled">已取消</string>
+    <string name="project_stop">项目结束</string>
     <string name="checking">审核中</string>
     <string name="unchecking">未审核</string>
     <string name="approve">审核通过</string>

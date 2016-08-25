@@ -83,7 +83,7 @@ public class DecorationBeiShuFragment extends Fragment {
         city_name = need.getCity_name();
         district_name = TextUtils.isEmpty(need.getDistrict_name()) ? "" : need.getDistrict_name();
 
-        String address = UIUtils.getNodataIfEmpty(province_name) + " " + UIUtils.getNodataIfEmpty(city_name) + " " + UIUtils.getNodataIfEmpty(district_name);
+        String address = UIUtils.getNoDataIfEmpty(province_name) + " " + UIUtils.getNoDataIfEmpty(city_name) + " " + UIUtils.getNoDataIfEmpty(district_name);
         mProjectAddress.setText(address);
 
         mBeiShuTag.setText(community_name);
