@@ -491,7 +491,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/textview_border_beishu"
+                    android:background="@drawable/btn_border_cancel"
                     android:text="@string/button_decoration_stop"
                     android:textColor="@color/bg_0084ff"
                     />

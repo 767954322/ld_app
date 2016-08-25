@@ -18,7 +18,7 @@
             android:id="@+id/iv_tag_ref"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_bei_normal"/>
+            android:src="@drawable/icon_taocan"/>
 
         <TextView
             android:id="@+id/tv_decoration_beishu_name"
