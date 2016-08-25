@@ -56,7 +56,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     }
 
     @Override
-    protected void initView() {
+    protected void initView() { 
         super.initView();
         ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
