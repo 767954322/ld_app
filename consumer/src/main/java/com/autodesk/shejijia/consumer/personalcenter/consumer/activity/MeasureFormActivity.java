@@ -98,7 +98,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = tvc_area.getText().toString().trim();
-                    area = String.format("%.2f", Double.valueOf(area));
+                    if (TextUtils.isEmpty(area)){
+                        area = "0";
+                    }
+                    area = String.format("%.2f",Double.valueOf(area));
                     tvc_area.setText(area);
                 }
             }
@@ -305,7 +308,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //.....................................
-                houseArea = String.format("%.2f", Double.valueOf(houseArea));
+                if (TextUtils.isEmpty(houseArea)){
+                    houseArea = "0";
+                }
+                houseArea = String.format("%.2f",Double.valueOf(houseArea));
                 tvc_area.setText(houseArea);
                 String subNum = "0";
                 if (houseArea.contains(".")) {

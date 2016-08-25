@@ -20,12 +20,26 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateCon
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.fragment.MassiveCasesFragment;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.slippingviewpager.NoSlippingViewPager;
+import com.autodesk.shejijia.shared.components.common.uielements.mtab.MaterialTabs;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+
+import org.json.JSONObject;
 
 import org.json.JSONObject;
 
@@ -135,8 +149,10 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, mContext,
-                        AlertView.Style.Alert, null).show();
+//                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryActivity.this);
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, mContext,
+//                        AlertView.Style.Alert, null).show();
                 hideFooterView(mCasesEntities);
             }
         };

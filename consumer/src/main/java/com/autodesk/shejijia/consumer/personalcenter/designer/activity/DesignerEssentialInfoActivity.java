@@ -626,7 +626,12 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                     e.printStackTrace();
                 }
             } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
-                CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+                if (CustomProgress.dialog != null) {
+                    CustomProgress.cancelDialog();
+                    CustomProgress.dialog = null;
+                } else {
+                    CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+                }
                 Bitmap bitmap = cameraCamera(data);
                 Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
                 File file = new File(strCameraFilePath);

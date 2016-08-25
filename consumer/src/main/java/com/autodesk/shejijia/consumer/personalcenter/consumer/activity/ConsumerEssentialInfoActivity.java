@@ -48,6 +48,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDial
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -143,6 +144,39 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
          */
         setTvString(mTvEmail, email);
         setGender();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mConsumerEssentialInfoEntity!= null){
+            getConsumerInfoData(member_id);
+        }
+    }
+
+    /**
+     * 获取个人基本信息
+     *
+     * @param member_Id
+     * @brief For details on consumers .
+     */
+    public void getConsumerInfoData(String member_Id) {
+        MPServerHttpManager.getInstance().getConsumerInfoData(member_Id, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+                showState();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, ConsumerEssentialInfoActivity.this,
+                            AlertView.Style.Alert, null).show();
+            }
+        });
     }
 
     @Override

@@ -73,8 +73,10 @@ public class CaseDescriptionActivity extends NavigationBarActivity implements Vi
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         showOrHideChatBtn();
+        if (caseDetailBean != null){
+            hs_uid = caseDetailBean.getHs_designer_uid();
+        }
 
-        hs_uid = caseDetailBean.getHs_designer_uid();
         if (caseDetailBean != null && caseDetailBean.getDesigner_info() != null) {
             designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
         }

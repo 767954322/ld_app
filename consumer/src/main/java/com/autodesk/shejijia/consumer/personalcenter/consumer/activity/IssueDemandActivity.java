@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -78,6 +77,9 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = et_issue_demand_area.getText().toString().trim();
+                    if (TextUtils.isEmpty(area)){
+                        area = "0";
+                    }
                     area = String.format("%.2f",Double.valueOf(area));
                     et_issue_demand_area.setText(area);
                 }
@@ -130,31 +132,37 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_room: /// 请选择户型：室 厅 卫 .
                 pvRoomTypeOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.ll_issue_style: /// 风格 .
                 pvStyleOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_budget: /// 请选择装修预算 .
                 pvDecorationBudgetOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_design_budget: /// 请选择设计预算 .
                 pvDesignBudgetOptions.show();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.tv_issue_address: /// 请选择地址：省 市 区 .
                 getPCDAddress();
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 break;
 
             case R.id.btn_send_demand: /// 提交 .
@@ -162,6 +170,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     return;
                 }
                 et_issue_demand_area.clearFocus();
+                et_issue_demand_mobile.clearFocus();
                 String area = et_issue_demand_area.getText().toString();
 
                 String mobile = et_issue_demand_mobile.getText().toString();
@@ -183,6 +192,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                    return;
 //                }
 
+                //..................................
+                if (TextUtils.isEmpty(area)){
+                    area = "0";
+                }
                 area = String.format("%.2f",Double.valueOf(area));
                 et_issue_demand_area.setText(area);
                 String subNum = "0";
