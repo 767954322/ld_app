@@ -493,10 +493,12 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_border_cancel"
                     android:text="@string/button_decoration_stop"
+                    android:visibility="gone"
                     android:textColor="@color/bg_0084ff"
                     />
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_fitment_amend_demand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

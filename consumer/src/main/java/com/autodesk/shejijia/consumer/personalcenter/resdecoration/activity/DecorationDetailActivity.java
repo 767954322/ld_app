@@ -263,6 +263,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             if (null != bidders) {
                 if (bidders.size() <= 0) {
                     mLlDemandModify.setVisibility(View.VISIBLE);
+                    mBtnAmendDemand.setVisibility(View.VISIBLE);
+                    mBtnStopDemand.setVisibility(View.VISIBLE);
                     setButtonGray(mBtnAmendDemand);
                 } else {
                     mLlDemandModify.setVisibility(View.GONE);
@@ -270,6 +272,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             }
         } else {
             mLlDemandModify.setVisibility(View.VISIBLE);
+            mBtnAmendDemand.setVisibility(View.VISIBLE);
+            mBtnStopDemand.setVisibility(View.VISIBLE);
         }
 
         /**
