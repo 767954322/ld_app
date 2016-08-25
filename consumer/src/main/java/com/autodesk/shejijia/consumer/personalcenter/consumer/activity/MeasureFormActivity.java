@@ -642,9 +642,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 style = styleItems.get(options1);
+                tvc_measure_form_style.setText(style);
                 Map<String, String> space = AppJsonFileReader.getStyle(MeasureFormActivity.this);
                 style = ConvertUtils.getKeyByValue(space, style);
-                tvc_measure_form_style.setText(style);
+
             }
         });
     }
