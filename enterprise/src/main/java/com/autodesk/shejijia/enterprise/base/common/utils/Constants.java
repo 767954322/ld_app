@@ -18,4 +18,10 @@ public class Constants {
     public static final String BASE_URL = "http://cp-alpha-plan.homestyler.com/api/v1";
 //    public static final String BASE_URL = "http://ec2-54-223-58-121.cn-north-1.compute.amazonaws.com.cn:8080/api/v1";
 
+    //项目列表页同级fragment的tag
+    public static final String TASK_LIST_FRAGMENT = "TaskListFragment";
+    public static final String ISSUE_LIST_FRAGMENT = "IssueListFragment";
+    public static final String GROUP_CHAT_FRAGMENT = "GroupChatFragment";
+
+
 }

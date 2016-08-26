@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.enterprise.projectlists.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.projectdetails.activitys.ProjectDetailsActivity;
 import com.autodesk.shejijia.enterprise.projectlists.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.projectlists.viewholder.ProjectListVH;
 import com.orhanobut.logger.Logger;
@@ -22,7 +24,7 @@ import java.util.List;
  * Created by t_xuz on 8/22/16.
  *
  */
-public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<TaskListBean.TaskList> taskLists;
     private int resId;
@@ -46,9 +48,20 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ProjectListVH projectVh = (ProjectListVH) holder;
 
+        initView(projectVh,position);
+
+        initEvents(projectVh,position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return taskLists.size();
+    }
+
+    private void initView(ProjectListVH projectVh,int position){
 
         if (!TextUtils.isEmpty(taskLists.get(position).getName())) {
             projectVh.mProjectName.setText(taskLists.get(position).getName());
@@ -77,21 +90,27 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             projectVh.mTaskListView.setItemAnimator(new DefaultItemAnimator());
             projectVh.mTaskListView.setLayoutManager(layoutManager);
 
-            Logger.e("tasklist-",taskLists.get(position).getPlan().getTasks());
+            Logger.d(taskLists.get(position).getPlan().getTasks());
 
             if (taskLists.get(position).getPlan().getTasks()!=null && taskLists.get(position).getPlan().getTasks().size()>0){
                 projectVh.mViewLine.setVisibility(View.VISIBLE);
-                projectVh.mTaskListView.setAdapter(new TaskDetailsListAdapter(taskLists.get(position).getPlan().getTasks(), R.layout.listitem_task_list_details_view));
+                projectVh.mTaskListView.setAdapter(new TaskDetailsListAdapter(taskLists.get(position).getPlan().getTasks(), R.layout.listitem_task_list_details_view,mContext));
             }else {//隐藏分割线
                 projectVh.mViewLine.setVisibility(View.GONE);
             }
         }
-
     }
 
-    @Override
-    public int getItemCount() {
-        return taskLists.size();
+    private void initEvents(ProjectListVH projectVh,final int position) {
+        projectVh.mProjectDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long projectId = taskLists.get(position).getProject_id();
+                Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
+                intent.putExtra("projectId",projectId);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
 }

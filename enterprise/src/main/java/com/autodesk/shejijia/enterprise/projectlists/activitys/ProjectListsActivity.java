@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.enterprise.projectlists.activitys;
 
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ProjectListsActivity extends BaseFragmentActivity implements OnCheckedChangeListener{
+public class ProjectListsActivity extends BaseProjectListActivity implements OnCheckedChangeListener{
 
     //RadioButton
     private RadioButton mTaskBtn;
@@ -46,9 +47,6 @@ public class ProjectListsActivity extends BaseFragmentActivity implements OnChec
     protected int getContentViewId() {
         return R.layout.activity_enterprise_main;
     }
-
-    @Override
-    protected void initData() {}
 
     @Override
     protected int getFragmentContentId() {
@@ -75,13 +73,13 @@ public class ProjectListsActivity extends BaseFragmentActivity implements OnChec
 
         switch (checkId){
             case R.id.rdoBtn_project_task:
-                addFragment(new TaskListFragment());
+                changeFragment(Constants.TASK_LIST_FRAGMENT,0);
                 break;
             case R.id.rdoBtn_project_issue:
-                addFragment(new IssueListFragment());
+                changeFragment(Constants.ISSUE_LIST_FRAGMENT,1);
                 break;
             case R.id.rdoBtn_project_session:
-                addFragment(new GroupChatFragment());
+                changeFragment(Constants.GROUP_CHAT_FRAGMENT,2);
                 break;
         }
     }

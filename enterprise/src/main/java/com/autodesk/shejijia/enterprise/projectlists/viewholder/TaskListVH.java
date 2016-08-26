@@ -16,11 +16,13 @@ public class TaskListVH extends RecyclerView.ViewHolder{
 
     public TextView mTaskName;
     public TextView mTaskStatus;
+    public LinearLayout mTaskDetails;
 
     public TaskListVH(View itemView) {
         super(itemView);
 
         mTaskName = (TextView) itemView.findViewById(R.id.tv_task_name);
         mTaskStatus = (TextView)itemView.findViewById(R.id.tv_task_status);
+        mTaskDetails = (LinearLayout)itemView.findViewById(R.id.ll_task_details);
     }
 }

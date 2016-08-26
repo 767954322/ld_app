@@ -16,4 +16,7 @@
     <string name="popup_save_update_delete">删除修改</string>
     <string name="popup_save_update_cancel">取消</string>
 
+    <!-- 节点详情添加备注提示语 -->
+    <string name="editText_hint_text">添加品牌等信息</string>
+
 </resources>

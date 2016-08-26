@@ -133,4 +133,24 @@ public class EnterpriseServerHttpManager {
         EnterpriseApplication.getInstance().queue.add(okRequest);
     }
 
+    /*
+    * 获取 project 详情的接口,含 task 详情的
+    * */
+    public void getProjectDetails(final long pid,
+                                  final String token,
+                                  OkJsonRequest.OKResponseCallback callback){
+        String url = Constants.BASE_URL + "/projects"
+                + "/" + pid
+                + "?task_data=true";
+        MyOkJsonRequest okRequest = new MyOkJsonRequest(MyOkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put("X-Token", token);
+                return header;
+            }
+        };
+        EnterpriseApplication.getInstance().queue.add(okRequest);
+    }
 }

@@ -13,7 +13,8 @@
     <!--popUpWindow 半透明背景-->
     <color name="popUpWindow_bg">#b0000000</color>
 
-
+    <!-- activity 半透明背景 -->
+    <color name="activity_bg">#63000000</color>
 
     <!-- grayscale -->
     <color name="white"     >#FFFFFF</color>

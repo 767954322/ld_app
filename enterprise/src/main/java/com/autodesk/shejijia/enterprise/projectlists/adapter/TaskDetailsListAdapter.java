@@ -1,5 +1,8 @@
 package com.autodesk.shejijia.enterprise.projectlists.adapter;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -7,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
+import com.autodesk.shejijia.enterprise.base.common.utils.ToastUtils;
+import com.autodesk.shejijia.enterprise.nodedetails.activity.NodeDetailsActivity;
 import com.autodesk.shejijia.enterprise.projectlists.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.projectlists.viewholder.TaskListVH;
 
@@ -20,10 +25,12 @@ public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private List<TaskListBean.TaskList.Plan.Task> taskIdLists ;
     private int resId;
+    private Context mContext;
 
-    public TaskDetailsListAdapter(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int resId){
+    public TaskDetailsListAdapter(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int resId, Context mContext){
         this.taskIdLists = taskIdLists;
         this.resId = resId;
+        this.mContext = mContext;
     }
 
     @Override
@@ -36,7 +43,18 @@ public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         TaskListVH taskListVH = (TaskListVH)holder;
-        LogUtils.e("taskId--name",taskIdLists.get(position).getName());
+
+        initView(taskListVH,position);
+
+        initEvents(taskListVH,position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return taskIdLists.size();
+    }
+
+    private void initView(TaskListVH taskListVH,int position){
         if (!TextUtils.isEmpty(taskIdLists.get(position).getName())) {
             taskListVH.mTaskName.setText(taskIdLists.get(position).getName());
         }
@@ -69,9 +87,16 @@ public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return taskIdLists.size();
+    private void initEvents(TaskListVH taskListVH,final int position){
+        taskListVH.mTaskDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtils.showShort((Activity) mContext,"node-details"+position);
+                Intent intent = new Intent(mContext, NodeDetailsActivity.class);
+                intent.putExtra("taskId",taskIdLists.get(position).getTask_id());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
 }

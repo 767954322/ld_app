@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/size_58">
+    android:layout_height="@dimen/size_58"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardElevation="10dp">
 
 
     <RadioGroup
@@ -20,8 +23,8 @@
             android:background="@android:color/transparent"
             android:button="@null"
             android:checked="false"
-            android:drawableTop="@drawable/main_tab_bottom_task_selector"
             android:drawablePadding="@dimen/spacing_padding_micro"
+            android:drawableTop="@drawable/main_tab_bottom_task_selector"
             android:gravity="center"
             android:text="@string/main_tab_task"
             android:textColor="@drawable/main_tab_bottom_textview_selector" />
@@ -36,8 +39,8 @@
             android:background="@android:color/transparent"
             android:button="@null"
             android:checked="false"
-            android:drawableTop="@drawable/main_tab_bottom_issue_selector"
             android:drawablePadding="@dimen/spacing_padding_micro"
+            android:drawableTop="@drawable/main_tab_bottom_issue_selector"
             android:gravity="center"
             android:text="@string/main_tab_issue"
             android:textColor="@drawable/main_tab_bottom_textview_selector" />
@@ -52,8 +55,8 @@
             android:background="@android:color/transparent"
             android:button="@null"
             android:checked="false"
-            android:drawableTop="@drawable/main_tab_bottom_session_selector"
             android:drawablePadding="@dimen/spacing_padding_micro"
+            android:drawableTop="@drawable/main_tab_bottom_session_selector"
             android:gravity="center"
             android:text="@string/main_tab_session"
             android:textColor="@drawable/main_tab_bottom_textview_selector" />

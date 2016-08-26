@@ -49,15 +49,4 @@ public abstract class BaseFragmentActivity extends BaseActivity {
     }
 
 
-    //返回键事件监听
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == keyCode) {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-                finish();
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 
 import com.socks.library.KLog;
 
@@ -21,18 +22,16 @@ public abstract class BaseActivity extends AppCompatActivity{
 
         setContentView(getContentViewId());
 
-        initData();
+        initData(savedInstanceState);
 
         initViews();
 
         initEvents();
-
-        KLog.e("BaseActivity--",getClass().getSimpleName());
     }
 
     protected abstract int getContentViewId();
 
-    protected abstract void initData();
+    protected abstract void initData(Bundle savedInstanceState);
 
     protected abstract void initViews();
 
@@ -45,5 +44,18 @@ public abstract class BaseActivity extends AppCompatActivity{
         config.setToDefaults();
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
+    }
+
+
+    //返回键事件监听
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+                finish();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

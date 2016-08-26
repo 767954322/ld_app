@@ -65,17 +65,17 @@ public class TaskListFragment extends BaseFragment{
 
     @Override
     protected void initEvents() {
-       mTaskListView.addOnItemTouchListener(new OnRecyclerItemClickListener(mTaskListView) {
-           @Override
-           public void onItemClick(RecyclerView.ViewHolder viewHolder, int position) {
-               ToastUtils.showShort(mContext,position+"");
-           }
+ /*       mTaskListView.addOnItemTouchListener(new OnRecyclerItemClickListener(mTaskListView) {
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder viewHolder, int position) {
+                ToastUtils.showShort(mContext, position + "");
+            }
 
-           @Override
-           public void onItemLongClick(RecyclerView.ViewHolder viewHolder, int position) {
+            @Override
+            public void onItemLongClick(RecyclerView.ViewHolder viewHolder, int position) {
 
-           }
-       });
+            }
+        });*/
     }
 
     private void getTaskLists(final String findDate,

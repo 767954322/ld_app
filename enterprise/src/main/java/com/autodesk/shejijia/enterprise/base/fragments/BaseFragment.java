@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.enterprise.base.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,12 +18,12 @@ import com.autodesk.shejijia.enterprise.base.activitys.BaseFragmentActivity;
  */
 public abstract class BaseFragment extends Fragment{
 
-    protected BaseFragmentActivity mContext;
+    protected BaseActivity mContext;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = (BaseFragmentActivity)context;
+        mContext = (BaseActivity) context;
     }
 
 
@@ -47,22 +48,5 @@ public abstract class BaseFragment extends Fragment{
     protected abstract void initData();
 
     protected abstract void initEvents();
-
-    //获取宿主Activity
-    protected BaseFragmentActivity getHoldingActivity(){
-        return mContext;
-    }
-
-    //添加fragment
-    protected void addFragment(BaseFragment fragment){
-        if (null != fragment){
-            getHoldingActivity().addFragment(fragment);
-        }
-    }
-
-    //移除fragment
-    protected void removeFragment(){
-       getHoldingActivity().removeFragment();
-    }
 
 }
