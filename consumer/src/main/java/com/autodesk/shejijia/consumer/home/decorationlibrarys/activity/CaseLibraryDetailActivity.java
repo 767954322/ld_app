@@ -8,17 +8,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.ImagesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
-import com.autodesk.shejijia.shared.components.common.uielements.ImageShowView;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.HackyViewPager;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.PhotoView;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.PhotoViewAttacher;
@@ -32,9 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -74,7 +69,7 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
      * 获取所有图片的url地址
      */
     private void updateViewFromData() {
-        if (caseDetailBean.getImages() != null) {
+        if (null !=caseDetailBean && null !=caseDetailBean.getImages()) {
             for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
                 if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
                     imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
