@@ -40,6 +40,13 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
     public void onCommandCellClicked(Context context, MPChatCommandInfo mpChatCommandInfo, String mThreadId) {
         int subNodeId = Integer.parseInt(mpChatCommandInfo.sub_node_id);
 
+        if (subNodeId > 62) {
+            subNodeId = 62;
+        }
+
+        if (subNodeId == 32) {
+            subNodeId = 21;
+        }
 
         switch (subNodeId) {
             case 13:

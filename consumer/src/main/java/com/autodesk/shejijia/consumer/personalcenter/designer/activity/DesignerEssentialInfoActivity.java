@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -70,7 +71,7 @@ import de.greenrobot.event.EventBus;
  * @brief 设计师个人中心修改个人信息界面 .
  */
 public class DesignerEssentialInfoActivity extends NavigationBarActivity implements View.OnClickListener {
-
+    private Bitmap headPicBitmap;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_info;
@@ -146,7 +147,9 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         mCurrentDistrict = mConsumerEssentialInfoEntity.getDistrict_name();
         mCurrentDistrictCode = mConsumerEssentialInfoEntity.getDistrict();
         if (mConsumerEssentialInfoEntity.getAvatar().isEmpty()) {
-            piv_essential_photo.setImageDrawable(getResources().getDrawable(R.drawable.icon_default_avator));
+//            piv_essential_photo.setImageDrawable(getResources().getDrawable(R.drawable.icon_default_avator));
+            headPicBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_default_avator);
+            piv_essential_photo.setImageBitmap(headPicBitmap);
         } else {
             ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), piv_essential_photo);
         }
@@ -599,30 +602,31 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
                     Object[] object = mPictureProcessingUtil.judgePicture(imageFilePath);
                     File tempFile = new File(imageFilePath);
-                    Bitmap _bitmap = (Bitmap) object[1];
-
+//                    Bitmap _bitmap = (Bitmap) object[1];
+                    headPicBitmap = (Bitmap) object[1];
                     File newFile = mImageProcessingUtil.compressFileSize(tempFile);
                     putFile2Server(newFile);
-                    piv_essential_photo.setImageBitmap(_bitmap);
+//                    piv_essential_photo.setImageBitmap(_bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
-                if (CustomProgress.dialog != null) {
-                    CustomProgress.cancelDialog();
-                    CustomProgress.dialog = null;
-                } else {
+//                if (CustomProgress.dialog != null) {
+//                    CustomProgress.cancelDialog();
+//                    CustomProgress.dialog = null;
+//                } else {
                     CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-                }
+//                }
                 Bitmap bitmap = cameraCamera(data);
-                Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
+//                Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
+                headPicBitmap = mPictureProcessingUtil.compressionBigBitmap(bitmap, true);
                 File file = new File(strCameraFilePath);
                 try {
                     putFile2Server(file);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                piv_essential_photo.setImageBitmap(bit);
+//                piv_essential_photo.setImageBitmap(bit);
             }
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -749,6 +753,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         handler.post(new Runnable() {
             public void run() {
                 MyToast.show(activity, string);
+                piv_essential_photo.setImageBitmap(headPicBitmap);
             }
         });
     }
@@ -845,6 +850,12 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this); // 反注册EventBus
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CustomProgress.cancelDialog();
     }
 
     private static final int SYS_INTENT_REQUEST = 0XFF01;

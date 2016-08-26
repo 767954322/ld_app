@@ -70,7 +70,18 @@ public class MPWkFlowManager {
         /// [2]获取对应订单节点的名字 .
         if (StringUtils.isNumeric(wk_cur_sub_node_id)) {
             int wk_cur_sub_node_id_temp = Integer.parseInt(wk_cur_sub_node_id);
-            if (wk_cur_sub_node_id_temp >= 11 && wk_cur_sub_node_id_temp <= 62) {
+
+            if (wk_cur_sub_node_id_temp > 62) {
+                wk_cur_sub_node_id = "62";
+            }
+
+            if (wk_cur_sub_node_id_temp == 32) {
+                wk_cur_sub_node_id = "21";
+            }
+
+            if (wk_cur_sub_node_id_temp < 11) {
+                wk_cur_sub_name = UIUtils.getString(R.string.my_bid_be_being_bid);
+            } else if (wk_cur_sub_node_id_temp >= 11 /*&& wk_cur_sub_node_id_temp <= 62*/) {
                 int position = -1;
                 switch (templateIdPosition) {
                     case 0:     /// 应标 .
@@ -79,13 +90,11 @@ public class MPWkFlowManager {
                     case 1:     /// 量房 .
                         position = getChooseSubNodePosition(wk_cur_sub_node_id);
                         break;
-                    default:
-                        break;
                 }
                 wk_cur_sub_name = mpSubNodeStateBeanRoot.get(position).getWk_cur_sub_name();
-            } else {
-                wk_cur_sub_name = UIUtils.getString(R.string.my_bid_be_being_bid);
             }
+        } else {
+            wk_cur_sub_name = "未知状态";
         }
         return wk_cur_sub_name;
     }
@@ -167,10 +176,10 @@ public class MPWkFlowManager {
      *
      * @param wk_cur_sub_node_id 全流程节点
      *                           11	 邀请量房
-     *
+     *                           <p/>
      *                           12	 设计师同意量房   13
      *                           13	 设计师拒绝量房   14
-     *
+     *                           <p/>
      *                           21	 支付量房费
      *                           22	 打开3d工具
      *                           31	 设计师发送合同
