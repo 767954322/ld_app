@@ -41,6 +41,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      */
     private static final String IS_PUBLIC = "1";
 
+    private static final String NONE = "none";
+
     private Intent mIntent;
     private Activity mActivity;
     private Map<String, String> spaceMap;
@@ -74,6 +76,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String province_name = decorationNeedsListBean.getProvince_name();
         String city_name = decorationNeedsListBean.getCity_name();
         String district_name = decorationNeedsListBean.getDistrict_name();
+        String district = decorationNeedsListBean.getDistrict();
         String bidder_count = decorationNeedsListBean.getBidder_count();
         String is_public = decorationNeedsListBean.getIs_public();
         String wk_template_id = decorationNeedsListBean.getWk_template_id();
@@ -90,10 +93,14 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? "其它" : house_type);
         }
 
+        district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
+        String address = province_name + city_name + district_name;
+
+        /// 项目地址
         if (TextUtils.isEmpty(city_name)) {
             holder.setText(R.id.tv_decoration_address, UIUtils.getString(R.string.nodata));
         } else {
-            holder.setText(R.id.tv_decoration_address, province_name + city_name + district_name);
+            holder.setText(R.id.tv_decoration_address, address);
         }
 
         holder.setText(R.id.tv_decoration_phone, decorationNeedsListBean.getContacts_mobile());
