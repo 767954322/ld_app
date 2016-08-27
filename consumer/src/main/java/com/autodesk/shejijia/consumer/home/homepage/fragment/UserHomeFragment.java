@@ -514,17 +514,17 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             initRequirementBtn();
-            initFindDesignerBtn();
             initCaseLibraryBtn();
+            initFindDesignerBtn();
 
         } else if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            initFindDesignerBtn();
             initCaseLibraryBtn();
+            initFindDesignerBtn();
 
         } else {
             initRequirementBtn();
-            initFindDesignerBtn();
             initCaseLibraryBtn();
+            initFindDesignerBtn();
         }
     }
 
