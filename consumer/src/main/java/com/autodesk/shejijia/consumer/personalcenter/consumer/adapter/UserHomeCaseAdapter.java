@@ -130,15 +130,15 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
             ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
             ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.str_others));
         }
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
-
-        } else {
-            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
-        }
+//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+//            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
+//           // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
+//
+//        } else {
+//            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
+//           // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
+//        }
 
         ((ViewHolder) holder).ivHeadIcon.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         ((ViewHolder) holder).ivCase.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
