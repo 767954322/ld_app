@@ -547,7 +547,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         if (introduction != null) {
             mCaseLibraryText.setText("          " + introduction);
         } else {
-            mCaseLibraryText.setText(R.string.nodata);
+            mCaseLibraryText.setText(R.string.nodescription);
         }
 
         tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
