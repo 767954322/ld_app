@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -95,8 +94,8 @@ public class ImageUtils {
                 .threadPriority(Thread.NORM_PRIORITY - 1) // default
                 .tasksProcessingOrder(QueueProcessingType.FIFO) // default
                 .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
-                .memoryCacheSize(2 * 1024 * 1024)
+                .memoryCache(new LruMemoryCache(1 * 1024 * 1024))
+                .memoryCacheSize(1 * 1024 * 1024)
                 .memoryCacheSizePercentage(13) // default
                 .diskCache(new UnlimitedDiskCache(createDefaultCacheDir())) // default
                 .diskCacheSize(50 * 1024 * 1024)
