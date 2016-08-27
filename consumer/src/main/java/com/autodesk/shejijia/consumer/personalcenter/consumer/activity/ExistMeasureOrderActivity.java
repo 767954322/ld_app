@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,6 +64,9 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         explistview = (PinnedHeaderExpandableListView) findViewById(R.id.explistview);
         btn_send = (Button) findViewById(R.id.btn_exist_measure_order_send);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
+        ll_liang_fang_charge = (LinearLayout) findViewById(R.id.ll_liang_fang_charge);
+        tv_measure_form_liangfangfei = (TextView) findViewById(R.id.tv_measure_form_liangfangfei);
+
     }
 
     @Override
@@ -78,6 +82,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         super.initData(savedInstanceState);
 
         setTitleForNavbar(UIUtils.getString(R.string.exist_measure_order_information));
+        ll_liang_fang_charge.setVisibility(View.GONE);
         initAlertView();
         showState();
         setMeasureTime();
@@ -94,9 +99,9 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         if (!fee.isEmpty() && !fee.equals("0")) {
             double dFee = Double.valueOf(fee);
             DecimalFormat df1 = new DecimalFormat("0.00");
-            tv_measure_fee.setText(df1.format(dFee) + "元");
+            tv_measure_form_liangfangfei.setText(df1.format(dFee)/* + "元"*/);
         } else {
-            tv_measure_fee.setText("0.00");
+            tv_measure_form_liangfangfei.setText("0.00");
         }
     }
 
@@ -331,6 +336,8 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
 
     /// 控件.
     private RelativeLayout rl_measure_time;
+    private LinearLayout ll_liang_fang_charge;
+    private TextView tv_measure_form_liangfangfei;
     private TextView tv_measure_time;
     private TextView tvIllustrate;
     private TextView tv_measure_fee;
