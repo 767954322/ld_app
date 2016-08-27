@@ -226,7 +226,7 @@
                     android:layout_marginRight="@dimen/size_30"
                     android:background="@drawable/bg_edit_text_shape"
                     android:inputType="number"
-                    android:maxLength="19"
+                    android:maxLength="22"
                     android:singleLine="true"
                     android:visibility="gone" />
             </LinearLayout>

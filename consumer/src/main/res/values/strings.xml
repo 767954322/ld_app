@@ -8,4 +8,5 @@
     <string name="apierrror">API内部异常</string>
     <string name="http402">服务器开小差中</string>
     <string name="http404">服务器走丢了</string>
+    <string name="are_you_sure_unbundling">您确定要将此银行卡解除绑定吗？</string>
 </resources>

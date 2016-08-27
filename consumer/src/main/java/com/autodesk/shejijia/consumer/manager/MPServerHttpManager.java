@@ -1133,4 +1133,20 @@ public class MPServerHttpManager {
 
 
     private String TAG = getClass().getSimpleName();
+
+    public void sendUnBindBankCard(final long designer_id,
+                                   JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+        String url = UrlConstants.URL_WITHDRAW_MEMBERS + designer_id + "/balances/delete";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.X_XTOKEN, xToken);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
 }
