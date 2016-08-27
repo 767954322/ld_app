@@ -99,6 +99,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         //获取节点信息
         getWkFlowStatePointInformation();
+        //获取设计师信息
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
 
     }
 
@@ -405,7 +408,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.msg_file);
                 if (ifIsDesiner) {
-                    setImageForNavButton(ButtonType.SECONDARY, R.drawable.chat_saoyisao);
+                    setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
                     ifIsLohoDesiner(acs_Member_Id, hs_uid);
@@ -577,6 +580,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
 
+
+
+
     private void showDesignerOrConsumerRadioGroup() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
@@ -589,6 +595,30 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             mDesignerIndentListBtn.setVisibility(View.GONE);
         }
     }
+
+    /**
+     * 设计师个人信息
+     *
+     * @param designer_id
+     * @param hs_uid
+     */
+    public void getDesignerInfoData(String designer_id, String hs_uid) {
+        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }
+        });
+    }
+
 
     //判断是否聊过天，跳转到之前聊天室或新聊天室
     private void jumpToChatRoom(String scanResult) {
