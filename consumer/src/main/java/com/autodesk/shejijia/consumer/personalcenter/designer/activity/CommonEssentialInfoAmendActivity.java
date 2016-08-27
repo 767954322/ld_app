@@ -72,6 +72,9 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
                 return;
             }
         } else if (pTag.equals(Constant.PersonCenterTagKey.MEASURE_HOUSE)) {
+
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(tvc_content.getWindowToken(),0);
             if (!num) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.no_measure_fee), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 return;

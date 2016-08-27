@@ -92,4 +92,8 @@
     <string name="button_decoration_amend">修改需求</string>
     <string name="content_designer_good_at">擅长：</string>
     <string name="content_others">其它</string>
+    <string name="loginguoqi">登陆过期</string>
+    <string name="canshuyichang">参数错误</string>
+    <string name="caozuoerror">当前操作不合法</string>
+    <string name="apierrror">API内部异常</string>
 </resources>

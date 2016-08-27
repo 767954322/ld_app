@@ -71,25 +71,6 @@ public class OkJsonRequest extends JsonObjectRequest {
         return super.setCacheEntry(entry);
     }
 
-    //    @Override
-//    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-//        try {
-//            String jsonString = new String(response.data,
-//                    HttpHeaderParser.parseCharset(response.headers));
-//
-//            JSONObject result = null;
-//
-//            if (jsonString != null && jsonString.length() > 0)
-//                result = new JSONObject(jsonString);
-//
-//            return Response.success(result,
-//                    HttpHeaderParser.parseCacheHeaders(response));
-//        } catch (UnsupportedEncodingException e) {
-//            return Response.error(new ParseError(e));
-//        } catch (JSONException je) {
-//            return Response.error(new ParseError(je));
-//        }
-//    }@Override
 
     /**
      * 增加response为null情况判断，防止走失败方法

@@ -4,12 +4,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include
-        android:id="@+id/main_topbar"
-        layout="@layout/activity_enterprise_main_topbar_view"/>
+    <include layout="@layout/activity_enterprise_main_topbar"/>
 
-    <include layout="@layout/activity_enterprise_main_content_view"/>
+    <include layout="@layout/activity_enterprise_main_content"/>
 
-    <include layout="@layout/activity_enterprise_main_bottombar_view"/>
+    <include layout="@layout/activity_enterprise_main_bottombar"/>
 
 </LinearLayout>

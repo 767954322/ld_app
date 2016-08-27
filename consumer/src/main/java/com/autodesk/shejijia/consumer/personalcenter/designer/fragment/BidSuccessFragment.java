@@ -66,6 +66,7 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
     }
 
     private void addFooterViewForMListView() {
+        rl_empty.setVisibility(View.GONE);
         mPullListView.addFooterView(mFooterView);
         WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
@@ -179,7 +180,7 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
         mBiddingNeedsListEntities.addAll(getData(0));
         isHideMFooterView(mBiddingNeedsListEntities.size());
         mCommonAdapter.notifyDataSetChanged();
-        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+        mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
     }
 
     @Override

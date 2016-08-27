@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_padding_normal"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_task_name"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/font_normal"
+        android:drawablePadding="@dimen/spacing_padding_normal"
+        tools:text="隐秘工程验收"/>
+
+    <TextView
+        android:id="@+id/tv_task_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="强制复检"
+        android:textSize="@dimen/font_normal"
+        android:background="@drawable/project_list_tv_orange_shape"
+        android:textColor="@color/white"
+        android:gravity="center"/>
+</LinearLayout>

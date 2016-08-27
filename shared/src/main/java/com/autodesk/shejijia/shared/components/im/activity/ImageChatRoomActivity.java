@@ -133,10 +133,7 @@ public class ImageChatRoomActivity extends BaseChatRoomActivity implements ChatE
     @Override
     public void onSendTextClicked(String msg)
     {
-        String filteredMessage = StringUtils.filterSpecialCharacters(msg);
-        assert (filteredMessage != null);
-
-        initiateTextMessageSendSequence(filteredMessage);
+        initiateTextMessageSendSequence(msg);
     }
 
     @Override

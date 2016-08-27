@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesig
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerFiltrateBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;

@@ -4,24 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DFinishDeliveryAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DLevelZeroAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.Wk3DPlanAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.DeliverySelector;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.util.ArrayList;
 
@@ -236,19 +235,19 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                 case 4:
                     setTitleForNavbar(UIUtils.getString(R.string.my_room_deliverable));
             }
-            Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(UIUtils.getContext(), mMPFileBeanArrayList);
+            Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(this, mMPFileBeanArrayList);
             mGridView3DPlan.setAdapter(wk3DFinishDeliveryAdapter);
-            mGridView3DPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(Wk3DPlanActivity.this, Wk3DPlanShowActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mMPFileBeanArrayList.get(position));
-                    bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, false);
-                    intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
-                    startActivity(intent);
-                }
-            });
+//            mGridView3DPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    Intent intent = new Intent(Wk3DPlanActivity.this, Wk3DPlanShowActivity.class);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mDeliveryFilesEntities.get(position));
+//                    bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, false);
+//                    intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
+//                    startActivity(intent);
+//                }
+//            });
         } else {
             MyToast.show(this, UIUtils.getString(R.string.to_get_data_fail_try_again_later));
         }

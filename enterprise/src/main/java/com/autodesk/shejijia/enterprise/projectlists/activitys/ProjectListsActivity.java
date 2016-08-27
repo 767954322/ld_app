@@ -1,10 +1,46 @@
 package com.autodesk.shejijia.enterprise.projectlists.activitys;
 
 
-import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-public class ProjectListsActivity extends BaseActivity{
+import com.android.volley.VolleyError;
+import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.base.activitys.BaseFragmentActivity;
+import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
+import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
+import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
+import com.autodesk.shejijia.enterprise.nodedetails.entity.NodeBean;
+import com.autodesk.shejijia.enterprise.projectlists.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.projectlists.fragments.GroupChatFragment;
+import com.autodesk.shejijia.enterprise.projectlists.fragments.IssueListFragment;
+import com.autodesk.shejijia.enterprise.projectlists.fragments.TaskListFragment;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
+import com.orhanobut.logger.Logger;
+
+import android.widget.RadioGroup.OnCheckedChangeListener;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+public class ProjectListsActivity extends BaseFragmentActivity implements OnCheckedChangeListener{
+
+    //RadioButton
+    private RadioButton mTaskBtn;
+    private RadioButton mIssueBtn;
+    private RadioButton mSessionBtn;
+    //RadioGroup
+    private RadioGroup mProjectGroup;
+
 
     @Override
     protected int getContentViewId() {
@@ -12,19 +48,108 @@ public class ProjectListsActivity extends BaseActivity{
     }
 
     @Override
-    protected void initData() {
+    protected void initData() {}
 
-
+    @Override
+    protected int getFragmentContentId() {
+        return R.id.main_content;
     }
 
     @Override
     protected void initViews() {
-
+        mTaskBtn = (RadioButton)this.findViewById(R.id.rdoBtn_project_task);
+        mIssueBtn = (RadioButton)this.findViewById(R.id.rdoBtn_project_issue);
+        mSessionBtn = (RadioButton)this.findViewById(R.id.rdoBtn_project_session);
+        mProjectGroup = (RadioGroup)this.findViewById(R.id.rdoGrp_project_list);
     }
 
     @Override
     protected void initEvents() {
-
+        //init RadioBtn Event
+        mProjectGroup.setOnCheckedChangeListener(this);
+        mTaskBtn.setChecked(true);
     }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+
+        switch (checkId){
+            case R.id.rdoBtn_project_task:
+                addFragment(new TaskListFragment());
+                break;
+            case R.id.rdoBtn_project_issue:
+                addFragment(new IssueListFragment());
+                break;
+            case R.id.rdoBtn_project_session:
+                addFragment(new GroupChatFragment());
+                break;
+        }
+    }
+
+
+    private void getProjectLists(final long uid,
+                                 final int project_status,
+                                 final int limit,
+                                 final int offset,
+                                 final String token) {
+        OkJsonRequest.OKResponseCallback callbackResult = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.e("projects-->", jsonObject.toString());
+                String result = GsonUtil.jsonToString(jsonObject);
+                ProjectListBean projectListBean = GsonUtil.jsonToBean(result, ProjectListBean.class);
+                //获取项目列表
+
+            }
+        };
+        EnterpriseServerHttpManager.getInstance().getProjectLists(offset, limit, token, callbackResult);
+    }
+
+    private void getPlanDetails(final long pid,
+                                final String token) {
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+            }
+        };
+
+        EnterpriseServerHttpManager.getInstance().getPlanDetails(pid, token, callback);
+    }
+
+
+    private void getTaskDetails(final long pid,
+                                final String tid,
+                                final String token) {
+
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                String result = GsonUtil.jsonToString(jsonObject);
+                NodeBean nodeBean = GsonUtil.jsonToBean(result, NodeBean.class);
+
+                LogUtils.e("TaskDetails", nodeBean.toString());
+
+            }
+        };
+        EnterpriseServerHttpManager.getInstance().getTaskDetails(pid, tid, token, callback);
+    }
+
 }
 

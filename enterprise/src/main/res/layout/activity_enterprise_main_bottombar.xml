@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_58">
+
+
+    <RadioGroup
+        android:id="@+id/rdoGrp_project_list"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rdoBtn_project_task"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/spacing_margin_micro"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/main_tab_bottom_task_selector"
+            android:drawablePadding="@dimen/spacing_padding_micro"
+            android:gravity="center"
+            android:text="@string/main_tab_task"
+            android:textColor="@drawable/main_tab_bottom_textview_selector" />
+
+        <RadioButton
+            android:id="@+id/rdoBtn_project_issue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/spacing_margin_micro"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/main_tab_bottom_issue_selector"
+            android:drawablePadding="@dimen/spacing_padding_micro"
+            android:gravity="center"
+            android:text="@string/main_tab_issue"
+            android:textColor="@drawable/main_tab_bottom_textview_selector" />
+
+        <RadioButton
+            android:id="@+id/rdoBtn_project_session"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/spacing_margin_micro"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/main_tab_bottom_session_selector"
+            android:drawablePadding="@dimen/spacing_padding_micro"
+            android:gravity="center"
+            android:text="@string/main_tab_session"
+            android:textColor="@drawable/main_tab_bottom_textview_selector" />
+
+    </RadioGroup>
+
+</android.support.v7.widget.CardView>

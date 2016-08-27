@@ -319,7 +319,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                  * 设计合同 or 量房交付物
                  */
                 case 2:
-                    if (Integer.parseInt(wk_cur_sub_node_id) == 21 || Integer.parseInt(wk_cur_sub_node_id) == 22) {
+                    if ((Integer.parseInt(wk_cur_sub_node_id) == 21) /*|| (Integer.parseInt(wk_cur_sub_node_id) == 32)*/ || Integer.parseInt(wk_cur_sub_node_id) == 22) {
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                                 AlertView.Style.Alert, null).show();
                     } else if (Integer.parseInt(wk_cur_sub_node_id) >= 31 && Integer.parseInt(wk_cur_sub_node_id) != 33) {

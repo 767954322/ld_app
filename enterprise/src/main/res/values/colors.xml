@@ -8,4 +8,24 @@
     <color name="main_bottom_textView_pressed">#5AB5EE</color>
     
     <color name="rectangle_gray">#999999</color>
+    <color name="ripple_material_dark">#c8c8c8</color>
+
+    <!--popUpWindow 半透明背景-->
+    <color name="popUpWindow_bg">#b0000000</color>
+
+
+
+    <!-- grayscale -->
+    <color name="white"     >#FFFFFF</color>
+    <color name="gray_light">#DBDBDB</color>
+    <color name="gray"      >#939393</color>
+    <color name="gray_dark" >#5F5F5F</color>
+    <color name="black"     >#323232</color>
+
+    <!-- basic colors -->
+    <color name="green">#27D34D</color>
+    <color name="blue">#2A91BD</color>
+    <color name="orange">#FF9D2F</color>
+    <color name="red">#FF432F</color>
+
 </resources>

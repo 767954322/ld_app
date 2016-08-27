@@ -48,6 +48,7 @@ public class RegexUtil {
      * 验证姓名
      */
     public static final String NAME_REGEX = "^([\u4e00-\u9fa5]{2,10})$";
+    public static final String NAME_REGEX1 = "^[A-Za-z\\u4e00-\\u9fa5]{2,12}+$";
 
     /**
      * 验证邮编
