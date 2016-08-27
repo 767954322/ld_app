@@ -491,6 +491,8 @@ public class SearchActivity extends NavigationBarActivity implements
             filterDateList.clear();
             for (SearchHoverCaseBean sortModel : mSearchHoverCaseBeenList) {
                 String name = sortModel.getValue();
+                name = name.toLowerCase();
+                filterStr = filterStr.toLowerCase();
                 if (name.indexOf(filterStr.toString()) != -1 || mCharacterParser.getSelling(name).startsWith(filterStr.toString())) {
                     filterDateList.add(sortModel);
                 }

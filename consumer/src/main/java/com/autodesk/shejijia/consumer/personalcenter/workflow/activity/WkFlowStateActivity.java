@@ -7,8 +7,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
@@ -16,9 +19,14 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommon
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.WkFlowStateAdapter;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
 
@@ -48,6 +56,11 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         context = this;
         mListView = (ListViewFinal) findViewById(R.id.lv_designer_meal_detail);
         mPtrLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
+        rl_piv = (RelativeLayout) findViewById(R.id.rl_piv);
+        ibFlowChart = (ImageButton) findViewById(R.id.ib_flow_chart);
+        tvDesignerName = (TextView) findViewById(R.id.tv_designer_name);
+        polygonImageView = (PolygonImageView)findViewById(R.id.piv_consumer_order_photo_01);
+
         //右上角三个按钮设置；
         right_contain = (LinearLayout) findViewById(R.id.right_contain);
         View view = LayoutInflater.from(this).inflate(R.layout.addview_wkflow_state,null);
@@ -85,7 +98,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.initListener();
         projectInformation.setOnClickListener(this);
         demandDetails.setOnClickListener(this);
-
+        ibFlowChart.setOnClickListener(this);
         mListView.setOnItemClickListener(this);
         mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
                                             @Override
@@ -107,6 +120,21 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     public void onClick(View v) {
 
         switch (v.getId()){
+
+            case R.id.ib_flow_chart:
+                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+                Intent intentChart = new Intent(context, ChatRoomActivity.class);
+                String acs_member_id = mMemberEntity.getAcs_member_id();
+                String member_type = mMemberEntity.getMember_type();
+                intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, mBiddersEntity.getUser_name());
+                intentChart.putExtra(ChatRoomActivity.THREAD_ID, mThreead_id);
+                intentChart.putExtra(ChatRoomActivity.ASSET_ID, "");
+                intentChart.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
+                intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                intentChart.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
+                context.startActivity(intentChart);
+
+                break;
 
             case R.id.demand_details:
                 /**
@@ -405,10 +433,20 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.onWorkFlowData();
 
         setTitleForNavbar(community_name); /// 设置标题 .
+        if (memberEntity != null) {
+            strMemberType = memberEntity.getMember_type();
+        }
+        if(Constant.UerInfoKey.CONSUMER_TYPE.equals(strMemberType)){
+            rl_piv.setVisibility(View.VISIBLE);
+        }
+
         mPtrLayout.onRefreshComplete();
         mAdapter = new WkFlowStateAdapter(context, memberEntity.getMember_type(), mBiddersEntity, wk_template_id);
         mListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        ImageUtils.displayAvatarImage(mBiddersEntity.getAvatar(), polygonImageView);
+        tvDesignerName.setText(mBiddersEntity.getUser_name());
     }
 
     @Override
@@ -697,6 +735,10 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private LinearLayout right_contain;
     private ImageView demandDetails;
     private ImageView projectInformation;
+    private RelativeLayout rl_piv;
+    private ImageButton ibFlowChart;
+    private PolygonImageView polygonImageView;
+    private TextView tvDesignerName;
 
     private String demand_type;
     private boolean bid_status;

@@ -554,7 +554,7 @@
     <string name="consume_detail_address_hint">请输入小区名称</string>
     <string name="complete">完成</string>
     <string name="designer_beishu_meal_form">北舒套餐表单</string>
-    <string name="save_success">请在我的订单中查看详情</string>
+    <string name="save_decoration_success">请在我的订单中查看详情</string>
     <string name="please_input_correct_address">请输入正确的地址</string>
     <string name="data_save">数据保存中</string>
 

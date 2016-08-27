@@ -13,8 +13,8 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidBidingFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidFailureFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidSuccessFragment;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.util.ArrayList;
 
@@ -27,6 +27,7 @@ import java.util.ArrayList;
  */
 public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener, BidBidingFragment.FragmentCallBack {
 
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_my_bid_view;
@@ -38,6 +39,11 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         tv_bid_be_being_bid = (TextView) findViewById(R.id.tv_bid_be_being_bid);
         tv_my_bid_bingo_bid = (TextView) findViewById(R.id.tv_my_bid_bingo_bid);
         tv_my_bid_outflow_bid = (TextView) findViewById(R.id.tv_my_bid_outflow_bid);
+    }
+
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
     }
 
     @Override
@@ -69,6 +75,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 switchFragment(beBeingFragment);
 
                 break;
+
             case R.id.tv_my_bid_bingo_bid:
                 setColorAndBackgroundForTextView(tv_my_bid_bingo_bid);
                 setTextColor(new TextView[]{tv_bid_be_being_bid, tv_my_bid_outflow_bid});
@@ -78,6 +85,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 }
                 switchFragment(bingoFragment);
                 break;
+
             case R.id.tv_my_bid_outflow_bid:
                 setColorAndBackgroundForTextView(tv_my_bid_outflow_bid);
                 setTextColor(new TextView[]{tv_bid_be_being_bid, tv_my_bid_bingo_bid});
@@ -90,6 +98,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
             default:
                 break;
         }
+
     }
 
     @Override

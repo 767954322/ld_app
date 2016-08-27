@@ -342,7 +342,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         mShadeView.setTag(MENU_COLLAPSE_TAG);
 
         mFloatingActionsMenu.setClosedOnTouchOutside(true);
-//        createCustomAnimation();
         /**
          * requirement btn发布设计需求
          */
@@ -476,20 +475,6 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         msg.obj = offset;
         handler.sendMessage(msg);
     }
-//TODO MERGE 825
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (mFloatingActionsMenu != null) {
-//            mFloatingActionsMenu.collapse();
-//        }
-//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (mMemberEntity == null) {
-//            return;
-//        }
-//        member_id = mMemberEntity.getAcs_member_id();
-//        getConsumerInfoData(member_id);
-//    }
 
     /**
      * 全局的广播接收者,用于处理登录后数据的操作

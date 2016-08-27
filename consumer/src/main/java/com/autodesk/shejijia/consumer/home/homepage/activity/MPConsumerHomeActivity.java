@@ -151,7 +151,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void onResume() {
 
-        UserPictureUtil.setConsumerOrDesignerPicture(this,getUserAvatar());
+        UserPictureUtil.setConsumerOrDesignerPicture(this, getUserAvatar());
         Intent intent = getIntent();
         setChooseViewWidth(true);
         int id = intent.getIntExtra(Constant.DesignerBeiShuMeal.SKIP_DESIGNER_PERSONAL_CENTER, -1);
@@ -299,17 +299,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
 
+        if (null != memberEntity&&Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             circleIntent = new Intent(MPConsumerHomeActivity.this, DesignerPersonalCenterActivity.class);
-
         }
 
-        if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+        if (null != memberEntity&&Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
 
             circleIntent = new Intent(MPConsumerHomeActivity.this, ConsumerPersonalCenterActivity.class);
         }
-
 
         startActivity(circleIntent);
 
@@ -326,7 +324,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 btWidth = contain.getMeasuredWidth();
                 btHeight = contain.getMeasuredHeight();
                 if (btWidth != 0) {
-
                     chooseViewPointer.setInitChooseVoewPoint(btWidth, just);
                 }
 
@@ -348,9 +345,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
                 break;
+
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
                 //TODO MERGE 825
-//<<<<<<< HEAD
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
@@ -374,30 +371,26 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
 
 
-
                 break;
 
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
                 //判断登陆的是设计师还是消费者，，，我的项目加载不同的信息
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 setChooseViewWidth(true);
-                if (memberEntity != null
-                        && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
 
-
+                if (null == memberEntity) {
+                    return;
+                }
+                if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
                     setVisibilityForNavButton(ButtonType.middle, false);
-
                     contain.setVisibility(View.VISIBLE);
                     if (contain.getChildCount() == 0) {
-
                         contain.addView(contain_layout);
                     }
                 }
 
-                if (memberEntity != null
-                        && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+                if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
                     setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_title_add);
-
                     setTitleForNavbar(UIUtils.getString(R.string.consumer_decoration));
                 }
 
@@ -424,7 +417,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
         }
     }
-
 
 
     //切换fragment 改变指针
@@ -584,8 +576,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         });
     }
-
-
 
 
     private void showDesignerOrConsumerRadioGroup() {

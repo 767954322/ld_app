@@ -249,7 +249,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
 
     //弹窗提醒
     private void initAlertView() {
-        mAlertViewExt = new AlertView(UIUtils.getString(R.string.tip_success), UIUtils.getString(R.string.save_success), null, null, new String[]{UIUtils.getString(R.string.sure)}, BeiShuMealActivity.this, AlertView.Style.Alert, BeiShuMealActivity.this).setCancelable(false);
+        mAlertViewExt = new AlertView(UIUtils.getString(R.string.tip_success), UIUtils.getString(R.string.save_decoration_success), null, null, new String[]{UIUtils.getString(R.string.sure)}, BeiShuMealActivity.this, AlertView.Style.Alert, BeiShuMealActivity.this).setCancelable(false);
     }
 
     /**
