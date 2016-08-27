@@ -529,7 +529,9 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             mFloatingActionsMenu.close(true);
         }
 
-        getConsumerInfoData(member_id);
+        if (!TextUtils.isEmpty(member_id)) {
+            getConsumerInfoData(member_id);
+        }
 
 
     }
