@@ -404,12 +404,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 String acs_Member_Type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                 Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.msg_file);
+                setImageForNavButton(ButtonType.SECONDARY,R.drawable.chat_saoyisao);
                 if (ifIsDesiner) {
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
                     ifIsLohoDesiner(acs_Member_Id, hs_uid);
                 } else {
-                    setVisibilityForNavButton(ButtonType.SECONDARY, false);
+                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
                 }
                 getFileThreadUnreadCount();
 
