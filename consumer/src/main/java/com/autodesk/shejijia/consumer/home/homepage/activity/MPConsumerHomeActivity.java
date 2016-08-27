@@ -187,7 +187,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             designer_main_radio_group.check(index);
-            mDesignerPersonalCenterFragment.setAllFragmentRefresh(true);
 
         }
         //登陆消费者时，会进入

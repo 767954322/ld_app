@@ -179,7 +179,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
 
     public void setAllFragmentRefresh(boolean isRefresh){
 
-        mBidBidingFragment.setRestartFragment(isRefresh);
+       // mBidBidingFragment.setRestartFragment(isRefresh);
     }
 
     private LinearLayout llFragmentContain;
@@ -197,6 +197,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     private FragmentTransaction transaction;
     private GradientDrawable drawable;/// set Textview bordercolor .
     private Fragment mDesignerConstructionFragment;
-    private BidingFragment mBidBidingFragment;
+    private Fragment mBidBidingFragment;
 
 }
