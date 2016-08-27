@@ -20,7 +20,7 @@ public class DesignerOrderActivity extends NavigationBarActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_designer_order;
+        return R.layout.activity_designer_order_bid;
     }
 
     @Override

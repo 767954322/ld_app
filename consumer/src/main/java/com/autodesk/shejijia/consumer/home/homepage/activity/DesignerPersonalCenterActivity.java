@@ -26,7 +26,6 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActi
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyPropertyActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
-import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -56,6 +55,9 @@ import de.greenrobot.event.EventBus;
  */
 public class DesignerPersonalCenterActivity extends NavigationBarActivity implements View.OnClickListener {
 
+    private static final int IS_BEI_SHU = 1;
+    private int mIsLoho;
+
 
     @Override
     protected int getLayoutResId() {
@@ -79,6 +81,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mTvDesignerNickname = (TextView) findViewById(R.id.tv_designer_nickname);
 
         mTvDesignerAttention = (LinearLayout) findViewById(R.id.ll_personal_designer_attention);
+
     }
 
     @Override
@@ -86,6 +89,21 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.designer_personal));
         memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == memberEntity) {
+            return;
+        }
+
+        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+            designer_id = memberEntity.getAcs_member_id();
+            hs_uid = memberEntity.getHs_uid();
+
+            getDesignerInfoData(designer_id, hs_uid);
+            getMemberInfoData(designer_id);
+            getRealNameAuditStatus(designer_id, hs_uid);
+        } else {
+            mTvDesignerNickname.setText(R.string.no_data);
+            mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
+        }
     }
 
     @Override
@@ -118,9 +136,9 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 /// 判断设计师的类型,快屋设计师有北舒,乐屋设计师IM有扫一扫 .
-                int isLoho = designerInfoDetails.getDesigner().getIs_loho();
+                mIsLoho = designerInfoDetails.getDesigner().getIs_loho();
 
-                if (isLoho == IS_BEI_SHU) {
+                if (mIsLoho == IS_BEI_SHU) {
                     mLlSetMeal.setVisibility(View.VISIBLE);
                 } else {
                     mLlSetMeal.setVisibility(View.GONE);
@@ -225,13 +243,6 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 }
                 break;
             case R.id.ll_no_attestation:    /// 进入是实名认证页面.
-//                Intent aaIntent = new Intent(DesignerPersonalCenterActivity.this,CertificationActivity.class);
-//                if (audit_status == null) {
-//                    aaIntent.putExtra(AUDIT_STATUS, "");
-//                } else {
-//                    aaIntent.putExtra(AUDIT_STATUS, audit_status);
-//                }
-//                startActivity(aaIntent);
                 if (audit_status == null) {
                     CommonUtils.launchActivity(DesignerPersonalCenterActivity.this, CertificationActivity.class);
                 } else if (audit_status.equals(Constant.NumKey.ZERO)) {
@@ -259,21 +270,10 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.ll_personal_designer_manage:/// 查看我的应标页面.
-                CommonUtils.launchActivity(DesignerPersonalCenterActivity.this, MyBidActivity.class);
+                Intent bidIntent = new Intent(DesignerPersonalCenterActivity.this, MyBidActivity.class);
+                startActivity(bidIntent);
                 break;
 
-//            case R.id.ll_personal_designer_decorate:    /// 我的订单 .
-//                if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
-//                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-//                        /// 北舒 .
-//                        CommonUtils.launchActivity(DesignerPersonalCenterActivity.this, DesignerOrderBeiShuActivity.class);
-//                    } else {
-//                        CommonUtils.launchActivity(DesignerPersonalCenterActivity.this, DesignerOrderActivity.class);
-//                    }
-//                } else {
-//                    CommonUtils.launchActivity(DesignerPersonalCenterActivity.this, DesignerOrderActivity.class);
-//                }
-//                break;
 
             case R.id.ll_personal_designer_property:    /// 查看我的资产页面.
                 CommonUtils.launchActivity(DesignerPersonalCenterActivity.this, MyPropertyActivity.class);
@@ -367,23 +367,22 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
-            designer_id = memberEntity.getAcs_member_id();
-            hs_uid = memberEntity.getHs_uid();
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+//            designer_id = memberEntity.getAcs_member_id();
+//            hs_uid = memberEntity.getHs_uid();
+//
+//            getDesignerInfoData(designer_id, hs_uid);
+//            getMemberInfoData(designer_id);
+//            getRealNameAuditStatus(designer_id, hs_uid);
+//        } else {
+//            mTvDesignerNickname.setText(R.string.no_data);
+//            mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
+//        }
+//    }
 
-            getDesignerInfoData(designer_id, hs_uid);
-            getMemberInfoData(designer_id);
-            getRealNameAuditStatus(designer_id, hs_uid);
-        } else {
-            mTvDesignerNickname.setText(R.string.no_data);
-            mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
-        }
-    }
-
-    private static final int IS_BEI_SHU = 1;
     private static final int QR = 1;
     private static final int MORE_LOGOUT = 0;
 
