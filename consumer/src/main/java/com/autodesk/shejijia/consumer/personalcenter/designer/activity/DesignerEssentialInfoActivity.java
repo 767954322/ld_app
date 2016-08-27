@@ -72,6 +72,7 @@ import de.greenrobot.event.EventBus;
  */
 public class DesignerEssentialInfoActivity extends NavigationBarActivity implements View.OnClickListener {
     private Bitmap headPicBitmap;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_info;
@@ -179,7 +180,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             tvLocation.setText(province_name + city_name + district_name);
         }
 
-        if (mConsumerEssentialInfoEntity.getMobile_number() == null)
+        if (mConsumerEssentialInfoEntity.getMobile_number() == null || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 0 || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 2)
 
         {
             tvTel.setText(getResources().getString(R.string.no_mobile));
@@ -615,7 +616,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 //                    CustomProgress.cancelDialog();
 //                    CustomProgress.dialog = null;
 //                } else {
-                    CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+                CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
 //                }
                 Bitmap bitmap = cameraCamera(data);
 //                Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);

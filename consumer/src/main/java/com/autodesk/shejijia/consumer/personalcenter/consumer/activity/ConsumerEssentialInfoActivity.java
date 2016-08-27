@@ -96,6 +96,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private static final int CAMERA_INTENT_REQUEST = 0XFF02;
     private Bitmap headPicBitmap;
 
+    private int is_validated_by_mobile;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_essential_info;
@@ -193,6 +194,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         if (mConsumerEssentialInfoEntity == null) {
             return;
         }
+        is_validated_by_mobile = mConsumerEssentialInfoEntity.getIs_validated_by_mobile();
         avatar = mConsumerEssentialInfoEntity.getAvatar();
         user_name = mConsumerEssentialInfoEntity.getHitachi_account();
         mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
@@ -226,10 +228,14 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 手机
          */
-        if (TextUtils.isEmpty(mobile_number)) {
+        if (0 == is_validated_by_mobile || 2 == is_validated_by_mobile)
             mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
-        } else {
-            mTvConsumerPhone.setText(mobile_number);
+        if (1 == is_validated_by_mobile){
+            if (TextUtils.isEmpty(mobile_number)) {
+                mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
+            } else {
+                mTvConsumerPhone.setText(mobile_number);
+            }
         }
 
         /**
