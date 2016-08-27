@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,21 +15,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import org.json.JSONException;
@@ -38,8 +38,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author DongXueQue .
@@ -129,14 +127,32 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 
                 boolean isName = account_user_name.trim().matches(regex_name);
                 boolean isBank = branch_bank_name.trim().matches(regex_bank);
+                boolean isBankNum = deposit_card.trim().matches(RegexUtil.PHONE_BLANK);
                 if (!isName) {
-                    Toast.makeText(WithdrawalActivity.this, "只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WithdrawalActivity.this, "持卡人姓名只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if (!isBank) {
-                    Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                if (myPropertyBean == null) {
+
+                    if (!isBankNum) {
+                        Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+
+                } else {
+                    if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
+
+                        if (!isBankNum) {
+                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+                }
+
 
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
 
