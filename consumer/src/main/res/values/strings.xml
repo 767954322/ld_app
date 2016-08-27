@@ -98,4 +98,6 @@
     <string name="canshuyichang">参数错误</string>
     <string name="caozuoerror">当前操作不合法</string>
     <string name="apierrror">API内部异常</string>
+    <string name="http402">服务器开小差中</string>
+    <string name="http404">服务器走丢了</string>
 </resources>
