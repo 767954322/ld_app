@@ -81,6 +81,19 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        if (isLoginAgain){
+
+            onWindowFocusChanged();
+            isLoginAgain = false;
+        }
+
+    }
+
     private void onWindowFocusChanged() {
         // 第一次进入自动刷新
         if (isFirstIn) {
@@ -282,6 +295,13 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
         MPServerHttpManager.getInstance().getMyBidData(memType, acsToken, offset, limit, designer_id, callback);
     }
 
+    //判断重新登陆时要及时刷新相关的fragment
+    public void setRestartFragment(boolean isLoginAgainJust){
+
+        this.isLoginAgain = isLoginAgainJust;
+
+    }
+
 
     /// 控件.
     private RelativeLayout rl_empty;
@@ -294,6 +314,7 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
     private static final String BE_BEING = "0";
     private String status;
     private boolean isFirstIn = true;
+    private boolean isLoginAgain = false;
 
     ///　集合，类.
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mList;

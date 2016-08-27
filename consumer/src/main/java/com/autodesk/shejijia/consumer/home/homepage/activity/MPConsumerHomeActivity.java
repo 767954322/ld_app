@@ -99,9 +99,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         //获取节点信息
         getWkFlowStatePointInformation();
-        //获取设计师信息
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
 
     }
 
@@ -140,6 +137,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         if (savedInstanceState == null)
             showFragment(getDesignerMainRadioBtnId());
+
+        //获取设计师信息
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == mMemberEntity){
+            return;
+        }
+        String member_id = mMemberEntity.getAcs_member_id();
+        String hs_uid = mMemberEntity.getHs_uid();
+        getDesignerInfoData(member_id, hs_uid);
+
     }
 
     @Override
@@ -180,6 +187,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             designer_main_radio_group.check(index);
+            mDesignerPersonalCenterFragment.setAllFragmentRefresh(true);
 
         }
         //登陆消费者时，会进入
@@ -440,7 +448,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setMyProjectTitleColorChange(design, bidding/*, construction*/);
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER + POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
                 //判断进入北舒套餐，，还是进入普通订单页面
-                if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
+                if (null != designerInfoDetails) {
                     if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
                         /// 北舒 .
                         mDesignerPersonalCenterFragment.setDesignBeiShuFragment();

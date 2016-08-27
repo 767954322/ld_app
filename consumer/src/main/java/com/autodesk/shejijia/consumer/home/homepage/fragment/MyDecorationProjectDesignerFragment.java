@@ -78,7 +78,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
      * */
     public void setDesignBeiShuFragment(){
 
-        if (mBeishuMealFragment == null){
+        if (mBeishuMealFragment == null  ){
 
             mBeishuMealFragment = new DesignerOrderBeiShuFragment();
 
@@ -176,6 +176,12 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
         });
     }
 
+
+    public void setAllFragmentRefresh(boolean isRefresh){
+
+        mBidBidingFragment.setRestartFragment(isRefresh);
+    }
+
     private LinearLayout llFragmentContain;
 
     private TextView mBeishuOrder, mOrder;
@@ -183,6 +189,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     private FrameLayout mOrderContainer;
     private int mIsLoho;
     private static final int IS_BEI_SHU = 1;
+    private boolean isRefreshJust = false;
     private DesignerInfoDetails designerInfoDetails;
     private Fragment mBeishuMealFragment, mCommonOrderFragment,mCommonFragment;
     private FragmentManager fragmentManager;
@@ -190,6 +197,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     private FragmentTransaction transaction;
     private GradientDrawable drawable;/// set Textview bordercolor .
     private Fragment mDesignerConstructionFragment;
-    private Fragment mBidBidingFragment;
+    private BidingFragment mBidBidingFragment;
 
 }
