@@ -11,9 +11,9 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -119,10 +119,8 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 CustomProgress.cancelDialog();
-                if (!CustomProgress.dialog.isShowing()) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-                            AlertView.Style.Alert, null).show();
-                }
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+
             }
         });
     }

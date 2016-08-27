@@ -99,7 +99,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         //获取节点信息
         getWkFlowStatePointInformation();
-
     }
 
     @Override

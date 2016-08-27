@@ -15,7 +15,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.MessageCenterAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenter;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -143,14 +143,14 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
-                MessageCenter messageCenter = GsonUtil.jsonToBean(jsonString, MessageCenter.class);
+                MessageCenterBean messageCenter = GsonUtil.jsonToBean(jsonString, MessageCenterBean.class);
                 updateViewFromData(messageCenter.getMessages(), state);
             }
         });
 
     }
 
-    private void updateViewFromData(List<MessageCenter.Message> messages, String state) {
+    private void updateViewFromData(List<MessageCenterBean.MessagesBean> messages, String state) {
         switch (state) {
             case REFRESH_STATUS:
                 offset = 10;
@@ -176,7 +176,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
      *
      * @param list 数据集合
      */
-    private void hideFooterView(List<MessageCenter.Message> list) {
+    private void hideFooterView(List<MessageCenterBean.MessagesBean> list) {
         if (list != null && list.size() > 0) {
             mRlEmpty.setVisibility(View.GONE);
         } else {
@@ -212,6 +212,6 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     private PullListView mListView;
     private MessageCenterAdapter messageCenterAdapter;
     private PullToRefreshLayout mPullToRefreshLayout;
-    private List<MessageCenter.Message> mCasesEntities = new ArrayList<MessageCenter.Message>();
+    private List<MessageCenterBean.MessagesBean> mCasesEntities = new ArrayList<MessageCenterBean.MessagesBean>();
 
 }

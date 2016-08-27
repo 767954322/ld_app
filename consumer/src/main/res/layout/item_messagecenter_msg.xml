@@ -1,43 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#eef1f4">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#eef1f4">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/font_40"
+        android:layout_marginBottom="@dimen/font_20"
         android:background="@color/white">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/font_1"
-            android:background="#d7d7d7" />
+            android:background="#d7d7d7"/>
 
-        <TextView
-            android:id="@+id/item_messagecenter_tital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/font_25"
-            android:layout_marginRight="@dimen/font_35"
-            android:layout_marginTop="@dimen/font_10"
-            android:text="@string/item_messagecenter_tital"
-            android:textSize="@dimen/size_14"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/item_msg_content"
+        <RelativeLayout
+            android:id="@+id/ll_msg_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_messagecenter_tital"
+            >
+
+            <TextView
+                android:id="@+id/tv_msg_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/font_25"
+                android:layout_marginRight="@dimen/font_35"
+                android:layout_marginTop="@dimen/font_10"
+                android:text="@string/item_messagecenter_tital"
+                android:textSize="@dimen/size_14"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/tv_msg_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/size_20"
+                android:layout_marginTop="@dimen/font_10"/>
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_msg_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_msg_tag"
             android:layout_marginBottom="@dimen/font_15"
             android:layout_marginLeft="@dimen/font_25"
             android:layout_marginRight="@dimen/font_35"
             android:layout_marginTop="@dimen/font_10"
             android:text="内容"
-            android:textSize="@dimen/size_14" />
+            android:textSize="@dimen/size_14"/>
 
 
     </RelativeLayout>

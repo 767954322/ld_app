@@ -16,6 +16,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerQrEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.AttestationInfoActivity;
@@ -301,10 +302,9 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.ll_personal_designer_msg_center:/// 消息中心页面.
-                MyToast.show(DesignerPersonalCenterActivity.this, UIUtils.getString(R.string.functional_development));
+                Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
+                startActivity(intent_messagecenter);
                 break;
-
-
         }
     }
 

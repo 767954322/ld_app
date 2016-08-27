@@ -18,7 +18,6 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerE
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -97,7 +96,6 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.rl_personal_b_collect:    /// 消息中心.
-//                MyToast.show(ConsumerPersonalCenterActivity.this, UIUtils.getString(R.string.functional_development));
                 Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
                 startActivity(intent_messagecenter);
                 break;

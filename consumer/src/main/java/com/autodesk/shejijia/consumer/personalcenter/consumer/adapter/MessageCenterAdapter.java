@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenter;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBody;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 
@@ -27,10 +27,10 @@ public class MessageCenterAdapter extends BaseAdapter {
 
     private Context mContext;
     private Boolean ifIsDesiner;
-    private List<MessageCenter.Message> mCasesEntities;
+    private List<MessageCenterBean.MessagesBean> mCasesEntities;
 
 
-    public MessageCenterAdapter(Context mContext, List<MessageCenter.Message> mCasesEntities, Boolean ifIsDesiner) {
+    public MessageCenterAdapter(Context mContext, List<MessageCenterBean.MessagesBean> mCasesEntities, Boolean ifIsDesiner) {
         this.mContext = mContext;
         this.mCasesEntities = mCasesEntities;
         this.ifIsDesiner = ifIsDesiner;
@@ -58,25 +58,36 @@ public class MessageCenterAdapter extends BaseAdapter {
         if (convertView == null) {
             myHolder = new MyHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_messagecenter_msg, null);
-            myHolder.item_msg_content = (TextView) convertView.findViewById(R.id.item_msg_content);
+            myHolder.item_msg_content = (TextView) convertView.findViewById(R.id.tv_msg_content);
+            myHolder.tv_msg_title = (TextView) convertView.findViewById(R.id.tv_msg_title);
+            myHolder.tv_msg_date = (TextView) convertView.findViewById(R.id.tv_msg_date);
             convertView.setTag(myHolder);
         } else {
             myHolder = (MyHolder) convertView.getTag();
         }
-        String body = mCasesEntities.get(position).getBody();
-        if (!TextUtils.isEmpty(body)&&body.contains("&quot;")){
+        MessageCenterBean.MessagesBean messagesBean = mCasesEntities.get(position);
+
+        String body = messagesBean.getBody();
+        String title = messagesBean.getTitle();
+        String sent_time = messagesBean.getSent_time();
+//        String timeMY = DateUtil.getTimeMY(sent_time);
+        title = TextUtils.isEmpty(title) ? "消息中心" : title;
+
+        myHolder.tv_msg_title.setText(title);
+        myHolder.tv_msg_date.setText(sent_time);
+
+        if (!TextUtils.isEmpty(body) && body.contains("&quot;")) {
             MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
 
-            Log.d("test",messageCenterBody.toString());
+            Log.d("test", messageCenterBody.toString());
             if (ifIsDesiner) {
                 myHolder.item_msg_content.setText(messageCenterBody.getFor_designer());
             } else {
                 myHolder.item_msg_content.setText(messageCenterBody.getFor_consumer());
             }
-        }else {
+        } else {
             myHolder.item_msg_content.setText(body);
         }
-
 
 
         return convertView;
@@ -84,6 +95,8 @@ public class MessageCenterAdapter extends BaseAdapter {
 
     class MyHolder {
 
+        private TextView tv_msg_date;
+        private TextView tv_msg_title;
         private TextView item_msg_content;
 
     }
