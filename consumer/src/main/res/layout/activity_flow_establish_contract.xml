@@ -69,11 +69,11 @@
                     android:id="@+id/flow_establish_contract_consumer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
+                    android:textColor="@color/bg_80"
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
@@ -97,13 +97,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
+                    android:textColor="@color/bg_80"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:lines="1"
                     android:maxLength="11"
                     android:phoneNumber="true"
                     android:singleLine="true"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
@@ -127,11 +127,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
+                    android:textColor="@color/bg_80"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:inputType="number"
                     android:singleLine="true"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
@@ -156,9 +156,9 @@
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
+                    android:textColor="@color/bg_80"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
@@ -183,6 +183,7 @@
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
+                    android:textColor="@color/bg_80"
                     android:background="@drawable/bg_flow_edittext"
                     android:gravity="center_vertical"
                     android:singleLine="true"
@@ -210,9 +211,9 @@
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
+                    android:textColor="@color/bg_80"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
@@ -237,6 +238,7 @@
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
+                    android:textColor="@color/bg_80"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
                     android:textSize="@dimen/font_14"/>
@@ -263,6 +265,7 @@
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
+                    android:textColor="@color/bg_80"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
                     android:textSize="@dimen/font_14"/>
@@ -288,6 +291,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
+                    android:textColor="@color/bg_80"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:inputType="number"
@@ -315,6 +319,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
+                    android:textColor="@color/bg_80"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
@@ -342,6 +347,7 @@
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
                     android:layout_weight="1"
+                    android:textColor="@color/bg_80"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
                     android:textSize="@dimen/font_14"/>
@@ -367,6 +373,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
+                    android:textColor="@color/bg_80"
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
@@ -424,11 +431,11 @@
                         android:id="@+id/tvc_flow_establish_contract_designer_design_sketch"
                         android:layout_width="@dimen/size_1"
                         android:layout_height="@dimen/size_28"
+                        android:textColor="@color/bg_80"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
 
                     <TextView
@@ -458,11 +465,11 @@
                         android:id="@+id/tvc_flow_establish_contract_designer_render_map"
                         android:layout_width="@dimen/size_1"
                         android:layout_height="@dimen/size_28"
+                        android:textColor="@color/bg_80"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
 
                     <TextView
@@ -491,11 +498,11 @@
                         android:id="@+id/tvc_flow_establish_contract_designer_design_sketch_plus"
                         android:layout_width="@dimen/size_1"
                         android:layout_height="@dimen/size_28"
+                        android:textColor="@color/bg_80"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
                         android:inputType="numberDecimal"
                         android:singleLine="true"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
 
                     <TextView
@@ -531,11 +538,11 @@
                         android:id="@+id/flow_establish_contract_consumer_total_cost"
                         android:layout_width="@dimen/size_1"
                         android:layout_height="@dimen/size_28"
+                        android:textColor="@color/bg_80"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
                         android:inputType="numberDecimal"
                         android:singleLine="true"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
 
                     <TextView
@@ -564,11 +571,11 @@
                         android:id="@+id/flow_establish_contract_consumer_first_cost"
                         android:layout_width="@dimen/size_1"
                         android:layout_height="@dimen/size_28"
+                        android:textColor="@color/bg_80"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
                         android:inputType="numberDecimal"
                         android:singleLine="true"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
 
                     <TextView
@@ -597,11 +604,11 @@
                         android:id="@+id/tvc_flow_establish_contract_consumer_last_cost"
                         android:layout_width="@dimen/size_1"
                         android:layout_height="@dimen/size_28"
+                        android:textColor="@color/bg_80"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
                         android:inputType="numberDecimal"
                         android:singleLine="true"
-                        android:textColor="@color/black"
                         android:textSize="@dimen/font_14"/>
 
                     <TextView
