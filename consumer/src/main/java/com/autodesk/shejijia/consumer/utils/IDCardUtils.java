@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -11,12 +12,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <p>Description:</p>
- * <p>Copyright: Copyright (c) 2016</p>
- * <p>Company: http://www.leediancn.com</p>
- *
  * @author he.liu .
- * @date 2016-08-27.
+ * @version v1.0 .
+ * @date 2016-8-27 .
+ * @file IDCardUtils.java .
+ * @brief 身份证校验 .
  */
 public class IDCardUtils {
     //身份证号码验证：start
@@ -28,16 +28,22 @@ public class IDCardUtils {
      * @return 有效：返回"" 无效：返回String信息
      * @throws ParseException
      */
-    public static boolean IDCardValidate(String IDStr){
+    public static boolean IDCardValidate(String IDStr) {
+
         String errorInfo = "";// 记录错误信息
         String[] ValCodeArr = {"1", "0", "x", "9", "8", "7", "6", "5", "4",
                 "3", "2"};
         String[] Wi = {"7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7",
                 "9", "10", "5", "8", "4", "2"};
         String Ai = "";
+
+        if (!TextUtils.isEmpty(IDStr)) {
+            IDStr = IDStr.replace("X", "x");
+        }
         // ================ 号码的长度 15位或18位 ================
         if (IDStr.length() != 15 && IDStr.length() != 18) {
             errorInfo = "身份证号码长度应该为15位或18位。";
+            Log.d("IDCardUtils", errorInfo);
             return false;
         }
         // =======================(end)========================
