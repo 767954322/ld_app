@@ -98,10 +98,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = tvc_area.getText().toString().trim();
-                    if (TextUtils.isEmpty(area)){
+                    if (TextUtils.isEmpty(area)) {
                         area = "0";
                     }
-                    area = String.format("%.2f",Double.valueOf(area));
+                    area = String.format("%.2f", Double.valueOf(area));
                     tvc_area.setText(area);
                 }
             }
@@ -308,10 +308,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //.....................................
-                if (TextUtils.isEmpty(houseArea)){
+                if (TextUtils.isEmpty(houseArea)) {
                     houseArea = "0";
                 }
-                houseArea = String.format("%.2f",Double.valueOf(houseArea));
+                houseArea = String.format("%.2f", Double.valueOf(houseArea));
                 tvc_area.setText(houseArea);
                 String subNum = "0";
                 if (houseArea.contains(".")) {
@@ -771,7 +771,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
                 KLog.d(TAG, jsonObject);
-                showAlertView(UIUtils.getString((R.string.consume_send_success)));
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString((R.string.consume_send_success)), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
+                        AlertView.Style.Alert, MeasureFormActivity.this).show();
                 CustomProgress.cancelDialog();
             }
 
