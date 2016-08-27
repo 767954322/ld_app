@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
@@ -131,10 +132,11 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         public void getToken(String token) {
             try {
                 String strToken = URLDecoder.decode(token, Constant.NetBundleKey.UTF_8).substring(6);
-                /// 登录成功后,发送广播 .
-                Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
-                intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
-                sendBroadcast(intent);
+                AdskApplication.getInstance().saveSignInInfo(strToken);
+//                /// 登录成功后,发送广播 .
+//                Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+//                intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
+//                sendBroadcast(intent);
 
                 finish();
             } catch (UnsupportedEncodingException e) {

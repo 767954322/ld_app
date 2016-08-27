@@ -100,48 +100,6 @@
                     android:background="@color/bg_impression" />
             </LinearLayout>
 
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/rl_personal_b_fitment"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:background="@color/white">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/img_fitment"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_marginLeft="20dp"-->
-                    <!--android:layout_marginRight="20dp"-->
-                    <!--android:src="@drawable/icon_my_bid_normal" />-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_toRightOf="@+id/img_fitment"-->
-                    <!--android:text="@string/my_family_order" />-->
-
-                <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_centerVertical="true"-->
-                    <!--android:layout_marginRight="20dp"-->
-                    <!--android:src="@drawable/icon_unfold_normal" />-->
-            <!--</RelativeLayout>-->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bg_impression" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_personal_designer_attention"
@@ -149,6 +107,7 @@
                 android:layout_height="@dimen/size_50"
                 android:background="@color/white"
                 android:gravity="center_vertical"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <ImageView

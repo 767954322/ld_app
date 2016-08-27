@@ -90,17 +90,17 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
 
             if (null != casesEntity) {
                 if (casesEntity.getTitle() == null) {
-                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     ((ViewHolder) holder).tvAddress.setText(casesEntity.getTitle());
                 }
                 if (casesEntity.getRoom_area() == null) {
-                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + "m²");
                 }
                 if (casesEntity.getRoom_type() == null) {
-                    ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     String room_type = casesEntity.getRoom_type();
                     if (roomMap.containsKey(room_type)) {
@@ -110,7 +110,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                     }
                 }
                 if (casesEntity.getProject_style() == null) {
-                    ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     String project_style = casesEntity.getProject_style();
                     if (style.containsKey(project_style)) {
@@ -125,20 +125,20 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
             }
         } else {
             ((ViewHolder) holder).ivCase.setImageResource(R.drawable.common_case_icon);
-            ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.data_null));
+            ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.str_others));
         }
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
-
-        } else {
-            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
-        }
+//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+//            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
+//           // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
+//
+//        } else {
+//            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
+//           // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
+//        }
 
         ((ViewHolder) holder).ivHeadIcon.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         ((ViewHolder) holder).ivCase.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));

@@ -99,6 +99,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         //获取节点信息
         getWkFlowStatePointInformation();
+        //获取设计师信息
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
 
     }
 
@@ -300,11 +303,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
 
-        if (null != memberEntity&&Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             circleIntent = new Intent(MPConsumerHomeActivity.this, DesignerPersonalCenterActivity.class);
         }
 
-        if (null != memberEntity&&Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+        if (null != memberEntity && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
 
             circleIntent = new Intent(MPConsumerHomeActivity.this, ConsumerPersonalCenterActivity.class);
         }
@@ -404,13 +407,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 String acs_Member_Type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                 Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.msg_file);
-                setImageForNavButton(ButtonType.SECONDARY,R.drawable.chat_saoyisao);
                 if (ifIsDesiner) {
+                    setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
                     ifIsLohoDesiner(acs_Member_Id, hs_uid);
                 } else {
-                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
+                    setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
                 getFileThreadUnreadCount();
 
@@ -429,7 +432,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.bidding:
                 //指针
                 setMyProjectTitleColorChange(bidding, design/*, construction*/);
-                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_NUMBER+POINTER_MIDDLE_END_NUMBER, POINTER_START_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
+                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_NUMBER + POINTER_MIDDLE_END_NUMBER, POINTER_START_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
                 mDesignerPersonalCenterFragment.setBidingFragment();
                 break;
 
@@ -465,7 +468,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         titleCheck.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
         textUnckeck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
-       // titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
+        // titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
 
     }
 
@@ -482,10 +485,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
                     int is_loho = jsonObject1.getInt("is_loho");
                     //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
-                    if (2 == is_loho) {
-                        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
-                        setVisibilityForNavButton(ButtonType.SECONDARY, true);
-                    }
+                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -579,6 +580,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
 
+
+
+
     private void showDesignerOrConsumerRadioGroup() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
@@ -591,6 +595,30 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             mDesignerIndentListBtn.setVisibility(View.GONE);
         }
     }
+
+    /**
+     * 设计师个人信息
+     *
+     * @param designer_id
+     * @param hs_uid
+     */
+    public void getDesignerInfoData(String designer_id, String hs_uid) {
+        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }
+        });
+    }
+
 
     //判断是否聊过天，跳转到之前聊天室或新聊天室
     private void jumpToChatRoom(String scanResult) {
@@ -711,7 +739,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private TextView bidding;
     private TextView design;
-  //  private TextView construction;
+    //  private TextView construction;
     private LinearLayout contain;
     private View contain_layout;
     private ChooseViewPointer chooseViewPointer;

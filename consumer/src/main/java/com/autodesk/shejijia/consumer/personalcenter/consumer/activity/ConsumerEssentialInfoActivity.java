@@ -94,9 +94,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
     private static final int SYS_INTENT_REQUEST = 0XFF01;
     private static final int CAMERA_INTENT_REQUEST = 0XFF02;
-    private int is_validated_by_mobile;
     private Bitmap headPicBitmap;
 
+    private int is_validated_by_mobile;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_essential_info;

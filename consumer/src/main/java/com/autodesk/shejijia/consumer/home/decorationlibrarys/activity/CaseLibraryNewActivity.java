@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Context;
 import android.content.Intent;
-
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -226,7 +225,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 break;
 
             case R.id.tv_follow_designer://关注
-
                 if (null != memberEntity) {
                     if (null != caseDetailBean && null != caseDetailBean.getDesigner_info()) {
                         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
@@ -262,6 +260,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
+
             case R.id.piv_img_customer_home_header:    /// 进入设计师详情页面.
                 Intent intent = new Intent(CaseLibraryNewActivity.this, SeekDesignerDetailActivity.class);
                 intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
@@ -270,45 +269,78 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 break;
 
             case R.id.img_look_more_detail_chat:    /// 进入聊天页面,如果没有登陆则进入登陆注册页面.
+                /**
+                 * 聊天,如没有登陆 也会跳入注册登陆页面
+                 */
                 if (memberEntity != null) {
-                    member_id = memberEntity.getAcs_member_id();
                     mMemberType = memberEntity.getMember_type();
-                    final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
-                    final String hs_uid = caseDetailBean.getHs_designer_uid();
-                    final String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
-                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                    member_id = memberEntity.getAcs_member_id();
 
-                    MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            MPNetworkUtils.logError(TAG, volleyError);
-                        }
+                    if (null != caseDetailBean) {
+                        final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
+                        final String hs_uid = caseDetailBean.getHs_designer_uid();
+                        final String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
 
-                        @Override
-                        public void onResponse(String s) {
-                            MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                            Intent intent = new Intent(CaseLibraryNewActivity.this, ChatRoomActivity.class);
-                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-                            intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-
-                            if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-                                int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                            } else {
-                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                        MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
                             }
-                            startActivity(intent);
-                        }
-                    });
+
+                            @Override
+                            public void onResponse(String s) {
+
+                                MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                                final Intent intent = new Intent(CaseLibraryNewActivity.this, ChatRoomActivity.class);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+
+                                if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
+                                    MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+                                    int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    startActivity(intent);
+
+                                } else {
+                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError volleyError) {
+                                            MPNetworkUtils.logError(TAG, volleyError);
+                                        }
+
+                                        @Override
+                                        public void onResponse(String s) {
+                                            try {
+                                                JSONObject jsonObject = new JSONObject(s);
+                                                String thread_id = jsonObject.getString("thread_id");
+                                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                                intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                                startActivity(intent);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+
+                            }
+                        });
+                    } else {
+                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
+                                AlertView.Style.Alert, null).show();
+                    }
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
+                break;
 
             default:
                 break;
@@ -668,6 +700,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         if (position != 2) {
             Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
             Bundle bundle = new Bundle();
+<<<<<<< HEAD
+=======
+            intent.putExtra("JUMP_STATUS", 1); // 标记从哪里跳到图片放大界面
+>>>>>>> 71ab73c2d87388a61878eef2da09993dad0192b1
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
             bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position==0?topPosition:position-3);
             intent.putExtras(bundle);
