@@ -700,10 +700,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         if (position != 2) {
             Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
             Bundle bundle = new Bundle();
-<<<<<<< HEAD
-=======
-            intent.putExtra("JUMP_STATUS", 1); // 标记从哪里跳到图片放大界面
->>>>>>> 71ab73c2d87388a61878eef2da09993dad0192b1
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
             bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position==0?topPosition:position-3);
             intent.putExtras(bundle);
