@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -53,8 +54,14 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        caseDetailBean = (CaseDetailBean) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
-        intExtra = getIntent().getIntExtra(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, 0);//获得点击的位置
+        jumpStatus = getIntent().getIntExtra("JUMP_STATUS", -1);
+        if (jumpStatus == 1) {
+            caseDetailBean = (CaseDetailBean) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
+            intExtra = getIntent().getIntExtra(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, 0);//获得点击的位置
+        } else if (jumpStatus == 2) {
+            mSeekDesignerDetailBean = (SeekDesignerDetailBean) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
+            intExtra = getIntent().getIntExtra(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, 0);//获得点击的位置
+        }
     }
 
     @Override
@@ -69,15 +76,26 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
      * 获取所有图片的url地址
      */
     private void updateViewFromData() {
-        if (null !=caseDetailBean && null !=caseDetailBean.getImages()) {
-            for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
-                if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
-                    imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
-                    mImageUrl.add(imageUrl);
+        if (jumpStatus == 1){
+            if (null != caseDetailBean && null != caseDetailBean.getImages()) {
+                for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
+                    if (null != caseDetailBean && caseDetailBean.getImages().size() != 0) {
+                        imageUrl = caseDetailBean.getImages().get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
+                        mImageUrl.add(imageUrl);
+                    }
+                }
+            }
+        }else if (jumpStatus == 2){
+
+            if (null != mSeekDesignerDetailBean && null != mSeekDesignerDetailBean.getCases()) {
+                for (int i = 0; i < mSeekDesignerDetailBean.getCases().size(); i++) {
+                    if (null != mSeekDesignerDetailBean && mSeekDesignerDetailBean.getCases().get(i).getImages().size() != 0) {
+                        imageUrl = mSeekDesignerDetailBean.getCases().get(i).getImages().get(0).getFile_url() + Constant.CaseLibraryDetail.JPG;
+                        mImageUrl.add(imageUrl);
+                    }
                 }
             }
         }
-
     }
 
 
@@ -218,6 +236,8 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
     private HackyViewPager mViewPager;
     private int intExtra;
     private String imageUrl;
+    private int jumpStatus;
+    private SeekDesignerDetailBean mSeekDesignerDetailBean;
     private CaseDetailBean caseDetailBean;
     private ArrayList<String> mImageUrl = new ArrayList<>();
 }
