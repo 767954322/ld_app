@@ -40,6 +40,8 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
     ///is_beishu:0 北舒套餐 1 非北舒.
     private static final String IS_NOT_BEI_SHU = "1";
+    private static final String NONE = "none";
+
     private Activity mActivity;
 
     public DecorationBeiShuDelegate(Activity activity) {
@@ -66,18 +68,21 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
         String province_name = decorationNeedsListBean.getProvince_name();
         String city_name = decorationNeedsListBean.getCity_name();
-        String district_name = TextUtils.isEmpty(decorationNeedsListBean.getDistrict_name()) ? "" : decorationNeedsListBean.getDistrict_name();
 
+        String district = decorationNeedsListBean.getDistrict();
+        String district_name = decorationNeedsListBean.getDistrict_name();
 
         holder.setText(R.id.tv_decoration_beishu_name, UIUtils.getNoDataIfEmpty(community_name));
         holder.setText(R.id.tv_decoration_beishu_needs_id, needs_id);
         holder.setText(R.id.tv_decoration_beishu_consumer_name, UIUtils.getNoDataIfEmpty(contacts_name));
         holder.setText(R.id.tv_decoration_beishu_phone, UIUtils.getNoDataIfEmpty(contacts_mobile));
 
+        district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
+        String address = province_name + city_name + district_name;
         if (TextUtils.isEmpty(city_name)) {
             holder.setText(R.id.tv_decoration_beishu_address, UIUtils.getString(R.string.nodata));
         } else {
-            holder.setText(R.id.tv_decoration_beishu_address, province_name + city_name + district_name);
+            holder.setText(R.id.tv_decoration_beishu_address, address);
         }
         holder.setText(R.id.tv_decoration_beishu_community_name, UIUtils.getNoDataIfEmpty(community_name));
 

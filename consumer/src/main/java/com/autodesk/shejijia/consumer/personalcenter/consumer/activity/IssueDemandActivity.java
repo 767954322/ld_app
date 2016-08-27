@@ -173,6 +173,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 et_issue_demand_mobile.clearFocus();
                 String area = et_issue_demand_area.getText().toString();
 
+
+//                if(area.equals("0.00")||area.equals("0.0")||area.equals("0000.00")||area.equals("000.00")||area.equals("00.00")){
+//                    showAlertView(R.string.please_input_correct_area);
+//                    return;
+//                }
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);

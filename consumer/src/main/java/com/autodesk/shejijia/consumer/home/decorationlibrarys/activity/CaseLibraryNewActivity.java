@@ -148,9 +148,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         tvheadThumbUp = (TextView) viewHead.findViewById(R.id.tv_thumb_up);
         ivHeadThumbUp = (ImageView) viewHead.findViewById(R.id.iv_thumb_up);
 
+        View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
-        View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
         mCaseLibraryText = (TextView) viewText.findViewById(R.id.case_library_text);
         caseLibraryNew.addHeaderView(view);
         caseLibraryNew.addHeaderView(viewHead);

@@ -127,7 +127,7 @@ public class WithdrawalRecordActivity extends NavigationBarActivity implements V
     }
 
     private void openAlertView(String content) {
-        new AlertView(UIUtils.getString(R.string.tip), content, null, new String[]{UIUtils.getString(R.string.sure)}, null, this,
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null,new String[]{UIUtils.getString(R.string.sure)}, this,
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object o, int position) {

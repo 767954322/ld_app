@@ -66,16 +66,24 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
     @Override
     public void onClick(View v) {
         transaction = fragmentManager.beginTransaction();
+
+        if (mBeishuMealFragment == null) {
+            mBeishuMealFragment = new OrderBeiShuFragment();
+        }
+
+        if (mCommonOrderFragment == null) {
+            mCommonOrderFragment = new OrderCommonFragment();
+        }
+
         switch (v.getId()) {
             case R.id.tv_designer_order_beishu: /// 北舒键 .
+
                 mBeishuOrder.setTextColor(UIUtils.getColor(R.color.white));
                 mBeishuOrder.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_blue_noradius));
                 setTvColor(mOrder);
                 mOrder.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
-                if (mBeishuMealFragment == null) {
-                    mBeishuMealFragment = new OrderBeiShuFragment();
-                }
                 switchFragment(mCommonOrderFragment, mBeishuMealFragment);
+
                 break;
             case R.id.tv_designer_order: /// 普通项目键 .
 
@@ -83,10 +91,8 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
                 mOrder.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_blue_noradius));
                 setTvColor(mBeishuOrder);
                 mBeishuOrder.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
-                if (mCommonOrderFragment == null) {
-                    mCommonOrderFragment = new OrderCommonFragment();
-                }
                 switchFragment(mBeishuMealFragment, mCommonOrderFragment);
+
                 break;
             default:
                 break;

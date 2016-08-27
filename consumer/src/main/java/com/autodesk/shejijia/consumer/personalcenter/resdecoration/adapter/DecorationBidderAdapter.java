@@ -63,6 +63,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         this.biddersBean = biddersBean;
         final String designer_id = biddersBean.getDesigner_id();
         final String uid = biddersBean.getUid();
+        String style_names = biddersBean.getStyle_names();
 
         String avatar = biddersBean.getAvatar();
         String nick_name = biddersBean.getUser_name();
@@ -83,7 +84,9 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         }
         holder.setText(R.id.tv_designer_name, nick_name);
         holder.setText(R.id.tv_designer_production, "作品：0");
-        holder.setText(R.id.tv_designer_good, be_good_at_prefix + "其它");
+
+
+        holder.setText(R.id.tv_designer_good, be_good_at_prefix + (TextUtils.isEmpty(style_names) ? "尚未填写" : style_names));
         holder.setText(R.id.tv_attention_num, "关注人数：" + "0");
 
         /**
