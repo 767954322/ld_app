@@ -104,6 +104,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private ImageView ivThumbUp;
     private ImageView ivHeadThumbUp;
     private String firstCaseLibraryImageUrl;
+    private  int topPosition;
 
     private float mPosY = 0;
     private float mCurPosY = 0;
@@ -500,6 +501,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         //查找是否是封面图片  若是就添加到头部
         for (int i = 0; i < images.size(); i++) {
             if (images.get(i).is_primary() == true) {
+                topPosition = i;
                 firstCaseLibraryImageUrl = images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
                 ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
             }
@@ -668,7 +670,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             Bundle bundle = new Bundle();
             intent.putExtra("JUMP_STATUS",1); // 标记从哪里跳到图片放大界面
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
-            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position - 3);
+            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position==0?topPosition:position-3);
             intent.putExtras(bundle);
             this.startActivity(intent);
         }
