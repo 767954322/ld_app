@@ -34,7 +34,6 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -248,6 +247,21 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 myPropertyBean = GsonUtil.jsonToBean(jsonString, MyPropertyBean.class);
+                if (TextUtils.isEmpty(myPropertyBean.getBank_name())){
+                    et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
+                    et_withdrawal_bank_card_number.setText("");
+                    et_withdrawal_branch_bank.setVisibility(View.VISIBLE);
+                    et_withdrawal_branch_bank.setText("");
+                    tv_withdrawal_bank_card_number.setVisibility(View.GONE);
+                    tv_withdrawal_branch_bank.setVisibility(View.GONE);
+                    ll_withdrawal_replace_bank_card.setVisibility(View.GONE);
+                }else {
+                    tv_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
+                    tv_withdrawal_branch_bank.setVisibility(View.VISIBLE);
+                    ll_withdrawal_replace_bank_card.setVisibility(View.VISIBLE);
+                    et_withdrawal_bank_card_number.setVisibility(View.GONE);
+                    et_withdrawal_branch_bank.setVisibility(View.GONE);
+                }
                 tv_withdrawal_open_account_bank.setText(myPropertyBean.getBank_name());
 //                et_withdrawal_branch_bank.setText(myPropertyBean.getBranch_bank_name());
 //                et_withdrawal_bank_card_number.setText(myPropertyBean.getDeposit_card());
@@ -512,9 +526,11 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 et_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
                 deposit_card = et_withdrawal_bank_card_number.getText().toString();
             } else {
-
                 tv_withdrawal_bank_card_number.setVisibility(View.VISIBLE);
                 tv_withdrawal_bank_card_number.setText(deposit_card);
+                if (TextUtils.isEmpty(bank_name)){
+                    tv_withdrawal_bank_card_number.setVisibility(View.GONE);
+                }
             }
         }
 
