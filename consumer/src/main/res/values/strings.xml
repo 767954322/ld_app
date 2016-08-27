@@ -6,7 +6,7 @@
     <string name="dianzanshu">"点赞数  "</string>
     <string name="thumbup_conunt">点赞数</string>
 
-    <string name="accept_mearch">接受量房交付物</string>
+    <string name="accept_mearch">接收量房交付物</string>
 
     <!--交付物延期确认-->
     <string name="title_introduce">说明</string>
@@ -98,4 +98,6 @@
     <string name="canshuyichang">参数错误</string>
     <string name="caozuoerror">当前操作不合法</string>
     <string name="apierrror">API内部异常</string>
+    <string name="http402">服务器开小差中</string>
+    <string name="http404">服务器走丢了</string>
 </resources>

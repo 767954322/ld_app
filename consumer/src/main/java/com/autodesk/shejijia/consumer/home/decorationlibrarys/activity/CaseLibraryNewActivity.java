@@ -260,6 +260,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
+
             case R.id.piv_img_customer_home_header:    /// 进入设计师详情页面.
                 Intent intent = new Intent(CaseLibraryNewActivity.this, SeekDesignerDetailActivity.class);
                 intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
