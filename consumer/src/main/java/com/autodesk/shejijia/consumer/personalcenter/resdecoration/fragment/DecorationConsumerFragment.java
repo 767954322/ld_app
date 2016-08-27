@@ -91,13 +91,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 DecorationListBean mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
-                int count = mDecorationListBean.getCount();
-                if (count == 0) {
-                    mRlEmpty.setVisibility(View.VISIBLE);
-                    return;
-                } else {
-                    mRlEmpty.setVisibility(View.GONE);
-                }
+
 
                 if (isRefreshOrLoadMore) {
                     updateViewFromData(mDecorationListBean);
@@ -108,6 +102,13 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
 
+                int count = mDecorationListBean.getCount();
+                if (count == 0) {
+                    mRlEmpty.setVisibility(View.VISIBLE);
+                    return;
+                } else {
+                    mRlEmpty.setVisibility(View.GONE);
+                }
                 KLog.json(TAG, userInfo);
             }
 
