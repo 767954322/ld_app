@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import com.autodesk.shejijia.shared.R;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -94,7 +93,8 @@ public class ImageUtils {
                 .threadPriority(Thread.NORM_PRIORITY - 1) // default
                 .tasksProcessingOrder(QueueProcessingType.FIFO) // default
                 .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new LruMemoryCache(1 * 1024 * 1024))
+                .memoryCache(new LRULimitedMemoryCache(1 * 1024 * 1024))//弱引用缓存策略，减少OOM出现
+//                .memoryCache(new LruMemoryCache(1 * 1024 * 1024))
                 .memoryCacheSize(1 * 1024 * 1024)
                 .memoryCacheSizePercentage(13) // default
                 .diskCache(new UnlimitedDiskCache(createDefaultCacheDir())) // default
@@ -103,7 +103,7 @@ public class ImageUtils {
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
                 .imageDownloader(new BaseImageDownloader(context)) // default
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
-                .memoryCache(new WeakMemoryCache())
+//                .memoryCache(new WeakMemoryCache())
                 .build();
         ImageLoader.getInstance().init(config);
     }
