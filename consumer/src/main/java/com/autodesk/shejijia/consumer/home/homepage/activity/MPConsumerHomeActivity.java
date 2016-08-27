@@ -85,10 +85,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
-        construction = (TextView) contain_layout.findViewById(R.id.construction);
+//        construction = (TextView) contain_layout.findViewById(R.id.construction);
 
 
-        setMyProjectTitleColorChange(design, bidding, construction);
+        setMyProjectTitleColorChange(design, bidding/*, construction*/);
 
 //        user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
@@ -144,7 +144,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         super.initListener();
         bidding.setOnClickListener(this);
         design.setOnClickListener(this);
-        construction.setOnClickListener(this);
+//        construction.setOnClickListener(this);
 
     }
 
@@ -371,7 +371,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 //                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
 //                textView.setCompoundDrawables(null, null, drawable, null);
 //                textView.setText(UIUtils.getString(R.string.bid_filter));
-//>>>>>>> release/July/Android-UAT
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
 
 
@@ -436,14 +435,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
             case R.id.bidding:
                 //指针
-                setMyProjectTitleColorChange(bidding, design, construction);
-                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_NUMBER, POINTER_START_END_NUMBER);
+                setMyProjectTitleColorChange(bidding, design/*, construction*/);
+                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_NUMBER+POINTER_MIDDLE_END_NUMBER, POINTER_START_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
                 mDesignerPersonalCenterFragment.setBidingFragment();
                 break;
 
             case R.id.design:
-                setMyProjectTitleColorChange(design, bidding, construction);
-                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER, POINTER_MIDDLE_END_NUMBER);
+                setMyProjectTitleColorChange(design, bidding/*, construction*/);
+                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER + POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
                 //判断进入北舒套餐，，还是进入普通订单页面
                 if (null != designerInfoDetails && null != designerInfoDetails.getDesigner()) {
                     if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
@@ -458,22 +457,22 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                 break;
 
-            case R.id.construction:
-                setMyProjectTitleColorChange(construction, design, bidding);
-                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER);
-
-                mDesignerPersonalCenterFragment.setConstructionFragment();
-                break;
+//            case R.id.construction:
+//                setMyProjectTitleColorChange(construction, design, bidding);
+//                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER);
+//
+//                mDesignerPersonalCenterFragment.setConstructionFragment();
+//                break;
 
         }
 
     }
 
-    protected void setMyProjectTitleColorChange(TextView titleCheck, TextView textUnckeck, TextView titleUncheck) {
+    protected void setMyProjectTitleColorChange(TextView titleCheck, TextView textUnckeck/*, TextView titleUncheck*/) {
 
         titleCheck.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
         textUnckeck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
-        titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
+       // titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
 
     }
 
@@ -721,15 +720,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private TextView bidding;
     private TextView design;
-    private TextView construction;
+  //  private TextView construction;
     private LinearLayout contain;
     private View contain_layout;
     private ChooseViewPointer chooseViewPointer;
     private int index;//判断所在fragment
     private String mConsumerNickName;
     final float POINTER_START_NUMBER = 0F;
-    final float POINTER_START_END_NUMBER = 1 / 3F;
-    final float POINTER_MIDDLE_END_NUMBER = 2 / 3F;
+    final float POINTER_START_END_NUMBER = 1 / 2F;
+    final float POINTER_MIDDLE_END_NUMBER = 1 / 9F;
     final float POINTER_END_NUMBER = 1F;
     private int btWidth;
     private int btHeight;

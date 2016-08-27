@@ -59,7 +59,7 @@ public class ChooseViewPointer extends View{
         if (initWidth != 0){
             if (initBoolean){
 
-                canvas.drawLine(initWidth * 1/3f,0,initWidth * 2/3f,0,paint);
+                canvas.drawLine(initWidth * 1/2f + initWidth * 1/9 ,0,initWidth * 1f - initWidth * 1/9f,0,paint);
             }
         }
         canvas.drawLine(width * A + decreaseWidth,0,width * B - decreaseWidth,0,paint);
