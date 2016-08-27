@@ -20,7 +20,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDe
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FollowingDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -262,19 +262,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     @Override
     public void OnItemCaseLibraryClick(int position) {
         // 这段代码不要动，case_id不知道用不用得到
-//        String case_id = mCasesEntityArrayList.get(position).getId();
-//        Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
-//        intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
-//        startActivity(intent);
-
-
-        Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
-        Bundle bundle = new Bundle();
-        intent.putExtra("JUMP_STATUS",2);
-        bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN,mSeekDesignerDetailBean );
-        bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
-        intent.putExtras(bundle);
-        this.startActivity(intent);
+        String case_id = mCasesEntityArrayList.get(position).getId();
+        Intent intent = new Intent(this, CaseLibraryNewActivity.class);
+        intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
+        startActivity(intent);
     }
 
     //获取屏幕宽度
@@ -670,18 +661,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private DesignerDetailHomeBean seekDesignerDetailHomeBean;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //package com.autodesk.shejijia.consumer.home.decorationdesigners.activity;
