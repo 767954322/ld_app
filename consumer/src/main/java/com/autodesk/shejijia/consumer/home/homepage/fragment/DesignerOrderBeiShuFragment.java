@@ -25,6 +25,12 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  * @brief 设计师：快屋设计师（北舒）数据展示 .
  */
 public class DesignerOrderBeiShuFragment extends BaseFragment implements View.OnClickListener{
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_order_beishu;

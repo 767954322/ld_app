@@ -28,7 +28,7 @@ public class DesignerOrderBeiShuActivity extends NavigationBarActivity implement
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_designer_order_beishu;
+        return R.layout.activity_designer_order_beishu_bid;
     }
 
     @Override

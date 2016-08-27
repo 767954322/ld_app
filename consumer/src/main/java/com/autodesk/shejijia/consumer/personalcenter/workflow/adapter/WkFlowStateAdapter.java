@@ -104,7 +104,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     break;
                 //支付量房费用
                 case 1:
-                    viewHolder.tv_meal_title.setText(mapWkFlowState.get("2").getDescription());
+                    viewHolder.tv_meal_title.setText((mapWkFlowState.get("2").getDescription()));//;
                     viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_liangfang));
                     if (stateCode == 12) {//消费者拒绝应标
                         textColor = StepDisEnableColor;
@@ -125,7 +125,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     break;
                 //接受设计交付物
                 case 2:
-                    viewHolder.tv_meal_title.setText(mapWkFlowState.get("3").getDescription());
+                    viewHolder.tv_meal_title.setText(UIUtils.getString(R.string.accept_mearch));//mapWkFlowState.get("3").getDescription()
                     if (stateCode >= 21) {
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejihetong));
