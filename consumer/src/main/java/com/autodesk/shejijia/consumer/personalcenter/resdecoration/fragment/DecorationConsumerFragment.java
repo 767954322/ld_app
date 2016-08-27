@@ -1,5 +1,10 @@
 package com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment;
 
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -38,6 +43,9 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
     private PullListView mPlvConsumerDecoration;
     private PullToRefreshLayout mPullToRefreshLayout;
+    private RelativeLayout mRlEmpty;
+    private ImageView mIvEmptyShow;
+    private TextView mTvEmptyShow;
 
     private DecorationConsumerAdapter mDecorationConsumerAdapter;
     private List<DecorationNeedsListBean> mDecorationNeedsList = new ArrayList<>();
@@ -51,6 +59,9 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     protected void initView() {
         mPlvConsumerDecoration = (PullListView) rootView.findViewById(R.id.plv_consumer_decoration);
         mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.refresh_view);
+        mRlEmpty = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
+        mTvEmptyShow = (TextView) rootView.findViewById(R.id.tv_empty_message);
+        mIvEmptyShow = (ImageView) rootView.findViewById(R.id.iv_default_empty);
     }
 
     @Override
@@ -59,6 +70,8 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
             mDecorationConsumerAdapter = new DecorationConsumerAdapter(getActivity(), mDecorationNeedsList);
         }
         mPlvConsumerDecoration.setAdapter(mDecorationConsumerAdapter);
+        mTvEmptyShow.setText(UIUtils.getString(R.string.empty_order_fitment));
+        mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_order_empty));
     }
 
     @Override
@@ -78,6 +91,8 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 DecorationListBean mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
+
+
                 if (isRefreshOrLoadMore) {
                     updateViewFromData(mDecorationListBean);
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
@@ -87,6 +102,13 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 }
 
+                int count = mDecorationListBean.getCount();
+                if (count == 0) {
+                    mRlEmpty.setVisibility(View.VISIBLE);
+                    return;
+                } else {
+                    mRlEmpty.setVisibility(View.GONE);
+                }
                 KLog.json(TAG, userInfo);
             }
 

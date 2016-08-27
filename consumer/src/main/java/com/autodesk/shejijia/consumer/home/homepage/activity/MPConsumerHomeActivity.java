@@ -299,14 +299,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == memberEntity) {
-            return;
-        }
-        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+
+        if (null != memberEntity&&Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             circleIntent = new Intent(MPConsumerHomeActivity.this, DesignerPersonalCenterActivity.class);
         }
 
-        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+        if (null != memberEntity&&Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
 
             circleIntent = new Intent(MPConsumerHomeActivity.this, ConsumerPersonalCenterActivity.class);
         }

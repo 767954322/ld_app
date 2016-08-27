@@ -15,24 +15,23 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.PushNotificationHttpManager;
+import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
+import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
-import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
-import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
-import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
-import com.autodesk.shejijia.shared.components.im.service.webSocketService;
 import com.autodesk.shejijia.shared.components.common.utility.ConfigProperties;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
+import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.im.service.webSocketService;
+import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
 import com.socks.library.KLog;
 
 import java.io.InputStream;
@@ -217,6 +216,7 @@ public class AdskApplication extends Application {
         closeChatConnection();
 
         unRegisterForPushNotification();
+        CommonUtils.clearCookie(this);
         CommonUtils.clearAppCache(this);
         SharedPreferencesUtils.clear(AdskApplication.getInstance(), SharedPreferencesUtils.CONFIG);
     }
