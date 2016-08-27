@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -94,6 +95,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private static final int SYS_INTENT_REQUEST = 0XFF01;
     private static final int CAMERA_INTENT_REQUEST = 0XFF02;
     private int is_validated_by_mobile;
+    private Bitmap headPicBitmap;
 
     @Override
     protected int getLayoutResId() {
@@ -208,6 +210,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         district_name = mConsumerEssentialInfoEntity.getDistrict_name();
         if (!TextUtils.isEmpty(avatar)) {
             ImageUtils.displayAvatarImage(avatar, mConsumeHeadIcon);
+        }else {
+            headPicBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_default_avator);
+            mConsumeHeadIcon.setImageBitmap(headPicBitmap);
         }
 
         /**
@@ -644,9 +649,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 e.printStackTrace();
             }
 
+            CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.nickname_on_the_cross), false, null);
             putAmendConsumerInfoData(member_id, jsonObject);
             mTvNickname.setText(event.getmMsg());
-            CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.nickname_on_the_cross), false, null);
         }
     }
 
@@ -732,9 +737,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         handler.post(new Runnable() {
             public void run() {
                 MyToast.show(activity, string);
+                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
             }
         });
     }
+
+
 
     /**
      * 修改消费者个人信息
@@ -777,26 +785,28 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 }
                 Object[] object = pictureProcessingUtil.judgePicture(imageFilePath);
                 File tempFile = new File(imageFilePath);
-                Bitmap _bitmap = (Bitmap) object[1];
+                headPicBitmap = (Bitmap) object[1];
+//                Bitmap _bitmap = (Bitmap) object[1];
 
                 File newFile = imageProcessingUtil.compressFileSize(tempFile);
                 putFile2Server(newFile);
                 CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-                mConsumeHeadIcon.setImageBitmap(_bitmap);
+//                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
             CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
             Bitmap bitmap = cameraCamera(data);
-            Bitmap bit = pictureProcessingUtil.compressionBigBitmap(bitmap, true);
+//            Bitmap bit = pictureProcessingUtil.compressionBigBitmap(bitmap, true);
+            headPicBitmap = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
             File file = new File(cameraFilePath);
             try {
                 putFile2Server(file);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            mConsumeHeadIcon.setImageBitmap(bit);
+//            mConsumeHeadIcon.setImageBitmap(headPicBitmap);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
