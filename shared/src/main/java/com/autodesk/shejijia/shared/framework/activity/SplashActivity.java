@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.utility.DataCleanManager;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 
 
@@ -25,6 +29,12 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        //每次进应用都默认清除缓存
+        DataCleanManager.cleanInternalCache(UIUtils.getContext());
+        DataCleanManager.cleanCustomCache(getCacheDir().getAbsolutePath());
+        MPFileUtility.clearCacheContent(this);
+        ImageLoader.getInstance().clearDiskCache();
+        ImageLoader.getInstance().clearMemoryCache();
     }
 
     @Override

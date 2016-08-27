@@ -27,6 +27,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
@@ -84,6 +85,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         mListView.addHeaderView(mHeader);
         mListView.addFooterView(mFooterView);
+        CustomProgress.show(this,"",false,null);
     }
 
     @Override
@@ -278,6 +280,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                     }
                 }
+                CustomProgress.cancelDialog();
             }
 
             @Override
@@ -289,6 +292,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 if (2 == state) {
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 }
+                CustomProgress.cancelDialog();
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailData(designer_id, offset, limit, okResponseCallback);
