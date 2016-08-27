@@ -289,9 +289,30 @@ public class AdskApplication extends Application {
     }
 
     /**
+     * 用于处理登录后数据的操作
+     * @param strToken
+     */
+
+    public  void saveSignInInfo(String strToken){
+        MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
+        String ZERO = "0";
+        /// 为不符合规则的acs_member_id 补足位数 .
+        String acs_member_id = entity.getAcs_member_id();
+        if (acs_member_id.length() < 8) {
+            acs_member_id += ZERO;
+            entity.setAcs_member_id(acs_member_id);
+        }
+        KLog.d("APPLICATION", "memberEntity:" + entity);
+
+        onLoginSuccess(entity);
+    }
+
+
+
+    /**
      * 全局的广播接收者,用于处理登录后数据的操作
      */
-    private class SignInNotificationReceiver extends BroadcastReceiver {
+    private class SignInNotificationReceiver extends BroadcastReceiver {//此广播会有延时，在进入界面后会有获取不到登陆人信息的的情况
         @Override
         public void onReceive(Context context, Intent intent) {
 
