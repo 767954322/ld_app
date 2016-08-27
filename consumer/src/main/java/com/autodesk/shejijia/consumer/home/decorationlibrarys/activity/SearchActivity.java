@@ -169,6 +169,10 @@ public class SearchActivity extends NavigationBarActivity implements
     @Override
     public void OnItemHomeChatClick(final int position) {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if(mMemberEntity == null){
+            AdskApplication.getInstance().doLogin(this);
+            return;
+        }
         final String member_id = mMemberEntity.getAcs_member_id();
         if (mMemberEntity != null) {
             final String designer_id = mCasesEntities.get(position).getDesigner_id();

@@ -100,15 +100,16 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     mDecorationNeedsList.clear();
                     updateViewFromData(mDecorationListBean);
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    int count = mDecorationListBean.getCount();
+                    if (count == 0) {
+                        mRlEmpty.setVisibility(View.VISIBLE);
+                        return;
+                    } else {
+                        mRlEmpty.setVisibility(View.GONE);
+                    }
                 }
 
-                int count = mDecorationListBean.getCount();
-                if (count == 0) {
-                    mRlEmpty.setVisibility(View.VISIBLE);
-                    return;
-                } else {
-                    mRlEmpty.setVisibility(View.GONE);
-                }
+
                 KLog.json(TAG, userInfo);
             }
 

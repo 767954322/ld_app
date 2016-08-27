@@ -49,8 +49,10 @@ public class SendWXShared {
                 }
                 WXMediaMessage msg = new WXMediaMessage(webpage);
                 msg.title = title;
-                if (title != null && !title.equals("null")) {
+                if (description != null && !description.trim().equals("null")) {
                     msg.description = description;
+                } else {
+                    msg.description = "";
                 }
                 Bitmap thumbBmp = null;
                 if (loadedImage != null) {
