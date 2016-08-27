@@ -89,6 +89,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mTvFollowedNum = (TextView) mHeader.findViewById(R.id.tv_followed_num);
         mListView.addHeaderView(mHeader);
         mListView.addFooterView(mFooterView);
+        CustomProgress.show(this,"",false,null);
     }
 
     @Override
@@ -301,6 +302,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                     }
                 }
+                CustomProgress.cancelDialog();
             }
 
             @Override
@@ -312,6 +314,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 if (2 == state) {
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 }
+                CustomProgress.cancelDialog();
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailData(designer_id, offset, limit, okResponseCallback);
