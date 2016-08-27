@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.activity.MPFileHotspotActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -95,7 +97,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 /**
                  * 在我的北舒套餐中显示.提示保存成功，进入聊天页面.
                  */
-                String name = tv_consumer_name.getText().toString();
+                name = tv_consumer_name.getText().toString();
                 String phone = et_consumer_phone.getText().toString();
                 String community_name = et_consumer_detail_address.getText().toString();
                 boolean phoneRight = phone.matches(RegexUtil.PHONE_REGEX);
@@ -156,6 +158,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                 intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
+                intent.putExtra(BaseChatRoomActivity.RECIEVER_USER_NAME, name);
                 startActivity(intent);
                 finish();
             }
@@ -333,6 +336,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
     private AddressDialog mChangeAddressDialog;
 
     public String mConsumerAvatar;
+    private String name;
     public String jsonString;
     private boolean isSendState = true;
     private String contacts_name = "";
