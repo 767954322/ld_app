@@ -188,6 +188,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         fragmentTransaction.commitAllowingStateLoss();
     }
 
+
     @Override
     public Resources getResources() {
         Resources res = super.getResources();

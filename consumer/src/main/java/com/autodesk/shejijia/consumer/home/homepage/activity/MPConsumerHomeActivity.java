@@ -362,22 +362,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setVisibilityForNavButton(ButtonType.middle, true);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
 
-//                TextView textView = (TextView) findViewById(R.id.nav_right_textView);
-//                textView.setVisibility(View.VISIBLE);
-//                Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
-//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//                textView.setCompoundDrawables(null, null, drawable, null);
-//                textView.setText(UIUtils.getString(R.string.bid_filter));
-
-
-//=======
-//                mBidHallFragment.handleFilterOption1();
-//                TextView textView = (TextView) findViewById(R.id.nav_left_textView);
-//                textView.setVisibility(View.VISIBLE);
-//                Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
-//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//                textView.setCompoundDrawables(null, null, drawable, null);
-//                textView.setText(UIUtils.getString(R.string.bid_filter));
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
 
 
