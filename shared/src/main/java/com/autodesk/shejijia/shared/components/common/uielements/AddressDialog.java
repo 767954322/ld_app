@@ -154,6 +154,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
             mDistrictWheelView.setCurrentItem(0);
         } else {
             district_name = "";
+            district = "";
         }
     }
 
@@ -173,6 +174,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
             city = mCityModelArrayList.get(0).CODE;
         } else {
             city_name = "";
+            city = "";
         }
         updateAreas();
     }
