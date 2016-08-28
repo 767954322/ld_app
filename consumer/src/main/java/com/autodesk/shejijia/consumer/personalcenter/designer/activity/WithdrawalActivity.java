@@ -32,8 +32,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.util
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -135,7 +133,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     break;
                 }
                 String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
-                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
+                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_ZHONGWEN);
                 boolean isBankNum = deposit_card.matches(RegexUtil.PHONE_BLANK);
 
                 if (!checkNameChese(branch_bank_name)) {

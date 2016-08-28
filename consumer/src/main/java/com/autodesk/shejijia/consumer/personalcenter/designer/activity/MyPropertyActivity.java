@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -141,6 +142,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
             public void onErrorResponse(VolleyError volleyError) {
                 setBtnUnpress();
                 tv_my_property_account_balance.setText("¥ " + "0.00");
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,MyPropertyActivity.this);
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         });
