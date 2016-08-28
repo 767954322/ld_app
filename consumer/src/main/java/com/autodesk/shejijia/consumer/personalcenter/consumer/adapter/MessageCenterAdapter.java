@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBody;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 
 import java.util.List;
 
@@ -70,11 +72,17 @@ public class MessageCenterAdapter extends BaseAdapter {
         String body = messagesBean.getBody();
         String title = messagesBean.getTitle();
         String sent_time = messagesBean.getSent_time();
-//        String timeMY = DateUtil.getTimeMY(sent_time);
+
+        String timeMY = "";
+        if (StringUtils.isNumeric(sent_time)) {
+            Long aLong = Long.valueOf(sent_time);
+            timeMY = DateUtil.showDate(aLong);
+        }
+
         title = TextUtils.isEmpty(title) ? "消息中心" : title;
 
         myHolder.tv_msg_title.setText(title);
-        myHolder.tv_msg_date.setText(sent_time);
+        myHolder.tv_msg_date.setText(timeMY);
 
         if (!TextUtils.isEmpty(body) && body.contains("&quot;")) {
             MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
