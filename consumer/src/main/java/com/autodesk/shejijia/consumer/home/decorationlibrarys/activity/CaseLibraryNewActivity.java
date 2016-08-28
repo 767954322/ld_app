@@ -183,6 +183,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         };
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
+        CustomProgress.show(this,"",false,null);
         getCaseDetailData(case_id);
         pictureProcessingUtil = new PictureProcessingUtil();
     }
@@ -489,6 +490,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
                 updateViewFromCaseDetailData();
 
+                CustomProgress.cancelDialog();
             }
 
             @Override
@@ -496,6 +498,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 MPNetworkUtils.logError(TAG, volleyError);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
                         AlertView.Style.Alert, null).show();
+                CustomProgress.cancelDialog();
             }
         };
         MPServerHttpManager.getInstance().getCaseListDetail(case_id, okResponseCallback);

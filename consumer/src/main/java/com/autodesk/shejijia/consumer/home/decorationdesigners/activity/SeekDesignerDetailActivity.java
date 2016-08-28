@@ -89,7 +89,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mTvFollowedNum = (TextView) mHeader.findViewById(R.id.tv_followed_num);
         mListView.addHeaderView(mHeader);
         mListView.addFooterView(mFooterView);
-        CustomProgress.show(this,"",false,null);
+
     }
 
     @Override
@@ -616,7 +616,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (isFirstIn) {
-            mPullToRefreshLayout.autoRefresh();
+//            mPullToRefreshLayout.autoRefresh();
+            onRefresh(mPullToRefreshLayout);
+            CustomProgress.show(this,"",false,null);
             isFirstIn = false;
         }
     }
