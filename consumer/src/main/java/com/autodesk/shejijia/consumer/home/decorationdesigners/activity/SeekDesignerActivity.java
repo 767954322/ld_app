@@ -12,12 +12,12 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesig
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerFiltrateBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -208,6 +208,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                 } finally {
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
+                CustomProgress.cancelDialog();
             }
 
             @Override
@@ -216,6 +217,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerActivity.this,
                         AlertView.Style.Alert, null).show();
+                CustomProgress.cancelDialog();
             }
         };
         MPServerHttpManager.getInstance().getFindDesignerData(offset, limit, okResponseCallback);
@@ -262,7 +264,9 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         // 第一次进入自动刷新
         if (isFirstIn) {
             //changeState
-            mPullToRefreshLayout.autoRefresh();
+//            mPullToRefreshLayout.autoRefresh();
+            onRefresh(mPullToRefreshLayout);
+            CustomProgress.show(this,"",false,null);
             isFirstIn = false;
         }
     }

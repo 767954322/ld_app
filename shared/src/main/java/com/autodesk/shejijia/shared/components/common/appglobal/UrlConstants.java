@@ -309,7 +309,6 @@ public final class UrlConstants {
     //String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
     //           http://192.168.150.103:8080/transaction-app/v1/api/withdraw/balance/0
 //        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
-    public static final String URL_WITHDRAW_MEMBERS = MAIN_TRANSACTION + "/members/";
 
     /**
      * 北舒套餐聊天入口
@@ -337,4 +336,6 @@ public final class UrlConstants {
      * "http://dev-www.gdfcx.net/member-app/v1/api"
      */
     public static final String URL_DELETE_ATTENTION = MAIN_MEMBER + "/members/";
+
+    public static final String URL_WITHDRAW_MEMBERS = MAIN_TRANSACTION + "/members/";
 }

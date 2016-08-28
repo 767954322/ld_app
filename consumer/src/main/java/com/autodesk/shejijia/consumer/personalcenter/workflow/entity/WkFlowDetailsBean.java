@@ -58,7 +58,17 @@ public class WkFlowDetailsBean implements Serializable {
         private String publish_time;
         private String wk_template_id;
 
+        private SelectionBean elite;
+
         private List<MPBidderBean> bidders;
+
+        public SelectionBean getElite() {
+            return elite;
+        }
+
+        public void setElite(SelectionBean elite) {
+            this.elite = elite;
+        }
 
         public String getCity() {
             return city;

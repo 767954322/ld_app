@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -103,7 +104,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private ImageView ivThumbUp;
     private ImageView ivHeadThumbUp;
     private String firstCaseLibraryImageUrl;
-    private  int topPosition;
+    private int topPosition;
 
     private float mPosY = 0;
     private float mCurPosY = 0;
@@ -112,6 +113,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private DesignerInfoBean mDesignerInfo;
     private String mHs_uid;
     private String mNickName;
+    private CountDownTimer mTimer;
 
     @Override
     protected int getLayoutResId() {
@@ -170,8 +172,18 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        mTimer = new CountDownTimer(800, 800) {//点赞的点击事件，800ms内拦截
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+            @Override
+            public void onFinish() {
+                rlThumbUp.setClickable(true);
+            }
+        };
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
+        CustomProgress.show(this,"",false,null);
         getCaseDetailData(case_id);
         pictureProcessingUtil = new PictureProcessingUtil();
     }
@@ -214,6 +226,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             case R.id.rl_thumb_up://点赞
                 if (null != memberEntity) {
                     if (!isMemberLike) {
+                        rlThumbUp.setClickable(false);
+                        mTimer.start();// 开始计时
                         sendThumbUp(caseDetailBean.getId());
                     } else {
                         //已经点过赞
@@ -476,6 +490,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
                 updateViewFromCaseDetailData();
 
+                CustomProgress.cancelDialog();
             }
 
             @Override
@@ -483,6 +498,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 MPNetworkUtils.logError(TAG, volleyError);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
                         AlertView.Style.Alert, null).show();
+                CustomProgress.cancelDialog();
             }
         };
         MPServerHttpManager.getInstance().getCaseListDetail(case_id, okResponseCallback);
@@ -701,9 +717,21 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
-            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position==0?topPosition:position-3);
+            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position == 0 ? topPosition : position - 3);
             intent.putExtras(bundle);
             this.startActivity(intent);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mTimer.cancel();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mTimer.cancel();
     }
 }
