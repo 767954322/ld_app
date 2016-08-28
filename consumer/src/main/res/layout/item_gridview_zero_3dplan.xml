@@ -48,6 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/size_110"
+        android:maxEms="6"
+        android:singleLine="true"
         android:text="@string/three_plan_name"/>
 </RelativeLayout>
 

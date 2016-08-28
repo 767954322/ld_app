@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -22,6 +21,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPThreeDime
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -109,9 +109,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物体，消费者可以查看，需要隐藏延期及确认按钮.
         if (33 == wk_sub_node_id_int) {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
+            show3DAndHideLevel();
             handleMeasureDelivery();
         } else {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
+            showAllLevel();
             handleDesignDelivery();
         }
 
@@ -560,6 +562,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError, true);
                 CustomProgress.cancelDialog();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowUploadDeliveryActivity.this);
             }
         });
     }
@@ -586,6 +589,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError, true);
                 CustomProgress.cancelDialog();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowUploadDeliveryActivity.this);
+
             }
         });
     }
@@ -611,6 +616,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError, true);
                 CustomProgress.cancelDialog();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowUploadDeliveryActivity.this);
+
             }
         });
     }
@@ -638,6 +645,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError, true);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowUploadDeliveryActivity.this);
+
             }
         };
 
@@ -663,6 +672,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError, true);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowUploadDeliveryActivity.this);
+
             }
         };
         MPServerHttpManager.getInstance().getFlowUploadDeliveryDelay(demands_id, designer_id, okResponseCallback);
@@ -686,10 +697,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onErrorResponse(VolleyError volleyError) { /// 204 .
                 CustomProgress.cancelDialog();
-                if (volleyError instanceof TimeoutError) {
-                    // Take action when timeout happens
-                    mDeliverySureAlertView.show();
-                }
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowUploadDeliveryActivity.this);
                 MPNetworkUtils.logError(TAG, volleyError, true);
             }
         });
@@ -811,7 +819,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 default:
                     break;
             }
-        } else if (wk_sub_node_id_int >= 42 && wk_sub_node_id_int < 51) {
+        } else if (wk_sub_node_id_int >= 42 && wk_sub_node_id_int <= 51) {
             switch (mMemberType) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mAlertViewDesignConsumerDelivery.show();
