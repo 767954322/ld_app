@@ -938,7 +938,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             clearDesignFileEntitiesLevel();
         } else {
             if (mDesignFileEntities3DPlanRendering == null || mDesignFileEntities3DPlanRendering.size() < 1) {
-                mIvDesignApply.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_rendering));
+                mIvDesignApply.setImageDrawable(UIUtils.getDrawable(R.drawable.default_rendering_design_ico));
                 mLlDesignApply.setOnClickListener(null);
             } else {
                 mIvDesignApply.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_rendering_press));
@@ -946,7 +946,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             }
 
             if (mDesignFileEntities3DPlanDesignBlueprint == null || mDesignFileEntities3DPlanDesignBlueprint.size() < 1) {
-                mIvDesignPager.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_drawing));
+                mIvDesignPager.setImageDrawable(UIUtils.getDrawable(R.drawable.default_design_drawings_ico));
                 mLlDesignPager.setOnClickListener(null);
             } else {
                 mIvDesignPager.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_drawing_press));
@@ -954,7 +954,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             }
 
             if (mDesignFileEntities3DPlanMaterialBill == null || mDesignFileEntities3DPlanMaterialBill.size() < 1) {
-                mIvMaterialList.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_inventory));
+                mIvMaterialList.setImageDrawable(UIUtils.getDrawable(R.drawable.default_materials_list_ico));
                 mLlMaterialList.setOnClickListener(null);
             } else {
                 mIvMaterialList.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_inventory_press));
@@ -1003,10 +1003,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * 各个条目默认显示的图片
      */
     private void setDefaultIcon() {
-        mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_3d));
-        mIvDesignApply.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_rendering));
-        mIvDesignPager.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_drawing));
-        mIvMaterialList.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_flow_inventory));
+        mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.default_design_scheme_ico));
+        mIvDesignApply.setImageDrawable(UIUtils.getDrawable(R.drawable.default_rendering_design_ico));
+        mIvDesignPager.setImageDrawable(UIUtils.getDrawable(R.drawable.default_design_drawings_ico));
+        mIvMaterialList.setImageDrawable(UIUtils.getDrawable(R.drawable.default_materials_list_ico));
     }
 
     /**
