@@ -9,13 +9,13 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.utility.Device;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Headers;
@@ -79,9 +79,6 @@ public class MPChatHttpManager {
     public void retrieveMemberThreads(String memberId, boolean onlyAttachedToFile,
                                       int offset, int limit,
                                       OkStringRequest.OKResponseCallback callback) {
-        if (AdskApplication.getInstance().getMemberEntity() != null)
-        Log.i("aaa",""+AdskApplication.getInstance().getMemberEntity().toString());
-        Log.i("aaa","memberid"+memberId);
         Assert.assertTrue(memberId != null && !memberId.isEmpty());
 
         String entityTypes = "ASSET,NONE";
