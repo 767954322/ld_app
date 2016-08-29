@@ -3,6 +3,8 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,9 +18,11 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -30,6 +34,7 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
@@ -48,6 +53,21 @@ import java.util.Map;
  * @brief 消费者发布需求.
  */
 public class IssueDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
+
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String nikeName = (String) msg.obj;
+            String initName = et_issue_demand_name.getText().toString();
+            if (TextUtils.isEmpty(initName) || "匿名".equals(initName)) {
+
+                et_issue_demand_name.setText(nikeName);
+            }
+        }
+    };
+
 
     @Override
     protected int getLayoutResId() {
@@ -77,10 +97,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = et_issue_demand_area.getText().toString().trim();
-                    if (TextUtils.isEmpty(area)){
+                    if (TextUtils.isEmpty(area)) {
                         area = "0";
                     }
-                    area = String.format("%.2f",Double.valueOf(area));
+                    area = String.format("%.2f", Double.valueOf(area));
                     et_issue_demand_area.setText(area);
                 }
             }
@@ -92,13 +112,18 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     protected void initExtraBundle() {
         super.initExtraBundle();
         nick_name = getIntent().getStringExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME);
-        et_issue_demand_name.setText(nick_name);
+//        et_issue_demand_name.setText(nick_name);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.requirements));
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        member_id = mMemberEntity.getAcs_member_id();
+        if (!TextUtils.isEmpty(member_id)) {
+            getConsumerInfoData(member_id);
+        }
         /// 房屋类型.
         setHouseType();
         /// 房屋风格.
@@ -111,6 +136,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         setDecorationBudget();
         ///提示框
         initAlertView();
+
     }
 
     @Override
@@ -198,10 +224,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //..................................
-                if (TextUtils.isEmpty(area)){
+                if (TextUtils.isEmpty(area)) {
                     area = "0";
                 }
-                area = String.format("%.2f",Double.valueOf(area));
+                area = String.format("%.2f", Double.valueOf(area));
                 et_issue_demand_area.setText(area);
                 String subNum = "0";
                 if (area.contains(".")) {
@@ -356,6 +382,33 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             }
         });
     }
+
+    /**
+     * 获取个人基本信息
+     *
+     * @param member_id
+     * @brief For details on consumers .
+     */
+    public void getConsumerInfoData(String member_id) {
+        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+
+                Message msg = new Message();
+                msg.obj = mConsumerEssentialInfoEntity.getNick_name();
+                handler.sendMessage(msg);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
+    }
+
 
     /**
      * @brief 设置室 厅 卫
@@ -596,5 +649,6 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String room, living_room, toilet;
     private boolean isSendState = true;
     private String success = "";
+    private String member_id;
     final int RESULT_CODE = 101;
 }
