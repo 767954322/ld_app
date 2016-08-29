@@ -126,8 +126,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.nav_right_button)
-        {
+        if (i == R.id.nav_right_button) {
             openFileThreadActivity();
 
         }
@@ -262,7 +261,10 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
                 mProgressbar.setVisibility(View.GONE);
             }
         };
-
+        if (AdskApplication.getInstance().getMemberEntity() != null) {
+            mMemberId = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
+            mMemberType = AdskApplication.getInstance().getMemberEntity().getMember_type();
+        }
         MPChatHttpManager.getInstance().retrieveMemberThreads(mMemberId, mIsFileBase, offset, limit, callback);
     }
 

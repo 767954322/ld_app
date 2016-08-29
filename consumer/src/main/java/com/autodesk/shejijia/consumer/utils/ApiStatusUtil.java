@@ -45,7 +45,7 @@ public class ApiStatusUtil {
 
             switch (statusCode) {
                 case 401:// 登陆过期
-                    showAlertView(context.getString(R.string.loginguoqi), 0);
+//                    showAlertView(context.getString(R.string.loginguoqi), 0);
                     break;
                 case 400:// 参数错误
                     showAlertView(context.getString(R.string.canshuyichang), 1);
