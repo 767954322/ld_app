@@ -91,16 +91,17 @@ public class TaskListFragment extends BaseFragment{
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                LogUtils.e("taskLists-->", jsonObject.toString());
+                Logger.d(jsonObject+"");
                 String result = jsonObject.toString();
                 TaskListBean taskListBean = GsonUtil.jsonToBean(result, TaskListBean.class);
-                LogUtils.e("taskListBean-->", taskListBean.toString());
 
                 //获取当前日期(默认就是当前日期)的任务列表
                 taskLists = taskListBean.getData();
-                //显示任务列表到页面上
-                mTaskListAdapter = new TaskListAdapter(taskLists,R.layout.listitem_task_list_view,mContext);
-                mTaskListView.setAdapter(mTaskListAdapter);
+                if (taskLists!=null && taskLists.size()>0) {
+                    //显示任务列表到页面上
+                    mTaskListAdapter = new TaskListAdapter(taskLists, R.layout.listitem_task_list_view, mContext);
+                    mTaskListView.setAdapter(mTaskListAdapter);
+                }
 
             }
         };

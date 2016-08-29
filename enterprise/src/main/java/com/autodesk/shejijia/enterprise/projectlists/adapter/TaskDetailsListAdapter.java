@@ -3,12 +3,15 @@ package com.autodesk.shejijia.enterprise.projectlists.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.base.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.nodedetails.activity.NodeDetailsActivity;
@@ -55,10 +58,12 @@ public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     private void initView(TaskListVH taskListVH,int position){
+        // 当前任务节点名
         if (!TextUtils.isEmpty(taskIdLists.get(position).getName())) {
             taskListVH.mTaskName.setText(taskIdLists.get(position).getName());
         }
 
+        // 当前任务节点的状态
         if (!TextUtils.isEmpty(taskIdLists.get(position).getStatus())) {
             String status = taskIdLists.get(position).getStatus();
             if (status.equalsIgnoreCase("open")) {
@@ -83,6 +88,32 @@ public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 taskListVH.mTaskStatus.setText("复验中");
             }else {
                 taskListVH.mTaskStatus.setText(status);
+            }
+        }
+
+        //当前任务节点的类型
+        if (!TextUtils.isEmpty(taskIdLists.get(position).getCategory())){
+            String category = taskIdLists.get(position).getCategory();
+            if (category.equalsIgnoreCase("timeline")){ //开工交底
+                Drawable drawable = ContextCompat.getDrawable(mContext,R.mipmap.default_head);
+                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+                taskListVH.mTaskName.setCompoundDrawables(drawable,null,null,null);
+            }else if (category.equalsIgnoreCase("inspection")){ //验收类
+                Drawable drawable= ContextCompat.getDrawable(mContext,R.mipmap.check_accept);
+                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+                taskListVH.mTaskName.setCompoundDrawables(drawable,null,null,null);
+            }else if (category.equalsIgnoreCase("construction")){ //施工类
+                Drawable drawable = ContextCompat.getDrawable(mContext,R.mipmap.construction);
+                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+                taskListVH.mTaskName.setCompoundDrawables(drawable,null,null,null);
+            }else if (category.equalsIgnoreCase("materialMeasuring")){ //主材测量
+                Drawable drawable = ContextCompat.getDrawable(mContext,R.mipmap.material);
+                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+                taskListVH.mTaskName.setCompoundDrawables(drawable,null,null,null);
+            }else if (category.equalsIgnoreCase("materialInstallation")){ //主材安装
+                Drawable drawable = ContextCompat.getDrawable(mContext,R.mipmap.material);
+                drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+                taskListVH.mTaskName.setCompoundDrawables(drawable,null,null,null);
             }
         }
     }

@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <corners android:radius="@dimen/textview_corners_normal" />
-    <solid android:color="@color/light_blue" />
+    <solid android:color="@color/task_status_light_blue" />
     <padding
         android:bottom="@dimen/spacing_padding_micro"
         android:left="@dimen/spacing_padding_normal"

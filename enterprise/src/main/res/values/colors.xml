@@ -25,8 +25,19 @@
 
     <!-- basic colors -->
     <color name="green">#27D34D</color>
-    <color name="blue">#2A91BD</color>
-    <color name="orange">#FF9D2F</color>
+    <color name="blue">#2B77C1</color>
+    <color name="yellow">#FFB22F</color>
+    <color name="orange">#EA6339</color>
     <color name="red">#FF432F</color>
+
+    <!-- font colors-->
+    <color name="font_gray">#939393</color>
+    <color name="font_black">#323232</color>
+
+    <!-- project status colors-->
+    <color name="task_status_orange">#EA6339</color>
+    <color name="task_status_blue">#2B77C1</color>
+    <color name="task_status_light_blue">#AAB9C3</color>
+    <color name="task_status_yellow">#FFB22F</color>
 
 </resources>

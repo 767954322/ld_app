@@ -94,9 +94,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             if (taskLists.get(position).getPlan().getTasks()!=null && taskLists.get(position).getPlan().getTasks().size()>0){
                 projectVh.mViewLine.setVisibility(View.VISIBLE);
+                projectVh.mTaskListView.setVisibility(View.VISIBLE);
                 projectVh.mTaskListView.setAdapter(new TaskDetailsListAdapter(taskLists.get(position).getPlan().getTasks(), R.layout.listitem_task_list_details_view,mContext));
-            }else {//隐藏分割线
+            }else {//隐藏分割线,与recyclerView
                 projectVh.mViewLine.setVisibility(View.GONE);
+                projectVh.mTaskListView.setVisibility(View.GONE);
             }
         }
     }

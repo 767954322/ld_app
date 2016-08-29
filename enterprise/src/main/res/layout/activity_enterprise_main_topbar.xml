@@ -4,12 +4,13 @@
     android:id="@+id/main_topbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_bottom_textView_pressed"
+    android:background="@color/blue"
     android:padding="10dp"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <ImageButton
+        android:id="@+id/imgBtn_personal_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -17,14 +18,17 @@
 
 
     <TextView
+        android:id="@+id/tv_project_date"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="@color/bg_00"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_normal"
         tools:text="6月15日"/>
 
     <ImageButton
+        android:id="@+id/imgBtn_screen"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
@@ -34,6 +38,7 @@
 
 
     <ImageButton
+        android:id="@+id/imgBtn_search"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"

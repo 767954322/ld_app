@@ -34,7 +34,7 @@ public class ProjectListVH extends RecyclerView.ViewHolder{
         mTaskListView = (RecyclerView)itemView.findViewById(R.id.rcy_task_list);
         mProjectName = (TextView)itemView.findViewById(R.id.tv_project_name);
         mProjectStatus = (TextView)itemView.findViewById(R.id.tv_project_status);
-        mViewLine = (View)itemView.findViewById(R.id.view_taskItem_line);
+        mViewLine = itemView.findViewById(R.id.view_taskItem_line);
         mStarLabel = (Button)itemView.findViewById(R.id.btn_star_label);
     }
 

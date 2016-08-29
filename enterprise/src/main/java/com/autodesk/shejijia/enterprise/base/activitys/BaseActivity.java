@@ -7,6 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
+import com.autodesk.shejijia.enterprise.R;
+import com.pgyersdk.crash.PgyCrashManager;
+import com.pgyersdk.feedback.PgyFeedbackShakeManager;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.views.PgyerDialog;
 import com.socks.library.KLog;
 
 /**
@@ -21,6 +26,8 @@ public abstract class BaseActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(getContentViewId());
+        //注册蒲公英
+        registerPgy();
 
         initData(savedInstanceState);
 
@@ -46,6 +53,15 @@ public abstract class BaseActivity extends AppCompatActivity{
         return res;
     }
 
+    private void registerPgy(){
+        //crash注册
+        PgyCrashManager.register(this);
+        //version update
+        PgyUpdateManager.register(this);
+        //设置反馈页面dialog的风格,符合app
+        PgyerDialog.setDialogTitleBackgroundColor("#2B77C1");
+        PgyerDialog.setDialogTitleTextColor("#ffffff");
+    }
 
     //返回键事件监听
     @Override
@@ -57,5 +73,28 @@ public abstract class BaseActivity extends AppCompatActivity{
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 蒲公英feedback功能
+        // custom sensitivity, defaults to 950, the smaller the number higher sensitivity.
+        PgyFeedbackShakeManager.setShakingThreshold(1000);
+
+        // Open as a dialog
+        PgyFeedbackShakeManager.register(BaseActivity.this);
+
+        // 以页面的形式展示反馈页面有点丑,屏蔽
+        //  Open as an Activity, in the case you must configure FeedbackActivity in the file of AndroidManifest.xml
+//        PgyFeedbackShakeManager.register(BaseActivity.this, false);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 蒲公英feedback功能
+        PgyFeedbackShakeManager.unregister();
     }
 }
