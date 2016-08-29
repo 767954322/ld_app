@@ -127,8 +127,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 String acs_member_id = mMemberEntity.getAcs_member_id();
                 String member_type = mMemberEntity.getMember_type();
                 intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, mBiddersEntity.getUser_name());
-                intentChart.putExtra(ChatRoomActivity.THREAD_ID, mThreead_id);
-                intentChart.putExtra(ChatRoomActivity.ASSET_ID, "");
+                intentChart.putExtra(ChatRoomActivity.THREAD_ID, mBiddersEntity.getDesign_thread_id());
+                intentChart.putExtra(ChatRoomActivity.ASSET_ID, mCurrentWorkFlowDetail.getRequirement().getNeeds_id());
                 intentChart.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
                 intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                 intentChart.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
