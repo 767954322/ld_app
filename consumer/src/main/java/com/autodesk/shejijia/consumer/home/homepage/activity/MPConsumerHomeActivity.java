@@ -238,7 +238,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
         }
 
-        if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
+        if (mBidHallFragment==null&&index == R.id.designer_indent_list_btn) {
             mBidHallFragment = new BidHallFragment();
             loadMainFragment(mBidHallFragment, BID_FRAGMENT_TAG);
         }
@@ -360,9 +360,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
-
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
-
+                Intent mIntent = new Intent(BidHallFragment.ACTION_NAME);
+                sendBroadcast(mIntent);
 
                 break;
 
@@ -709,6 +709,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
     }
+
+
+
+
 
     private final int CHAT = 0;
     private static final int IS_BEI_SHU = 1;
