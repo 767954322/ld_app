@@ -59,6 +59,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     public static final String ACS_MEMBER_ID = "acs_member_id"; //logged in user
     public static final String PROJECT_INFO = "project_info";
     public static final String MEDIA_TYPE = "media_type";
+    public static final String PROJECT_TITLE = "project_title";
 
     public interface CallBack {
         void call();
@@ -126,7 +127,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         refresh();
 
         if (mRecieverUserName != null)
-            setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName));
+            setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName  +"/"+ mProjectTtile));
     }
 
 
@@ -164,6 +165,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         mAcsMemberId = bundle.getString(ACS_MEMBER_ID);
         mProjectInfo = bundle.getParcelable(PROJECT_INFO);
         mMediaType = bundle.getString(MEDIA_TYPE);
+        mProjectTtile = bundle.getString(PROJECT_TITLE);
     }
 
     protected void putInstanceStateToBundle(Bundle bundle) {
@@ -176,6 +178,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         bundle.putString(ACS_MEMBER_ID, mAcsMemberId);
         bundle.putParcelable(PROJECT_INFO, mProjectInfo);
         bundle.putString(MEDIA_TYPE, mMediaType);
+        bundle.putString(PROJECT_TITLE,mProjectTtile);
     }
 
 
@@ -662,6 +665,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     protected String mRecieverUserId;
     protected String mReceiverHsUid;
     protected String mRecieverUserName;
+    protected String mProjectTtile;
     protected MPChatProjectInfo mProjectInfo;
     protected String mMediaType;
 

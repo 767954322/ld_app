@@ -99,7 +99,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                  */
                 name = tv_consumer_name.getText().toString();
                 String phone = et_consumer_phone.getText().toString();
-                String community_name = et_consumer_detail_address.getText().toString();
+                community_name = et_consumer_detail_address.getText().toString();
                 boolean phoneRight = phone.matches(RegexUtil.PHONE_REGEX);
                 boolean address_right = community_name.matches(RegexUtil.ADDRESS_REGEX);
                 if (TextUtils.isEmpty(phone) || !phoneRight) {
@@ -159,6 +159,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                 intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                 intent.putExtra(BaseChatRoomActivity.RECIEVER_USER_NAME, name);
+                intent.putExtra("project_title",community_name);
                 startActivity(intent);
                 finish();
             }
@@ -329,6 +330,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
     }
 
     private TextView tv_consumer_name;
+    private String  community_name;
     private TextView tv_consumer_address;
     private EditText et_consumer_phone, et_consumer_detail_address;
     private Button btn_consumer_finish;
