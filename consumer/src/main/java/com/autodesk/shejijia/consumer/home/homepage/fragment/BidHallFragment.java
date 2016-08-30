@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -284,7 +283,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
             String action = intent.getAction();
             if (action.equals(ACTION_NAME)) {
                 getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
-                Toast.makeText(getActivity(), "接受到广播", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "接受到广播", Toast.LENGTH_SHORT).show();
             }
         }
     };

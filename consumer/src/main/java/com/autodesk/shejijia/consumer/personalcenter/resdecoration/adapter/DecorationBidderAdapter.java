@@ -215,7 +215,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 //                        UIUtils.getString(R.string.network_error),
 //                        null, new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
 //                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,mContext);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,mActivity);
             }
         };
         MPServerHttpManager.getInstance().refuseDesignerMeasure(needs_id, designer_id, okResponseCallback);
