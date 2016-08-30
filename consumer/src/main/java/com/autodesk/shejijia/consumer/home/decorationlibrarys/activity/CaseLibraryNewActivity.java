@@ -454,8 +454,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
-                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
                 CustomProgress.cancelDialog();
             }
         };
