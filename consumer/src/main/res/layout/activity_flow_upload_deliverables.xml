@@ -36,7 +36,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/default_design_scheme_ico" />
 
-
         <TextView
             android:id="@+id/tv_delivery"
             android:layout_width="wrap_content"
@@ -68,7 +67,6 @@
             android:layout_height="wrap_content"
             android:src="@drawable/default_rendering_design_ico" />
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +95,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/default_design_drawings_ico" />
-
 
         <TextView
             android:layout_width="wrap_content"

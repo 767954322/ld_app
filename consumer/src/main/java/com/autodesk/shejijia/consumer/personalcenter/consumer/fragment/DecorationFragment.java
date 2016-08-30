@@ -28,12 +28,13 @@ import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AppraiseDesignerActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploadDeliveryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.SelectDesignerActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -118,6 +119,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         mTvBuildTime = (TextView) mRootView.findViewById(R.id.consumer_decoration_buildtime);
         mIbnDecorationShow = (ImageButton) mRootView.findViewById(R.id.ibn_decoration_show);
         mIbnDecorationModify = (ImageButton) mRootView.findViewById(R.id.ibn_decoration_modify);
+        lLSelectDesign = (LinearLayout) mRootView.findViewById(R.id.ll_select_design);
         /**
          * 立即评价
          */
@@ -150,6 +152,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
     private void initListener() {
         mIbnDecorationShow.setOnClickListener(this);
         mTvEvaluate.setOnClickListener(this);
+        lLSelectDesign.setOnClickListener(this);
     }
 
     @Override
@@ -180,10 +183,15 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
 
             case R.id.tv_appraise_designer: /// 立即评价 .
                 Intent evaluateIntent = new Intent(getActivity(), AppraiseDesignerActivity.class);
-                evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
+                evaluateIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
                 evaluateIntent.putExtra(FlowUploadDeliveryActivity.BIDDER_ENTITY, mMPBidderBean);
-                evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id_evaluate);
+                evaluateIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id_evaluate);
                 startActivityForResult(evaluateIntent, EVALUATE_STATE);
+                break;
+            case R.id.ll_select_design: /// 派单人数 .
+                startActivity( new Intent(getActivity(), SelectDesignerActivity.class));
+
+//                MyToast.show(getActivity(),"d55");
                 break;
         }
     }
@@ -305,9 +313,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     if (!TextUtils.isEmpty(designer_id)) {
                         Intent intent = new Intent();
                         intent.setClass(getActivity(), WkFlowStateActivity.class);
-                        intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
-                        intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
-                        intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
+                        intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                        intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                         startActivityForResult(intent, WK_FLOW_STATE);
                     }
                     break;
@@ -358,7 +365,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                 tv_decoration_designer_expens.setText(UIUtils.getString(R.string.measurement_fee) + design_fee + UIUtils.getString(R.string.measurement));
             }
             tv_decoration_name_choose.setText(user_name_biding);
-            tv_decoration_designer_introduce.setText(UIUtils.getNodataIfEmpty(style_names_biding));
+            tv_decoration_designer_introduce.setText(UIUtils.getNoDataIfEmpty(style_names_biding));
 
             /**
              * IM
@@ -397,16 +404,16 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
              *
              * 选TA量房
              */
+
             ibn_decoration_measure_choose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     alertDialog.dismiss();
                     if (!TextUtils.isEmpty(needs_id) && !TextUtils.isEmpty(designer_id_biding)) {
                         Intent intent = new Intent(getActivity(), FlowMeasureFormActivity.class);
-                        intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
-                        intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id_biding);
+                        intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                        intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id_biding);
                         /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
-                        intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
                         startActivityForResult(intent, BIDING_STATE);
                     }
                 }
@@ -655,14 +662,14 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
         }
         convertEn2Cn();
 
-        livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_convert) + UIUtils.getNodataIfEmpty(living_room_convert) + UIUtils.getNodataIfEmpty(toilet_convert);
+        livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_convert) + UIUtils.getNoDataIfEmpty(living_room_convert) + UIUtils.getNoDataIfEmpty(toilet_convert);
         mTvCommunityName.setText(community_name);
         mTVHomeAddress.setText(simple_address + " " + livingRoom_room_toilet + "  " + house_area + "㎡");
         mTvProjectAddress.setText(address);
         mTvHouseType.setText(house_type_convert);
-        mTvDemandPrice.setText(UIUtils.getNodataIfEmpty(decoration_budget));
-        mTvDesignBudget.setText(UIUtils.getNodataIfEmpty(UIUtils.getNodataIfEmpty(design_budget)));
-        mTvStyle.setText(UIUtils.getNodataIfEmpty(decoration_style_convert));
+        mTvDemandPrice.setText(UIUtils.getNoDataIfEmpty(decoration_budget));
+        mTvDesignBudget.setText(UIUtils.getNoDataIfEmpty(UIUtils.getNoDataIfEmpty(design_budget)));
+        mTvStyle.setText(UIUtils.getNoDataIfEmpty(decoration_style_convert));
     }
 
     /**
@@ -670,25 +677,25 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      */
     private void updateViewFromData() {
         district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(mDistrict) || TextUtils.isEmpty(mDistrict) ? "" : district_name;
-        String simple_address = /*province_name + */ UIUtils.getNodataIfEmpty(city_name) + district_name;
+        String simple_address = /*province_name + */ UIUtils.getNoDataIfEmpty(city_name) + district_name;
         /// 项目地址
-        String project_address = province_name + UIUtils.getNodataIfEmpty(city_name) + district_name;
+        String project_address = province_name + UIUtils.getNoDataIfEmpty(city_name) + district_name;
         //户型
-        livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_convert) + UIUtils.getNodataIfEmpty(living_room_convert) + UIUtils.getNodataIfEmpty(toilet_convert);
+        livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_convert) + UIUtils.getNoDataIfEmpty(living_room_convert) + UIUtils.getNoDataIfEmpty(toilet_convert);
         ///小区名称 .
-        mTvCommunityName.setText(UIUtils.getNodataIfEmpty(community_name));
+        mTvCommunityName.setText(UIUtils.getNoDataIfEmpty(community_name));
         //项目编号
         mTvNeeds_id.setText(needs_id);
         /// 房屋地址及室卫厅 .
-        mTVHomeAddress.setText(simple_address + " " + livingRoom_room_toilet + " " + UIUtils.getNodataIfEmpty(house_area) + "㎡");
+        mTVHomeAddress.setText(simple_address + " " + livingRoom_room_toilet + " " + UIUtils.getNoDataIfEmpty(house_area) + "㎡");
         mTvHouseType.setText(house_type_convert);
         mTvBidderCount.setText(bidder_count + UIUtils.getString(R.string.designer_much));/// bidder_count .
         mTvProjectAddress.setText(project_address);
-        mTvDemandPrice.setText(UIUtils.getNodataIfEmpty(this.decoration_budget));
-        mTvDesignBudget.setText(UIUtils.getNodataIfEmpty(UIUtils.getNodataIfEmpty(design_budget)));
+        mTvDemandPrice.setText(UIUtils.getNoDataIfEmpty(this.decoration_budget));
+        mTvDesignBudget.setText(UIUtils.getNoDataIfEmpty(UIUtils.getNoDataIfEmpty(design_budget)));
         mTvEndDay.setText(end_day + UIUtils.getString(R.string.day_much));
         mTvDemandPrice.setText(decoration_budget);
-        mTvStyle.setText(UIUtils.getNodataIfEmpty(decoration_style_convert));
+        mTvStyle.setText(UIUtils.getNoDataIfEmpty(decoration_style_convert));
         mTvBuildTime.setText(publish_time);
 
         refreshListView();
@@ -701,7 +708,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      */
     private void refreshListView() {
         if (bidders != null && bidders.size() > 0) {
-            mDecorationAdapter = new MyDecorationAdapter(getActivity(), bidders, R.layout.item_lv_decoration);
+            mDecorationAdapter = new MyDecorationAdapter(getActivity(), bidders, R.layout.item_decoration_designer_list);
             mListView.setAdapter(mDecorationAdapter);
         }
     }
@@ -908,6 +915,7 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
      */
     protected View mRootView;
     private LinearLayout mLlItemConsumerDecoration;
+    private LinearLayout lLSelectDesign;
     private TextView mTvDesignBudget;
     private TextView mTvProjectAddress;
     private TextView mTvDemandPrice;

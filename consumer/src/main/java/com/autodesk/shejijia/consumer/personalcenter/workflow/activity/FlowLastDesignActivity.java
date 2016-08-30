@@ -126,7 +126,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
                 public void onClick(View v) {
                     MPOrderBean order = null;
 
-                    order = getOrderEntityByStep(FlowLastDesignActivity.this.wk_cur_ActionNode_id);
+                    order = getOrderEntityByStep(FlowLastDesignActivity.this.nodeState);
                     if (order == null)
                         return;
 

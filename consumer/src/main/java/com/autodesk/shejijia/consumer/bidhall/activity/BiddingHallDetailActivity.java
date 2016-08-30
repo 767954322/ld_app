@@ -8,12 +8,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.entity.BidHallDetailEntity;
 import com.autodesk.shejijia.consumer.bidhall.entity.RealNameBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CertificationActivity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -130,6 +134,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,BiddingHallDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getBidHallDetailData(needs_id, okResponseCallback);
@@ -159,13 +164,18 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 String info = GsonUtil.jsonToString(jsonObject);
                 KLog.json(info);
                 getAlertView(UIUtils.getString(R.string.designer_bid_detail_success), null, false).show();
+                mBtnSendBid.setEnabled(false);
+                mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+                mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+                mBtnSendBid.setText(UIUtils.getString(R.string.bided));
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-                getAlertView(UIUtils.getString(R.string.designer_bid_detail_fail), null, false).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,BiddingHallDetailActivity.this);
+              //  getAlertView(UIUtils.getString(R.string.designer_bid_detail_fail), null, false).show();
             }
         };
         MPServerHttpManager.getInstance().sendBidDemand(jsonObject, needs_id, designer_id, okResponseCallback);
@@ -254,12 +264,12 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String room_cn = ConvertUtils.getConvert2CN(roomJson, room);
         String toilet_cn = ConvertUtils.getConvert2CN(toiletJson, toilet);
         String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
-        String livingRoom_room_toilet = UIUtils.getNodataIfEmpty(room_cn) + UIUtils.getNodataIfEmpty(living_room_cn) + UIUtils.getNodataIfEmpty(toilet_cn);
+        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
         district_name = TextUtils.isEmpty(mBidHallEntity.getDistrict())
                 || "none".equals(mBidHallEntity.getDistrict())
                 || TextUtils.isEmpty(district_name)
                 || district_name.equals("none") ? "" : district_name;
-        String projectAddress = UIUtils.getNodataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNodataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
+        String projectAddress = UIUtils.getNoDataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNoDataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
         setTitleForNavbar(community_name);
         mTvProjectNeedsId.setText(needs_id);
@@ -268,7 +278,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         mTvHouseModel.setText(livingRoom_room_toilet);
         mTvName.setText(mBidHallEntity.getContacts_name());
         mTvDecorationBudget.setText(decoration_budget);
-        mTvDesignBudget.setText(UIUtils.getNodataIfEmpty(mBidHallEntity.getDesign_budget()));
+        mTvDesignBudget.setText(UIUtils.getNoDataIfEmpty(mBidHallEntity.getDesign_budget()));
         mTvHouseArea.setText(mBidHallEntity.getHouse_area() + "m²");
         mTvProjectAddress.setText(projectAddress);
         mTvPublishTime.setText(mBidHallEntity.getPublish_time());

@@ -26,6 +26,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.FileManager;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.utils.IDCardUtils;
 import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -154,7 +155,8 @@ public class CertificationActivity extends NavigationBarActivity implements View
                 getIdentity = et_autonym_identity.getText().toString();
                 boolean isName = isName(getName);
                 boolean isMobile = isMobileNO(getPhone);
-                boolean isPaper = isPapersNo(getIdentity);
+
+                boolean isPaper = IDCardUtils.IDCardValidate(getIdentity);
                 if (isName) {
                     if (isMobile) {
                         if (isPaper) {

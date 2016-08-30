@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.entity;
 
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SelectionBean;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -58,7 +60,17 @@ public class WkFlowDetailsBean implements Serializable {
         private String publish_time;
         private String wk_template_id;
 
+        private SelectionBean elite;
+
         private List<MPBidderBean> bidders;
+
+        public SelectionBean getElite() {
+            return elite;
+        }
+
+        public void setElite(SelectionBean elite) {
+            this.elite = elite;
+        }
 
         public String getCity() {
             return city;

@@ -27,7 +27,7 @@ public class DesignerInfoDetails implements Serializable {
      * is_real_name : 0
      * measurement_price : null
      * personal_honour : null
-     * studio : null
+     * work_room_detail_six_shap : null
      * style_long_names : 欧式风格,日式风格
      * style_names : 日式,欧式
      * styles : japanese,european

@@ -83,8 +83,8 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         if (null != bundle) {
             mMPBidderBean = (MPBidderBean) bundle.getSerializable(FlowUploadDeliveryActivity.BIDDER_ENTITY);
             mMPBidderBean.getDesigner_id();
-            designer_id = bundle.getString(Constant.BundleKey.BUNDLE_DESIGNER_ID);
-            needs_id = bundle.getString(Constant.BundleKey.BUNDLE_ASSET_NEED_ID);
+            designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+            needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         }
     }
 
@@ -189,7 +189,8 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
      * designer_id 设计师编号
      */
     private void submitEvaluation(JSONObject jsonObject) {
-        MPServerHttpManager.getInstance().submitAppraisement(needs_id, designer_id, jsonObject, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().submitAppraisement(needs_id, designer_id, jsonObject,
+                new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();

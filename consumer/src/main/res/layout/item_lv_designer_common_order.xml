@@ -29,7 +29,7 @@
                 android:layout_marginLeft="@dimen/size_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/address_ico"/>
+                android:src="@drawable/icon_position_normal"/>
 
             <TextView
                 android:id="@+id/tv_designer_order_address"

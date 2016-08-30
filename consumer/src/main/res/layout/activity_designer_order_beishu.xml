@@ -11,28 +11,16 @@
         android:layout_height="@dimen/size_40"
         android:orientation="horizontal">
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_designer_order_all"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/bg_common_btn_blue_noradius"-->
-            <!--android:clickable="true"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/my_bid_all"-->
-            <!--android:textColor="@color/white"></TextView>-->
-
         <TextView
-            android:id="@+id/tv_designer_order_beishu"
+            android:id="@+id/tv_elite_project"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_common_btn_blue_noradius"
             android:layout_weight="1"
+            android:background="@drawable/bg_common_btn_blue_noradius"
             android:clickable="true"
             android:gravity="center"
-            android:text="@string/my_project_bei_shu"
-            android:textColor="@color/white"></TextView>
-
+            android:text="@string/elite_project"
+            android:textColor="@color/white"/>
         <TextView
             android:id="@+id/tv_designer_order"
             android:layout_width="0dp"
@@ -41,13 +29,26 @@
             android:layout_weight="1"
             android:clickable="true"
             android:gravity="center"
-            android:text="@string/my_project_common"
-            android:textColor="@color/bg_0084ff"></TextView>
+            android:text="@string/average_project"
+            android:textColor="@color/bg_0084ff"/>
+
+        <TextView
+            android:id="@+id/tv_designer_order_beishu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/textview_border_beishu"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/packages_project"
+            android:textColor="@color/bg_0084ff"/>
+
+
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fl_designer_order_beishu_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

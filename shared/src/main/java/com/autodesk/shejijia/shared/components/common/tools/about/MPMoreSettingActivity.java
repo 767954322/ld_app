@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.shared.components.common.tools.about;
 
-import com.autodesk.shejijia.shared.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,18 +10,18 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
-import com.autodesk.shejijia.shared.components.common.utility.DataCleanManager;
-import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
+import com.autodesk.shejijia.shared.components.common.utility.DataCleanManager;
+import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -68,7 +67,10 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
      * 提示框
      */
     private void showDialog() {
-        mAlertView = new AlertView(UIUtils.getString(R.string.clearcache_detail), null, UIUtils.getString(R.string.cancel), new String[]{UIUtils.getString(R.string.clearcache)}, null, this, AlertView.Style.ActionSheet, this);
+        mAlertView =
+                new AlertView(UIUtils.getString(R.string.clearcache_detail),
+                        null, UIUtils.getString(R.string.cancel), new String[]{UIUtils.getString(R.string.clearcache)},
+                        null, this, AlertView.Style.ActionSheet, this);
     }
 
 
@@ -90,7 +92,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
         }
         else if (i == R.id.bt_consumer_exit)
         {
-            CommonUtils.clearCookie(this);
+            CommonUtils.clearAppCache(this);
 
             intentLogout.putExtra(Constant.LOGOUT, Constant.LOGOUT);
             setResult(RESULT_OK, intentLogout);

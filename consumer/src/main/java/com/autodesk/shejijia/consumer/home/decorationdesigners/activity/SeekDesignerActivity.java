@@ -2,14 +2,20 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAdapter;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerFiltrateBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -17,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -34,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author DongXueQiu .
@@ -43,6 +51,14 @@ import java.util.ArrayList;
  * @brief 查看设计师 .
  */
 public class SeekDesignerActivity extends NavigationBarActivity implements SeekDesignerAdapter.OnItemChatClickListener, PullToRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+
+    private static final int REQUEST_FILTRATE_CODE = 0x12;
+    private static final int REQUEST_SEARCH_CODE = 0x13;
+
+    private RelativeLayout mRlEmpty;
+    private ImageView mIvDefaultEmpty;
+    private TextView mTvEmptyMessage;
+
 
     @Override
     protected int getLayoutResId() {
@@ -58,11 +74,14 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
         setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
 
-//        setVisibilityForNavButton(ButtonType.RIGHT, true);
-//        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+        mRlEmpty = (RelativeLayout) findViewById(R.id.rl_empty);
+        mIvDefaultEmpty = (ImageView) findViewById(R.id.iv_default_empty);
+        mTvEmptyMessage = (TextView) findViewById(R.id.tv_empty_message);
 
-        setVisibilityForNavButton(ButtonType.RIGHT, false);
-        setVisibilityForNavButton(ButtonType.SECONDARY, false);
+        /// TODO 九月份内容 .
+        setVisibilityForNavButton(ButtonType.RIGHT, true);
+        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+
     }
 
     /// 数据逻辑.
@@ -72,6 +91,12 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         setTitleForNavbar(UIUtils.getString(R.string.find_designer));
         mSeekDesignerAdapter = new SeekDesignerAdapter(this, mDesignerListEntities);
         mListView.setAdapter(mSeekDesignerAdapter);
+        mFindDesignerBean.setNick_name("");
+        mFindDesignerBean.setDesign_price_code("");
+        mFindDesignerBean.setStart_experience("");
+        mFindDesignerBean.setEnd_experience("");
+        mFindDesignerBean.setStyle_names("");
+
     }
 
     @Override
@@ -86,32 +111,34 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     protected void secondaryNavButtonClicked(View view) {
         super.secondaryNavButtonClicked(view);
         intent = new Intent(this, DesignerFiltrateActivity.class);
-        intent.putExtra(Constant.CaseLibrarySearch.YEAR_INDEX, mDesignerFiltrateBean == null ? 0 : mDesignerFiltrateBean.getYearIndex());
-        intent.putExtra(Constant.CaseLibrarySearch.STYLEL_INDEX, mDesignerFiltrateBean == null ? 0 : mDesignerFiltrateBean.getStyleIndex());
-        intent.putExtra(Constant.CaseLibrarySearch.PRICE_INDEX, mDesignerFiltrateBean == null ? 0 : mDesignerFiltrateBean.getPriceIndex());
-        this.startActivityForResult(intent, FILTRATE_REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_FILTRATE_CODE);
     }
 
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
         intent = new Intent(this, DesignerSearchActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_SEARCH_CODE);
     }
 
 
     /**
      * 选中某一个设计师进入详情页面
-     *
-     * @param adapterView 　某一个ListView
-     * @param view        　item的view的句柄
-     * @param position    　position是适配器里的位置
-     * @param l           　在listview里的第几行的位置
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-        String designer_id = mDesignerListEntities.get(position).getDesigner().getAcs_member_id();
-        String hs_uid = mDesignerListEntities.get(position).getHs_uid();
+        SeekDesignerBean.DesignerListEntity designerListEntity = mDesignerListEntities.get(position);
+        if (null == designerListEntity) {
+            return;
+        }
+        DesignerInfoBean designer = designerListEntity.getDesigner();
+
+        String designer_id = designer.getAcs_member_id();
+        String hs_uid = designerListEntity.getHs_uid();
+        if (TextUtils.isEmpty(designer_id) || TextUtils.isEmpty(hs_uid)) {
+            return;
+        }
+
         Intent intent = new Intent(SeekDesignerActivity.this, SeekDesignerDetailActivity.class);
         intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
         intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
@@ -126,10 +153,22 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null) {
             member_id = memberEntity.getAcs_member_id();
-            final String designer_id = mDesignerListEntities.get(position).getDesigner().getAcs_member_id();
-            final String hs_uid = mDesignerListEntities.get(position).getHs_uid();
             final String mMemberType = memberEntity.getMember_type();
-            final String receiver_name = mDesignerListEntities.get(position).getNick_name();
+            SeekDesignerBean.DesignerListEntity designerListEntity = mDesignerListEntities.get(position);
+            if (null == designerListEntity) {
+                return;
+            }
+            DesignerInfoBean designer = designerListEntity.getDesigner();
+            if (null==designer){
+                return;
+            }
+            final String designer_id = designer.getAcs_member_id();
+            final String hs_uid = designerListEntity.getHs_uid();
+            if (TextUtils.isEmpty(designer_id) || TextUtils.isEmpty(hs_uid)) {
+                return;
+            }
+
+            final String receiver_name = designerListEntity.getNick_name();
             final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
 
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
@@ -156,7 +195,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        SeekDesignerActivity.this.startActivity(intent);
+                        startActivity(intent);
 
                     } else {
                         MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
@@ -173,7 +212,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, "");
                                     intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
                                     intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-                                    SeekDesignerActivity.this.startActivity(intent);
+                                    startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -188,61 +227,61 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     }
 
     /**
-     * 获取设计师列表.
-     *
-     * @param offset 页数
-     * @param limit  　每页数据条数
-     * @param state  　刷新的状态
+     * 筛选设计师
      */
-    public void getDesignerListData(int offset, int limit, final int state) {
+    private void findDesignerList(FindDesignerBean findDesignerBean, int offset, int limit, final int state) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                try {
-                    String info = GsonUtil.jsonToString(jsonObject);
-                    mSeekDesignerBean = GsonUtil.jsonToBean(info, SeekDesignerBean.class);
-
-                    updateViewFromData(state);
-                } finally {
-                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                }
+                String filterDesignerString = GsonUtil.jsonToString(jsonObject);
+                SeekDesignerBean seekDesignerBean = GsonUtil.jsonToBean(filterDesignerString, SeekDesignerBean.class);
+                updateViewFromFindDesigner(seekDesignerBean, state);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip),
+                        UIUtils.getString(R.string.network_error), null,
+                        new String[]{UIUtils.getString(R.string.sure)},
+                        null, SeekDesignerActivity.this,
                         AlertView.Style.Alert, null).show();
+                CustomProgress.cancelDialog();
             }
         };
-        MPServerHttpManager.getInstance().getFindDesignerData(offset, limit, okResponseCallback);
+        MPServerHttpManager.getInstance().findDesignerList(findDesignerBean, offset, limit, okResponseCallback);
+
     }
 
-    /**
-     * 获取数据，更新页面
-     *
-     * @param state 　刷新用到的状态
-     */
-    private void updateViewFromData(int state) {
+
+    private void updateViewFromFindDesigner(SeekDesignerBean seekDesignerBean, int state) {
+
+        if (null != seekDesignerBean && seekDesignerBean.getCount() <= 0) {
+            mRlEmpty.setVisibility(View.VISIBLE);
+            mPullToRefreshLayout.setVisibility(View.GONE);
+            mTvEmptyMessage.setText("暂无结果");
+        } else {
+            mPullToRefreshLayout.setVisibility(View.VISIBLE);
+            mRlEmpty.setVisibility(View.GONE);
+        }
+
         switch (state) {
             case 0:
-                OFFSET = 0;
-                mDesignerListEntities.clear();
-                break;
-            case 1:
                 OFFSET = 10;
                 mDesignerListEntities.clear();
                 break;
-            case 2:
+            case 1:
                 OFFSET += 10;
                 break;
             default:
                 break;
         }
-        mDesignerListEntities.addAll(this.mSeekDesignerBean.getDesigner_list());
+        mDesignerListEntities.addAll(seekDesignerBean.getDesigner_list());
         mSeekDesignerAdapter.notifyDataSetChanged();
+        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
+
 
     /**
      * 第一次进入刷新页面
@@ -255,27 +294,27 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         // 第一次进入自动刷新
         if (isFirstIn) {
             //changeState
-            mPullToRefreshLayout.autoRefresh();
+//            mPullToRefreshLayout.autoRefresh();
+            onRefresh(mPullToRefreshLayout);
+            CustomProgress.show(this,"",false,null);
             isFirstIn = false;
         }
     }
 
-    /// 下拉刷新.
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        getDesignerListData(0, LIMIT, 1);
+        findDesignerList(mFindDesignerBean, 0, LIMIT, 0);
     }
 
-    /// 上拉加载.
+
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        getDesignerListData(OFFSET, LIMIT, 2);
+        findDesignerList(mFindDesignerBean, OFFSET, LIMIT, 1);
     }
 
-    /// 刷新.
-    public void updateNotify(DesignerFiltrateBean content) {
-        this.mDesignerFiltrateBean = content;
-        mPullToRefreshLayout.autoRefresh();
+    public void updateNotify(FindDesignerBean findDesignerBean) {
+        this.mFindDesignerBean = findDesignerBean;
+        findDesignerList(mFindDesignerBean, 0, LIMIT, 0);
     }
 
     /**
@@ -287,36 +326,32 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (null == data) {
-            return;
-        }
-        Bundle bundle = data.getExtras();
-        switch (resultCode) {
-            case DesignerFiltrateActivity.DF_RESULT_CODE:
-                DesignerFiltrateBean designerFiltrateBean = (DesignerFiltrateBean) bundle.getSerializable(Constant.CaseLibrarySearch.DESIGNER_FILTRATE);
-                updateNotify(designerFiltrateBean);
-                break;
+        if (resultCode == RESULT_OK && null != data) {
+            switch (requestCode) {
+                case REQUEST_FILTRATE_CODE:
+                case REQUEST_SEARCH_CODE:
+                    FindDesignerBean findDesignerBean =
+                            (FindDesignerBean) data.getSerializableExtra(Constant.CaseLibrarySearch.DESIGNER_FILTRATE);
+                    Log.d("SeekDesignerActivity", "findDesignerBean:" + findDesignerBean);
+                    updateNotify(findDesignerBean);
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
-    /// 静态常量,常量,静态上下文.
-    public static final int FILTRATE_REQUEST_CODE = 0x92;
-    public static final String BLANK = "";
-    /// 控件.
     private ListView mListView;
     private PullToRefreshLayout mPullToRefreshLayout;
 
-    /// 变量.
     private int LIMIT = 10;
     private int OFFSET = 0;
     private boolean isFirstIn = true;
     private String member_id;
     private Intent intent;
 
-
-    /// 集合，类.
-    private SeekDesignerBean mSeekDesignerBean;
     private SeekDesignerAdapter mSeekDesignerAdapter;
-    private DesignerFiltrateBean mDesignerFiltrateBean;
+    private FindDesignerBean mFindDesignerBean = new FindDesignerBean();
     private ArrayList<SeekDesignerBean.DesignerListEntity> mDesignerListEntities = new ArrayList<>();
 }

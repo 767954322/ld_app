@@ -45,8 +45,8 @@ public class Constant {
      * Flow pass parameter .
      */
     public static class ProjectMaterialKey {
-        public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
-        public static final String IM_TO_FLOW_NEEDS_ID = "imToFlowNeeds";
+//        public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
+//        public static final String IM_TO_FLOW_NEEDS_ID = "imToFlowNeeds";
         public static final String IM_TO_FLOW_NODE_ID = "imToFlowNode";
         public static final String IM_TO_FLOW_THREAD_ID = "imToFlowThreadId";
     }
@@ -59,7 +59,7 @@ public class Constant {
         public static final int STEP_IM = 1;
         public static final int STEP_FLOW = 2;
         public static final int STEP_MATERIAL = 3;
-        public static final String JUMP_FROM_STATE = "jump_from_state";
+//        public static final String JUMP_FROM_STATE = "jump_from_state";
     }
 
     /**
@@ -84,6 +84,10 @@ public class Constant {
         public static final String ZERO_ONE = "01";
         public static final String ZERO_TWO = "02";
         public static final String ZERO_THREE = "03";
+
+        public static final String TWENTY_ONE = "21";
+        public static final String TWENTY_TWO = "22";
+        public static final String TWENTY_THREE = "23";
     }
 
     /**
@@ -104,10 +108,15 @@ public class Constant {
      * 全流程分发到每个状态的key
      */
     public static class BundleKey {
+//        public static final String BUNDLE_ASSET_NEED_ID = "ASSET_NEEDS_ID";
+//        public static final String BUNDLE_ACTION_NODE_ID = "WORK_ACTION_NODE_ID";
         public static final String BUNDLE_ASSET_NEED_ID = "ASSET_NEEDS_ID";
         public static final String BUNDLE_SUB_NODE_ID = "WORK_FLOW_SUB_NODE_ID";
         public static final String BUNDLE_ACTION_NODE_ID = "WORK_ACTION_NODE_ID";
         public static final String BUNDLE_DESIGNER_ID = "DESIGNER_ID";
+        public static final String TEMPDATE_ID = "tempdate_id";
+
+//        public static final String BUNDLE_DESIGNER_ID = "DESIGNER_ID";
 //        public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
 //        public static final String IM_TO_FLOW_NEEDS_ID = "imToFlowNeeds";
 //        public static final String IM_TO_FLOW_NODE_ID = "imToFlowNode";
@@ -119,6 +128,16 @@ public class Constant {
     public static class ConsumerPersonCenterFragmentKey {
         public static final String NICK_NAME = "NICK_NAME";
         public static final String CONSUMER_PERSON = "CONSUMER_PERSON";
+
+
+    }
+    /**
+     * 六大产品fragment消息KEY
+     */
+    public static class SixProductsFragmentKey {
+        public static final String SELECTION = "selection";
+        public static final String ISELITE = "elite";
+        public static final int STATE = 1010;
 
     }
 
@@ -139,6 +158,8 @@ public class Constant {
         public static final String designer_id = "designer_id";
         public static final String hs_uid = "hs_uid";
         public static final String NEED_ID = "NEED_ID";
+        public static final String WK_TEMPLATE_ID = "wk_template_id";
+        public static final String DECORATIONbIDDERBEAN = "DecorationBiddersBean";
     }
 
     /**
@@ -152,6 +173,7 @@ public class Constant {
         public static String SEEK_DESIGNER_DETAIL = "SEEK_DESIGNER_DETAIL";
         public static String HS_UID = "HS_UID";
         public static String FLOW_STATE = "FLOW_STATE";
+        public static String DESIGNER_STYLE_ALL = "DESIGNERSTYLEALL";
     }
 
     /**
@@ -265,6 +287,7 @@ public class Constant {
         public static final String DIY_COUNT = "diy_count";
         public static final String CASE_COUNT = "case_count";
         public static final String THEME_PIC = "theme_pic";
+        public static final String DESIGN_PRICE_CODE = "design_price_code";
     }
 
     /**
@@ -449,6 +472,10 @@ public class Constant {
         public static final String DESIGNFIRSTFEE = "designFirstFee";
         public static final String DESIGNBALANCEFEE = "designBalanceFee";
     }
+
+    /***
+     *
+     * */
 
     private Constant() {
     }

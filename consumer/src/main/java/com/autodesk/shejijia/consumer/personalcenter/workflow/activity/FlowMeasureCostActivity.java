@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -45,23 +46,36 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
         tv_phone = (TextView) findViewById(R.id.tv_flow_measure_cost_phone);
         tv_house_cost = (TextView) findViewById(R.id.tv_flow_measure_house_cost);
         btn_pay_measure = (Button) findViewById(R.id.btn_pay_measure);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay_measure: /// 支付量房费 .
-                MPOrderBean order = getOrderEntityByStep(this.wk_cur_ActionNode_id);
+                Intent intent = getIntent();
+                String order_line_id = intent.getStringExtra("order_line_id");
+                String order_id = intent.getStringExtra("order_id");
+
+                MPOrderBean order = getOrderEntityByStep(this.nodeState);
                 if (order == null) {
                     return;
                 }
-
-                String order_line_no = order.getOrder_line_no();
-                String order_no = order.getOrder_no();
-                if (isLock) {
-                    getAliPayDetailsInfo(order_no, order_line_no);
-                    isLock = false;
+                if(order_line_id!= null && order_id != null){
+                    if (isLock) {
+                        getAliPayDetailsInfo(order_id, order_line_id);
+                        isLock = false;
+                    }
+                }else{
+                    String order_line_no = order.getOrder_line_no();
+                    String order_no = order.getOrder_no();
+                    if (isLock) {
+                        getAliPayDetailsInfo(order_no, order_line_no);
+                        isLock = false;
+                    }
                 }
+
+
                 break;
             default:
                 break;
@@ -107,8 +121,11 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
         if (TextUtils.isEmpty(measurement_fee)||"0.0".equals(measurement_fee)){
             measurement_fee = "0.00";
         }
-        tv_house_cost.setText(measurement_fee);
-
+        if(measureFee != null && measureFee.length() > 0){
+            tv_house_cost.setText(measureFee);
+        }else{
+            tv_house_cost.setText(measurement_fee);
+        }
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             setTitleForNavbar(getResources().getString(R.string.i_want_to_pay));
             if (Integer.valueOf(this.wk_cur_sub_node_id) >= 21) {                         /// 如果是支付量房费状态及后续状态，就隐藏支付按钮 .
@@ -175,6 +192,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
         public void onOK() {
             MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success));
             payOk = true;
+            setResult(RESULT_CODE,new Intent());
             finish();
         }
 
@@ -182,14 +200,20 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
             MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed));
             payOk = false;
             isLock = true;
+            Intent intent = new Intent();
+            intent.putExtra(Constant.SixProductsFragmentKey.SELECTION,Constant.SixProductsFragmentKey.ISELITE);
+            setResult(RESULT_CODE,intent);
         }
     };
+
+    private String order_line_id;
+    private String order_id;
 
     private TextView tv_name;
     private TextView tv_phone;
     private TextView tv_house_cost;
     private Button btn_pay_measure;
-
+    public static final int RESULT_CODE = 1011010;
     protected DesignerInfoDetails designerInfoList;
     private boolean payOk = false;
     private boolean isLock = true; // 是否锁定按键

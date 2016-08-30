@@ -185,6 +185,35 @@
         </LinearLayout>
 
         <include layout="@layout/view_parting_line"></include>
+        <LinearLayout
+            android:id="@+id/ll_select_design"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginLeft="@dimen/size_10"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="@string/send_single_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bg_66"/>
+
+            <TextView
+                android:layout_width="@dimen/size_1"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:layout_marginRight="@dimen/size_20"
+                android:src="@drawable/icon_unfold_normal"/>
+
+        </LinearLayout>
+
+        <include layout="@layout/view_parting_line"></include>
 
         <include layout="@layout/view_viewstub_consumer_decoration"></include>
 

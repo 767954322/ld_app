@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_4"
-            android:drawableLeft="@drawable/icon_bei_normal"
+            android:drawableLeft="@drawable/icon_taocan"
             android:drawablePadding="@dimen/size_10"
             android:ellipsize="end"
             android:maxWidth="@dimen/size_300"

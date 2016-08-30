@@ -214,8 +214,10 @@ public class PullToRefreshLayout extends RelativeLayout {
      * @param refreshResult PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
      */
     public void refreshFinish(int refreshResult) {
-        refreshingView.clearAnimation();
-        refreshingView.setVisibility(View.VISIBLE);
+        if (refreshingView != null) {
+            refreshingView.clearAnimation();
+            refreshingView.setVisibility(View.VISIBLE);
+        }
         switch (refreshResult) {
             case SUCCEED:
                 // 刷新成功
@@ -252,21 +254,26 @@ public class PullToRefreshLayout extends RelativeLayout {
      * @param refreshResult PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
      */
     public void loadmoreFinish(int refreshResult) {
-        loadingView.clearAnimation();
-        loadingView.setVisibility(View.GONE);
+        if (loadingView != null) {
+            loadingView.clearAnimation();
+            loadingView.setVisibility(View.GONE);
+        }
         switch (refreshResult) {
             case SUCCEED:
                 // 加载成功
-                loadStateImageView.setVisibility(View.VISIBLE);
-                loadStateTextView.setText(R.string.load_succeed);
-                loadStateImageView.setBackgroundResource(R.drawable.load_succeed);
+//                loadStateImageView.setVisibility(View.VISIBLE);
+//                loadStateTextView.setText(R.string.load_succeed);
+//                loadStateImageView.setBackgroundResource(R.drawable.load_succeed);
                 break;
             case FAIL:
             default:
                 // 加载失败
-                loadStateImageView.setVisibility(View.VISIBLE);
-                loadStateTextView.setText(R.string.load_fail);
-                loadStateImageView.setBackgroundResource(R.drawable.load_failed);
+                if (loadStateImageView != null) {
+                    loadStateImageView.setVisibility(View.VISIBLE);
+                    loadStateImageView.setBackgroundResource(R.drawable.load_failed);
+                }
+                if (loadStateTextView != null)
+                    loadStateTextView.setText(R.string.load_fail);
                 break;
         }
         if (pullUpY < 0) {
@@ -282,6 +289,7 @@ public class PullToRefreshLayout extends RelativeLayout {
             changeState(DONE);
             hide();
         }
+
     }
 
     ///改变状态.
@@ -494,7 +502,8 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         @Override
         protected void onPostExecute(String result) {
-            refresh_contain.setVisibility(View.VISIBLE);
+            if (refresh_contain != null)
+                refresh_contain.setVisibility(View.VISIBLE);
             changeState(REFRESHING);
             // 刷新操作
             if (mListener != null) {
@@ -516,6 +525,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                 requestLayout();
         }
     }
+
     /**
      * 自动刷新
      */

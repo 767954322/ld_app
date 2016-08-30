@@ -19,16 +19,16 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MPMemberUnreadCountManager
-{
-    public interface MPMemberUnreadCountInterface
-    {
+public class MPMemberUnreadCountManager {
+    public interface MPMemberUnreadCountInterface {
         TextView getUnreadBadgeLabel();
     }
+    public interface MPMemberUnreadCountInterface2 {
+        void getUnreadBadgeLabel(int num);
+    }
 
-
-    public void registerForMessageUpdates(Context context, MPMemberUnreadCountInterface listener)
-    {
+    private MPMemberUnreadCountInterface2 mListener2;
+    public void registerForMessageUpdates(Context context, MPMemberUnreadCountInterface listener) {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BroadCastInfo.USER_DID_LOGOUT);
         intentFilter.addAction(BroadCastInfo.USER_DID_LOGIN);
@@ -39,32 +39,93 @@ public class MPMemberUnreadCountManager
         if (listener != null)
             mListener = listener;
     }
+    public void registerForMessageUpdates(Context context,MPMemberUnreadCountInterface2 listener) {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BroadCastInfo.USER_DID_LOGOUT);
+        intentFilter.addAction(BroadCastInfo.USER_DID_LOGIN);
+        intentFilter.addAction(BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
 
+        context.registerReceiver(mMessageBroadcastReceiver, intentFilter);
+        if (listener != null)
+            mListener2 = listener;
 
-    public void unregisterForMessageUpdates(Context context)
-    {
-        context.unregisterReceiver(mMessageBroadcastReceiver);
-
-        mListener = null;
     }
 
 
-    public void refreshCount()
-    {
+    public void unregisterForMessageUpdates(Context context) {
+        context.unregisterReceiver(mMessageBroadcastReceiver);
+
+        mListener = null;
+        mListener2 = null;
+    }
+
+
+    public void refreshCount() {
         getMemberThreadUnreadCount();
     }
 
 
-    public MPMemberUnreadCountManager()
-    {
+    public MPMemberUnreadCountManager() {
 
     }
 
+    //未读消息数
+    private int mUnreadCountNum = 0;
 
-    private void getMemberThreadUnreadCount()
-    {
-        if (mMemberEntity == null)
-        {
+    public int getmUnreadCountNum() {
+        return mUnreadCountNum;
+    }
+
+    public void setmUnreadCountNum(int mUnreadCountNum) {
+        this.mUnreadCountNum = mUnreadCountNum;
+    }
+
+    private int getUnreadCount() {
+        if (mMemberEntity == null) {
+            // TODO: Correct this if we figure out a better way to inform
+            // clients of login available on 2nd launch
+            MemberEntity entity = AdskApplication.getInstance().getMemberEntity();
+
+            if (entity == null)
+                return 0;
+            else
+                mMemberEntity = entity;
+        }
+
+
+        MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(mMemberEntity.getAcs_member_id(),
+                true, new OkStringRequest.OKResponseCallback() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        MPNetworkUtils.logError(TAG, volleyError);
+                    }
+
+                    @Override
+                    public void onResponse(String s) {
+                        JSONObject jObj = null;
+                        int unread_message_count = 0;
+
+                        try {
+                            jObj = new JSONObject(s);
+                            unread_message_count = jObj.optInt("unread_message_count");
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Exception while parsing unread count from JSON");
+                        }
+//                        setmUnreadCountNum(unread_message_count);
+//                        mListener2.getUnreadBadgeLabel(unread_message_count);
+                        if (unread_message_count <= 0) {
+                            hideUnreadBadge();
+                        } else {
+                            updateUnreadBadge(unread_message_count);
+                        }
+                    }
+                });
+        return getmUnreadCountNum();
+
+    }
+
+    private void getMemberThreadUnreadCount() {
+        if (mMemberEntity == null) {
             // TODO: Correct this if we figure out a better way to inform
             // clients of login available on 2nd launch
             MemberEntity entity = AdskApplication.getInstance().getMemberEntity();
@@ -77,27 +138,21 @@ public class MPMemberUnreadCountManager
 
 
         MPChatHttpManager.getInstance().retrieveMemberUnreadMessageCount(mMemberEntity.getAcs_member_id(),
-                true, new OkStringRequest.OKResponseCallback()
-                {
+                true, new OkStringRequest.OKResponseCallback() {
                     @Override
-                    public void onErrorResponse(VolleyError volleyError)
-                    {
+                    public void onErrorResponse(VolleyError volleyError) {
                         MPNetworkUtils.logError(TAG, volleyError);
                     }
 
                     @Override
-                    public void onResponse(String s)
-                    {
+                    public void onResponse(String s) {
                         JSONObject jObj = null;
                         int unread_message_count = 0;
 
-                        try
-                        {
+                        try {
                             jObj = new JSONObject(s);
                             unread_message_count = jObj.optInt("unread_message_count");
-                        }
-                        catch (JSONException e)
-                        {
+                        } catch (JSONException e) {
                             Log.e(TAG, "Exception while parsing unread count from JSON");
                         }
 
@@ -110,23 +165,20 @@ public class MPMemberUnreadCountManager
     }
 
 
-    private void updateUnreadBadge(int unreadCount)
-    {
+    private void updateUnreadBadge(int unreadCount) {
         if (mListener == null)
             return;
 
         TextView unreadLabel = mListener.getUnreadBadgeLabel();
 
-        if (unreadLabel != null)
-        {
+        if (unreadLabel != null) {
             unreadLabel.setVisibility(View.VISIBLE);
             unreadLabel.setText(MPChatUtility.getFormattedBadgeString(unreadCount));
         }
     }
 
 
-    private void hideUnreadBadge()
-    {
+    private void hideUnreadBadge() {
         if (mListener == null)
             return;
 
@@ -137,33 +189,34 @@ public class MPMemberUnreadCountManager
     }
 
 
-    private class MessageBroadcastReceiver extends BroadcastReceiver
-    {
+    private class MessageBroadcastReceiver extends BroadcastReceiver {
         @Override
-        public void onReceive(Context context, Intent intent)
-        {
+        public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            if (action.equalsIgnoreCase(BroadCastInfo.RECEVIER_RECEIVERMESSAGE))
+            if (action.equalsIgnoreCase(BroadCastInfo.RECEVIER_RECEIVERMESSAGE)) {
+                getUnreadCount();
                 getMemberThreadUnreadCount();
-            else if (action.equalsIgnoreCase(BroadCastInfo.USER_DID_LOGIN))
-            {
+            } else if (action.equalsIgnoreCase(BroadCastInfo.USER_DID_LOGIN)) {
                 mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+                getUnreadCount();
                 getMemberThreadUnreadCount();
-            }
-            else if (action.equalsIgnoreCase(BroadCastInfo.USER_DID_LOGOUT))
-            {
+            } else if (action.equalsIgnoreCase(BroadCastInfo.USER_DID_LOGOUT)) {
+                setmUnreadCountNum(0);
                 hideUnreadBadge();
                 mMemberEntity = null;
             }
         }
     }
 
+
+
     private static final String TAG = "MemberUnreadCountMgr";
 
     private static MPMemberUnreadCountManager mInstance;
 
-    private MessageBroadcastReceiver mMessageBroadcastReceiver = new MessageBroadcastReceiver();;
+    public MessageBroadcastReceiver mMessageBroadcastReceiver = new MessageBroadcastReceiver();
+
     private MPMemberUnreadCountInterface mListener;
     private MemberEntity mMemberEntity;
 }

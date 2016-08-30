@@ -1,5 +1,8 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.entity;
 
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SelectionBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -51,9 +54,18 @@ public class DecorationNeedsListBean implements Serializable {
     private String needs_id;
     private String province_name;
     private String publish_time;
-    private String wk_template_id;
+    private String wk_template_id;//1,2,3,4,5,6
     private String contract;
     private List<DecorationBiddersBean> bidders;
+    private SelectionBean elite;
+
+    public SelectionBean getElite() {
+        return elite;
+    }
+
+    public void setElite(SelectionBean elite) {
+        this.elite = elite;
+    }
 
     public String getCity() {
         return city;

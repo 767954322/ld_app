@@ -34,6 +34,37 @@ public class DesignerInfoBean implements Serializable {
     private String company_id;
     private String company_name;
 
+    /**
+     * 筛选新增字段
+     */
+    private String design_price_code;
+    private String evalution_avg_scores;
+    private String evalution_count;
+
+    public String getDesign_price_code() {
+        return design_price_code;
+    }
+
+    public void setDesign_price_code(String design_price_code) {
+        this.design_price_code = design_price_code;
+    }
+
+    public String getEvalution_avg_scores() {
+        return evalution_avg_scores;
+    }
+
+    public void setEvalution_avg_scores(String evalution_avg_scores) {
+        this.evalution_avg_scores = evalution_avg_scores;
+    }
+
+    public String getEvalution_count() {
+        return evalution_count;
+    }
+
+    public void setEvalution_count(String evalution_count) {
+        this.evalution_count = evalution_count;
+    }
+
     public String getStudio() {
         return studio;
     }

@@ -77,8 +77,6 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mIsToolViewOpen = false;
-
-
     }
 
 

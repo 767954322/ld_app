@@ -169,6 +169,10 @@ public class SearchActivity extends NavigationBarActivity implements
     @Override
     public void OnItemHomeChatClick(final int position) {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if(mMemberEntity == null){
+            AdskApplication.getInstance().doLogin(this);
+            return;
+        }
         final String member_id = mMemberEntity.getAcs_member_id();
         if (mMemberEntity != null) {
             final String designer_id = mCasesEntities.get(position).getDesigner_id();
@@ -491,6 +495,8 @@ public class SearchActivity extends NavigationBarActivity implements
             filterDateList.clear();
             for (SearchHoverCaseBean sortModel : mSearchHoverCaseBeenList) {
                 String name = sortModel.getValue();
+                name = name.toLowerCase();
+                filterStr = filterStr.toLowerCase();
                 if (name.indexOf(filterStr.toString()) != -1 || mCharacterParser.getSelling(name).startsWith(filterStr.toString())) {
                     filterDateList.add(sortModel);
                 }

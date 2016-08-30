@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/main_library"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_library"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -10,15 +9,14 @@
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header"></include>
+        layout="@layout/view_navigation_header" />
 
 
     <ListView
         android:id="@+id/case_library_new"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/common_navbar"
-        ></ListView>
+        android:layout_below="@+id/common_navbar" />
 
     <include
         android:id="@+id/case_head"
@@ -27,12 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/common_navbar"
         android:background="@android:color/white"
-        android:visibility="gone"></include>
+        android:visibility="gone" />
 
     <include
         layout="@layout/case_library_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

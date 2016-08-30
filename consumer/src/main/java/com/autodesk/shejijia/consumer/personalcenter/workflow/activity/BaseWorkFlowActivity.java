@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
@@ -51,19 +52,15 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initExtraBundle();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
-//        state = intent.getIntExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE,-1);
-        state = (int) intent.getExtras().get(Constant.WorkFlowStateKey.JUMP_FROM_STATE);
-        /// 状态标签，全流程、IM、资料项目 .
-        if (state == Constant.WorkFlowStateKey.STEP_DECORATION || state == Constant.WorkFlowStateKey.STEP_FLOW) { /// 全流程 .
-            designer_id = bundle.getString(Constant.BundleKey.BUNDLE_DESIGNER_ID);
-            needs_id = bundle.getString(Constant.BundleKey.BUNDLE_ASSET_NEED_ID);
-        } else if (state == Constant.WorkFlowStateKey.STEP_IM || state == Constant.WorkFlowStateKey.STEP_MATERIAL) { /// IM、资料项目 .
-            designer_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID);
-            needs_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID);
-        }
+        designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+        needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
+        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
+        designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+        needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
+        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         mThreead_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);//thread_id
-        wk_cur_ActionNode_id = bundle.getInt(Constant.BundleKey.BUNDLE_ACTION_NODE_ID);                                         /// 获取wk_cur_ActionNode_id以此来判断状态 .
+
+        nodeState = bundle.getInt(Constant.BundleKey.TEMPDATE_ID);
     }
 
     @Override
@@ -88,10 +85,13 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             super.handleMessage(msg);
             mCurrentWorkFlowDetail = (WkFlowDetailsBean) msg.obj;
             requirement = mCurrentWorkFlowDetail.getRequirement();
+
             if (requirement == null) {
                 return;
             }
+
             mBidders = requirement.getBidders();
+
             if (null == mBidders) {
                 return;
             }
@@ -102,14 +102,16 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
                     mDeliveryBean = biddersEntity.getDelivery();
                 }
             }
+
             mBiddersEntity = requirement.getOrderBidder();
             community_name = requirement.getCommunity_name();
+            contacts_name = requirement.getContacts_name();
             if (mBiddersEntity == null) {
                 return;
             }
             wk_cur_sub_node_id = mBiddersEntity.getWk_cur_sub_node_id();
             if (!TextUtils.isEmpty(wk_cur_sub_node_id) && StringUtils.isNumeric(wk_cur_sub_node_id)) {
-                wk_template_id = requirement.getWk_template_id();
+                tempdate_id = Integer.parseInt(requirement.getWk_template_id());
                 onWorkFlowData();
             }
         }
@@ -127,6 +129,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             public void onResponse(final JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 mCurrentWorkFlowDetail = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
+
                 if (null != mCurrentWorkFlowDetail) {
                     Message msg = Message.obtain();
                     msg.obj = mCurrentWorkFlowDetail;
@@ -149,7 +152,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
 
         for (MPOrderBean order : mBiddersEntity.getOrders()) {
             order_type = order.getOrder_type();
-            if (Constant.NumKey.ZERO.equals(order_type) && step == MPStatusMachine.NODE__MEANSURE_PAY) {            /// 支付量房费 .
+            if ((Constant.NumKey.ZERO.equals(order_type) && step == MPStatusMachine.NODE__MEANSURE_PAY)) {            /// 支付量房费 .
                 return order;
             }
             if (Constant.NumKey.ONE.equals(order_type)) {
@@ -170,15 +173,16 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     }
 
     protected int state;
-    protected int wk_cur_ActionNode_id;
+    protected int nodeState;
+    protected int tempdate_id;
     protected String hs_uid;
     protected String designer_id;
     protected String mThreead_id;
-    protected String wk_template_id;
     protected String community_name;
+    protected String contacts_name;
     protected String wk_cur_sub_node_id;
     protected String needs_id;
-
+    protected  String measureFee;
     protected MemberEntity memberEntity;
     protected WkFlowDetailsBean mCurrentWorkFlowDetail;
     protected WkFlowDetailsBean.RequirementEntity requirement;

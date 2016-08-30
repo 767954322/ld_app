@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -8,15 +7,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderActivity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderBeiShuActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
+import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
+import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -29,6 +30,8 @@ import java.util.Map;
  * @brief 我的应标:应标成功 .
  */
 public class BidSuccessFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
+
+    private static final String IS_BEI_SHU = "1";
 
     @Override
     protected int getLayoutResId() {
@@ -66,6 +69,7 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
     }
 
     private void addFooterViewForMListView() {
+        rl_empty.setVisibility(View.GONE);
         mPullListView.addFooterView(mFooterView);
         WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
@@ -152,11 +156,18 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
                 }
                 holder.setText(R.id.tv_bin_go_budget, UIUtils.getString(R.string.my_bid_black) + biddingNeedsListEntity.getRenovation_budget());
 
+                final String is_beishu = biddingNeedsListEntity.getIs_beishu();
+
 
                 holder.getView(R.id.item_lv_bingo_fragment_order).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), DesignerOrderActivity.class));
+                        if (IS_BEI_SHU.equals(is_beishu)) {
+                            /// 北舒 .
+                            CommonUtils.launchActivity(getActivity(), DesignerOrderBeiShuActivity.class);
+                        } else {
+                            CommonUtils.launchActivity(getActivity(), DesignerOrderActivity.class);
+                        }
                     }
                 });
             }
@@ -179,7 +190,7 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
         mBiddingNeedsListEntities.addAll(getData(0));
         isHideMFooterView(mBiddingNeedsListEntities.size());
         mCommonAdapter.notifyDataSetChanged();
-        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+        mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
     }
 
     @Override

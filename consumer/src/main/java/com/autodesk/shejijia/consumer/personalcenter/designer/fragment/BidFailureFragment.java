@@ -61,6 +61,7 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
     }
 
     private void addFooterViewForMListView() {
+        rl_empty.setVisibility(View.GONE);
         mListView.addFooterView(mFooterView);
         WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();

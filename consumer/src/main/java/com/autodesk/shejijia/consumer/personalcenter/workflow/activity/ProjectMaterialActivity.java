@@ -24,30 +24,26 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
 
             case R.id.ll_project_material_measure_house:
                 Intent mIntent = new Intent(ProjectMaterialActivity.this, FlowMeasureFormActivity.class);
-                mIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
-                mIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
-                mIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_MATERIAL);
+                mIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                mIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(mIntent);
                 break;
             case R.id.ll_project_material_measure_house_delivery:
                 Intent dIntent = new Intent(ProjectMaterialActivity.this, FlowUploadDeliveryActivity.class);
-                dIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
-                dIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
-                dIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_MATERIAL);
+                dIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                dIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(dIntent);
                 break;
             case R.id.ll_project_material_contract:
                 Intent cIntent = new Intent(ProjectMaterialActivity.this, FlowEstablishContractActivity.class);
-                cIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
-                cIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
-                cIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_MATERIAL);
+                cIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                cIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(cIntent);
                 break;
             case R.id.ll_project_material_project:
                 Intent pIntent = new Intent(ProjectMaterialActivity.this, FlowUploadDeliveryActivity.class);
-                pIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
-                pIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
-                pIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_MATERIAL);
+                pIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                pIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(pIntent);
                 break;
         }

@@ -20,7 +20,11 @@
         android:layout_below="@id/iv_show_3dplan"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:maxEms="6"
+        android:singleLine="true"
         android:text="@string/three_plan_name"
+        android:textAlignment="center"
+
         android:textColor="@color/black"/>
 
     <ImageView

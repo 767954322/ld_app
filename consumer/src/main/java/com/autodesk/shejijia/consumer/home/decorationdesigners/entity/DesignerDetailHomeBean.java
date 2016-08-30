@@ -8,7 +8,15 @@ import java.util.List;
  * @version 1.0 .
  * @date 2016/4/22 0022 16:26 .
  * @file DesignerDetailHomeBean  .
+<<<<<<< HEAD
+<<<<<<< HEAD
  * @brief 设计师列表设计师信息实体类.
+=======
+ * @brief 查看设计师设计过的房子的bean.
+>>>>>>> feature/Aug/Hawkeye-Sprint
+=======
+ * @brief 设计师列表设计师信息实体类.
+>>>>>>> 7c424a6ee939c40815a4fc7b8af4b50de82591bf
  */
 public class DesignerDetailHomeBean implements Serializable {
     /**
@@ -51,8 +59,6 @@ public class DesignerDetailHomeBean implements Serializable {
     private String is_validated_by_mobile;
     private String is_email_binding;
     private String has_secreted;
-
-
     public List<CasesListBean> getCases_list() {
         return cases_list;
     }

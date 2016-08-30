@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListBean> {
 
+
     public BidHallAdapter(Context context, List<BidHallEntity.NeedsListBean> datas) {
         super(context, datas);
     }
@@ -52,6 +53,7 @@ public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListBean> {
         ((ViewHolder) holder).tvCustomBidPerson.setText(customBid.getContacts_name());
         ((ViewHolder) holder).tvCustomBidBidBudget.setText(customBid.getDecoration_budget());
     }
+
 
     public class ViewHolder extends BaseAdapter.Holder {
         public TextView tvCustomBidHouseAddress;

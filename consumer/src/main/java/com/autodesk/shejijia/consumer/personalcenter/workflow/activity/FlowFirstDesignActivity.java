@@ -117,10 +117,9 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 @Override
                 public void onClick(View v) {
                     MPOrderBean order = null;
-                    order = getOrderEntityByStep(FlowFirstDesignActivity.this.wk_cur_ActionNode_id);
+                    order = getOrderEntityByStep(FlowFirstDesignActivity.this.nodeState);
                     if (order == null)
                         return;
-
                     String order_line_no = order.getOrder_line_no();
                     String order_no = order.getOrder_no();
                     if (isLock) {

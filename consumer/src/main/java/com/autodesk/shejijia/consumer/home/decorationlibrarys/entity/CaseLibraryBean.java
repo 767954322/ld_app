@@ -542,7 +542,7 @@ public class CaseLibraryBean implements Serializable {
              * is_real_name : 2
              * measurement_price : 0.01
              * personal_honour : 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888555555555555555555555555555555555
-             * studio : null
+             * work_room_detail_six_shap : null
              * style_long_names : 日式风格,韩式风格,混搭风格,欧式风格,新古典风格
              * style_names : 古典,欧式,混搭,韩式,日式
              * styles : newClassical,european,mashup,kora,japanese

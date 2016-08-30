@@ -199,7 +199,7 @@ public class OrderCommonEntity implements Serializable {
             this.is_public = is_public;
         }
 
-        public Object getBeishu_thread_id() {
+        public String getBeishu_thread_id() {
             return beishu_thread_id;
         }
 
@@ -279,7 +279,7 @@ public class OrderCommonEntity implements Serializable {
             this.decoration_budget = decoration_budget;
         }
 
-        public Object getAvatar() {
+        public String getAvatar() {
             return avatar;
         }
 

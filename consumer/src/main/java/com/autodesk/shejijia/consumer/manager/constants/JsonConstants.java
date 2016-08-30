@@ -152,6 +152,8 @@ public class JsonConstants {
     public static final String JSON_MEASURE_FORM_TOILET = "toilet";
     public static final String JSON_MEASURE_FORM_USER_ID = "user_id";
     public static final String JSON_MEASURE_FORM_THREAD_ID = "thread_id";
+    public static final String ASSET_ID = "asset_id";
+    public static final String MEASUREMENT="measurement_status";
 
     /// 我的资产.
     public static final String WITHDRAWARE_BALANCE_ACCOUNT_USER_NAME = "account_user_name";
@@ -182,4 +184,19 @@ public class JsonConstants {
     public static final String JSON_BEI_SHU_MEAL_DISTRICT_NAME= "district_name";
     public static final String JSON_BEI_SHU_MEAL_PROVINCE= "province";
     public static final String JSON_BEI_SHU_MEAL_PROVINCE_NAME= "province_name";
+
+    ///套餐发送预约表单
+    public static final String JSON_PACKAGES_NAME = "customer_name";
+    public static final String JSON_PACKAGES_PHONE_NUM = "mobile_phone";
+    public static final String JSON_PACKAGES_PROVINCE = "province";
+    public static final String JSON_PACKAGES_PROVINCE_NAME = "province_name";
+    public static final String JSON_PACKAGES_CITY = "city";
+    public static final String JSON_PACKAGES_CITY_NAME = "city_name";
+    public static final String JSON_PACKAGES_DISTRICT = "district";
+    public static final String JSON_PACKAGES_DISTRICT_NAME = "district_name";
+    public static final String JSON_PACKAGES_ADDRESS = "address";
+    public static final String JSON_PACKAGES_PROJECT_AREA = "project_area";
+    public static final String JSON_PACKAGES_EXPENSE_BUDGET = "expense_budget";
+    public static final String JSON_PACKAGES_PKG = "pkg";
+    public static final String JSON_PACKAGES_PKG_NAME = "pkg_name";
 }

@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,15 +14,19 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerDesignCostBean;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -58,6 +63,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
@@ -70,6 +76,7 @@ import de.greenrobot.event.EventBus;
  * @brief 设计师个人中心修改个人信息界面 .
  */
 public class DesignerEssentialInfoActivity extends NavigationBarActivity implements View.OnClickListener {
+    private Bitmap headPicBitmap;
 
     @Override
     protected int getLayoutResId() {
@@ -132,7 +139,6 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     }
 
     private void initInfo() {
-        setProjectCost();
         if (mConsumerEssentialInfoEntity == null) {
             return;
         }
@@ -146,7 +152,9 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         mCurrentDistrict = mConsumerEssentialInfoEntity.getDistrict_name();
         mCurrentDistrictCode = mConsumerEssentialInfoEntity.getDistrict();
         if (mConsumerEssentialInfoEntity.getAvatar().isEmpty()) {
-            piv_essential_photo.setImageDrawable(getResources().getDrawable(R.drawable.icon_default_avator));
+//            piv_essential_photo.setImageDrawable(getResources().getDrawable(R.drawable.icon_default_avator));
+            headPicBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_default_avator);
+            piv_essential_photo.setImageBitmap(headPicBitmap);
         } else {
             ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), piv_essential_photo);
         }
@@ -176,7 +184,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             tvLocation.setText(province_name + city_name + district_name);
         }
 
-        if (mConsumerEssentialInfoEntity.getMobile_number() == null)
+        if (mConsumerEssentialInfoEntity.getMobile_number() == null || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 0 || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 2)
 
         {
             tvTel.setText(getResources().getString(R.string.no_mobile));
@@ -238,6 +246,8 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         }
 
         getGender();
+        //获取设计师个人设计费用区间
+        getDesignerDesignCostRange();
 
     }
 
@@ -318,6 +328,20 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 strProjectCost = projectCostItems.get(options1);
+
+//                String designPriceCode;
+//                for (int i = 0; i <relate_information_list.size(); i++){
+//                    String costStringName = relate_information_list.get(i).getName();
+////                    String costStringUnit = relate_information_list.get(i).getDescription();
+////                    String costString = costStringName + costStringUnit;
+//                    if (costStringName.equals(strProjectCost)){
+//
+//                        designPriceCode = relate_information_list.get(i).getCode();
+//                    }
+//
+//                }
+
+
                 String temp[];
                 temp = strProjectCost.split("-");
                 JSONObject jsonObj = new JSONObject();
@@ -343,6 +367,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                     jsonObj.put(Constant.DesignerBasicInfoKey.DIY_COUNT, mDesignerInfoDetails.getDesigner().getDiy_count());
                     jsonObj.put(Constant.DesignerBasicInfoKey.CASE_COUNT, mDesignerInfoDetails.getDesigner().getCase_count());
                     jsonObj.put(Constant.DesignerBasicInfoKey.THEME_PIC, mDesignerInfoDetails.getDesigner().getTheme_pic());
+                    jsonObj.put(Constant.DesignerBasicInfoKey.DESIGN_PRICE_CODE,options1);//上传选择的设计费用价格code
                     CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.design_fees_on_cross), false, null);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -599,25 +624,31 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
                     Object[] object = mPictureProcessingUtil.judgePicture(imageFilePath);
                     File tempFile = new File(imageFilePath);
-                    Bitmap _bitmap = (Bitmap) object[1];
-
+//                    Bitmap _bitmap = (Bitmap) object[1];
+                    headPicBitmap = (Bitmap) object[1];
                     File newFile = mImageProcessingUtil.compressFileSize(tempFile);
                     putFile2Server(newFile);
-                    piv_essential_photo.setImageBitmap(_bitmap);
+//                    piv_essential_photo.setImageBitmap(_bitmap);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
+//                if (CustomProgress.dialog != null) {
+//                    CustomProgress.cancelDialog();
+//                    CustomProgress.dialog = null;
+//                } else {
                 CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+//                }
                 Bitmap bitmap = cameraCamera(data);
-                Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
+//                Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
+                headPicBitmap = mPictureProcessingUtil.compressionBigBitmap(bitmap, true);
                 File file = new File(strCameraFilePath);
                 try {
                     putFile2Server(file);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                piv_essential_photo.setImageBitmap(bit);
+//                piv_essential_photo.setImageBitmap(bit);
             }
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -628,7 +659,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
      * @return
      * @biref 解决小米手机上获取图片路径为null的情况
      */
-    public Uri getUri(android.content.Intent intent) {
+    public Uri getUri(Intent intent) {
         Uri uri = intent.getData();
         String type = intent.getType();
         if (uri.getScheme().equals("file") && (type.contains("image/"))) {
@@ -744,6 +775,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         handler.post(new Runnable() {
             public void run() {
                 MyToast.show(activity, string);
+                piv_essential_photo.setImageBitmap(headPicBitmap);
             }
         });
     }
@@ -785,6 +817,37 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         return bitmap;
     }
 
+
+    //获取量房费用设计区间，
+    public void getDesignerDesignCostRange(){
+
+        MPServerHttpManager.getInstance().getDesignerDesignCost(new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                String designerDesignCostData = GsonUtil.jsonToString(jsonObject);
+                DesignerDesignCostBean mDecorationListBean =GsonUtil.jsonToBean(designerDesignCostData, DesignerDesignCostBean.class);
+                relate_information_list = mDecorationListBean.getRelate_information_list();
+                //projectCosts
+                projectCosts = new String[relate_information_list.size()];
+                for (int i = 0; i <relate_information_list.size(); i++){
+                    String costStringName = relate_information_list.get(i).getName();
+//                    String costStringUnit = relate_information_list.get(i).getDescription();
+//                    String costString = costStringName + costStringUnit;
+                    projectCosts[i] = costStringName;
+
+                }
+                setProjectCost();
+            }
+        });
+
+
+    }
     /**
      * @param strDesignerId
      * @param hs_uid
@@ -842,6 +905,12 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         EventBus.getDefault().unregister(this); // 反注册EventBus
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CustomProgress.cancelDialog();
+    }
+
     private static final int SYS_INTENT_REQUEST = 0XFF01;
     private static final int CAMERA_INTENT_REQUEST = 0XFF02;
 
@@ -872,13 +941,16 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     private String strCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String pTag;
     private String[] genderString = {"保密", "女", "男"};
-    private String[] projectCosts = {"30-60", "61-120", "121-200", "201-600", "601-1000"};
+    //private String[] projectCosts = {"30-60", "61-120", "121-200", "201-600", "601-1000"};
+    private String[] projectCosts;
     private ArrayList<String> projectCostItems = new ArrayList<>();
     private ArrayList<String> genderList = new ArrayList<>();
 
     private DesignerInfoDetails mDesignerInfoDetails;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
+    private List<DesignerDesignCostBean.RelateInformationListBean> relate_information_list;
 
     private PictureProcessingUtil mPictureProcessingUtil;
     private ImageProcessingUtil mImageProcessingUtil;
 }
+

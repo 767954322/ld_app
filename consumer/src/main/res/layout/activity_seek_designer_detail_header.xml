@@ -175,70 +175,69 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
         android:background="@color/bg_ef" />
+    <LinearLayout
+        android:id="@+id/ll_case_choose_contain"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_47"
+            android:orientation="horizontal"
+            >
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/ll_case_choose_contain"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/size_50"-->
-        <!--android:orientation="vertical"-->
-        <!--&gt;-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/size_47"-->
-            <!--android:orientation="horizontal"-->
-            <!--&gt;-->
+            <TextView
+                android:id="@+id/case_2d_btn"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/font_16"
+                android:layout_weight="1"
+                android:textColor="@color/bg_00"
+                android:text="2D案例"
+                />
+            <TextView
+                android:id="@+id/case_3d_btn"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/font_16"
+                android:layout_weight="1"
+                android:textColor="@color/bg_00"
+                android:text="3D案例"
+                />
+            <TextView
+                android:id="@+id/consumer_appraise"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/font_16"
+                android:layout_weight="1"
+                android:textColor="@color/bg_00"
+                android:text="评价"
 
-            <!--<TextView-->
-                <!--android:id="@+id/case_2d_btn"-->
-                <!--android:layout_width="@dimen/size_0"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:textSize="@dimen/font_16"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/bg_00"-->
-                <!--android:text="2D案例"-->
-                <!--/>-->
-            <!--<TextView-->
-                <!--android:id="@+id/case_3d_btn"-->
-                <!--android:layout_width="@dimen/size_0"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:textSize="@dimen/font_16"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/bg_00"-->
-                <!--android:text="3D案例"-->
-                <!--/>-->
-            <!--<TextView-->
-                <!--android:id="@+id/consumer_appraise"-->
-                <!--android:layout_width="@dimen/size_0"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:textSize="@dimen/font_16"-->
-                <!--android:layout_weight="1"-->
-                <!--android:textColor="@color/bg_00"-->
-                <!--android:text="评价"-->
+                />
 
-                <!--/>-->
+        </LinearLayout>
 
-        <!--</LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/contain_point"
+            android:layout_width="match_parent"
+            android:layout_height="13dp"
+            android:orientation="vertical">
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/contain_point"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="13dp"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer-->
-                <!--android:id="@+id/choose_point"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent" />-->
+            <com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer
+                android:id="@+id/choose_point"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
 
-        <!--</LinearLayout>-->
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/size_1"-->
-            <!--android:background="@color/bg_ef" />-->
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ef" />
 
-    <!--</LinearLayout>-->
+    </LinearLayout>
 </LinearLayout>

@@ -5,11 +5,6 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.autodesk.shejijia.consumer.base.bean.AreaBean;
-import com.autodesk.shejijia.consumer.base.bean.LivingRoomBean;
-import com.autodesk.shejijia.consumer.base.bean.RoomBean;
-import com.autodesk.shejijia.consumer.base.bean.SpaceBean;
-import com.autodesk.shejijia.consumer.base.bean.StyleBean;
-import com.autodesk.shejijia.consumer.base.bean.ToiletBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.google.gson.Gson;
 
@@ -86,19 +81,8 @@ public class AppJsonFileReader {
      */
     public static Map<String, String> getRoomHall(Activity activity) {
         String fileName = Constant.JsonLocationKey.LIVING_ROOM_JSON;
-        String livingRoomJSON = loadJSONFromAsset(activity, fileName);
-        RoomBean livingRoom = new Gson().fromJson(livingRoomJSON, RoomBean.class);
-        Map<String, String> livingRoomMap = new HashMap<>();
-        livingRoomMap.put("one", livingRoom.getOne());
-        livingRoomMap.put("two", livingRoom.getTwo());
-        livingRoomMap.put("three", livingRoom.getThree());
-        livingRoomMap.put("four", livingRoom.getFour());
-        livingRoomMap.put("five", livingRoom.getFive());
-        livingRoomMap.put("loft", livingRoom.getLoft());
-        livingRoomMap.put("multiple", livingRoom.getMultiple());
-        livingRoomMap.put("villa", livingRoom.getVilla());
-        livingRoomMap.put("other", livingRoom.getOther());
-        return livingRoomMap;
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
     }
 
     /**
@@ -110,16 +94,8 @@ public class AppJsonFileReader {
      */
     public static Map<String, String> getLivingRoom(Activity activity) {
         String fileName = Constant.JsonLocationKey.ROOM_JSON;
-        String roomHallJSON = loadJSONFromAsset(activity, fileName);
-        LivingRoomBean room = new Gson().fromJson(roomHallJSON, LivingRoomBean.class);
-        Map<String, String> roomMap = new HashMap<>();
-        roomMap.put("one", room.getOne());
-        roomMap.put("two", room.getTwo());
-        roomMap.put("three", room.getThree());
-        roomMap.put("four", room.getFour());
-        roomMap.put("five", room.getFive());
-        return roomMap;
-
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
     }
 
     /**
@@ -131,16 +107,8 @@ public class AppJsonFileReader {
      */
     public static Map<String, String> getToilet(Activity activity) {
         String fileName = Constant.JsonLocationKey.TOILET_JSON;
-        String toiletJSON = loadJSONFromAsset(activity, fileName);
-        ToiletBean toilet = new Gson().fromJson(toiletJSON, ToiletBean.class);
-        Map<String, String> toiletMap = new HashMap<>();
-        toiletMap.put("one", toilet.getOne());
-        toiletMap.put("two", toilet.getTwo());
-        toiletMap.put("three", toilet.getThree());
-        toiletMap.put("four", toilet.getFour());
-        toiletMap.put("five", toilet.getFive());
-        return toiletMap;
-
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
     }
 
     /**
@@ -159,23 +127,8 @@ public class AppJsonFileReader {
      */
     public static Map<String, String> getStyle(Activity activity) {
         String fileName = Constant.JsonLocationKey.STYLE_JSON;
-        String styleJSON = loadJSONFromAsset(activity, fileName);
-        StyleBean styleBean = new Gson().fromJson(styleJSON, StyleBean.class);
-        Map<String, String> styleMap = new HashMap<>();
-        styleMap.put("Japan", styleBean.getJapan());
-        styleMap.put("korea", styleBean.getKorea());
-        styleMap.put("Mashup", styleBean.getMashup());
-        styleMap.put("european", styleBean.getEuropean());
-        styleMap.put("chinese", styleBean.getChinese());
-        styleMap.put("neoclassical", styleBean.getNeoclassical());
-        styleMap.put("ASAN", styleBean.getASAN());
-        styleMap.put("US", styleBean.getUS());
-        styleMap.put("country", styleBean.getCountry());
-        styleMap.put("modern", styleBean.getModern());
-        styleMap.put("mediterranean", styleBean.getMediterranean());
-        styleMap.put("other", styleBean.getOther());
-
-        return styleMap;
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
     }
 
     /**
@@ -237,23 +190,8 @@ public class AppJsonFileReader {
      */
     public static Map<String, String> getSpace(Activity activity) {
         String fileName = Constant.JsonLocationKey.SPACE_JSON;
-        String spaceJSON = loadJSONFromAsset(activity, fileName);
-        SpaceBean spaceBean = new Gson().fromJson(spaceJSON, SpaceBean.class);
-        Map<String, String> spaceMap = new HashMap<>();
-        spaceMap.put("house", spaceBean.getHouse());
-        spaceMap.put("catering", spaceBean.getCatering());
-        spaceMap.put("office", spaceBean.getOffice());
-        spaceMap.put("hotel", spaceBean.getHotel());
-        spaceMap.put("business", spaceBean.getBusiness());
-        spaceMap.put("entertainment", spaceBean.getEntertainment());
-        spaceMap.put("leisure", spaceBean.getLeisure());
-        spaceMap.put("healthcare", spaceBean.getHealthcare());
-        spaceMap.put("sale", spaceBean.getSale());
-        spaceMap.put("finace", spaceBean.getFinace());
-        spaceMap.put("sport", spaceBean.getSport());
-        spaceMap.put("education", spaceBean.getEducation());
-        spaceMap.put("other", spaceBean.getOther());
-        return spaceMap;
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
     }
 
 

@@ -17,12 +17,38 @@ public class RealNameBean implements Serializable {
     private String birthday;
     private String auditor;
     private String certificate_type;
-    private String photo_front_end;
-    private String photo_back_end;
-    private String photo_in_hand;
     private String audit_status;
     private String audit_date;
     private String auditor_opinion;
+
+    private PhotoCardBean photo_front_end;
+    private PhotoCardBean photo_back_end;
+    private PhotoCardBean photo_in_hand;
+
+
+    public PhotoCardBean getPhoto_front_end() {
+        return photo_front_end;
+    }
+
+    public PhotoCardBean getPhoto_back_end() {
+        return photo_back_end;
+    }
+
+    public PhotoCardBean getPhoto_in_hand() {
+        return photo_in_hand;
+    }
+
+    public void setPhoto_front_end(PhotoCardBean photo_front_end) {
+        this.photo_front_end = photo_front_end;
+    }
+
+    public void setPhoto_back_end(PhotoCardBean photo_back_end) {
+        this.photo_back_end = photo_back_end;
+    }
+
+    public void setPhoto_in_hand(PhotoCardBean photo_in_hand) {
+        this.photo_in_hand = photo_in_hand;
+    }
 
     public String getCertificate_no() {
         return certificate_no;
@@ -70,30 +96,6 @@ public class RealNameBean implements Serializable {
 
     public void setCertificate_type(String certificate_type) {
         this.certificate_type = certificate_type;
-    }
-
-    public String getPhoto_front_end() {
-        return photo_front_end;
-    }
-
-    public void setPhoto_front_end(String photo_front_end) {
-        this.photo_front_end = photo_front_end;
-    }
-
-    public String getPhoto_back_end() {
-        return photo_back_end;
-    }
-
-    public void setPhoto_back_end(String photo_back_end) {
-        this.photo_back_end = photo_back_end;
-    }
-
-    public String getPhoto_in_hand() {
-        return photo_in_hand;
-    }
-
-    public void setPhoto_in_hand(String photo_in_hand) {
-        this.photo_in_hand = photo_in_hand;
     }
 
     public String getAudit_status() {

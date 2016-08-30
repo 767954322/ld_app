@@ -7,8 +7,8 @@
     <RelativeLayout
         android:alpha="100"
         android:background="@drawable/gradient_reflect"
-        android:layout_width="@dimen/size_130"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/size_100"
+        android:layout_height="@dimen/size_100"
         android:layout_centerInParent="true"
         android:gravity="center">
 

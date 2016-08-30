@@ -25,13 +25,12 @@ public final class UrlConstants {
     public static final String RUNNING_DEV = "RUNNING_DEV";
     /// DOCKER_DESIGN环境
     public static final String RUNNING_DOCKER_DESIGN = "RUNNING_DOCKER_DESIGN";
-//    /// DOCKER_MEMBER
+    //    /// DOCKER_MEMBER
 //    public static final String RUNNING_DOCKER_MENBER = "RUNNING_DOCKER_MENBER";
 //    /// DOCKER_TRANSACTION
 //    public static final String RUNNING_DOCKER_TRANSACTION = "RUNNING_DOCKER_TRANSACTION";
     //
     public static final String RUNNING_DOKER = "RUNNING_DOKER";
-
 
     /**
      * 如需更改环境，需到ApiManager中修改RUNNING_DEVLEOPMENT的值
@@ -77,19 +76,36 @@ public final class UrlConstants {
     public static final String UAT_SECURTY = "http://cas.juranzx.com.cn/myspace/member/account_security.htm";
 
     /// 开发环境地址 .
-    public static final String DEVELOPMENT_MP_MAIN = "http://124.207.32.252:6091";
+    public static final String DEVELOPMENT_MP_MAIN = "http://192.168.120.219:8080";
 
     /// QA环境地址 .
     public static final String QA_MP_MAIN = "http://192.168.6.25:8080";
 
     //新环境
-    public static final String DOCKER_HAWKEYE_DESIGN = "http://192.168.88.155:8080";
+    // yxh
+//    public static final String DOCKER_HAWKEYE_DESIGN = "http://192.168.88.155:8080";
+    // lcb   http://192.168.120.219:8080
+    public static final String DOCKER_HAWKEYE_DESIGN ="http://192.168.150.105:8080";//"http://192.168.120.102:8280";////"http://192.168.120.219:8080";
 
     //新环境
-    public static final String DOCKER_HAWKEYE_MEMBER = "http://192.168.88.153:8080";
+    //yxh
+//    public static final String DOCKER_HAWKEYE_MEMBER = "http://192.168.88.153:8080";
+    // lcb
+    public static final String DOCKER_HAWKEYE_MEMBER = "http://alpha-www.gdfcx.net";//http://192.168.150.104:8080";
+
+
 
     //新环境
-    public static final String DOCKER_HAWKEYE_TRANSCATION = "http://192.168.88.152:8080";
+    // yxh
+//    public static final String DOCKER_HAWKEYE_TRANSCATION = "http://192.168.88.152:8080";
+    // lcb
+    public static final String DOCKER_HAWKEYE_TRANSCATION = "http://alpha-www.gdfcx.net";//"http://192.168.150.101:8080";
+
+    /**
+     *transaction-server  192.168.150.101
+     trade-server           192.168.150.102
+     design-app              192.168.150.106
+     */
 
 
     /// UAT = UAT331环境地址 .
@@ -137,9 +153,20 @@ public final class UrlConstants {
     public static final String URL_GET_CASE_LIST_SEARCH = MAIN_DESIGN + "/cases/search?";
 
     /**
+     * 3D案例库
+     */
+    public static final String URL_GET_CASE_LIST_D3= MAIN_DESIGN + "/d3/cases/";
+
+    /**
      * 发布装修需求
      */
     public static final String URL_SEND_DESIGN_REQUIREMENTS = MAIN_DESIGN + "/needs";
+
+    /**
+     * 发布精选装修需求
+     */
+    public static final String URL_SEND_DESIGN_SELECTION_REQUIREMENTS = MAIN_DESIGN + "/selection/demands";
+
 
     /**
      * 应标大厅.
@@ -158,9 +185,14 @@ public final class UrlConstants {
      * 案例库详情.
      */
     public static final String URL_GET_CASE_DETAILS = MAIN_DESIGN + "/cases/";
+//    /**
+//     * 3D案例库详情.
+//     * http://192.168.88.175:8080/design-app/v1/api/d3/case/{asset_id}
+//     */
+//    public static final String URL_GET_3D_CASE_DETAILS = MAIN_DESIGN + "/cases/";
     /**
      * 点赞接口
-     * http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/{asset_id}    
+     * http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/{asset_id}
      */
     public static final String URL_GET_CASE_DETAILS_LIKE = MAIN_DESIGN + "/designers/d2/cases/like/";
 
@@ -180,6 +212,12 @@ public final class UrlConstants {
     public static final String URL_FIND_DESIGNER = MAIN_MEMBER + "/designers";
 
     /**
+     * 终止合作.
+     */
+
+    public static final String URL_STOP_COLLABORATION = MAIN_DESIGN + "/selection/termination/demands";
+
+    /**
      * 获取设计师详情.
      */
     public static final String URL_GET_DESIGNER_INFO = MAIN_MEMBER + "/designers/";
@@ -195,16 +233,29 @@ public final class UrlConstants {
     /**
      * 修改设计师信息.
      */
-    public static final String URL_PUT_AMEND_DESIGNER_INFO = MAIN_MEMBER + "/members/"; //
+    public static final String URL_PUT_AMEND_DESIGNER_INFO = MAIN_MEMBER + "/members/";
     /**
      * 修改设计师两房费用.
      */
     public static final String URL_PUT_AMEND_DESIGNER_COST = MAIN_MEMBER + "/designers/";
 
+//    String url = "http://192.168.120.163:8080/design-app/v1/api/selection/pictures";
+    /**
+     * 我要装修中的几张图片.
+     */
+
+    public static final String URL_PUT_SELECTION_DESIGNER_PICTURES = MAIN_DESIGN + "/selection/pictures";
+
     /**
      * 设计师详情.
      */
     public static final String URL_GET_SEEK_DESIGNER_DETAIL = MAIN_DESIGN + "/designers/";
+
+    /**
+     * 设计师个人中心3d详情
+     * http://192.168.88.175:8080/design-app/v1/api /hs/prints/anonymity/designers/{designer_id}/d3/d3dimensionals?limit=20&offset=0&sort_by=date &sort_order=asc
+     */
+    public static final String URL_GET_SEEK_DESIGNER_ANONYMITY= MAIN_DESIGN + "/hs/prints/anonymity/designers/";
 
     /**
      * 设计师详情-设计师信息.
@@ -245,6 +296,10 @@ public final class UrlConstants {
      * 修改需求,终止需求.
      */
     public static final String URL_POST_MODIFY_MEAL = MAIN_DESIGN + "/needs/";
+    /**
+     * 精选修改需求
+     */
+    public static final String URL_POST_ELITE_MODIFY_MEAL = MAIN_DESIGN +"/selection/demands/";
 
     /**
      * 订单详情.
@@ -327,6 +382,12 @@ public final class UrlConstants {
 
     public static final String URL_WkFlowState_pointe_Information = MAIN_DESIGN + "/fullflow/message";
 
+
+    /**
+     * 获取全流程节点信息(带精选)
+     */
+    public static final String URL_ALL_WkFlowState_pointe_Information = MAIN_DESIGN + "/configration/workflow/get/all?templdate_ids=1,2,3,4,5,6";
+
     /**
      * 交付物延期时间
      */
@@ -337,4 +398,19 @@ public final class UrlConstants {
      * "http://dev-www.gdfcx.net/member-app/v1/api"
      */
     public static final String URL_DELETE_ATTENTION = MAIN_MEMBER + "/members/";
+
+    /**
+     * 获得设计师的设计费用区间
+     * */
+    public static final String URL_DESIGNER_DESIGN_COST_RANGE = "http://192.168.120.123:8081/member-app/v1/api/designers/costs";
+    /**
+     *获得工作室列表
+     * */
+    public static final String URL_WORK_ROOM_LIST = "192.168.120.217:8080/member-app/v1/api/designers/search/studio?limit=20&offset=0&design_type=工作室";
+
+    /**
+     *
+     *发布套餐预定
+     */
+    public static final String SEND_PACKAGES_FORM = "http://192.168.88.175:8080/design-app/v1/api/appointMeal/";
 }

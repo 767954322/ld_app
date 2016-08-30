@@ -188,7 +188,6 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
             default:
                 break;
         }
-
         /// 处理上拉加载更多时候，重复加载问题 .
         int count = attentionEntity.getCount();
         if (count == attentionList.size()) {

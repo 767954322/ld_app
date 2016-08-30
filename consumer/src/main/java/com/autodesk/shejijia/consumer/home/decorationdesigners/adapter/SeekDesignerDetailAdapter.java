@@ -3,12 +3,14 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -24,43 +26,51 @@ import java.util.Map;
  * @file SeekDesignerDetailAdapter  .
  * @brief 为SeekDesignerDetailActivity适配数据 .
  */
-public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBean.CasesEntity> {
-
-    /// 监听接口.
-    public interface OnItemCaseLibraryClickListener {
-        void OnItemCaseLibraryClick(int position);
-    }
-
-    public void setOnItemCaseLibraryClickListener(OnItemCaseLibraryClickListener mOnItemCaseLibraryClickListener) {
-        this.mOnItemCaseLibraryClickListener = mOnItemCaseLibraryClickListener;
-    }
+public class SeekDesignerDetailAdapter extends BaseAdapter {
 
     public SeekDesignerDetailAdapter(Context context, List<SeekDesignerDetailBean.CasesEntity> datas, Activity activity) {
-        super(context, datas);
+        this.mDatas = datas;
+        this.context = context;
         mRoom = AppJsonFileReader.getRoomHall(activity);
         mStyle = AppJsonFileReader.getStyle(activity);
         mArea = AppJsonFileReader.getArea(activity);
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.item_lv_seek_designer_detail;
+    public int getCount() {
+        return mDatas.size();
     }
 
     @Override
-    public Holder initHolder(View container) {
-        ViewHolder viewHolder = new ViewHolder();
-        viewHolder.mSeekCase = (ImageView) container.findViewById(R.id.img_seek_designer_detail_case);
-//        viewHolder.mSeekAddress = (TextView) container.findViewById(R.id.img_seek_designer_detail_address);
-        viewHolder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
-        viewHolder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
-        viewHolder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
-        viewHolder.tv_thumb_up = (TextView) container.findViewById(R.id.tv_thumb_up);
-        return viewHolder;
+    public Object getItem(int position) {
+        return mDatas.get(position);
     }
 
     @Override
-    public void initItem(View view, Holder holder, int position) {
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View container, ViewGroup parent) {
+
+        ViewHolder viewHolder = null;
+        if (container == null){
+             viewHolder = new ViewHolder();
+            container = LayoutInflater.from(context).inflate(R.layout.item_lv_seek_designer_detail,null);
+            viewHolder.mSeekCase = (ImageView) container.findViewById(R.id.img_seek_designer_detail_case);
+//            viewHolder.mSeekAddress = (TextView) container.findViewById(R.id.img_seek_designer_detail_address);
+            viewHolder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
+            viewHolder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
+            viewHolder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
+
+            container.setTag(viewHolder);
+        }else {
+
+            viewHolder = (ViewHolder) container.getTag();
+
+        }
+
         if (null != mDatas) {
             if (null != mDatas && mDatas.size() > 0) {
                 SeekDesignerDetailBean.CasesEntity casesEntity = mDatas.get(position);
@@ -75,57 +85,75 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
                     if (TextUtils.isEmpty(imageOneUrl)) {
                         imageOneUrl = casesEntity.getImages().get(0).getFile_url();
                     }
-                    ImageUtils.loadImage(((ViewHolder) holder).mSeekCase, imageOneUrl + Constant.CaseLibraryDetail.JPG);
+                    ImageUtils.loadImage(viewHolder.mSeekCase, imageOneUrl + Constant.CaseLibraryDetail.JPG);
                 }
             } else {
-                ((ViewHolder) holder).mSeekCase.setImageResource(R.drawable.common_case_icon);
+                viewHolder.mSeekCase.setImageResource(R.drawable.common_case_icon);
             }
 //            if (null != mDatas.get(position).getTitle()) {
-//                ((ViewHolder) holder).mSeekAddress.setText(mDatas.get(position).getTitle());
+//                viewHolder.mSeekAddress.setText(mDatas.get(position).getTitle());
 //            } else {
-//                ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
+//                viewHolder.mSeekAddress.setText(R.string.temporarily_no_data);
 //            }
             if (null != mDatas.get(position).getRoom_type()) {
                 String room_type = mDatas.get(position).getRoom_type();
                 if (mRoom.containsKey(room_type)) {
-                    ((ViewHolder) holder).mSeekLivingRoom.setText(mRoom.get(room_type));
+                    viewHolder.mSeekLivingRoom.setText(mRoom.get(room_type));
                 } else {
-                    ((ViewHolder) holder).mSeekLivingRoom.setText(room_type);
+                    viewHolder.mSeekLivingRoom.setText(room_type);
                 }
             } else {
-                ((ViewHolder) holder).mSeekLivingRoom.setText(R.string.temporarily_no_data);
+                viewHolder.mSeekLivingRoom.setText(R.string.temporarily_no_data);
             }
             if (null != mDatas.get(position).getProject_style()) {
                 String project_style = mDatas.get(position).getProject_style();
                 if (mStyle.containsKey(project_style)) {
-                    ((ViewHolder) holder).mSeekStyle.setText(mStyle.get(project_style));
+                    viewHolder.mSeekStyle.setText(mStyle.get(project_style));
                 } else {
-                    ((ViewHolder) holder).mSeekStyle.setText(project_style);
+                    viewHolder.mSeekStyle.setText(project_style);
                 }
             } else {
-                ((ViewHolder) holder).mSeekStyle.setText(R.string.temporarily_no_data);
+                viewHolder.mSeekStyle.setText(R.string.temporarily_no_data);
             }
             if (null != mDatas.get(position).getRoom_area()) {
                 String room_area = mDatas.get(position).getRoom_area();
                 if (mArea.containsKey(room_area)) {
-                    ((ViewHolder) holder).mSeekArea.setText(mArea.get(room_area) + "m²");
+                    viewHolder.mSeekArea.setText(mArea.get(room_area) + "m²");
                 } else {
-                    ((ViewHolder) holder).mSeekArea.setText(room_area + "m²");
+                    viewHolder.mSeekArea.setText(room_area + "m²");
                 }
             } else {
-                ((ViewHolder) holder).mSeekArea.setText(R.string.temporarily_no_data);
+                viewHolder.mSeekArea.setText(R.string.temporarily_no_data);
             }
-            if (null!=mDatas.get(position).getFavorite_count()){
-                        ((ViewHolder) holder).tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
-            }
+//            if (null!=mDatas.get(position).getFavorite_count()){
+//                  //      viewHolder.tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
+//            }
         } else {
-            ((ViewHolder) holder).mSeekCase.setImageResource(R.drawable.common_case_icon);
-//            ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
-            ((ViewHolder) holder).mSeekLivingRoom.setText(R.string.temporarily_no_data);
-            ((ViewHolder) holder).mSeekStyle.setText(R.string.temporarily_no_data);
-            ((ViewHolder) holder).mSeekArea.setText(R.string.temporarily_no_data);
+            viewHolder.mSeekCase.setImageResource(R.drawable.common_case_icon);
+           // viewHolder.mSeekAddress.setText(R.string.temporarily_no_data);
+            viewHolder.mSeekLivingRoom.setText(R.string.temporarily_no_data);
+            viewHolder.mSeekStyle.setText(R.string.temporarily_no_data);
+            viewHolder.mSeekArea.setText(R.string.temporarily_no_data);
         }
-        ((ViewHolder) holder).mSeekCase.setOnClickListener(new MyOnClickListener(position, (ViewHolder) holder));
+        ( viewHolder).mSeekCase.setOnClickListener(new MyOnClickListener(position, viewHolder));
+
+        return container;
+    }
+
+    //加载更多数据
+    public void addMoreData(List<SeekDesignerDetailBean.CasesEntity> mDatas){
+
+        this.mDatas = mDatas;
+    }
+
+
+    /// 监听接口.
+    public interface OnItemCaseLibraryClickListener {
+        void OnItemCaseLibraryClick(int position);
+    }
+
+    public void setOnItemCaseLibraryClickListener(OnItemCaseLibraryClickListener mOnItemCaseLibraryClickListener) {
+        this.mOnItemCaseLibraryClickListener = mOnItemCaseLibraryClickListener;
     }
 
     class MyOnClickListener implements View.OnClickListener {
@@ -151,9 +179,9 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
         }
     }
 
-    public class ViewHolder extends BaseAdapter.Holder {
+    public class ViewHolder {
         private ImageView mSeekCase;
-//        private TextView mSeekAddress;
+       // private TextView mSeekAddress;
         private TextView mSeekLivingRoom;
         private TextView mSeekStyle;
         private TextView mSeekArea;
@@ -166,4 +194,6 @@ public class SeekDesignerDetailAdapter extends BaseAdapter<SeekDesignerDetailBea
     private Map<String, String> mStyle;
     private Map<String, String> mArea;
     private String imageOneUrl;
+    private Context context;
+    private List<SeekDesignerDetailBean.CasesEntity> mDatas;
 }

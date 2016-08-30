@@ -17,17 +17,17 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.im.manager.MPMemberUnreadCountManager;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONException;
@@ -54,7 +54,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         super.initData(savedInstanceState);
 
         // retrieve the fragment handle from fragmentmanager
-
         if (savedInstanceState != null) {
             mMPThreadListFragment = (MPThreadListFragment) getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
             mFragmentArrayList.add(mMPThreadListFragment);
@@ -188,6 +187,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         fragmentTransaction.commitAllowingStateLoss();
     }
 
+
     @Override
     public Resources getResources() {
         Resources res = super.getResources();
@@ -266,8 +266,10 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
                     threadListFragment = (MPThreadListFragment) fragment;
                 else
                     f = (BaseFragment) fragment;
-            } else
+            }
+            else {
                 fragmentTransaction.hide(fragment);
+            }
         }
         fragmentTransaction.commitAllowingStateLoss();
 
@@ -336,6 +338,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         }
     }
 
+
     public void getFileThreadUnreadCount() {
         OkStringRequest.OKResponseCallback callback = new OkStringRequest.OKResponseCallback() {
             @Override
@@ -366,10 +369,16 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         }
     }
 
+    public MPMemberUnreadCountManager getmMemberUnreadCountManager() {
+        if (mMemberUnreadCountManager == null){
+            mMemberUnreadCountManager = new MPMemberUnreadCountManager();
+        }
+        return mMemberUnreadCountManager;
+    }
 
     private List<RadioButton> mRadioButtons = new ArrayList<RadioButton>();
     protected List<Fragment> mFragmentArrayList = new ArrayList<>();
-    private RadioGroup mRadioGroup;
+    protected RadioGroup mRadioGroup;
 
     private RadioButton mIMRadioButton;
     private TextView mTvMsgNumber;

@@ -35,6 +35,8 @@ public class MessageCenter implements Serializable {
         private int unreadMsgCount;
 
 
+
+
         public String getBody() {
             return body;
         }

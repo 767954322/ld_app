@@ -59,7 +59,7 @@ public class ChooseViewPointer extends View{
         if (initWidth != 0){
             if (initBoolean){
 
-                canvas.drawLine(initWidth * 1/3f,0,initWidth * 2/3f,0,paint);
+                canvas.drawLine(initWidth * 1/2f + initWidth * 1/9 ,0,initWidth * 1f - initWidth * 1/9f,0,paint);
             }
         }
         canvas.drawLine(width * A + decreaseWidth,0,width * B - decreaseWidth,0,paint);
@@ -89,5 +89,26 @@ public class ChooseViewPointer extends View{
 
     }
 
+    public void setCase2dBtn(int width){
+
+        setDecreaseWidth(width * 1 / 20f);
+        setWidthOrHeight(width, 0, 0f, 1 / 3f);
+
+    }
+
+    public void setCase3dBtn(int width){
+
+
+        setDecreaseWidth(width * 1 / 20f);
+        setWidthOrHeight(width, 0, 1 / 3f, 2 / 3f);
+
+    }
+
+    public void setConsumerAppraise(int width){
+
+        setDecreaseWidth(width * 1 / 20f);
+        setWidthOrHeight(width, 0, 2 / 3f, 1f);
+
+    }
 
 }

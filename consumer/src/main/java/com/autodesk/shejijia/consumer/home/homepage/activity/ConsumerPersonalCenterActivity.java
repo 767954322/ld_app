@@ -43,7 +43,6 @@ import de.greenrobot.event.EventBus;
  * @brief 消费者个人中心 .
  */
 public class ConsumerPersonalCenterActivity extends NavigationBarActivity implements View.OnClickListener {
-
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_personal_center_consumer;
@@ -74,6 +73,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     }
 
 
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -96,7 +96,6 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.rl_personal_b_collect:    /// 消息中心.
-//                MyToast.show(ConsumerPersonalCenterActivity.this, UIUtils.getString(R.string.functional_development));
                 Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
                 startActivity(intent_messagecenter);
                 break;
@@ -119,20 +118,19 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 }
                 break;
 
-            case R.id.ll_personal_designer_attention: /// 我的关注 .
-                if (mMemberEntity != null) {
-                    Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this, AttentionActivity.class);
-                    startActivity(intent2);
-                } else {
-                    AdskApplication.getInstance().doLogin(this);
-                }
-                break;
 //            case R.id.rl_personal_b_fitment:    /// 我的装修项目 .
 //                intent = new Intent(ConsumerPersonalCenterActivity.this, DecorationActivity.class);
 //                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
 //                startActivity(intent);
 //                break;
-
+            case R.id.ll_personal_designer_attention: /// 我的关注 .
+                if (mMemberEntity != null) {
+                    Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this,AttentionActivity.class);
+                    startActivity(intent2);
+                }else{
+                    AdskApplication.getInstance().doLogin(this);
+                }
+                break;
         }
     }
 

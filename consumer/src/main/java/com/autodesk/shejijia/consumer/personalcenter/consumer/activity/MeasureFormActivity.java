@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,18 +18,22 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
+import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -47,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author DongXueQiu .
@@ -95,37 +101,65 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = tvc_area.getText().toString().trim();
-                    area = String.format("%.2f",Double.valueOf(area));
+                    if (TextUtils.isEmpty(area)) {
+                        area = "0";
+                    }
+                    area = String.format("%.2f", Double.valueOf(area));
                     tvc_area.setText(area);
                 }
             }
         });
-
     }
 
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        Bundle extras = getIntent().getExtras();
-        flow_state = (int) extras.get(Constant.SeekDesignerDetailKey.FLOW_STATE);
-        needs_id = (String) extras.get(Constant.SeekDesignerDetailKey.NEEDS_ID);
-        designer_id = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
-        mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
-        mThread_id = (String) extras.get(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);
+        if(iselite){
+            getExtraData();
+            return;
+        }
+        if (first){
+            first = false;
+            Bundle extras = getIntent().getExtras();
+            flow_state = (int) extras.get(Constant.SeekDesignerDetailKey.FLOW_STATE);
+            needs_id = (String) extras.get(Constant.SeekDesignerDetailKey.NEEDS_ID);
+            designer_id = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+            hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
+            mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
+            String styleAll = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
+            // String styleAll = getIntent().getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
+            styles = new ArrayList<String>();
+            if (styleAll != null && styleAll.length() > 0){
+                String Style[] = styleAll.split("，");
+                for (int i = 0; i < Style.length; i++){
+                    String styleItem = Style[i];
+                    styles.add(styleItem);
+                }
+            }
+
+        }
+    }
+     //获取精选装修模式传递过来的数据
+    private void getExtraData(){
+        Intent intent = getIntent();
+        decorationNeedsListBean = (DecorationNeedsListBean)intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
+        designer_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+        iselite = intent.getBooleanExtra(Constant.SixProductsFragmentKey.ISELITE,false);
+
     }
 
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        setTitleForNavbar(UIUtils.getString(R.string.demand_measure_house_form));
+        if(iselite){
+            return;
+        }
         if (flow_state == 1) {
-
             getRealNameAuditStatus(designer_id, hs_uid);
-
         }
 
-        setTitleForNavbar(UIUtils.getString(R.string.demand_measure_house_form));
         tvc_time.setFocusable(false);
 //      showState(needs_id, designer_id);
         getUserId();
@@ -288,27 +322,29 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //.....................................
-                houseArea = String.format("%.2f",Double.valueOf(houseArea));
+                if (TextUtils.isEmpty(houseArea)) {
+                    houseArea = "0";
+                }
+                houseArea = String.format("%.2f", Double.valueOf(houseArea));
                 tvc_area.setText(houseArea);
                 String subNum = "0";
                 if (houseArea.contains(".")) {
                     subNum = houseArea.substring(0, houseArea.indexOf("."));
                 }
-                if (TextUtils.isEmpty(houseArea)||Float.valueOf(houseArea) == 0) {
+                if (TextUtils.isEmpty(houseArea) || Float.valueOf(houseArea) == 0) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                     return;
                 } else {
-                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4){
+                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
                         getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                         return;
-                    }else {
+                    } else {
                         if (!houseArea.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
                             getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
                             return;
                         }
                     }
                 }
-
 
 
                 if (designBudget == null) {
@@ -362,8 +398,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
 //                try {
 //                    if (formatDate(date, currentData)) {
-                        CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
-                        postSendMeasureForm(jsonObject);
+                CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
+                postSendMeasureForm(jsonObject);
 //                    } else {
 //                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
 //                    }
@@ -394,7 +430,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
                 break;
             case R.id.tvIllustrate:
-                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null,new String[]{UIUtils.getString(R.string.finish_cur_pager)}, MeasureFormActivity.this,
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null, null, new String[]{UIUtils.getString(R.string.finish_cur_pager)}, MeasureFormActivity.this,
                         AlertView.Style.Alert, null).show();
                 break;
             default:
@@ -468,7 +504,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
-                currentData = DateUtil.dateFormat(currentData,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点");
+                currentData = DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点");
                 tvc_time.setText(currentData);
             }
         });
@@ -606,7 +642,15 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      */
     private void setStyleType() {
         final ArrayList<String> styleItems = new ArrayList<>();
-        List<String> styles = filledData(getResources().getStringArray(R.array.style));
+
+        if (styles != null) {
+
+
+        } else {
+
+            styles = filledData(getResources().getStringArray(R.array.style));
+
+        }
         pvStyleOptions = new OptionsPickerView(this);
         for (String item : styles) {
             styleItems.add(item);
@@ -619,6 +663,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onOptionsSelect(int options1, int option2, int options3) {
                 style = styleItems.get(options1);
                 tvc_measure_form_style.setText(style);
+                Map<String, String> space = AppJsonFileReader.getStyle(MeasureFormActivity.this);
+                style = ConvertUtils.getKeyByValue(space, style);
             }
         });
     }
@@ -738,7 +784,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
                 KLog.d(TAG, jsonObject);
-                showAlertView(UIUtils.getString((R.string.consume_send_success)));
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString((R.string.consume_send_success)), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
+                        AlertView.Style.Alert, MeasureFormActivity.this).show();
                 CustomProgress.cancelDialog();
             }
 
@@ -810,6 +857,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
     /// 变量.
     private int flow_state;
+    private boolean first = true;
     private String designer_id;
     private String mThread_id;
     private String hs_uid;
@@ -831,6 +879,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String memberId;
+    private boolean iselite;
 
     ///　集合，类.
     private ArrayList<String> decorationBudgetItems = new ArrayList<>();
@@ -838,71 +887,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private ArrayList<String> roomsList = new ArrayList<>();
     private ArrayList<ArrayList<String>> hallsList = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
+    private List<String> styles;
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
+    private DecorationNeedsListBean decorationNeedsListBean;
 
-
-    //    private void showState(String needs_id, String designer_id) {
-//        /**
-//         * @brief complete flow scheme .
-//         */
-//        if (flow_state == 1) {
-//            CustomProgress.show(MeasureFormActivity.this, "", false, null);
-//            getOrderDetailsInfo(needs_id, designer_id);
-//            tvc_name.setEnabled(false);
-//            tvc_phone.setEnabled(false);
-//            tvc_project_budget.setEnabled(false);
-//            tvc_fitment_budget.setEnabled(false);
-//            tvc_area.setEnabled(false);
-//            tvc_house_type.setEnabled(false);
-//            tvc_time.setEnabled(false);
-//            tvc_address.setEnabled(false);
-//            tvc_estate.setEnabled(false);
-//            ll_style.setVisibility(View.GONE);
-//            ll_type.setVisibility(View.GONE);
-//            btn_send_form.setVisibility(View.GONE);
-//        }
-//    }
-
-    //    /**
-//     * @param needs_id
-//     * @param designer_id
-//     * @brief 获取个人信息详情
-//     */
-//    public void getOrderDetailsInfo(String needs_id, String designer_id) {
-//        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                CustomProgress.cancelDialog();
-//                String userInfo = GsonUtil.jsonToString(jsonObject);
-//                wkFlowDetailsBean = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
-//                WkFlowDetailsBean.RequirementEntity requirement = wkFlowDetailsBean.getRequirement();
-//                if (requirement == null) {
-//                    return;
-//                }
-//                tvc_name.setText(requirement.getContacts_name());
-//                tvc_phone.setText(requirement.getContacts_mobile());
-//                tvc_project_budget.setText(requirement.getDesign_budget() + "");
-//                tvc_fitment_budget.setText(requirement.getDecoration_budget());
-//                tvc_area.setText(requirement.getHouse_area() + "m²");
-//                tvc_house_type.setText(requirement.getHouse_type());
-//                tvc_time.setText(requirement.getPublish_time());
-//                tvc_address.setText(requirement.getCity() + requirement.getProvince() + requirement.getDistrict());
-//                tvc_estate.setText(requirement.getCommunity_name());
-//                List<WkFlowDetailsBean.RequirementEntity.BiddersEntity> bidders = requirement.getBidders();
-//                if (null != bidders && bidders.size() > 0) {
-//                    String measurement_fee = bidders.get(0).getMeasurement_fee();
-//                    measurement_fee = UIUtils.getNodataIfEmpty(measurement_fee);
-//                    tv_measure_fee.setText(measurement_fee);
-//                }
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                MPNetworkUtils.logError(TAG, volleyError);
-//                CustomProgress.cancelDialog();
-//            }
-//        };
-//        MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, designer_id, okResponseCallback);
-//    }
 }

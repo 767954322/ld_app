@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -96,6 +95,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
         setTitleForNavbar(UIUtils.getString(R.string.requirements));
         /// 房屋类型.
         setHouseType();
@@ -174,6 +174,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(R.string.please_enter_correct_phone_number);
                     return;
                 }
+
                 if (TextUtils.isEmpty(house_type)) {
                     showAlertView(R.string.demand_please_project_types);
                     return;
@@ -184,7 +185,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                }
 
                 //..................................
-                area = String.format("%.2f",Double.valueOf(area));
+                area = (area != null && area.length() > 0)?String.format("%.2f",Double.valueOf(area)):"";
                 et_issue_demand_area.setText(area);
                 String subNum = "0";
                 if (area.contains(".")) {
@@ -314,7 +315,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
      * @param jsonObject
      */
     private void sendDesignRequirements(JSONObject jsonObject) {
-        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject,false,new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
@@ -576,8 +577,9 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String mDesignBudget;
     private String mDecorationBudget;
     private String nick_name;
+//    private boolean isSelection = false;
     private String room, living_room, toilet;
     private boolean isSendState = true;
     private String success = "";
-    final int RESULT_CODE = 101;
+    public static final int RESULT_CODE = 101;
 }

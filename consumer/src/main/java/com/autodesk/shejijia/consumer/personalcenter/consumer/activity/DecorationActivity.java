@@ -62,10 +62,10 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
         mIbnAdd = (ImageButton) findViewById(R.id.nav_right_imageButton);
         mIbnBack = (ImageButton) findViewById(R.id.nav_left_imageButton);
         mLlPagers = (LinearLayout) findViewById(R.id.dots_ll);
-        mRlEmpty = (RelativeLayout) findViewById(R.id.rl_empty);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTitle = (TextView) findViewById(R.id.nav_title_textView);
         mTvLoadingMore = (TextView) findViewById(R.id.tv_loading_more);
+        mRlEmpty = (RelativeLayout) findViewById(R.id.rl_empty);
         mTvEmptyShow = (TextView) findViewById(R.id.tv_empty_message);
         mIvEmptyShow = (ImageView) findViewById(R.id.iv_default_empty);
 
@@ -82,8 +82,8 @@ public class DecorationActivity extends AppCompatActivity implements View.OnClic
         mContext = this;
         mTitle.setText(UIUtils.getString(R.string.consumer_decoration));
         mTvLoadingMore.setText(UIUtils.getString(R.string.loding_more));
-        mTvEmptyShow.setText(UIUtils.getString(R.string.empty_order_fitment));
         mIbnAdd.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_title_add));
+        mTvEmptyShow.setText(UIUtils.getString(R.string.empty_order_fitment));
         mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_order_empty));
         initPagerNum();
 

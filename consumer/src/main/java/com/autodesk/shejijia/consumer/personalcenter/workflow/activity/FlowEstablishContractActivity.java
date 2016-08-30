@@ -346,14 +346,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                             btn_send.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
                                 public void onClick(View v) {
                                     Intent intent = new Intent(FlowEstablishContractActivity.this, FlowFirstDesignActivity.class);
-                                    intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
-                                    intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, needs_id);
-                                    intent.putExtra(Constant.BundleKey.BUNDLE_ACTION_NODE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
-                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
+                                    intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+                                    intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                                    intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
+//                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                                     startActivityForResult(intent, ContractForFirst);
                                 }
                             });
                         }
+
                         isAgree = !isAgree;
                     }
                 });
@@ -517,14 +518,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         boolean isMap = renderMap.matches(RegexUtil.POSITIVE_INTEGER_REGEX); //　验证渲染图张数
         boolean isPostNum = consumerPostcode.matches(RegexUtil.POST_NUMBER_REGEX);
 
-        if (!consumerName.isEmpty() && consumerName.matches(RegexUtil.NAME_REGEX)) {
+        if (!consumerName.isEmpty() && consumerName.matches(RegexUtil.NAME_REGEX1)) {
 
             if (isMobile) {
                 if (TextUtils.isEmpty(consumerPostcode) || isPostNum) {
 
                     if (isEmail || consumerEmail.isEmpty()) {
 
-                        if (!detailAddress.isEmpty() && detailAddress.length() > 2 && decorateAddress.length() < 32) {
+                        if (!detailAddress.isEmpty() && detailAddress.length() >= 2 && decorateAddress.length() <= 32) {
 
                             if (isSketch) {
 

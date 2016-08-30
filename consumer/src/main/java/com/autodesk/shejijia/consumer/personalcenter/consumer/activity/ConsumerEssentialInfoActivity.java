@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -48,6 +49,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDial
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -92,7 +94,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
     private static final int SYS_INTENT_REQUEST = 0XFF01;
     private static final int CAMERA_INTENT_REQUEST = 0XFF02;
+    private Bitmap headPicBitmap;
 
+    private int is_validated_by_mobile;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_essential_info;
@@ -145,6 +149,39 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(mConsumerEssentialInfoEntity!= null){
+            getConsumerInfoData(member_id);
+        }
+    }
+
+    /**
+     * 获取个人基本信息
+     *
+     * @param member_Id
+     * @brief For details on consumers .
+     */
+    public void getConsumerInfoData(String member_Id) {
+        MPServerHttpManager.getInstance().getConsumerInfoData(member_Id, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+                showState();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, ConsumerEssentialInfoActivity.this,
+                            AlertView.Style.Alert, null).show();
+            }
+        });
+    }
+
+    @Override
     protected void setTextColorForRightNavButton(int color) {
         super.setTextColorForRightNavButton(color);
 
@@ -157,6 +194,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         if (mConsumerEssentialInfoEntity == null) {
             return;
         }
+        is_validated_by_mobile = mConsumerEssentialInfoEntity.getIs_validated_by_mobile();
         avatar = mConsumerEssentialInfoEntity.getAvatar();
         user_name = mConsumerEssentialInfoEntity.getHitachi_account();
         mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
@@ -172,6 +210,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         district_name = mConsumerEssentialInfoEntity.getDistrict_name();
         if (!TextUtils.isEmpty(avatar)) {
             ImageUtils.displayAvatarImage(avatar, mConsumeHeadIcon);
+        }else {
+            headPicBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_default_avator);
+            mConsumeHeadIcon.setImageBitmap(headPicBitmap);
         }
 
         /**
@@ -187,10 +228,16 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 手机
          */
-        if (TextUtils.isEmpty(mobile_number)) {
+        if (0 == is_validated_by_mobile || 2 == is_validated_by_mobile)
+            mobile_number = "";
             mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
-        } else {
-            mTvConsumerPhone.setText(mobile_number);
+        if (1 == is_validated_by_mobile){
+            if (TextUtils.isEmpty(mobile_number)) {
+                mobile_number = "";
+                mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
+            } else {
+                mTvConsumerPhone.setText(mobile_number);
+            }
         }
 
         /**
@@ -604,9 +651,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 e.printStackTrace();
             }
 
+            CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.nickname_on_the_cross), false, null);
             putAmendConsumerInfoData(member_id, jsonObject);
             mTvNickname.setText(event.getmMsg());
-            CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.nickname_on_the_cross), false, null);
         }
     }
 
@@ -692,9 +739,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         handler.post(new Runnable() {
             public void run() {
                 MyToast.show(activity, string);
+                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
             }
         });
     }
+
+
 
     /**
      * 修改消费者个人信息
@@ -737,26 +787,28 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 }
                 Object[] object = pictureProcessingUtil.judgePicture(imageFilePath);
                 File tempFile = new File(imageFilePath);
-                Bitmap _bitmap = (Bitmap) object[1];
+                headPicBitmap = (Bitmap) object[1];
+//                Bitmap _bitmap = (Bitmap) object[1];
 
                 File newFile = imageProcessingUtil.compressFileSize(tempFile);
                 putFile2Server(newFile);
                 CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-                mConsumeHeadIcon.setImageBitmap(_bitmap);
+//                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
             CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
             Bitmap bitmap = cameraCamera(data);
-            Bitmap bit = pictureProcessingUtil.compressionBigBitmap(bitmap, true);
+//            Bitmap bit = pictureProcessingUtil.compressionBigBitmap(bitmap, true);
+            headPicBitmap = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
             File file = new File(cameraFilePath);
             try {
                 putFile2Server(file);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            mConsumeHeadIcon.setImageBitmap(bit);
+//            mConsumeHeadIcon.setImageBitmap(headPicBitmap);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

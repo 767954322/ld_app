@@ -14,16 +14,6 @@
         android:layout_height="@dimen/size_40"
         android:orientation="horizontal">
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_my_bid_all"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/bg_common_btn_blue_noradius"-->
-        <!--android:clickable="true"-->
-        <!--android:gravity="center"-->
-        <!--android:text="@string/my_bid_all"-->
-        <!--android:textColor="@color/white"></TextView>-->
 
         <TextView
             android:id="@+id/tv_bid_be_being_bid"

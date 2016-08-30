@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 
 public class NavigationBarActivity extends BaseActivity {
 
@@ -42,6 +43,10 @@ public class NavigationBarActivity extends BaseActivity {
 
     }
 
+   public ImageView getUserAvatar(){
+        return (ImageView) findViewById(R.id.user_avatar);
+    }
+
     @Override
     protected void initListener() {
         ImageButton leftImageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
@@ -49,11 +54,11 @@ public class NavigationBarActivity extends BaseActivity {
         ImageButton rightImageButton = (ImageButton) findViewById(R.id.nav_right_imageButton);
         TextView rightTextView = (TextView) findViewById(R.id.nav_right_textView);
         TextView leftTextView = (TextView) findViewById(R.id.nav_left_textView);
-        ImageView userAvatar = (ImageView) findViewById(R.id.user_avatar);
+        userAvatar = (ImageView) findViewById(R.id.user_avatar);
 
         //2. hook up events
 
-        if (userAvatar != null){
+        if (userAvatar != null) {
 
             userAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,7 +154,31 @@ public class NavigationBarActivity extends BaseActivity {
         TextView titleTextView = (TextView) findViewById(R.id.nav_title_textView);
         if (titleTextView != null) {
             titleTextView.setText(value);
+            MaterialTabs materialTabs = (MaterialTabs) findViewById(R.id.case_library_head);
+            titleTextView.setVisibility(View.VISIBLE);
+            materialTabs.setVisibility(View.GONE);
         }
+    }
+
+    protected void hideCaseLIbraryTitle() {
+        TextView titleTextView = (TextView) findViewById(R.id.nav_title_textView);
+        MaterialTabs materialTabs = (MaterialTabs) findViewById(R.id.case_library_head);
+        titleTextView.setVisibility(View.VISIBLE);
+        materialTabs.setVisibility(View.GONE);
+        setVisibilityForNavButton(ButtonType.RIGHT, false);
+
+    }
+
+    protected void setCaseLIbraryTitle() {
+        TextView titleTextView = (TextView) findViewById(R.id.nav_title_textView);
+        MaterialTabs materialTabs = (MaterialTabs) findViewById(R.id.case_library_head);
+        titleTextView.setVisibility(View.GONE);
+        materialTabs.setVisibility(View.VISIBLE);
+        setImageForNavButton(ButtonType.RIGHT,R.drawable.icon_search);
+        setImageForNavButton(ButtonType.SECONDARY,R.drawable.icon_filtrate_normal);
+        setVisibilityForNavButton(ButtonType.RIGHT, true);
+        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+
     }
 
     protected void setNavButtonEnabled(ButtonType type, boolean bEnabled) {
@@ -203,7 +232,7 @@ public class NavigationBarActivity extends BaseActivity {
         finish();
     }
 
-    protected void leftCircleUserAvarClicked(View view){
+    protected void leftCircleUserAvarClicked(View view) {
 
 
     }
@@ -274,7 +303,8 @@ public class NavigationBarActivity extends BaseActivity {
 
         // first setup left button
         ImageButton leftImageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
-        ImageView user_avatar = (ImageView) findViewById(R.id.user_avatar);
+
+        userAvatar = (ImageView) findViewById(R.id.user_avatar);
 
         if (leftImageButton != null) {
 
@@ -383,12 +413,21 @@ public class NavigationBarActivity extends BaseActivity {
 
         return textView;
     }
-    private ViewGroup getNavitionViewGroup(ButtonType type){
+
+    private ViewGroup getNavitionViewGroup(ButtonType type) {
 
         ViewGroup viewGroup = null;
-         if (type == ButtonType.middlecontain)
-             viewGroup = (ViewGroup) findViewById(R.id.ll_contain);
+        if (type == ButtonType.middlecontain)
+            viewGroup = (ViewGroup) findViewById(R.id.ll_contain);
 
         return viewGroup;
+    }
+    private  ImageView userAvatar;
+
+
+    public MaterialTabs getMaterialTabs() {
+
+        return (MaterialTabs) findViewById(R.id.case_library_head);
+
     }
 }

@@ -44,8 +44,6 @@ public class CasesListBean {
     private String room_area;
     private String room_type;
     private Object search_tag;
-
-
     public Object getBedroom() {
         return bedroom;
     }

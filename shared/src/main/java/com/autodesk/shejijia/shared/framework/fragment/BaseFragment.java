@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @author lufan .
  * @version v1.0 .

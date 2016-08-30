@@ -58,6 +58,15 @@
         android:singleLine="true"
         android:textSize="@dimen/font_16"/>
 
+    <com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs
+        android:id="@+id/case_library_head"
+        android:background="@color/bg_f9"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_height="48dip"/>
+
+
     <LinearLayout
         android:id="@+id/ll_contain"
         android:layout_width="match_parent"
@@ -144,7 +153,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:text=""
-
             android:textSize="15sp"
             android:visibility="gone"/>
     </RelativeLayout>

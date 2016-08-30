@@ -60,6 +60,7 @@ public class CaseDescriptionActivity extends NavigationBarActivity implements Vi
         mIvCase = (ImageView) findViewById(R.id.img_look_more_detail_case);
         mIvFinish = (ImageView) findViewById(R.id.img_look_more_detail_finish);
         mIvChat = (ImageView) findViewById(R.id.img_look_more_detail_chat);
+        showOrHideChatBtn();
     }
 
     @Override
@@ -73,16 +74,20 @@ public class CaseDescriptionActivity extends NavigationBarActivity implements Vi
         super.initData(savedInstanceState);
         showOrHideChatBtn();
 
-        hs_uid = caseDetailBean.getHs_designer_uid();
         if (caseDetailBean != null && caseDetailBean.getDesigner_info() != null) {
             designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
         }
+        if (caseDetailBean != null){
+            hs_uid = caseDetailBean.getHs_designer_uid();
+            /// 设置title .
+            String title = caseDetailBean.getTitle();
+            title = TextUtils.isEmpty(title) ? UIUtils.getString(R.string.data_null) : title;
+            setTitleForNavbar(title);
+            updateViewFromDate();
+        }
 
-        /// 设置title .
-        String title = caseDetailBean.getTitle();
-        title = TextUtils.isEmpty(title) ? UIUtils.getString(R.string.data_null) : title;
-        setTitleForNavbar(title);
-        updateViewFromDate();
+
+
     }
 
     /// 监听　.

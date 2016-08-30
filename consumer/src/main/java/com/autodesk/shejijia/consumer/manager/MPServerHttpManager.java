@@ -5,6 +5,8 @@ import android.util.Log;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
@@ -50,10 +52,6 @@ public class MPServerHttpManager {
 
     /**
      * 我的家装订单
-     *
-     * @param offset
-     * @param limit
-     * @param callback
      */
     public void getMyDecorationData(final int offset, final int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_MY_DECORATION_LIST + member_id + "/needs?" +
@@ -77,19 +75,28 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 首页案例列表
+     * 获取精选设计师作品图片
      *
-     * @param custom_string_style
-     * @param custom_string_type
-     * @param custom_string_keywords
-     * @param custom_string_area
-     * @param custom_string_bedroom
-     * @param taxonomy_id
-     * @param offset
-     * @param limit
-     * @param custom_string_restroom
-     * @param custom_string_form
      * @param callback
+     */
+    public void getDesignWorks(OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_PUT_SELECTION_DESIGNER_PICTURES;//"http://192.168.120.163:8080/design-app/v1/api/selection/pictures";
+
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+
+    /**
+     * 首页案例列表
      */
     public void getCaseListData(String custom_string_style,
                                 String custom_string_type,
@@ -127,19 +134,45 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+    public void get3DCaseListData(String custom_string_style,
+                                  String custom_string_type,
+                                  String custom_string_keywords,
+                                  String custom_string_area,
+                                  String custom_string_bedroom,
+                                  String taxonomy_id,
+                                  String custom_string_restroom,
+                                  String custom_string_form,
+                                  final int offset, final int limit,
+                                  OkJsonRequest.OKResponseCallback callback) {
+
+        String url = UrlConstants.URL_GET_CASE_LIST_D3 +
+                "custom_string_style=" + custom_string_style +
+                "&custom_string_type=" + custom_string_type +
+                "&custom_string_keywords=" + custom_string_keywords +
+                "&sort_by=date" +
+                "&custom_string_area=" + custom_string_area +
+                "&custom_string_bedroom=" + custom_string_bedroom +
+                "&taxonomy_id=" + taxonomy_id +
+                "&offset=" + offset +
+                "&limit=" + limit +
+                "&custom_string_restroom=" + custom_string_restroom +
+                "&sort_order=desc" +
+                "&custom_string_form=" + custom_string_form;
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+
     /**
      * 获取应标大厅应标信息
-     *
-     * @param offset
-     * @param custom_string_area
-     * @param custom_string_form
-     * @param custom_string_type
-     * @param custom_string_bedroom
-     * @param limit
-     * @param custom_string_style
-     * @param asset_taxonomy
-     * @param custom_string_restroom
-     * @param callback
      */
     public void getShouldHallData(
             int offset,
@@ -245,7 +278,7 @@ public class MPServerHttpManager {
      * @param designer_id
      * @param callback
      */
-    public void sendBidDemand(JSONObject jsonObject,/* final String acsToken,*/ String needs_id, String designer_id,
+    public void sendBidDemand(JSONObject jsonObject, String needs_id, String designer_id,
                               OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_I_WANT_SHOULD_BID + needs_id +
                 "/designers/" + designer_id;
@@ -262,11 +295,34 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 搜索，查找设计师
+     */
+    public void findDesignerList(FindDesignerBean findDesignerBean,
+                                 int offset,
+                                 int limit, OkJsonRequest.OKResponseCallback callback) {
+//        String filterURl = "http://192.168.120.217:8080/member-app/v1/api/designers/search?" +
+        String filterURl = UrlConstants.MAIN_MEMBER + "/designers/search?" +
+                "nick_name=" + findDesignerBean.getNick_name() +
+                "&style_names=" + findDesignerBean.getStyle_names() +
+                "&start_experience=" + findDesignerBean.getStart_experience() +
+                "&end_experience=" + findDesignerBean.getEnd_experience() +
+                "&design_price_code=" + findDesignerBean.getDesign_price_code() +
+                "&offset=" + offset +
+                "&limit=" + limit;
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, filterURl, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 获取设计师列表
-     *
-     * @param offset
-     * @param limit
-     * @param callback
      */
     public void getFindDesignerData(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_FIND_DESIGNER +
@@ -278,7 +334,9 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
             }
         };
         queue.add(okRequest);
@@ -339,11 +397,48 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 全流程节点信息获取
+     * 终止合作
+     *
+     * @param callback
+     */
+    public void sendStopFlow(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+//        String url ="http://192.168.120.219:8080/design-app/v1/api/selection/termination/demands";
+        String url = UrlConstants.URL_STOP_COLLABORATION;
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+//                return super.getHeaders();
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 全流程节点信息获取(待删除)
      */
     public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback) {
 
         OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_WkFlowState_pointe_Information, null, callback) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+        queue.add(okJsonRequest);
+    }
+
+    /**
+     * 全流程节点信息获取(带精选)
+     */
+    public void getAll_WkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_ALL_WkFlowState_pointe_Information;
+
+        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -376,9 +471,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取消费者\设计师个人基本信息
-     *
-     * @param callback
-     * @param member_id
      */
     public void getConsumerInfoData(String member_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CONSUMER_INFO + member_id;
@@ -415,12 +507,6 @@ public class MPServerHttpManager {
 
     /**
      * 修改设计师个人中心信息-量房费
-     *
-     * @param callback
-     * @param designer_id
-     * @param hs_uid
-     * @param jsonObject
-     * @brief Modify the project design .
      */
     public void putAmendDesignerCostData(String designer_id, final String hs_uid, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_PUT_AMEND_DESIGNER_COST + designer_id;
@@ -438,10 +524,6 @@ public class MPServerHttpManager {
 
     /**
      * 修改消费者个人中心信息
-     *
-     * @param callback
-     * @param member_id
-     * @param jsonObject
      */
     public void putAmendConsumerInfoData(String member_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_PUT_AMEND_CONSUMER_INFO + member_id;
@@ -459,14 +541,33 @@ public class MPServerHttpManager {
 
     /**
      * 设计师详情
+     */
+    public void getSeekDesignerDetailData(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/cases?" +
+                "offset=" + offset +
+                "&sort_order=desc" +
+                "&sort_by=date" +
+                "&limit=" + limit;
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 设计师3D详情
+     * http://192.168.88.175:8080/design-app/v1/api /hs/prints/anonymity/designers/{designer_id}/d3/d3dimensionals?limit=20&offset=0&sort_by=date &sort_order=asc
      *
      * @param callback
      * @param designer_id
      * @param offset
      * @param limit
      */
-    public void getSeekDesignerDetailData(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_GET_SEEK_DESIGNER_DETAIL + designer_id + "/cases?" +
+    public void getSeekDesigner3DDetailData(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_GET_SEEK_DESIGNER_ANONYMITY + designer_id + "/d3/d3dimensionals?" +
                 "offset=" + offset +
                 "&sort_order=desc" +
                 "&sort_by=date" +
@@ -498,7 +599,7 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 获取案例库列表
+     * 获取案例库详情列表
      *
      * @param case_id
      * @param callback
@@ -508,7 +609,27 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-//                return super.getHeaders();
+
+               HashMap<String, String> header = new HashMap<>();
+               header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+              return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 获取3D案例库详情列表
+     *
+     * @param case_id
+     * @param callback http://192.168.88.175:8080/design-app/v1/api/d3/case/{asset_id}
+     */
+    public void getCaseList3DDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.URL_GET_CASE_LIST_D3 + case_id;
+//        String url = "http://192.168.88.175:8080/design-app/v1/api/d3/cases/" + case_id;
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return header;
@@ -525,7 +646,6 @@ public class MPServerHttpManager {
      */
     public void sendThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
-        Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -539,7 +659,6 @@ public class MPServerHttpManager {
     }
 
 
-
     /**
      * 获得点赞状态
      *
@@ -547,9 +666,7 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void getThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
-//        String url ="http://192.168.120.90:8080/design-app/v1/api/designers/d2/cases/like/"+assetId;
         String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
-        Log.d("yxw",url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -564,10 +681,6 @@ public class MPServerHttpManager {
 
     /**
      * 判断是否是实名认证
-     *
-     * @param hsUid
-     * @param designer_id
-     * @param callback
      */
     public void getRealName(final String hsUid, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_IS_REALY_NAME + designer_id +
@@ -586,13 +699,6 @@ public class MPServerHttpManager {
 
     /**
      * 个人中心 我要应标
-     *
-     * @param callback
-     * @param memType
-     * @param acsToken
-     * @param offset
-     * @param limit
-     * @param designer_id
      */
     public void getMyBidData(final String memType, final String acsToken, int offset, int limit, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_MY_BID + designer_id +
@@ -673,6 +779,36 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+
+    /**
+     * 精选订单
+     */
+    public void getSliteOder(HashMap<String, Object> map, final OkJsonRequest.OKResponseCallback callback) {
+
+
+        String url = UrlConstants.URL_GET_ORDER + map.get(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID) + "/orders?" +
+                "offset=" + map.get(JsonConstants.JSON_DEMAND_LIST_OFFSET) +
+                "&limit=" + map.get(JsonConstants.JSON_DEMAND_LIST_LIMIT) +
+                "&sort_by=date" +
+                "&sort_order=desc" +
+                "&version=2" +
+                "&service_modlue=5" +
+                "&node_ids=1" +
+                "&sub_node_ids=1" +
+                "&commend=5";
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.MEMBER_TYPE, memType);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
     /**
      * 北舒套餐表单
      *
@@ -719,11 +855,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取云相册
-     *
-     * @param callback
-     * @param X_Token
-     * @param needs_id
-     * @param member_id
      */
     public void getCloudFiles(
             final String X_Token, String needs_id, String member_id, OkJsonRequest.OKResponseCallback callback) {
@@ -767,13 +898,12 @@ public class MPServerHttpManager {
 
     /**
      * 修改需求
-     *
-     * @param callback
-     * @param amendJson
      */
-    public void getModifyDesignerRequirement(String needs_id, final JSONObject amendJson, OkJsonRequest.OKResponseCallback callback) {
+    public void getModifyDesignerRequirement(String needs_id, String wk_template_id, final JSONObject amendJson, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_MODIFY_MEAL + needs_id;
-        KLog.d(TAG, url);
+        if (wk_template_id.equals("4")) {
+            url = UrlConstants.URL_POST_ELITE_MODIFY_MEAL + needs_id;
+        }
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, amendJson, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -788,10 +918,6 @@ public class MPServerHttpManager {
 
     /**
      * 终止需求
-     *
-     * @param callback
-     * @param needs_id
-     * @param is_deleted
      */
     public void getStopDesignerRequirement(final String needs_id, final int is_deleted, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_MODIFY_MEAL + needs_id +
@@ -813,12 +939,12 @@ public class MPServerHttpManager {
 
     /**
      * 发布需求
-     *
-     * @param callback
-     * @param jsonObject
      */
-    public void sendDesignRequirements(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, UrlConstants.URL_SEND_DESIGN_REQUIREMENTS, jsonObject, callback) {
+    public void sendDesignRequirements(JSONObject jsonObject, boolean isSelection, OkJsonRequest.OKResponseCallback callback) {
+        //"http://192.168.120.219:8080/design-app/v1/api/selection/demands"
+        String url = isSelection ? UrlConstants.URL_SEND_DESIGN_SELECTION_REQUIREMENTS : UrlConstants.URL_SEND_DESIGN_REQUIREMENTS;
+
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
@@ -831,8 +957,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取合同编号
-     *
-     * @param callback
      */
     public void getContractNumber(OkJsonRequest.OKResponseCallback callback) {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_GET_CONTRACT_NUM, null, callback) {
@@ -846,9 +970,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取需求详情
-     *
-     * @param need_id
-     * @param callback
      */
     public void getAmendDemand(String need_id, OkJsonRequest.OKResponseCallback callback) {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_POST_MODIFY_MEAL + need_id, null, callback) {
@@ -886,14 +1007,13 @@ public class MPServerHttpManager {
 
     /**
      * 设计师同意量房
-     *
-     * @param callback
-     * @param need_id
      */
-    public void agreeMeasureHouse(String need_id, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_PUT_AGREE_MEASURE_HOUSE + need_id;
-        JSONObject jsonObject = new JSONObject();
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
+    public void agreeMeasureHouse(String need_id, String designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+        String agreeMeasureUrl = UrlConstants.MAIN_DESIGN +
+                "/demands/" + need_id +
+                "/designers/" + designer_id +
+                "/measurement/options/agreement";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, agreeMeasureUrl, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
@@ -907,9 +1027,6 @@ public class MPServerHttpManager {
 
     /**
      * 设计师拒绝量房
-     *
-     * @param callback
-     * @param need_id
      */
     public void agreeRefusedHouse(String need_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_PUT_REFUSED_MEASURE_HOUSE + need_id;
@@ -927,8 +1044,6 @@ public class MPServerHttpManager {
 
     /**
      * 消费者同意应标
-     *
-     * @param callback
      */
     public void agreeResponseBid(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
 
@@ -945,8 +1060,6 @@ public class MPServerHttpManager {
 
     /**
      * 消费者自选设计师量房
-     *
-     * @param callback
      */
     public void agreeOneselfResponseBid(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_ONESELF_AGREE_RESPONSE_BID;
@@ -964,13 +1077,42 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 支付宝接口
+     * 消费者发送量房邀约
      *
-     * @param order_no
-     * @param order_line_no
      * @param callback
      */
+    public void SendMeasureForm(String needs_id, String acs_designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+        String url1 = UrlConstants.URL_SEND_DESIGN_SELECTION_REQUIREMENTS + "/" + needs_id + "" +
+                "/designers/" + acs_designer_id + "/measurement/options/invitation";
+//        String url0 = "http://192.168.120.102:8070/design-app/v1/api/selection/demands/"+needs_id+"" +
+//                      "/designers/"+acs_designer_id+"/measurement/options/invitation";
+//        String url = "http://192.168.120.163:8081/design-app/v1/api/selection/demands/"+needs_id+"" +
+//                "/designers/"+acs_designer_id+"/measurement/options/invitation";
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url1, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+
+    /**
+     * 支付宝接口
+     */
     public void getAlipayDetailInfo(String order_no, String order_line_no, OkJsonRequest.OKResponseCallback callback) {
+//        String url = "http://192.168.120.219:8080/design-app/v1/api/pay/alipay/app/"+
+//                "parameters" +
+//                "?orderId=" + order_no +
+//                "&orderLineId=" + order_line_no +
+//                "&channel_type=mobile" +
+//                "&paymethod=1";
+
         String url = UrlConstants.URL_PAY +
                 "parameters" +
                 "?orderId=" + order_no +
@@ -991,10 +1133,6 @@ public class MPServerHttpManager {
 
     /**
      * 判断是否是乐屋设计师
-     *
-     * @param designers
-     * @param hs_uid
-     * @param callback
      */
     public void ifIsLohoDesiner(String designers, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.ALPHA_MP_MAIN + "/member-app/v1/api/designers/" + designers;
@@ -1011,9 +1149,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取与装修项目相关联的3D方案列表
-     *
-     * @param callback
-     * @param needs_id
      */
     public void get3DPlanInfoData(String needs_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELIVER +
@@ -1037,9 +1172,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取3D方案的文件列表
-     *
-     * @param callback
-     * @param asset_3d_id
      */
     public void get3DPlanList(final String needs_id, String asset_3d_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELIVER + asset_3d_id +
@@ -1060,12 +1192,6 @@ public class MPServerHttpManager {
 
     /**
      * 提交交付物
-     *
-     * @param callback
-     * @param needs_id
-     * @param designer_id
-     * @param file_ids
-     * @param design_assets_id
      */
     public void postDelivery(final String needs_id, final String designer_id, String file_ids, String design_assets_id, String type, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELIVER + design_assets_id +
@@ -1088,30 +1214,6 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 设计师获取已经交付的文件
-     *
-     * @param callback
-     * @param needs_id
-     */
-    public void getDeliveredFile(String needs_id, String designer_id, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_DELIVER +
-                "delivery/" + needs_id +
-                "?designer_id=" + designer_id;
-
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                return header;
-            }
-        };
-        queue.add(okRequest);
-    }
-
-
-    /**
      * @param callback
      */
     public void getLoginThreadId(String memberId, OkJsonRequest.OKResponseCallback callback) {
@@ -1132,14 +1234,9 @@ public class MPServerHttpManager {
 
     /**
      * 我的资产
-     *
-     * @param callback
-     * @param designer_id
      */
     public void getMyPropertyData(String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MY_PROPERTY + designer_id;
-//        http://192.168.120.90:8010
-//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/withdraw/20730531";
         KLog.d(TAG, "url:" + url + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
@@ -1198,9 +1295,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取消息中心数据
-     *
-     * @param offset
-     * @param limit
      */
     public void getMessageCenterMessages(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MESSAGE_CENTER + member_id + "/sysmessages?limit=" + limit + "&offset=" + offset;
@@ -1237,22 +1331,7 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
-
-    public void sendUnBindBankCard(final long designer_id,
-                                       JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
-        String url = UrlConstants.URL_WITHDRAW_MEMBERS + designer_id+"/balances/delete";
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT,url, jsonObject, callback) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                header.put(Constant.NetBundleKey.X_XTOKEN, xToken);
-                return header;
-            }
-        };
-        queue.add(okRequest);
-    }
+ 
 
     /**
      * 消费者交付物确认处理
@@ -1307,9 +1386,9 @@ public class MPServerHttpManager {
 
     /**
      * 获取设计师首页评价列表信息
-     * <p>
      */
     public void getEstimateList(String designer_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
+       // String url = "http://192.168.120.123:8081/member-app/v1/api" + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;
         String estimateUrl = UrlConstants.MAIN_MEMBER + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, estimateUrl, null, callback) {
             @Override
@@ -1404,11 +1483,6 @@ public class MPServerHttpManager {
 
     /**
      * 关注列表
-     *
-     * @param member_id 用户id
-     * @param limit
-     * @param offset
-     * @param callback
      */
     public void attentionListData(String member_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELETE_ATTENTION + member_id + "/follows?" + "limit=" + limit + "&offset=" + offset;
@@ -1428,6 +1502,133 @@ public class MPServerHttpManager {
 
 
     /**
+     * 获取设计师设计费用列表
+     */
+    public void getDesignerDesignCost(OkJsonRequest.OKResponseCallback callback) {
+
+        String url = UrlConstants.URL_DESIGNER_DESIGN_COST_RANGE;
+
+        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+
+        queue.add(okJsonRequest);
+
+    }
+
+    /**
+     * 获得工作室列表
+     */
+    public void getWorkRoomList(OkJsonRequest.OKResponseCallback callback, String type, int offset, int limit) {
+
+        String url = UrlConstants.MAIN_MEMBER + "/designers/search/studio?limit=" + limit + "&offset=" + offset + "&type_code=" + type;
+        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+        };
+
+        queue.add(okJsonRequest);
+
+    }
+
+
+    /**
+     * 套餐发布需求
+     */
+    public void sendPackagesForm(JSONObject jsonObject, String customer_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_DESIGN + "/appointMeal/"+customer_id;
+//        "http://192.168.88.175:8080/design-app/v1/api/appointMeal/"
+//        String url = UrlConstants.SEND_PACKAGES_FORM + customer_id;
+
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 大师接口
+     */
+    public void getGrandMasterInfo(int offset, int limit, String type, OkJsonRequest.OKResponseCallback callback) {
+
+        String url = UrlConstants.MAIN_MEMBER + "/designers/search/studio?limit=" + limit + "&offset=" + offset + "&type_code=" + type;//61
+//        String url = "http://192.168.120.217:8083/member-app/v1/api/designers/search/studio?limit=20&offset=0&type_code=61";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback);
+        queue.add(okRequest);
+    }
+
+    /**
+     * 大师详情接口
+     */
+    public void getGrandMasterDetailInfo(int offset, int limit, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
+
+        String url = UrlConstants.MAIN_MEMBER + "/designers/studio?limit=" + limit + "&offset=" + offset;
+//        String url = "http://192.168.120.217:8083/member-app/v1/api/designers/studio?limit=10&offset=0";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put("hs_uid", hs_uid);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+
+    /**
+     * 上传工作室立即预约信息
+     */
+
+    public void upWorkRoomOrderData(JSONObject jsonObject,
+                                    OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_DESIGN+ "/sixmodules/demands";
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> header = new HashMap<>();
+//                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+//                return header;
+//            }
+        };
+        queue.add(okRequest);
+
+    }
+
+    /**
+     * 获取工作室详情的信息
+     */
+
+    public void getWorkRoomOrderData(int designer_id, int offset, int limit, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
+
+        String url = UrlConstants.MAIN_MEMBER + "/designers/studio?limit=" + limit + "&offset=" + offset;
+
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put("hs_uid", hs_uid);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+
+    }
+
+    /**
      * 为X-Token 增加前缀
      *
      * @param xToken
@@ -1439,4 +1640,6 @@ public class MPServerHttpManager {
 
     private String TAG = getClass().getSimpleName();
 
+    public void sendUnBindBankCard(long designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback  callback) {
+    }
 }

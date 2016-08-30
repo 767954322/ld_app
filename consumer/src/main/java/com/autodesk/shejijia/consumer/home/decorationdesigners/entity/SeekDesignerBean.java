@@ -42,6 +42,7 @@ public class SeekDesignerBean implements Serializable {
         private String register_date;
         private String user_name;
         private String zip_code;
+
         private DesignerInfoBean designer;
         private RealNameBean real_name;
         private List<CasesListEntity> cases_list;
@@ -57,6 +58,46 @@ public class SeekDesignerBean implements Serializable {
         private String evalution_avg_scores;
         private String evalution_count;
         public String following_count;
+
+        /**
+         * 筛选新增字段
+         */
+        private String follows;
+        private String region;
+        private String seq;
+        private int followingCount;
+
+        public String getFollows() {
+            return follows;
+        }
+
+        public void setFollows(String follows) {
+            this.follows = follows;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public String getSeq() {
+            return seq;
+        }
+
+        public void setSeq(String seq) {
+            this.seq = seq;
+        }
+
+        public int getFollowingCount() {
+            return followingCount;
+        }
+
+        public void setFollowingCount(int followingCount) {
+            this.followingCount = followingCount;
+        }
 
         public String getLast_name() {
             return last_name;

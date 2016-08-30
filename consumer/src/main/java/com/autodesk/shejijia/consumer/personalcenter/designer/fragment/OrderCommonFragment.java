@@ -215,7 +215,7 @@ public class OrderCommonFragment extends BaseFragment {
 
             String livingRoom_Room_Toilet = room_convert + living_room_convert + toilet_convert;
             String address = province_name + city_name + district_name;
-            String wk_template_id = orderListEntity.getWk_template_id();
+            final String wk_template_id = orderListEntity.getWk_template_id();
             List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
             if (bidders != null && bidders.size() > 0) {
                 wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
@@ -236,11 +236,11 @@ public class OrderCommonFragment extends BaseFragment {
                             /**
                              * 项目进度．
                              */
+                            int template_id = Integer.parseInt(wk_template_id);
                             Intent intentOrder = new Intent(getActivity(), WkFlowStateActivity.class);
-                            intentOrder.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, orderListEntity.getNeeds_id());
-                            intentOrder.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
-                            intentOrder.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
-
+                            intentOrder.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, orderListEntity.getNeeds_id());
+                            intentOrder.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+                            intentOrder.putExtra(Constant.BundleKey.TEMPDATE_ID, template_id);
                             intentOrder.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, orderListEntity.getNeeds_id());
                             intentOrder.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_DESIGNERORDER_ACTIVITY);
                             intentOrder.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);

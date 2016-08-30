@@ -9,10 +9,28 @@ import java.io.Serializable;
  * @file user SearchHoverCaseBean .
  * @brief 搜索内容bean .
  */
-public class SearchHoverCaseBean implements Serializable{
+public class SearchHoverCaseBean implements Serializable {
     int type;
     String key;
-    String value;
+    String value; /// name .
+    String code;    /// code .
+    String description; /// 单位.
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public int getType() {
         return type;

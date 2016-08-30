@@ -108,6 +108,9 @@ public class AlertView {
     }
 
     protected void initViews() {
+        if(context == null){
+            return;
+        }
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById(android.R.id.content);
         rootView = (ViewGroup) layoutInflater.inflate(R.layout.layout_alertview, decorView, false);
@@ -240,7 +243,8 @@ public class AlertView {
                 }
                 //高亮按钮的样式
                 else if (mDestructive != null && mDestructive.contains(data)) {
-                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_destructive));
+//                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_destructive));
+                    tvAlert.setTextColor(context.getResources().getColor(R.color.textColor_alert_button_cancel));
                 }
 
                 tvAlert.setOnClickListener(new OnTextClickListener(position));
@@ -264,6 +268,7 @@ public class AlertView {
     }
 
     public AlertView addExtView(View extView) {
+
         loAlertHeader.addView(extView);
         return this;
     }

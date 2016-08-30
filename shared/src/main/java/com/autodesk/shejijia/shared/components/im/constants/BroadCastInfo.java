@@ -13,6 +13,7 @@ public class BroadCastInfo {
     public static final String MPCHAT_DISCONNECT_NOTIFICATION = "com.easyhome.chatdisconnected";
     public static final String MPCHAT_CONNECT_NOTIFICATION = "com.easyhome.chatconnected";
     public static final String MPCHAT_ERROR = "com.easyhome.servererror";
+    public static final String MPFITER_CASES = "com.easyhome.fitercases";
 
     public static final String USER_DID_LOGOUT = "com.easyhome.logout";
     public static final String USER_DID_LOGIN = "com.easyhome.login";
