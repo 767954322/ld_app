@@ -1,38 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/chat_tool_parentlayout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/chat_bottombar_background"
-    android:minHeight="@dimen/chat_toolview_minheight"
-    android:visibility="visible">
+<LinearLayout android:id="@+id/chat_tool_parentlayout"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/chat_bottombar_background"
+              android:minHeight="@dimen/chat_toolview_minheight"
+              android:visibility="visible">
 
-    <ImageView
-        android:id="@+id/chat_selectphoto"
-        android:layout_width="@dimen/chat_toolview_button_side"
-        android:layout_height="@dimen/chat_toolview_button_side"
-        android:layout_gravity="center_vertical|left"
-        android:layout_weight="1"
-        android:scaleType="centerInside"
-        android:src="@drawable/photo_ico" />
 
-    <ImageView
-        android:id="@+id/chat_takephoto"
+    <RelativeLayout
         android:layout_width="@dimen/chat_toolview_button_side"
-        android:layout_height="@dimen/chat_toolview_button_side"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:scaleType="centerInside"
-        android:src="@drawable/camera_ico" />
+        android:layout_weight="1">
 
-    <ImageView
-        android:id="@+id/chat_custom_button"
+
+        <ImageView
+            android:id="@+id/chat_selectphoto"
+            android:layout_width="@dimen/chat_toolview_button_side"
+            android:layout_height="@dimen/chat_toolview_button_side"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"
+            android:visibility="visible"
+            android:src="@drawable/photo_ico"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chat_selectphoto"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:text="相册"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="@dimen/chat_toolview_button_side"
-        android:layout_height="@dimen/chat_toolview_button_side"
-        android:layout_gravity="center_vertical|right"
-        android:layout_weight="1"
-        android:scaleType="centerInside"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1">
+
+
+        <ImageView
+            android:id="@+id/chat_takephoto"
+            android:layout_width="@dimen/chat_toolview_button_side"
+            android:layout_height="@dimen/chat_toolview_button_side"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"
+            android:visibility="visible"
+            android:src="@drawable/camera_ico"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chat_takephoto"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:text="相机"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_chat_custom_button"
+        android:layout_width="@dimen/chat_toolview_button_side"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1">
+
+
+        <ImageView
+            android:id="@+id/chat_custom_button"
+            android:layout_width="@dimen/chat_toolview_button_side"
+            android:layout_height="@dimen/chat_toolview_button_side"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerInside"/>
+
+        <TextView
+            android:id="@+id/chat_custom_button_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chat_custom_button"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
 
 </LinearLayout>
 

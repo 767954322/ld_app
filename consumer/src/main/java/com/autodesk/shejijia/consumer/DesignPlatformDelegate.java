@@ -101,6 +101,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         return getWorkflowButtonIco(OrderDetailsInfo, ifIsDesiner);
     }
 
+    @Override
+    public String getTextForProjectInfo(String OrderDetailsInfo, boolean ifIsDesiner) {
+        return getWorkflowText(OrderDetailsInfo, ifIsDesiner);
+    }
+
     public void onChatRoomSupplementryButtonClicked(Context context, String assetId, String designerId) {
         Intent maIntent = new Intent(context, ProjectMaterialActivity.class);
         maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
@@ -353,6 +358,175 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
         return -1;
     }
 
+
+    private String getWorkflowText(String OrderDetailsInfo, boolean ifIsDesiner) {
+        int wk_cur_sub_node_idi;
+        String Wk_template_id;
+        String Wk_cur_node_id;
+
+        WkFlowDetailsBean wkFlowDetailsBean = new Gson().fromJson(OrderDetailsInfo, WkFlowDetailsBean.class);
+        String Wk_cur_sub_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_sub_node_id();
+        wk_cur_sub_node_idi = Integer.valueOf(Wk_cur_sub_node_id);
+        Wk_template_id = wkFlowDetailsBean.getRequirement().getWk_template_id();
+        Wk_cur_node_id = wkFlowDetailsBean.getRequirement().getBidders().get(0).getWk_cur_node_id();
+
+        if (Wk_template_id.equals("1")) {
+
+            if (!Wk_cur_node_id.equals("-1")) {
+
+                switch (wk_cur_sub_node_idi) {
+                    case -1:
+                        return "选TA量房";
+                    case 11: // 量房
+                        if (ifIsDesiner) {
+                            return "确认量房";
+                        }
+                        return "量房表单";
+
+                    case 12: // 消费者拒绝设计师
+                    case 14: // 设计师拒绝量房
+                        return "量房表单";
+                    case 13: // 支付
+                        if (ifIsDesiner) {
+                            return "接收量房费";
+                        } else {
+                            return "支付量房费";
+                        }
+
+                    case 21: // 合同
+                    case 22: // 打开3D工具
+                        if (ifIsDesiner) {
+                            return "创建设计合同";
+                        } else {
+                            return "接收设计合同";
+                        }
+                    case 31: // 首款
+
+                        if (ifIsDesiner) {
+                            return "接收首款";
+                        } else {
+                            return "支付首款";
+                        }
+                    case 33: // 量房交付物
+                        if (ifIsDesiner) {
+                            return "上传量房交付物";
+                        } else {
+                            return "接受量房交付物";
+                        }
+
+                    case 41: // 支付设计首款
+                    case 42: // 打开3D工具
+                        if (ifIsDesiner) {
+                            return "接收尾款";
+                        } else {
+                            return "支付尾款";
+                        }
+
+                    case 51: // 支付尾款
+                    case 52: // 打开3D工具
+                        if (ifIsDesiner) {
+                            return "上传设计交付物";
+                        } else {
+                            return "接收设计交付物";
+                        }
+
+                    case 61: // 上传支付交付物
+                    case 62: // 编辑交付物
+                    case 63: // 交付曲确认
+                    case 64: // 交付曲延期
+                    case 71: // 评价
+                    case 72: // 稍后评价
+                        return "查看设计交付物";
+
+                    default:
+                        return "";
+                }
+            } else {
+
+                if (!ifIsDesiner) {
+                    return "选TA量房";
+                } else {
+                    return "";
+                }
+            }
+
+        } else if (Wk_template_id.equals("2")) {
+
+            switch (wk_cur_sub_node_idi) {
+                case 11: // 量房
+                    if (ifIsDesiner) {
+                        return "确认量房";
+                    }
+                    return "量房表单";
+                case 14: // 设计师拒绝量房
+                    return "量房表单";
+                case 13: // 支付
+                    if (ifIsDesiner) {
+                        return "接收量房费";
+                    } else {
+                        return "支付量房费";
+                    }
+
+                case 21: // 合同
+                case 22: // 打开3D工具
+                    if (ifIsDesiner) {
+                        return "创建设计合同";
+                    } else {
+                        return "接收设计合同";
+                    }
+                case 31: // 首款
+
+                    if (ifIsDesiner) {
+                        return "接收首款";
+                    } else {
+                        return "支付首款";
+                    }
+                case 33: // 量房交付物
+                    if (ifIsDesiner) {
+                        return "上传量房交付物";
+                    } else {
+                        return "接受量房交付物";
+                    }
+
+                case 41: // 支付设计首款
+                case 42: // 打开3D工具
+                    if (ifIsDesiner) {
+                        return "接收尾款";
+                    } else {
+                        return "支付尾款";
+                    }
+
+                case 51: // 支付尾款
+                case 52: // 打开3D工具
+                    if (ifIsDesiner) {
+                        return "上传设计交付物";
+                    } else {
+                        return "接收设计交付物";
+                    }
+
+                case 61: // 上传支付交付物
+                case 62: // 编辑交付物
+                case 63: // 交付曲确认
+                case 64: // 交付曲延期
+                case 71: // 评价
+                case 72: // 稍后评价
+                    return "查看设计交付物";
+
+                default:
+                    if (!ifIsDesiner) {
+                        return "选TA量房";
+                    } else {
+                        return "";
+                    }
+            }
+
+        } else if (Wk_template_id.equals("3")) {
+                return "";
+        }
+
+
+        return "";
+    }
 
     public void getCloudFilesAsync(final String X_Token, final String assetId, final String memberId,
                                    final OkJsonRequest.OKResponseCallback callback) {
