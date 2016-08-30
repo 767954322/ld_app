@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,6 +28,7 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailB
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.consumer.wxapi.SendWXShared;
@@ -64,56 +63,18 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @描述 :  案例库详情界面
+ *
+ * @Author  :willson
+ *
+ * @version : 0.0.0.30;
+ *
+ * @创建日期  :2016.8.29
+ */
 public class CaseLibraryNewActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
-    private ListView caseLibraryNew;
-    private LinearLayout llThumbUp;
-    private String case_id;
-    private CaseDetailBean caseDetailBean;
-    private CaseLibraryAdapter mCaseLibraryAdapter;
-    private List<ImagesBean> images;
-    private RelativeLayout rlCaseLibraryHead;
-    private View viewHead;
-    private RelativeLayout rlCaseLibraryBottom;
-    private ImageView mdesignerAvater;
-    private TextView mCaseLibraryText;
-    private PolygonImageView pivImgCustomerHomeHeader;
-    private ImageView ivCustomerIm;
-    private TextView ivConsumeHomeDesigner;
-    private TextView mTvFollowedDesigner;
-    private TextView tvCustomerHomeStyle;
-    private TextView tvCustomerHomeRoom;
-    private TextView tvCustomerHomeArea;
-    private TextView tvThumbUp;
-    private Map<String, String> roomHall;
-    private Map<String, String> style;
-    private LinearLayout ll_fenxiang_up;
-    private LinearLayout rlThumbUp;
-    private TextView tvheadThumbUp;
-    private LinearLayout ll_fenxiang_down;
-    private WXSharedPopWin takePhotoPopWin;
-    private boolean ifIsSharedToFriends = true;
-    private PictureProcessingUtil pictureProcessingUtil;
-    private String designer_id;
-    private String hs_uid;
-    private MemberEntity memberEntity;
-    private String member_type;
-    private String member_id;
-    private String mMemberType;
-    private boolean isMemberLike;
-    private ImageView ivThumbUp;
-    private ImageView ivHeadThumbUp;
-    private String firstCaseLibraryImageUrl;
-    private int topPosition;
 
-    private float mPosY = 0;
-    private float mCurPosY = 0;
-
-    private AlertView unFollowedAlertView;
-    private DesignerInfoBean mDesignerInfo;
-    private String mHs_uid;
-    private String mNickName;
-    private CountDownTimer mTimer;
 
     @Override
     protected int getLayoutResId() {
@@ -141,15 +102,17 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
         mTvFollowedDesigner = (TextView) findViewById(R.id.tv_follow_designer);
 
+        //顶部图片head
         View view = LayoutInflater.from(this).inflate(R.layout.case_library_new_item, null);
         mdesignerAvater = (ImageView) view.findViewById(R.id.case_library_item_iv);
 
+        //分享 点赞的head
         View viewHead = LayoutInflater.from(this).inflate(R.layout.caselibrary_head, null);
         ll_fenxiang_down = (LinearLayout) viewHead.findViewById(R.id.ll_fenxiang);
         rlThumbUp = (LinearLayout) viewHead.findViewById(R.id.rl_thumb_up);
         tvheadThumbUp = (TextView) viewHead.findViewById(R.id.tv_thumb_up);
         ivHeadThumbUp = (ImageView) viewHead.findViewById(R.id.iv_thumb_up);
-
+        //描述文字的head
         View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
@@ -172,15 +135,15 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mTimer = new CountDownTimer(800, 800) {//点赞的点击事件，800ms内拦截
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-            @Override
-            public void onFinish() {
-                rlThumbUp.setClickable(true);
-            }
-        };
+//        mTimer = new CountDownTimer(800, 800) {//点赞的点击事件，800ms内拦截
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//            }
+//            @Override
+//            public void onFinish() {
+//                rlThumbUp.setClickable(true);
+//            }
+//        };
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
         CustomProgress.show(this,"",false,null);
@@ -225,14 +188,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         switch (v.getId()) {
             case R.id.rl_thumb_up://点赞
                 if (null != memberEntity) {
-                    if (!isMemberLike) {
-                        rlThumbUp.setClickable(false);
-                        mTimer.start();// 开始计时
-                        sendThumbUp(caseDetailBean.getId());
-                    } else {
-                        //已经点过赞
-                    }
-
+                    rlThumbUp.setOnClickListener(null);
+                    llThumbUp.setOnClickListener(null);
+                    CustomProgress.show(this, "", false, null);
+                    sendThumbUp(caseDetailBean.getId());
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -417,6 +376,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 rlThumbUp.setOnClickListener(null);
                 llThumbUp.setOnClickListener(null);
 
@@ -429,11 +389,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                rlThumbUp.setOnClickListener(CaseLibraryNewActivity.this);
+                llThumbUp.setOnClickListener(CaseLibraryNewActivity.this);
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null,
-                        CaseLibraryNewActivity.this,
-                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
             }
         };
         MPServerHttpManager.getInstance().sendThumbUpRequest(assetId, okResponseCallback);
@@ -448,7 +408,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Log.d("yxw", jsonObject.toString());
                 try {
                     isMemberLike = jsonObject.getBoolean("is_member_like");
                     if (isMemberLike) {
@@ -467,8 +426,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
-                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getThumbUpRequest(assetId, okResponseCallback);
@@ -525,6 +483,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
          */
         if (null != memberEntity) {
             member_id = memberEntity.getAcs_member_id();
+            getThumbUp(caseDetailBean.getId());
+
         }
         if (!TextUtils.isEmpty(member_id)) {
             /**
@@ -539,12 +499,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             setFollowedTitle(false);
         }
         initUnFollowedAlertView();
-
-        //登录状态判断是否点赞
-        if (null != memberEntity) {
-            getThumbUp(caseDetailBean.getId());
-        }
-
         images = caseDetailBean.getImages();
         //查找是否是封面图片  若是就添加到头部
         for (int i = 0; i < images.size(); i++) {
@@ -713,7 +667,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position != 2) {
+        if (position != 2||position!=1 ) {
             Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
@@ -726,12 +680,61 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     @Override
     protected void onStop() {
         super.onStop();
-        mTimer.cancel();
+       // mTimer.cancel();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mTimer.cancel();
+      //  mTimer.cancel();
     }
+
+    private ListView caseLibraryNew;
+    private LinearLayout llThumbUp;
+    private String case_id;
+    private CaseDetailBean caseDetailBean;
+    private CaseLibraryAdapter mCaseLibraryAdapter;
+    private List<ImagesBean> images;
+    private RelativeLayout rlCaseLibraryHead;
+    private View viewHead;
+    private RelativeLayout rlCaseLibraryBottom;
+    private ImageView mdesignerAvater;
+    private TextView mCaseLibraryText;
+    private PolygonImageView pivImgCustomerHomeHeader;
+    private ImageView ivCustomerIm;
+    private TextView ivConsumeHomeDesigner;
+    private TextView mTvFollowedDesigner;
+    private TextView tvCustomerHomeStyle;
+    private TextView tvCustomerHomeRoom;
+    private TextView tvCustomerHomeArea;
+    private TextView tvThumbUp;
+    private Map<String, String> roomHall;
+    private Map<String, String> style;
+    private LinearLayout ll_fenxiang_up;
+    private LinearLayout rlThumbUp;
+    private TextView tvheadThumbUp;
+    private LinearLayout ll_fenxiang_down;
+    private WXSharedPopWin takePhotoPopWin;
+    private boolean ifIsSharedToFriends = true;
+    private PictureProcessingUtil pictureProcessingUtil;
+    private String designer_id;
+    private String hs_uid;
+    private MemberEntity memberEntity;
+    private String member_type;
+    private String member_id;
+    private String mMemberType;
+    private boolean isMemberLike;
+    private ImageView ivThumbUp;
+    private ImageView ivHeadThumbUp;
+    private String firstCaseLibraryImageUrl;
+    private int topPosition;
+
+    private float mPosY = 0;
+    private float mCurPosY = 0;
+
+    private AlertView unFollowedAlertView;
+    private DesignerInfoBean mDesignerInfo;
+    private String mHs_uid;
+    private String mNickName;
+//    private CountDownTimer mTimer;
 }
