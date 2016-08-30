@@ -16,33 +16,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.manager.ChatEventHandler;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.tools.photopicker.MPPhotoPickerActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPCameraUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.socks.library.KLog;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.ChatEventHandler;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 
 
 public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventHandler.ChatEventHandlerInterface {
@@ -142,6 +139,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     @Override
     public void onSendTextClicked(String msg) {
         sendTextMsg(msg);
+
     }
 
 

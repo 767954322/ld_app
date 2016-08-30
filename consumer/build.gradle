@@ -37,6 +37,11 @@ android {
 
     productFlavors {
     }
+
+    lintOptions {
+        //忽略lint检查报错
+        abortOnError false
+    }
 }
 
 dependencies {
