@@ -8,8 +8,11 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+
+import java.util.Map;
 
 /**
  * 网络状态判断类
@@ -39,12 +42,32 @@ public class ApiStatusUtil {
     public void apiStatuError(VolleyError error, Context context) {
         this.mContext = context;
         Log.i("ApiStatusUtil","--------------------------------------错误日志-------------------------------------");
+<<<<<<< HEAD
         Log.e("VolleyError---", error.getMessage(), error);
         byte[] htmlBodyBytes = error.networkResponse.data;  //回应的报文的包体内容
         Log.e("VolleyError body---->", new String(htmlBodyBytes), error);
         Log.i("ApiStatusUtil","--------------------------------------错误日志-------------------------------------");
 
         NetworkResponse networkResponse = error.networkResponse;
+=======
+        Log.e("Response Error", error.getMessage(), error);
+        MPNetworkUtils.logError("Response url", error);
+        NetworkResponse response = error.networkResponse;
+        if (response == null){
+            showAlertView("请检查网络连接状态", 1);
+            return;
+        }
+        Map<String,String> headers = response.headers;
+        for (String key : headers.keySet()) {
+            Log.e("RESPONSE HEADERS", key + "=" + headers.get(key));
+        }
+        Log.e("RESPONSE CODE", "ERROR CODE = "+response.statusCode);
+        byte[] htmlBodyBytes = response.data;  //回应的报文的包体内容
+        Log.e("Response body--->", new String(htmlBodyBytes));
+        Log.i("ApiStatusUtil","--------------------------------------错误日志-------------------------------------");
+
+        NetworkResponse networkResponse = response;
+>>>>>>> af9e8c87b377944625430fa62a2ec59f14ff1d86
 
         if (networkResponse != null) {
             int statusCode = networkResponse.statusCode;

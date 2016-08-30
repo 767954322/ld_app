@@ -585,11 +585,18 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                         mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
                         updateViewFrom3DPlanList(design_asset_id);
                     }else {
-                        Toast.makeText(FlowUploadDeliveryActivity.this, R.string.fanganflow, Toast.LENGTH_SHORT).show();
+                        new AlertView(" ",
+                                UIUtils.getString(R.string.fanganflow),
+                                null, null,
+                                new String[]{UIUtils.getString(R.string.sure)},
+                                FlowUploadDeliveryActivity.this,
+                                AlertView.Style.Alert,
+                                FlowUploadDeliveryActivity.this).show();
 
                     }
 
                 } catch (Exception e){
+
                     Toast.makeText(FlowUploadDeliveryActivity.this, "e:" + e, Toast.LENGTH_SHORT).show();
                 }
             }
