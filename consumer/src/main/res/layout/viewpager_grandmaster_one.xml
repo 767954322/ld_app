@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/iv_detail_desiner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/common_case_icon"
+        android:scaleType="fitXY" />
+
+
+    <TextView
+        android:id="@+id/tv_detail_cn_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/common_navbar"
+        android:layout_marginLeft="@dimen/font_15"
+        android:layout_marginTop="@dimen/font_30"
+        android:fontFamily="Regular"
+        android:text="菲尔普·斯塔克"
+        android:textColor="#0084FF"
+        android:textSize="@dimen/font_36" />
+
+    <TextView
+        android:id="@+id/tv_detail_en_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_detail_cn_name"
+        android:layout_marginLeft="@dimen/font_15"
+        android:layout_marginTop="@dimen/font_5"
+        android:fontFamily="serif"
+        android:text="Whillin stark"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/font_26"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_detail_cn_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_detail_en_name"
+        android:layout_marginLeft="@dimen/font_15"
+        android:layout_marginTop="@dimen/font_10"
+        android:fontFamily="Regular"
+        android:text="法国艺术总监"
+        android:textColor="#0084FF"
+        android:textSize="@dimen/font_26" />
+
+    <TextView
+        android:id="@+id/tv_detail_en_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_detail_cn_position"
+        android:layout_marginLeft="@dimen/font_15"
+        android:layout_marginTop="@dimen/font_5"
+        android:fontFamily="serif"
+        android:text="French art director"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/font_17"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_center_inparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_center_inparent"
+        android:layout_marginTop="@dimen/font_45"
+        android:background="#4d000000">
+
+        <TextView
+            android:id="@+id/tv_detail_content"
+            android:layout_width="@dimen/font_230"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/font_10"
+            android:text="大师介绍： 符合就算打开粉红色的看法和肯定是发送的看法和打扫房间快速的回复健康第三方的可沙发看电视"
+            android:textColor="@color/white"
+            android:maxLines="5"
+            android:textSize="@dimen/font_15" />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetail3DActivity">
+
+    <include
+        android:id="@+id/case_3d_title"
+        layout="@layout/view_navigation_header" />
+
+
+    <ListView
+        android:id="@+id/case_library_3d"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/case_3d_title" />
+
+    <include
+        android:id="@+id/case_library_head_3d"
+        layout="@layout/caselibrary_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/case_3d_title"
+        android:background="@android:color/white"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/case_library_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

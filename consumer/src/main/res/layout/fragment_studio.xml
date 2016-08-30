@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f4f4"
+    android:orientation="vertical"
+    >
+
+    <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/work_room_refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/view_refresh_head" />
+
+        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.FlexibleListView
+            android:id="@+id/work_room_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/transparent"
+            android:scrollbars="none" />
+
+        <include layout="@layout/view_load_more" />
+    </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
+
+
+
+    <TextView
+        android:id="@+id/now_order"
+        android:layout_width="@dimen/size_162"
+        android:layout_height="@dimen/size_40"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/size_50"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:background="@drawable/now_order_bg"
+        android:textSize="@dimen/font_16"
+        android:textColor="@color/bg_ff"
+        android:text="立即预约"
+        />
+</RelativeLayout>

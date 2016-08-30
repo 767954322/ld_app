@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_16"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_appraise_designer_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_10"
+            android:text="@string/appraise_designer"/>
+        <!--style="@android:style/Widget.RatingBar.Small"-->
+
+        <RatingBar
+            android:id="@+id/rating_star"
+            style="@style/custom_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_appraise_designer_tag"
+            android:layout_marginLeft="@dimen/size_8"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:stepSize="1"
+            />
+
+    </LinearLayout>
+
+    <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
+        android:id="@+id/lv_seek_appraise_detail_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"/>
+
+
+</LinearLayout>

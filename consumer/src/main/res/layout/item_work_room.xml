@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_95"
+        android:layout_marginTop="@dimen/size_12"
+        >
+
+
+
+        <ImageView
+            android:id="@+id/work_room_imageView"
+            android:layout_width="@dimen/size_214"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/work_room_header_bg"
+            />
+        <TextView
+            android:id="@+id/work_room_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_17"
+            android:layout_marginLeft="@dimen/size_28"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/work_room_imageView"
+            android:text="律典工作室"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

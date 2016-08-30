@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_consumer_demand"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_eef1f4"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/common_navbar"
+            layout="@layout/view_navigation_header" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_d5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name_space"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/et_issue_demand_name"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:gravity="center_vertical"
+                android:textColorHint="#999"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/consume_phone"
+                android:textSize="@dimen/font_14" />
+
+            <EditText
+                android:id="@+id/et_issue_demand_mobile"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:ems="10"
+                android:hint="@string/please_enter_your_phone"
+                android:maxLength="11"
+                android:phoneNumber="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_issue_house_type"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demand_project_types"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/tv_issue_house_type"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:gravity="center_vertical"
+                android:hint="@string/demand_please_project_types_select"
+                android:textColor="@color/black"
+                android:textColorHint="#999"
+                android:textSize="@dimen/font_14" />
+
+            <ImageView
+                android:id="@+id/iv_sword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_unfold_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fitment_area"
+                android:textSize="@dimen/font_14" />
+
+            <EditText
+                android:id="@+id/et_issue_demand_area"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:ems="10"
+                android:hint="@string/demand_import_area"
+                android:inputType="numberDecimal"
+                android:textColor="@color/black"
+                android:textColorHint="#999"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_18"
+                android:text="㎡" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demand_planning_budget"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/tv_issue_demand_design_budget"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:clickable="true"
+                android:ems="10"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:hint="@string/demand_design_budget_hint_select"
+                android:phoneNumber="true"
+                android:textColor="@color/black"
+                android:textColorHint="#999"
+                android:textSize="@dimen/font_14" />
+
+            <!-- <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginRight="@dimen/size_8"
+                 android:text="元"/>-->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_unfold_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demand_project_budget"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/tv_issue_demand_budget"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:clickable="true"
+                android:ems="10"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:hint="@string/demand_budget_hint_select"
+                android:phoneNumber="true"
+                android:textColor="@color/black"
+                android:textColorHint="#999"
+                android:textSize="@dimen/font_14" />
+
+            <!-- <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginRight="@dimen/size_8"
+                 android:text="元"/>-->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_unfold_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demand_house_model"
+                android:textSize="@dimen/font_14" />
+
+            <LinearLayout
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:background="@color/no_color"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_issue_room"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:hint="@string/issue_room_select"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/icon_unfold_normal" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_issue_style"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demand_style"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/tv_issue_style"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:hint="@string/demand_please_style_select"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_unfold_normal" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_issue_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginTop="@dimen/size_10"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demand_project_address"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/tv_issue_address"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="@string/demand_please_address"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_unfold_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/bg_ff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:background="@color/bg_ef" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@color/bg_ff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_10"
+            android:paddingRight="@dimen/size_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demand_village_name"
+                android:textSize="@dimen/font_14" />
+
+            <EditText
+                android:id="@+id/tv_issue_demand_detail_address"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:ellipsize="end"
+                android:hint="@string/demand_please_specific_address"
+                android:maxLength="32"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_14" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_send_demand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20"
+            android:layout_marginRight="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_30"
+            android:background="@drawable/bg_common_btn_blue"
+            android:text="@string/autonym_submit"
+            android:textColor="@color/bg_ff"
+            android:textSize="@dimen/font_20" />
+
+    </LinearLayout>
+</ScrollView>

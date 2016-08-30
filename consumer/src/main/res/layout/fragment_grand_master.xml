@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".codecorationBase.grandmaster.fragment.GrandMasterFragment">
+
+    <!--<FrameLayout-->
+    <!--android:id="@+id/fl_grand"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginLeft="@dimen/size_10"-->
+    <!--android:layout_marginRight="@dimen/size_10"-->
+    <!--android:layout_marginTop="@dimen/size_10">-->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_grand_selection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <!--</FrameLayout>-->
+
+    <RelativeLayout
+        android:id="@+id/rl_grand_dot"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/size_20"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/font_30">
+
+        <LinearLayout
+            android:id="@+id/ll_grand_selection"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"></LinearLayout>
+    </RelativeLayout>
+
+
+    <ImageButton
+        android:id="@+id/bt_grand_reservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_grand_dot"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/font_20"
+        android:textSize="@dimen/font_25"
+        android:background="@drawable/boutton"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+ <include
+     android:id="@+id/common_navbar"
+     layout="@layout/view_navigation_header"/>
+
+ <com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs
+     android:id="@+id/consumer_six_products_tabs"
+     android:layout_width="match_parent"
+     android:layout_height="48dip"
+      />
+ <com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager
+     android:id="@+id/consumer_six_products_viewPager"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     />
+</LinearLayout>

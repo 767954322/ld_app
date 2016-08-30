@@ -1,0 +1,43 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_average_bottom"
+    tools:context=".codecorationBase.average.fragment.AverageFragment">
+
+    <RelativeLayout
+        android:id="@+id/rl_average"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/bg_average"
+            />
+
+        <ImageView
+            android:id="@+id/iv_average_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/iv_send_demand"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/size_20"
+            android:src="@drawable/btn_rule_intro"/>
+
+        <ImageView
+            android:id="@+id/iv_send_demand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/size_20"
+            android:src="@drawable/btn_demand_send"/>
+
+    </RelativeLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/work_room_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/work_room_bg_header" />
+
+
+        <ImageView
+            android:id="@+id/work_room_back"
+            android:layout_width="@dimen/size_25"
+            android:layout_height="@dimen/size_25"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:src="@drawable/work_room_back" />
+
+        <TextView
+            android:id="@+id/work_room_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size_10"
+            android:text="工作室名字"
+            android:textColor="@color/bg_ff"
+            android:textSize="@dimen/font_20"
+
+            />
+        <!--6边形-->
+        <RelativeLayout
+            android:id="@+id/rl_six_shape"
+            android:layout_width="@dimen/size_102"
+            android:layout_height="@dimen/size_112"
+            android:layout_below="@id/work_room_name_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size_80"
+            >
+
+            <ImageView
+                android:id="@+id/work_room_detail_six_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/header_work_room_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_six_shape"
+            android:layout_centerHorizontal="true"
+            android:text="伟大的工作室名字"
+            android:textColor="@color/bg_00"
+            android:textSize="@dimen/font_17"
+
+            />
+
+        <TextView
+            android:id="@+id/header_work_room_design_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header_work_room_name"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/font_14"
+
+            />
+
+        <TextView
+            android:id="@+id/work_room_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header_work_room_design_year"
+            android:layout_marginBottom="@dimen/size_5"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
+            android:textColor="#666666" />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/work_room_design_imageView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/size_180"-->
+            <!--android:layout_below="@id/work_room_introduce"-->
+            <!--android:background="@drawable/common_case_icon" />-->
+
+
+    </RelativeLayout>
+</RelativeLayout>

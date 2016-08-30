@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/ll_work_room_one"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:id="@+id/work_room_design_logo_one"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_100"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/icon"
+            />
+        <TextView
+            android:id="@+id/tv_designer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/work_room_design_logo_one"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_gravity="center_horizontal"
+            android:text="王宝强"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/space_one"
+        android:layout_width="@dimen/size_10"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/ll_work_room_two"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:id="@+id/work_room_design_logo_two"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_100"
+            android:scaleType="fitXY"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/icon"
+            />
+        <TextView
+            android:id="@+id/tv_designer_name_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/work_room_design_logo_one"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_gravity="center_horizontal"
+            android:text="王宝强"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/space_two"
+        android:layout_width="@dimen/size_10"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/ll_work_room_three"
+        android:layout_width="@dimen/size_0"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:id="@+id/work_room_design_logo_three"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_100"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/icon"
+            />
+        <TextView
+            android:id="@+id/tv_designer_name_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/work_room_design_logo_one"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_gravity="center_horizontal"
+            android:text="王宝强"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

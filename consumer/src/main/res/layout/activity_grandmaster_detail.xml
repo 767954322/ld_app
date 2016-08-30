@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.autodesk.shejijia.consumer.codecorationBase.packages.view.VerticalViewPager
+        android:id="@+id/vvp_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside" />
+
+    <RelativeLayout
+        android:id="@+id/rl_navr_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical">
+
+        <RelativeLayout
+            android:id="@+id/backButton_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/nav_left_imageButton"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/transparent"
+                android:padding="@dimen/navbar_icon_padding"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_back_normal_z"
+                android:visibility="visible" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/nav_title_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:maxEms="6"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/font_16"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+    <ImageButton
+        android:id="@+id/bt_grand_reservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ib_grand_detail_ico"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/boutton" />
+
+    <ImageButton
+        android:id="@+id/ib_grand_detail_ico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/font_15"
+        android:layout_marginTop="@dimen/font_15"
+        android:background="@drawable/drop_down" />
+
+</RelativeLayout>

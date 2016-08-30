@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="@dimen/size_265"
+        android:layout_height="@dimen/size_310"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_50"
+        android:background="@drawable/work_room_dialog_circle_bg">
+
+        <LinearLayout
+            android:id="@+id/ll_work_room_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/work_room_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_29"
+                android:layout_marginTop="@dimen/size_102"
+                android:text="@string/work_room_name_text"
+                android:textColor="@color/bg_00"
+                android:textSize="@dimen/font_15"
+
+
+                />
+
+            <EditText
+                android:id="@+id/work_room_name"
+                android:layout_width="@dimen/size_175"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_29"
+                android:layout_marginTop="@dimen/size_102"
+                android:layout_toRightOf="@id/work_room_name_text"
+                android:background="@android:color/transparent"
+                android:hint="@string/work_room_name" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_work_room_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_work_room_name"
+            android:layout_marginTop="@dimen/size_55"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/work_room_phone_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_29"
+                android:text="@string/work_room_phone_text"
+                android:textColor="@color/bg_00"
+                android:textSize="@dimen/font_15"
+
+
+                />
+
+            <EditText
+                android:id="@+id/work_room_phoneNumber"
+                android:layout_width="@dimen/size_175"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_29"
+                android:layout_toRightOf="@id/work_room_phone_text"
+                android:background="@android:color/transparent"
+                android:hint="@string/work_room_phone_number" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/commit_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_55"
+            android:textColor="@color/bg_ff"
+            android:background="@drawable/commit_bg"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/ll_work_room_phone"
+            android:gravity="center"
+            android:text="提交"
+
+            android:textSize="@dimen/font_16"
+
+            />
+
+        <ImageView
+            android:id="@+id/work_room_dialog_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/font_7"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_16"
+            android:background="@drawable/work_room_dialog_close"
+
+            />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/dialog_title_picture"
+        android:layout_width="@dimen/size_100"
+        android:layout_height="@dimen/size_112"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/dialog_title_picture" />
+
+
+</RelativeLayout>
