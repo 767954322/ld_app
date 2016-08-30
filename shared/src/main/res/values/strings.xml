@@ -105,6 +105,7 @@
     <string name="flow_decorate_address">装修地址：</string>
     <string name="flow_second_party">乙方(设计师)：</string>
     <string name="flow_detail_address">详细地址：</string>
+    <string name="flow_service_address">服务地址：</string>
     <string name="flow_renderings">渲染图：</string>
     <string name="flow_monad_zhang">张</string>
     <string name="flow_every_increase_a_rendering_fee">每增加一张效果图费用：</string>
