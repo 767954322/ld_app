@@ -134,9 +134,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                 String strToken = URLDecoder.decode(token, Constant.NetBundleKey.UTF_8).substring(6);
                 AdskApplication.getInstance().saveSignInInfo(strToken);
 //                /// 登录成功后,发送广播 .
-//                Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
-//                intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
-//                sendBroadcast(intent);
+                Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+                intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
+                sendBroadcast(intent);
 
                 finish();
             } catch (UnsupportedEncodingException e) {

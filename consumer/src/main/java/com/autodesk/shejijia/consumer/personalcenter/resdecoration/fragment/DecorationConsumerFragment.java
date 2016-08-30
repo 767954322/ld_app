@@ -12,6 +12,8 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationL
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
@@ -19,6 +21,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.socks.library.KLog;
 
@@ -84,45 +87,51 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
      * 获取消费者家装订单
      */
     public void getMyDecorationData(final int offset, final int limit) {
-        MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
+        MemberEntity memBerEnty = AdskApplication.getInstance().getMemberEntity();
+        if(null != memBerEnty && Constant.UerInfoKey.CONSUMER_TYPE.equals(memBerEnty.getMember_type())){
 
-                String userInfo = GsonUtil.jsonToString(jsonObject);
-                DecorationListBean mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
+            MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    CustomProgress.cancelDialog();
+
+                    String userInfo = GsonUtil.jsonToString(jsonObject);
+                    DecorationListBean mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
 
 
-                if (isRefreshOrLoadMore) {
-                    updateViewFromData(mDecorationListBean);
-                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                } else {
-                    mDecorationNeedsList.clear();
-                    updateViewFromData(mDecorationListBean);
-                    mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    int count = mDecorationListBean.getCount();
-                    if (count == 0) {
-                        mRlEmpty.setVisibility(View.VISIBLE);
-                        return;
+                    if (isRefreshOrLoadMore) {
+                        updateViewFromData(mDecorationListBean);
+                        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                     } else {
-                        mRlEmpty.setVisibility(View.GONE);
+                        mDecorationNeedsList.clear();
+                        updateViewFromData(mDecorationListBean);
+                        mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                        int count = mDecorationListBean.getCount();
+                        if (count == 0) {
+                            mRlEmpty.setVisibility(View.VISIBLE);
+                            return;
+                        } else {
+                            mRlEmpty.setVisibility(View.GONE);
+                        }
                     }
+
+
+                    KLog.json(TAG, userInfo);
                 }
 
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    MPNetworkUtils.logError(TAG, volleyError);
+                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    CustomProgress.cancelDialog();
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
 
-                KLog.json(TAG, userInfo);
-            }
+                }
+            });
 
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+        }
 
-            }
-        });
     }
 
     private void updateViewFromData(DecorationListBean mDecorationListBean) {
