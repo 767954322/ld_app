@@ -229,9 +229,11 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
          * 手机
          */
         if (0 == is_validated_by_mobile || 2 == is_validated_by_mobile)
+            mobile_number = "";
             mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
         if (1 == is_validated_by_mobile){
             if (TextUtils.isEmpty(mobile_number)) {
+                mobile_number = "";
                 mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
             } else {
                 mTvConsumerPhone.setText(mobile_number);
