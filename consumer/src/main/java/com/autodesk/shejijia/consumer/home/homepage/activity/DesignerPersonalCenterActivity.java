@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
@@ -371,21 +370,21 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         }
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
-//            designer_id = memberEntity.getAcs_member_id();
-//            hs_uid = memberEntity.getHs_uid();
-//
-//            getDesignerInfoData(designer_id, hs_uid);
-//            getMemberInfoData(designer_id);
-//            getRealNameAuditStatus(designer_id, hs_uid);
-//        } else {
-//            mTvDesignerNickname.setText(R.string.no_data);
-//            mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
-//        }
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+            designer_id = memberEntity.getAcs_member_id();
+            hs_uid = memberEntity.getHs_uid();
+
+            getDesignerInfoData(designer_id, hs_uid);
+            getMemberInfoData(designer_id);
+            getRealNameAuditStatus(designer_id, hs_uid);
+        } else {
+            mTvDesignerNickname.setText(R.string.no_data);
+            mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
+        }
+    }
 
     private static final int QR = 1;
     private static final int MORE_LOGOUT = 0;

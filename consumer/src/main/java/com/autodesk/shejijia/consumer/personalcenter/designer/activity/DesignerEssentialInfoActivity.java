@@ -2,7 +2,9 @@ package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,7 +27,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
@@ -54,6 +56,7 @@ import com.squareup.okhttp.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -74,9 +77,13 @@ import de.greenrobot.event.EventBus;
  */
 public class DesignerEssentialInfoActivity extends NavigationBarActivity implements View.OnClickListener {
     private Bitmap headPicBitmap;
+    private Uri uritempFile;
+    private static final int CROP_SMALL_PICTURE = 5;//截图
+    private static final int CROP_SMALL_PICTURE_1 = 6;//截图
 
     @Override
     protected int getLayoutResId() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置竖屏
         return R.layout.activity_designer_info;
     }
 
@@ -364,7 +371,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                     jsonObj.put(Constant.DesignerBasicInfoKey.DIY_COUNT, mDesignerInfoDetails.getDesigner().getDiy_count());
                     jsonObj.put(Constant.DesignerBasicInfoKey.CASE_COUNT, mDesignerInfoDetails.getDesigner().getCase_count());
                     jsonObj.put(Constant.DesignerBasicInfoKey.THEME_PIC, mDesignerInfoDetails.getDesigner().getTheme_pic());
-                    jsonObj.put(Constant.DesignerBasicInfoKey.DESIGN_PRICE_CODE,options1);//上传选择的设计费用价格code
+                    jsonObj.put(Constant.DesignerBasicInfoKey.DESIGN_PRICE_CODE, options1);//上传选择的设计费用价格code
                     CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.design_fees_on_cross), false, null);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -597,59 +604,138 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             MyToast.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.autonym_sd_disabled));
             return;
         }
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
         startActivityForResult(intent, CAMERA_INTENT_REQUEST);
+    }
+
+    /**
+     * 图片截取
+     *
+     * @param uri
+     * @param outputX
+     * @param outputY
+     * @param requestCode
+     */
+    private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", outputX);
+        intent.putExtra("outputY", outputY);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
+        startActivityForResult(intent, requestCode);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        {
-            if (requestCode == SYS_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
-                try {
-                    CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-
-                    Uri uri = data.getData();
-                    /**
-                     * 解决上传图片找不到路径问题
-                     */
-                    String imageFilePath = PhotoPathUtils.getPath(DesignerEssentialInfoActivity.this, uri);
-
-                    if (TextUtils.isEmpty(imageFilePath)) {
-                        return;
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case SYS_INTENT_REQUEST://系统相册
+                    if (data != null) {
+                        // 照片的原始资源地址
+                        Uri originalUri = data.getData();
+                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_1);
                     }
+                    break;
+                case CAMERA_INTENT_REQUEST://相机
+                    cropImageUri(uritempFile, 300, 300, CROP_SMALL_PICTURE);
+                    break;
+                case CROP_SMALL_PICTURE://截图
+                    if (uritempFile != null) {
+                        Bitmap bitmap;
+                        File file;
+                        try {
+                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
+                            file = saveBitmap2File(this, "headpic.png", bitmap);
+                            piv_essential_photo.setImageBitmap(bitmap);
+                            bitmap.recycle();
+                            try {
+                                CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+                                putFile2Server(file);
+                            } catch (Exception e) {
+                                CustomProgress.cancelDialog();
+                                e.printStackTrace();
+                            }
+                        } catch (FileNotFoundException e) {
+                            ToastUtil.showCustomToast(this, "找不到图片");
+                            e.printStackTrace();
+                        }
 
-                    Object[] object = mPictureProcessingUtil.judgePicture(imageFilePath);
-                    File tempFile = new File(imageFilePath);
-//                    Bitmap _bitmap = (Bitmap) object[1];
-                    headPicBitmap = (Bitmap) object[1];
-                    File newFile = mImageProcessingUtil.compressFileSize(tempFile);
-                    putFile2Server(newFile);
-//                    piv_essential_photo.setImageBitmap(_bitmap);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
-//                if (CustomProgress.dialog != null) {
-//                    CustomProgress.cancelDialog();
-//                    CustomProgress.dialog = null;
-//                } else {
-                CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-//                }
-                Bitmap bitmap = cameraCamera(data);
-//                Bitmap bit = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
-                headPicBitmap = mPictureProcessingUtil.compressionBigBitmap(bitmap, true);
-                File file = new File(strCameraFilePath);
-                try {
-                    putFile2Server(file);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-//                piv_essential_photo.setImageBitmap(bit);
+                    }
+                    break;
+                case CROP_SMALL_PICTURE_1://截图
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        uritempFile = uri;
+                    }
+                    if (uritempFile != null) {
+                        Bitmap bitmap;
+                        File file;
+                        try {
+                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
+                            file = saveBitmap2File(this, "headpic.png", bitmap);
+                            piv_essential_photo.setImageBitmap(bitmap);
+                            bitmap.recycle();
+                            try {
+                                CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+                                putFile2Server(file);
+                            } catch (Exception e) {
+                                CustomProgress.cancelDialog();
+                                e.printStackTrace();
+                            }
+                        } catch (FileNotFoundException e) {
+                            ToastUtil.showCustomToast(this, "找不到图片");
+                            e.printStackTrace();
+                        }
+
+                    }
+                    break;
+                default:
+                    break;
             }
-            super.onActivityResult(requestCode, resultCode, data);
         }
+//
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
+    /**
+     * bitmap 转为file 缓存文件
+     *
+     * @param context
+     * @param filename
+     * @param bitmap
+     * @return
+     */
+    private File saveBitmap2File(Context context, String filename, Bitmap bitmap) {
+        File f = new File(context.getCacheDir(), filename);
+        try {
+            f.createNewFile();
+
+            //将bitmap转为array数组
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+            //讲数组写入到文件
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return f;
+    }
+
 
     /**
      * @param intent
@@ -727,6 +813,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                             dealResult(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_failed));
                         }
                     });
+                    CustomProgress.cancelDialog();
                 }
 
                 @Override
@@ -738,6 +825,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                         dealResult(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.uploaded_failed));
 //                        throw new IOException("Unexpected code " + response);
                     }
+                    CustomProgress.cancelDialog();
                 }
             });
 
@@ -816,7 +904,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
 
     //获取量房费用设计区间，
-    public void getDesignerDesignCostRange(){
+    public void getDesignerDesignCostRange() {
 
         MPServerHttpManager.getInstance().getDesignerCost(new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -828,11 +916,11 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             public void onResponse(JSONObject jsonObject) {
 
                 String designerDesignCostData = GsonUtil.jsonToString(jsonObject);
-                DesignerWorkTimeBean mDecorationListBean =GsonUtil.jsonToBean(designerDesignCostData, DesignerWorkTimeBean.class);
+                DesignerWorkTimeBean mDecorationListBean = GsonUtil.jsonToBean(designerDesignCostData, DesignerWorkTimeBean.class);
                 relate_information_list = mDecorationListBean.getRelate_information_list();
                 //projectCosts
                 projectCosts = new String[relate_information_list.size()];
-                for (int i = 0; i <relate_information_list.size(); i++){
+                for (int i = 0; i < relate_information_list.size(); i++) {
                     String costStringName = relate_information_list.get(i).getName();
 //                    String costStringUnit = relate_information_list.get(i).getDescription();
 //                    String costString = costStringName + costStringUnit;
@@ -845,6 +933,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
 
     }
+
     /**
      * @param strDesignerId
      * @param hs_uid

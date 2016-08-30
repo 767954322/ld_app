@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -40,7 +41,7 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerQrE
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CommonEssentialInfoAmendActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
@@ -73,6 +74,7 @@ import com.squareup.okhttp.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -96,7 +98,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private static final int CAMERA_INTENT_REQUEST = 0XFF02;
     private Bitmap headPicBitmap;
 
+    private Uri uritempFile;
+    private static final int CROP_SMALL_PICTURE = 5;//截图
+    private static final int CROP_SMALL_PICTURE_1 = 6;//截图
+
     private int is_validated_by_mobile;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_essential_info;
@@ -123,6 +130,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     protected void initExtraBundle() {
         super.initExtraBundle();
         mConsumerEssentialInfoEntity = (ConsumerEssentialInfoEntity) getIntent().getExtras().get(Constant.ConsumerPersonCenterFragmentKey.CONSUMER_PERSON);
+        if (mConsumerEssentialInfoEntity != null) {
+            getConsumerInfoData(member_id);
+        }
     }
 
     @Override
@@ -148,13 +158,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         setGender();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(mConsumerEssentialInfoEntity!= null){
-            getConsumerInfoData(member_id);
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if(mConsumerEssentialInfoEntity!= null){
+//            getConsumerInfoData(member_id);
+//        }
+//    }
 
     /**
      * 获取个人基本信息
@@ -177,7 +187,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 MPNetworkUtils.logError(TAG, volleyError);
 //                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, ConsumerEssentialInfoActivity.this,
 //                            AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,ConsumerEssentialInfoActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, ConsumerEssentialInfoActivity.this);
             }
         });
     }
@@ -211,7 +221,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         district_name = mConsumerEssentialInfoEntity.getDistrict_name();
         if (!TextUtils.isEmpty(avatar)) {
             ImageUtils.displayAvatarImage(avatar, mConsumeHeadIcon);
-        }else {
+        } else {
             headPicBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_default_avator);
             mConsumeHeadIcon.setImageBitmap(headPicBitmap);
         }
@@ -231,8 +241,8 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
          */
         if (0 == is_validated_by_mobile || 2 == is_validated_by_mobile)
             mobile_number = "";
-            mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
-        if (1 == is_validated_by_mobile){
+        mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
+        if (1 == is_validated_by_mobile) {
             if (TextUtils.isEmpty(mobile_number)) {
                 mobile_number = "";
                 mTvConsumerPhone.setText(getResources().getString(R.string.no_mobile));
@@ -412,10 +422,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         String sdStatus = Environment.getExternalStorageState();
         /// Detection of sd is available .
         if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(this, getResources().getString(R.string.autonym_sd_disabled), Toast.LENGTH_SHORT).show();
+            MyToast.show(this, UIUtils.getString(R.string.autonym_sd_disabled));
             return;
         }
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
         startActivityForResult(intent, CAMERA_INTENT_REQUEST);
     }
 
@@ -740,11 +753,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         handler.post(new Runnable() {
             public void run() {
                 MyToast.show(activity, string);
-                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
+//                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
             }
         });
     }
-
 
 
     /**
@@ -774,44 +786,171 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     }
 
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == SYS_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
+//            try {
+//                Uri uri = data.getData();
+//                /**
+//                 * 解决上传图片找不到路径问题
+//                 */
+//                String imageFilePath = PhotoPathUtils.getPath(ConsumerEssentialInfoActivity.this, uri);
+//                if (TextUtils.isEmpty(imageFilePath)) {
+//                    return;
+//                }
+//                Object[] object = pictureProcessingUtil.judgePicture(imageFilePath);
+//                File tempFile = new File(imageFilePath);
+//                headPicBitmap = (Bitmap) object[1];
+////                Bitmap _bitmap = (Bitmap) object[1];
+//
+//                File newFile = imageProcessingUtil.compressFileSize(tempFile);
+//                putFile2Server(newFile);
+//                CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+////                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
+//            CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+//            Bitmap bitmap = cameraCamera(data);
+////            Bitmap bit = pictureProcessingUtil.compressionBigBitmap(bitmap, true);
+//            headPicBitmap = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
+//            File file = new File(cameraFilePath);
+//            try {
+//                putFile2Server(file);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+////            mConsumeHeadIcon.setImageBitmap(headPicBitmap);
+//        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SYS_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
-            try {
-                Uri uri = data.getData();
-                /**
-                 * 解决上传图片找不到路径问题
-                 */
-                String imageFilePath = PhotoPathUtils.getPath(ConsumerEssentialInfoActivity.this, uri);
-                if (TextUtils.isEmpty(imageFilePath)) {
-                    return;
-                }
-                Object[] object = pictureProcessingUtil.judgePicture(imageFilePath);
-                File tempFile = new File(imageFilePath);
-                headPicBitmap = (Bitmap) object[1];
-//                Bitmap _bitmap = (Bitmap) object[1];
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case SYS_INTENT_REQUEST://系统相册
+                    if (data != null) {
+                        // 照片的原始资源地址
+                        Uri originalUri = data.getData();
+                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_1);
+                    }
+                    break;
+                case CAMERA_INTENT_REQUEST://相机
+                    cropImageUri(uritempFile, 300, 300, CROP_SMALL_PICTURE);
+                    break;
+                case CROP_SMALL_PICTURE://截图
+                    if (uritempFile != null) {
+                        Bitmap bitmap;
+                        File file;
+                        try {
+                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
+                            file = saveBitmap2File(this, "headpic.png", bitmap);
+                            headPicBitmap = bitmap;
+                            mConsumeHeadIcon.setImageBitmap(bitmap);
+                            bitmap.recycle();
+                            try {
+                                CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+                                putFile2Server(file);
+                            } catch (Exception e) {
+                                CustomProgress.cancelDialog();
+                                e.printStackTrace();
+                            }
+                        } catch (FileNotFoundException e) {
+                            ToastUtil.showCustomToast(this, "找不到图片");
+                            e.printStackTrace();
+                        }
 
-                File newFile = imageProcessingUtil.compressFileSize(tempFile);
-                putFile2Server(newFile);
-                CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-//                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
+                    }
+                    break;
+                case CROP_SMALL_PICTURE_1://截图
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        uritempFile = uri;
+                    }
+                    if (uritempFile != null) {
+                        Bitmap bitmap;
+                        File file;
+                        try {
+                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
+                            file = saveBitmap2File(this, "headpic.png", bitmap);
+                            mConsumeHeadIcon.setImageBitmap(bitmap);
+                            bitmap.recycle();
+                            try {
+                                CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+                                putFile2Server(file);
+                            } catch (Exception e) {
+                                CustomProgress.cancelDialog();
+                                e.printStackTrace();
+                            }
+                        } catch (FileNotFoundException e) {
+                            ToastUtil.showCustomToast(this, "找不到图片");
+                            e.printStackTrace();
+                        }
+
+                    }
+                    break;
+                default:
+                    break;
             }
-        } else if (requestCode == CAMERA_INTENT_REQUEST && resultCode == RESULT_OK && data != null) {
-            CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-            Bitmap bitmap = cameraCamera(data);
-//            Bitmap bit = pictureProcessingUtil.compressionBigBitmap(bitmap, true);
-            headPicBitmap = PictureProcessingUtil.compressionBigBitmap(bitmap, true);
-            File file = new File(cameraFilePath);
-            try {
-                putFile2Server(file);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-//            mConsumeHeadIcon.setImageBitmap(headPicBitmap);
         }
+//
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    /**
+     * 图片截取
+     *
+     * @param uri
+     * @param outputX
+     * @param outputY
+     * @param requestCode
+     */
+    private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", outputX);
+        intent.putExtra("outputY", outputY);
+        intent.putExtra("scale", true);
+        //        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
+        startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * bitmap 转为file 缓存文件
+     *
+     * @param context
+     * @param filename
+     * @param bitmap
+     * @return
+     */
+    private File saveBitmap2File(Context context, String filename, Bitmap bitmap) {
+        File f = new File(context.getCacheDir(), filename);
+        try {
+            f.createNewFile();
+
+            //将bitmap转为array数组
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 50, bos);
+            byte[] bitmapdata = bos.toByteArray();
+
+            //讲数组写入到文件
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(bitmapdata);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return f;
     }
 
     @Override
