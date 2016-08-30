@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.utils;
 
-import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
@@ -16,7 +17,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
  */
 public class ApiStatusUtil {
 
-    private Activity mContext;
+    private Context mContext;
     private static ApiStatusUtil apiStatusUtil = new ApiStatusUtil();
 
     public static ApiStatusUtil getInstance() {
@@ -35,8 +36,14 @@ public class ApiStatusUtil {
      *
      * @param error
      */
-    public void apiStatuError(VolleyError error, Activity context) {
+    public void apiStatuError(VolleyError error, Context context) {
         this.mContext = context;
+        Log.i("ApiStatusUtil","--------------------------------------错误日志-------------------------------------");
+        Log.e("VolleyError---", error.getMessage(), error);
+        byte[] htmlBodyBytes = error.networkResponse.data;  //回应的报文的包体内容
+        Log.e("VolleyError body---->", new String(htmlBodyBytes), error);
+        Log.i("ApiStatusUtil","--------------------------------------错误日志-------------------------------------");
+
         NetworkResponse networkResponse = error.networkResponse;
 
         if (networkResponse != null) {

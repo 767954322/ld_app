@@ -32,6 +32,7 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FuzzySearc
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.SearchHoverCaseBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.CharacterParser;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -41,7 +42,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesConta
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
@@ -414,8 +414,9 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPtrLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
 
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, DesignerSearchActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, DesignerSearchActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerSearchActivity.this);
                 hideFooterView(mDesignerListEntities);
                 mSeekDesignerAdapter.notifyDataSetChanged();
             }

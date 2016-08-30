@@ -39,6 +39,7 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEss
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerQrEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.InfoModifyEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CommonEssentialInfoAmendActivity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -49,7 +50,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDial
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -175,8 +175,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, ConsumerEssentialInfoActivity.this,
-                            AlertView.Style.Alert, null).show();
+//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, ConsumerEssentialInfoActivity.this,
+//                            AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,ConsumerEssentialInfoActivity.this);
             }
         });
     }

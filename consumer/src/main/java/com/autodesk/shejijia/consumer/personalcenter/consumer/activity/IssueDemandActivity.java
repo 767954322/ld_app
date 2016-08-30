@@ -20,8 +20,8 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
@@ -59,12 +59,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String nikeName = (String) msg.obj;
-            String initName = et_issue_demand_name.getText().toString();
-            if (TextUtils.isEmpty(initName) || "匿名".equals(initName)) {
-
-                et_issue_demand_name.setText(nikeName);
-            }
+            nick_name = (String) msg.obj;
+//          String initName = et_issue_demand_name.getText().toString();
+//          if (TextUtils.isEmpty(initName) || "匿名".equals(initName)) {
+            et_issue_demand_name.setText(nick_name);
+//          }
         }
     };
 
@@ -111,7 +110,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        nick_name = getIntent().getStringExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME);
+//        nick_name = getIntent().getStringExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME);
 //        et_issue_demand_name.setText(nick_name);
     }
 
@@ -378,7 +377,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 MPNetworkUtils.logError(TAG, volleyError);
                 isSendState = true;
                 CustomProgress.cancelDialog();
-                showAlertView(R.string.network_error);
+//                showAlertView(R.string.network_error);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,IssueDemandActivity.this);
             }
         });
     }
