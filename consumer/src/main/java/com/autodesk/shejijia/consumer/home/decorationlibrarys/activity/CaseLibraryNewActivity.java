@@ -259,6 +259,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
+                                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
                             }
 
                             @Override
@@ -286,6 +287,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                                         @Override
                                         public void onErrorResponse(VolleyError volleyError) {
                                             MPNetworkUtils.logError(TAG, volleyError);
+                                            ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
                                         }
 
                                         @Override

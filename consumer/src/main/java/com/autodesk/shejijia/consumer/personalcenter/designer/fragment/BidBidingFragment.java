@@ -14,13 +14,13 @@ import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -281,8 +281,9 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
             }
         };
         MPServerHttpManager.getInstance().getMyBidData(memType, acsToken, offset, limit, designer_id, callback);

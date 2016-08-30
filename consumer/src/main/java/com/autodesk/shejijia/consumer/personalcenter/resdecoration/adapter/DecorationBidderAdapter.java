@@ -11,6 +11,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
@@ -210,10 +211,11 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
-                new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.network_error),
-                        null, new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip),
+//                        UIUtils.getString(R.string.network_error),
+//                        null, new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,mContext);
             }
         };
         MPServerHttpManager.getInstance().refuseDesignerMeasure(needs_id, designer_id, okResponseCallback);

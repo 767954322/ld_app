@@ -26,6 +26,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.DecorationConsumerFragment;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateContainsBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -603,8 +604,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,MPConsumerHomeActivity.this);
             }
         });
     }

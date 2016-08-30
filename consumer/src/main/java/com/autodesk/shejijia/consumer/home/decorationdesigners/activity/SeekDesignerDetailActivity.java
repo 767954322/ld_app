@@ -23,6 +23,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesign
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MeasureFormActivity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -141,6 +142,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
                                     MPNetworkUtils.logError(TAG, volleyError);
+                                    ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
                                 }
 
                                 @Override
@@ -224,6 +226,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                                         @Override
                                         public void onErrorResponse(VolleyError volleyError) {
                                             MPNetworkUtils.logError(TAG, volleyError);
+                                            ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
                                         }
 
                                         @Override
@@ -347,8 +350,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             public void onErrorResponse(VolleyError volleyError) {
                 mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.FAIL);
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hsUid, okResponseCallback);

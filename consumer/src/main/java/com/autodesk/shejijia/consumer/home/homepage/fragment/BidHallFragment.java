@@ -23,11 +23,11 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateCon
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.adapter.BidHallAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.BidHallEntity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
@@ -165,8 +165,9 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 if (null != getActivity()) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-                            AlertView.Style.Alert, null).show();
+//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
+//                            AlertView.Style.Alert, null).show();
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
                 }
                 hideFooterView(mNeedsListEntities);
             }

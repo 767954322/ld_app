@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DemandDetailBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationDetailBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -278,8 +280,9 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getAmendDemand(need_id, okResponseCallback);
@@ -308,8 +311,9 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getStopDesignerRequirement(needs_id,
@@ -336,8 +340,9 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 if (!CustomProgress.dialog.isShowing()) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
-                            AlertView.Style.Alert, null).show();
+//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
+//                            AlertView.Style.Alert, null).show();
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
                 }
             }
         };
