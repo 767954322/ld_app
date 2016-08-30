@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.RollFragAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;

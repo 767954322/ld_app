@@ -629,14 +629,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private void setStyleType() {
         final ArrayList<String> styleItems = new ArrayList<>();
 
-        if (styles != null) {
-
-
-        } else {
-
             styles = filledData(getResources().getStringArray(R.array.style));
 
-        }
         pvStyleOptions = new OptionsPickerView(this);
         for (String item : styles) {
             styleItems.add(item);

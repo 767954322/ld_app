@@ -1,6 +1,6 @@
 package com.autodesk.shejijia.consumer.utils;
 
-import android.content.Context;
+import android.app.Activity;
 import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class UserPictureUtil {
 
     //设置头像
-    public static void setConsumerOrDesignerPicture(Context context,ImageView iv) {
+    public static void setConsumerOrDesignerPicture(Activity context,ImageView iv) {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null &&
                 Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -42,7 +42,7 @@ public class UserPictureUtil {
      * @param member_id
      * @brief For details on consumers .
      */
-    private static void getConsumerInfoData(String member_id, final Context context, final ImageView iv) {
+    private static void getConsumerInfoData(String member_id, final Activity context, final ImageView iv) {
         MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -70,7 +70,7 @@ public class UserPictureUtil {
      * @param designer_id
      * @param hs_uid
      */
-    private static void getDesignerInfoData(String designer_id, String hs_uid, final Context context, final ImageView iv) {
+    private static void getDesignerInfoData(String designer_id, String hs_uid, final Activity context, final ImageView iv) {
         MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {

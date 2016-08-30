@@ -1,6 +1,6 @@
 package com.autodesk.shejijia.consumer.utils;
 
-import android.content.Context;
+import android.app.Activity;
 import android.util.Log;
 
 import com.android.volley.NetworkResponse;
@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class ApiStatusUtil {
 
-    private Context mContext;
+    private Activity mContext;
     private static ApiStatusUtil apiStatusUtil = new ApiStatusUtil();
 
     public static ApiStatusUtil getInstance() {
@@ -39,29 +39,28 @@ public class ApiStatusUtil {
      *
      * @param error
      */
-    public void apiStatuError(VolleyError error, Context context) {
+    public void apiStatuError(VolleyError error, Activity context) {
         this.mContext = context;
-        Log.i("ApiStatusUtil","--------------------------------------错误日志-------------------------------------");
+        Log.i("ApiStatusUtil", "--------------------------------------错误日志-------------------------------------");
         Log.e("Response Error", error.getMessage(), error);
         MPNetworkUtils.logError("Response url", error);
         NetworkResponse response = error.networkResponse;
-        if (response == null){
+        if (response == null) {
             showAlertView("请检查网络连接状态", 1);
             return;
         }
-        Map<String,String> headers = response.headers;
+        Map<String, String> headers = response.headers;
         for (String key : headers.keySet()) {
             Log.e("RESPONSE HEADERS", key + "=" + headers.get(key));
         }
-        Log.e("RESPONSE CODE", "ERROR CODE = "+response.statusCode);
+        Log.e("RESPONSE CODE", "ERROR CODE = " + response.statusCode);
         byte[] htmlBodyBytes = response.data;  //回应的报文的包体内容
         Log.e("Response body--->", new String(htmlBodyBytes));
-        Log.i("ApiStatusUtil","--------------------------------------错误日志-------------------------------------");
+        Log.i("ApiStatusUtil", "--------------------------------------错误日志-------------------------------------");
 
-        NetworkResponse networkResponse = response;
 
-        if (networkResponse != null) {
-            int statusCode = networkResponse.statusCode;
+        if (response != null) {
+            int statusCode = response.statusCode;
 //            String data= String.valueOf(networkResponse.data);
 
             switch (statusCode) {
@@ -117,7 +116,7 @@ public class ApiStatusUtil {
                     AdskApplication.getInstance().doLogout(mContext);
                     AdskApplication.getInstance().doLogin(mContext);
 
-                }else {
+                } else {
 
                 }
 

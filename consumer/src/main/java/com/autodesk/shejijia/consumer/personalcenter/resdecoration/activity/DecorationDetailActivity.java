@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
@@ -211,7 +210,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         String district_name = demandDetailBean.getDistrict_name();
         String publish_time = demandDetailBean.getPublish_time();
         String community_name = demandDetailBean.getCommunity_name();
-        String house_area = demandDetailBean.getHouse_area();
+        String house_area = demandDetailBean.getHouse_area() + "㎡";
         String contacts_mobile = demandDetailBean.getContacts_mobile();
         String custom_string_status = demandDetailBean.getCustom_string_status();
         String decoration_budget = demandDetailBean.getDecoration_budget();

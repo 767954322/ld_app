@@ -515,10 +515,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         caseLibraryNew.setAdapter(mCaseLibraryAdapter);
         //设置简介
         String introduction = caseDetailBean.getDescription();
-        if (introduction != null) {
-            mCaseLibraryText.setText("          " + introduction);
-        } else {
+        if (introduction == null || introduction.equals("")){
             mCaseLibraryText.setText(R.string.nodescription);
+        }else {
+            mCaseLibraryText.setText("          " + introduction);
         }
 
         tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
