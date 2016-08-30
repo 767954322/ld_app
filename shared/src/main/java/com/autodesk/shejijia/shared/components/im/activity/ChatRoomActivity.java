@@ -23,7 +23,6 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
@@ -180,6 +179,9 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     public boolean shouldHideCustomButton() {
         return false;
     }
+
+
+
 
     @Override
     public void onClick(View v) {

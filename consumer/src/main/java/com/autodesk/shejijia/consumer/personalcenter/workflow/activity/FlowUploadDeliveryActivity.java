@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -577,12 +578,20 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         MPServerHttpManager.getInstance().get3DPlanList(needs_id, design_asset_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                try {
+                    if (jsonObject!=null){
+                        String userInfo = GsonUtil.jsonToString(jsonObject);
+                        KLog.json(TAG, userInfo);
+                        mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
+                        updateViewFrom3DPlanList(design_asset_id);
+                    }else {
+                        Toast.makeText(FlowUploadDeliveryActivity.this, R.string.fanganflow, Toast.LENGTH_SHORT).show();
 
-                String userInfo = GsonUtil.jsonToString(jsonObject);
-                KLog.json(TAG, userInfo);
+                    }
 
-                mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
-                updateViewFrom3DPlanList(design_asset_id);
+                } catch (Exception e){
+                    Toast.makeText(FlowUploadDeliveryActivity.this, "e:" + e, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

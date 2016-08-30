@@ -119,9 +119,9 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
+                //HashMap<String, String> header = new HashMap<>();
+               // header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return super.getHeaders();
             }
         };
         queue.add(okRequest);
@@ -278,7 +278,9 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
             }
         };
         queue.add(okRequest);
@@ -508,9 +510,9 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
+//                HashMap<String, String> header = new HashMap<>();
+//                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return super.getHeaders();
             }
         };
         queue.add(okRequest);

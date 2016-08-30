@@ -378,7 +378,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     /**
-     * 设置输入框不可点击输入
+     * 设置输入框不可点击输入且无边框
      */
     private void setTvcCannotClickable() {
         tvc_consumer_name.setEnabled(false);
@@ -394,6 +394,24 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_first_cost.setEnabled(false);
         tvc_total_cost.setEnabled(false);
         tvc_last_cost.setEnabled(false);
+        tvc_consumer_name.setBackgroundResource(0);
+        tvc_consumer_phone.setBackgroundResource(0);
+        tvc_consumer_postcode.setBackgroundResource(0);
+        tvc_consumer_email.setBackgroundResource(0);
+        tvc_consumer_decorate_address.setBackgroundResource(0);
+        tvc_consumer_detail_address.setBackgroundResource(0);
+        tvc_designer_postcode.setBackgroundResource(0);
+        tvc_design_sketch.setBackgroundResource(0);
+        tvc_render_map.setBackgroundResource(0);
+        tvc_sketch_plus.setBackgroundResource(0);
+        tvc_first_cost.setBackgroundResource(0);
+        tvc_total_cost.setBackgroundResource(0);
+        tvc_last_cost.setBackgroundResource(0);
+        tvc_designer_name.setBackgroundResource(0);
+        tvc_designer_decorate_address.setBackgroundResource(0);
+        tvc_designer_detail_address.setBackgroundResource(0);
+        tvc_designer_email.setBackgroundResource(0);
+        tvc_designer_phone.setBackgroundResource(0);
     }
 
     /**

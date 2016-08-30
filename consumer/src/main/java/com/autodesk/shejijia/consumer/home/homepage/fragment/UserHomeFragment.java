@@ -29,12 +29,14 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHomeCaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -146,6 +148,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
+        CustomProgress.show(activity,"",false,null);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
             final String designer_id = casesEntities.get(position).getDesigner_id();
@@ -158,6 +161,8 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     MPNetworkUtils.logError(TAG, volleyError);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
+                    CustomProgress.cancelDialog();
                 }
 
                 @Override
@@ -185,11 +190,14 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
+                                CustomProgress.cancelDialog();
+                                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
                             }
 
                             @Override
                             public void onResponse(String s) {
                                 try {
+                                    CustomProgress.cancelDialog();
                                     JSONObject jsonObject = new JSONObject(s);
                                     String thread_id = jsonObject.getString("thread_id");
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, "");
