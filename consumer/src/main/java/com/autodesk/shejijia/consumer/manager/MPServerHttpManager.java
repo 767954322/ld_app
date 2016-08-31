@@ -1000,7 +1000,7 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void ifIsLohoDesiner(String designers, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.ALPHA_MP_MAIN + "/member-app/v1/api/designers/" + designers;
+        String url = UrlConstants.MAIN_MEMBER + "/member-app/v1/api/designers/" + designers;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
