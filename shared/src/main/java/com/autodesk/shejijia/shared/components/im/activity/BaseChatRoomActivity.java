@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -125,8 +126,15 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         super.onResume();
         refresh();
 
-        if (mRecieverUserName != null)
-            setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName  +"/"+ mProjectTtile));
+        if (mRecieverUserName != null) {
+
+            if (!TextUtils.isEmpty(mProjectTtile)){
+                setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName + "/" + mProjectTtile));
+            }else {
+                setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName ));
+            }
+
+        }
     }
 
 
