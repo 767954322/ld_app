@@ -508,9 +508,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             int  sub_node_id =wk_cur_sub_node_id != null? Integer.parseInt(wk_cur_sub_node_id):-1;
             if(sub_node_id < 11 || sub_node_id >=31 || sub_node_id == 24){
                 btnStopDemand.setVisibility(View.GONE);
-//                btnStopDemand.setEnabled(false);
-//                btnStopDemand.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-//                btnStopDemand.setTextColor(UIUtils.getColor(R.color.white));
             }
         }
 

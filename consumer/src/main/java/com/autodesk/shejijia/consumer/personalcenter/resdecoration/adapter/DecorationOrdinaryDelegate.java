@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.SelectDesignerActivity;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationBidderActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
@@ -16,9 +18,12 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdeleg
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -137,36 +142,27 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
              * 如果处于审核状态或者有人支付了设计首款，隐藏应标人数布局
              */
             holder.setVisible(R.id.rl_select_designer, false);
-        /**
-         * 如果处于审核状态或者有人支付了设计首款，隐藏应标人数布局
-         */
-        boolean isBidding = isBiding(custom_string_status);
-        if (IS_PUBLIC.equals(is_public)) {
-            holder.setVisible(R.id.rl_bidder_count, false);
-        } else {
-            holder.setVisible(R.id.rl_bidder_count, true);
+            /**
+             * 如果处于审核状态或者有人支付了设计首款，隐藏应标人数布局
+             */
+            boolean isBidding = isBiding(custom_string_status);
+            if (IS_PUBLIC.equals(is_public)) {
+                holder.setVisible(R.id.rl_bidder_count, false);
+            } else {
+                holder.setVisible(R.id.rl_bidder_count, true);
 
-//            if (isBidding) {
+                // TODO 需求： 当有设计师支付了首款，隐藏应标人数条目布局
+//             if (isBidding) {
 //                if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
 //                    holder.setVisible(R.id.rl_bidder_count, false);
-//                } else {
+//                 } else {
 //                    holder.setVisible(R.id.rl_bidder_count, true);
-//                }
-//            } else {
+//                 }
+//              } else {
 //                holder.setVisible(R.id.rl_bidder_count, false);
-//            }
+//             }
+            }
         }
-          //  boolean isBidding = isBiding(custom_string_status);
-           // if (isBidding) {
-             //   if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
-             //       holder.setVisible(R.id.rl_bidder_count, false);
-              //  } else {
-              //      holder.setVisible(R.id.rl_bidder_count, true);
-               // }
-           // } else {
-            //    holder.setVisible(R.id.rl_bidder_count, false);
-            //}
-        
         /**
          * 应标设计师列表
          */
@@ -227,7 +223,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                 mActivity.startActivityForResult(mIntent, 0);
             }
         });
-    }}
+    }
 
     /**
      * 获取应标设计师中流程节点的最大值
