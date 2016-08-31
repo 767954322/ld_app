@@ -133,13 +133,14 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
      * @brief 默认北舒套餐页面 .
      */
     public void setDefaultFragment() {
-        if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU){
-
-            mCommonFragment = new DesignerOrderBeiShuFragment();
-        }else {
-
-            mCommonFragment = new DesignerOrderFragment();
-        }
+        mCommonFragment = new DesignerOrderBeiShuFragment();
+//        if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU){
+//
+//            mCommonFragment = new DesignerOrderBeiShuFragment();
+//        }else {
+//
+//            mCommonFragment = new DesignerOrderFragment();
+//        }
         fragmentManager = getChildFragmentManager();
         /*  fragmentManager.beginTransaction().add(R.id.fl_designer_order_beishu_container, mBeishuMealFragment)
                 .commit();*/
