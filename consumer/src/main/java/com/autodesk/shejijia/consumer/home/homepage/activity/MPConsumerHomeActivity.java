@@ -99,11 +99,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
-//        construction = (TextView) contain_layout.findViewById(R.id.construction);
-
-
         setMyProjectTitleColorChange(design, bidding/*, construction*/);
-
         user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
         addRadioButtons(mDesignerMainRadioBtn);
@@ -111,9 +107,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         addRadioButtons(mDesignerPersonCenterRadioBtn);
 
 
-        //获取节点信息
 
-//        getWkFlowStatePointInformation();//待删除
         //获取节点信息
         getALLWkFlowStatePointInformation();
     }
@@ -143,10 +137,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 mFragmentArrayList.add(mBidHallFragment);
             }
         }
-       // if (savedInstanceState == null) {
-        //    showFragment(getDesignerMainRadioBtnId());
-//showDesignerOrConsumerRadioGroup();
-      //  }
+
         super.initData(savedInstanceState);
         if (savedInstanceState == null) {
             showFragment(getDesignerMainRadioBtnId());
@@ -170,7 +161,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         bidding.setOnClickListener(this);
         design.setOnClickListener(this);
         rbCustomerElite.setOnClickListener(this);
-//        construction.setOnClickListener(this);
 
     }
 
@@ -378,27 +368,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setVisibilityForNavButton(ButtonType.middle, true);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
 
-//                TextView textView = (TextView) findViewById(R.id.nav_right_textView);
-//                textView.setVisibility(View.VISIBLE);
-//                Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
-//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//                textView.setCompoundDrawables(null, null, drawable, null);
-//                textView.setText(UIUtils.getString(R.string.bid_filter));
-
-
-//                mBidHallFragment.handleFilterOption1();
-//                TextView textView = (TextView) findViewById(R.id.nav_left_textView);
-//                textView.setVisibility(View.VISIBLE);
-//                Drawable drawable = UIUtils.getDrawable(R.drawable.shanjiao_ico);
-//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//                textView.setCompoundDrawables(null, null, drawable, null);
-//                textView.setText(UIUtils.getString(R.string.bid_filter));
                 setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
                 Intent mIntent = new Intent(BidHallFragment.ACTION_NAME);
                 sendBroadcast(mIntent);
                 break;
 
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
+                hideCaseLIbraryTitle();
                 //判断登陆的是设计师还是消费者，，，我的项目加载不同的信息
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 setChooseViewWidth(true);
