@@ -440,6 +440,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 /**
                  *  进入3D方案，选择其中一个，并返回选中的3d_asset_id
                  */
+                if (null == DeliverySelector.select_design_file_id_map.get(0)){
+                    Toast.makeText(this, "xuan 3D xian ", Toast.LENGTH_SHORT).show();
+                }
+
                 if (null != mWk3DPlanListBeanArrayList && mWk3DPlanListBeanArrayList.size() > 0) {
                     bundle = new Bundle();
                     putBundleValue(0, 1, bundle);
@@ -450,6 +454,11 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.ll_design_apply:          /// 渲染图设计 .
+
+                if (null == DeliverySelector.select_design_file_id_map.get(0)){
+                    Toast.makeText(this, "xuan 3D xian ", Toast.LENGTH_SHORT).show();
+                }
+
                 if (null != mDesignFileEntities3DPlanRendering && mDesignFileEntities3DPlanRendering.size() > 0) {
                     bundle = new Bundle();
                     putBundleValue(1, 1, bundle);
@@ -460,6 +469,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.ll_design_pager:          /// 设计图纸 .
+                if (null == DeliverySelector.select_design_file_id_map.get(0)){
+                    Toast.makeText(this, "xuan 3D xian ", Toast.LENGTH_SHORT).show();
+                }
                 if (null != mDesignFileEntities3DPlanDesignBlueprint && mDesignFileEntities3DPlanDesignBlueprint.size() > 0) {
                     bundle = new Bundle();
                     putBundleValue(2, 1, bundle);
@@ -470,6 +482,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.ll_material_list:         /// 材料清单 .
+                if (null == DeliverySelector.select_design_file_id_map.get(0)){
+                    Toast.makeText(this, "xuan 3D xian ", Toast.LENGTH_SHORT).show();
+                }
+
                 if (null != mDesignFileEntities3DPlanMaterialBill && mDesignFileEntities3DPlanMaterialBill.size() > 0) {
                     bundle = new Bundle();
                     putBundleValue(3, 1, bundle);
@@ -1139,17 +1155,18 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                                     arrayList.add(designFileEntity.getId());
                                 }
                             }
-                        }
+                              }
                     }
                     DeliverySelector.select_design_file_id_map.put(0, arrayList);
+
+
                     /**
                      * 当前3D方案的详情
                      */
                     ArrayList<MPDesignFileBean> design_file = (ArrayList<MPDesignFileBean>) mWk3DPlanListBean.getDesign_file();
                     for (MPDesignFileBean designFileEntity : design_file) {
                         type = designFileEntity.getType();
-                        if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_RENDERING_DESIGN_DELIVERY_0.equals(type)
-                                || Constant.DeliveryTypeBundleKey.USAGE_TYPE_READERING_DESIGN_DELIVERY_4.equals(type)) {
+                        if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_RENDERING_DESIGN_DELIVERY_0.equals(type)||Constant.DeliveryTypeBundleKey.USAGE_TYPE_READERING_DESIGN_DELIVERY_4.equals(type)) {
                             mDesignFileEntities3DPlanRendering.add(designFileEntity);
                         } else if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(type)) {
                             mDesignFileEntities3DPlanDesignBlueprint.add(designFileEntity);
