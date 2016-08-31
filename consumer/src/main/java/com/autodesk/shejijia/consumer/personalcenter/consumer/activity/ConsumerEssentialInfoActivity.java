@@ -19,6 +19,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -157,6 +158,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 邮箱
          */
+
         setTvString(mTvEmail, email);
         setGender();
     }
@@ -373,7 +375,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      */
     private void setTvString(TextView mTv, String content) {
         if (TextUtils.isEmpty(content)) {
-            mTv.setText(UIUtils.getString(R.string.no_data));
+            mTv.setText(UIUtils.getString(R.string.not_filled));
         } else {
             mTv.setText(content);
         }
