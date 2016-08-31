@@ -201,7 +201,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         if (mConsumerEssentialInfoEntity.getEmail() == null)
 
         {
-            tvEmail.setText(getResources().getString(R.string.no_data));
+            tvEmail.setText(getResources().getString(R.string.not_filled));
         } else
 
         {
