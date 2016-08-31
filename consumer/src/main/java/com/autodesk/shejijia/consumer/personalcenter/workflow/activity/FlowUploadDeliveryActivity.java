@@ -160,6 +160,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             if (null == mFiles) {
                 return;
             }
+            delivery.setDeliveryFiles(mFiles);
             deliveryFilesFormat(delivery);
         }
     }
