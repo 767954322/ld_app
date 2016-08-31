@@ -129,9 +129,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     protected void initExtraBundle() {
         super.initExtraBundle();
         mConsumerEssentialInfoEntity = (ConsumerEssentialInfoEntity) getIntent().getExtras().get(Constant.ConsumerPersonCenterFragmentKey.CONSUMER_PERSON);
-        if (mConsumerEssentialInfoEntity != null) {
-            getConsumerInfoData(member_id);
-        }
+//        if (mConsumerEssentialInfoEntity != null) {
+//           // getConsumerInfoData(member_id);
+//        }
     }
 
     @Override
@@ -146,6 +146,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         member_id = memberEntity.getAcs_member_id();
         hs_uid = memberEntity.getHs_uid();
 
+        if (memberEntity!=null){
+            getConsumerInfoData(member_id);
+        }
+
         setTextColorForRightNavButton(UIUtils.getColor(R.color.black));
 
         showState();
@@ -157,13 +161,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         setGender();
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
 //        if(mConsumerEssentialInfoEntity!= null){
 //            getConsumerInfoData(member_id);
 //        }
-//    }
+    }
 
     /**
      * 获取个人基本信息

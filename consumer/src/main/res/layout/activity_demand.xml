@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
-                android:textColorHint="#999"
+
                 android:textSize="@dimen/font_14" />
         </LinearLayout>
 
@@ -132,8 +132,6 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/demand_please_project_types"
-                android:textColor="@color/black"
-                android:textColorHint="#999"
                 android:textSize="@dimen/font_14" />
 
             <ImageView
@@ -182,7 +180,6 @@
                 android:hint="@string/demand_import_area"
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
-                android:textColorHint="#999"
                 android:textSize="@dimen/font_14" />
 
             <TextView
@@ -234,7 +231,6 @@
                 android:hint="@string/demand_design_budget_hint"
                 android:phoneNumber="true"
                 android:textColor="@color/black"
-                android:textColorHint="#999"
                 android:textSize="@dimen/font_14" />
 
             <!-- <TextView
@@ -291,7 +287,6 @@
                 android:hint="@string/demand_budget_hint"
                 android:phoneNumber="true"
                 android:textColor="@color/black"
-                android:textColorHint="#999"
                 android:textSize="@dimen/font_14" />
 
             <!-- <TextView
