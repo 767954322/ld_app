@@ -41,8 +41,8 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
      xingfujia
      yishujia
      */
-    private Integer[] pic_detail = {  R.drawable.xijing, R.drawable.dongjie, R.drawable.xingfujia, R.drawable.beishu,
-            R.drawable.yishujia, R.drawable.nanyun, R.drawable.pinzhijia};
+    private Integer[] pic_detail = {  R.drawable.xijing,R.drawable.dongjie, R.drawable.xingfujia,R.drawable.beishu,
+            R.drawable.yishujia,R.drawable.nanyun,R.drawable.pinzhijia};
     private String item_name;
 
     @Override
