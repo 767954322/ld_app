@@ -93,12 +93,9 @@ public class DesignerListFragment extends BaseFragment
     protected void initData() {
         mSeekDesignerAdapter = new SeekDesignerAdapter(getActivity(), mDesignerListEntities);
         mListView.setAdapter(mSeekDesignerAdapter);
-        mFindDesignerBean.setNick_name("");
-        mFindDesignerBean.setDesign_price_code("");
-        mFindDesignerBean.setStart_experience("");
-        mFindDesignerBean.setEnd_experience("");
-        mFindDesignerBean.setStyle_names("");
+        setDefaultFindDesignerBean();
     }
+
 
     @Override
     protected void initListener() {
@@ -109,13 +106,16 @@ public class DesignerListFragment extends BaseFragment
     }
 
     /**
-     * 处理
+     * 处理筛选逻辑
      */
     public void handleFilterOption() {
         intent = new Intent(getActivity(), DesignerFiltrateActivity.class);
         startActivityForResult(intent, REQUEST_FILTRATE_CODE);
     }
 
+    /**
+     * 处理搜索逻辑
+     */
     public void handleSearchOption() {
         intent = new Intent(getActivity(), DesignerSearchActivity.class);
         startActivityForResult(intent, REQUEST_SEARCH_CODE);
@@ -250,6 +250,16 @@ public class DesignerListFragment extends BaseFragment
         MPServerHttpManager.getInstance().findDesignerList(findDesignerBean, offset, limit, okResponseCallback);
     }
 
+    /**
+     * 设置查找设计师默认值
+     */
+    private void setDefaultFindDesignerBean() {
+        mFindDesignerBean.setNick_name("");
+        mFindDesignerBean.setDesign_price_code("");
+        mFindDesignerBean.setStart_experience("");
+        mFindDesignerBean.setEnd_experience("");
+        mFindDesignerBean.setStyle_names("");
+    }
 
     private void updateViewFromFindDesigner(SeekDesignerBean seekDesignerBean, int state) {
         CustomProgress.cancelDialog();
