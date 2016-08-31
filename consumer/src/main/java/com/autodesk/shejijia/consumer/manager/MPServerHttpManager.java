@@ -127,7 +127,7 @@ public class MPServerHttpManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 //HashMap<String, String> header = new HashMap<>();
-               // header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                // header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return super.getHeaders();
             }
         };
@@ -1064,6 +1064,7 @@ public class MPServerHttpManager {
      */
     public void agreeOneselfResponseBid(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_ONESELF_AGREE_RESPONSE_BID;
+//        String url ="192.168.120.113:8080/design-app/v1/api/orders?is_need=false"; // 要和明旭联调得接口
         KLog.d(TAG, "url" + url);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
             @Override
@@ -1136,7 +1137,7 @@ public class MPServerHttpManager {
      * 判断是否是乐屋设计师
      */
     public void ifIsLohoDesiner(String designers, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.ALPHA_MP_MAIN + "/member-app/v1/api/designers/" + designers;
+        String url = UrlConstants.MAIN_MEMBER + "/designers/" + designers;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1403,6 +1404,10 @@ public class MPServerHttpManager {
 
     /**
      * 获取设计师首页评价列表信息
+<<<<<<< HEAD
+=======
+     * <p/>
+>>>>>>> feature-3.2
      */
     public void getEstimateList(String designer_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
        // String url = "http://192.168.120.123:8081/member-app/v1/api" + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;
