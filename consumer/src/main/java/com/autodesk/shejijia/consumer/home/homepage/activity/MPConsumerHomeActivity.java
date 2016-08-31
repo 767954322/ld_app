@@ -19,6 +19,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
@@ -30,6 +31,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.Deco
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -71,12 +73,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected static final String TAB_IM = "TAB_IM";                /// 聊天 .
     protected static final String TAB_PROJECT = "TAB_PROJECT";      /// 我的订单 .
 
-    private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
-    private static final String BID_FRAGMENT_TAG = "BID_FRAGMENT_TAG";
-    private static final String DESIGNER_PERSONAL_FRAGMENT_TAG = "DESIGNER_FRAGMENT_TAG";
-    private static final String CONSUMER_PERSONAL_FRAGMENT_TAG = "CONSUMER_FRAGMENT_TAG";
-
     private MemberEntity memberEntity;
+    private DesignerListFragment designerListFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -154,7 +152,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         //获取设计师信息
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity){
+        if (null == mMemberEntity) {
             return;
         }
         String member_id = mMemberEntity.getAcs_member_id();
@@ -255,7 +253,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
         }
 
-        if (mBidHallFragment==null&&index == R.id.designer_indent_list_btn) {
+        if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
             mBidHallFragment = new BidHallFragment();
             loadMainFragment(mBidHallFragment, BID_FRAGMENT_TAG);
         }
@@ -317,6 +315,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             startActivity(intent);
         }
     }
+
     //判断圆形按钮跳入不同的个人中心界面
     @Override
     protected void leftCircleUserAvarClicked(View view) {
@@ -434,6 +433,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             default:
                 break;
         }
+    }
+
+    private void setDesignerListTitle() {
+        setImageForNavButton(ButtonType.RIGHT, com.autodesk.shejijia.shared.R.drawable.icon_search);
+        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.icon_filtrate_normal);
+        setVisibilityForNavButton(ButtonType.RIGHT, true);
+        setVisibilityForNavButton(ButtonType.SECONDARY, true);
     }
 
     //切换fragment 改变指针
@@ -586,33 +592,33 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     }
 
-    /**
-     * 获取个人基本信息
-     *
-     * @param member_id
-     * @brief For details on consumers .
-     */
-    public void getConsumerInfoData(String member_id) {
-        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-
-                updateViewFromData();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                if (MPConsumerHomeActivity.this != null) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
-                            AlertView.Style.Alert, null).show();
-                }
-            }
-        });
-    }
+//    /**
+//     * 获取个人基本信息
+//     *
+//     * @param member_id
+//     * @brief For details on consumers .
+//     */
+//    public void getConsumerInfoData(String member_id) {
+//        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
+//
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                String jsonString = GsonUtil.jsonToString(jsonObject);
+//                mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+//
+//                updateViewFromData();
+//            }
+//
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//                MPNetworkUtils.logError(TAG, volleyError);
+//                if (MPConsumerHomeActivity.this != null) {
+//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
+//                            AlertView.Style.Alert, null).show();
+//                }
+//            }
+//        });
+//    }
 
     public void getALLWkFlowStatePointInformation() {
 
