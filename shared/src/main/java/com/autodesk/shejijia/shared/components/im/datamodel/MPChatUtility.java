@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.im.datamodel;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class MPChatUtility
     {
         MPChatUser sysUser = isThereSystemThreadName(thread);
 
-        if (!thread.sender.user_id.equalsIgnoreCase(loggedInUserId) && !thread.sender.user_id.equalsIgnoreCase(ADMIN_USER_ID))
+        if (!thread.sender.user_id.equalsIgnoreCase(loggedInUserId) && !thread.sender.user_id.equalsIgnoreCase(GetSysAdminUserId()))
         {
 
             return thread.sender;
@@ -30,7 +31,7 @@ public class MPChatUtility
 
         for (MPChatUser user : thread.recipients.users)
         {
-            if (!user.user_id.equalsIgnoreCase(loggedInUserId) && !user.user_id.equalsIgnoreCase(ADMIN_USER_ID))
+            if (!user.user_id.equalsIgnoreCase(loggedInUserId) && !user.user_id.equalsIgnoreCase(GetSysAdminUserId()))
                 return user;
         }
 
@@ -41,12 +42,12 @@ public class MPChatUtility
 
     public static MPChatUser isThereSystemThreadName(MPChatThread thread)
     {
-        if (thread.sender.user_id.equalsIgnoreCase(ADMIN_USER_ID))
+        if (thread.sender.user_id.equalsIgnoreCase(GetSysAdminUserId()))
             return thread.sender;
 
         for (MPChatUser user : thread.recipients.users)
         {
-            if (user.user_id.equalsIgnoreCase(ADMIN_USER_ID))
+            if (user.user_id.equalsIgnoreCase(GetSysAdminUserId()))
                 return user;
         }
 
@@ -211,9 +212,19 @@ public class MPChatUtility
         return false;
     }
 
+    public static String GetSysAdminUserId()
+    {
+        boolean imServer = ApiManager.isRunningDevelopment(ApiManager.RUNNING_DEVELOPMENT);
+
+        if (imServer)
+            return ADMIN_USER_ID_UAT;
+
+        return ADMIN_USER_ID_PROD;
+    }
 
     ///this is production Admin User Id.
     //////private static final String ADMIN_USER_ID = "20742718";
-    private static final String ADMIN_USER_ID = "20730165";
+    private static final String ADMIN_USER_ID_PROD = "20742718";
+    private static final String ADMIN_USER_ID_UAT = "20730165";
     private static final String Default_UserImage = "default_avatar.png";
 }
