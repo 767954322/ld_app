@@ -161,13 +161,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         setGender();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
 //        if(mConsumerEssentialInfoEntity!= null){
 //            getConsumerInfoData(member_id);
 //        }
-    }
+//    }
 
     /**
      * 获取个人基本信息
