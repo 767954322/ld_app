@@ -134,8 +134,12 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 如果是精选项目订单，则显示派单人数
          */
-        if (wk_template_id.equals("4") && mBidders.size() > 0) {
-            holder.setVisible(R.id.rl_select_designer, true);
+        if (wk_template_id.equals("4")) {
+            if(mBidders.size() > 0){
+                holder.setVisible(R.id.rl_select_designer, true);
+            }else{
+                holder.setVisible(R.id.rl_select_designer, false);
+            }
             holder.setVisible(R.id.rl_bidder_count, false);
         } else {
             /**
