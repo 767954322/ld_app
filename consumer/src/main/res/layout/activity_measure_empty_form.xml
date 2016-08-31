@@ -690,6 +690,7 @@
 
 
                 <TextView
+                    android:textColor="@color/actionsheet_gray"
                     android:id="@+id/consumer_rmb_show"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
