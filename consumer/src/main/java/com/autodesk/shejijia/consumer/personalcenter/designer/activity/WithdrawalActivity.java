@@ -136,12 +136,14 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
                 boolean isBankNum = deposit_card.trim().matches(RegexUtil.PHONE_BLANK);
                 boolean isName = account_user_name.trim().matches(regex_name);
+                boolean isBranchBankName = branch_bank_name.trim().matches(RegexUtil.ADDRESS_ZHONGWEN);
                 if (myPropertyBean == null) {
                     if (!isName) {
                         Toast.makeText(WithdrawalActivity.this, "持卡人姓名只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    if (!checkNameChese(branch_bank_name)) {
+//                    if (!checkNameChese(branch_bank_name)) {
+                    if (!isBranchBankName) {
                         Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -174,7 +176,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     }
                 } else {
                     if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())) {
-                        if (!checkNameChese(branch_bank_name)) {
+                        if (!isBranchBankName) {
                             Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                             break;
                         }
