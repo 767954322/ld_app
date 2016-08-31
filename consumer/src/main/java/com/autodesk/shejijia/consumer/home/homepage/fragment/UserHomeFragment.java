@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -167,7 +168,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
 
                 @Override
                 public void onResponse(String s) {
-
+                    CustomProgress.cancelDialog();
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
                     final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
@@ -217,6 +218,8 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
         }
 
     }
+
+
 
     ///事件监听 .
     @Override
@@ -533,6 +536,10 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("aaa","onResume");
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()){
+            CustomProgress.cancelDialog();
+        }
         if (null != mFloatingActionsMenu) {
             mFloatingActionsMenu.close(true);
         }

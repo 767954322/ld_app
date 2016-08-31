@@ -373,8 +373,9 @@ public class MPChatHttpManager {
 
     public void markThreadAsRead(String memberId, final String threadId,
                                  OkStringRequest.OKResponseCallback callback) {
-        Assert.assertTrue(memberId != null && !memberId.isEmpty());
-        Assert.assertTrue(threadId != null && !threadId.isEmpty());
+//        Assert.assertTrue(memberId != null && !memberId.isEmpty());
+//        Assert.assertTrue(threadId != null && !threadId.isEmpty());
+        Assert.assertEquals(memberId != null && !memberId.isEmpty(),threadId != null && !threadId.isEmpty());
 
         String url = UrlMessagesContants.StrHttpServicerootCn +
                 "/members/" + memberId +
