@@ -131,7 +131,8 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
                 && mMemberEntity.getNick_name().length() > 0)?mMemberEntity.getNick_name():UIUtils.getString(R.string.anonymity);
         Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
         intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
-        getActivity().startActivityForResult(intent,1002);
+        startActivity(intent);
+//        getActivity().startActivityForResult(intent,1002);
     }
 
     //载入设计师作品
@@ -143,7 +144,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
                 String str = GsonUtil.jsonToString(jsonObject);
                 DesignWorksBean myBidBean = GsonUtil.jsonToBean(str, DesignWorksBean.class);
                 myBidBean.getInnerPicList();
-               // MyToast.show(getActivity(),"dsadasd");
             }
 
             @Override

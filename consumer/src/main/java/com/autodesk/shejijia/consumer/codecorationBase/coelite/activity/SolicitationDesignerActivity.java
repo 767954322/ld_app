@@ -171,7 +171,8 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                 showAlertView();
                 break;
             case R.id.btn_send_measure_house_form:
-                getJSONObject();
+                btn_send_form.setEnabled(false);
+                    getJSONObject();
                 break;
             case R.id.tvc_measure_form_time:
                 pvTime.show();
@@ -334,11 +335,12 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == FlowMeasureCostActivity.RESULT_CODE){
+
+            setResult(10058,new Intent());
             finish();
-            setResult(FlowMeasureCostActivity.RESULT_CODE,new Intent());
-            if(data == null){
-                return;
-            }
+//            if(data == null){
+//                return;
+//            }
 //            if(data.getStringExtra(Constant.SixProductsFragmentKey.SELECTION).equals(Constant.SixProductsFragmentKey.ISELITE)){
 //                CustomProgress.cancelDialog();
 //            }
