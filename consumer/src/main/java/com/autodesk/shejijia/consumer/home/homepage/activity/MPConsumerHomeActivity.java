@@ -467,6 +467,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
+
             case R.id.bidding:
                 //指针
                 setMyProjectTitleColorChange(bidding, design/*, construction*/);
