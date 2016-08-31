@@ -10,14 +10,14 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <com.autodesk.shejijia.shared.components.common.uielements.ImageShowView
             android:id="@+id/ad_view"
             android:layout_width="match_parent"
             android:layout_height="280dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
     </LinearLayout>
 
@@ -25,4 +25,5 @@
         android:id="@+id/case_librafy_detail_activity_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

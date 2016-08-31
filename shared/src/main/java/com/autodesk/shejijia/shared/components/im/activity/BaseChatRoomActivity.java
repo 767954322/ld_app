@@ -17,25 +17,24 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPAudioManager;
+import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
+import com.autodesk.shejijia.shared.components.im.adapter.ChatRoomAdapter;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
-import com.autodesk.shejijia.shared.components.im.adapter.ChatRoomAdapter;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatCommandInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessage;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatMessages;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatProjectInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPAudioManager;
-import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +58,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     public static final String ACS_MEMBER_ID = "acs_member_id"; //logged in user
     public static final String PROJECT_INFO = "project_info";
     public static final String MEDIA_TYPE = "media_type";
+    public static final String PROJECT_TITLE = "project_title";
 
     public interface CallBack {
         void call();
@@ -126,7 +126,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         refresh();
 
         if (mRecieverUserName != null)
-            setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName));
+            setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName  +"/"+ mProjectTtile));
     }
 
 
@@ -164,6 +164,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         mAcsMemberId = bundle.getString(ACS_MEMBER_ID);
         mProjectInfo = bundle.getParcelable(PROJECT_INFO);
         mMediaType = bundle.getString(MEDIA_TYPE);
+        mProjectTtile = bundle.getString(PROJECT_TITLE);
     }
 
     protected void putInstanceStateToBundle(Bundle bundle) {
@@ -176,6 +177,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         bundle.putString(ACS_MEMBER_ID, mAcsMemberId);
         bundle.putParcelable(PROJECT_INFO, mProjectInfo);
         bundle.putString(MEDIA_TYPE, mMediaType);
+        bundle.putString(PROJECT_TITLE,mProjectTtile);
     }
 
 
@@ -662,6 +664,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
     protected String mRecieverUserId;
     protected String mReceiverHsUid;
     protected String mRecieverUserName;
+    protected String mProjectTtile;
     protected MPChatProjectInfo mProjectInfo;
     protected String mMediaType;
 

@@ -68,9 +68,9 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:background="@color/bg_ff"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/bg_ff"
                     android:text="@string/common_order_project_number"
                     android:textColor="@color/bg_9E"
                     android:textSize="@dimen/font_15"/>
@@ -363,11 +363,11 @@
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_14"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/size_18"
-                    android:text="㎡"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginRight="@dimen/size_18"-->
+                    <!--android:text="㎡"/>-->
             </LinearLayout>
 
             <LinearLayout
@@ -491,12 +491,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/textview_border_beishu"
+                    android:background="@drawable/btn_border_cancel"
                     android:text="@string/button_decoration_stop"
+                    android:visibility="gone"
                     android:textColor="@color/bg_0084ff"
                     />
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_fitment_amend_demand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

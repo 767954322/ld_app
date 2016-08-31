@@ -59,6 +59,8 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         mSelectImageButton = (ImageView) findViewById(R.id.chat_selectphoto);
         mSelectTakeImageButton = (ImageView) findViewById(R.id.chat_takephoto);
         mWorkflowButton = (ImageView) findViewById(R.id.chat_custom_button);
+        rl_chat_custom_button = (RelativeLayout) findViewById(R.id.rl_chat_custom_button);
+        mWorkflowText = (TextView) findViewById(R.id.chat_custom_button_hint);
         mAudioParentView = (RelativeLayout) findViewById(R.id.audio_recording_parent_view);
         mBottomCustomLayout.setVisibility(View.GONE);
 
@@ -177,6 +179,9 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         return false;
     }
 
+
+
+
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -203,7 +208,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
                 Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
             } else {
                 if (mIWorkflowDelegate != null) {
-                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId, mReceiverHsUid,mThreadId);
+                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId, mReceiverHsUid, mThreadId);
                 }
             }
 
@@ -506,7 +511,10 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         super.changeConsumerUI();
 
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberType)) { //消费者
+            rl_chat_custom_button.setVisibility(View.VISIBLE);
             mWorkflowButton.setVisibility(View.VISIBLE);
+            mWorkflowText.setVisibility(View.VISIBLE);
+
             mWorkflowButton.setImageDrawable(getResources().getDrawable(R.drawable.amount_room_ico));
         }
 
@@ -518,7 +526,10 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
         if (projectInfo != null && projectInfo.is_beishu) {
             secondaryImageButton.setVisibility(View.GONE);
+
+            rl_chat_custom_button.setVisibility(View.GONE);
             mWorkflowButton.setVisibility(View.GONE);
+            mWorkflowText.setVisibility(View.GONE);
         } else {
             secondaryImageButton.setVisibility(View.VISIBLE);
 
@@ -527,12 +538,20 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
             if (mIWorkflowDelegate != null) {
                 int imageResId = mIWorkflowDelegate.getImageForProjectInfo(userInfo, ifIsDesiner);
+                String text_hint = mIWorkflowDelegate.getTextForProjectInfo(userInfo, ifIsDesiner);
+                mWorkflowText.setText(text_hint);
 
                 if (imageResId > 0) {
+
+                    rl_chat_custom_button.setVisibility(View.VISIBLE);
                     mWorkflowButton.setVisibility(View.VISIBLE);
+                    mWorkflowText.setVisibility(View.VISIBLE);
                     mWorkflowButton.setImageDrawable(getResources().getDrawable(imageResId));
                 } else if (imageResId == -1) {
+
+                    rl_chat_custom_button.setVisibility(View.GONE);
                     mWorkflowButton.setVisibility(View.GONE);
+                    mWorkflowText.setVisibility(View.GONE);
                 }
             }
         }
@@ -544,11 +563,12 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
 
     private RelativeLayout mAudioParentView;
+    private RelativeLayout rl_chat_custom_button;
     private LinearLayout mBottomCustomLayout;
     private ImageView mSelectImageButton;
     private ImageView mSelectTakeImageButton;
     private ImageView mWorkflowButton;
-
+    private TextView mWorkflowText;
     private int wk_cur_sub_node_idi; //全流程标识
     private ImageButton secondaryImageButton;
     private ImageButton rightImageButton;

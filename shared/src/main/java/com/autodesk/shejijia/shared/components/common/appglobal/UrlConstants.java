@@ -364,7 +364,6 @@ public final class UrlConstants {
     //String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
     //           http://192.168.150.103:8080/transaction-app/v1/api/withdraw/balance/0
 //        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
-    public static final String URL_WITHDRAW_MEMBERS = MAIN_TRANSACTION + "/members/";
 
     /**
      * 北舒套餐聊天入口
@@ -399,6 +398,7 @@ public final class UrlConstants {
      */
     public static final String URL_DELETE_ATTENTION = MAIN_MEMBER + "/members/";
 
+    public static final String URL_WITHDRAW_MEMBERS = MAIN_TRANSACTION + "/members/";
     /**
      * 获得设计师的设计费用区间
      * */
@@ -413,4 +413,5 @@ public final class UrlConstants {
      *发布套餐预定
      */
     public static final String SEND_PACKAGES_FORM = "http://192.168.88.175:8080/design-app/v1/api/appointMeal/";
+
 }

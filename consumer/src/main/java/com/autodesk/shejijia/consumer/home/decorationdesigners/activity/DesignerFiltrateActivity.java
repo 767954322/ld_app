@@ -14,10 +14,10 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateCo
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateStyleAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateWorkYearAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -205,11 +205,9 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.network_error),
-                        null, new String[]{UIUtils.getString(R.string.sure)},
-                        null, DesignerFiltrateActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerExperiences(okResponseCallback);
@@ -234,8 +232,9 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerCost(okResponseCallback);
@@ -260,8 +259,9 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerStyles(okResponseCallback);

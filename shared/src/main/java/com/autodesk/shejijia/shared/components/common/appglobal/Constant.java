@@ -59,7 +59,7 @@ public class Constant {
         public static final int STEP_IM = 1;
         public static final int STEP_FLOW = 2;
         public static final int STEP_MATERIAL = 3;
-//        public static final String JUMP_FROM_STATE = "jump_from_state";
+        public static final String JUMP_FROM_STATE = "jump_from_state";
     }
 
     /**

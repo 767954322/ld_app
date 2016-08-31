@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
@@ -50,6 +51,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     private Activity mActivity;
     private DecorationBiddersBean biddersBean;
     private ArrayList<DecorationBiddersBean> mBidders;
+    private OnItemViewClickCallback mOnItemViewClickCallback;
 
     public DecorationBidderAdapter(Activity activity, List<DecorationBiddersBean> datas, String wkTempleId, String needs_id) {
         super(activity, datas, R.layout.item_decoration_bidder_list);
@@ -60,7 +62,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
     }
 
     @Override
-    public void convert(CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
+    public void convert(final CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
         this.biddersBean = biddersBean;
         final String designer_id = biddersBean.getDesigner_id();
         final String uid = biddersBean.getUid();
@@ -93,7 +95,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         /**
          *控制显示拒绝、选TA量房，还是显示全流程状态
          */
-        String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
+        final String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
         boolean isNotBiding = isNOtBiding(wk_cur_sub_node_id);
         if (isNotBiding) {
             holder.setVisible(R.id.ll_bidder_after_biding, true);
@@ -125,6 +127,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         });
 
         /// 拒绝量房 .
+        final String finalNick_name = nick_name;
         holder.setOnClickListener(R.id.btn_designer_refuse, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +139,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
                     @Override
                     public void onItemClick(Object object, int position) {
                         if (position != AlertView.CANCELPOSITION) {
-                            refuseDesignerMeasure(mNeeds_id, designer_id);
+                            refuseDesignerMeasure(mNeeds_id, designer_id, holder.getPosition(), wk_cur_sub_node_id);
                         }
                     }
                 }).setCancelable(false).show();
@@ -158,6 +161,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             }
         });
     }
+
 
     /**
      * 打开聊天室
@@ -187,23 +191,38 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
     /**
      * 消费者拒绝设计师量房
+     * [1]如果只有一个设计师应标，就关闭当前页面
+     * [2]如果有多个设计师应标，就移除当前设计师，并更新页面
      */
-    public void refuseDesignerMeasure(String needs_id, String designer_id) {
+    private void refuseDesignerMeasure(String needs_id, final String designer_id, final int position, final String wk_cur_sub_node_id) {
         CustomProgress.show(mActivity, "", false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                mActivity.finish();
+
+                if (null != mBidders && mBidders.size() == 1) {
+                    mActivity.finish();
+                } else {
+                    int size = mBidders.size();
+                    for (int i = size - 1; i >= 0; i--) {
+                        String designer_id1 = mBidders.get(i).getDesigner_id();
+                        if (designer_id.equals(designer_id1)) {
+                            mBidders.remove(i);
+                            notifyDataSetChanged();
+                        }
+                    }
+                }
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
-                new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.network_error),
-                        null, new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip),
+//                        UIUtils.getString(R.string.network_error),
+//                        null, new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,mActivity);
             }
         };
         MPServerHttpManager.getInstance().refuseDesignerMeasure(needs_id, designer_id, okResponseCallback);
@@ -215,7 +234,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
      * @param wk_cur_sub_node_id 当前全流程节点
      * @return 如果为true, 表示进入全流程逻辑;如果为false,表示在应标进行中
      */
-    public boolean isNOtBiding(String wk_cur_sub_node_id) {
+    private boolean isNOtBiding(String wk_cur_sub_node_id) {
         boolean isNotBiding = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= IS_BIDING;
         if (isNotBiding) {
             return true;
@@ -223,5 +242,19 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             return false;
         }
     }
+
+
+    public void setOnItemViewClickCallback(OnItemViewClickCallback onItemViewClickCallback) {
+        mOnItemViewClickCallback = onItemViewClickCallback;
+    }
+
+    public interface OnItemViewClickCallback {
+        /**
+         * 点击选TA量房的回调
+         */
+        void setOnItemViewClickCallback(String designer_id);
+
+    }
+
 }
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_ef"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_ef"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header"/>
+        layout="@layout/view_navigation_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,26 +29,26 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_contract_num"/>
+                    android:text="@string/flow_contract_num" />
 
                 <TextView
                     android:id="@+id/flow_establish_contract_contract_number"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_10"
-                android:text="@string/flow_basic_info"/>
+                android:text="@string/flow_basic_info" />
 
             <TextView
                 android:id="@+id/tv_prevent_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_0"
                 android:focusable="true"
-                android:focusableInTouchMode="true"/>
+                android:focusableInTouchMode="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_owner"/>
+                    android:text="@string/flow_owner" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_name"
@@ -73,8 +73,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +90,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_phone"/>
+                    android:text="@string/flow_phone" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_phone"
@@ -103,8 +103,8 @@
                     android:maxLength="11"
                     android:phoneNumber="true"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -120,7 +120,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_postal_code"/>
+                    android:text="@string/flow_postal_code" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_postcode"
@@ -131,8 +131,8 @@
                     android:background="@drawable/bg_flow_edittext"
                     android:inputType="number"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -148,7 +148,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_email_address"/>
+                    android:text="@string/flow_email_address" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_email"
@@ -158,8 +158,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -175,7 +175,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_decorate_address"/>
+                    android:text="@string/flow_decorate_address" />
 
                 <TextView
                     android:id="@+id/flow_establish_contract_consumer_decorate_address"
@@ -186,7 +186,8 @@
                     android:background="@drawable/bg_flow_edittext"
                     android:gravity="center_vertical"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -202,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_detail_address"/>
+                    android:text="@string/flow_detail_address" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_detail_address"
@@ -212,8 +213,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -229,7 +230,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_second_party"/>
+                    android:text="@string/flow_second_party" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_name"
@@ -239,7 +240,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -255,7 +257,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_phone"/>
+                    android:text="@string/flow_phone" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_phone"
@@ -265,7 +267,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -281,7 +284,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_postal_code"/>
+                    android:text="@string/flow_postal_code" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_postcode"
@@ -292,7 +295,8 @@
                     android:background="@drawable/bg_flow_edittext"
                     android:inputType="number"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -308,7 +312,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_email_address"/>
+                    android:text="@string/flow_email_address" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_email"
@@ -318,7 +322,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -334,7 +339,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_decorate_address"/>
+                    android:text="@string/flow_service_address" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_decorate_address"
@@ -344,7 +349,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -360,7 +366,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_detail_address"/>
+                    android:text="@string/flow_detail_address" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_detail_address"
@@ -370,7 +376,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_flow_edittext"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <TextView
@@ -379,7 +386,7 @@
                 android:paddingBottom="@dimen/size_5"
                 android:paddingLeft="@dimen/size_10"
                 android:paddingTop="@dimen/size_10"
-                android:text="@string/flow_design_work_content"/>
+                android:text="@string/flow_design_work_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -391,19 +398,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1.1 平面规划设计"/>
+                    android:text="1.1 平面规划设计" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_5"
-                    android:text="量房后乙方设计师根据甲方提供的需求信息开始平面规划设计，包括设计理念阐述，平面布置图，甲方确认以后，平面规划设计完成"/>
+                    android:text="量房后乙方设计师根据甲方提供的需求信息开始平面规划设计，包括设计理念阐述，平面布置图，甲方确认以后，平面规划设计完成" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_15"
-                    android:text="1.11 甲乙上方协商，乙方应提供给甲方"/>
+                    android:text="1.11 甲乙上方协商，乙方应提供给甲方" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -418,7 +425,7 @@
                         android:layout_width="@dimen/size_1"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:text="@string/flow_effect_picture"/>
+                        android:text="@string/flow_effect_picture" />
 
                     <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                         android:id="@+id/tvc_flow_establish_contract_designer_design_sketch"
@@ -426,17 +433,18 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
+                        android:gravity="right|center"
                         android:inputType="number"
+                        android:paddingRight="@dimen/size_10"
                         android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"/>
+                        android:textColor="@color/bg_80"
+                        android:textSize="@dimen/font_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_5"
-
-                        android:text="@string/flow_monad_zhang"/>
+                        android:text="@string/flow_monad_zhang" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -452,7 +460,7 @@
                         android:layout_width="@dimen/size_1"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:text="@string/flow_renderings"/>
+                        android:text="@string/flow_renderings" />
 
                     <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                         android:id="@+id/tvc_flow_establish_contract_designer_render_map"
@@ -460,16 +468,18 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
+                        android:gravity="right|center"
                         android:inputType="number"
+                        android:paddingRight="@dimen/size_10"
                         android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"/>
+                        android:textColor="@color/bg_80"
+                        android:textSize="@dimen/font_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_5"
-                        android:text="@string/flow_monad_zhang"/>
+                        android:text="@string/flow_monad_zhang" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -485,7 +495,7 @@
                         android:layout_width="@dimen/size_1"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:text="@string/flow_every_increase_a_rendering_fee"/>
+                        android:text="@string/flow_every_increase_a_rendering_fee" />
 
                     <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                         android:id="@+id/tvc_flow_establish_contract_designer_design_sketch_plus"
@@ -493,16 +503,18 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
+                        android:gravity="right|center"
                         android:inputType="numberDecimal"
+                        android:paddingRight="@dimen/size_10"
                         android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"/>
+                        android:textColor="@color/bg_80"
+                        android:textSize="@dimen/font_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_5"
-                        android:text="@string/flow_monad_rmb"/>
+                        android:text="@string/flow_monad_rmb" />
                 </LinearLayout>
 
 
@@ -510,7 +522,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_15"
-                    android:text="2.1 费用"/>
+                    android:text="2.1 费用" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -525,7 +537,7 @@
                         android:layout_width="@dimen/size_1"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:text="@string/flow_the_total_project_design"/>
+                        android:text="@string/flow_the_total_project_design" />
 
                     <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                         android:id="@+id/flow_establish_contract_consumer_total_cost"
@@ -533,16 +545,18 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
+                        android:gravity="right|center"
                         android:inputType="numberDecimal"
+                        android:paddingRight="@dimen/size_10"
                         android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"/>
+                        android:textColor="@color/bg_80"
+                        android:textSize="@dimen/font_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_5"
-                        android:text="@string/flow_monad_rmb"/>
+                        android:text="@string/flow_monad_rmb" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -558,7 +572,7 @@
                         android:layout_width="@dimen/size_1"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:text="@string/flow_first_design_cost"/>
+                        android:text="@string/flow_first_design_cost" />
 
                     <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                         android:id="@+id/flow_establish_contract_consumer_first_cost"
@@ -566,16 +580,18 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
+                        android:gravity="right|center"
                         android:inputType="numberDecimal"
+                        android:paddingRight="@dimen/size_10"
                         android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"/>
+                        android:textColor="@color/bg_80"
+                        android:textSize="@dimen/font_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_5"
-                        android:text="@string/flow_monad_rmb"/>
+                        android:text="@string/flow_monad_rmb" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -591,7 +607,7 @@
                         android:layout_width="@dimen/size_1"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
-                        android:text="@string/flow_last_design_cost"/>
+                        android:text="@string/flow_last_design_cost" />
 
                     <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                         android:id="@+id/tvc_flow_establish_contract_consumer_last_cost"
@@ -599,16 +615,18 @@
                         android:layout_height="@dimen/size_28"
                         android:layout_weight="3"
                         android:background="@drawable/bg_flow_edittext"
+                        android:gravity="right|center"
                         android:inputType="numberDecimal"
+                        android:paddingRight="@dimen/size_10"
                         android:singleLine="true"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"/>
+                        android:textColor="@color/bg_80"
+                        android:textSize="@dimen/font_14" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_5"
-                        android:text="@string/flow_monad_rmb"/>
+                        android:text="@string/flow_monad_rmb" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -629,12 +647,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/bg_ff"
-                    android:text="@string/flow_examine_contract_detail"/>
+                    android:text="@string/flow_examine_contract_detail" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
 
             </LinearLayout>
 
@@ -657,12 +675,12 @@
             android:id="@+id/img_agree_establish_contract"
             android:layout_width="@dimen/size_20"
             android:layout_height="@dimen/size_20"
-            android:background="@drawable/icon_selected_unchecked"/>
+            android:background="@drawable/icon_selected_unchecked" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/flow_have_read_all_contract_detail"/>
+            android:text="@string/flow_have_read_all_contract_detail" />
     </LinearLayout>
 
     <LinearLayout
@@ -680,7 +698,7 @@
             android:layout_height="@dimen/size_40"
             android:background="@drawable/bg_common_btn_blue"
             android:text="@string/sure_and_send"
-            android:textColor="@color/bg_ff"/>
+            android:textColor="@color/bg_ff" />
     </LinearLayout>
 
 </LinearLayout>

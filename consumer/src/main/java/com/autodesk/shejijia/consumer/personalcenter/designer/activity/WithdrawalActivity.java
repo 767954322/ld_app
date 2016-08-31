@@ -23,6 +23,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyPropertyBean;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -133,10 +134,14 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     break;
                 }
                 String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
-                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_ZHONGWEN);
+//<<<<<<< HEAD
+//                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_ZHONGWEN);
+//=======
+////                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
+//>>>>>>> release/July/Android-UAT
                 boolean isBankNum = deposit_card.matches(RegexUtil.PHONE_BLANK);
                 boolean isName = account_user_name.trim().matches(regex_name);
-                if (myPropertyBean == null) {
+                if (myPropertyBean == null){
                     if (!isName) {
                         Toast.makeText(WithdrawalActivity.this, "持卡人姓名只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
                         break;
@@ -148,64 +153,78 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     if (myPropertyBean == null) {
 
                         if (!isBankNum) {
-                            Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();}
+                    if (!isBankNum) {
+                        Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }else {
+                    if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())){
+                        if (!checkNameChese(branch_bank_name)) {
+                            Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+                    if (TextUtils.isEmpty(myPropertyBean.getDeposit_card())){
+                        if (!isBankNum) {
+                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
                             break;
                         }
                     }
                 }
-
-
-                if (myPropertyBean == null) {
 
                     if (!isBankNum) {
                         Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
                         break;
                     }
-
-                } else {
-                    if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
-
+                }else {
+                    if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())){
+                        if (!checkNameChese(branch_bank_name)) {
+                            Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+                    if (TextUtils.isEmpty(myPropertyBean.getDeposit_card())){
                         if (!isBankNum) {
                             Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
                             break;
                         }
-
-                    } else {
-                        if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
-
-                            if (!isBankNum) {
-                                Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                                break;
-                            }
-                        }
                     }
-
-
-                    if (myPropertyBean == null) {
-
-                        if (!isBankNum) {
-                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-
-                    } else {
-                        if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
-
-                            if (!isBankNum) {
-                                Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                                break;
-                            }
-                        }
-                    }
-
-                    boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
-
-                    if (flag && null != memberEntity) {
-                        designer_id = Long.parseLong(memberEntity.getAcs_member_id());
-
-                    }
-                    break;
                 }
+
+
+//                if (!checkNameChese(branch_bank_name)) {
+//                    Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+////                    if (!isBank) {
+////                        Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+////                        break;
+////                    }
+//                    if (myPropertyBean == null) {
+//
+//                        if (!isBankNum) {
+//                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+//                            break;
+//                        }
+//
+//                    } else {
+//                        if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
+//
+//                            if (!isBankNum) {
+//                                Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+//                                break;
+//                            }
+//                        }
+//                    }
+//
+//                    boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
+//
+//                    if (flag && null != memberEntity) {
+//                        designer_id = Long.parseLong(memberEntity.getAcs_member_id());
+//                        getWithdrawareBalanceData(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
+//                    }
+//
+//                }
+                break;
             default:
                 break;
         }
@@ -491,8 +510,9 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 if (WithdrawalActivity.this != null) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
-                            AlertView.Style.Alert, null).show();
+//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
+//                            AlertView.Style.Alert, null).show();
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError,WithdrawalActivity.this);
                 }
             }
         });
@@ -614,99 +634,98 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
     }
 
 
-class MyWatcher implements TextWatcher {
-    int beforeTextLength = 0;
-    int onTextLength = 0;
-    boolean isChanged = false;
-    int location = 0;// 记录光标的位置
-    private char[] tempChar;
-    private StringBuffer buffer = new StringBuffer();
-    int konggeNumberB = 0;
+    class MyWatcher implements TextWatcher {
+        int beforeTextLength = 0;
+        int onTextLength = 0;
+        boolean isChanged = false;
+        int location = 0;// 记录光标的位置
+        private char[] tempChar;
+        private StringBuffer buffer = new StringBuffer();
+        int konggeNumberB = 0;
 
-    @Override
-    public void beforeTextChanged(CharSequence text, int start, int count, int after) {
+        @Override
+        public void beforeTextChanged(CharSequence text, int start, int count, int after) {
 
-        // TODO Auto-generated method stub
-        beforeTextLength = text.length();
-        if (buffer.length() > 0) {
-            buffer.delete(0, buffer.length());
-        }
-        konggeNumberB = 0;
-        for (int i = 0; i < text.length(); i++) {
-            if (text.charAt(i) == ' ') {
-                konggeNumberB++;
+            // TODO Auto-generated method stub
+            beforeTextLength = text.length();
+            if (buffer.length() > 0) {
+                buffer.delete(0, buffer.length());
             }
+            konggeNumberB = 0;
+            for (int i = 0; i < text.length(); i++) {
+                if (text.charAt(i) == ' ') {
+                    konggeNumberB++;
+                }
+            }
+
         }
 
-    }
+        @Override
+        public void onTextChanged(CharSequence text, int start, int before, int count) {
 
-    @Override
-    public void onTextChanged(CharSequence text, int start, int before, int count) {
-
-        // TODO Auto-generated method stub
-        onTextLength = text.length();
-        buffer.append(text.toString());
-        if (onTextLength == beforeTextLength || onTextLength <= 3 || isChanged) {
-            isChanged = false;
-            return;
+            // TODO Auto-generated method stub
+            onTextLength = text.length();
+            buffer.append(text.toString());
+            if (onTextLength == beforeTextLength || onTextLength <= 3 || isChanged) {
+                isChanged = false;
+                return;
+            }
+            isChanged = true;
         }
-        isChanged = true;
-    }
 
-    @Override
-    public void afterTextChanged(Editable s) {
+        @Override
+        public void afterTextChanged(Editable s) {
 
-        if (isChanged) {
-            location = et_withdrawal_bank_card_number.getSelectionEnd();
-            int index = 0;
-            while (index < buffer.length()) {
-                if (buffer.charAt(index) == ' ') {
-                    buffer.deleteCharAt(index);
-                } else {
+            if (isChanged) {
+                location = et_withdrawal_bank_card_number.getSelectionEnd();
+                int index = 0;
+                while (index < buffer.length()) {
+                    if (buffer.charAt(index) == ' ') {
+                        buffer.deleteCharAt(index);
+                    } else {
+                        index++;
+                    }
+                }
+                index = 0;
+                int konggeNumberC = 0;
+                while (index < buffer.length()) {
+
+                    if ((index + 1) % 5 == 0) {// if ((index == 4 || index == 9 || index == 14 || index// == 19)) {
+
+                        buffer.insert(index, ' ');
+                        konggeNumberC++;
+                    }
                     index++;
                 }
-            }
-            index = 0;
-            int konggeNumberC = 0;
-            while (index < buffer.length()) {
 
-                if ((index + 1) % 5 == 0) {// if ((index == 4 || index == 9 || index == 14 || index// == 19)) {
+                if (konggeNumberC > konggeNumberB) {
 
-                    buffer.insert(index, ' ');
-                    konggeNumberC++;
+                    location += (konggeNumberC - konggeNumberB);
                 }
-                index++;
+
+                tempChar = new char[buffer.length()];
+
+                buffer.getChars(0, buffer.length(), tempChar, 0);
+
+                String str = buffer.toString();
+
+                if (location > str.length()) {
+
+                    location = str.length();
+
+                } else if (location < 0) {
+
+                    location = 0;
+
+                }
+                et_withdrawal_bank_card_number.setText(str);
+                Editable etable = et_withdrawal_bank_card_number.getText();
+                Selection.setSelection(etable, location);
+                isChanged = false;
             }
 
-            if (konggeNumberC > konggeNumberB) {
-
-                location += (konggeNumberC - konggeNumberB);
-            }
-
-            tempChar = new char[buffer.length()];
-
-            buffer.getChars(0, buffer.length(), tempChar, 0);
-
-            String str = buffer.toString();
-
-            if (location > str.length()) {
-
-                location = str.length();
-
-            } else if (location < 0) {
-
-                location = 0;
-
-            }
-            et_withdrawal_bank_card_number.setText(str);
-            Editable etable = et_withdrawal_bank_card_number.getText();
-            Selection.setSelection(etable, location);
-            isChanged = false;
         }
-
     }
-
-}
 
     /// 控件.
     private TextView tv_withdrawal_account_balance;

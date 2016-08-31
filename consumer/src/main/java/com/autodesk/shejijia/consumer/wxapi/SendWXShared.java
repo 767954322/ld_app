@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.consumer.wxapi;
 
-import android.graphics.Bitmap;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,7 +54,13 @@ public class SendWXShared {
                 } else {
                     msg.description = "";
                 }
-                Bitmap thumbBmp = Bitmap.createScaledBitmap(loadedImage, 150, 150, true);
+                Bitmap thumbBmp = null;
+                if (loadedImage != null) {
+                    thumbBmp = createBitmapThumbnail(loadedImage);
+                } else {
+                    thumbBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.shuoming_ico);
+                }
+//                Bitmap thumbBmp = Bitmap.createScaledBitmap(loadedImage, 150, 150, true);
                 byte[] bytes = bmpToByteArray(thumbBmp, true);
                 msg.thumbData = bytes;
                 SendMessageToWX.Req req = new SendMessageToWX.Req();

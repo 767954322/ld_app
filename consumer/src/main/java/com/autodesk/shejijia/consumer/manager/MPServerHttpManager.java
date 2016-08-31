@@ -126,9 +126,9 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
+                //HashMap<String, String> header = new HashMap<>();
+               // header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return super.getHeaders();
             }
         };
         queue.add(okRequest);
@@ -609,10 +609,9 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-
-               HashMap<String, String> header = new HashMap<>();
-               header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-              return header;
+//                HashMap<String, String> header = new HashMap<>();
+//                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return super.getHeaders();
             }
         };
         queue.add(okRequest);
@@ -646,6 +645,7 @@ public class MPServerHttpManager {
      */
     public void sendThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
+        Log.d("yxw", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -667,6 +667,7 @@ public class MPServerHttpManager {
      */
     public void getThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
+        Log.d("yxw", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1331,7 +1332,23 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
- 
+
+
+    public void sendUnBindBankCard(final long designer_id,
+                                   JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
+        String url = UrlConstants.URL_WITHDRAW_MEMBERS + designer_id + "/balances/delete";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put(Constant.NetBundleKey.X_XTOKEN, xToken);
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
 
     /**
      * 消费者交付物确认处理
@@ -1640,6 +1657,4 @@ public class MPServerHttpManager {
 
     private String TAG = getClass().getSimpleName();
 
-    public void sendUnBindBankCard(long designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback  callback) {
-    }
 }

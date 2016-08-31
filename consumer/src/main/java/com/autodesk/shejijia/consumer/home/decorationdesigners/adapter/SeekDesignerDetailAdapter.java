@@ -54,20 +54,20 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View container, ViewGroup parent) {
 
-        ViewHolder viewHolder = null;
+        ViewHolder holder = null;
         if (container == null){
-             viewHolder = new ViewHolder();
+            holder = new ViewHolder();
             container = LayoutInflater.from(context).inflate(R.layout.item_lv_seek_designer_detail,null);
-            viewHolder.mSeekCase = (ImageView) container.findViewById(R.id.img_seek_designer_detail_case);
+            holder.mSeekCase = (ImageView) container.findViewById(R.id.img_seek_designer_detail_case);
 //            viewHolder.mSeekAddress = (TextView) container.findViewById(R.id.img_seek_designer_detail_address);
-            viewHolder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
-            viewHolder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
-            viewHolder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
+            holder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
+            holder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
+            holder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
 
-            container.setTag(viewHolder);
+            container.setTag(holder);
         }else {
 
-            viewHolder = (ViewHolder) container.getTag();
+            holder = (ViewHolder) container.getTag();
 
         }
 
@@ -85,57 +85,71 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
                     if (TextUtils.isEmpty(imageOneUrl)) {
                         imageOneUrl = casesEntity.getImages().get(0).getFile_url();
                     }
-                    ImageUtils.loadImage(viewHolder.mSeekCase, imageOneUrl + Constant.CaseLibraryDetail.JPG);
+                    ImageUtils.loadImage(holder.mSeekCase, imageOneUrl + Constant.CaseLibraryDetail.JPG);
                 }
             } else {
-                viewHolder.mSeekCase.setImageResource(R.drawable.common_case_icon);
+                holder.mSeekCase.setImageResource(R.drawable.common_case_icon);
             }
 //            if (null != mDatas.get(position).getTitle()) {
 //                viewHolder.mSeekAddress.setText(mDatas.get(position).getTitle());
 //            } else {
 //                viewHolder.mSeekAddress.setText(R.string.temporarily_no_data);
 //            }
+            //TODO MERGE 825
+//            if (null != mDatas.get(position).getTitle()) {
+//                ((ViewHolder) holder).mSeekAddress.setText(mDatas.get(position).getTitle());
+//            } else {
+//                ((ViewHolder) holder).mSeekAddress.setText(R.string.str_others);
+//            }
             if (null != mDatas.get(position).getRoom_type()) {
                 String room_type = mDatas.get(position).getRoom_type();
                 if (mRoom.containsKey(room_type)) {
-                    viewHolder.mSeekLivingRoom.setText(mRoom.get(room_type));
+                    ((ViewHolder) holder).mSeekLivingRoom.setText(mRoom.get(room_type));
                 } else {
-                    viewHolder.mSeekLivingRoom.setText(room_type);
+                    ((ViewHolder) holder).mSeekLivingRoom.setText(room_type);
                 }
             } else {
-                viewHolder.mSeekLivingRoom.setText(R.string.temporarily_no_data);
+                ((ViewHolder) holder).mSeekLivingRoom.setText(R.string.str_others);
             }
             if (null != mDatas.get(position).getProject_style()) {
                 String project_style = mDatas.get(position).getProject_style();
                 if (mStyle.containsKey(project_style)) {
-                    viewHolder.mSeekStyle.setText(mStyle.get(project_style));
+                    ((ViewHolder) holder).mSeekStyle.setText(mStyle.get(project_style));
                 } else {
-                    viewHolder.mSeekStyle.setText(project_style);
+                    ((ViewHolder) holder).mSeekStyle.setText(project_style);
                 }
             } else {
-                viewHolder.mSeekStyle.setText(R.string.temporarily_no_data);
+                ((ViewHolder) holder).mSeekStyle.setText(R.string.str_others);
             }
             if (null != mDatas.get(position).getRoom_area()) {
                 String room_area = mDatas.get(position).getRoom_area();
                 if (mArea.containsKey(room_area)) {
-                    viewHolder.mSeekArea.setText(mArea.get(room_area) + "m²");
+                    ((ViewHolder) holder).mSeekArea.setText(mArea.get(room_area) + "m²");
                 } else {
-                    viewHolder.mSeekArea.setText(room_area + "m²");
+                    ((ViewHolder) holder).mSeekArea.setText(room_area + "m²");
                 }
             } else {
-                viewHolder.mSeekArea.setText(R.string.temporarily_no_data);
+                ((ViewHolder) holder).mSeekArea.setText(R.string.str_others);
             }
-//            if (null!=mDatas.get(position).getFavorite_count()){
-//                  //      viewHolder.tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
-//            }
+            if (null!=mDatas.get(position).getFavorite_count()){
+                        ((ViewHolder) holder).tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
+            }
         } else {
-            viewHolder.mSeekCase.setImageResource(R.drawable.common_case_icon);
-           // viewHolder.mSeekAddress.setText(R.string.temporarily_no_data);
-            viewHolder.mSeekLivingRoom.setText(R.string.temporarily_no_data);
-            viewHolder.mSeekStyle.setText(R.string.temporarily_no_data);
-            viewHolder.mSeekArea.setText(R.string.temporarily_no_data);
+            ((ViewHolder) holder).mSeekCase.setImageResource(R.drawable.common_case_icon);
+//<<<<<<< HEAD
+//            ((ViewHolder) holder).mSeekAddress.setText(R.string.temporarily_no_data);
+            ((ViewHolder) holder).mSeekLivingRoom.setText(R.string.temporarily_no_data);
+            ((ViewHolder) holder).mSeekStyle.setText(R.string.temporarily_no_data);
+            ((ViewHolder) holder).mSeekArea.setText(R.string.temporarily_no_data);
+            //TODO MERGE 825
+//=======
+//            ((ViewHolder) holder).mSeekAddress.setText(R.string.str_others);
+//            ((ViewHolder) holder).mSeekLivingRoom.setText(R.string.str_others);
+//            ((ViewHolder) holder).mSeekStyle.setText(R.string.str_others);
+//            ((ViewHolder) holder).mSeekArea.setText(R.string.str_others);
+//>>>>>>> release/July/Android-UAT
         }
-        ( viewHolder).mSeekCase.setOnClickListener(new MyOnClickListener(position, viewHolder));
+        ((ViewHolder) holder).mSeekCase.setOnClickListener(new MyOnClickListener(position, (ViewHolder) holder));
 
         return container;
     }

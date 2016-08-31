@@ -53,7 +53,6 @@ public class UrlMessagesContants {
 //            ConnectWebSocketUrl = "ws://api.beta.squidplatform.com:80/api/v2/connect";
 //            StrHttpServicerootCn= "https://beta-api.acg.autodesk.com/api/v2/";
         }
-        KLog.d("yxw", ConnectWebSocketUrl + "   StrHttpServicerootCn  " + StrHttpServicerootCn);
     }
 
     /**

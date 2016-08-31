@@ -665,6 +665,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 tvc_measure_form_style.setText(style);
                 Map<String, String> space = AppJsonFileReader.getStyle(MeasureFormActivity.this);
                 style = ConvertUtils.getKeyByValue(space, style);
+
             }
         });
     }

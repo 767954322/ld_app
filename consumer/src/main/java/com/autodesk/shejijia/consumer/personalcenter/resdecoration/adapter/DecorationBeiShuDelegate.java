@@ -107,7 +107,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openChatRoom(uid,user_name,designer_id,beishu_thread_id);
+                    openChatRoom(uid, user_name, designer_id, beishu_thread_id);
                 }
             });
 
@@ -126,6 +126,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
     /**
      * 进入聊天室
+     *
      * @param uid
      * @param user_name
      * @param designer_id

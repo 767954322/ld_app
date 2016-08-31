@@ -1,19 +1,14 @@
-package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
+package com.autodesk.shejijia.consumer.home.decorationlibrarys.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.HoverCaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
@@ -24,13 +19,11 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author DongXueQiu .
@@ -39,43 +32,45 @@ import java.util.List;
  * @filename CaseLibraryActivity.
  * @brief 案例库详情页面.
  */
-public class CaseLibraryActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener, HoverCaseAdapter.OnItemHoverCaseClickListener {
+public class MassiveCasesFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener, HoverCaseAdapter.OnItemHoverCaseClickListener {
+
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_case_library;
+        return R.layout.fragment_case_library;
     }
 
     @Override
     protected void initView() {
-        super.initView();
-        mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
-        mFooterView = View.inflate(this, R.layout.view_empty_layout, null);
-        mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
-        mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
-        mListView = (ListView) findViewById(R.id.hover_case_list_view);
-        mIvEmpty = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
+        mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view));
+//        mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
+//        mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
+//        mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
+        mListView = (ListView) rootView.findViewById(R.id.hover_case_list_view);
+//        mIvEmpty = ((ImageView) mFooterView.findViewById(R.id.iv_default_empty));
 
-        mListView.addFooterView(mFooterView);
-        setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
-
-        setVisibilityForNavButton(ButtonType.RIGHT, true);
-        setVisibilityForNavButton(ButtonType.SECONDARY, true);
+//        mListView.addFooterView(mFooterView);
+//        setImageForNavButton(NavigationBarActivity.ButtonType.RIGHT, R.drawable.icon_search);
+//        setImageForNavButton(NavigationBarActivity.ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
+//
+//        setVisibilityForNavButton(NavigationBarActivity.ButtonType.RIGHT, true);
+//        setVisibilityForNavButton(NavigationBarActivity.ButtonType.SECONDARY, true);
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
-        mContext = this;
-        screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
-        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
-
-        setTitleForNavbar(UIUtils.getString(R.string.case_library));
+    protected void initData() {
+        screenWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+        screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
         if (mHoverCaseAdapter == null) {
-            mHoverCaseAdapter = new HoverCaseAdapter(mContext, mCasesEntities, screenWidth, screenHeight);
+            mHoverCaseAdapter = new HoverCaseAdapter(getActivity(), mCasesEntities, screenWidth, screenHeight);
         }
         mListView.setAdapter(mHoverCaseAdapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPullToRefreshLayout.autoRefresh();
     }
 
     @Override
@@ -93,38 +88,18 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
     @Override
     public void OnItemHoverCaseClick(int position) {
         String case_id = mCasesEntities.get(position).getId();
-        Intent intent = new Intent(mContext, CaseLibraryNewActivity.class);
+        Intent intent = new Intent(getActivity(), CaseLibraryNewActivity.class);
         intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(intent);
     }
 
-    @Override
-    protected void secondaryNavButtonClicked(View view) {
-        super.secondaryNavButtonClicked(view);
-        Intent intent = new Intent(this, FiltrateActivity.class);
-        intent.putExtra(Constant.CaseLibrarySearch.SEARCH_TYPE, 1);
-        intent.putExtra(Constant.CaseLibrarySearch.AREA_INDEX, mFiltrateContentBean == null ? 0 : mFiltrateContentBean.getAreaIndex());
-        intent.putExtra(Constant.CaseLibrarySearch.HOUSING_INDEX, mFiltrateContentBean == null ? 0 : mFiltrateContentBean.getHouseIndex());
-        intent.putExtra(Constant.CaseLibrarySearch.STYLE_INDEX, mFiltrateContentBean == null ? 0 : mFiltrateContentBean.getStyleIndex());
-        this.startActivityForResult(intent, REQUEST_CODE);
-    }
-
-    @Override
-    protected void rightNavButtonClicked(View view) {
-        super.rightNavButtonClicked(view);
-        Intent search = new Intent(this, SearchActivity.class);
-        startActivity(search);
-    }
 
     /**
      * 获取案例库数据并刷新
      */
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
-                                   final int offset, final int limit, final String custom_string_restroom, final String custom_string_form,
-                                   final int state) {
-
-
+                                   final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -138,13 +113,15 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryActivity.this);
-                hideFooterView(mCasesEntities);
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+//                hideFooterView(mCasesEntities);
             }
         };
         MPServerHttpManager.getInstance().getCaseListData(custom_string_style, custom_string_type, custom_string_keywords,
                 custom_string_area, custom_string_bedroom, taxonomy_id,
-                custom_string_restroom, custom_string_form, offset, limit,  callback);
+               custom_string_restroom, custom_string_form, offset, limit,  callback);
     }
 
     /**
@@ -165,7 +142,7 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
                 break;
         }
         mCasesEntities.addAll(mCaseLibraryBean.getCases());
-        hideFooterView(mCasesEntities);
+//        hideFooterView(mCasesEntities);
         mHoverCaseAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
@@ -173,42 +150,33 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
     /**
      * 是否隐藏底部布局
      *
-     * @param list 传入案例库数据集合
+//     * @param 传入案例库数据集合
      */
-    private void hideFooterView(List<CaseLibraryBean.CasesEntity> list) {
-        if (list != null && list.size() > 0) {
-            mRlEmpty.setVisibility(View.GONE);
-        } else {
-            mRlEmpty.setVisibility(View.VISIBLE);
-        }
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-        mIvEmpty.setImageBitmap(bmp);
-        mTvEmptyMessage.setText(R.string.no_designer_case);
-        WindowManager wm = (WindowManager) CaseLibraryActivity.this.getSystemService(CaseLibraryActivity.WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
-        mRlEmpty.getLayoutParams();
-        layoutParams.height = height - 10;
-        mRlEmpty.setLayoutParams(layoutParams);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
-    }
+//    private void hideFooterView(List<CaseLibraryBean.CasesEntity> list) {
+//        if (list != null && list.size() > 0) {
+//            mRlEmpty.setVisibility(View.GONE);
+//        } else {
+//            mRlEmpty.setVisibility(View.VISIBLE);
+//        }
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+//        mIvEmpty.setImageBitmap(bmp);
+//        mTvEmptyMessage.setText(R.string.no_designer_case);
+//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+//        int height = wm.getDefaultDisplay().getHeight();
+//        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
+//        mRlEmpty.getLayoutParams();
+//        layoutParams.height = height - 10;
+//        mRlEmpty.setLayoutParams(layoutParams);
+//        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+//    }
 
     /// 是否显示ListView.
     private void showListView() {
         mPullToRefreshLayout.setVisibility(View.VISIBLE);
-        mRlEmpty.setVisibility(View.GONE);
+//        mRlEmpty.setVisibility(View.GONE);
     }
 
-    /// 第一次进入页面刷新.
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        /// For the first time into the automatic refresh .
-        if (isFirstIn) {
-            mPullToRefreshLayout.autoRefresh();
-            isFirstIn = false;
-        }
-    }
+
 
     /// 下拉刷新.
     @Override
@@ -240,7 +208,7 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
      * @param data       回来的数据
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (null == data) {
             return;
@@ -261,18 +229,17 @@ public class CaseLibraryActivity extends NavigationBarActivity implements PullTo
 
     /// 控件.
     private PullToRefreshLayout mPullToRefreshLayout;
-    private RelativeLayout mRlEmpty;
-    private TextView mTvEmptyMessage;
+//    private RelativeLayout mRlEmpty;
+//    private TextView mTvEmptyMessage;
     private ListView mListView;
-    private ImageView mIvEmpty;
-    private View mFooterView;
+//    private ImageView mIvEmpty;
+//    private View mFooterView;
 
     private int LIMIT = 10;
     private int OFFSET = 0;
     private int screenWidth;
     private int screenHeight;
     private boolean isFirstIn = true;
-    private Context mContext;
     private FiltrateContentBean mFiltrateContentBean;
     /// 集合,类.
     private HoverCaseAdapter mHoverCaseAdapter;

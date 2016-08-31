@@ -18,6 +18,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerIn
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -242,11 +243,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.network_error), null,
-                        new String[]{UIUtils.getString(R.string.sure)},
-                        null, SeekDesignerActivity.this,
-                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerActivity.this);
                 CustomProgress.cancelDialog();
             }
         };
@@ -351,6 +348,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
     private String member_id;
     private Intent intent;
 
+//    private SeekDesignerBean mSeekDesignerBean;
     private SeekDesignerAdapter mSeekDesignerAdapter;
     private FindDesignerBean mFindDesignerBean = new FindDesignerBean();
     private ArrayList<SeekDesignerBean.DesignerListEntity> mDesignerListEntities = new ArrayList<>();

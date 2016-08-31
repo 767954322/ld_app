@@ -22,7 +22,6 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDia
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
@@ -124,7 +123,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             }
 
 //            tv_grandmaster_detail.setText("菲尔普·斯塔克 (法国) 一个非凡的传奇人物 疯狂的明星大家飞的风很大");
-            ImageUtils.displayIconImage(designer_list.get(i).getDesigner().getDesigner_profile_cover().getPublic_url(), iv_grandmaster_pic);
+//            ImageUtils.displayIconImage(designer_list.get(i).getDesigner().getDesigner_profile_cover().getPublic_url(), iv_grandmaster_pic);
             viewList.add(view2);
         }
         addImageViewtips();

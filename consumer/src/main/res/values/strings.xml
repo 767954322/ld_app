@@ -3,13 +3,15 @@
     <string name="title_messagecenter">消息中心</string>
     <string name="item_messagecenter_tital">消息中心</string>
     <string name="nodata">暂无数据</string>
-    <string name="nodescription">暂无描叙</string>
-    <string name="dianzanshu">"点赞数  "</string>
-    <string name="thumbup_conunt">点赞数</string>
+
 
     <string name="send_single_number">派单人数：</string>
     <string name="send_design">派单设计师</string>
     <string name="accept_mearch">接受量房交付物</string>
+    <string name="nodescription">暂无介绍</string>
+    <string name="dianzanshu">"点赞数  "</string>
+    <string name="thumbup_conunt">点赞数</string>
+
 
     <!--交付物延期确认-->
     <string name="title_introduce">说明</string>
@@ -101,11 +103,20 @@
     <string name="alert_decoration_message">终止需求后项目就会结束</string>
     <string name="button_decoration_amend">修改需求</string>
     <string name="content_designer_good_at">擅长：</string>
-    <string name="content_others">其他</string>
+    <string name="content_others">其它</string>
     <string name="loginguoqi">登陆过期</string>
     <string name="canshuyichang">参数错误</string>
     <string name="caozuoerror">当前操作不合法</string>
     <string name="apierrror">API内部异常</string>
+    <string name="http402">服务器开小差中</string>
+    <string name="http404">服务器走丢了</string>
+    <string name="fanganflow">请在PC端进行3D方案的创建</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_wk_flow_node">WkFlowNode</string>
+    <!--title_activity_issue_elite_deman-->
+
     <string name="packages_yuyue">立即预约</string>
 
     <string name="title_average_rule">规则说明</string>
@@ -114,9 +125,5 @@
     <string name="alert_average_rule_3">3.签定设计合同量房费自动转入设计费</string>
     <string name="close_alert">关闭</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="http402">服务器开小差中</string>
-    <string name="http404">服务器走丢了</string>
-    <string name="title_activity_wk_flow_node">WkFlowNode</string>
-    <string name="title_activity_issue_elite_deman">IssueEliteDemanActivity</string>
+
 </resources>

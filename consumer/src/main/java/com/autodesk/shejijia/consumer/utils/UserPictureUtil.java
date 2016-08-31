@@ -1,6 +1,6 @@
 package com.autodesk.shejijia.consumer.utils;
 
-import android.content.Context;
+import android.app.Activity;
 import android.widget.ImageView;
 
 import com.android.volley.VolleyError;
@@ -11,10 +11,8 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONObject;
@@ -24,7 +22,8 @@ import org.json.JSONObject;
 public class UserPictureUtil {
 
     //设置头像
-    public static void setConsumerOrDesignerPicture(Context context,ImageView iv) {
+    public static void setConsumerOrDesignerPicture(Activity context,ImageView iv) {
+
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null &&
                 Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -44,7 +43,8 @@ public class UserPictureUtil {
      * @param member_id
      * @brief For details on consumers .
      */
-    private static void getConsumerInfoData(String member_id, final Context context, final ImageView iv) {
+    private static void getConsumerInfoData(String member_id, final Activity context, final ImageView iv) {
+
         MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -57,8 +57,9 @@ public class UserPictureUtil {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (context != null) {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, context,
-                            AlertView.Style.Alert, null).show();
+//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, context,
+//                            AlertView.Style.Alert, null).show();
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError,context);
                 }
             }
         });
@@ -71,7 +72,7 @@ public class UserPictureUtil {
      * @param designer_id
      * @param hs_uid
      */
-    private static void getDesignerInfoData(String designer_id, String hs_uid, final Context context, final ImageView iv) {
+    private static void getDesignerInfoData(String designer_id, String hs_uid, final Activity context, final ImageView iv) {
         MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -83,8 +84,9 @@ public class UserPictureUtil {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, context,
-                        AlertView.Style.Alert, null).show();
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, context,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,context);
             }
         });
     }
