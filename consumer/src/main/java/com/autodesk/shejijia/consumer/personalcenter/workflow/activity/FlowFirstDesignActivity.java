@@ -2,14 +2,15 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPAliPayBean;
@@ -19,7 +20,6 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.SplitStringUtils;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -199,13 +199,19 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
 
         public void onOK() {
-            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success));
+//            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success));
+            Toast toast = Toast.makeText(FlowFirstDesignActivity.this,UIUtils.getString(R.string.pay_success),Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
             setResult(FirstForContract);
             finish();
         }
 
         public void onFail() {
-            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed));
+//            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed));
+            Toast toast = Toast.makeText(FlowFirstDesignActivity.this,UIUtils.getString(R.string.pay_failed),Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER,0,0);
+            toast.show();
             isLock = true;
         }
     };
