@@ -3,11 +3,13 @@ package com.autodesk.shejijia.consumer.home.homepage.fragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseViewPagerAdapter;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager;
 import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
@@ -41,6 +43,15 @@ public class UserHomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         caseViewPager = (NoSlippingViewPager) rootView.findViewById(R.id.case_library_viewPager);
+
+    }
+
+    public void onResume() {
+        super.onResume();
+        Log.i("aaa","onResume");
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()){
+            CustomProgress.cancelDialog();
+        }
 
     }
 

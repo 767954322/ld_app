@@ -324,17 +324,20 @@ public class ChatRoomAdapter extends BaseAdapter {
                 }
                 case 61:
                 case 62:
-                case 63:
                 case 64:
-                case 71:
-                case 72: {
                     if (mListInterface.ifLoggedInUserIsConsumer())
                         (holder).commandButton.setText(mContext.getString(R.string.lookDeliver));
                     else
-                        (holder).commandButton.setText(mContext.getString(R.string.lookDeliver));
+                        (holder).commandButton.setText(mContext.getString(R.string.motifyDeliver));
 
                     break;
-                }
+
+                case 63:
+                case 71:
+                case 72:
+                    (holder).commandButton.setText(mContext.getString(R.string.lookDeliver));
+
+                    break;
 
                 default:
                     break;
