@@ -27,7 +27,8 @@ public class RegexUtil {
     /**
      * 银行卡号验证
      */
-    public static final String PHONE_BLANK = "^(\\d{16}|\\d{22})$";
+//    public static final String PHONE_BLANK = "^(\\d{16}|\\d{23})$";
+    public static final String PHONE_BLANK = "^[0-9]{16,19}$";
 
     /**
      * 量房面积校验： 整数四位，小数2位
