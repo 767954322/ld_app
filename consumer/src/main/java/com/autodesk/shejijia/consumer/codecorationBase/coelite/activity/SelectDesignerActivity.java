@@ -74,10 +74,10 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == FlowMeasureCostActivity.RESULT_CODE){
+//        if(resultCode == 10058){
             finish();
-            setResult(FlowMeasureCostActivity.RESULT_CODE,new Intent());
-        }
+//            setResult(FlowMeasureCostActivity.RESULT_CODE,new Intent());
+//        }
 
     }
 }
