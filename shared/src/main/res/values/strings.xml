@@ -643,7 +643,7 @@
     <!-- MyBidActivity -->
     <string name="my_bid_all">全部</string>
     <string name="elite_project">精选项目</string>
-    <string name="average_project">竟优项目</string>
+    <string name="average_project">竞优项目</string>
     <string name="packages_project">套餐项目</string>
 
     <string name="response_manage">我的应标</string>

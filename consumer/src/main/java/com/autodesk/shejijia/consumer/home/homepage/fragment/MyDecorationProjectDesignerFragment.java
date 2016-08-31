@@ -186,7 +186,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     private Context context = getActivity();
     private FrameLayout mOrderContainer;
     private int mIsLoho;
-    private static final int IS_BEI_SHU = 1;
+    private static final int IS_BEI_SHU = 0;
     private boolean isRefreshJust = false;
     private DesignerInfoDetails designerInfoDetails;
     private Fragment mBeishuMealFragment, mCommonOrderFragment,mCommonFragment;
