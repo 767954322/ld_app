@@ -280,6 +280,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
             }
         });
     }
@@ -303,6 +304,7 @@ public class UserHomeFragment extends BaseFragment implements UserHomeCaseAdapte
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
                 if (getActivity() != null) {
                     mPtrLayout.onRefreshComplete();
                     mListView.onLoadMoreComplete();
