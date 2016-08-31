@@ -328,7 +328,7 @@ public class ChatRoomAdapter extends BaseAdapter {
                     if (mListInterface.ifLoggedInUserIsConsumer())
                         (holder).commandButton.setText(mContext.getString(R.string.DownloadDeliver));
                     else
-                        (holder).commandButton.setText(mContext.getString(R.string.UploadDeliver));
+                        (holder).commandButton.setText(mContext.getString(R.string.motifyDeliver));
 
                     break;
 
