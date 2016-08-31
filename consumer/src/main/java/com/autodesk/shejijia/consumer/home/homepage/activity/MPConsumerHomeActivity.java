@@ -19,6 +19,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
@@ -44,6 +45,7 @@ import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
+import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -70,6 +72,12 @@ import java.util.Map;
 public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener {
 
 
+    protected static final String TAB_HOME_CASE = "TAB_HOME_CASE";  /// 案例 .
+    protected static final String TAB_DESIGNER = "TAB_DESIGNER";    /// 设计师列表 .
+    protected static final String TAB_BID_HALL = "TAB_BID_HALL";    /// 应标大厅 .
+    protected static final String TAB_IM = "TAB_IM";                /// 聊天 .
+    protected static final String TAB_PROJECT = "TAB_PROJECT";      /// 我的订单 .
+
     private MemberEntity memberEntity;
     private String mConsumerNickName;
     private ImageView user_avatar;
@@ -88,6 +96,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         designer_main_radio_group = (RadioGroup) findViewById(R.id.designer_main_radio_group);
         designer_main_radio_btn = (RadioButton) findViewById(R.id.designer_main_radio_btn);
         rbCustomerElite = (RadioButton) findViewById(R.id.rb_customer_elite);
+
+        radioBtnDesigner = (RadioButton) findViewById(R.id.radio_btn_designer);
 
 
         mDesignerMainRadioBtn = (RadioButton) findViewById(getDesignerMainRadioBtnId());
@@ -108,6 +118,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
+        addRadioButtons(radioBtnDesigner);
         addRadioButtons(mDesignerMainRadioBtn);
         addRadioButtons(mDesignerIndentListBtn);
         addRadioButtons(mDesignerPersonCenterRadioBtn);
@@ -123,9 +134,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void initData(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             // retrieve the fragment handle from fragmentmanager
+
+
             mUserHomeFragment = (UserHomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
             if (mUserHomeFragment != null)
                 mFragmentArrayList.add(mUserHomeFragment);
+
+
+            designerListFragment = (DesignerListFragment) getSupportFragmentManager().findFragmentByTag(TAB_DESIGNER);
+            if (designerListFragment != null)
+                mFragmentArrayList.add(designerListFragment);
 
             mDesignerPersonalCenterFragment = (MyDecorationProjectDesignerFragment)
                     getSupportFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
@@ -143,10 +161,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 mFragmentArrayList.add(mBidHallFragment);
             }
         }
-       // if (savedInstanceState == null) {
+        // if (savedInstanceState == null) {
         //    showFragment(getDesignerMainRadioBtnId());
 //showDesignerOrConsumerRadioGroup();
-      //  }
+        //  }
         super.initData(savedInstanceState);
         if (savedInstanceState == null) {
             showFragment(getDesignerMainRadioBtnId());
@@ -155,7 +173,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         //获取设计师信息
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity){
+        if (null == mMemberEntity) {
             return;
         }
         String member_id = mMemberEntity.getAcs_member_id();
@@ -201,7 +219,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         setConsumerOrDesignerPicture();//设置头像
 
         // TODO 3.2
-       //  showDesignerOrConsumerRadioGroup();
+        //  showDesignerOrConsumerRadioGroup();
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -233,8 +251,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.designer_person_center_radio_btn:
                 button = mDesignerPersonCenterRadioBtn;
                 break;
+            case R.id.radio_btn_designer:
+                button = radioBtnDesigner;
+                break;
         }
-
         return button;
     }
 
@@ -258,7 +278,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
         }
 
-        if (mBidHallFragment==null&&index == R.id.designer_indent_list_btn) {
+        if (designerListFragment == null && index == getDesignerButtonId()) {
+            designerListFragment = new DesignerListFragment();
+            loadMainFragment(designerListFragment, TAB_DESIGNER);
+        }
+
+        if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
             mBidHallFragment = new BidHallFragment();
             loadMainFragment(mBidHallFragment, BID_FRAGMENT_TAG);
         }
@@ -317,6 +342,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             startActivity(intent);
         }
     }
+
     //判断圆形按钮跳入不同的个人中心界面
     @Override
     protected void leftCircleUserAvarClicked(View view) {
@@ -373,6 +399,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setCaseLIbraryTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
+                break;
+
+            case R.id.radio_btn_designer:
+                setDesignerListTitle();
+                setVisibilityForNavButton(ButtonType.middlecontain, false);
+                setVisibilityForNavButton(ButtonType.middle, true);
+                setTitleForNavbar(UIUtils.getString(R.string.tab_designer));
                 break;
 
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
@@ -441,6 +474,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             default:
                 break;
         }
+    }
+
+    // 设计师列表
+    private void setDesignerListTitle() {
+        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.RIGHT, com.autodesk.shejijia.shared.R.drawable.icon_search);
+        setVisibilityForNavButton(ButtonType.RIGHT, true);
+        setVisibilityForNavButton(ButtonType.SECONDARY, true);
     }
 
 
@@ -560,6 +601,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return R.id.designer_main_radio_btn;
     }
 
+    protected int getDesignerButtonId() {
+        return R.id.radio_btn_designer;
+    }
+
     protected int getIMButtonId() {
         return R.id.designer_session_radio_btn;
     }
@@ -571,6 +616,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     protected int getMainContentId() {
         return R.id.main_content;
+    }
+
+    protected Fragment getDesignerFragment() {
+        return designerListFragment;
     }
 
 
@@ -643,9 +692,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
 
-
-
-
     private void showDesignerOrConsumerRadioGroup() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
@@ -679,7 +725,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 MPNetworkUtils.logError(TAG, volleyError);
 //                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
 //                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,MPConsumerHomeActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
             }
         });
     }
@@ -837,9 +883,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
 
-
-
-
     private final int CHAT = 0;
     private static final int IS_BEI_SHU = 1;
     private RadioButton mDesignerMainRadioBtn;
@@ -847,6 +890,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private RadioButton mDesignerIndentListBtn;
     private RadioButton designer_main_radio_btn;
     private RadioButton rbCustomerElite;
+    private RadioButton radioBtnDesigner;
     private RadioGroup designer_main_radio_group;
 
 
@@ -862,7 +906,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private TextView design;
     private TextView tvGronMmsgNumber;
     private TextView construction;
-  //  private TextView construction;
+    //  private TextView construction;
     private LinearLayout contain;
     private LinearLayout contain_point;
     private View contain_layout;
@@ -889,6 +933,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private FiltrateContentBean filtrateContentBean;
 
     private BidHallFragment mBidHallFragment;
+    private DesignerListFragment designerListFragment;
     private DesignerInfoDetails designerInfoDetails;
     private MyDecorationProjectDesignerFragment mDesignerPersonalCenterFragment;
 }

@@ -131,7 +131,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
     protected boolean needLoginOnRadiobuttonTap(int id) {
-        if (id == getIMButtonId())
+        if (id == getIMButtonId() || id == getDesignerButtonId())
             return true;
         else
             return false;
@@ -220,6 +220,10 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         assert (false);
         return -1;
     }
+    protected int getDesignerButtonId() {
+        assert (false);
+        return -1;
+    }
 
     protected int getRadioGroupId() {
         assert (false);
@@ -303,11 +307,18 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     protected Fragment getFragmentByButtonId(int id) {
         Fragment f = null;
-        if (id == getIMButtonId())
+        if (id == getIMButtonId()) {
             f = mMPThreadListFragment;
+        }else if(id == getDesignerButtonId()){
+            f = getDesignerFragment();
+
+        }
 
         return f;
     }
+    protected Fragment getDesignerFragment(){
+        return null;
+    };
 
 
     protected boolean isActiveFragment(Class clazz) {
