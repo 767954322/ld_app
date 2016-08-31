@@ -883,7 +883,7 @@ public class MPServerHttpManager {
      */
     public void ifIsLohoDesiner(String designers, final String hs_uid, OkJsonRequest.OKResponseCallback callback) {
         //http://alpha-api.gdfcx.net/member-app/v1/api/designers/20735915
-        String url = UrlConstants.MAIN_MEMBER + "/member-app/v1/api/designers/" + designers;
+        String url = UrlConstants.MAIN_MEMBER + "/designers/" + designers;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
