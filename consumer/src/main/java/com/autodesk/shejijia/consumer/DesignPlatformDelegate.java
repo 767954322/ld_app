@@ -40,9 +40,9 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
     public void onCommandCellClicked(Context context, MPChatCommandInfo mpChatCommandInfo, String mThreadId) {
         int subNodeId = Integer.parseInt(mpChatCommandInfo.sub_node_id);
 
-        if (subNodeId > 62) {
-            subNodeId = 62;
-        }
+//        if (subNodeId > 62) {
+//            subNodeId = 62;
+//        }
 
         if (subNodeId == 32) {
             subNodeId = 21;
@@ -117,7 +117,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
 
     //全流程，聊天下面小图标
-    public void onChatRoomWorkflowButtonClicked(Context context, int wk_cur_sub_node_idi, String assetId, String recieverId, String receiverUserName, String designerId, String hs_uid, String mThreadId) {
+    public void onChatRoomWorkflowButtonClicked(Context context, int wk_cur_sub_node_idi, String assetId, String recieverId, String receiverUserName, String designerId, String hs_uid, String mThreadId, boolean ifIsDesiner) {
 
         if (wk_cur_sub_node_idi != 0) {
             if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == -1) {
@@ -135,11 +135,21 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
             } else if (wk_cur_sub_node_idi == 31) {
                 jumpToOtherProcessesFour(context, FlowEstablishContractActivity.class, assetId, designerId, MPStatusMachine.NODE__MEANSURE_PAY, mThreadId);
 
-            } else if (wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51 || wk_cur_sub_node_idi == 61 || wk_cur_sub_node_idi == 52 || wk_cur_sub_node_idi == 62
-                    || wk_cur_sub_node_idi == 63 || wk_cur_sub_node_idi == 64 || wk_cur_sub_node_idi == 71 || wk_cur_sub_node_idi == 72) {
+            } else if (wk_cur_sub_node_idi == 61 || wk_cur_sub_node_idi == 62 || wk_cur_sub_node_idi == 64 ||
+                    wk_cur_sub_node_idi == 33 || wk_cur_sub_node_idi == 51 || wk_cur_sub_node_idi == 52 ||
+                    wk_cur_sub_node_idi == 63 || wk_cur_sub_node_idi == 71 || wk_cur_sub_node_idi == 72
+                    ) {
+                //设计师，发送设计交付物！消费者查看设计交付物
                 jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId, mThreadId);
 
-            } else if (wk_cur_sub_node_idi == 41 || wk_cur_sub_node_idi == 42) {
+            }
+//            else if (wk_cur_sub_node_idi == 63 || wk_cur_sub_node_idi == 71 || wk_cur_sub_node_idi == 72) {
+//
+//                //查看设计交付物
+//                jumpToOtherProcessesThree(context, FlowUploadDeliveryActivity.class, assetId, designerId, mThreadId);
+//
+//            }
+            else if (wk_cur_sub_node_idi == 41 || wk_cur_sub_node_idi == 42) {
                 jumpToOtherProcessesFour(context, FlowLastDesignActivity.class, assetId, designerId, MPStatusMachine.NODE__DESIGN_BALANCE_PAY, mThreadId);
 
             }
@@ -432,8 +442,15 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                     case 61: // 上传支付交付物
                     case 62: // 编辑交付物
-                    case 63: // 交付曲确认
                     case 64: // 交付曲延期
+                        if (ifIsDesiner) {
+                            return "修改设计交付物";
+                        } else {
+                            return "查看设计交付物";
+                        }
+
+
+                    case 63: // 交付曲确认
                     case 71: // 评价
                     case 72: // 稍后评价
                         return "查看设计交付物";
@@ -506,8 +523,14 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                 case 61: // 上传支付交付物
                 case 62: // 编辑交付物
-                case 63: // 交付曲确认
                 case 64: // 交付曲延期
+
+                    if (ifIsDesiner) {
+                        return "修改设计交付物";
+                    } else {
+                        return "查看设计交付物";
+                    }
+                case 63: // 交付曲确认
                 case 71: // 评价
                 case 72: // 稍后评价
                     return "查看设计交付物";
@@ -521,7 +544,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
             }
 
         } else if (Wk_template_id.equals("3")) {
-                return "";
+            return "";
         }
 
 

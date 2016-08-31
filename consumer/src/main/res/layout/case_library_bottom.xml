@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_case_library_bottom"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
 
@@ -103,8 +103,8 @@
 
     <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
         android:id="@+id/piv_img_customer_home_header"
-        android:layout_width="@dimen/size_50"
-        android:layout_height="@dimen/size_50"
+        android:layout_width="@dimen/size_45"
+        android:layout_height="@dimen/size_45"
         android:layout_marginBottom="20dp"
         android:layout_gravity="top"
         android:layout_marginLeft="@dimen/size_10"

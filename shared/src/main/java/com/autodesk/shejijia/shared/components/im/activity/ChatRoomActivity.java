@@ -210,7 +210,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
                 Toast.makeText(this, R.string.no_repeat_click, Toast.LENGTH_SHORT).show();
             } else {
                 if (mIWorkflowDelegate != null) {
-                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId, mReceiverHsUid, mThreadId);
+                    mIWorkflowDelegate.onChatRoomWorkflowButtonClicked(this, wk_cur_sub_node_idi, mAssetId, mRecieverUserId, mRecieverUserName, designerId, mReceiverHsUid, mThreadId,ifIsDesiner);
                 }
             }
 

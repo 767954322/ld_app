@@ -740,6 +740,7 @@
     <string name="UploadDeliver">上传交付物</string>
     <string name="DownloadDeliver">接收交付物</string>
     <string name="lookDeliver">查看交付物</string>
+    <string name="motifyDeliver">修改交付物</string>
 
     <!-- FileMsgListActivity -->
     <string name="picture_img">图片聊天</string>
