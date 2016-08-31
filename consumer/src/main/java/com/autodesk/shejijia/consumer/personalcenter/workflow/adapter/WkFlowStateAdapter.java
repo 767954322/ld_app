@@ -317,6 +317,27 @@ public class WkFlowStateAdapter extends BaseAdapter {
 
     }
 
+//todo fixbug feature 3.2
+//    //上传量房交付物
+//    case 2:
+//            viewHolder.tv_meal_title.setText(mapWkFlowState.get("3").getDescription());//签订设计合同
+//    if (stateCode == 21 || stateCode == 22) {
+//        textColor = StepEnableColor;
+//        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejihetong));
+//    } else if (stateCode >= 31 && stateCode != 33) {
+//        textColor = StepEnableColor;
+//        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejihetong));
+//    } else if (stateCode == 33) {
+//        viewHolder.tv_meal_title.setText("上传量房交付物");//量房交付
+//        textColor = StepEnableColor;
+//        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejihetong));
+//    } else {
+//        textColor = StepDisEnableColor;
+//        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.jieshoushejihetong_ico));
+//    }
+//    viewHolder.tv_meal_title.setTextColor(textColor);
+//    break;
+
     /**
      * 支付量房费用（或者接收量房费）节点
      *
