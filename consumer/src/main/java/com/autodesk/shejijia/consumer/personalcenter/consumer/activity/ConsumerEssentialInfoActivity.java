@@ -19,7 +19,6 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -840,11 +839,11 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                     if (data != null) {
                         // 照片的原始资源地址
                         Uri originalUri = data.getData();
-                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_1);
+                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_1,false);
                     }
                     break;
                 case CAMERA_INTENT_REQUEST://相机
-                    cropImageUri(uritempFile, 300, 300, CROP_SMALL_PICTURE);
+                    cropImageUri(uritempFile, 300, 300, CROP_SMALL_PICTURE,true);
                     break;
                 case CROP_SMALL_PICTURE://截图
                     if (uritempFile != null) {
@@ -853,7 +852,6 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                         try {
                             bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
                             file = saveBitmap2File(this, "headpic.png", bitmap);
-                            headPicBitmap = bitmap;
                             mConsumeHeadIcon.setImageBitmap(bitmap);
                             bitmap.recycle();
                             try {
@@ -905,7 +903,6 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
     /**
      * 图片截取
      *
@@ -913,8 +910,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      * @param outputX
      * @param outputY
      * @param requestCode
+     * @param isOutPut    是否输出到指定文件，系统相册不指定，相机拍照需要指定：用来解决小米手机选择图片的问题
      */
-    private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode) {
+    private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode, boolean isOutPut) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
@@ -923,9 +921,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         intent.putExtra("outputX", outputX);
         intent.putExtra("outputY", outputY);
         intent.putExtra("scale", true);
-        //        intent.putExtra("return-data", false);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+//        intent.putExtra("return-data", false);
+        if (isOutPut)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+//        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true); // no face detection
         startActivityForResult(intent, requestCode);
     }
