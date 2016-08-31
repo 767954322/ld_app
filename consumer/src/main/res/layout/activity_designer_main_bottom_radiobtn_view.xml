@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <RadioGroup
@@ -14,48 +14,58 @@
         <RadioButton
             android:id="@+id/designer_main_radio_btn"
             style="@style/main_tab_bottom"
-            android:checked="true"
-            android:drawableTop="@drawable/selector_home"
             android:layout_marginTop="@dimen/size_6"
-            android:textSize="@dimen/size_12"
-            android:text="@string/tab_home"/>
+            android:checked="true"
+            android:drawableTop="@drawable/tab_case_selector"
+            android:text="@string/tab_home"
+            android:textSize="@dimen/size_12" />
+
+        <!--设计师-->
+        <RadioButton
+            android:id="@+id/radio_btn_designer"
+            style="@style/main_tab_bottom"
+            android:layout_marginTop="@dimen/size_6"
+            android:checked="false"
+            android:drawableTop="@drawable/tab_designer_selector"
+            android:text="@string/tab_designer"
+            android:textSize="@dimen/size_12" />
 
         <RadioButton
             android:id="@+id/designer_indent_list_btn"
             style="@style/main_tab_bottom"
-            android:checked="false"
-            android:drawableTop="@drawable/selector_hall"
             android:layout_marginTop="@dimen/size_6"
-            android:textSize="@dimen/size_12"
-            android:text="@string/tab_hall"/>
+            android:checked="false"
+            android:drawableTop="@drawable/tab_hall_selector"
+            android:text="@string/tab_hall"
+            android:textSize="@dimen/size_12" />
 
         <RadioButton
             android:id="@+id/rb_customer_elite"
             style="@style/main_tab_bottom"
+            android:layout_marginTop="@dimen/size_6"
             android:checked="false"
             android:drawableTop="@drawable/selector_hall"
-            android:layout_marginTop="@dimen/size_6"
+            android:text="@string/tab_six_products"
             android:textSize="@dimen/size_12"
-            android:visibility="gone"
-            android:text="@string/tab_six_products"/>
+            android:visibility="gone" />
 
         <RadioButton
             android:id="@+id/designer_session_radio_btn"
             style="@style/main_tab_bottom"
-            android:checked="false"
-            android:drawableTop="@drawable/selector_chat"
             android:layout_marginTop="@dimen/size_6"
-            android:textSize="@dimen/size_12"
-            android:text="@string/tab_im"/>
+            android:checked="false"
+            android:drawableTop="@drawable/tab_im_selector"
+            android:text="@string/tab_im"
+            android:textSize="@dimen/size_12" />
 
         <RadioButton
             android:id="@+id/designer_person_center_radio_btn"
             style="@style/main_tab_bottom"
-            android:checked="false"
-            android:drawableTop="@drawable/selector_personal"
             android:layout_marginTop="@dimen/size_6"
-            android:textSize="@dimen/size_12"
-            android:text="@string/tab_personalcenter"/>
+            android:checked="false"
+            android:drawableTop="@drawable/tab_project_selector"
+            android:text="@string/tab_personalcenter"
+            android:textSize="@dimen/size_12" />
     </RadioGroup>
 
     <LinearLayout
@@ -66,17 +76,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tv_gron_msg_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tv_msg_number"
@@ -90,12 +101,12 @@
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="13sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 </RelativeLayout>
