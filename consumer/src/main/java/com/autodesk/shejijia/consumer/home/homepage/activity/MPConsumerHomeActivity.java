@@ -62,6 +62,8 @@ import java.util.Map;
 public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnClickListener {
 
 
+    public int is_loho;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -138,14 +140,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (savedInstanceState == null)
             showFragment(getDesignerMainRadioBtnId());
 
-        //获取设计师信息
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity){
-            return;
-        }
-        String member_id = mMemberEntity.getAcs_member_id();
-        String hs_uid = mMemberEntity.getHs_uid();
-        getDesignerInfoData(member_id, hs_uid);
 
     }
 
@@ -175,8 +169,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     break;
             }
         }
-
         super.onResume();
+
+        //获取设计师信息
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == mMemberEntity){
+            return;
+        }
+        String member_id = mMemberEntity.getAcs_member_id();
+        String hs_uid = mMemberEntity.getHs_uid();
+        getDesignerInfoData(member_id, hs_uid);
+
     }
 
     @Override
@@ -250,6 +253,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
                 if (mDesignerPersonalCenterFragment == null) {
                     mDesignerPersonalCenterFragment = new MyDecorationProjectDesignerFragment();
+
                     loadMainFragment(mDesignerPersonalCenterFragment, DESIGNER_PERSONAL_FRAGMENT_TAG);
                 }
             } else {
@@ -599,13 +603,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                if (mDesignerPersonalCenterFragment != null) {
+                    mDesignerPersonalCenterFragment.setDefaultFragment(is_loho);
+
+                }
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, MPConsumerHomeActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,MPConsumerHomeActivity.this);
             }
         });
