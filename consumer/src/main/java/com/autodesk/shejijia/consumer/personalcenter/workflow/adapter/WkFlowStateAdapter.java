@@ -138,26 +138,26 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 //支付设计首款
                 case 3:
                     viewHolder.tv_meal_title.setText(mapWkFlowState.get("4").getDescription());
-//                    if (stateCode == 31) {
-//                        textColor = StepEnableColor;
-//                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_zhifushejishoukuan));
-//                    } else if (stateCode > 31 && stateCode != 33) {
-//                        textColor = StepEnableColor;
-//                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_zhifushejishoukuan));
-//                    } else {
-//                        textColor = StepDisEnableColor;
-//                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.shejishoukuan_ico));
-//                    }
-
-                    if (stateCode >= 31) {
-
+                    if (stateCode == 31) {
+                        textColor = StepEnableColor;
+                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_zhifushejishoukuan));
+                    } else if (stateCode > 31 && stateCode != 33) {
                         textColor = StepEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_zhifushejishoukuan));
                     } else {
-
                         textColor = StepDisEnableColor;
                         viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.shejishoukuan_ico));
                     }
+
+//                    if (stateCode >= 31) {
+//
+//                        textColor = StepEnableColor;
+//                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_zhifushejishoukuan));
+//                    } else {
+//
+//                        textColor = StepDisEnableColor;
+//                        viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.shejishoukuan_ico));
+//                    }
 
                     viewHolder.tv_meal_title.setTextColor(textColor);
 
