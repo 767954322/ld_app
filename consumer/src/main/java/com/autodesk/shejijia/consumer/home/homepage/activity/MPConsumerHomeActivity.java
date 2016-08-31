@@ -74,7 +74,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected static final String TAB_PROJECT = "TAB_PROJECT";      /// 我的订单 .
 
     private MemberEntity memberEntity;
-    private DesignerListFragment designerListFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -90,6 +89,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         designer_main_radio_group = (RadioGroup) findViewById(R.id.designer_main_radio_group);
         designer_main_radio_btn = (RadioButton) findViewById(R.id.designer_main_radio_btn);
         rbCustomerElite = (RadioButton) findViewById(R.id.rb_customer_elite);
+
+        radioBtnDesigner = (RadioButton) findViewById(R.id.radio_btn_designer);
 
 
         mDesignerMainRadioBtn = (RadioButton) findViewById(getDesignerMainRadioBtnId());
@@ -128,6 +129,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             designerListFragment = (DesignerListFragment) getSupportFragmentManager().findFragmentByTag(TAB_DESIGNER);
             if (designerListFragment != null)
                 mFragmentArrayList.add(designerListFragment);
+
             mDesignerPersonalCenterFragment = (MyDecorationProjectDesignerFragment)
                     getSupportFragmentManager().findFragmentByTag(DESIGNER_PERSONAL_FRAGMENT_TAG);
             if (mDesignerPersonalCenterFragment != null)
@@ -227,6 +229,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.designer_person_center_radio_btn:
                 button = mDesignerPersonCenterRadioBtn;
                 break;
+
+            case R.id.radio_btn_designer:
+                button = radioBtnDesigner;
+                break;
         }
 
         return button;
@@ -251,6 +257,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (mUserHomeFragment == null && index == getDesignerMainRadioBtnId()) {
             mUserHomeFragment = new UserHomeFragment();
             loadMainFragment(mUserHomeFragment, HOME_FRAGMENT_TAG);
+        }
+
+        if (designerListFragment == null && index == getDesignerButtonId()) {
+            designerListFragment = new DesignerListFragment();
+            loadMainFragment(designerListFragment, TAB_DESIGNER);
         }
 
         if (mBidHallFragment == null && index == R.id.designer_indent_list_btn) {
@@ -562,6 +573,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return R.id.designer_main_radio_btn;
     }
 
+    protected int getDesignerButtonId() {
+        return R.id.radio_btn_designer;
+    }
+
     protected int getIMButtonId() {
         return R.id.designer_session_radio_btn;
     }
@@ -573,6 +588,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     protected int getMainContentId() {
         return R.id.main_content;
+    }
+
+    protected Fragment getDesignerFragment() {
+        return designerListFragment;
     }
 
 
@@ -821,6 +840,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private RadioButton mDesignerIndentListBtn;
     private RadioButton designer_main_radio_btn;
     private RadioButton rbCustomerElite;
+    private RadioButton radioBtnDesigner;
     private RadioGroup designer_main_radio_group;
 
     private DecorationConsumerFragment mConsumerPersonalCenterFragment;
@@ -863,6 +883,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private WkFlowStateBean wkFlowStateBean;
     private FiltrateContentBean filtrateContentBean;
 
+    private DesignerListFragment designerListFragment;
     private BidHallFragment mBidHallFragment;
     private DesignerInfoDetails designerInfoDetails;
     private MyDecorationProjectDesignerFragment mDesignerPersonalCenterFragment;
