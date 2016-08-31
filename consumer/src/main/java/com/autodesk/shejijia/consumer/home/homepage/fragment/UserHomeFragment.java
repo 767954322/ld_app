@@ -48,7 +48,6 @@ public class UserHomeFragment extends BaseFragment {
 
     public void onResume() {
         super.onResume();
-        Log.i("aaa","onResume");
         if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()){
             CustomProgress.cancelDialog();
         }

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -37,7 +38,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
@@ -756,7 +756,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                 setRightTitle(followsType);
                 if (followsType) {
-                    MyToast.show(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_success));
+//                    MyToast.show(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_success));
+                    Toast toast = Toast.makeText(SeekDesignerDetailActivity.this, UIUtils.getString(R.string.attention_success), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
                     seekDesignerDetailHomeBean.is_following = true;
                 } else {
                     seekDesignerDetailHomeBean.is_following = false;
