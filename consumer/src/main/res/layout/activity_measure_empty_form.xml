@@ -657,6 +657,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/no_color"
                         android:gravity="center_vertical"
+                        android:textColor="@color/actionsheet_gray"
                         android:text="200"
                         android:textSize="@dimen/font_15" />
                     <TextView
@@ -690,7 +691,6 @@
 
 
                 <TextView
-                    android:textColor="@color/actionsheet_gray"
                     android:id="@+id/consumer_rmb_show"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

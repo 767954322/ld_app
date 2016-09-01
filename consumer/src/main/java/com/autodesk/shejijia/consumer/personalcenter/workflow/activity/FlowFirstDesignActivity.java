@@ -94,7 +94,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 MPNetworkUtils.logError(TAG, volleyError);
 //                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowFirstDesignActivity.this,
 //                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,FlowFirstDesignActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowFirstDesignActivity.this);
             }
         });
     }
@@ -201,8 +201,9 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
 
         public void onOK() {
 //            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success));
-            Toast toast = Toast.makeText(FlowFirstDesignActivity.this,UIUtils.getString(R.string.pay_success),Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER,0,0);
+            Toast toast = Toast.makeText(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
             setResult(FirstForContract);
             finish();
@@ -210,8 +211,12 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
 
         public void onFail() {
 //            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed));
-            Toast toast = Toast.makeText(FlowFirstDesignActivity.this,UIUtils.getString(R.string.pay_failed),Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER,0,0);
+//            Toast toast = Toast.makeText(FlowFirstDesignActivity.this,UIUtils.getString(R.string.pay_failed),Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,0);
+//            toast.show();
+            Toast toast = Toast.makeText(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
             isLock = true;
         }

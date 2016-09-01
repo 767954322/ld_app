@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -101,7 +103,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
                 MPNetworkUtils.logError(TAG, volleyError);
 //                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowLastDesignActivity.this,
 //                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,FlowLastDesignActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowLastDesignActivity.this);
             }
         });
     }
@@ -200,12 +202,20 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
         public void onOK() {
-            MyToast.show(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_success));
+//            MyToast.show(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_success));
+            Toast toast = Toast.makeText(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
             finish();
         }
 
         public void onFail() {
-            MyToast.show(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_failed));
+            Toast toast = Toast.makeText(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+//            MyToast.show(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_failed));
             isLock = true;
         }
     };
