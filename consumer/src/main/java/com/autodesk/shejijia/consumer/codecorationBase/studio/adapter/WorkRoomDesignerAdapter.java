@@ -22,7 +22,8 @@ import java.util.List;
  * @file WorkRoomAdapter  .
  * @brief 工作室主设计师的适配器 .
  */
-public class WorkRoomDesignerAdapter extends BaseAdapter{
+public class
+WorkRoomDesignerAdapter extends BaseAdapter{
 
 
     private List<WorkRoomDetailsBeen.MainDesignersBean[]> list;
