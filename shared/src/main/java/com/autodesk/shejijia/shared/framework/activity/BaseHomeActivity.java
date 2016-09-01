@@ -311,7 +311,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             f = mMPThreadListFragment;
         }else if(id == getDesignerButtonId()){
             f = getDesignerFragment();
-
         }
 
         return f;
@@ -348,7 +347,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             AdskApplication.getInstance().doLogin(this);
         }
     }
-
 
     public void getFileThreadUnreadCount() {
         OkStringRequest.OKResponseCallback callback = new OkStringRequest.OKResponseCallback() {
