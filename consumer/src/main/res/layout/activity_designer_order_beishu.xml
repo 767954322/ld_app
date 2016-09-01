@@ -32,16 +32,16 @@
             android:text="@string/average_project"
             android:textColor="@color/bg_0084ff"/>
 
-        <TextView
-            android:id="@+id/tv_designer_order_beishu"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/textview_border_beishu"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="@string/packages_project"
-            android:textColor="@color/bg_0084ff"/>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_designer_order_beishu"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@drawable/textview_border_beishu"-->
+            <!--android:layout_weight="1"-->
+            <!--android:clickable="true"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/packages_project"-->
+            <!--android:textColor="@color/bg_0084ff"/>-->
 
 
     </LinearLayout>

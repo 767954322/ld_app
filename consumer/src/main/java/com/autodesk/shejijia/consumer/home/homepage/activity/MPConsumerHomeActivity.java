@@ -29,7 +29,6 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEss
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.DecorationConsumerFragment;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.UserPictureUtil;
@@ -76,7 +75,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private MemberEntity memberEntity;
 
-    public int is_loho;
+//    public int is_loho;
 
     @Override
     protected int getLayoutResId() {
@@ -484,7 +483,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER + POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
                 //判断进入北舒套餐，，还是进入普通订单页面
                 if (null != designerInfoDetails) {
-                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
+                    if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
                         /// 北舒 .
                         mDesignerPersonalCenterFragment.setDesignBeiShuFragment();
                     } else {
@@ -495,14 +494,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 }
 
                 break;
-
-//            case R.id.construction:
-//                setMyProjectTitleColorChange(construction, design, bidding);
-//                chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER);
-//
-//                mDesignerPersonalCenterFragment.setConstructionFragment();
-//                break;
-
         }
 
     }
@@ -661,9 +652,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                if(designerInfoDetails.getReal_name().getHigh_level_audit() != null){
+                    high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
+                }
                 if (mDesignerPersonalCenterFragment != null) {
-                    mDesignerPersonalCenterFragment.setDefaultFragment(is_loho);
+                    mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit);
 
                 }
                 updateViewFromData();
@@ -850,32 +843,24 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private TextView bidding;
     private TextView design;
     private TextView tvGronMmsgNumber;
-    private TextView construction;
-    //  private TextView construction;
     private LinearLayout contain;
-    private LinearLayout contain_point;
     private View contain_layout;
     private ChooseViewPointer chooseViewPointer;
     private int index;//判断所在fragment
-    private int lastIndex;
     private String mNickNameConsumer;
-    private boolean isRefush = false;
-    final int RESULT_CODE = 101;
     final float POINTER_START_NUMBER = 0F;
     final float POINTER_START_END_NUMBER = 1 / 2F;
     final float POINTER_MIDDLE_END_NUMBER = 1 / 9F;
     final float POINTER_END_NUMBER = 1F;
     private int btWidth;
     private int btHeight;
-    private int screenWidth;
-
+    public int high_level_audit;
     private String FLAG_CLICK = TAB_HOME_CASE;
     public static final int CASE_CODE = 0x92;
 
     private UserHomeFragment mUserHomeFragment;
 
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
-    private WkFlowStateBean wkFlowStateBean;
     private FiltrateContentBean filtrateContentBean;
 
     private BidHallFragment mBidHallFragment;
