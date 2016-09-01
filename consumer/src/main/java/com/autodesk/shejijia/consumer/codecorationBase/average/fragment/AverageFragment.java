@@ -74,10 +74,15 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_send_demand: /// .
-                Intent intent = new Intent(mActivity, IssueDemandActivity.class);
-                intent.putExtra(Constant.SixProductsFragmentKey.SELECTION, false);
-                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNick_name);
-                startActivity(intent);
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                if (null == memberEntity){
+                    AdskApplication.getInstance().doLogin(getActivity());
+                }else {
+                    Intent intent = new Intent(mActivity, IssueDemandActivity.class);
+                    intent.putExtra(Constant.SixProductsFragmentKey.SELECTION, false);
+                    intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNick_name);
+                    startActivity(intent);
+                }
                 break;
 
             case R.id.iv_average_tip:
