@@ -20,7 +20,6 @@
         android:verticalSpacing="@dimen/size_2"/>
 
     <Button
-        android:layout_below="@+id/gridView_3dplan"
         android:layout_alignParentBottom="true"
         android:id="@+id/btn_submit_3dplan"
         android:layout_width="match_parent"
@@ -28,7 +27,6 @@
         android:layout_marginBottom="@dimen/size_20"
         android:layout_marginLeft="@dimen/size_20"
         android:layout_marginRight="@dimen/size_20"
-        android:layout_marginTop="@dimen/size_60"
         android:background="@drawable/bg_common_btn_pressed"
         android:text="@string/autonym_confirm"
         android:textColor="@color/bg_ff"
