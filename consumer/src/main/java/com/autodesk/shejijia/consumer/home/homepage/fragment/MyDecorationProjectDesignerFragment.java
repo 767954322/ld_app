@@ -1,13 +1,8 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
-import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
@@ -22,11 +17,6 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  * @brief 我的装修项目--设计师.
  */
 public class MyDecorationProjectDesignerFragment extends BaseFragment{
-
-    public static MyDecorationProjectDesignerFragment getInstance() {
-        MyDecorationProjectDesignerFragment uhf = new MyDecorationProjectDesignerFragment();
-        return uhf;
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -48,10 +38,11 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
      * */
     public void setBidingFragment(){
 
-            if (mBidBidingFragment == null) {
+        if (mBidBidingFragment == null){
 
-                mBidBidingFragment = new BidingFragment();
-            }
+            mBidBidingFragment = new BidingFragment();
+        }
+
         switchFragment(mBidBidingFragment);
     }
     /**
@@ -113,6 +104,9 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
         fromFragment = to;
     }
 
+    /**
+     *  默认北舒套餐页面 .
+     */
     public void setDefaultFragment(int isLoho) {
         if (isLoho == IS_BEI_SHU){
 
@@ -133,12 +127,11 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     private Context context = getActivity();
     private FrameLayout mOrderContainer;
     private int mIsLoho;
-
     private static final int IS_BEI_SHU = 1;
     private Fragment mBeishuMealFragment, mCommonOrderFragment,mCommonFragment;
     private FragmentManager fragmentManager;
     private Fragment fromFragment;
     private Fragment mDesignerConstructionFragment;
-    private BidingFragment mBidBidingFragment;
+    private Fragment mBidBidingFragment;
 
 }

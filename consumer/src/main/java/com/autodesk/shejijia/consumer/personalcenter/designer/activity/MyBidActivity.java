@@ -38,6 +38,7 @@ import java.util.ArrayList;
  */
 public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener, BidBidingFragment.FragmentCallBack {
 
+    public int is_loho;
 
     public int is_loho;
 
@@ -63,7 +64,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.response_manage));
-
     }
 
     @Override
@@ -112,6 +112,43 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 break;
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //获取设计师信息
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == mMemberEntity) {
+            return;
+        }
+        String member_id = mMemberEntity.getAcs_member_id();
+        String hs_uid = mMemberEntity.getHs_uid();
+        getDesignerInfoData(member_id, hs_uid);
+        setDefaultFragment();
+    }
+
+    /**
+     * 设计师个人信息
+     *
+     * @param designer_id
+     * @param hs_uid
+     */
+    public void getDesignerInfoData(String designer_id, String hs_uid) {
+        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                DesignerInfoDetails designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MyBidActivity.this);
+            }
+        });
     }
 
     @Override
