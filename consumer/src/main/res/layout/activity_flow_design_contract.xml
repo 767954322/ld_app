@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_ef"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+    <!--Content for Designer-->
+    <include
+        android:id="@+id/design_contract_content_designer"
+        layout="@layout/activity_flow_contract_subcontent_designer"
+
+        />
+
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_agree_establish_contract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/size_20"
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginRight="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/img_agree_establish_contract"
+            android:layout_width="@dimen/size_20"
+            android:layout_height="@dimen/size_20"
+            android:background="@drawable/icon_selected_unchecked" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flow_have_read_all_contract_detail" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_send_establish_contract"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_f9"
+        android:orientation="horizontal"
+        android:padding="@dimen/size_10"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_send_establish_contract"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/bg_common_btn_blue"
+            android:text="@string/sure_and_send"
+            android:textColor="@color/bg_ff" />
+    </LinearLayout>
+
+</LinearLayout>

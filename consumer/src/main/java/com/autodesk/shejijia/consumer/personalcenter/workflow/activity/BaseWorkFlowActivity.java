@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
@@ -59,7 +60,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         mThreead_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);//thread_id
-
         nodeState = bundle.getInt(Constant.BundleKey.TEMPDATE_ID);
     }
 
@@ -171,6 +171,36 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
 
     protected void onWorkFlowData() {
     }
+
+    public interface commonJsonResponseCallback  {
+        public void onJsonResponse(String jsonResponse);
+        public void onError(VolleyError volleyError);
+    }
+
+
+   // public void getDesignerInfoData(String designer_id, String hs_uid,commonJsonResponseCallback callBack) {
+
+
+   // }
+
+    // Method when child class need some extra data from app-server
+    public void restgetDesignerInfoData(String designer_id, String hs_uid,final commonJsonResponseCallback callBack) {
+        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                callBack.onJsonResponse(jsonString);
+
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError, true);
+                callBack.onError(volleyError);
+            }
+        });
+    }
+
 
     protected int state;
     protected int nodeState;

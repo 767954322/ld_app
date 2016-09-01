@@ -105,7 +105,11 @@
     <string name="flow_basic_info">基本信息</string>
     <string name="flow_owner">甲方（消费者）：</string>
     <string name="flow_phone">手机号码：</string>
-    <string name="flow_postal_code">邮政编号：</string>
+
+    <!--string name="flow_postal_code">邮政编号：</string>-->
+
+
+
     <string name="flow_email_address">电子邮箱：</string>
     <string name="flow_decorate_address">装修地址：</string>
     <string name="flow_second_party">乙方(设计师)：</string>
