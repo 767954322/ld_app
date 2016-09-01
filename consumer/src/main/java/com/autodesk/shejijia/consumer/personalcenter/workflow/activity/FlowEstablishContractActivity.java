@@ -175,7 +175,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         /**
          * 如果超过了33节点，就隐藏上传量房按钮
          */
-
+/////////
         if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= 33) {
             btn_send.setVisibility(View.GONE);
             ll_agree_establish_contract.setVisibility(View.GONE);
