@@ -52,13 +52,31 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
 
     }
     private void isSelected(){
-        for(DecorationBiddersBean decorationBiddersBean:decorationBiddersBeans){
+        for(DecorationBiddersBean decorationBiddersBean:decorationNeedsListBean.getBidders()){
             String wk_cur_sub_node_id = decorationBiddersBean.getWk_cur_sub_node_id();
             int  i=Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
-            if(i >= 11){
+            if(i >= 11 && i != 24){
                 falg = true;
+                break;
             }
         }
+        if(!falg){
+            decorationBiddersBeans.clear();
+            for(DecorationBiddersBean decorationBiddersBean:decorationNeedsListBean.getBidders()){
+                String wk_cur_sub_node_id = decorationBiddersBean.getWk_cur_sub_node_id();
+                int  i=Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
+                int  measurement_status =Integer.parseInt(decorationBiddersBean.getMeasurement_status());
+                if(i == 24 && measurement_status == 0){
+                    decorationBiddersBean.setSelected(false);
+                }else if(i == 24 && measurement_status == 1){
+                    decorationBiddersBean.setSelected(true);
+                }else if(i == -1 && measurement_status == 1){
+                    decorationBiddersBean.setSelected(true);
+                }
+                decorationBiddersBeans.add(decorationBiddersBean);
+            }
+        }
+
     }
 
     //选TA量房

@@ -35,7 +35,7 @@ public class DecorationBiddersBean implements Serializable {
     private String style_names;
     private String design_price_max;
     private String design_price_min;
-
+    private boolean isSelected;
     public String following_count;
 
     private PaymentBean payment;
@@ -44,6 +44,14 @@ public class DecorationBiddersBean implements Serializable {
     private List<OrdersBean> orders;
     private List<WkNextPossibleSubNodeIdsBean> wk_next_possible_sub_node_ids;
     private List<WkStepsEntity> wk_steps;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getMeasurement_status() {
         return measurement_status;
