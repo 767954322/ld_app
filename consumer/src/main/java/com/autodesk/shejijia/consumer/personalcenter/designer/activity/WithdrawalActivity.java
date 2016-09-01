@@ -138,22 +138,22 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 boolean isName = account_user_name.trim().matches(regex_name);
                 boolean isBranchBankName = branch_bank_name.trim().matches(RegexUtil.ADDRESS_ZHONGWEN);
                 if (myPropertyBean == null) {
-                    if (!isName) {
+                    if (!isName || TextUtils.isEmpty(account_user_name)) {
                         Toast.makeText(WithdrawalActivity.this, "持卡人姓名只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
                         break;
                     }
 //                    if (!checkNameChese(branch_bank_name)) {
-                    if (!isBranchBankName) {
+                    if (!isBranchBankName || TextUtils.isEmpty(branch_bank_name)) {
                         Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    if (!isBankNum) {
+                    if (!isBankNum || TextUtils.isEmpty(branch_bank_name)) {
                         Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
                         break;
                     }
                 } else {
                     if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())) {
-                        if (!checkNameChese(branch_bank_name)) {
+                        if (!checkNameChese(branch_bank_name) || TextUtils.isEmpty(branch_bank_name)) {
                             if (!isBranchBankName) {
                                 Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                                 break;
@@ -178,6 +178,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 }
         }
     }
+
     /**
      * 检测String是否全是中文
      *
