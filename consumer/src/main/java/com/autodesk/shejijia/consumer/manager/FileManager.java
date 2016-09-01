@@ -7,9 +7,9 @@ import android.os.Message;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.socks.library.KLog;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -60,7 +60,8 @@ public class FileManager {
         }
 
         this.handlerState = handlerState;
-        String url = "https://beta-api.acgcn.autodesk.com/api/v2/server/upload";
+        String url = "https://api.acgcn.autodesk.com/api/v2/server/upload";
+//        String url = UrlConstants.MAIN_DESIGN+"/v2/server/upload";
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
