@@ -63,6 +63,8 @@ public class MPWkFlowManager {
         memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             memType = memberEntity.getMember_type();
+        } else {
+            return wkSubNodeName;
         }
 
         if (!StringUtils.isNumeric(wk_template_id)) {
