@@ -62,8 +62,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvName = (TextView) findViewById(R.id.tvc_measure_form_name);
         tvPhone = (TextView) findViewById(R.id.tvc_measure_form_phone);
 
-        designer_house_charge_show = (LinearLayout) findViewById(R.id.designer_house_charge_show);
-        consumer_rmb_show = (TextView) findViewById(R.id.consumer_rmb_show);
         rl_house_charge_show = (RelativeLayout) findViewById(R.id.rl_house_charge_show);
         consumer_house_charge_show = (LinearLayout) findViewById(R.id.consumer_house_charge_show);
         designer_house_charge_show = (LinearLayout) findViewById(R.id.designer_house_charge_show);

@@ -2,9 +2,11 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -113,14 +115,14 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
                 MPNetworkUtils.logError(TAG, volleyError);
 //                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowMeasureCostActivity.this,
 //                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,FlowMeasureCostActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowMeasureCostActivity.this);
             }
         });
     }
 
     private void updateViewFromData() {
         String measurement_fee = mBiddersEntity.getMeasurement_fee();
-        if (TextUtils.isEmpty(measurement_fee)||"0.0".equals(measurement_fee)){
+        if (TextUtils.isEmpty(measurement_fee) || "0.0".equals(measurement_fee)) {
             measurement_fee = "0.00";
         }
         if(measureFee != null && measureFee.length() > 0){
@@ -192,14 +194,22 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
 
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
         public void onOK() {
-            MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success));
+//            MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success));
+            Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
             payOk = true;
             setResult(RESULT_CODE,new Intent());
             finish();
         }
 
         public void onFail() {
-            MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed));
+            Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER,0,0);
+            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+//            MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed));
             payOk = false;
             isLock = true;
             Intent intent = new Intent();
