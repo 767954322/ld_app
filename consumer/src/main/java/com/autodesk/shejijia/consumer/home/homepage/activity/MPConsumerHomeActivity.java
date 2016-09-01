@@ -207,13 +207,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void onRestart() {
         super.onRestart();
         isShowBidHallFragment();
-//        setConsumerOrDesignerPicture();//设置头像
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             designer_main_radio_group.check(index);
-
         }
         //登陆消费者时，会进入
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -221,7 +219,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
         //未登录状态，会自动进入案例fragment
-
         if (mMemberEntity == null) {
             designer_main_radio_btn.setChecked(true);
         }
@@ -594,7 +591,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return designerListFragment;
     }
 
-
     /**
      * 网络获取数据并且更新
      */
@@ -610,11 +606,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
-    public void getALLWkFlowStatePointInformation() {
 
+    public void getALLWkFlowStatePointInformation() {
         MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
             }
 
             @Override
@@ -647,7 +644,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit);
 
                 }
-                updateViewFromData();
             }
 
             @Override
@@ -689,7 +685,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         });
     }
-
 
     private void isShowBidHallFragment() {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -763,7 +758,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     , AlertView.Style.Alert, null).show();
 
         }
-
     }
 
     @Override

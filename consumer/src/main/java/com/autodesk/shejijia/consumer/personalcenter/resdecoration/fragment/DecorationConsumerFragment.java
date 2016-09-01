@@ -88,7 +88,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     protected void initListener() {
         super.initListener();
         mPullToRefreshLayout.setOnRefreshListener(this);
-
     }
 
     /**
