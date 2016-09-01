@@ -91,23 +91,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
     }
 
-//    private void getMyDecorationData111(){
-//        String userInfo = ss();
-//        mDecorationListBean = GsonUtil.jsonToBean(userInfo, DecorationListBean.class);
-//        if (isRefreshOrLoadMore) {
-//            updateViewFromData();
-//            mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-//        } else {
-//            mDecorationNeedsList.clear();
-//            updateViewFromData();
-//            mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-//        }
-//
-//        CustomProgress.cancelDialog();
-//        KLog.json(TAG, userInfo);
-//    }
-
-
     /**
      * 获取消费者家装订单
      */
