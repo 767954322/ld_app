@@ -518,6 +518,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
             mWorkflowText.setVisibility(View.VISIBLE);
 
             mWorkflowButton.setImageDrawable(getResources().getDrawable(R.drawable.amount_room_ico));
+            mWorkflowText.setText("选TA量房");
         }
 
     }
