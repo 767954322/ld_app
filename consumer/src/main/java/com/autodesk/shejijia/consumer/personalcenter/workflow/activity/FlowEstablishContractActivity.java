@@ -88,6 +88,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         ll_contract = (LinearLayout) findViewById(R.id.ll_flow_examine_contract);
         ll_send = (LinearLayout) findViewById(R.id.ll_send_establish_contract);
         ll_agree_establish_contract = (LinearLayout) findViewById(R.id.ll_agree_establish_contract);
+        ll_contract_content_designer = (LinearLayout) findViewById(R.id.design_contract_content_designer);
+        ll_contract_content_consumer = (LinearLayout) findViewById(R.id.design_contract_content_consumer);
+
+
         //Variables
         btn_send = (Button) findViewById(R.id.btn_send_establish_contract);
         tv_contract_number = (TextView) findViewById(R.id.flow_establish_contract_contract_number);
@@ -160,27 +164,218 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         CustomProgress.cancelDialog();
     }
 
+    private void layoutContractContent()
+    {
+        if ( isRoleDesigner()){
+            ll_contract_content_consumer.setVisibility(View.GONE);
+            ll_contract_content_designer.setVisibility(View.VISIBLE);
+        }
+        if ( isRoleCustomer()){
+            ll_contract_content_designer.setVisibility(View.GONE);
+            ll_contract_content_consumer.setVisibility(View.VISIBLE);
+
+        }
+    }
+
     private void UpdateUIDesigner() {
+        ll_agree_establish_contract.setVisibility(View.GONE);
+        tvc_last_cost.setEnabled(false);
+
+        if (mBidders.get(0).getDesign_contract() == null) {                         /// 如果是新的合同.
+            getContractNumber();                                                                   /// 获取合同编号.
+            tvc_consumer_name.setText(requirement.getContacts_name());
+            tvc_consumer_phone.setText(requirement.getContacts_mobile());
+
+            String province_name = requirement.getProvince_name();
+            String city_name = requirement.getCity_name();
+            String district_name = requirement.getDistrict_name();
+            if ("none".equals(requirement.getDistrict())
+                    || "null".equals(district_name)
+                    || "none".equals(district_name)
+                    || TextUtils.isEmpty(district_name)) {
+                district_name = "";
+            }
+            //  tvc_consumer_decorate_address.setText(province_name + " " + city_name + " " + district_name);
+            tvc_consumer_detail_address.setText(requirement.getCommunity_name());
+            if (WorkFlowSubNodeStep() == 31) {                                                            /// 设计师发完合同后可以继续发送按钮显示.
+                ll_send.setVisibility(View.VISIBLE);
+                btn_send.setText(R.string.send_design_contract);
+            } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
+                ll_send.setVisibility(View.GONE);
+            } else if (WorkFlowSubNodeStep() == 33) {
+                ll_send.setVisibility(View.VISIBLE);
+                btn_send.setText(R.string.uploaded_deliverable);
+            } else {
+                ll_send.setVisibility(View.VISIBLE);
+                btn_send.setText(R.string.send_design_contract);
+            }
+        } else {  /// 已有合同
+            if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {// 从项目资料跳转.
+                disableFieldsInput();  /// 如果是已有的合同设置所有得按键都不可点击 .
+            }
+            if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
+                ll_send.setVisibility(View.VISIBLE);
+                btn_send.setText(R.string.send_design_contract);
+            } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) {   /// 当消费者发完设计首款按钮隐藏 .
+                ll_send.setVisibility(View.GONE);
+            } else if (WorkFlowSubNodeStep() == 33) {
+                ll_send.setVisibility(View.VISIBLE);
+                btn_send.setText(R.string.uploaded_deliverable);
+            }
+            MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+            if (null == designContractEntity) {
+                return;
+            }
+            String contractData = designContractEntity.getContract_data();
+            String str = contractData.toString().replace("@jr@", "\"");                  /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
+            MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
+            String zip = designContractBean.getZip();
+            String email = designContractBean.getEmail();
+            zip = (TextUtils.isEmpty(zip) || "null".equals(zip)) ? "" : zip;
+            email = (TextUtils.isEmpty(email) || "null".equals(email)) ? "" : email;
+
+            tv_contract_number.setText(designContractEntity.getContract_no());
+            tvc_consumer_name.setText(designContractBean.getName());
+            tvc_consumer_phone.setText(designContractBean.getMobile());
+
+            if (!"null".equals(email)) {
+                tvc_consumer_email.setText(email);
+            } else {
+                tvc_consumer_email.setText("");
+            }
+            //tvc_consumer_decorate_address.setText(designContractBean.getAddr());
+            tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
+            //tvc_design_sketch.setText(designContractBean.getDesign_sketch());
+
+            tvc_total_cost.setText(designContractEntity.getContract_charge());
+            tvc_first_cost.setText(designContractEntity.getContract_first_charge());
+            Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
+            Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
+            DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
+            tvc_last_cost.setText(df.format(totalCost - firstCost));
+            /**
+             * 如果过了上传量房交付物的节点，就不可能改合同
+             */
+            if (WorkFlowSubNodeStep() >= 33) {
+                disableFieldsInput();
+            }
+        }
+
+        /**
+         *  发送合同 .
+         */
+        btn_send.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                sendEstablishContractCon();
+            }
+        });
 
 
     }
 
     private void UpdateUIConsumer() {
+        disableFieldsInput();                                                                  /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
+        MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+        if (null == designContractEntity) { // 如果设计师没有发送设计合同 .
+            mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                @Override
+                public void onDismiss(Object o) {
+                    finish();
+                }
+            });
+            mDesignContract.show();
+            return;
+        }
+        String contractData = designContractEntity.getContract_data();
+        final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
+        MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
+        String zip = designContractBean.getZip();
+        String email = designContractBean.getEmail();
+        zip = TextUtils.isEmpty(zip) ? "" : zip;
+        email = TextUtils.isEmpty(email) ? "" : email;
 
+        tv_contract_number.setText(designContractEntity.getContract_no());
+        tvc_consumer_name.setText(designContractBean.getName());
+        tvc_consumer_phone.setText(designContractBean.getMobile());
+
+        if (!"null".equals(email)) {
+            tvc_consumer_email.setText(email);
+        } else {
+            tvc_consumer_email.setText("");
+        }
+
+        //tvc_consumer_decorate_address.setText(designContractBean.getAddr());
+        tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
+        //tvc_design_sketch.setText(designContractBean.getDesign_sketch());
+        // tvc_render_map.setText(designContractBean.getRender_map());
+        // tvc_sketch_plus.setText(designContractBean.getDesign_sketch_plus());
+        tvc_total_cost.setText(designContractEntity.getContract_charge());
+        tvc_first_cost.setText(designContractEntity.getContract_first_charge());
+        Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
+        Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
+        DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
+        tvc_last_cost.setText(df.format(totalCost - firstCost));
+
+        if (WorkFlowSubNodeStep() == 31) {
+            ll_send.setVisibility(View.VISIBLE);
+            ll_agree_establish_contract.setVisibility(View.VISIBLE);
+
+            btn_send.setEnabled(false);
+            btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+
+            img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isAgree) { // 判断是否我已阅读（我已阅读）
+                        img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+                        btn_send.setEnabled(false);
+                        btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+                    } else { // 判断是否我已阅读（我未阅读）
+                        img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_checked);
+                        btn_send.setEnabled(true);
+                        btn_send.setBackgroundResource(R.drawable.bg_common_btn_blue);
+                        btn_send.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(FlowEstablishContractActivity.this, FlowFirstDesignActivity.class);
+                                intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+                                intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                                intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
+//                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
+                                startActivityForResult(intent, ContractForFirst);
+                            }
+                        });
+                    }
+
+                    isAgree = !isAgree;
+                }
+            });
+            btn_send.setText(R.string.agree_and_send_design_first_new);
+        } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) {
+            ll_send.setVisibility(View.GONE);
+            ll_agree_establish_contract.setVisibility(View.GONE);
+        } else if (WorkFlowSubNodeStep() == 33) {
+            ll_send.setVisibility(View.VISIBLE);
+            ll_agree_establish_contract.setVisibility(View.GONE);
+            btn_send.setText(R.string.receiving_room_deliverable);
+        }
 
     }
+
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         /**
-         * 如果超过了33节点，就隐藏上传量房按钮
+         * 如果超过了33节点，就隐藏上传合同按钮
          */
-/////////
+
         if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= 33) {
             btn_send.setVisibility(View.GONE);
             ll_agree_establish_contract.setVisibility(View.GONE);
         }
 
+        //get designer infomation
         restgetDesignerInfoData(designer_id, hs_uid,new commonJsonResponseCallback(){
             @Override
             public void onJsonResponse(String jsonResponse) {
@@ -195,194 +390,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             }
         });
-        //getDesignerInfoData(designer_id, hs_uid);
-        int wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
-        if (memberEntity != null) {
-            memberType = memberEntity.getMember_type();
-        }
 
-        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberType)) { /// 设计师　.
-            ll_agree_establish_contract.setVisibility(View.GONE);
-            tvc_last_cost.setEnabled(false);
-
-            if (mBidders.get(0).getDesign_contract() == null) {                         /// 如果是新的合同.
-                getContractNumber();                                                                   /// 获取合同编号.
-                tvc_consumer_name.setText(requirement.getContacts_name());
-                tvc_consumer_phone.setText(requirement.getContacts_mobile());
-
-                String province_name = requirement.getProvince_name();
-                String city_name = requirement.getCity_name();
-                String district_name = requirement.getDistrict_name();
-                if ("none".equals(requirement.getDistrict())
-                        || "null".equals(district_name)
-                        || "none".equals(district_name)
-                        || TextUtils.isEmpty(district_name)) {
-                    district_name = "";
-                }
-              //  tvc_consumer_decorate_address.setText(province_name + " " + city_name + " " + district_name);
-                tvc_consumer_detail_address.setText(requirement.getCommunity_name());
-                if (wk_cur_sub_node_idi == 31) {                                                            /// 设计师发完合同后可以继续发送按钮显示.
-                    ll_send.setVisibility(View.VISIBLE);
-                    btn_send.setText(R.string.send_design_contract);
-                } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) { /// 当消费者发完设计首款按钮隐藏.
-                    ll_send.setVisibility(View.GONE);
-                } else if (wk_cur_sub_node_idi == 33) {
-                    ll_send.setVisibility(View.VISIBLE);
-                    btn_send.setText(R.string.uploaded_deliverable);
-                } else {
-                    ll_send.setVisibility(View.VISIBLE);
-                    btn_send.setText(R.string.send_design_contract);
-                }
-            } else {  /// 已有合同
-                if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {// 从项目资料跳转.
-                    setTvcCannotClickable();  /// 如果是已有的合同设置所有得按键都不可点击 .
-                }
-                if (wk_cur_sub_node_idi == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
-                    ll_send.setVisibility(View.VISIBLE);
-                    btn_send.setText(R.string.send_design_contract);
-                } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) {   /// 当消费者发完设计首款按钮隐藏 .
-                    ll_send.setVisibility(View.GONE);
-                } else if (wk_cur_sub_node_idi == 33) {
-                    ll_send.setVisibility(View.VISIBLE);
-                    btn_send.setText(R.string.uploaded_deliverable);
-                }
-                MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
-                if (null == designContractEntity) {
-                    return;
-                }
-                String contractData = designContractEntity.getContract_data();
-                String str = contractData.toString().replace("@jr@", "\"");                  /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
-                MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
-                String zip = designContractBean.getZip();
-                String email = designContractBean.getEmail();
-                zip = (TextUtils.isEmpty(zip) || "null".equals(zip)) ? "" : zip;
-                email = (TextUtils.isEmpty(email) || "null".equals(email)) ? "" : email;
-
-                tv_contract_number.setText(designContractEntity.getContract_no());
-                tvc_consumer_name.setText(designContractBean.getName());
-                tvc_consumer_phone.setText(designContractBean.getMobile());
-
-                if (!"null".equals(email)) {
-                    tvc_consumer_email.setText(email);
-                } else {
-                    tvc_consumer_email.setText("");
-                }
-                //tvc_consumer_decorate_address.setText(designContractBean.getAddr());
-                tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
-                //tvc_design_sketch.setText(designContractBean.getDesign_sketch());
-
-                tvc_total_cost.setText(designContractEntity.getContract_charge());
-                tvc_first_cost.setText(designContractEntity.getContract_first_charge());
-                Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
-                Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
-                DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
-                tvc_last_cost.setText(df.format(totalCost - firstCost));
-                /**
-                 * 如果过了上传量房交付物的节点，就不可能改合同
-                 */
-                if (wk_cur_sub_node_idi >= 33) {
-                    setTvcCannotClickable();
-                }
-            }
-
-            /**
-             *  发送合同 .
-             */
-            btn_send.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    sendEstablishContractCon();
-                }
-            });
-
-        } else if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberType)) { /// 消费者 .
-            setTvcCannotClickable();                                                                  /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
-            MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
-            if (null == designContractEntity) { // 如果设计师没有发送设计合同 .
-                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
-                    @Override
-                    public void onDismiss(Object o) {
-                        finish();
-                    }
-                });
-                mDesignContract.show();
-                return;
-            }
-            String contractData = designContractEntity.getContract_data();
-            final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
-            MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
-            String zip = designContractBean.getZip();
-            String email = designContractBean.getEmail();
-            zip = TextUtils.isEmpty(zip) ? "" : zip;
-            email = TextUtils.isEmpty(email) ? "" : email;
-
-            tv_contract_number.setText(designContractEntity.getContract_no());
-            tvc_consumer_name.setText(designContractBean.getName());
-            tvc_consumer_phone.setText(designContractBean.getMobile());
-
-            if (!"null".equals(email)) {
-                tvc_consumer_email.setText(email);
-            } else {
-                tvc_consumer_email.setText("");
-            }
-
-            //tvc_consumer_decorate_address.setText(designContractBean.getAddr());
-            tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
-            //tvc_design_sketch.setText(designContractBean.getDesign_sketch());
-           // tvc_render_map.setText(designContractBean.getRender_map());
-           // tvc_sketch_plus.setText(designContractBean.getDesign_sketch_plus());
-            tvc_total_cost.setText(designContractEntity.getContract_charge());
-            tvc_first_cost.setText(designContractEntity.getContract_first_charge());
-            Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
-            Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
-            DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
-            tvc_last_cost.setText(df.format(totalCost - firstCost));
-
-            if (wk_cur_sub_node_idi == 31) {
-                ll_send.setVisibility(View.VISIBLE);
-                ll_agree_establish_contract.setVisibility(View.VISIBLE);
-
-                btn_send.setEnabled(false);
-                btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-
-                img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (isAgree) { // 判断是否我已阅读（我已阅读）
-                            img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
-                            btn_send.setEnabled(false);
-                            btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-                        } else { // 判断是否我已阅读（我未阅读）
-                            img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_checked);
-                            btn_send.setEnabled(true);
-                            btn_send.setBackgroundResource(R.drawable.bg_common_btn_blue);
-                            btn_send.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(FlowEstablishContractActivity.this, FlowFirstDesignActivity.class);
-                                    intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-                                    intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                                    intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
-//                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
-                                    startActivityForResult(intent, ContractForFirst);
-                                }
-                            });
-                        }
-
-                        isAgree = !isAgree;
-                    }
-                });
-                btn_send.setText(R.string.agree_and_send_design_first_new);
-            } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) {
-                ll_send.setVisibility(View.GONE);
-                ll_agree_establish_contract.setVisibility(View.GONE);
-            } else if (wk_cur_sub_node_idi == 33) {
-                ll_send.setVisibility(View.VISIBLE);
-                ll_agree_establish_contract.setVisibility(View.GONE);
-                btn_send.setText(R.string.receiving_room_deliverable);
-            }
+        layoutContractContent();
+        if (isRoleDesigner()) { /// 设计师　.
+            UpdateUIDesigner();
+        } else if (isRoleCustomer()) { /// 消费者 .
+            UpdateUIConsumer();
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -395,7 +411,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     /**
      * 设置输入框不可点击输入且无边框
      */
-    private void setTvcCannotClickable() {
+    private void disableFieldsInput() {
         tvc_consumer_name.setEnabled(false);
         tvc_consumer_phone.setEnabled(false);
         //tvc_consumer_postcode.setEnabled(false);
@@ -429,26 +445,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_designer_phone.setBackgroundResource(0);
     }
 
-    /**
-     * 获取设计师个人信息 .
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                list = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                tvc_designer_name.setText(list.getReal_name().getReal_name());
-                tvc_designer_phone.setText(list.getReal_name().getMobile_number().toString());
-                tvc_designer_email.setText(list.getEmail());
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError, true);
-            }
-        });
-    }
 
     /**
      * 获取合同编号 .
@@ -788,6 +784,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private LinearLayout ll_contract;
     private LinearLayout ll_send;
     private LinearLayout ll_agree_establish_contract;
+    private LinearLayout ll_contract_content_designer;
+    private LinearLayout ll_contract_content_consumer;
 
     private DesignerInfoDetails list;
     private MPContractNoBean contractNo; // 设计合同编号对象

@@ -67,9 +67,8 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (memberEntity != null) {
-            mMemberType = memberEntity.getMember_type();
-        }
+
+
         getOrderDetailsInfo(needs_id, designer_id);
 
     }
@@ -78,6 +77,34 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected void initListener() {
         super.initListener();
     }
+
+    public int WorkFlowTemplateStep(){
+
+
+         return  Integer.valueOf(wk_cur_template_id);
+
+    }
+
+    public int WorkFlowSubNodeStep(){
+        return  Integer.valueOf(wk_cur_sub_node_id);
+
+    }
+
+    public String GetRoleType(){
+        if (memberEntity != null) {
+            return memberEntity.getMember_type();
+        }
+        return  "";
+    }
+    public Boolean isRoleDesigner(){
+        return (Constant.UerInfoKey.DESIGNER_TYPE.equals(GetRoleType())) ;
+    }
+    public Boolean isRoleCustomer(){
+        return (Constant.UerInfoKey.CONSUMER_TYPE.equals(GetRoleType())) ;
+    }
+
+
+
 
     private android.os.Handler handler = new android.os.Handler() {
         @Override
@@ -110,10 +137,14 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
                 return;
             }
             wk_cur_sub_node_id = mBiddersEntity.getWk_cur_sub_node_id();
-            if (!TextUtils.isEmpty(wk_cur_sub_node_id) && StringUtils.isNumeric(wk_cur_sub_node_id)) {
-                tempdate_id = Integer.parseInt(requirement.getWk_template_id());
-                onWorkFlowData();
-            }
+            wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
+
+            onWorkFlowData();
+            /*if (!TextUtils.isEmpty(wk_cur_sub_node_id) && StringUtils.isNumeric(wk_cur_sub_node_id)) {
+                wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
+
+
+            }*/
         }
     };
 
@@ -178,11 +209,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     }
 
 
-   // public void getDesignerInfoData(String designer_id, String hs_uid,commonJsonResponseCallback callBack) {
-
-
-   // }
-
     // Method when child class need some extra data from app-server
     public void restgetDesignerInfoData(String designer_id, String hs_uid,final commonJsonResponseCallback callBack) {
         MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
@@ -204,13 +230,14 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
 
     protected int state;
     protected int nodeState;
-    protected int tempdate_id;
+    protected int wk_cur_template_id;
+    protected String wk_cur_sub_node_id;
     protected String hs_uid;
     protected String designer_id;
     protected String mThreead_id;
     protected String community_name;
     protected String contacts_name;
-    protected String wk_cur_sub_node_id;
+
     protected String needs_id;
     protected  String measureFee;
     protected MemberEntity memberEntity;
@@ -219,6 +246,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected MPBidderBean mBiddersEntity;
     protected List<MPBidderBean> mBidders;
     protected MPDeliveryBean mDeliveryBean;
-    protected String mMemberType;
+
 
 }

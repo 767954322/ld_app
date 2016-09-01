@@ -13,9 +13,13 @@
     <include
         android:id="@+id/design_contract_content_designer"
         layout="@layout/activity_flow_contract_subcontent_designer"
-
+        android:visibility="gone"
         />
-
+    <include
+        android:id="@+id/design_contract_content_consumer"
+        layout="@layout/activity_flow_contract_subcontent_consumer"
+        android:visibility="gone"
+        />
 
 
 

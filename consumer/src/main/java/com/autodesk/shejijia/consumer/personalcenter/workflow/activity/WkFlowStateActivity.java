@@ -247,7 +247,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (memberEntity != null) {
             strMemberType = memberEntity.getMember_type();
         }
-        if (tempdate_id == 4) {
+        if (WorkFlowTemplateStep() == 4) {
             onEliteItemClick(position,wk_cur_sub_node_idi,view);
         } else {
             onOrdinaryItemClick(position,wk_cur_sub_node_idi,view);
@@ -307,13 +307,13 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void costMeasureFeeNode(int wk_cur_sub_node_idi,View view){
         if(Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (tempdate_id == 1) {     // 应标
+            if (WorkFlowTemplateStep() == 1) {     // 应标
                 if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
                     view.setClickable(false);
                 } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
                     showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
                 }
-            } else if (tempdate_id == 2) {    /// 自选量房阶段 .
+            } else if (WorkFlowTemplateStep() == 2) {    /// 自选量房阶段 .
                 if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
                     view.setClickable(false);
                 } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
@@ -323,14 +323,14 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             return;
         }
 
-        if (tempdate_id == 1) { // 应标
+        if (WorkFlowTemplateStep() == 1) { // 应标
             if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
                 showNewActivity(FlowMeasureCostActivity.class,MPStatusMachine.NODE__MEANSURE_PAY);
 
             } else {
                 view.setClickable(false);
             }
-        } else if (tempdate_id == 2) {
+        } else if (WorkFlowTemplateStep() == 2) {
             // 自选或北舒
             if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
                 showNewActivity(FlowMeasureCostActivity.class,MPStatusMachine.NODE__MEANSURE_PAY);
@@ -518,12 +518,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
         List<TipWorkFlowTemplateBean> tipWorkFlowTemplateBeanMap  = WkFlowStateMap.sWkFlowBeans;
         for(TipWorkFlowTemplateBean tipWorkFlowTemplateBean:tipWorkFlowTemplateBeanMap){
-            if(tipWorkFlowTemplateBean.getTempdate_id() == tempdate_id){
+            if(tipWorkFlowTemplateBean.getTempdate_id() == WorkFlowTemplateStep()){
                 this.tipWorkFlowTemplateBean = tipWorkFlowTemplateBean;
             }
         }
 
-        mAdapter = new WkFlowStateAdapter(context, memberEntity.getMember_type(), mBiddersEntity,tipWorkFlowTemplateBean,tempdate_id);
+        mAdapter = new WkFlowStateAdapter(context, memberEntity.getMember_type(), mBiddersEntity,tipWorkFlowTemplateBean,WorkFlowTemplateStep());
         mListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         ImageUtils.displayAvatarImage(mBiddersEntity.getAvatar(), polygonImageView);

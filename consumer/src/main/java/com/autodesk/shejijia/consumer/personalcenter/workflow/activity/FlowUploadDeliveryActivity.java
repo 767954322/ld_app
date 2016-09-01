@@ -191,7 +191,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     private void handleDeliveryState(int wk_sub_node_id_int, Wk3DPlanDelivery delivery) {
         if (wk_sub_node_id_int < DOWN_DELIVERY_UPLOADED_DELIVERY) {
-            switch (mMemberType) {
+            switch (GetRoleType()) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
                     mLinerDelayedShow.setVisibility(View.GONE);
@@ -205,7 +205,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     break;
             }
         } else if (DOWN_DELIVERY_UPLOADED_DELIVERY == wk_sub_node_id_int) {
-            switch (mMemberType) {
+            switch (GetRoleType()) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
                     mLinerDelayedShow.setVisibility(View.VISIBLE);
@@ -220,7 +220,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     break;
             }
         } else if (wk_sub_node_id_int == CONSUMER_DELAY_DELIVERY) {
-            switch (mMemberType) {
+            switch (GetRoleType()) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
                     mLinerDelayedShow.setVisibility(View.VISIBLE);
@@ -291,7 +291,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                          */
                         doneMeasureDelivery(v, intent3DPlan);
                     } else if (Integer.valueOf(wk_cur_sub_node_id) >= DOWN_DELIVERY_UPLOADED_DELIVERY) {
-                        switch (mMemberType) {
+                        switch (GetRoleType()) {
                             case Constant.UerInfoKey.CONSUMER_TYPE:
                                 /**
                                  * 设计师已经上传了设计交付物
@@ -845,7 +845,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private void alertMeasureOrDesign() {
         if (wk_sub_node_id_int >= PAY_FOR_MEASURE
                 && wk_sub_node_id_int < PAY_FOR_FIRST_FEE) {
-            switch (mMemberType) {
+            switch (GetRoleType()) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mAlertViewMeasureConsumerDelivery.show();
                     break;
@@ -858,7 +858,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             }
         } else if (wk_sub_node_id_int >= 42
                 && wk_sub_node_id_int < NO_UPLOAD_DELIVERY) {
-            switch (mMemberType) {
+            switch (GetRoleType()) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mAlertViewDesignConsumerDelivery.show();
                     break;
@@ -1229,7 +1229,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 if (isFinish) {
                     return;
                 }
-                if (mMemberType.equals(Constant.UerInfoKey.DESIGNER_TYPE)) {
+                if (isRoleDesigner()) {
                     changeItemClickState();
                     changeSubmitOkState();
                 }
