@@ -109,7 +109,10 @@ public class WorkRoomDesignerAdapter extends BaseAdapter{
 
         if (position < casesBeenList.size()){
             viewHolder.caseImageView = (ImageView) convertView.findViewById(R.id.work_room_design_imageView);
-            ImageUtils.loadImage(viewHolder.caseImageView, casesBeenList.get(position).getImages().get(0).getFile_url()+"HD.jpg");
+            if (casesBeenList.get(position).getImages() != null && casesBeenList.get(position).getImages().size() != 0){
+
+                ImageUtils.loadImage(viewHolder.caseImageView, casesBeenList.get(position).getImages().get(0).getFile_url()+"HD.jpg");
+            }
         }else if (position == casesBeenList.size()){
             if (list.get(position - casesBeenList.size()).length == 1 ){
 

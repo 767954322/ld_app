@@ -95,6 +95,17 @@ public class OrderCommonFragment extends BaseFragment {
         }
     };
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     /**
      * 获取普通订单数据
      *

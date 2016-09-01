@@ -59,7 +59,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         back = (ImageView) workRoomDetailHeader.findViewById(R.id.work_room_back);
         work_room_detail_content = (LinearLayout) findViewById(R.id.work_room_detail_content);
         work_room_detail_content.addView(workRoomDetailHeader);
-        listView  = (ListView) findViewById(R.id.listview);
+        listView = (ListView) findViewById(R.id.listview);
 //        work_room_design_imageView = (ImageView) workRoomDetailHeader.findViewById(R.id.work_room_design_imageView);
         header_work_room_name = (TextView) workRoomDetailHeader.findViewById(R.id.header_work_room_name);
         header_work_room_design_year = (TextView) workRoomDetailHeader.findViewById(R.id.header_work_room_design_year);
@@ -89,17 +89,17 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        getWorkRoomDetailData(acs_member_id,0,10,hs_uid);
+        getWorkRoomDetailData(acs_member_id, 0, 10, hs_uid);
 
         isLoginUserJust = isLoginUser();
     }
 
     public void upDataForView(WorkRoomDetailsBeen workRoomDetailsBeen) {
 
-            work_room_name_title.setText(workRoomDetailsBeen.getNick_name());
-            header_work_room_name.setText(workRoomDetailsBeen.getNick_name());
-            ImageUtils.loadImage(work_room_detail_six_imageView, workRoomDetailsBeen.getDesigner().getDesigner_profile_cover().getPublic_url().replace(" ",""));
-            work_room_introduce.setText("工作室介绍：" + workRoomDetailsBeen.getDesigner().getIntroduction());
+        work_room_name_title.setText(workRoomDetailsBeen.getNick_name());
+        header_work_room_name.setText(workRoomDetailsBeen.getNick_name());
+        ImageUtils.loadImage(work_room_detail_six_imageView, workRoomDetailsBeen.getDesigner().getDesigner_profile_cover().getPublic_url().replace(" ", ""));
+        work_room_introduce.setText("工作室介绍：" + workRoomDetailsBeen.getDesigner().getIntroduction());
 
         if (workRoomDetailsBeen.getDesigner() != null) {
 
@@ -107,58 +107,62 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 //            String aaa = (workRoomDetailsBeen.getCases_list().get(1).getImages().get(0).getFile_url()+"HD.jpg");
 
 
- //           ImageUtils.loadImage(work_room_design_imageView, aaa);
+            //           ImageUtils.loadImage(work_room_design_imageView, aaa);
         }
 
-        WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain,workRoomDetailsBeen.getCases_list());
+        WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain, workRoomDetailsBeen.getCases_list());
         listView.setAdapter(workRoomAdapter);
         HeightUtils.setListViewHeightBasedOnChildren(listView);
 
     }
 
     //获取主案设计师
-    public void getDesignerDataForView(WorkRoomDetailsBeen workRoomDetailsBeen){
+    public void getDesignerDataForView(WorkRoomDetailsBeen workRoomDetailsBeen) {
 
-        int mainLength = workRoomDetailsBeen.getMain_designers().size();//判断主案设计师item数量
-        if (mainLength % 3 == 0) {
+        if (workRoomDetailsBeen.getMain_designers() != null && workRoomDetailsBeen.getMain_designers().size() != 0) {
 
-            mainLength = mainLength / 3;
-        } else {
 
-            mainLength = mainLength / 3 + 1;
-        }
-        WorkRoomDetailsBeen.MainDesignersBean[] mainDesigner;
-        for (int i = 0; i < mainLength; i++) {//将主案设计师按数量添加不同的组，方便显示
-            int count = 0;
-            if (count < workRoomDetailsBeen.getMain_designers().size()) {
+            int mainLength = workRoomDetailsBeen.getMain_designers().size();//判断主案设计师item数量
+            if (mainLength % 3 == 0) {
 
-                if (i + 1 <= mainLength) {
+                mainLength = mainLength / 3;
+            } else {
 
-                    mainDesigner = new WorkRoomDetailsBeen.MainDesignersBean[3];
-                    for (int j = 0; j < 3; j++) {
-                        mainDesigner[j] = workRoomDetailsBeen.getMain_designers().get(count);
-                        count++;
-                    }
-
-                } else {
-
-                    mainDesigner = new WorkRoomDetailsBeen.MainDesignersBean[workRoomDetailsBeen.getMain_designers().size() % 3];
-
-                    for (int j = 0; j < workRoomDetailsBeen.getMain_designers().size() % 3; j++) {
-                        mainDesigner[j] = workRoomDetailsBeen.getMain_designers().get(count);
-                        count++;
-
-                    }
-                }
-                listMain.add(mainDesigner);
+                mainLength = mainLength / 3 + 1;
             }
+            WorkRoomDetailsBeen.MainDesignersBean[] mainDesigner;
+            for (int i = 0; i < mainLength; i++) {//将主案设计师按数量添加不同的组，方便显示
+                int count = 0;
+                if (count < workRoomDetailsBeen.getMain_designers().size()) {
+
+                    if (i + 1 <= mainLength) {
+
+                        mainDesigner = new WorkRoomDetailsBeen.MainDesignersBean[3];
+                        for (int j = 0; j < 3; j++) {
+                            mainDesigner[j] = workRoomDetailsBeen.getMain_designers().get(count);
+                            count++;
+                        }
+
+                    } else {
+
+                        mainDesigner = new WorkRoomDetailsBeen.MainDesignersBean[workRoomDetailsBeen.getMain_designers().size() % 3];
+
+                        for (int j = 0; j < workRoomDetailsBeen.getMain_designers().size() % 3; j++) {
+                            mainDesigner[j] = workRoomDetailsBeen.getMain_designers().get(count);
+                            count++;
+
+                        }
+                    }
+                    listMain.add(mainDesigner);
+                }
+            }
+
+            if (workRoomDetailsBeen != null) {
+
+            }
+
+            upDataForView(workRoomDetailsBeen);
         }
-
-        if (workRoomDetailsBeen != null) {
-
-        }
-
-        upDataForView(workRoomDetailsBeen);
     }
 
 
@@ -190,7 +194,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
                                 jsonObject.put("type", 2);//工作室类型
                                 jsonObject.put("customer_id", member_id);//消费者ID
                                 jsonObject.put("consumer_uid", hs_uid);
-                                jsonObject.put("name",workRoomDetailsBeen.getNick_name());
+                                jsonObject.put("name", workRoomDetailsBeen.getNick_name());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -199,7 +203,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
                             try {
                                 jsonObject.put("consumer_name", name);
-                                jsonObject.put("name",workRoomDetailsBeen.getNick_name());
+                                jsonObject.put("name", workRoomDetailsBeen.getNick_name());
                                 jsonObject.put("consumer_mobile", phoneNumber);
                                 jsonObject.put("type", 2);
                             } catch (JSONException e) {
@@ -219,16 +223,16 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
     /**
      * 获取工作室详情信息
-     * */
+     */
 
-    public void getWorkRoomDetailData(int designer_id, int offset, int limit, final String hs_uid){
+    public void getWorkRoomDetailData(int designer_id, int offset, int limit, final String hs_uid) {
 
         MPServerHttpManager.getInstance().getWorkRoomOrderData(designer_id, offset, limit, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip),volleyError.toString() /*UIUtils.getString(R.string.network_error)*/, null, new String[]{UIUtils.getString(R.string.sure)}, null, WorkRoomDetailActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), volleyError.toString() /*UIUtils.getString(R.string.network_error)*/, null, new String[]{UIUtils.getString(R.string.sure)}, null, WorkRoomDetailActivity.this,
                         AlertView.Style.Alert, null).show();
             }
 
@@ -236,7 +240,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
             public void onResponse(JSONObject jsonObject) {
 
                 String infoTwo;
-                infoTwo =GsonUtil.jsonToString(jsonObject);
+                infoTwo = GsonUtil.jsonToString(jsonObject);
                 workRoomDetailsBeen = GsonUtil.jsonToBean(infoTwo, WorkRoomDetailsBeen.class);
                 main_designers = workRoomDetailsBeen.getMain_designers();
                 getDesignerDataForView(workRoomDetailsBeen);
@@ -270,13 +274,13 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                Toast.makeText(WorkRoomDetailActivity.this,R.string.work_room_commit_fail,Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkRoomDetailActivity.this, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                Toast.makeText(WorkRoomDetailActivity.this,R.string.work_room_commit_successful,Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkRoomDetailActivity.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -285,7 +289,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private View workRoomDetailHeader;
     private LinearLayout work_room_detail_content;
     private ImageView back;
-//    private ImageView work_room_design_imageView;
+    //    private ImageView work_room_design_imageView;
     private ImageView work_room_detail_six_imageView;
     private TextView now_order;
     private int acs_member_id;

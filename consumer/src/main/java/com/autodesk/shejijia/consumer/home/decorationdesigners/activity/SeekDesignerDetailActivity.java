@@ -800,16 +800,29 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         //判断是否可以加载更多
         int myScrollViewChildHeight = myScrollView.getChildAt(0).getHeight();//myScrollView中子类的高度
         int myScrollViewHeight = myScrollView.getHeight();//myScrollView的高度
-        if ((myScrollViewChildHeight == myScrollViewHeight + y) || (myScrollViewChildHeight - myScrollViewHeight - y < 5) || myScrollViewChildHeight < myScrollViewHeight) {
+//        if ((myScrollViewChildHeight == myScrollViewHeight + y) || (myScrollViewChildHeight - myScrollViewHeight - y < 5) || myScrollViewChildHeight < myScrollViewHeight) {
+//
+//            Log.i(TAG, "YAOmyScrollView子类" + myScrollView.getChildAt(0).getHeight());
+//            Log.i(TAG, "YAOmyScrollView高度" + myScrollView.getHeight());
+//            Log.i(TAG, "YAOmyScrollView滑动的距离" + y);
+//            myScrollView.setIsLoad(true);
+//        } else {
+//
+//            myScrollView.setIsLoad(false);
+//        }
 
-            Log.i(TAG, "YAOmyScrollView子类" + myScrollView.getChildAt(0).getHeight());
-            Log.i(TAG, "YAOmyScrollView高度" + myScrollView.getHeight());
-            Log.i(TAG, "YAOmyScrollView滑动的距离" + y);
+        int height = myScrollView.getHeight();
+        int scrollViewMeasuredHeight = myScrollView.getChildAt(0).getMeasuredHeight();
+
+        if(scrollViewMeasuredHeight <= y + height){
+
             myScrollView.setIsLoad(true);
-        } else {
+        }else {
 
             myScrollView.setIsLoad(false);
         }
+
+
         //判断回到顶部
         if (myScrollViewChildHeight < myScrollViewHeight) {
 
@@ -942,17 +955,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                     }
 
-                }
-                if (myScrollView.getChildAt(0).getHeight() < myScrollView.getHeight()) {
 
-                    myScrollView.setIsLoad(true);
-                } else {
-                    myScrollView.setIsLoad(false);
                 }
-
-                Log.i(TAG, "YAOmyScrollView子类load" + myScrollView.getChildAt(0).getHeight());
-                Log.i(TAG, "YAOmyScrollView高度load" + myScrollView.getHeight());
-                Log.i(TAG, "屏幕高度" + height);
+                mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
 
             }
         });

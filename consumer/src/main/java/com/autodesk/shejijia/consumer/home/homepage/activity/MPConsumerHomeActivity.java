@@ -1,7 +1,9 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -49,6 +51,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.matertab.Materi
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
@@ -238,6 +241,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
+
     @Override
     protected RadioButton getRadioButtonById(int id) {
         RadioButton button = super.getRadioButtonById(id);
@@ -394,6 +398,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         switch (index) {
             case R.id.designer_main_radio_btn:
+                SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 // setTitleForNavbar(UIUtils.getString(R.string.app_name));
                 flag_click = "first";
                 setCaseLIbraryTitle();
@@ -402,6 +407,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
 
             case R.id.radio_btn_designer:
+                SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 setDesignerListTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
@@ -409,6 +415,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
 
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
+                SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 //TODO MERGE 825
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
@@ -451,10 +458,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     setTitleForNavbar(UIUtils.getString(R.string.consumer_decoration));
                 }
 
+                SharedPreferencesUtils.writeBoolean("re_refresh", true);
 
                 break;
 
             case R.id.designer_session_radio_btn:  /// 会話聊天.
+                SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 flag_click = "chat";
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
@@ -504,6 +513,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setMyProjectTitleColorChange(bidding, design/*, construction*/);
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_NUMBER + POINTER_MIDDLE_END_NUMBER, POINTER_START_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
                 mDesignerPersonalCenterFragment.setBidingFragment();
+
                 break;
             case R.id.design:
                 setMyProjectTitleColorChange(design, bidding/*, construction*/);

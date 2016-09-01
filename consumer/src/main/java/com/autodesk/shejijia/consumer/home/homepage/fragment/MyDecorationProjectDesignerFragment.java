@@ -63,11 +63,10 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
      * */
     public void setBidingFragment(){
 
-            if (mBidBidingFragment == null){
+            if (mBidBidingFragment == null) {
 
                 mBidBidingFragment = new BidingFragment();
             }
-
         switchFragment(mBidBidingFragment);
     }
     /**
@@ -141,8 +140,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
             mCommonFragment = new DesignerOrderFragment();
         }
         fragmentManager = getChildFragmentManager();
-        /*  fragmentManager.beginTransaction().add(R.id.fl_designer_order_beishu_container, mBeishuMealFragment)
-                .commit();*/
         fragmentManager.beginTransaction().replace(R.id.ll_contain, mCommonFragment)
                 .commit();
         fromFragment = mCommonFragment;
@@ -174,12 +171,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
         });
     }
 
-
-    public void setAllFragmentRefresh(boolean isRefresh){
-
-       // mBidBidingFragment.setRestartFragment(isRefresh);
-    }
-
     private LinearLayout llFragmentContain;
 
     private TextView mBeishuOrder, mOrder;
@@ -195,6 +186,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     private FragmentTransaction transaction;
     private GradientDrawable drawable;/// set Textview bordercolor .
     private Fragment mDesignerConstructionFragment;
-    private Fragment mBidBidingFragment;
+    private BidingFragment mBidBidingFragment;
 
 }
