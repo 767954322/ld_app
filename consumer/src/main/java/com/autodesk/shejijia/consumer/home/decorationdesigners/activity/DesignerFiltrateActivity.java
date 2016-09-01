@@ -205,8 +205,6 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
             }
         };
@@ -232,8 +230,6 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
             }
         };
@@ -259,8 +255,6 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerFiltrateActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
             }
         };
