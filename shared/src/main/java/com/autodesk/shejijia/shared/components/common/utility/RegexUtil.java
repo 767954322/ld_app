@@ -15,6 +15,7 @@ public class RegexUtil {
      * 小区地址校验：无特殊字符，2-32位
      */
     public static final String ADDRESS_REGEX = "^[\\u4e00-\\u9fa5_a-zA-Z0-9_]{2,32}$";
+    public static final String ADDRESS_ZHONGWEN = "^[\\u4e00-\\u9fa5]{2,32}$";
 
     public static final String ADDRESS_NUM = "^[1-9]+(.[0-9]{2})?$";
 
@@ -26,8 +27,8 @@ public class RegexUtil {
     /**
      * 银行卡号验证
      */
-    public static final String PHONE_BLANK = "^(\\d{16}|\\d{22})$";
-
+//    public static final String PHONE_BLANK = "^(\\d{16}|\\d{23})$";
+    public static final String PHONE_BLANK = "^[0-9]{16,19}$";
     /**
      * 量房面积校验： 整数四位，小数2位
      */
