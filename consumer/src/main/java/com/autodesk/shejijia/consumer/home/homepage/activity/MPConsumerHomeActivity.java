@@ -285,22 +285,22 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     @Override
     protected Fragment getFragmentByButtonId(int id) {
-        Fragment f = super.getFragmentByButtonId(id);
-        if (id == R.id.designer_indent_list_btn)
-            f = mBidHallFragment;
-        else if (id == R.id.designer_person_center_radio_btn) {
+        Fragment fragmentByButtonId = super.getFragmentByButtonId(id);
+        if (id == R.id.designer_indent_list_btn) {
+            fragmentByButtonId = mBidHallFragment;
+        } else if (id == R.id.designer_person_center_radio_btn) {
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type()))
-                f = mDesignerPersonalCenterFragment;
+                fragmentByButtonId = mDesignerPersonalCenterFragment;
             else
-                f = mConsumerPersonalCenterFragment;
+                fragmentByButtonId = mConsumerPersonalCenterFragment;
         } else if (id == getDesignerMainRadioBtnId()) {
-            f = mUserHomeFragment;
+            fragmentByButtonId = mUserHomeFragment;
         }
-        return f;
+        return fragmentByButtonId;
     }
 
-    //监听筛选按钮，，，
+    //监听筛选按钮.
     @Override
     protected void rightNavButtonClicked(View view) {
         if (isActiveFragment(BidHallFragment.class)) {
@@ -371,7 +371,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         super.configureNavigationBar(index);
 
-//        setConsumerOrDesignerPicture();//设置头像
         setVisibilityForNavButton(ButtonType.LEFTCIRCLE, true);
 
         switch (index) {
@@ -386,25 +385,26 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
             case R.id.radio_btn_designer:
                 FLAG_CLICK = TAB_DESIGNER;
+                setTitleForNavbar(UIUtils.getString(R.string.tab_designer));
                 setDesignerListTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
-                setTitleForNavbar(UIUtils.getString(R.string.tab_designer));
                 break;
 
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
+                setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
                 SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 //TODO MERGE 825
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
 
-                setTitleForNavbar(UIUtils.getString(R.string.tab_hall));
                 Intent mIntent = new Intent(BidHallFragment.ACTION_NAME);
                 sendBroadcast(mIntent);
                 break;
 
             case R.id.designer_person_center_radio_btn:  /// 个人中心按钮.
+                SharedPreferencesUtils.writeBoolean("re_refresh", true);
                 hideCaseLIbraryTitle();
                 //判断登陆的是设计师还是消费者，，，我的项目加载不同的信息
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -417,12 +417,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     }
                 }
                 if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
-
                     setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_title_add);
                     setTitleForNavbar(UIUtils.getString(R.string.consumer_decoration));
                 }
-
-                SharedPreferencesUtils.writeBoolean("re_refresh", true);
 
                 break;
 
@@ -462,13 +459,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         switch (v.getId()) {
             case R.id.rb_customer_elite:
-                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                if (memberEntity != null) {
-                    startActivity(new Intent(this, SixProductsActivity.class));
-                } else {
-                    mRadioGroup.check(R.id.consumer_main_radio_btn);
-                    AdskApplication.getInstance().doLogin(this);
-                }
+                startActivity(new Intent(this, SixProductsActivity.class));
+                mRadioGroup.check(R.id.consumer_main_radio_btn);
                 break;
 
             case R.id.bidding:
@@ -495,15 +487,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                 break;
         }
-
     }
 
     protected void setMyProjectTitleColorChange(TextView titleCheck, TextView textUnckeck/*, TextView titleUncheck*/) {
-
         titleCheck.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
         textUnckeck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
-        // titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
-
     }
 
     private void ifIsLohoDesiner(String desiner_id, String hs_uid) {
