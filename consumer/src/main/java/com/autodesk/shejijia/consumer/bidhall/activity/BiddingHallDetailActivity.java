@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.matertab.Utils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.entity.BidHallDetailEntity;
@@ -264,7 +265,9 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String room_cn = ConvertUtils.getConvert2CN(roomJson, room);
         String toilet_cn = ConvertUtils.getConvert2CN(toiletJson, toilet);
         String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
-        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
+
+//        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
+
         district_name = TextUtils.isEmpty(mBidHallEntity.getDistrict())
                 || "none".equals(mBidHallEntity.getDistrict())
                 || TextUtils.isEmpty(district_name)
@@ -273,12 +276,12 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
         setTitleForNavbar(community_name);
         mTvProjectNeedsId.setText(needs_id);
-        mTvHouseType.setText(house_type_convert);
-        mTvHouseStyle.setText(decoration_style_convert);
-        mTvHouseModel.setText(livingRoom_room_toilet);
+        mTvHouseType.setText(TextUtils.isEmpty(house_type_convert)?UIUtils.getString(R.string.no_select):house_type_convert);
+        mTvHouseStyle.setText(TextUtils.isEmpty(decoration_style_convert)?UIUtils.getString(R.string.no_select):decoration_style_convert);
+        mTvHouseModel.setText(TextUtils.isEmpty(room_cn)?UIUtils.getString(R.string.no_select):room_cn);
         mTvName.setText(mBidHallEntity.getContacts_name());
-        mTvDecorationBudget.setText(decoration_budget);
-        mTvDesignBudget.setText(UIUtils.getNoDataIfEmpty(mBidHallEntity.getDesign_budget()));
+        mTvDecorationBudget.setText(TextUtils.isEmpty(decoration_budget)?UIUtils.getString(R.string.no_select):decoration_budget);
+        mTvDesignBudget.setText(TextUtils.isEmpty(mBidHallEntity.getDesign_budget())?UIUtils.getString(R.string.no_select):mBidHallEntity.getDesign_budget());
         mTvHouseArea.setText(mBidHallEntity.getHouse_area() + "m²");
         mTvProjectAddress.setText(projectAddress);
         mTvPublishTime.setText(mBidHallEntity.getPublish_time());
