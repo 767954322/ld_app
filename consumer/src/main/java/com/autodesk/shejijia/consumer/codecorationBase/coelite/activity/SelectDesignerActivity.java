@@ -20,7 +20,7 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     private List<DecorationBiddersBean> decorationBiddersBeans;
     private SelectDesignAdapter selectDesignAdapter;
     private DecorationNeedsListBean decorationNeedsListBean;
-    private boolean falg = false;
+    private boolean falg;
 
     @Override
     protected int getLayoutResId() {
@@ -41,6 +41,7 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     protected void initData(Bundle savedInstanceState) {
         setTitleForNavbar(UIUtils.getString(R.string.send_design));
         String payment_status=null;
+        falg = false;
         isSelected();
         if(decorationNeedsListBean.getElite() != null){
             payment_status = decorationNeedsListBean.getElite().getMeasurement().getPayment_status();
@@ -52,13 +53,14 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
 
     }
     private void isSelected(){
-        for(DecorationBiddersBean decorationBiddersBean:decorationNeedsListBean.getBidders()){
+        for(DecorationBiddersBean decorationBiddersBean:decorationBiddersBeans) {
             String wk_cur_sub_node_id = decorationBiddersBean.getWk_cur_sub_node_id();
-            int  i=Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
-            if(i >= 11){
-                falg = true;
+            int i = Integer.parseInt(wk_cur_sub_node_id != null ? wk_cur_sub_node_id : "-1");
+            if (i >= 11 && i != 24) {
+                falg =true;
                 break;
             }
+
         }
     }
 

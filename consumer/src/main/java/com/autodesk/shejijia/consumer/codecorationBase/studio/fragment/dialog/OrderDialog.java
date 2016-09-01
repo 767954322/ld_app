@@ -16,6 +16,9 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.Utils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author yaoxuehua .
  * @version 1.0 .
@@ -150,6 +153,17 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
         });
     }
 
+
+
+    public static boolean isMobileNum(String mobiles) {
+        Pattern p = Pattern
+                .compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Matcher m = p.matcher(mobiles);
+        System.out.println(m.matches() + "---");
+        return m.matches();
+
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -176,7 +190,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                 }
                 //phone
                 String mobile = phoneNumber.getText().toString();
-                phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
+                phoneRight = isMobileNum(mobile);
                 if (phoneRight) {
 
                     line_phone.setBackgroundColor(Color.BLACK);

@@ -41,6 +41,7 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/work_room_name"
                 android:maxEms="10"
+                android:maxLength="12"
                 android:textSize="@dimen/font_14"/>
             <TextView
                 android:id="@+id/line_name"
@@ -97,6 +98,8 @@
                 android:layout_toRightOf="@id/work_room_phone_text"
                 android:background="@android:color/transparent"
                 android:textSize="@dimen/font_14"
+                android:maxLength="11"
+                android:phoneNumber="true"
                 android:hint="@string/work_room_phone_number" />
 
             <TextView

@@ -76,7 +76,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                String detailInfo = volleyError.getMessage().toString();
+//                String detailInfo = volleyError.getMessage().toString();
 
             }
 
