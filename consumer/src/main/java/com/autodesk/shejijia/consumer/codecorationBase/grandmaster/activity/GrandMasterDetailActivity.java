@@ -140,7 +140,14 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         } else {
             tv_detail_content.setText(masterDetail.getDesigner().getIntroduction());
         }
-        ImageUtils.displayIconImage(masterDetail.getDesigner().getDesigner_detail_cover().getPublic_url().toString(), iv_detail_desiner);
+
+        if (null != masterDetail.getDesigner() && null != masterDetail.getDesigner().getDesigner_detail_cover() && null != masterDetail.getDesigner().getDesigner_detail_cover().getPublic_url()) {
+
+            String img_url = masterDetail.getDesigner().getDesigner_detail_cover().getPublic_url();
+
+            ImageUtils.displayIconImage(img_url, iv_detail_desiner);
+        }
+
 
         ll_grand_master_detail = (MyListView) view2.findViewById(R.id.ll_grand_master_detail);
         ll_grand_master_detail.setAdapter(new MasterAdapter());

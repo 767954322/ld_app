@@ -177,10 +177,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onGlobalLayout() {
                 btHeight = piv_seek_designer_head_linearlayout.getMeasuredHeight();
-
-
             }
-
         });
     }
 
@@ -678,8 +675,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             } else {
                 setRightTitle(false);
             }
+            String follows = seekDesignerDetailHomeBean.getFollows();
+            follows = TextUtils.isEmpty(follows) ? "0" : follows;
 
-            mTvFollowedNum.setText(" : " + seekDesignerDetailHomeBean.following_count);
+            mTvFollowedNum.setText(" : " + follows);
             mNickName = seekDesignerDetailHomeBean.getNick_name();
             mNickName = TextUtils.isEmpty(mNickName) ? "" : mNickName;
             setTitleForNavbar(mNickName);
@@ -726,7 +725,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      */
     private void showOrHideChatMeasure() {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
         if (null != memberEntity) {
+            mSelfAcsMemberId = memberEntity.getAcs_member_id();
             mMemberType = memberEntity.getMember_type();
             if (mMemberType.equals((Constant.UerInfoKey.CONSUMER_TYPE))) {
                 mLlChatMeasure.setVisibility(View.VISIBLE);
@@ -944,7 +945,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mAppraiseDesignBeen = GsonUtil.jsonToBean(jsonString, AppraiseDesignBeen.class);
                 estimates = mAppraiseDesignBeen.getEstimates();
 
-                if (estimates != null){
+                if (estimates != null) {
 
                     if (isRefreshOrLoadAppraise) {
 

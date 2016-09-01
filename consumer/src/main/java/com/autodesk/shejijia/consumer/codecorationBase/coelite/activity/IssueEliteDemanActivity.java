@@ -198,7 +198,6 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
                     showAlertView(R.string.please_enter_correct_address);
                     return;
                 }
-                success = "SUCCESS";
                 JSONObject jsonObject = new JSONObject();
                 try {
                     String click_number = "0";
@@ -294,9 +293,9 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
                     mSendDesignRequirementSuccessAlertView.show();
                 }
                 isSendState = true;
-                Intent intent = new Intent();
-                intent.putExtra("SUCCESS", success);
-                setResult(RESULT_CODE, intent);
+//                Intent intent = new Intent();
+//                intent.putExtra("SUCCESS", success);
+//                setResult(RESULT_CODE, intent);
             }
 
             @Override
@@ -547,7 +546,6 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     private String nick_name;
     private String room, living_room, toilet;
     private boolean isSendState = true;
-    private String success = "";
     public static final int RESULT_CODE = 101;
 
 
