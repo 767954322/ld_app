@@ -724,10 +724,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 is_loho = designerInfoDetails.getDesigner().getIs_loho();
-                if (mDesignerPersonalCenterFragment != null) {
-                    mDesignerPersonalCenterFragment.setDefaultFragment(is_loho);
-
-                }
             }
 
             @Override

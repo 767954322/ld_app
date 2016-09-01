@@ -199,7 +199,9 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 break;
 
             case R.id.tvc_measure_form_time: /// 设置量房时间 .
-                pvTime.show();
+                if (pvTime!=null){
+                    pvTime.show();
+                }
                 break;
         }
     }
