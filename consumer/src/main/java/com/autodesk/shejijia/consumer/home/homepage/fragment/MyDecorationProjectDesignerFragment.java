@@ -133,13 +133,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
      */
     public void setDefaultFragment() {
         mCommonFragment = new DesignerOrderBeiShuFragment();
-//        if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU){
-//
-//            mCommonFragment = new DesignerOrderBeiShuFragment();
-//        }else {
-//
-//            mCommonFragment = new DesignerOrderFragment();
-//        }
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.ll_contain, mCommonFragment)
                 .commit();
