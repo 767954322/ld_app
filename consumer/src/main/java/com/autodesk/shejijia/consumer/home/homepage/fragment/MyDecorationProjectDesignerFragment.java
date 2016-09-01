@@ -12,7 +12,7 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  * @author yaoxuehua .
  * @version 1.0 .
  * @date 16-7-13
- * @file DesignerOrderBeiShuActivity.java  .
+ * @file MyDecorationProjectDesignerFragment.java  .
  * @brief 我的装修项目--设计师.
  */
 public class MyDecorationProjectDesignerFragment extends BaseFragment{
@@ -29,8 +29,8 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     @Override
     protected void initData() {
 
-        int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
-        setDefaultFragment(is_loho);
+        int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
+        setDefaultFragment(high_level_audit);
     }
     /**
      * 设置应标的fragment
@@ -64,11 +64,8 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     public void setDesignFragment(){
 
         if (mCommonOrderFragment == null){
-
             mCommonOrderFragment = new DesignerOrderFragment();
-
         }
-
         switchFragment(mCommonOrderFragment);
     }
 
@@ -106,8 +103,9 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     /**
      *  默认北舒套餐页面 .
      */
-    public void setDefaultFragment(int isLoho) {
-        if (isLoho == IS_BEI_SHU){
+    public void setDefaultFragment(int high_level_audit) {
+
+        if (high_level_audit == 2){
 
             mCommonFragment = new DesignerOrderBeiShuFragment();
         }else {
@@ -121,7 +119,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment{
     }
 
 
-    private static final int IS_BEI_SHU = 1;
+//    private static final int IS_BEI_SHU = 1;
     private Fragment mBeishuMealFragment, mCommonOrderFragment,mCommonFragment;
     private FragmentManager fragmentManager;
     private Fragment fromFragment;

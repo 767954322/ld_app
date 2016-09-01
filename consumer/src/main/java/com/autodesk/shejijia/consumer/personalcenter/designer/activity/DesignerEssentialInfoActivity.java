@@ -223,7 +223,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             tvSex.setText(getResources().getString(R.string.boy));
         }
 
-        DesignerInfoDetails.DesignerEntity designer = mDesignerInfoDetails.getDesigner();
+        DesignerInfoDetails.DesignerBean designer = mDesignerInfoDetails.getDesigner();
         if (null == designer)
 
         {

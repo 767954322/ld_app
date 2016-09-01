@@ -57,8 +57,6 @@ public class UserPictureUtil {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (context != null) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, context,
-//                            AlertView.Style.Alert, null).show();
                     ApiStatusUtil.getInstance().apiStatuError(volleyError,context);
                 }
             }
@@ -79,13 +77,10 @@ public class UserPictureUtil {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 DesignerInfoDetails designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), iv);
-
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, context,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,context);
             }
         });

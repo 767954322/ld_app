@@ -41,7 +41,6 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
     protected void initView() {
 
         mOrderContainer = (FrameLayout)rootView.findViewById(R.id.fl_designer_order_beishu_container);
-        mBeishuOrder = (TextView) rootView.findViewById(R.id.tv_designer_order_beishu);
         mOrder = (TextView) rootView.findViewById(R.id.tv_designer_order);
         tvEliteProject = (TextView) rootView.findViewById(R.id.tv_elite_project);
 
@@ -49,26 +48,11 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
 
     @Override
     protected void initData() {
-        //setTitleForNavbar(UIUtils.getString(R.string.decoration_order));
         setDefaultFragment();
-
-        initMemberEntity();
-
     }
-
-    private void initMemberEntity() {
-
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-
-        if (memberEntity == null) {
-            return;
-        }
-    }
-
     @Override
     protected void initListener() {
         super.initListener();
-        mBeishuOrder.setOnClickListener(this);
         mOrder.setOnClickListener(this);
         tvEliteProject.setOnClickListener(this);
     }
@@ -88,24 +72,16 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
         switch (v.getId()) {
             case R.id.tv_elite_project:///精选项目
                 setColorAndBackgroundForTextView(tvEliteProject);
-                setTextColor(new TextView[]{mOrder,mBeishuOrder});
+                setTextColor(new TextView[]{mOrder});
                 if(eliteFragment == null){
                     eliteFragment = new EliteFragment();
                 }
                 switchFragment(eliteFragment);
                 break;
-            case R.id.tv_designer_order_beishu: /// 套餐 .
-                setColorAndBackgroundForTextView(mBeishuOrder);
-                setTextColor(new TextView[]{mOrder,tvEliteProject});
-                if (mBeishuMealFragment == null) {
-                    mBeishuMealFragment = new OrderBeiShuFragment();
-                }
-                switchFragment(mBeishuMealFragment);
-                break;
             case R.id.tv_designer_order: /// 竟优项目 .
 
                 setColorAndBackgroundForTextView(mOrder);
-                setTextColor(new TextView[]{mBeishuOrder,tvEliteProject});
+                setTextColor(new TextView[]{tvEliteProject});
 
                 if (mCommonOrderFragment == null) {
                     mCommonOrderFragment = new OrderCommonFragment();
@@ -166,7 +142,7 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
         fromFragment = eliteFragment;
     }
 
-    private TextView mBeishuOrder, mOrder,tvEliteProject;
+    private TextView mOrder,tvEliteProject;
     private Context context = getActivity();
     private FrameLayout mOrderContainer;
     private Fragment mBeishuMealFragment, mCommonOrderFragment,eliteFragment,fromFragment;
