@@ -135,8 +135,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void initData(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             // retrieve the fragment handle from fragmentmanager
-
-
             mUserHomeFragment = (UserHomeFragment) getSupportFragmentManager().findFragmentByTag(HOME_FRAGMENT_TAG);
             if (mUserHomeFragment != null)
                 mFragmentArrayList.add(mUserHomeFragment);
@@ -197,20 +195,20 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         //获取设计师信息
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity){
+
+        if (null == mMemberEntity) {
             return;
         }
         String member_id = mMemberEntity.getAcs_member_id();
         String hs_uid = mMemberEntity.getHs_uid();
         getDesignerInfoData(member_id, hs_uid);
-
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         isShowBidHallFragment();
-        setConsumerOrDesignerPicture();//设置头像
+//        setConsumerOrDesignerPicture();//设置头像
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
@@ -388,7 +386,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         super.configureNavigationBar(index);
 
-        setConsumerOrDesignerPicture();//设置头像
+//        setConsumerOrDesignerPicture();//设置头像
         setVisibilityForNavButton(ButtonType.LEFTCIRCLE, true);
 
         switch (index) {
@@ -621,7 +619,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (designerInfoDetails != null && !TextUtils.isEmpty(designerInfoDetails.getAvatar()) && MPConsumerHomeActivity.this != null) {
             ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), user_avatar);
         }
-
     }
 
     public void getALLWkFlowStatePointInformation() {
@@ -654,6 +651,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                if (mDesignerPersonalCenterFragment != null) {
+                    mDesignerPersonalCenterFragment.setDefaultFragment(is_loho);
+
+                }
                 updateViewFromData();
             }
 
@@ -663,23 +665,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
             }
         });
-    }
-
-    //设置头像
-    private void setConsumerOrDesignerPicture() {
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-
-            getConsumerInfoData(mMemberEntity.getAcs_member_id());
-            return;
-        }
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-
-            getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
-            return;
-        }
-        setImageForNavCircleView(ButtonType.LEFTCIRCLE, R.drawable.icon_default_avator);
-
     }
 
     /**
@@ -698,6 +683,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 if (designerInfoDetails!=null){
                     is_loho = designerInfoDetails.getDesigner().getIs_loho();
                 }
+                // MERGE release/September
+                                //mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+
+                // updateViewFromData();
             }
 
             @Override

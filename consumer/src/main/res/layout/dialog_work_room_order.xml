@@ -99,9 +99,8 @@
                 android:background="@android:color/transparent"
                 android:textSize="@dimen/font_14"
                 android:maxLength="11"
-                android:numeric="integer"
+                android:phoneNumber="true"
                 android:hint="@string/work_room_phone_number" />
-
             <TextView
                 android:id="@+id/line_phone"
                 android:layout_width="match_parent"

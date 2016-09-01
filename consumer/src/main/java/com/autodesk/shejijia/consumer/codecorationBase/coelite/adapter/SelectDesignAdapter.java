@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
     private  MeasureFormCallBack measureFormCallBack;
-    private boolean falg = false;
+    private boolean falg;
     private String payment_status;
     private Context context;
     public SelectDesignAdapter(Context context, List<DecorationBiddersBean> biddersEntities, int layoutId,String payment_status,boolean falg) {
@@ -55,19 +55,8 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
 
         String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
         int  key=Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
-        if(falg){
-            isHideButton(false, button, textView);
-        }else{
-            if(biddersBean.isSelected()){
-                isHideButton(true, button, textView);
-            }else{
-                isHideButton(false, button, textView);
-            }
-        }
 
-
-
-//        verification(key,button,textView,biddersBean.getMeasurement_status());
+        verification(key,button,textView);
 
 
         holder.setOnClickListener(R.id.img_consume_home_chat, new View.OnClickListener() {
@@ -100,18 +89,17 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
             }
         });
     }
-//    private void verification(int key,Button button,TextView textView,String measurement_status ){
-//        if(falg) {
-//            isHideButton(false, button, textView);
-////            if (key == 24 && measurement_status.equals("0")) {//如果终止合作并量过房，则屏蔽
-////                isHideButton(false, button, textView);
-////            } else if (key == 24 && measurement_status.equals("1")) {//如果终止合作并未量过房，则显示
-////                isHideButton(true, button, textView);
-////            } else {
-////                isHideButton(false, button, textView);
-////            }
-//        }
-//    }
+    private void verification(int key,Button button,TextView textView){
+        if(falg){
+            isHideButton(false, button, textView);
+        }else {
+            if(key == 24){
+                isHideButton(false, button, textView);
+            }else{
+                isHideButton(true, button, textView);
+            }
+        }
+    }
     private void isHideButton(boolean flg,Button button,TextView textView ){
         if(flg){
             button.setVisibility(View.VISIBLE);
