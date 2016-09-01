@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.utility.SignUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -21,9 +22,11 @@ import java.net.URLEncoder;
 public class AliPayService {
 
     AliPayActionStatus AliCallBack;
-
+    //生产环境
     public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMbDgiRrWNBmgIe+IIEKV5UoyCDRjIO6UZulU5l6Tc9PClbw/wBtVNWdtdKcUNF1psAeFBmKMuSsy/5eYnPrEDQfKRHC31o+NAYSj3U7Lwjmx/0UL+nq56620YdI+RLGpbr4Z3jPN/10Ox7qKa1Zju1hmD40Pzak795yg4Sn9KXvAgMBAAECgYAUMuIS2WXZJ9F/+e5LrsVfvxk3XJQu/sw0SQTJ4AfwPVQLqcoAPRwV6UUE9iWwY4hilavtPIIXgwfn/ad7qDOpKnPhhDXFF/koR8q1n6wOzycLgWBLchwKxc+twipXcJ0C5Cg5ZVaRtiZSSJIdpm48WeAXWj/GESeK9cKqM36MAQJBAOgRaDBqSIU25dcYJYVFgVOyoZOFjA/n2umIrGsceuvyzKy6B1DieIl1gqnSkQLZ8r2Q3T0tOhH0yjv0RSr9moECQQDbQt5OXy+jORSCsWA5dfcTjOAtB/iX1CCbhyRKQRYgVQGfqTt3Q0JQZuGjCOsd0ovvCyzoCTXjfGGnqO0lmqhvAkA86ozR4KRGq6Frc8AtmpAXG1XEdpLMfgz9rk2sFB7EHsjRMkfHWJtRYdI5p7c+610Hm6Ynb97FZd9MG5OodEeBAkAwLUErdz7AXopjLRY3ifQAF7QqMNYuhi2j/s26gxKZiBQTQNwQGHc5s2FgsVT3+ItGuu3jDiMJGQtcC4IQASuBAkEAz6mhDzSq4M1eB9Dggh2iPQusXM2f4UBph0MjxQzuoVPZ0L7KHyOlUQ1ipDBQsV2W5DVGeSDijzfFa9gEgdtUDA==";
-    // 支付宝公钥
+    public static final String RSA_PRIVATE_PRODUCTION = "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAMM5f9X7G9ElDP6bhc6tYQWN8qFhGUHE2CQIRT1zWCdgvVeCJBshKm0ClGQMmVSlaFXWZpvhqf7Zt0urbElOB0qSr/ZDlvJZyGKJShcmPhMGNQZgdKh3NyPY1YyHOkCiTkEyjKE3osTaJRjBKTmjzq4leFJP6EyxU++kxDDQxh+3AgMBAAECgYEAgsSyP6hLksWptaaBc9apRao2myjKXUa4rTIpByeLJh1j1wkinFWT8J8ovPe/gXams9DAvKvlTgOSBwrVpyiwMnS//Fa/GAogKv9vGoK/1XYYTfEikdBBUKjUf2MadpELNAw9H/b+6x03KwwPXBZeEh8Y031nJwKoPFep84nxZWkCQQDq7kzK9itImNTDYbIxF4Og+jBrj24gnIoNHO3TyJmuBgV6QX+rQy8WAwRE2ZWBvwVKplPn9eW0Oio9gTR/j+CdAkEA1LuYvfOBZuWdWH7Nb9VIywVuGAWU68rLGFLgEz1wL+BU6l+9FlNchc88OHbaDCgpNmHNelR/n1DioD19uGhfYwJBAMiZokjL2jmrBkGu8hCpG2QhPacaWdbO07JOuWTVLSRDT/oMY49BVrtc6BBCGj8ndMVBMPQoK3OxFtBduw4RNKECQBKmyAOPf/73js4dgAGYH6O9PCPbCW2LADeHvKGzN0zbTFaoQjnc4TXSL6N7uC5srwBXnt5k3jOnsdb+zTEH5aUCQQDC0iISuYWiXMmyvNLoOq3/L0Tqk3WZI+5sda1hs8LIfkQcqTGJUH4YTWAqkcrhQCYroQhqPqBBx7lupKh6GwBN";
+
+    // 非生产环境　　支付宝公钥
     public static final String RSA_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
     private static final int SDK_PAY_FLAG = 1;
 
@@ -187,7 +190,13 @@ public class AliPayService {
      * @param content 待签名订单信息
      */
     private String sign(String content) {
-        return SignUtils.sign(content, RSA_PRIVATE);
+        boolean isNotProduction = ApiManager.isRunningDevelopment(ApiManager.RUNNING_DEVELOPMENT);
+        if (isNotProduction){
+            return SignUtils.sign(content, RSA_PRIVATE);
+
+        }else {
+            return  SignUtils.sign(content,RSA_PRIVATE_PRODUCTION);
+        }
     }
 
     /**

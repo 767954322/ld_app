@@ -518,6 +518,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+
             }
 
             @Override
