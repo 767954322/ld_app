@@ -76,6 +76,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private MemberEntity memberEntity;
 
+    public int is_loho;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -150,17 +152,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (savedInstanceState == null) {
             showFragment(getDesignerMainRadioBtnId());
         }
-        isShowBidHallFragment();
-
-        //获取设计师信息
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity) {
-            return;
-        }
-        String member_id = mMemberEntity.getAcs_member_id();
-        String hs_uid = mMemberEntity.getHs_uid();
-        getDesignerInfoData(member_id, hs_uid);
-
     }
 
     @Override
@@ -188,15 +179,23 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     break;
             }
         }
-
         super.onResume();
+
+        //获取设计师信息
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == mMemberEntity) {
+            return;
+        }
+        String member_id = mMemberEntity.getAcs_member_id();
+        String hs_uid = mMemberEntity.getHs_uid();
+        getDesignerInfoData(member_id, hs_uid);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         isShowBidHallFragment();
-        setConsumerOrDesignerPicture();//设置头像
+//        setConsumerOrDesignerPicture();//设置头像
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
@@ -373,7 +372,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         super.configureNavigationBar(index);
 
-        setConsumerOrDesignerPicture();//设置头像
+//        setConsumerOrDesignerPicture();//设置头像
         setVisibilityForNavButton(ButtonType.LEFTCIRCLE, true);
 
         switch (index) {
@@ -615,7 +614,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (designerInfoDetails != null && !TextUtils.isEmpty(designerInfoDetails.getAvatar()) && MPConsumerHomeActivity.this != null) {
             ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), user_avatar);
         }
-     
+
     }
 
 
@@ -662,6 +661,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                if (mDesignerPersonalCenterFragment != null) {
+                    mDesignerPersonalCenterFragment.setDefaultFragment(is_loho);
+
+                }
                 updateViewFromData();
             }
 
@@ -672,29 +676,29 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         });
     }
-
-    //设置头像
-    private void setConsumerOrDesignerPicture() {
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-
-            getConsumerInfoData(mMemberEntity.getAcs_member_id());
-
-            return;
-
-        }
-
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-
-            getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
-
-            return;
-
-        }
-
-        setImageForNavCircleView(ButtonType.LEFTCIRCLE, R.drawable.icon_default_avator);
-
-    }
+//
+//    //设置头像
+//    private void setConsumerOrDesignerPicture() {
+//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
+//
+//            getConsumerInfoData(mMemberEntity.getAcs_member_id());
+//
+//            return;
+//
+//        }
+//
+//        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+//
+//            getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
+//
+//            return;
+//
+//        }
+//
+//        setImageForNavCircleView(ButtonType.LEFTCIRCLE, R.drawable.icon_default_avator);
+//
+//    }
 
     /**
      * 获取个人基本信息

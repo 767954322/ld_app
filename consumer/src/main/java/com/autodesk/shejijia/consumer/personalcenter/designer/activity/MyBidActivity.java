@@ -8,13 +8,24 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidBidingFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidFailureFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidSuccessFragment;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,6 +38,7 @@ import java.util.ArrayList;
  */
 public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener, BidBidingFragment.FragmentCallBack {
 
+    public int is_loho;
 
     @Override
     protected int getLayoutResId() {
@@ -50,7 +62,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.response_manage));
-        setDefaultFragment();
     }
 
     @Override
@@ -99,6 +110,43 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 break;
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //获取设计师信息
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == mMemberEntity) {
+            return;
+        }
+        String member_id = mMemberEntity.getAcs_member_id();
+        String hs_uid = mMemberEntity.getHs_uid();
+        getDesignerInfoData(member_id, hs_uid);
+        setDefaultFragment();
+    }
+
+    /**
+     * 设计师个人信息
+     *
+     * @param designer_id
+     * @param hs_uid
+     */
+    public void getDesignerInfoData(String designer_id, String hs_uid) {
+        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                DesignerInfoDetails designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
+                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MyBidActivity.this);
+            }
+        });
     }
 
     @Override
