@@ -194,13 +194,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void onRestart() {
         super.onRestart();
         isShowBidHallFragment();
-//        setConsumerOrDesignerPicture();//设置头像
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             designer_main_radio_group.check(index);
-
         }
         //登陆消费者时，会进入
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
@@ -208,7 +206,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
         //未登录状态，会自动进入案例fragment
-
         if (mMemberEntity == null) {
             designer_main_radio_btn.setChecked(true);
         }
@@ -579,30 +576,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return designerListFragment;
     }
 
-
-    /**
-     * 网络获取数据并且更新
-     */
-    private void updateViewFromData() {
-
-        if (mConsumerEssentialInfoEntity != null && !TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar()) && MPConsumerHomeActivity.this != null) {
-            mNickNameConsumer = mConsumerEssentialInfoEntity.getNick_name();
-            ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), user_avatar);
-        }
-
-        if (designerInfoDetails != null && !TextUtils.isEmpty(designerInfoDetails.getAvatar()) && MPConsumerHomeActivity.this != null) {
-            ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), user_avatar);
-        }
-
-    }
-
-
     public void getALLWkFlowStatePointInformation() {
-
         MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
             }
 
             @Override
@@ -647,7 +625,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit);
 
                 }
-                updateViewFromData();
             }
 
             @Override
@@ -657,57 +634,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         });
     }
-//
-//    //设置头像
-//    private void setConsumerOrDesignerPicture() {
-//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-//
-//            getConsumerInfoData(mMemberEntity.getAcs_member_id());
-//
-//            return;
-//
-//        }
-//
-//        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-//
-//            getDesignerInfoData(mMemberEntity.getAcs_member_id(), mMemberEntity.getHs_uid());
-//
-//            return;
-//
-//        }
-//
-//        setImageForNavCircleView(ButtonType.LEFTCIRCLE, R.drawable.icon_default_avator);
-//
-//    }
-
-    /**
-     * 获取个人基本信息
-     *
-     * @param member_id
-     * @brief For details on consumers .
-     */
-    public void getConsumerInfoData(String member_id) {
-        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-
-                updateViewFromData();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                if (MPConsumerHomeActivity.this != null) {
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
-                }
-            }
-        });
-    }
-
 
     private void isShowBidHallFragment() {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -781,7 +707,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     , AlertView.Style.Alert, null).show();
 
         }
-
     }
 
     @Override
