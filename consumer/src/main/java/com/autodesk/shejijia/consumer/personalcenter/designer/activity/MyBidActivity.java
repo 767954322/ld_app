@@ -63,7 +63,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.response_manage));
-        setDefaultFragment();
+
     }
 
     @Override
@@ -216,6 +216,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         String member_id = mMemberEntity.getAcs_member_id();
         String hs_uid = mMemberEntity.getHs_uid();
         getDesignerInfoData(member_id, hs_uid);
+        setDefaultFragment();
     }
 
 

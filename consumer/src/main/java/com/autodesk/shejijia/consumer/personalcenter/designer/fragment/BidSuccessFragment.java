@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class BidSuccessFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
 
-    private static final String IS_BEI_SHU = "1";
+    private static final int IS_BEI_SHU = 1;
 
     @Override
     protected int getLayoutResId() {
@@ -158,12 +158,11 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
                 holder.setText(R.id.tv_bin_go_budget, UIUtils.getString(R.string.my_bid_black) + biddingNeedsListEntity.getRenovation_budget());
 
 //                final String is_beishu = biddingNeedsListEntity.getIs_beishu();
-
                 final int is_loho = ((MyBidActivity) getActivity()).is_loho;
                 holder.getView(R.id.item_lv_bingo_fragment_order).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (IS_BEI_SHU.equals(is_loho)) {
+                        if (IS_BEI_SHU == is_loho) {
                             /// 北舒 .
                             CommonUtils.launchActivity(getActivity(), DesignerOrderBeiShuActivity.class);
                         } else {
