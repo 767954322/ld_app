@@ -126,7 +126,12 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         }
     }
     private void showIssueDemandActivity(){
+
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == mMemberEntity){
+            AdskApplication.getInstance().doLogin(getActivity());
+            return;
+        }
         String nick_name = (mMemberEntity != null && mMemberEntity.getNick_name() != null
                 && mMemberEntity.getNick_name().length() > 0)?mMemberEntity.getNick_name():UIUtils.getString(R.string.anonymity);
         Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);

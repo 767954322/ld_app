@@ -260,7 +260,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
         String livingRoom_room_toilet = room + living_room + toilet;
 
-        mTvAmendRoomType.setText(TextUtils.isEmpty(livingRoom_room_toilet) ? UIUtils.getString(R.string.no_data) : livingRoom_room_toilet);
+        mTvAmendRoomType.setText(TextUtils.isEmpty(livingRoom_room_toilet) ? UIUtils.getString(R.string.no_select) : livingRoom_room_toilet);
         mTvAmendStyle.setText(TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.no_select) : decoration_style);
         mTvAmendHouseType.setText(TextUtils.isEmpty(house_type) ? UIUtils.getString(R.string.no_select) : house_type);
         mTvAmendName.setText(TextUtils.isEmpty(contacts_name) ? UIUtils.getString(R.string.no_data) : contacts_name);
