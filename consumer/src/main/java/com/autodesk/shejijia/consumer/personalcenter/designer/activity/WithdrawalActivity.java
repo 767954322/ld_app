@@ -134,102 +134,50 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     break;
                 }
                 String regex_name = "[a-zA-Z\\u4e00-\\u9fa5]{2,10}";
-//<<<<<<< HEAD
-//                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_ZHONGWEN);
-//=======
-////                boolean isBank = branch_bank_name.trim().matches(RegexUtil.ADDRESS_REGEX);
-//>>>>>>> release/July/Android-UAT
-                boolean isBankNum = deposit_card.matches(RegexUtil.PHONE_BLANK);
+                boolean isBankNum = deposit_card.trim().matches(RegexUtil.PHONE_BLANK);
                 boolean isName = account_user_name.trim().matches(regex_name);
-                if (myPropertyBean == null){
-                    if (!isName) {
+                boolean isBranchBankName = branch_bank_name.trim().matches(RegexUtil.ADDRESS_ZHONGWEN);
+                if (myPropertyBean == null) {
+                    if (!isName || TextUtils.isEmpty(account_user_name)) {
                         Toast.makeText(WithdrawalActivity.this, "持卡人姓名只能包含2-10位汉字或英文", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    if (!checkNameChese(branch_bank_name)) {
+//                    if (!checkNameChese(branch_bank_name)) {
+                    if (!isBranchBankName || TextUtils.isEmpty(branch_bank_name)) {
                         Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                    if (myPropertyBean == null) {
-
-                        if (!isBankNum) {
-                            Toast.makeText(WithdrawalActivity.this, "只能包含2-32位汉字", Toast.LENGTH_SHORT).show();}
-                    if (!isBankNum) {
+                    if (!isBankNum || TextUtils.isEmpty(branch_bank_name)) {
                         Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
                         break;
                     }
-                }else {
-                    if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())){
-                        if (!checkNameChese(branch_bank_name)) {
-                            Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
-                            break;
+                } else {
+                    if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())) {
+                        if (!checkNameChese(branch_bank_name) || TextUtils.isEmpty(branch_bank_name)) {
+                            if (!isBranchBankName) {
+                                Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                        }
+                        if (TextUtils.isEmpty(myPropertyBean.getDeposit_card())) {
+                            if (!isBankNum) {
+                                Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
                         }
                     }
-                    if (TextUtils.isEmpty(myPropertyBean.getDeposit_card())){
-                        if (!isBankNum) {
-                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
+//
+                    boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
+//
+                    if (flag && null != memberEntity) {
+                        designer_id = Long.parseLong(memberEntity.getAcs_member_id());
+                        getWithdrawareBalanceData(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
                     }
+//
+                    break;
                 }
-
-                    if (!isBankNum) {
-                        Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                }else {
-                    if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())){
-                        if (!checkNameChese(branch_bank_name)) {
-                            Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                    }
-                    if (TextUtils.isEmpty(myPropertyBean.getDeposit_card())){
-                        if (!isBankNum) {
-                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                    }
-                }
-
-
-//                if (!checkNameChese(branch_bank_name)) {
-//                    Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
-////                    if (!isBank) {
-////                        Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
-////                        break;
-////                    }
-//                    if (myPropertyBean == null) {
-//
-//                        if (!isBankNum) {
-//                            Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-//                            break;
-//                        }
-//
-//                    } else {
-//                        if (!deposit_card.equals(myPropertyBean.getDeposit_card())) {
-//
-//                            if (!isBankNum) {
-//                                Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
-//                                break;
-//                            }
-//                        }
-//                    }
-//
-//                    boolean flag = validateEditText(account_user_name, branch_bank_name, deposit_card);
-//
-//                    if (flag && null != memberEntity) {
-//                        designer_id = Long.parseLong(memberEntity.getAcs_member_id());
-//                        getWithdrawareBalanceData(designer_id, account_user_name, bank_name, branch_bank_name, deposit_card);
-//                    }
-//
-//                }
-                break;
-            default:
-                break;
         }
     }
-
 
     /**
      * 检测String是否全是中文
@@ -512,7 +460,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 if (WithdrawalActivity.this != null) {
 //                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, WithdrawalActivity.this,
 //                            AlertView.Style.Alert, null).show();
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,WithdrawalActivity.this);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, WithdrawalActivity.this);
                 }
             }
         });

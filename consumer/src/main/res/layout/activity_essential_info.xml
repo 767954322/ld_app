@@ -38,11 +38,16 @@
                     app:poly_vertices="0"/>
 
                 <TextView
+                    android:background="@drawable/bg_upload_protrait_tv"
                     android:id="@+id/tv_consume_essential_upload_picture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_10"
-                    android:padding="@dimen/size_5"
+                    android:paddingLeft="@dimen/size_7"
+                    android:paddingRight="@dimen/size_7"
+                    android:paddingBottom="@dimen/size_2"
+                    android:paddingTop="@dimen/size_2"
+                    android:textSize="@dimen/size_14"
                     android:text="@string/uploading_photo"/>
             </LinearLayout>
 

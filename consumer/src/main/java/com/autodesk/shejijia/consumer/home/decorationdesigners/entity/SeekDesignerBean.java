@@ -30,12 +30,12 @@ public class SeekDesignerBean implements Serializable {
         private String district;
         private String email;
         private String first_name;
-        private int gender;
+        private String gender;
         private String hitachi_account;
         private String hs_uid;
-        private int is_order_sms;
-        private int is_validated_by_mobile;
-        private int member_id;
+        private String is_order_sms;
+        private String is_validated_by_mobile;
+        private String member_id;
         private String mobile_number;
         private String nick_name;
         private String province;
@@ -62,14 +62,11 @@ public class SeekDesignerBean implements Serializable {
         /**
          * 筛选新增字段
          */
+        private SortBean sort;
         private String follows;
         private String region;
         private String seq;
-        private int followingCount;
-
-        public String getFollows() {
-            return follows;
-        }
+        private String followingCount;
 
         public void setFollows(String follows) {
             this.follows = follows;
@@ -91,13 +88,26 @@ public class SeekDesignerBean implements Serializable {
             this.seq = seq;
         }
 
-        public int getFollowingCount() {
+        public SortBean getSort() {
+            return sort;
+        }
+
+        public void setSort(SortBean sort) {
+            this.sort = sort;
+        }
+
+        public String getFollowingCount() {
             return followingCount;
         }
 
-        public void setFollowingCount(int followingCount) {
+        public void setFollowingCount(String followingCount) {
             this.followingCount = followingCount;
         }
+
+        public String getFollows() {
+            return follows;
+        }
+
 
         public String getLast_name() {
             return last_name;
@@ -223,29 +233,6 @@ public class SeekDesignerBean implements Serializable {
             this.first_name = first_name;
         }
 
-        public void setGender(int gender) {
-            this.gender = gender;
-        }
-
-        public void setHitachi_account(String hitachi_account) {
-            this.hitachi_account = hitachi_account;
-        }
-
-        public void setHs_uid(String hs_uid) {
-            this.hs_uid = hs_uid;
-        }
-
-        public void setIs_order_sms(int is_order_sms) {
-            this.is_order_sms = is_order_sms;
-        }
-
-        public void setIs_validated_by_mobile(int is_validated_by_mobile) {
-            this.is_validated_by_mobile = is_validated_by_mobile;
-        }
-
-        public void setMember_id(int member_id) {
-            this.member_id = member_id;
-        }
 
         public void setMobile_number(String mobile_number) {
             this.mobile_number = mobile_number;
@@ -283,6 +270,46 @@ public class SeekDesignerBean implements Serializable {
             this.cases_list = cases_list;
         }
 
+        public String getGender() {
+            return gender;
+        }
+
+        public void setGender(String gender) {
+            this.gender = gender;
+        }
+
+        public void setHitachi_account(String hitachi_account) {
+            this.hitachi_account = hitachi_account;
+        }
+
+        public void setHs_uid(String hs_uid) {
+            this.hs_uid = hs_uid;
+        }
+
+        public String getIs_order_sms() {
+            return is_order_sms;
+        }
+
+        public void setIs_order_sms(String is_order_sms) {
+            this.is_order_sms = is_order_sms;
+        }
+
+        public String getIs_validated_by_mobile() {
+            return is_validated_by_mobile;
+        }
+
+        public void setIs_validated_by_mobile(String is_validated_by_mobile) {
+            this.is_validated_by_mobile = is_validated_by_mobile;
+        }
+
+        public String getMember_id() {
+            return member_id;
+        }
+
+        public void setMember_id(String member_id) {
+            this.member_id = member_id;
+        }
+
         public String getAddress() {
             return address;
         }
@@ -312,9 +339,6 @@ public class SeekDesignerBean implements Serializable {
             return first_name;
         }
 
-        public int getGender() {
-            return gender;
-        }
 
         public String getHitachi_account() {
             return hitachi_account;
@@ -324,17 +348,6 @@ public class SeekDesignerBean implements Serializable {
             return hs_uid;
         }
 
-        public int getIs_order_sms() {
-            return is_order_sms;
-        }
-
-        public int getIs_validated_by_mobile() {
-            return is_validated_by_mobile;
-        }
-
-        public int getMember_id() {
-            return member_id;
-        }
 
         public String getMobile_number() {
             return mobile_number;
@@ -1068,4 +1081,24 @@ public class SeekDesignerBean implements Serializable {
     }
 
 
+    public static class SortBean implements Serializable {
+        String region;
+        String seq;
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public String getSeq() {
+            return seq;
+        }
+
+        public void setSeq(String seq) {
+            this.seq = seq;
+        }
+    }
 }

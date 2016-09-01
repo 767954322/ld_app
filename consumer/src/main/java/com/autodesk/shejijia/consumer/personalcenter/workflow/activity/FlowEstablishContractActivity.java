@@ -177,7 +177,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             memberType = memberEntity.getMember_type();
         }
 
-        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberType)) { /// 设计师.
+        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberType)) { /// 设计师　.
             ll_agree_establish_contract.setVisibility(View.GONE);
             tvc_last_cost.setEnabled(false);
             tvc_designer_postcode.setEnabled(false);
@@ -209,11 +209,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.send_design_contract);
                 }
-            } else {                                                                                                             /// 已有合同
-                if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {                  /// 从项目资料跳转.
-                    setTvcCannotClickable();                                                                       /// 如果是已有的合同设置所有得按键都不可点击 .
+            } else {  /// 已有合同
+                if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {// 从项目资料跳转.
+                    setTvcCannotClickable();  /// 如果是已有的合同设置所有得按键都不可点击 .
                 }
-                if (wk_cur_sub_node_idi == 31) {                                                              /// 设计师发完合同后可以继续发送按钮显示 .
+                if (wk_cur_sub_node_idi == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
                     ll_send.setVisibility(View.VISIBLE);
                     btn_send.setText(R.string.send_design_contract);
                 } else if (wk_cur_sub_node_idi > 31 && wk_cur_sub_node_idi != 33) {   /// 当消费者发完设计首款按钮隐藏 .

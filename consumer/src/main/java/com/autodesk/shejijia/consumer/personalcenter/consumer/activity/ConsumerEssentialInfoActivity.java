@@ -129,9 +129,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     protected void initExtraBundle() {
         super.initExtraBundle();
         mConsumerEssentialInfoEntity = (ConsumerEssentialInfoEntity) getIntent().getExtras().get(Constant.ConsumerPersonCenterFragmentKey.CONSUMER_PERSON);
-        if (mConsumerEssentialInfoEntity != null) {
-            getConsumerInfoData(member_id);
-        }
+//        if (mConsumerEssentialInfoEntity != null) {
+//           // getConsumerInfoData(member_id);
+//        }
     }
 
     @Override
@@ -146,6 +146,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         member_id = memberEntity.getAcs_member_id();
         hs_uid = memberEntity.getHs_uid();
 
+        if (memberEntity != null) {
+            getConsumerInfoData(member_id);
+        }
+
         setTextColorForRightNavButton(UIUtils.getColor(R.color.black));
 
         showState();
@@ -153,17 +157,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 邮箱
          */
+
         setTvString(mTvEmail, email);
         setGender();
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if(mConsumerEssentialInfoEntity!= null){
-//            getConsumerInfoData(member_id);
-//        }
-//    }
 
     /**
      * 获取个人基本信息
@@ -377,7 +374,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      */
     private void setTvString(TextView mTv, String content) {
         if (TextUtils.isEmpty(content)) {
-            mTv.setText(UIUtils.getString(R.string.no_data));
+            mTv.setText(UIUtils.getString(R.string.not_filled));
         } else {
             mTv.setText(content);
         }
@@ -868,7 +865,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                     if (data != null) {
                         // 照片的原始资源地址
                         Uri originalUri = data.getData();
-                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_1);
+                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE);
                     }
                     break;
                 case CAMERA_INTENT_REQUEST://相机
@@ -876,13 +873,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                     break;
                 case CROP_SMALL_PICTURE://截图
                     if (uritempFile != null) {
-                        Bitmap bitmap;
+                        Bitmap bitmap = null;
                         File file;
                         try {
                             bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
                             file = saveBitmap2File(this, "headpic.png", bitmap);
-                            headPicBitmap = bitmap;
                             mConsumeHeadIcon.setImageBitmap(bitmap);
+                            mConsumeHeadIcon.invalidate();
                             bitmap.recycle();
                             try {
                                 CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
@@ -895,36 +892,39 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                             ToastUtil.showCustomToast(this, "找不到图片");
                             e.printStackTrace();
                         }
-
-                    }
-                    break;
-                case CROP_SMALL_PICTURE_1://截图
-                    if (data != null) {
-                        Uri uri = data.getData();
-                        uritempFile = uri;
-                    }
-                    if (uritempFile != null) {
-                        Bitmap bitmap;
-                        File file;
-                        try {
-                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
-                            file = saveBitmap2File(this, "headpic.png", bitmap);
-                            mConsumeHeadIcon.setImageBitmap(bitmap);
+                        if (bitmap != null) {
                             bitmap.recycle();
-                            try {
-                                CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-                                putFile2Server(file);
-                            } catch (Exception e) {
-                                CustomProgress.cancelDialog();
-                                e.printStackTrace();
-                            }
-                        } catch (FileNotFoundException e) {
-                            ToastUtil.showCustomToast(this, "找不到图片");
-                            e.printStackTrace();
                         }
 
                     }
                     break;
+//                case CROP_SMALL_PICTURE_1://截图
+//                    if (data != null) {
+//                        Uri uri = data.getData();
+//                        uritempFile = uri;
+//                    }
+//                    if (uritempFile != null) {
+//                        Bitmap bitmap;
+//                        File file;
+//                        try {
+//                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
+//                            file = saveBitmap2File(this, "headpic.png", bitmap);
+//                            mConsumeHeadIcon.setImageBitmap(bitmap);
+//                            bitmap.recycle();
+//                            try {
+//                                CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+//                                putFile2Server(file);
+//                            } catch (Exception e) {
+//                                CustomProgress.cancelDialog();
+//                                e.printStackTrace();
+//                            }
+//                        } catch (FileNotFoundException e) {
+//                            ToastUtil.showCustomToast(this, "找不到图片");
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                    break;
                 default:
                     break;
             }
@@ -932,7 +932,6 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 //
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
     /**
      * 图片截取
@@ -951,7 +950,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         intent.putExtra("outputX", outputX);
         intent.putExtra("outputY", outputY);
         intent.putExtra("scale", true);
-        //        intent.putExtra("return-data", false);
+        intent.putExtra("return-data", false);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true); // no face detection

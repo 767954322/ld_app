@@ -31,7 +31,7 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
     private Context mContext;
     private OnItemChatClickListener mOnItemChatClickListener;
     private MemberEntity mMemberEntity;
-    private static final String IS_REALNAME = "2";
+    private static final String IS_REAL_NAME = "2";
 
     public SeekDesignerAdapter(Context context, List<SeekDesignerBean.DesignerListEntity> datas) {
         super(context, datas, R.layout.item_lv_seek_designer);
@@ -106,7 +106,7 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
 
         ///  TODO is_real_name 老字段  .
 
-        if (IS_REALNAME.equals(audit_status) || is_real_name == 2) {
+        if (IS_REAL_NAME.equals(audit_status) || is_real_name == 2) {
             holder.setVisible(R.id.img_seek_designer_authentication, true);
         } else {
             holder.setVisible(R.id.img_seek_designer_authentication, false);

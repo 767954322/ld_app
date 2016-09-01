@@ -19,6 +19,8 @@
         <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
             android:id="@+id/piv_consumer_order_photo_01"
             android:layout_width="@dimen/size_50"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_height="@dimen/size_50"
             android:background="@drawable/icon_default_avator"
             android:layout_gravity="center"
@@ -41,7 +43,7 @@
                 android:layout_toLeftOf="@+id/tv_decoration_mesure"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="匿名"
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_15"
                 />

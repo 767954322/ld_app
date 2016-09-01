@@ -1,7 +1,7 @@
 package com.autodesk.shejijia.enterprise.projectlists.activitys;
 
+import com.autodesk.shejijia.enterprise.base.activitys.SplashActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-import com.autodesk.shejijia.shared.framework.activity.SplashActivity;
 
 
 public class MPSplashActivity extends SplashActivity

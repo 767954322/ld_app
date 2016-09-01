@@ -26,6 +26,7 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -190,6 +191,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             @Override
             public void onItemClick(Object object, int position) {
                 if(position == 0){
+                    CustomProgress.show(WkFlowStateActivity.this, UIUtils.getString(R.string.data_submission), false, null);
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
@@ -218,11 +220,14 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MyToast.show(WkFlowStateActivity.this,"网络链接失败");
+                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 finish();
+
             }
         };
 

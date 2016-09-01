@@ -68,10 +68,12 @@ public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             String status = taskIdLists.get(position).getStatus();
             if (status.equalsIgnoreCase("open")) {
                 taskListVH.mTaskStatus.setText("未开始");
+                taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext,R.drawable.project_list_tv_blue_shape));
             }else if (status.equalsIgnoreCase("reserving")){
                 taskListVH.mTaskStatus.setText("待预约");
             }else if (status.equalsIgnoreCase("inProgress")){
                 taskListVH.mTaskStatus.setText("进行中");
+                taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext,R.drawable.project_list_tv_blue_shape));
             }else if (status.equalsIgnoreCase("delayed")){
                 taskListVH.mTaskStatus.setText("已延期");
             }else if (status.equalsIgnoreCase("qualified")){
@@ -79,9 +81,13 @@ public class TaskDetailsListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             }else if (status.equalsIgnoreCase("unqualified")){
                 taskListVH.mTaskStatus.setText("不合格");
             }else if (status.equalsIgnoreCase("resolved")){
+                taskListVH.mTaskStatus.setText("验收通过");
+                taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext,R.drawable.project_list_tv_lightblue_shape));
+            }else if (status.equalsIgnoreCase("rejected")){
                 taskListVH.mTaskStatus.setText("验收拒绝");
             }else if (status.equalsIgnoreCase("reinspection")){
                 taskListVH.mTaskStatus.setText("强制复验");
+                taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext,R.drawable.project_list_tv_orange_shape));
             }else if (status.equalsIgnoreCase("rectification")){
                 taskListVH.mTaskStatus.setText("监督整改");
             }else if (status.equalsIgnoreCase("reinspecting")){

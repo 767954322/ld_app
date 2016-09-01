@@ -22,6 +22,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDia
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
@@ -75,7 +76,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-//                String detailInfo = volleyError.getMessage().toString();
+                String detailInfo = volleyError.getMessage().toString();
 
             }
 
@@ -122,8 +123,11 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 tv_grandmaster_detail.setText(designer_list.get(i).getDesigner().getIntroduction());
             }
 
-//            tv_grandmaster_detail.setText("菲尔普·斯塔克 (法国) 一个非凡的传奇人物 疯狂的明星大家飞的风很大");
-//            ImageUtils.displayIconImage(designer_list.get(i).getDesigner().getDesigner_profile_cover().getPublic_url(), iv_grandmaster_pic);
+            if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover().getPublic_url()) {
+
+                String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover().getPublic_url();
+                ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
+            }
             viewList.add(view2);
         }
         addImageViewtips();
@@ -236,7 +240,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
                     public void onClick(View v) {
                         Intent intent = new Intent(activity, GrandMasterDetailActivity.class);
-                        intent.putExtra("hs_uid", designer_list.get(position-1).getHs_uid());
+                        intent.putExtra("hs_uid", designer_list.get(position - 1).getHs_uid());
                         startActivity(intent);
                     }
                 });

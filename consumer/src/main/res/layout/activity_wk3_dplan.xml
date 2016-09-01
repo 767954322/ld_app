@@ -13,21 +13,20 @@
     <GridView
         android:id="@+id/gridView_3dplan"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/common_navbar"
         android:horizontalSpacing="@dimen/size_3"
         android:numColumns="4"
         android:verticalSpacing="@dimen/size_2"/>
 
     <Button
+        android:layout_alignParentBottom="true"
         android:id="@+id/btn_submit_3dplan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/size_20"
         android:layout_marginLeft="@dimen/size_20"
         android:layout_marginRight="@dimen/size_20"
-        android:layout_marginTop="@dimen/size_30"
         android:background="@drawable/bg_common_btn_pressed"
         android:text="@string/autonym_confirm"
         android:textColor="@color/bg_ff"

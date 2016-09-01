@@ -68,16 +68,16 @@ public class ApiStatusUtil {
                     showAlertView(context.getString(R.string.loginguoqi), 0);
                     break;
                 case 400:// 参数错误
-                    showAlertView(context.getString(R.string.canshuyichang), 1);
+//                    showAlertView(context.getString(R.string.canshuyichang), 1);
                     break;
                 case 402://该状态码是为了将来可能的需求而预留的
-                    showAlertView(context.getString(R.string.http402), 1);
+//                    showAlertView(context.getString(R.string.http402), 1);
                     break;
                 case 403: // 当前操作不合法（无权限再次操作）
                     showAlertView(context.getString(R.string.caozuoerror), 1);
                     break;
                 case 404://请求失败，请求所希望得到的资源未被在服务器上发现。没有信息能够告诉用户这个状况到底是暂时的还是永久的
-                    showAlertView(context.getString(R.string.http404), 1);
+//                    showAlertView(context.getString(R.string.http404), 1);
                     break;
                 case 405://
                 case 406://
@@ -89,7 +89,7 @@ public class ApiStatusUtil {
                 case 412://
                 case 413://
                 case 414://
-                    showAlertView(context.getString(R.string.http402), 1);
+//                    showAlertView(context.getString(R.string.http402), 1);
                     break;
                 case 500: // API内部异常（服务器异常）
                     showAlertView(context.getString(R.string.apierrror), 1);

@@ -54,4 +54,7 @@
     <dimen name="linearLayout_corners_normal">8dp</dimen>
     <dimen name="linearLayout_corners_double">16dp</dimen>
 
+    <!-- all topBar height -->
+    <dimen name="app_topBar_height">55dp</dimen>
+
 </resources>

@@ -91,6 +91,13 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".personalcenter.activitys.PersonalCenterActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

@@ -67,7 +67,7 @@
 
     <!--Qr-->
     <string name="scanner_text">将二维码放入框内,即可自动扫描</string>
-    <string name="consumer_zxing_describe">请设计师扫码为您创建北舒套餐</string>
+    <string name="consumer_zxing_describe">请设计师扫码为您创建套餐项目</string>
 
     <!--Tab-->
     <string name="tab_im">聊天</string>
@@ -568,7 +568,7 @@
     <string name="consume_detail_address">小区名称：</string>
     <string name="consume_detail_address_hint">请输入小区名称</string>
     <string name="complete">完成</string>
-    <string name="designer_beishu_meal_form">北舒套餐表单</string>
+    <string name="designer_beishu_meal_form">套餐项目表单</string>
     <string name="save_decoration_success">请在我的订单中查看详情</string>
     <string name="please_input_correct_address">请输入正确的地址</string>
     <string name="data_save">数据保存中</string>
@@ -597,7 +597,7 @@
 
     <!-- CaptureActivity -->
     <string name="scanner_title">二维码</string>
-    <string name="qr_code_format_error_tip">二维码格式错误，无法创建北舒套餐</string>
+    <string name="qr_code_format_error_tip">二维码格式错误，无法创建套餐项目</string>
 
     <!--DesignerEssentialInfoActivity -->
     <string name="uploading_photo">上传头像</string>
@@ -643,7 +643,7 @@
     <!-- MyBidActivity -->
     <string name="my_bid_all">全部</string>
     <string name="elite_project">精选项目</string>
-    <string name="average_project">竟优项目</string>
+    <string name="average_project">竞优项目</string>
     <string name="packages_project">套餐项目</string>
 
     <string name="response_manage">我的应标</string>
@@ -766,6 +766,7 @@
     <string name="UploadDeliver">上传交付物</string>
     <string name="DownloadDeliver">接收交付物</string>
     <string name="lookDeliver">查看交付物</string>
+    <string name="motifyDeliver">修改交付物</string>
 
     <!-- FileMsgListActivity -->
     <string name="picture_img">图片聊天</string>
@@ -853,7 +854,7 @@
     <string name="set_meal">套餐项目</string>
     <string name="my_home">我的主页</string>
     <string name="camera_is_not_available">相机不可用</string>
-    <string name="unable_create_beishu_meal">二维码格式错误，无法创建北舒套餐</string>
+    <string name="unable_create_beishu_meal">二维码格式错误，无法创建套餐项目</string>
     <string name="please_go_to_certification">您还没有进行实名认证，请去认证</string>
     <string name="please_patient">正在进行认证，请耐心等待</string>
     <string name="authentication_failed">认证失败，请重新认证</string>

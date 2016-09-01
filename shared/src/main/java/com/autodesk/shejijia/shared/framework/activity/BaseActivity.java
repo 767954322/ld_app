@@ -31,7 +31,7 @@ public abstract class BaseActivity extends FragmentActivity {
     /**
      * 获取布局的Id
      *
-     * @return
+     * @return社会化设计师
      */
     protected abstract int getLayoutResId();
 
