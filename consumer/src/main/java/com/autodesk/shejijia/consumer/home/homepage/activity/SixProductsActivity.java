@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.fragment.StudioFragment;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SixProductsAdapter;
 import com.autodesk.shejijia.consumer.codecorationBase.average.fragment.AverageFragment;

@@ -1,9 +1,4 @@
-package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.activity;
-
-import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.adapter.WorkRoomDesignerAdapter;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.entity.WorkRoomDetailsBeen;
-import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+package com.autodesk.shejijia.consumer.codecorationBase.studio.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +11,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.dialog.OrderDialog;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.entity.DesignerRetrieveRsp;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.adapter.WorkRoomDesignerAdapter;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.dialog.OrderDialog;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.DesignerRetrieveRsp;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomDetailsBeen;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.HeightUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -33,9 +32,6 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 

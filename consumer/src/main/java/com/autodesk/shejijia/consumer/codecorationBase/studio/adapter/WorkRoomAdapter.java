@@ -1,7 +1,6 @@
-package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.adapter;
+package com.autodesk.shejijia.consumer.codecorationBase.studio.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.entity.DesignerRetrieveRsp;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.entity.WorkRoomListBeen;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomListBeen;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;

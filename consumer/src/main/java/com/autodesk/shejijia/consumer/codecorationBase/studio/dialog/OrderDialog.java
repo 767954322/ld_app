@@ -1,19 +1,15 @@
-package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.dialog;
+package com.autodesk.shejijia.consumer.codecorationBase.studio.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.uielements.matertab.Utils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 
 import java.util.regex.Matcher;
