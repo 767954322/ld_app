@@ -355,8 +355,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         amount = mBidders.get(0).getMeasurement_fee();
         tvName.setText(user_name);
         tvPhone.setText(mobile_number);
-        tvProjectBudget.setText(requirement.getDesign_budget() + "");
-        tvc_measure_fitment_budget.setText(requirement.getDecoration_budget());
+        tvProjectBudget.setText(TextUtils.isEmpty(requirement.getDesign_budget())?UIUtils.getString(R.string.no_select):requirement.getDesign_budget() + "");
+
+
+        tvc_measure_fitment_budget.setText(TextUtils.isEmpty(requirement.getDecoration_budget())?
+                UIUtils.getString(R.string.no_select):requirement.getDecoration_budget());
 
         tvc_measure_form_area.setText(requirement.getHouse_area() + "m²");
         if ("none".equals(requirement.getDistrict())
@@ -427,10 +430,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
             house_type_content = requirement.getHouse_type();
         }
-        tvc_measure_form_house_type_model.setText(room_convert + " " + living_room_convert + " " + toilet_convert);
+        String rlt = room_convert + " " + living_room_convert + " " + toilet_convert;
+        rlt = (rlt.equals("null"+" "+"null"+" "+"null"))?UIUtils.getString(R.string.no_select):rlt;
+        tvc_measure_form_house_type_model.setText(rlt);
 
-        tvc_measure_form_type.setText(house_type_content);
-        tvc_measure_form_style.setText(house_style);
+        tvc_measure_form_type.setText(house_type_content != null?house_type_content:UIUtils.getString(R.string.no_select));
+
+        tvc_measure_form_style.setText(TextUtils.isEmpty(house_style)?UIUtils.getString(R.string.no_select):house_style);
     }
 
 
