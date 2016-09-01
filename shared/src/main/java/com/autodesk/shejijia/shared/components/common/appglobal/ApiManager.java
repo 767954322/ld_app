@@ -25,7 +25,7 @@ public class ApiManager {
 
     /// 供给聊天使用的userId .
     public static int ADMIN_USER_ID = getAdmin_User_Id(RUNNING_DEVELOPMENT);
-
+//ssssss
     /**
      * 登录
      *
