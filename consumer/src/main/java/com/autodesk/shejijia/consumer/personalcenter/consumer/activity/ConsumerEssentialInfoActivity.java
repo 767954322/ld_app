@@ -147,7 +147,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         member_id = memberEntity.getAcs_member_id();
         hs_uid = memberEntity.getHs_uid();
 
-        if (memberEntity!=null){
+        if (memberEntity != null) {
             getConsumerInfoData(member_id);
         }
 
@@ -839,20 +839,21 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                     if (data != null) {
                         // 照片的原始资源地址
                         Uri originalUri = data.getData();
-                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE_1,false);
+                        cropImageUri(originalUri, 300, 300, CROP_SMALL_PICTURE);
                     }
                     break;
                 case CAMERA_INTENT_REQUEST://相机
-                    cropImageUri(uritempFile, 300, 300, CROP_SMALL_PICTURE,true);
+                    cropImageUri(uritempFile, 300, 300, CROP_SMALL_PICTURE);
                     break;
                 case CROP_SMALL_PICTURE://截图
                     if (uritempFile != null) {
-                        Bitmap bitmap;
+                        Bitmap bitmap = null;
                         File file;
                         try {
                             bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
                             file = saveBitmap2File(this, "headpic.png", bitmap);
                             mConsumeHeadIcon.setImageBitmap(bitmap);
+                            mConsumeHeadIcon.invalidate();
                             bitmap.recycle();
                             try {
                                 CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
@@ -865,36 +866,39 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                             ToastUtil.showCustomToast(this, "找不到图片");
                             e.printStackTrace();
                         }
-
-                    }
-                    break;
-                case CROP_SMALL_PICTURE_1://截图
-                    if (data != null) {
-                        Uri uri = data.getData();
-                        uritempFile = uri;
-                    }
-                    if (uritempFile != null) {
-                        Bitmap bitmap;
-                        File file;
-                        try {
-                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
-                            file = saveBitmap2File(this, "headpic.png", bitmap);
-                            mConsumeHeadIcon.setImageBitmap(bitmap);
+                        if (bitmap != null) {
                             bitmap.recycle();
-                            try {
-                                CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
-                                putFile2Server(file);
-                            } catch (Exception e) {
-                                CustomProgress.cancelDialog();
-                                e.printStackTrace();
-                            }
-                        } catch (FileNotFoundException e) {
-                            ToastUtil.showCustomToast(this, "找不到图片");
-                            e.printStackTrace();
                         }
 
                     }
                     break;
+//                case CROP_SMALL_PICTURE_1://截图
+//                    if (data != null) {
+//                        Uri uri = data.getData();
+//                        uritempFile = uri;
+//                    }
+//                    if (uritempFile != null) {
+//                        Bitmap bitmap;
+//                        File file;
+//                        try {
+//                            bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
+//                            file = saveBitmap2File(this, "headpic.png", bitmap);
+//                            mConsumeHeadIcon.setImageBitmap(bitmap);
+//                            bitmap.recycle();
+//                            try {
+//                                CustomProgress.show(this, UIUtils.getString(R.string.head_on_the_cross), false, null);
+//                                putFile2Server(file);
+//                            } catch (Exception e) {
+//                                CustomProgress.cancelDialog();
+//                                e.printStackTrace();
+//                            }
+//                        } catch (FileNotFoundException e) {
+//                            ToastUtil.showCustomToast(this, "找不到图片");
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
+//                    break;
                 default:
                     break;
             }
@@ -910,9 +914,8 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      * @param outputX
      * @param outputY
      * @param requestCode
-     * @param isOutPut    是否输出到指定文件，系统相册不指定，相机拍照需要指定：用来解决小米手机选择图片的问题
      */
-    private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode, boolean isOutPut) {
+    private void cropImageUri(Uri uri, int outputX, int outputY, int requestCode) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
@@ -921,10 +924,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         intent.putExtra("outputX", outputX);
         intent.putExtra("outputY", outputY);
         intent.putExtra("scale", true);
-//        intent.putExtra("return-data", false);
-        if (isOutPut)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
-//        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true); // no face detection
         startActivityForResult(intent, requestCode);
     }
