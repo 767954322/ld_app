@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.entity;
+package com.autodesk.shejijia.consumer.codecorationBase.studio.entity;
 
 
 import java.util.List;

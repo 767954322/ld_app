@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.adapter;
+package com.autodesk.shejijia.consumer.codecorationBase.studio.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.entity.WorkRoomDetailsBeen;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomDetailsBeen;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class WorkRoomDesignerAdapter extends BaseAdapter{
     private List<WorkRoomDetailsBeen.CasesListBean> casesBeenList;
     private Context context;
 
-    public WorkRoomDesignerAdapter(Context context, List<WorkRoomDetailsBeen.MainDesignersBean[]> list,List<WorkRoomDetailsBeen.CasesListBean> casesBeenList) {
+    public WorkRoomDesignerAdapter(Context context, List<WorkRoomDetailsBeen.MainDesignersBean[]> list, List<WorkRoomDetailsBeen.CasesListBean> casesBeenList) {
         this.context = context;
         this.list = list;
         this.casesBeenList = casesBeenList;

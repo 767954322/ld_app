@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.fragment;
+package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,31 +10,21 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.activity.WorkRoomDetailActivity;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.adapter.WorkRoomAdapter;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.dialog.OrderDialog;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.entity.WorkRoomListBeen;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.adapter.WorkRoomAdapter;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.dialog.OrderDialog;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomListBeen;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
