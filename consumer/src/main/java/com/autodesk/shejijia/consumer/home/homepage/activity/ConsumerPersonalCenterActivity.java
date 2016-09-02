@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -123,7 +124,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                     Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this,AttentionActivity.class);
                     startActivity(intent2);
                 }else{
-                    AdskApplication.getInstance().doLogin(this);
+                    AdskApplication.doLogin(this);
                 }
                 break;
         }
@@ -192,7 +193,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ConsumerPersonalCenterActivity.this.RESULT_OK && requestCode == MORE_LOGOUT && data != null) {
+        if (resultCode == RESULT_OK && requestCode == MORE_LOGOUT && data != null) {
             finish();
         }
     }

@@ -130,10 +130,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
     protected boolean needLoginOnRadioButtonTap(int id) {
-        if (id == getIMButtonId() || id == getDesignerButtonId())
-            return true;
-        else
-            return false;
+        return id == getIMButtonId() || id == getDesignerButtonId();
     }
 
 
@@ -320,8 +317,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return null;
     }
 
-    ;
-
 
     protected boolean isActiveFragment(Class clazz) {
         Fragment fragment = getFragment(clazz);
@@ -347,7 +342,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             showFragment(radioBtnId);
         } else {
             mRadioGroup.check(R.id.consumer_main_radio_btn);
-            AdskApplication.getInstance().doLogin(this);
+            AdskApplication.doLogin(this);
         }
     }
 

@@ -33,7 +33,7 @@ import java.util.List;
  * 点击取消按钮返回 －1，其他按钮从0开始算.
  */
 public class AlertView {
-    public static enum Style {
+    public enum Style {
         ActionSheet,
         Alert
     }

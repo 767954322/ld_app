@@ -35,11 +35,7 @@ public class ApiManager {
     public static boolean isRunningDevelopment(String runningDevelopment) {
         String productionDevelopmentTag = ApiManagerV2.PRODUCTION_DEVELOPMENT_TAG;
 
-        if (IS_PRODUCTION.equals(productionDevelopmentTag)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !IS_PRODUCTION.equals(productionDevelopmentTag);
     }
 
     /**

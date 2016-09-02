@@ -8,5 +8,5 @@ package com.autodesk.shejijia.shared.components.common.uielements.alertview;
  * @brief 点击AlertView之外的处理事件
  */
 public interface OnDismissListener {
-    public void onDismiss(Object o);
+    void onDismiss(Object o);
 }
