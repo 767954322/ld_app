@@ -54,7 +54,7 @@ public class DecorationNeedsListBean implements Serializable {
     private String needs_id;
     private String province_name;
     private String publish_time;
-    private String wk_template_id;//1,2,3,4,5,6
+    private String wk_template_id; //1,2,3,4,5,6
     private String contract;
     private List<DecorationBiddersBean> bidders;
     private SelectionBean elite;

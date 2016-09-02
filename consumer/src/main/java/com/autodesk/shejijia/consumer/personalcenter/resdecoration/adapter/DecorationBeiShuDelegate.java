@@ -20,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesConta
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
@@ -57,7 +58,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
     public boolean isForViewType(DecorationNeedsListBean needsListBean, int position) {
         String wk_template_id = needsListBean.getWk_template_id();
 
-        return TextUtils.isEmpty(wk_template_id) || WkTemplateConstants.IS_BEISHU.equals(wk_template_id);
+        return StringUtils.isEmpty(wk_template_id) || WkTemplateConstants.IS_BEISHU.equals(wk_template_id);
     }
 
     @Override
