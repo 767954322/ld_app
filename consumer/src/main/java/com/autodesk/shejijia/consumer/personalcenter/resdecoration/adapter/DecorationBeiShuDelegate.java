@@ -46,7 +46,6 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
     public DecorationBeiShuDelegate(Activity activity) {
         mActivity = activity;
-
     }
 
     @Override
