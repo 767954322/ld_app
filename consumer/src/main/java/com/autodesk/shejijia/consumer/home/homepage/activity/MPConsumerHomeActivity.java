@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -205,7 +206,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void onRestart() {
         super.onRestart();
         isShowBidHallFragment();
-        showDesignerOrConsumerRadioGroup();
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
@@ -348,8 +348,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void leftCircleUserAvarClicked(View view) {
         super.leftCircleUserAvarClicked(view);
         Intent circleIntent = new Intent(MPConsumerHomeActivity.this, RegisterOrLoginActivity.class);
-
-
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
 
         if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
@@ -357,18 +355,15 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
         if (null != memberEntity && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
-
             circleIntent = new Intent(MPConsumerHomeActivity.this, ConsumerPersonalCenterActivity.class);
         }
 
         startActivity(circleIntent);
-
     }
 
     //设置指针控件宽度
 
     public void setChooseViewWidth(final boolean just) {
-
         ViewTreeObserver vto = contain.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
@@ -386,11 +381,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
     protected void configureNavigationBar(int index) {
-
         super.configureNavigationBar(index);
-
         setVisibilityForNavButton(ButtonType.LEFTCIRCLE, true);
-
         switch (index) {
             case R.id.designer_main_radio_btn:
                 SharedPreferencesUtils.writeBoolean("re_refresh", false);
@@ -637,7 +629,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         });
     }
 
-
     /**
      * 设计师个人信息
      *
@@ -701,15 +692,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private void isShowBidHallFragment() {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            mDesignerIndentListBtn.setVisibility(View.VISIBLE);
             rbCustomerElite.setVisibility(View.GONE);
+            mDesignerIndentListBtn.setVisibility(View.VISIBLE);
             tvGronMmsgNumber.setVisibility(View.VISIBLE);
             return;
         }
         rbCustomerElite.setVisibility(View.VISIBLE);
-        tvGronMmsgNumber.setVisibility(View.GONE);
         mDesignerIndentListBtn.setVisibility(View.GONE);
-
+        tvGronMmsgNumber.setVisibility(View.GONE);
     }
 
 

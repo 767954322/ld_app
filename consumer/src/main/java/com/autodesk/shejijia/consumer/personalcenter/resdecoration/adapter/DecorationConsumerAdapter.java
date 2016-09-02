@@ -20,12 +20,12 @@ public class DecorationConsumerAdapter extends MultiItemTypeAdapter<DecorationNe
         super(activity, datas);
 
         /**
-         * 北舒订单item
+         * 套餐订单item
          */
         addItemViewDelegate(new DecorationBeiShuDelegate(activity));
 
         /**
-         * 普通订单item
+         * 竞优订单item
          */
         addItemViewDelegate(new DecorationOrdinaryDelegate(activity));
     }
