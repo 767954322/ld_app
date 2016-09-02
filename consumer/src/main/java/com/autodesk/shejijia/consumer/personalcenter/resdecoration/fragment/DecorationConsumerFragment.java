@@ -13,8 +13,6 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationL
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
@@ -22,7 +20,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.socks.library.KLog;
 
@@ -166,10 +163,10 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onResume() {
         super.onResume();
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null !=memberEntity&& Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
-            getMyDecorationData(OFFSET, LIMIT, 1);
-        }
+//        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (null !=memberEntity&& Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
+        getMyDecorationData(OFFSET, LIMIT, 1);
+//        }
     }
 
     @Override
