@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AmendDemandBean;
@@ -310,8 +309,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
             }
         };
@@ -375,7 +372,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         String publish_time = demandDetailBean.getPublish_time();
         String community_name = demandDetailBean.getCommunity_name();
 
-        if (this.custom_string_status.equals(Constant.NumKey.THREE) || this.custom_string_status.equals(Constant.NumKey.ZERO_THREE)) {
+        if (this.custom_string_status.equals(Constant.NumKey.CERTIFIED_PASS_THREE) || this.custom_string_status.equals(Constant.NumKey.CERTIFIED_PASS_THREE_1)) {
             btnFitmentAmendDemand.setClickable(false);
             btnFitmentAmendDemand.setPressed(false);
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));

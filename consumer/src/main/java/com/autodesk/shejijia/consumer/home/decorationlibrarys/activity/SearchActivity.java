@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FuzzySearchAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
@@ -71,7 +70,7 @@ import java.util.Map;
  * @version 1.0 .
  * @date 2015/12/25 0025 15:57 .
  * @file SearchActivity  .
- * @brief 搜索页面 .
+ * @brief 搜索案例库页面 .
  */
 public class SearchActivity extends NavigationBarActivity implements
         PullToRefreshLayout.OnRefreshListener,
@@ -170,7 +169,7 @@ public class SearchActivity extends NavigationBarActivity implements
     @Override
     public void OnItemHomeChatClick(final int position) {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if(mMemberEntity == null){
+        if (mMemberEntity == null) {
             AdskApplication.getInstance().doLogin(this);
             return;
         }
@@ -180,7 +179,7 @@ public class SearchActivity extends NavigationBarActivity implements
             final String hs_uid = mCasesEntities.get(position).getHs_designer_uid();
             final String receiver_name = mCasesEntities.get(position).getDesigner_info().getNick_name();
             final String mMemberType = mMemberEntity.getMember_type();
-            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                 @Override
@@ -311,7 +310,7 @@ public class SearchActivity extends NavigationBarActivity implements
 
 //                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, SearchActivity.this,
 //                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,SearchActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, SearchActivity.this);
                 hideFooterView(mCasesEntities);
                 mUserHomeCaseAdapter.notifyDataSetChanged();
             }

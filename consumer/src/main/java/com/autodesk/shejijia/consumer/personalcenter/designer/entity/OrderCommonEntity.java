@@ -492,7 +492,7 @@ public class OrderCommonEntity implements Serializable {
                 this.measure_time = measure_time;
             }
 
-            public Object getAvatar() {
+            public String getAvatar() {
                 return avatar;
             }
 

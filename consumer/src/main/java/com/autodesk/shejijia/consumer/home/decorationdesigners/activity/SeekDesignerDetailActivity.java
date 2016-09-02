@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -194,7 +193,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     if (null != seekDesignerDetailHomeBean) {
                         member_id = memberEntity.getAcs_member_id();
                         final String designer_id = seekDesignerDetailHomeBean.getDesigner().getAcs_member_id();
-                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
                         MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
@@ -245,7 +244,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         final String designer_id = seekDesignerDetailHomeBean.getDesigner().getAcs_member_id();
                         final String hs_uid = seekDesignerDetailHomeBean.getHs_uid();
                         final String receiver_name = seekDesignerDetailHomeBean.getNick_name();
-                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
                         MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                             @Override

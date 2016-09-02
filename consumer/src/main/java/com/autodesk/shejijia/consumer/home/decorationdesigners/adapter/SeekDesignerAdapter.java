@@ -12,7 +12,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
@@ -101,13 +100,14 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
         if (costBoolean) {
             holder.setText(R.id.tv_seek_designer_cost, UIUtils.getString(R.string.has_yet_to_fill_out));
         } else {
-            if (StringUtils.isNumeric(design_price_min)) {
-                design_price_min = Integer.valueOf(design_price_min)/100 + "";
-            }
-
-            if (StringUtils.isNumeric(design_price_max)) {
-                design_price_max = Integer.valueOf(design_price_max)/100 + "";
-            }
+            /// TODO DELETE .
+            //            if (StringUtils.isNumeric(design_price_min)) {
+            //                design_price_min = Integer.valueOf(design_price_min)/100 + "";
+            //            }
+            //
+            //            if (StringUtils.isNumeric(design_price_max)) {
+            //                design_price_max = Integer.valueOf(design_price_max)/100 + "";
+            //            }
 
             holder.setText(R.id.tv_seek_designer_cost, design_price_min + "-" + design_price_max + "元/m²");
         }

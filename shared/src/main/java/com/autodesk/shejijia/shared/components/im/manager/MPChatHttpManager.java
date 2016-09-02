@@ -130,7 +130,6 @@ public class MPChatHttpManager {
     }
 
 
-
     /**
      * 为X-Token 增加前缀
      *
@@ -661,13 +660,13 @@ public class MPChatHttpManager {
         map.put("Content-Type", "application/x-www-form-urlencoded");
         map.put("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC);
         if (AdskApplication.getInstance().getMemberEntity() != null)
-        map.put("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
+            map.put("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session());
         return map;
     }
 
     public void getThreadIdIfNotChatBefore(final String acs_number_id, final String desiner_id, OkStringRequest.OKResponseCallback callback) {
 
-        String url = UrlConstants.UAT_MP_MAIN + "/design-app/v1/api/chat/" + acs_number_id + "/" + desiner_id;
+        String url = UrlConstants.MAIN_DESIGN + "/chat/" + acs_number_id + "/" + desiner_id;
         queue.add(new OkStringRequest(Request.Method.POST, url, callback) {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 return getDefaultHeaders();

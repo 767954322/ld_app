@@ -8,6 +8,7 @@ import android.view.View;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
@@ -19,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesConta
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
@@ -39,14 +41,12 @@ import java.util.List;
 public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeedsListBean> {
 
     ///is_beishu:0 北舒套餐 1 非北舒.
-    private static final String IS_NOT_BEI_SHU = "1";
     private static final String NONE = "none";
 
     private Activity mActivity;
 
     public DecorationBeiShuDelegate(Activity activity) {
         mActivity = activity;
-
     }
 
     @Override
@@ -56,7 +56,9 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
     @Override
     public boolean isForViewType(DecorationNeedsListBean needsListBean, int position) {
-        return !IS_NOT_BEI_SHU.equals(needsListBean.getIs_beishu());
+        String wk_template_id = needsListBean.getWk_template_id();
+
+        return StringUtils.isEmpty(wk_template_id) || WkTemplateConstants.IS_BEISHU.equals(wk_template_id);
     }
 
     @Override
@@ -139,7 +141,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             final String hs_uid = uid;
             final String mMemberType = memberEntity.getMember_type();
             final String receiver_name = user_name;
-            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
