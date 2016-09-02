@@ -35,6 +35,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
     private static final String IS_NOT_BEI_SHU = "1";
     /// 支付了设计首款的节点 .
     private static final int PAYED_FIRST_COST = 41;
+    private static final String IS_ELIVATE="4";
     /**
      * is_public=1,表示终止了需求
      */
@@ -127,7 +128,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 如果是精选项目订单，则显示派单人数
          */
-        if (wk_template_id.equals("4")) {
+        if (IS_ELIVATE.equals(wk_template_id)) {
             if(mBidders.size() > 0){
                 holder.setVisible(R.id.rl_select_designer, true);
             }else{

@@ -927,7 +927,8 @@ public class MPServerHttpManager {
      * 获取需求详情
      */
     public void getAmendDemand(String need_id, OkJsonRequest.OKResponseCallback callback) {
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_POST_MODIFY_MEAL + need_id, null, callback) {
+        String amendUrl = UrlConstants.MAIN_DESIGN + "/demands/" + need_id;
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, amendUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
 
