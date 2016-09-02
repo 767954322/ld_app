@@ -179,6 +179,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     textColor = StepDisEnableColor;
                     drawable = R.drawable.jiaofuwu_ico;
                 }
+                if(stateCode > 51){
+                    setItemAnimationForView(textColor,viewHolder);
+                }
             }else {
                 if (stateCode == 51 || stateCode > 51) {
                     textColor = StepEnableColor;
@@ -186,6 +189,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 } else {
                     textColor = StepDisEnableColor;
                     drawable = R.drawable.jiaofuwu_ico;
+                }
+                if(stateCode == 51){
+                    setItemAnimationForView(textColor,viewHolder);
                 }
             }
             initViewHolder(viewHolder,drawable,textColor);
@@ -208,6 +214,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     drawable = R.drawable.weikuan_ico;
                 }
 
+
             }else {
                 if (stateCode == 41||(stateCode > 41 && stateCode != 42)) {
                     textColor = StepEnableColor;
@@ -216,7 +223,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     textColor = StepDisEnableColor;
                     drawable = R.drawable.weikuan_ico;
                 }
-
+            }
+            if(stateCode == 41){
+                setItemAnimationForView(textColor,viewHolder);
             }
             initViewHolder(viewHolder,drawable,textColor);
         }
@@ -237,6 +246,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     textColor = StepDisEnableColor;
                     drawable = R.drawable.shejishoukuan_ico;
                 }
+                if(stateCode == 31){
+                    setItemAnimationForView(textColor,viewHolder);
+                }
             }else {
                 if (stateCode == 31 ||stateCode >= 41) {
                     textColor = StepEnableColor;
@@ -244,6 +256,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 }else {
                     textColor = StepDisEnableColor;
                     drawable = R.drawable.shejishoukuan_ico;
+                }
+                if(stateCode == 41){
+                    setItemAnimationForView(textColor,viewHolder);
                 }
             }
             initViewHolder(viewHolder,drawable,textColor);
@@ -276,8 +291,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 drawable= R.drawable.jieshoushejihetong_ico;
             }
         }
-        if(stateCode == 11 && textColor == StepEnableColor){
-            setItemAnimation(viewHolder.piv_meal_phone,true);
+
+        if(stateCode == 11){
+            setItemAnimationForView(textColor,viewHolder);
         }
         initViewHolder(viewHolder,drawable,textColor);
 
@@ -353,11 +369,11 @@ public class WkFlowStateAdapter extends BaseAdapter {
             int drawable = R.drawable.quedingliangfang_ico;
             int textColor = StepDisEnableColor;
             if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {// 消费者
-                setItemAnimation(viewHolder.piv_meal_phone,false);
                 if (stateCode >= 11) {
                     drawable = R.drawable.icon_xuanzeshejishi;
                     textColor = StepEnableColor;
                 }
+
             } else {//设计师
                 if (stateCode >= 11) {
                     drawable = R.drawable.icon_xuanzeshejishi;
@@ -368,6 +384,18 @@ public class WkFlowStateAdapter extends BaseAdapter {
             viewHolder.tv_meal_title.setTextColor(textColor);
             initViewHolder(viewHolder, drawable, textColor);
         }
+
+    /**
+     * 设置呼吸状态
+     * @param textColor
+     * @param viewHolder
+     */
+
+    private void setItemAnimationForView(int textColor,ViewHolder viewHolder){
+        if(textColor == StepEnableColor){
+            setItemAnimation(viewHolder.piv_meal_phone,false);
+        }
+    }
 
             //呼吸状态，动画效果呢；
 
