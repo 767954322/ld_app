@@ -170,8 +170,6 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 if (!CustomProgress.dialog.isShowing()) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, DecorationDetailActivity.this,
-//                            AlertView.Style.Alert, null).show();
                     ApiStatusUtil.getInstance().apiStatuError(volleyError,DecorationDetailActivity.this);
                 }
             }

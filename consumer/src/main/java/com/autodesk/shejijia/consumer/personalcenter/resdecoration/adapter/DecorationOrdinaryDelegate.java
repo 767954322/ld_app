@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.SelectDesignerActivity;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationBidderActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
@@ -18,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -68,7 +71,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
         final ArrayList<DecorationBiddersBean> mBidders =
                 (ArrayList<DecorationBiddersBean>) decorationNeedsListBean.getBidders();
-        
+
         final String mNeeds_id = decorationNeedsListBean.getNeeds_id();
         String contacts_name = decorationNeedsListBean.getContacts_name();
         String community_name = decorationNeedsListBean.getCommunity_name();
@@ -127,10 +130,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 如果是精选项目订单，则显示派单人数
          */
-        if (wk_template_id.equals("4")) {
-            if(mBidders.size() > 0){
+        if (WkTemplateConstants.IS_ELITE.equals(wk_template_id)) {
+            if (mBidders.size() > 0) {
                 holder.setVisible(R.id.rl_select_designer, true);
-            }else{
+            } else {
                 holder.setVisible(R.id.rl_select_designer, false);
             }
             holder.setVisible(R.id.rl_bidder_count, false);
@@ -278,10 +281,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      * @return 节点状态
      */
     private String getNeedsState(String is_public, String wk_template_id, String custom_string_status,
-                                 int wk_cur_sub_node_id_int,String needs_id) {
+                                 int wk_cur_sub_node_id_int, String needs_id) {
         String needsState = "未知状态";
-        if(Constant.NumKey.FOUR.equals(wk_template_id)){//如果时精选
-            needsState = getEliteNeedsState(needsState, custom_string_status,needs_id);
+        if (Constant.NumKey.FOUR.equals(wk_template_id)) {//如果时精选
+            needsState = getEliteNeedsState(needsState, custom_string_status, needs_id);
             return needsState;
 
         }
@@ -346,12 +349,13 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
     /**
      * 获取精选状态信息
+     *
      * @param needsState
      * @param custom_string_status
      * @param needs_id
      * @return
      */
-    private String getEliteNeedsState(String needsState, String custom_string_status,String needs_id) {
+    private String getEliteNeedsState(String needsState, String custom_string_status, String needs_id) {
         switch (custom_string_status) {
             case Constant.NumKey.TWENTY_ONE://21:审核中
                 needsState = UIUtils.getString(R.string.checking);

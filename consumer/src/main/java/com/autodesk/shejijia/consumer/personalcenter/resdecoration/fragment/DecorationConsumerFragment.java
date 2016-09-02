@@ -13,8 +13,6 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationL
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
@@ -22,7 +20,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.socks.library.KLog;
 
@@ -78,6 +75,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
         if (null == mDecorationConsumerAdapter) {
             mDecorationConsumerAdapter = new DecorationConsumerAdapter(getActivity(), mDecorationNeedsList);
         }
+        CustomProgress.show(getActivity(), "", false, null);
 
         mPlvConsumerDecoration.setAdapter(mDecorationConsumerAdapter);
         mTvEmptyShow.setText(UIUtils.getString(R.string.empty_order_fitment));
@@ -94,7 +92,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
      * 获取消费者家装订单
      */
     public void getMyDecorationData(final int offset, final int limit, final int state) {
-        CustomProgress.show(getActivity(), "", false, null);
         MPServerHttpManager.getInstance().getMyDecorationData(offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -150,7 +147,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         isRefreshOrLoadMore = false;
-//        getMyDecorationData111();
         getMyDecorationData(0, LIMIT, 1);
         OFFSET = 0;
     }
@@ -173,10 +169,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//       if(resultCode == FlowMeasureCostActivity.RESULT_CODE){
-//           MyToast.show(getActivity(),"刷新数据");
-//       }
-
     }
 
 }

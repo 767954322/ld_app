@@ -43,6 +43,11 @@ public final class UrlConstants {
     public static final String URL_GET_CASE_LIST_D3 = MAIN_DESIGN + "/d3/cases?";
 
     /**
+     * 3D案例详情
+     */
+    public static final String URL_GET_CASE_LIST_D3_DETAIL = MAIN_DESIGN + "/d3/cases/";
+
+    /**
      * 发布装修需求
      */
     public static final String URL_SEND_DESIGN_REQUIREMENTS = MAIN_DESIGN + "/needs";

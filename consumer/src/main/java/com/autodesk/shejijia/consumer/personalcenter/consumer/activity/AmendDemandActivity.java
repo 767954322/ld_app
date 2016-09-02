@@ -310,8 +310,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
             }
         };

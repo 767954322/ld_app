@@ -110,6 +110,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
 
         Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
         Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
+
         DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
         tv_flow_first_design_last.setText(df.format(totalCost - firstCost)); // 设计尾款
 

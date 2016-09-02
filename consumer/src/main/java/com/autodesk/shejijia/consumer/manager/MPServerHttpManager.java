@@ -584,7 +584,8 @@ public class MPServerHttpManager {
      * 获取3D案例库详情列表
      */
     public void getCaseList3DDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_GET_CASE_LIST_D3 + case_id;
+        String url = UrlConstants.URL_GET_CASE_LIST_D3_DETAIL + case_id;
+        // http://192.168.88.175:8080/design-app/v1/api/d3/cases/{asset_id}
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -927,7 +928,8 @@ public class MPServerHttpManager {
      * 获取需求详情
      */
     public void getAmendDemand(String need_id, OkJsonRequest.OKResponseCallback callback) {
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_POST_MODIFY_MEAL + need_id, null, callback) {
+        String amendUrl = UrlConstants.MAIN_DESIGN + "/demands/" + need_id;
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, amendUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
 

@@ -63,8 +63,20 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
         String address = province_name + city_name + district_name;
         final String beishu_thread_id = orderListEntity.getBeishu_thread_id();
         final String contacts_name= orderListEntity.getContacts_name();
-        String status =  getEliteNeedsState(orderListEntity.getCustom_string_status());
-        holder.setText(R.id.tv_decoration_state, status);
+//        String status =  getEliteNeedsState(orderListEntity.getCustom_string_status());
+
+        final String wk_template_id = orderListEntity.getWk_template_id();
+        List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
+
+        if (bidders != null && bidders.size() > 0) {
+            String wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
+            holder.setText(R.id.tv_decoration_state, MPWkFlowManager.getWkSubNodeName(context, wk_template_id, wk_cur_sub_node_id));
+        } else {
+            holder.setText(R.id.tv_decoration_state, UIUtils.getString(R.string.str_others));
+        }
+
+
+//        holder.setText(R.id.tv_decoration_state, status);
         holder.setText(R.id.tv_decoration_needs_id, order_number);
         holder.setText(R.id.tv_decoration_address, address);
         holder.setText(R.id.tv_decoration_house_type, house_type_convert);

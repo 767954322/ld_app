@@ -70,7 +70,7 @@ import java.util.Map;
  * @version 1.0 .
  * @date 2015/12/25 0025 15:57 .
  * @file SearchActivity  .
- * @brief 搜索页面 .
+ * @brief 搜索案例库页面 .
  */
 public class SearchActivity extends NavigationBarActivity implements
         PullToRefreshLayout.OnRefreshListener,
@@ -169,7 +169,7 @@ public class SearchActivity extends NavigationBarActivity implements
     @Override
     public void OnItemHomeChatClick(final int position) {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if(mMemberEntity == null){
+        if (mMemberEntity == null) {
             AdskApplication.getInstance().doLogin(this);
             return;
         }
@@ -310,7 +310,7 @@ public class SearchActivity extends NavigationBarActivity implements
 
 //                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, SearchActivity.this,
 //                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,SearchActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, SearchActivity.this);
                 hideFooterView(mCasesEntities);
                 mUserHomeCaseAdapter.notifyDataSetChanged();
             }
