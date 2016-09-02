@@ -723,7 +723,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                if (designerInfoDetails!=null){
+                    is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                }
             }
 
             @Override
