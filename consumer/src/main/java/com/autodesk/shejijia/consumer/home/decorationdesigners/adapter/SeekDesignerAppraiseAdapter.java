@@ -29,6 +29,7 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
     private Context context;
 
     private List<AppraiseDesignBeen.EstimatesBean> mDatas;
+
     public SeekDesignerAppraiseAdapter(Context context, List<AppraiseDesignBeen.EstimatesBean> datas) {
 
 
@@ -60,10 +61,10 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
     public View getView(int position, View container, ViewGroup parent) {
 
         ViewHolder viewHolder = null;
-        if (container == null){
+        if (container == null) {
 
             viewHolder = new ViewHolder();
-            container = LayoutInflater.from(context).inflate(R.layout.item_appraise_layout,null);
+            container = LayoutInflater.from(context).inflate(R.layout.item_appraise_layout, null);
             viewHolder.mTvName = (TextView) container.findViewById(R.id.tv_name);
             viewHolder.mTvTime = (TextView) container.findViewById(R.id.tv_time);
             viewHolder.mTvAppraiseContent = (TextView) container.findViewById(R.id.consumer_appraise_content);
@@ -72,7 +73,7 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
 
             container.setTag(viewHolder);
 
-        }else {
+        } else {
 
             viewHolder = (ViewHolder) container.getTag();
 
@@ -113,11 +114,10 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
         }
 
 
-
         return container;
     }
 
-    public class ViewHolder  {
+    public class ViewHolder {
         public TextView mTvName;
         public TextView mTvTime;
         public TextView mTvAppraiseContent;
@@ -125,7 +125,7 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
         public RatingBar rating_star;
     }
 
-    public void addMoreData(List<AppraiseDesignBeen.EstimatesBean> moreData){
+    public void addMoreData(List<AppraiseDesignBeen.EstimatesBean> moreData) {
 
         this.mDatas = moreData;
         notifyDataSetChanged();
