@@ -149,8 +149,8 @@ WorkRoomDesignerAdapter extends BaseAdapter{
 
                 viewHolder.workRoomNameOne.setText(list.get(position - casesBeenList.size())[0].getName());
                 ImageUtils.loadImage(viewHolder.workRoomImageViewOne, list.get(position - casesBeenList.size())[0].getAvatar());
-                viewHolder.llWorkRoomTwo.setVisibility(View.GONE);
-                viewHolder.llWorkRoomThree.setVisibility(View.GONE);
+                viewHolder.workRoomImageViewTwo.setVisibility(View.GONE);
+                viewHolder.workRoomImageViewThree.setVisibility(View.GONE);
                 viewHolder.space_one.setVisibility(View.GONE);
                 viewHolder.space_two.setVisibility(View.GONE);
             }
