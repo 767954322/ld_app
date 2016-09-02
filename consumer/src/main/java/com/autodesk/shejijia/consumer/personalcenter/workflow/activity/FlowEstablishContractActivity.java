@@ -23,6 +23,9 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractD
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
@@ -43,6 +46,8 @@ import com.socks.library.KLog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -61,6 +66,18 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         return R.layout.activity_flow_design_contract;
     }
 
+    /**
+     * @param savedInstanceState
+     * @brief 初始化信息 .
+     */
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+
+
+    }
+
+
     @Override
     protected void initView() {
         super.initView();
@@ -74,12 +91,23 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_designer_email.setEnabled(false);
         tvc_designer_decorate_address.setEnabled(false);
 
+
+        //setConsumerContentView();
+        WebSettings webSettings = twvc_consumerContent.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setDefaultTextEncodingName(Constant.NetBundleKey.UTF_8);
+        webSettings.setBuiltInZoomControls(false);
+        webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+
+        twvc_consumerContent.setWebViewClient(new webViewClient());
+
+        ViewlayoutContractContent();
         /* To prevent the pop-up keyboard */
         TextView textView = (TextView) findViewById(R.id.tv_prevent_edit_text);
         textView.requestFocus();
     }
-
-
 
     protected void initViewVariables() {
 
@@ -107,65 +135,16 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_first_cost = (TextViewContent) findViewById(R.id.flow_establish_contract_consumer_first_cost);
         tvc_last_cost = (TextViewContent) findViewById(R.id.tvc_flow_establish_contract_consumer_last_cost);
         img_agree_establish_contract = (ImageView) findViewById(R.id.img_agree_establish_contract);
+        tvc_treeD_render_count = (TextViewContent) findViewById(R.id.tvc_flow_establish_contract_designer_render_map);
 
 
          /* init content for consumer form */
+        twvc_consumerContent = (WebView) findViewById(R.id.contract_sub_content_webview);
 
 
     }
 
-    /**
-     * @param savedInstanceState
-     * @brief 初始化信息 .
-     */
-    @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
-
-
-    }
-
-    /**
-     * @brief 监听方法 .
-     */
-    @Override
-    protected void initListener() {
-        super.initListener();
-        ll_contract.setOnClickListener(this);
-        tvc_consumer_detail_address.addTextChangedListener(new EditTextWatcher(tvc_consumer_detail_address));
-        tvc_first_cost.addTextChangedListener(new EditTextWatcher(tvc_first_cost));
-        tvc_total_cost.addTextChangedListener(new EditTextWatcher(tvc_total_cost));
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_flow_examine_contract:
-                Intent intent = new Intent(FlowEstablishContractActivity.this, FlowWebContractDetailActivity.class);
-                if (tvc_total_cost.getText().toString() != null) {
-                    intent.putExtra(Constant.DesignerFlowEstablishContract.DESIGNPAY, tvc_total_cost.getText().toString());
-                }
-                if (tvc_first_cost.getText().toString() != null) {
-                    intent.putExtra(Constant.DesignerFlowEstablishContract.DESIGNFIRSTFEE, tvc_first_cost.getText().toString());
-                }
-                if (tvc_last_cost.getText().toString() != null) {
-                    intent.putExtra(Constant.DesignerFlowEstablishContract.DESIGNBALANCEFEE, tvc_last_cost.getText().toString());
-                }
-                startActivity(intent);
-                break;
-            case R.id.flow_establish_contract_consumer_decorate_address:
-                getPCDAddress();
-                break;
-        }
-    }
-
-    @Override
-    public void onItemClick(Object o, int position) {
-        CustomProgress.cancelDialog();
-    }
-
-    private void layoutContractContent()
-    {
+    private void ViewlayoutContractContent() {
         if ( isRoleDesigner()){
             ll_contract_content_consumer.setVisibility(View.GONE);
             ll_contract_content_designer.setVisibility(View.VISIBLE);
@@ -175,14 +154,29 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             ll_contract_content_consumer.setVisibility(View.VISIBLE);
 
         }
+
     }
 
     private void UpdateUIDesigner() {
         ll_agree_establish_contract.setVisibility(View.GONE);
         tvc_last_cost.setEnabled(false);
 
+
         if (mBidders.get(0).getDesign_contract() == null) {                         /// 如果是新的合同.
-            getContractNumber();                                                                   /// 获取合同编号.
+            AsyncGetContractNumber(new commonJsonResponseCallback(){
+                @Override
+                public void onJsonResponse(String jsonResponse) {
+                    contractNo = new Gson().fromJson(jsonResponse.toString(), MPContractNoBean.class);
+                    contract_no = contractNo.getContractNO(); /// 获取合同编号 .
+                    tv_contract_number.setText(contract_no); /// 设置合同编号 .
+                }
+
+                @Override
+                public void onError(VolleyError volleyError) {
+                    MPNetworkUtils.logError(TAG, volleyError);
+                    MyToast.show(FlowEstablishContractActivity.this, R.string.failure);
+                }
+            });                                                                   /// 获取合同编号.
             tvc_consumer_name.setText(requirement.getContacts_name());
             tvc_consumer_phone.setText(requirement.getContacts_mobile());
 
@@ -272,103 +266,143 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
         });
 
-
     }
 
     private void UpdateUIConsumer() {
-        disableFieldsInput();                                                                  /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
-        MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
-        if (null == designContractEntity) { // 如果设计师没有发送设计合同 .
-            mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
-                @Override
-                public void onDismiss(Object o) {
-                    finish();
-                }
-            });
-            mDesignContract.show();
-            return;
-        }
-        String contractData = designContractEntity.getContract_data();
-        final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
-        MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
-        String zip = designContractBean.getZip();
-        String email = designContractBean.getEmail();
-        zip = TextUtils.isEmpty(zip) ? "" : zip;
-        email = TextUtils.isEmpty(email) ? "" : email;
-
-        tv_contract_number.setText(designContractEntity.getContract_no());
-        tvc_consumer_name.setText(designContractBean.getName());
-        tvc_consumer_phone.setText(designContractBean.getMobile());
-
-        if (!"null".equals(email)) {
-            tvc_consumer_email.setText(email);
-        } else {
-            tvc_consumer_email.setText("");
-        }
-
-        //tvc_consumer_decorate_address.setText(designContractBean.getAddr());
-        tvc_consumer_detail_address.setText(designContractBean.getAddrDe());
-        //tvc_design_sketch.setText(designContractBean.getDesign_sketch());
-        // tvc_render_map.setText(designContractBean.getRender_map());
-        // tvc_sketch_plus.setText(designContractBean.getDesign_sketch_plus());
-        tvc_total_cost.setText(designContractEntity.getContract_charge());
-        tvc_first_cost.setText(designContractEntity.getContract_first_charge());
-        Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
-        Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
-        DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
-        tvc_last_cost.setText(df.format(totalCost - firstCost));
-
-        if (WorkFlowSubNodeStep() == 31) {
-            ll_send.setVisibility(View.VISIBLE);
-            ll_agree_establish_contract.setVisibility(View.VISIBLE);
-
-            btn_send.setEnabled(false);
-            btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-
-            img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isAgree) { // 判断是否我已阅读（我已阅读）
-                        img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
-                        btn_send.setEnabled(false);
-                        btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-                    } else { // 判断是否我已阅读（我未阅读）
-                        img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_checked);
-                        btn_send.setEnabled(true);
-                        btn_send.setBackgroundResource(R.drawable.bg_common_btn_blue);
-                        btn_send.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(FlowEstablishContractActivity.this, FlowFirstDesignActivity.class);
-                                intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-                                intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                                intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
-//                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
-                                startActivityForResult(intent, ContractForFirst);
-                            }
-                        });
-                    }
-
-                    isAgree = !isAgree;
-                }
-            });
-            btn_send.setText(R.string.agree_and_send_design_first_new);
-        } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) {
-            ll_send.setVisibility(View.GONE);
-            ll_agree_establish_contract.setVisibility(View.GONE);
-        } else if (WorkFlowSubNodeStep() == 33) {
-            ll_send.setVisibility(View.VISIBLE);
-            ll_agree_establish_contract.setVisibility(View.GONE);
-            btn_send.setText(R.string.receiving_room_deliverable);
-        }
-
+        setConsumerContentView();
     }
 
+    private void setConsumerContentView() {
+
+        try {
+            //Return an AssetManager instance for your application's package
+            InputStream is = getAssets().open("contract_content_consumer.txt");
+            int size = is.available();
+
+            // Read the entire asset into a local byte buffer.
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+
+            String text = new String(buffer, Constant.NetBundleKey.UTF_8);
+
+
+
+            while (true)
+            {
+                text = text.replace("#val(designer_name)", designer_name);
+                text = text.replace("#val(designer_mobile)", designer_mobile);
+                text = text.replace("#val(designer_mail)", designer_mail);
+
+                if  (contract_data_entity==null)
+                    break;
+
+                MPContractDataBean contract_detail=getContractDetailData(contract_data_entity);
+                if  (contract_detail==null)
+                    break;
+
+                String contract_number=contract_data_entity.getContract_no();
+                String contract_date=contract_data_entity.getContract_create_date();
+                String design_amount=contract_data_entity.getContract_charge();
+                String design_amount_first=contract_data_entity.getContract_first_charge();
+
+
+                Double totalCost = Double.parseDouble(design_amount);
+                Double firstCost = Double.parseDouble(design_amount_first);
+                DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
+                String design_amount_balance= df.format(totalCost - firstCost);
+
+
+                String consumer_name=contract_detail.getName();
+                String consumer_mobile=contract_detail.getMobile();
+                String consumer_addr=contract_detail.getAddr();
+                String consumer_mail=contract_detail.getEmail();
+                String tree_d_renderimage=contract_detail.getRender_map();
+                String designer_addr=contract_detail.getAddr();
+
+                text = text.replace("#val(contract_number)", contract_number);
+                text = text.replace("#val(contract_date)", contract_date);
+                text = text.replace("#val(design_amount)", design_amount);
+                text = text.replace("#val(design_amount_first)", design_amount_first);
+                text = text.replace("#val(design_amount_balance)", design_amount_balance);
+                text = text.replace("#val(consumer_name)", consumer_name);
+                text = text.replace("#val(consumer_mobile)", consumer_mobile);
+                text = text.replace("#val(consumer_addr)", consumer_addr);
+                text = text.replace("#val(consumer_mail)", consumer_mail);
+                text = text.replace("#val(tree_d_renderimage)", tree_d_renderimage);
+                text = text.replace("#val(designer_addr)", designer_addr);
+                break;
+            };
+            twvc_consumerContent.loadDataWithBaseURL(null, text, Constant.NetBundleKey.MIME_TYPE_TEXT_HTML, Constant.NetBundleKey.UTF_8, "");
+
+        } catch (IOException e) {
+            // Should never happen!
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @brief 监听方法 .
+     */
+    @Override
+    protected void initListener() {
+        super.initListener();
+        ll_contract.setOnClickListener(this);
+        tvc_consumer_detail_address.addTextChangedListener(new EditTextWatcher(tvc_consumer_detail_address));
+        tvc_first_cost.addTextChangedListener(new EditTextWatcher(tvc_first_cost));
+        tvc_total_cost.addTextChangedListener(new EditTextWatcher(tvc_total_cost));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_flow_examine_contract:
+                Intent intent = new Intent(FlowEstablishContractActivity.this, FlowWebContractDetailActivity.class);
+                if (tvc_total_cost.getText().toString() != null) {
+                    intent.putExtra(Constant.DesignerFlowEstablishContract.DESIGNPAY, tvc_total_cost.getText().toString());
+                }
+                if (tvc_first_cost.getText().toString() != null) {
+                    intent.putExtra(Constant.DesignerFlowEstablishContract.DESIGNFIRSTFEE, tvc_first_cost.getText().toString());
+                }
+                if (tvc_last_cost.getText().toString() != null) {
+                    intent.putExtra(Constant.DesignerFlowEstablishContract.DESIGNBALANCEFEE, tvc_last_cost.getText().toString());
+                }
+                startActivity(intent);
+                break;
+            case R.id.flow_establish_contract_consumer_decorate_address:
+                getPCDAddress();
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == FirstForContract) {
+            finish();
+        }
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
+        CustomProgress.cancelDialog();
+    }
+
+
+    // work flow related
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         /**
          * 如果超过了33节点，就隐藏上传合同按钮
          */
+
+        //Here we can determine if we already have a contract
+        contract_data_entity=getContractDataEntityFromFirstBidder();
+        if  (contract_data_entity==null)
+        {
+
+        }
 
         if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= 33) {
             btn_send.setVisibility(View.GONE);
@@ -380,9 +414,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             @Override
             public void onJsonResponse(String jsonResponse) {
                 list = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
-                tvc_designer_name.setText(list.getReal_name().getReal_name());
-                tvc_designer_phone.setText(list.getReal_name().getMobile_number().toString());
-                tvc_designer_email.setText(list.getEmail());
+
+                designer_name=list.getReal_name().getReal_name();
+                designer_mobile=list.getReal_name().getMobile_number().toString();
+                designer_mail=list.getEmail();
+                setConsumerContentView();
+
             }
 
             @Override
@@ -391,21 +428,34 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
         });
 
-        layoutContractContent();
+
+
         if (isRoleDesigner()) { /// 设计师　.
             UpdateUIDesigner();
         } else if (isRoleCustomer()) { /// 消费者 .
             UpdateUIConsumer();
         }
+
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == FirstForContract) {
-            finish();
-        }
+    //contract data method
+    private MPDesignContractBean getContractDataEntityFromFirstBidder()
+    {
+        MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+        if (null == designContractEntity) // 如果设计师没有发送设计合同 .
+            return null;
+
+        return designContractEntity;
+    }
+
+    private MPContractDataBean getContractDetailData(MPDesignContractBean contractEntity)
+    {
+        String contractData = contractEntity.getContract_data();
+        final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
+        MPContractDataBean designContractDetail = GsonUtil.jsonToBean(str, MPContractDataBean.class);
+
+        return designContractDetail;
     }
 
     /**
@@ -446,26 +496,22 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
 
-    /**
-     * 获取合同编号 .
-     */
-    public void getContractNumber() {
-        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-
+    //Async method
+    public void AsyncGetContractNumber(final commonJsonResponseCallback callBack) {
+        MPServerHttpManager.getInstance().getContractNumber(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                contractNo = new Gson().fromJson(jsonObject.toString(), MPContractNoBean.class);
-                contract_no = contractNo.getContractNO(); /// 获取合同编号 .
-                tv_contract_number.setText(contract_no); /// 设置合同编号 .
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                callBack.onJsonResponse(jsonString);
+
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                MyToast.show(FlowEstablishContractActivity.this, R.string.failure);
+                MPNetworkUtils.logError(TAG, volleyError, true);
+                callBack.onError(volleyError);
             }
-        };
-        MPServerHttpManager.getInstance().getContractNumber(callback);
+        });
     }
 
     /**
@@ -600,6 +646,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         }
     }
 
+
+
+    ///others
     /**
      * @brief 获取省市区地址 .
      */
@@ -760,25 +809,28 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 AlertView.Style.Alert, null).show();
     }
 
+
+    //Web view client
+    private class webViewClient extends WebViewClient {
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+    }
+
     private TextViewContent tvc_consumer_name;
     private TextViewContent tvc_consumer_phone;
-    //private TextViewContent tvc_consumer_postcode;
     private TextViewContent tvc_consumer_email;
     private TextViewContent tvc_consumer_detail_address;
-    //private TextViewContent tvc_design_sketch;
-    //private TextViewContent tvc_render_map;
-    //private TextViewContent tvc_sketch_plus;
+    private TextViewContent tvc_treeD_render_count;
     private TextViewContent tvc_designer_name;
     private TextViewContent tvc_designer_phone;
-    //private TextViewContent tvc_designer_postcode;
     private TextViewContent tvc_designer_email;
     private TextViewContent tvc_designer_decorate_address;
-    //private TextViewContent tvc_designer_detail_address;
     private TextViewContent tvc_total_cost;
     private TextViewContent tvc_first_cost;
     private TextViewContent tvc_last_cost;
     private TextView tv_contract_number;
-    //private TextView tvc_consumer_decorate_address;
     private ImageView img_agree_establish_contract;
     private Button btn_send;
     private LinearLayout ll_contract;
@@ -791,6 +843,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private MPContractNoBean contractNo; // 设计合同编号对象
     private AddressDialog mChangeAddressDialog;
     private AlertView mDesignContract;
+    private WebView twvc_consumerContent;
 
     private String contract_no; // 设计合同编号
     private String total_cost;
@@ -800,4 +853,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private int ContractForFirst = 0; //　从合同跳转到设计首款
     private int FirstForContract = 1; // 首款调到设计合同
     private boolean isAgree = false;
+
+    private MPDesignContractBean contract_data_entity;
+
+    private String designer_name="";
+    private String designer_mobile="";
+    private String designer_mail="";
+
 }
