@@ -276,6 +276,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 drawable= R.drawable.jieshoushejihetong_ico;
             }
         }
+        if(stateCode == 11 && textColor == StepEnableColor){
+            setItemAnimation(viewHolder.piv_meal_phone,true);
+        }
         initViewHolder(viewHolder,drawable,textColor);
 
     }
@@ -367,7 +370,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
 
             //呼吸状态，动画效果呢；
 
-    public void setItemAnimation(View view, boolean cancelAnimation, boolean animation) {
+    public void setItemAnimation(View view, boolean cancelAnimation) {
 
         imagView_SaleAnimation = new ScaleAnimation(1.0f, 1.25f, 1.0f, 1.25f, 0.7f, 0.7f);
         imagView_SaleAnimation.setDuration(1000);
