@@ -60,14 +60,14 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
     @Override
     public void onClick(View v) {
         transaction = fragmentManager.beginTransaction();
-
-        if (mBeishuMealFragment == null) {
-            mBeishuMealFragment = new OrderBeiShuFragment();
-        }
-
-        if (mCommonOrderFragment == null) {
-            mCommonOrderFragment = new OrderCommonFragment();
-        }
+//
+//        if (mBeishuMealFragment == null) {
+//            mBeishuMealFragment = new OrderBeiShuFragment();
+//        }
+//
+//        if (mCommonOrderFragment == null) {
+//            mCommonOrderFragment = new OrderCommonFragment();
+//        }
 
         switch (v.getId()) {
             case R.id.tv_elite_project:///精选项目
@@ -145,7 +145,7 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
     private TextView mOrder,tvEliteProject;
     private Context context = getActivity();
     private FrameLayout mOrderContainer;
-    private Fragment mBeishuMealFragment, mCommonOrderFragment,eliteFragment,fromFragment;
+    private Fragment  mCommonOrderFragment,eliteFragment,fromFragment;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private GradientDrawable drawable;/// set Textview bordercolor .
