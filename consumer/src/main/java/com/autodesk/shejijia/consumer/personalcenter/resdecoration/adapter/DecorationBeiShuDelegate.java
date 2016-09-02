@@ -139,7 +139,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             final String hs_uid = uid;
             final String mMemberType = memberEntity.getMember_type();
             final String receiver_name = user_name;
-            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {

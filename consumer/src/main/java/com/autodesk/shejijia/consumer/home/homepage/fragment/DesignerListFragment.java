@@ -168,7 +168,7 @@ public class DesignerListFragment extends BaseFragment
             }
 
             final String receiver_name = designerListEntity.getNick_name();
-            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                 @Override
@@ -234,6 +234,7 @@ public class DesignerListFragment extends BaseFragment
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 String filterDesignerString = GsonUtil.jsonToString(jsonObject);
                 SeekDesignerBean seekDesignerBean = GsonUtil.jsonToBean(filterDesignerString, SeekDesignerBean.class);
                 updateViewFromFindDesigner(seekDesignerBean, state);
@@ -292,9 +293,9 @@ public class DesignerListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
+        CustomProgress.show(getActivity(), "", false, null);
         mPullToRefreshLayout.autoRefresh();
         onRefresh(mPullToRefreshLayout);
-        CustomProgress.show(getActivity(), "", false, null);
     }
 
     @Override

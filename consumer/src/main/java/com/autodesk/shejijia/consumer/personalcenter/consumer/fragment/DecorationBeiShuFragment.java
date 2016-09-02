@@ -168,7 +168,7 @@ public class DecorationBeiShuFragment extends Fragment {
                         final String hs_uid = biddersEntity.getUid();
                         final String mMemberType = memberEntity.getMember_type();
                         final String receiver_name = biddersEntity.getUser_name();
-                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
                         final String beishu_thread_id = need.getBeishu_thread_id();
 
 
