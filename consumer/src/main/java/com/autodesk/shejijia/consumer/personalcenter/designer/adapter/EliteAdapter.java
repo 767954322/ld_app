@@ -34,6 +34,8 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
     private Map<String, String> style;
     private Map<String, String> houseJson;
     private String designer_id;
+    private String customer_id;
+    private String thread_id;
     private Context context;
     public EliteAdapter(Context context, List<OrderCommonEntity.OrderListEntity> orderListEntities, int layoutId,String designer_id) {
         super(context, orderListEntities, layoutId);
@@ -61,22 +63,25 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
         province_name = TextUtils.isEmpty(province_name) ? "" : province_name;
         city_name = TextUtils.isEmpty(city_name) ? "" : city_name;
         String address = province_name + city_name + district_name;
-        final String beishu_thread_id = orderListEntity.getBeishu_thread_id();
         final String contacts_name= orderListEntity.getContacts_name();
 //        String status =  getEliteNeedsState(orderListEntity.getCustom_string_status());
 
         final String wk_template_id = orderListEntity.getWk_template_id();
+        PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_slite_photo);
         List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
-
+        String avatar="";
         if (bidders != null && bidders.size() > 0) {
+            avatar = bidders.get(0).getAvatar();
+            customer_id = bidders.get(0).getUid();
+            thread_id = bidders.get(0).getDesign_thread_id();
             String wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
+
             holder.setText(R.id.tv_decoration_state, MPWkFlowManager.getWkSubNodeName(context, wk_template_id, wk_cur_sub_node_id));
         } else {
             holder.setText(R.id.tv_decoration_state, UIUtils.getString(R.string.str_others));
         }
 
-
-//        holder.setText(R.id.tv_decoration_state, status);
+        ImageUtils.displayAvatarImage(avatar, polygonImageView);
         holder.setText(R.id.tv_decoration_needs_id, order_number);
         holder.setText(R.id.tv_decoration_address, address);
         holder.setText(R.id.tv_decoration_house_type, house_type_convert);
@@ -85,8 +90,8 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
         holder.setText(R.id.tv_decoration_name, contacts_name+"/"+community_name);
         holder.setText(R.id.tv_decoration_mobile, orderListEntity.getContacts_mobile());
 
-        PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_slite_photo);
-        ImageUtils.displayAvatarImage(orderListEntity.getAvatar(), polygonImageView);
+
+
         holder.setText(R.id.tv_customer_name, contacts_name);
 
         holder.getView(R.id.bt_designer_projectdetail).setOnClickListener(/*this);*/
@@ -129,17 +134,21 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
                 /**
                  * 在线聊天 .
                  */
-
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
                 Intent intent = new Intent(context, ChatRoomActivity.class);
+
                 String acs_member_id = mMemberEntity.getAcs_member_id();
                 String member_type = mMemberEntity.getMember_type();
+
                 intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, contacts_name);
-                intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
-                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                intent.putExtra(ChatRoomActivity.THREAD_ID,thread_id);
+                intent.putExtra(ChatRoomActivity.ASSET_ID, orderListEntity.getNeeds_id());
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
-//                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, customer_id);
+
+                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, customer_id);
+
                 intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
+
                 context.startActivity(intent);
 
 
