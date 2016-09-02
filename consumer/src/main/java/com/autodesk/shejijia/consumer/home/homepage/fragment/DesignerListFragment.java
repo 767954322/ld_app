@@ -234,6 +234,7 @@ public class DesignerListFragment extends BaseFragment
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 String filterDesignerString = GsonUtil.jsonToString(jsonObject);
                 SeekDesignerBean seekDesignerBean = GsonUtil.jsonToBean(filterDesignerString, SeekDesignerBean.class);
                 updateViewFromFindDesigner(seekDesignerBean, state);
@@ -292,9 +293,9 @@ public class DesignerListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
+        CustomProgress.show(getActivity(), "", false, null);
         mPullToRefreshLayout.autoRefresh();
         onRefresh(mPullToRefreshLayout);
-        CustomProgress.show(getActivity(), "", false, null);
     }
 
     @Override

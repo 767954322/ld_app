@@ -827,7 +827,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private UserHomeFragment mUserHomeFragment;
 
-    private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
     private FiltrateContentBean filtrateContentBean;
 
     private DesignerListFragment designerListFragment;
