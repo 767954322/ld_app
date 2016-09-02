@@ -159,6 +159,8 @@ public class MPServerHttpManager {
                 "&sort_order=desc" +
                 "&custom_string_form=" + custom_string_form;
 
+//         URL = "http://192.168.88.175:8080/design-app/v1/api/d3/cases?limit=20&offset=0"
+
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
