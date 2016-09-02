@@ -582,7 +582,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取3D案例库详情列表
-     *
      */
     public void getCaseList3DDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_LIST_D3 + case_id;
@@ -1063,7 +1062,8 @@ public class MPServerHttpManager {
         String url = UrlConstants.URL_PAY +
                 "parameters" +
                 "?orderId=" + order_no +
-                "&orderLineId=" + order_line_no +
+                "&orderLineId=" + order_line_no +    //
+
                 "&channel_type=mobile" +
                 "&paymethod=1";
 
@@ -1508,7 +1508,7 @@ public class MPServerHttpManager {
      * 套餐发布需求
      */
     public void sendPackagesForm(JSONObject jsonObject, String customer_id, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.MAIN_DESIGN + "/appointMeal/"+customer_id;
+        String url = UrlConstants.MAIN_DESIGN + "/appointMeal/" + customer_id;
 //        "http://192.168.88.175:8080/design-app/v1/api/appointMeal/"
 //        String url = UrlConstants.SEND_PACKAGES_FORM + customer_id;
 
@@ -1559,7 +1559,7 @@ public class MPServerHttpManager {
 
     public void upWorkRoomOrderData(JSONObject jsonObject,
                                     OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.MAIN_DESIGN+ "/sixmodules/demands";
+        String url = UrlConstants.MAIN_DESIGN + "/sixmodules/demands";
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
 //            @Override

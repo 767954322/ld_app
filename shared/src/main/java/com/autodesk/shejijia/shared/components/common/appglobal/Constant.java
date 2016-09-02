@@ -23,9 +23,7 @@ public class Constant {
      * 第四位: 对QA测试的跳版编号.
      */
     private static final String WB = "W";
-    // private static final String WB = "B";
-    private static final String VERSION_IMIE = "0.0.0.10";
-    public static final String VERSION_NUMBER = "Version " + WB + ApiManager.getVersionNumber(ApiManager.RUNNING_DEVELOPMENT) +
+    public static final String VERSION_NUMBER = "Version " + WB + ApiManager.getVersionNumber() +
             CommonUtils.getAppVersionName(AdskApplication.getInstance());
 
     /**

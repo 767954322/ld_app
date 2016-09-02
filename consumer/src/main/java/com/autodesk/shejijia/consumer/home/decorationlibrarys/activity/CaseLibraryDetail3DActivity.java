@@ -276,7 +276,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                     final String designer_id = case3DDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
                     final String hs_uid = case3DDetailBean.getHs_designer_uid();
                     final String receiver_name = case3DDetailBean.getDesigner_info().getNick_name();
-                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
                     MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                         @Override
@@ -333,7 +333,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl = ApiManager.getHtml5Url(ApiManager.RUNNING_DEVELOPMENT, case_id);
+            String webUrl = ApiManager.getHtml5Url(case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:

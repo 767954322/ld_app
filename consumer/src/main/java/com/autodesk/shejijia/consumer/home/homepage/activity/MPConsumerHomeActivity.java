@@ -721,7 +721,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 final String receiver_name = consumerQrEntity.getName();
                 final String designer_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
                 final String mMemberType = AdskApplication.getInstance().getMemberEntity().getMember_type();
-                final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
                 MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                     @Override

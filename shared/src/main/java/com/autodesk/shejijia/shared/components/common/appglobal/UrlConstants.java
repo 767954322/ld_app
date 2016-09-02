@@ -11,138 +11,26 @@ public final class UrlConstants {
     private UrlConstants() {
     }
 
-    /// 开发环境 .
-    public static final String RUNNING_DEVELOP = "RUNNING_DEVELOP";
-    /// QA环境 .
-    public static final String RUNNING_QA = "RUNNING_QA";
-    /// UAT331环境 .
-    public static final String RUNNING_UAT = "RUNNING_UAT";
-    /// UAT415或者Alpha环境 .
-    public static final String RUNNING_ALPHA = "RUNNING_ALPHA";
-    /// 正式(PRODUCTION)环境  .
-    public static final String RUNNING_PRODUCTION = "RUNNING_PRODUCTION";
-    /// alpha dev境 .
-    public static final String RUNNING_DEV = "RUNNING_DEV";
-    /// DOCKER_DESIGN环境
-    public static final String RUNNING_DOCKER_DESIGN = "RUNNING_DOCKER_DESIGN";
-    //    /// DOCKER_MEMBER
-//    public static final String RUNNING_DOCKER_MENBER = "RUNNING_DOCKER_MENBER";
-//    /// DOCKER_TRANSACTION
-//    public static final String RUNNING_DOCKER_TRANSACTION = "RUNNING_DOCKER_TRANSACTION";
-    //
-    public static final String RUNNING_DOKER = "RUNNING_DOKER";
+
+    public static String LOGIN_PATH = ApiManagerV2.LOGIN_PATH;
 
     /**
-     * 如需更改环境，需到ApiManager中修改RUNNING_DEVLEOPMENT的值
+     * design-app的url公共部分 .
      */
-    public static String LOGIN_PATH = ApiManager.getLoginPath(ApiManager.RUNNING_DEVELOPMENT);
-    public static String LOGOUT_PATH = ApiManager.getLogoutPath(ApiManager.RUNNING_DEVELOPMENT);
+    public static String MAIN_DESIGN = ApiManagerV2.DESIGN_PATH;
 
     /**
-     * 拼接请求设计师相关数据的url的公共部分 .
-     * 比如: http://124.207.32.252:6091/design-app/v1/api .
+     * member-app 的url的公共部分 .
      */
-    public static String MAIN_DESIGN = ApiManager.getMPMain_Design(ApiManager.RUNNING_DEVELOPMENT);
-
-    /**
-     * 拼接请求设计师相关数据的url的公共部分 .
-     * 比如: http://124.207.32.252:6091/member-app/v1/api .
-     */
-    public static String MAIN_MEMBER = ApiManager.getMPMain_Member(ApiManager.RUNNING_DEVELOPMENT);
+    public static String MAIN_MEMBER = ApiManagerV2.MEMBER_PATH;
 
     /**
      * 我的资产相关数据的url的公共部分 .
      */
-    private static String MAIN_TRANSACTION = ApiManager.getMPMain_Transaction(ApiManager.RUNNING_DEVELOPMENT);
-
-    /// 登录 .
-    public static final String MP_MAIN_LOGIN_PATH = "http://121.69.19.182:8100/SSO_login.html?caller=shejijia&browser_type=android";
-    //    public static final String MP_MAIN_LOGIN_PATH_UAT = "http://uat331www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    //    public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGIN_PATH_UAT = "http://uat-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGIN_PATH_ALPHA = "http://alpha-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGIN_PATH_PRODUCTION = "http://www.shejijia.com/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGIN_PATH_DEV = "http://dev-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-
-    /// 登出 .
-    public static final String MP_MAIN_LOGOUT_PATH = "http://121.69.19.182:8100/SSO_logout.html";
-    public static final String MP_MAIN_LOGOUT_PATH_UAT = "http://uat331www.gdfcx.net/sso/SSO_logout.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGOUT_PATH_ALPHA = "http://uat415www.gdfcx.net/sso/SSO_logout.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGOUT_PATH_PRODUCTION = "http://www.shejijia.com/sso/SSO_login.html?caller=shejijia&browser_type=android";
-    public static final String MP_MAIN_LOGOUT_PATH_DEV = "http://dev-www.gdfcx.net/sso/SSO_login.html?caller=shejijia&browser_type=android";
-
-    /// 安全中心 .
-    public static final String DEVELOPMENT_SECURTY = "http://cas.juranzaixian.com.cn/myspace/member/account_security.htm";
-    public static final String UAT_SECURTY = "http://cas.juranzx.com.cn/myspace/member/account_security.htm";
-
-    /// 开发环境地址 .
-    public static final String DEVELOPMENT_MP_MAIN = "http://192.168.120.219:8080";
-
-    /// QA环境地址 .
-    public static final String QA_MP_MAIN = "http://192.168.6.25:8080";
-
-    //新环境
-    // yxh
-//    public static final String DOCKER_HAWKEYE_DESIGN = "http://192.168.88.155:8080";
-    // lcb   http://192.168.120.219:8080
-    public static final String DOCKER_HAWKEYE_DESIGN = "http://192.168.150.105:8080";//"http://192.168.120.102:8280";////"http://192.168.120.219:8080";
-
-    //新环境
-    //yxh
-//    public static final String DOCKER_HAWKEYE_MEMBER = "http://192.168.88.153:8080";
-    // lcb
-    public static final String DOCKER_HAWKEYE_MEMBER = "http://alpha-www.gdfcx.net";//http://192.168.150.104:8080";
-
-
-    //新环境
-    // yxh
-//    public static final String DOCKER_HAWKEYE_TRANSCATION = "http://192.168.88.152:8080";
-    // lcb
-    public static final String DOCKER_HAWKEYE_TRANSCATION = "http://alpha-www.gdfcx.net";//"http://192.168.150.101:8080";
-
-    /**
-     * transaction-server  192.168.150.101
-     * trade-server           192.168.150.102
-     * design-app              192.168.150.106
-     */
-
-
-    /// UAT = UAT331环境地址 .
-//    public static final String UAT_MP_MAIN = "http://uat331api.gdfcx.net:8080";
-    public static final String UAT_MP_MAIN = "http://uat-api.gdfcx.net:8080";
-
-    /// ALPHA = UAT415环境地址 .
-//    public static final String ALPHA_MP_MAIN = "http://uat415api.gdfcx.net";
-    public static final String ALPHA_MP_MAIN = "http://alpha-api.gdfcx.net";
-
-    /// alpha-dev环境 .
-    public static final String DEV_MP_MAIN = "http://dev-api.gdfcx.net";
-
-    /**
-     * willson本地测试环境
-     * transaction-app  192.168.150.103:8080
-     * member-app 192.168.150.104:8080
-     * design-app :   192.168.150.106:8080
-     */
-    public static final String DOKER_MP_TRANSACTION = "http://192.168.88.172:8080";
-    public static final String DOKER_MP_MEMBER = "http://192.168.88.173:8080";
-    public static final String DOKER_MP_DESIGN = "http://192.168.88.175:8080";
-
-    /// PRODUCTION .
-    public static final String PRODUCTION_MP_MAIN = "http://api.shejijia.com";
-
-    /// 生产环境user_id .
-    public static final int PRODUCTION_ADMIN_USER_ID = 20742718;
-    /// 开发环境user_id .
-    public static final int UAT_ADMIN_USER_ID = 20730165;
-
-
-    public static final String MP_MAIN_TRANSACTION = "/transaction-app/v1/api";
-    public static final String MP_MAIN_DESIGN = "/design-app/v1/api";
-    public static final String MP_MAIN_MEMBER = "/member-app/v1/api";
+    private static String MAIN_TRANSACTION = ApiManagerV2.TRANSACTION_PATH;
 
     //分享界面的url
-    public static final String MP_MAIN_SHARE = "/share/2dcase.html?caseid=";
+    public static final String MP_MAIN_SHARE = ApiManagerV2.SHARE_PATH + "/share/2dcase.html?caseid=";
 
     /**
      * 搜索.
@@ -168,7 +56,7 @@ public final class UrlConstants {
     /**
      * 应标大厅.
      */
-    public static final String URL_GET_SHOULD_HALL_LIST = MAIN_DESIGN + "/search/needs";  //
+    public static final String URL_GET_SHOULD_HALL_LIST = MAIN_DESIGN + "/search/needs";
 
     /**
      * 应标大厅详情页 .
@@ -233,7 +121,6 @@ public final class UrlConstants {
     /**
      * 我要装修中的几张图片.
      */
-
     public static final String URL_PUT_SELECTION_DESIGNER_PICTURES = MAIN_DESIGN + "/selection/pictures";
 
     /**
