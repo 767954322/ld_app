@@ -12,12 +12,12 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerSearchActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -117,7 +117,7 @@ public class DesignerListFragment extends BaseFragment
      * 处理搜索逻辑
      */
     public void handleSearchOption() {
-        intent = new Intent(getActivity(), DesignerSearchActivity.class);
+        intent = new Intent(getActivity(), SearchActivity.class);
         startActivityForResult(intent, REQUEST_SEARCH_CODE);
     }
 

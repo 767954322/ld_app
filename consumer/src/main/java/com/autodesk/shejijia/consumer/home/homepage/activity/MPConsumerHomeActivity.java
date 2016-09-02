@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment;
@@ -26,7 +27,6 @@ import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProject
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment.DecorationConsumerFragment;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
@@ -73,6 +73,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected static final String TAB_BID_HALL = "TAB_BID_HALL";    /// 应标大厅 .
     protected static final String TAB_IM = "TAB_IM";                /// 聊天 .
     protected static final String TAB_PROJECT = "TAB_PROJECT";      /// 我的订单 .
+    protected static final String TAB_SEARCH = "TAB_SEARCH";      /// 我的订单 .
 
     protected static final String TAB_HOME_CASE = "TAB_HOME_CASE";  /// 案例 .
     protected static final String TAB_DESIGNER = "TAB_DESIGNER";    /// 设计师列表 .
@@ -329,8 +330,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
         /// 处理设计师搜索逻辑 .
-        if (isActiveFragment(DesignerListFragment.class)) {
-            designerListFragment.handleSearchOption();
+        if (isActiveFragment(UserHomeFragment.class)) {
+            Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
+            startActivity(intent);
+//            designerListFragment.handleSearchOption();
         }
 
         if (isActiveFragment(MyDecorationProjectFragment.class) || isActiveFragment(DecorationConsumerFragment.class)) {
@@ -557,6 +560,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 designerListFragment.handleFilterOption();
                 break;
 
+            case TAB_SEARCH:
+                designerListFragment.handleSearchOption();
+                break;
             default:
                 break;
         }
