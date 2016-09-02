@@ -124,7 +124,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         addRadioButtons(mDesignerIndentListBtn);
         addRadioButtons(mDesignerPersonCenterRadioBtn);
         //获取节点信息
-        getALLWkFlowStatePointInformation();
+        getWkFlowStatePointInformation();
     }
 
     @Override
@@ -614,7 +614,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 /**
      * 获取全流程节点提示信息
      */
-    public void getALLWkFlowStatePointInformation() {
+    public void getWkFlowStatePointInformation() {
         MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
