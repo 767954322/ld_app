@@ -193,8 +193,6 @@ public class OrderBeiShuFragment extends BaseFragment {
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 if (getActivity() != null) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-//                            AlertView.Style.Alert, null).show();
                     ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
                 }
             }

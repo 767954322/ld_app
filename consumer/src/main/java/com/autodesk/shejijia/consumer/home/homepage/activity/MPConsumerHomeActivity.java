@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -47,7 +46,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -84,7 +82,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private MemberEntity memberEntity;
 
-//    public int is_loho;
+    public int is_loho;
 
     @Override
     protected int getLayoutResId() {
@@ -120,7 +118,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 //        construction = (TextView) contain_layout.findViewById(R.id.construction);
 
         setMyProjectTitleColorChange(design, bidding/*, construction*/);
-        user_avatar = (ImageView) findViewById(R.id.user_avatar);
 
         addRadioButtons(radioBtnDesigner);
         addRadioButtons(mDesignerMainRadioBtn);
@@ -207,6 +204,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected void onRestart() {
         super.onRestart();
         isShowBidHallFragment();
+        showDesignerOrConsumerRadioGroup();
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
@@ -227,7 +225,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     @Override
     protected RadioButton getRadioButtonById(int id) {
-        RadioButton button = super.getRadioButtonById(id);
+        RadioButton button = null;
         switch (id) {
             case R.id.designer_main_radio_btn:
                 button = mDesignerMainRadioBtn;
@@ -242,18 +240,25 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.radio_btn_designer:
                 button = radioBtnDesigner;
                 break;
+            case R.id.rb_customer_elite:
+                button = rbCustomerElite;
+                break;
+            default:
+                button = super.getRadioButtonById(id);
         }
         return button;
     }
 
     @Override
-    protected boolean needLoginOnRadiobuttonTap(int id) {
-        if ((super.needLoginOnRadiobuttonTap(id)) ||
+    protected boolean needLoginOnRadioButtonTap(int id) {
+        if ((super.needLoginOnRadioButtonTap(id)) ||
                 (id == R.id.designer_indent_list_btn) ||
-                (id == R.id.designer_person_center_radio_btn))
+                (id == R.id.designer_person_center_radio_btn)) {
+
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     //将每个fragment添加
@@ -330,7 +335,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         if (isActiveFragment(MyDecorationProjectFragment.class) || isActiveFragment(DecorationConsumerFragment.class)) {
             Intent intent = new Intent(this, IssueDemandActivity.class);
-            mNickNameConsumer = TextUtils.isEmpty(mNickNameConsumer) ? UIUtils.getString(R.string.anonymity) : mNickNameConsumer;
             intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNickNameConsumer);
             startActivity(intent);
         }
@@ -447,7 +451,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
-                    ifIsLohoDesiner(acs_Member_Id, hs_uid);
+                    changLohoDesigner(acs_Member_Id, hs_uid);
                 } else {
                     setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
@@ -482,6 +486,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 mDesignerPersonalCenterFragment.setBidingFragment();
 
                 break;
+
             case R.id.design:
                 setMyProjectTitleColorChange(design, bidding/*, construction*/);
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER + POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
@@ -506,7 +511,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         textUnckeck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
     }
 
-    private void ifIsLohoDesiner(String desiner_id, String hs_uid) {
+    private void changLohoDesigner(String desiner_id, String hs_uid) {
 
         MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -582,7 +587,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return R.id.designer_main_radio_group;
     }
 
-
     protected int getMainContentId() {
         return R.id.main_content;
     }
@@ -607,6 +611,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
 
+/**
+     * 获取全流程节点提示信息
+     */
     public void getALLWkFlowStatePointInformation() {
         MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -637,12 +644,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                if(designerInfoDetails.getReal_name().getHigh_level_audit() != null){
+                if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
                 if (mDesignerPersonalCenterFragment != null) {
                     mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit);
-
                 }
             }
 
@@ -802,8 +808,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private static final String DESIGNER_PERSONAL_FRAGMENT_TAG = "DESIGNER_FRAGMENT_TAG";
     private static final String CONSUMER_PERSONAL_FRAGMENT_TAG = "CONSUMER_FRAGMENT_TAG";
 
-    private ImageView user_avatar;
-
     private TextView bidding;
     private TextView design;
     private TextView tvGronMmsgNumber;
@@ -811,7 +815,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private View contain_layout;
     private ChooseViewPointer chooseViewPointer;
     private int index;//判断所在fragment
-    private String mNickNameConsumer;
     final float POINTER_START_NUMBER = 0F;
     final float POINTER_START_END_NUMBER = 1 / 2F;
     final float POINTER_MIDDLE_END_NUMBER = 1 / 9F;

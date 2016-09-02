@@ -321,26 +321,6 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
-    /**
-     * 获取设计师列表
-     */
-    public void getFindDesignerData(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_FIND_DESIGNER +
-                "?offset=" + offset +
-                "&sort_order=desc" +
-                "&sort_by=date" +
-                "&limit=" + limit;
-
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
-            }
-        };
-        queue.add(okRequest);
-    }
 
     /**
      * 获取设计师从业年限列表
@@ -402,7 +382,6 @@ public class MPServerHttpManager {
      * @param callback
      */
     public void sendStopFlow(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-//        String url ="http://192.168.120.219:8080/design-app/v1/api/selection/termination/demands";
         String url = UrlConstants.URL_STOP_COLLABORATION;
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
@@ -411,32 +390,17 @@ public class MPServerHttpManager {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return header;
-//                return super.getHeaders();
             }
         };
         queue.add(okRequest);
     }
 
-    /**
-     * 全流程节点信息获取(待删除)
-     */
-    public void getWkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback) {
-
-        OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, UrlConstants.URL_WkFlowState_pointe_Information, null, callback) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return super.getHeaders();
-            }
-        };
-        queue.add(okJsonRequest);
-    }
 
     /**
      * 全流程节点信息获取(带精选)
      */
     public void getAll_WkFlowStatePointInformation(OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_ALL_WkFlowState_pointe_Information;
+        String url = UrlConstants.URL_ALL_WKFLOWSTATE_POINTE_INFORMATION;
 
         OkJsonRequest okJsonRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
 
@@ -559,7 +523,6 @@ public class MPServerHttpManager {
 
     /**
      * 设计师3D详情
-     * http://192.168.88.175:8080/design-app/v1/api /hs/prints/anonymity/designers/{designer_id}/d3/d3dimensionals?limit=20&offset=0&sort_by=date &sort_order=asc
      *
      * @param callback
      * @param designer_id
@@ -620,12 +583,9 @@ public class MPServerHttpManager {
     /**
      * 获取3D案例库详情列表
      *
-     * @param case_id
-     * @param callback http://192.168.88.175:8080/design-app/v1/api/d3/case/{asset_id}
      */
     public void getCaseList3DDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_LIST_D3 + case_id;
-//        String url = "http://192.168.88.175:8080/design-app/v1/api/d3/cases/" + case_id;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -645,13 +605,11 @@ public class MPServerHttpManager {
      */
     public void sendThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
-        Log.d("yxw", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_XTOKEN, xToken);
-                Log.d("yxw", Constant.NetBundleKey.X_XTOKEN + "   " + xToken);
                 return header;
             }
         };
@@ -667,7 +625,6 @@ public class MPServerHttpManager {
      */
     public void getThumbUpRequest(String assetId, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_DETAILS_LIKE + assetId;
-        Log.d("yxw", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -785,7 +742,6 @@ public class MPServerHttpManager {
      * 精选订单
      */
     public void getSliteOder(HashMap<String, Object> map, final OkJsonRequest.OKResponseCallback callback) {
-
 
         String url = UrlConstants.URL_GET_ORDER + map.get(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID) + "/orders?" +
                 "offset=" + map.get(JsonConstants.JSON_DEMAND_LIST_OFFSET) +
@@ -942,7 +898,6 @@ public class MPServerHttpManager {
      * 发布需求
      */
     public void sendDesignRequirements(JSONObject jsonObject, boolean isSelection, OkJsonRequest.OKResponseCallback callback) {
-        //"http://192.168.120.219:8080/design-app/v1/api/selection/demands"
         String url = isSelection ? UrlConstants.URL_SEND_DESIGN_SELECTION_REQUIREMENTS : UrlConstants.URL_SEND_DESIGN_REQUIREMENTS;
 
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, jsonObject, callback) {
@@ -1086,10 +1041,6 @@ public class MPServerHttpManager {
     public void SendMeasureForm(String needs_id, String acs_designer_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url1 = UrlConstants.URL_SEND_DESIGN_SELECTION_REQUIREMENTS + "/" + needs_id + "" +
                 "/designers/" + acs_designer_id + "/measurement/options/invitation";
-//        String url0 = "http://192.168.120.102:8070/design-app/v1/api/selection/demands/"+needs_id+"" +
-//                      "/designers/"+acs_designer_id+"/measurement/options/invitation";
-//        String url = "http://192.168.120.163:8081/design-app/v1/api/selection/demands/"+needs_id+"" +
-//                "/designers/"+acs_designer_id+"/measurement/options/invitation";
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url1, jsonObject, callback) {
             @Override
@@ -1108,12 +1059,6 @@ public class MPServerHttpManager {
      * 支付宝接口
      */
     public void getAlipayDetailInfo(String order_no, String order_line_no, OkJsonRequest.OKResponseCallback callback) {
-//        String url = "http://192.168.120.219:8080/design-app/v1/api/pay/alipay/app/"+
-//                "parameters" +
-//                "?orderId=" + order_no +
-//                "&orderLineId=" + order_line_no +
-//                "&channel_type=mobile" +
-//                "&paymethod=1";
 
         String url = UrlConstants.URL_PAY +
                 "parameters" +
@@ -1337,7 +1282,6 @@ public class MPServerHttpManager {
 
     public void sendUnBindBankCard(final long designer_id,
                                    JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
-//        String url ="http://192.168.120.90:8010/transaction-app/v1/api/members/"+designer_id+"/balances/delete";
         String url = UrlConstants.URL_WITHDRAW_MEMBERS + designer_id + "/balances/delete";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, jsonObject, callback) {
             @Override
@@ -1410,7 +1354,6 @@ public class MPServerHttpManager {
 >>>>>>> feature-3.2
      */
     public void getEstimateList(String designer_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
-       // String url = "http://192.168.120.123:8081/member-app/v1/api" + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;
         String estimateUrl = UrlConstants.MAIN_MEMBER + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, estimateUrl, null, callback) {
             @Override

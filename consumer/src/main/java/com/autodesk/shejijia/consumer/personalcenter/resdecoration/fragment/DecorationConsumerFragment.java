@@ -119,7 +119,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     }
                 }
 
-
                 KLog.json(TAG, userInfo);
             }
 
