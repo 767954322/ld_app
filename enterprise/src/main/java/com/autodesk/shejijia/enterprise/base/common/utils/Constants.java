@@ -23,5 +23,9 @@ public class Constants {
     public static final String ISSUE_LIST_FRAGMENT = "IssueListFragment";
     public static final String GROUP_CHAT_FRAGMENT = "GroupChatFragment";
 
+    //我页流程式fragment对应的tag
+    public static final String PERSONAL_MORE_FRAGMENT = "MoreFragment";
+    public static final String PERSONAL_POJECTLIST_FRAGMENT = "MyProjectListFragment";
+
 
 }

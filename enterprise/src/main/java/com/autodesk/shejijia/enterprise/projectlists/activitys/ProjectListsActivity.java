@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.enterprise.projectlists.activitys;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,6 +20,7 @@ import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.nodedetails.entity.NodeBean;
+import com.autodesk.shejijia.enterprise.personalcenter.activitys.PersonalCenterActivity;
 import com.autodesk.shejijia.enterprise.projectlists.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.projectlists.fragments.GroupChatFragment;
 import com.autodesk.shejijia.enterprise.projectlists.fragments.IssueListFragment;
@@ -28,6 +30,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.orhanobut.logger.Logger;
+import com.pgyersdk.update.PgyUpdateManager;
 
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -84,6 +87,9 @@ public class ProjectListsActivity extends BaseProjectListActivity implements OnC
         mScreenBtn.setOnClickListener(this);
         mSearchBtn.setOnClickListener(this);
         mProjectDate.setOnClickListener(this);
+
+        //version update
+        PgyUpdateManager.register(this);
     }
 
     @Override
@@ -106,9 +112,12 @@ public class ProjectListsActivity extends BaseProjectListActivity implements OnC
 
     @Override
     public void onClick(View view) {
+        Intent intent = null;
         switch (view.getId()){
             case R.id.imgBtn_personal_center:
-
+                intent = new Intent();
+                intent.setClass(this, PersonalCenterActivity.class);
+                startActivity(intent);
                 break;
             case R.id.imgBtn_screen:
 

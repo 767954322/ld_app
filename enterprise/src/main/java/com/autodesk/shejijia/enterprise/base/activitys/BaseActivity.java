@@ -57,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         //crash注册
         PgyCrashManager.register(this);
         //version update
-        PgyUpdateManager.register(this);
+//        PgyUpdateManager.register(this); //放在主页里(projectListActivity)提示version update
         //设置反馈页面dialog的风格,符合app
         PgyerDialog.setDialogTitleBackgroundColor("#2B77C1");
         PgyerDialog.setDialogTitleTextColor("#ffffff");
@@ -66,19 +66,19 @@ public abstract class BaseActivity extends AppCompatActivity{
     //返回键事件监听
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == keyCode) {
+       /* if (KeyEvent.KEYCODE_BACK == keyCode) {
             if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
                 finish();
                 return true;
             }
-        }
+        }*/
         return super.onKeyDown(keyCode, event);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // 蒲公英feedback功能
+        // 蒲公英feedback功能注册
         // custom sensitivity, defaults to 950, the smaller the number higher sensitivity.
         PgyFeedbackShakeManager.setShakingThreshold(1000);
 
@@ -94,7 +94,7 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onPause() {
         super.onPause();
-        // 蒲公英feedback功能
+        // 蒲公英feedback取消注册功能
         PgyFeedbackShakeManager.unregister();
     }
 }
