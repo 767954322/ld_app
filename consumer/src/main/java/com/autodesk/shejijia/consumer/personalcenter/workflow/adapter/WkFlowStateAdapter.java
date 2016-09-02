@@ -353,6 +353,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
             int drawable = R.drawable.quedingliangfang_ico;
             int textColor = StepDisEnableColor;
             if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {// 消费者
+                setItemAnimation(viewHolder.piv_meal_phone,false);
                 if (stateCode >= 11) {
                     drawable = R.drawable.icon_xuanzeshejishi;
                     textColor = StepEnableColor;
@@ -372,7 +373,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
 
     public void setItemAnimation(View view, boolean cancelAnimation) {
 
-        imagView_SaleAnimation = new ScaleAnimation(1.0f, 1.25f, 1.0f, 1.25f, 0.7f, 0.7f);
+        imagView_SaleAnimation = new ScaleAnimation(1.0f, 1.25f, 1.0f, 1.25f, Animation.RELATIVE_TO_SELF, 0.5f,Animation.RELATIVE_TO_SELF,0.5f);
         imagView_SaleAnimation.setDuration(1000);
         imagView_SaleAnimation.setRepeatCount(10000);
         imagView_SaleAnimation.setRepeatMode(Animation.REVERSE);
