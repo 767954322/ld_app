@@ -34,7 +34,6 @@
                 android:layout_height="@dimen/size_100"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon"
                 />
             <TextView
                 android:id="@+id/tv_designer_name"
@@ -65,7 +64,6 @@
                 android:layout_height="@dimen/size_100"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon"
                 />
             <TextView
                 android:id="@+id/tv_designer_name_two"
@@ -97,7 +95,6 @@
                 android:layout_height="@dimen/size_100"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon"
                 />
             <TextView
                 android:id="@+id/tv_designer_name_three"
