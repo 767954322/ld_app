@@ -103,7 +103,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         twvc_consumerContent.setWebViewClient(new webViewClient());
 
-        ViewlayoutContractContent();
+
         /* To prevent the pop-up keyboard */
         TextView textView = (TextView) findViewById(R.id.tv_prevent_edit_text);
         textView.requestFocus();
@@ -401,7 +401,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         contract_data_entity=getContractDataEntityFromFirstBidder();
         if  (contract_data_entity==null)
         {
+              if(isRoleCustomer())
+              {
 
+              }
         }
 
         if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= 33) {
@@ -414,7 +417,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             @Override
             public void onJsonResponse(String jsonResponse) {
                 list = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
-
                 designer_name=list.getReal_name().getReal_name();
                 designer_mobile=list.getReal_name().getMobile_number().toString();
                 designer_mail=list.getEmail();
@@ -429,6 +431,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         });
 
 
+        ViewlayoutContractContent();
 
         if (isRoleDesigner()) { /// 设计师　.
             UpdateUIDesigner();

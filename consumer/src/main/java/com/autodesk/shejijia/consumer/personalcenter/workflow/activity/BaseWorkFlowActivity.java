@@ -66,9 +66,8 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-
-
         getOrderDetailsInfo(needs_id, designer_id);
 
     }
