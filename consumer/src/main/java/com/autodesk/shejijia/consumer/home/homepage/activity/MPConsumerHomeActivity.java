@@ -1,9 +1,7 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -14,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -45,8 +42,8 @@ import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
-import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -76,15 +73,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected static final String TAB_PROJECT = "TAB_PROJECT";      /// 我的订单 .
     protected static final String TAB_SEARCH = "TAB_SEARCH";      /// 我的订单 .
 
-    protected static final String TAB_HOME_CASE = "TAB_HOME_CASE";  /// 案例 .
-    protected static final String TAB_DESIGNER = "TAB_DESIGNER";    /// 设计师列表 .
-    protected static final String TAB_BID_HALL = "TAB_BID_HALL";    /// 应标大厅 .
-    protected static final String TAB_IM = "TAB_IM";                /// 聊天 .
-    protected static final String TAB_PROJECT = "TAB_PROJECT";      /// 我的订单 .
-
     private MemberEntity memberEntity;
 
     public int is_loho;
+
+    public MPConsumerHomeActivity() {
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -333,12 +327,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (isActiveFragment(UserHomeFragment.class)) {
             Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
             startActivity(intent);
-//            designerListFragment.handleSearchOption();
         }
 
         if (isActiveFragment(MyDecorationProjectFragment.class) || isActiveFragment(DecorationConsumerFragment.class)) {
             Intent intent = new Intent(this, IssueDemandActivity.class);
-            intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNickNameConsumer);
             startActivity(intent);
         }
     }
@@ -593,23 +585,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return designerListFragment;
     }
 
+
     /**
-     * 网络获取数据并且更新
-     */
-    private void updateViewFromData() {
-
-        if (mConsumerEssentialInfoEntity != null && !TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar()) && MPConsumerHomeActivity.this != null) {
-            mNickNameConsumer = mConsumerEssentialInfoEntity.getNick_name();
-            ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), user_avatar);
-        }
-
-        if (designerInfoDetails != null && !TextUtils.isEmpty(designerInfoDetails.getAvatar()) && MPConsumerHomeActivity.this != null) {
-            ImageUtils.displayAvatarImage(designerInfoDetails.getAvatar(), user_avatar);
-        }
-    }
-
-
-/**
      * 获取全流程节点提示信息
      */
     public void getWkFlowStatePointInformation() {
@@ -670,11 +647,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                if (designerInfoDetails!=null){
+                if (designerInfoDetails != null) {
                     is_loho = designerInfoDetails.getDesigner().getIs_loho();
                 }
                 // MERGE release/September
-                                //mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+                //mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
 
                 // updateViewFromData();
             }
@@ -825,7 +802,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private FiltrateContentBean filtrateContentBean;
 
-    private DesignerListFragment designerListFragment;
     private BidHallFragment mBidHallFragment;
     private DesignerListFragment designerListFragment;
     private DesignerInfoDetails designerInfoDetails;
