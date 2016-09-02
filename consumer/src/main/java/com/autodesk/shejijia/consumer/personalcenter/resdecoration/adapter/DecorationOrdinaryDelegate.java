@@ -34,8 +34,6 @@ import java.util.Map;
  */
 public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNeedsListBean> {
 
-    ///is_beishu:0 北舒套餐 1 非北舒.
-    private static final String IS_NOT_BEI_SHU = "1";
     /// 支付了设计首款的节点 .
     private static final int PAYED_FIRST_COST = 41;
     /**
@@ -63,7 +61,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
     @Override
     public boolean isForViewType(DecorationNeedsListBean needsListBean, int position) {
-        return IS_NOT_BEI_SHU.equals(needsListBean.getIs_beishu());
+        String wk_template_id = needsListBean.getWk_template_id();
+        return (!TextUtils.isEmpty(wk_template_id)) && (!WkTemplateConstants.IS_BEISHU.equals(wk_template_id));
     }
 
     @Override
@@ -95,7 +94,6 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? "其它" : house_type);
         }
 
-
         district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
         String address = province_name + city_name + district_name;
 
@@ -114,7 +112,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (styleMap.containsKey(decoration_style)) {
             holder.setText(R.id.tv_decoration_style, styleMap.get(decoration_style));
         } else {
-            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? "其它" : decoration_style);
+            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.str_others) : decoration_style);
         }
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
@@ -258,8 +256,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         boolean isBiding = false;
         if (!TextUtils.isEmpty(custom_string_status)) {
             switch (custom_string_status) {
-                case Constant.NumKey.THREE:
-                case Constant.NumKey.ZERO_THREE:
+                case Constant.NumKey.CERTIFIED_PASS_THREE:
+                case Constant.NumKey.CERTIFIED_PASS_THREE_1:
                     isBiding = true;
                     break;
                 default:
@@ -317,8 +315,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                         needsState = UIUtils.getString(R.string.disapprove);
                         break;
 
-                    case Constant.NumKey.THREE:
-                    case Constant.NumKey.ZERO_THREE:
+                    case Constant.NumKey.CERTIFIED_PASS_THREE:
+                    case Constant.NumKey.CERTIFIED_PASS_THREE_1:
                         /**
                          * 审核通过,但是没有设计师应标.??
                          */

@@ -8,6 +8,7 @@ import android.view.View;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
@@ -39,7 +40,6 @@ import java.util.List;
 public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeedsListBean> {
 
     ///is_beishu:0 北舒套餐 1 非北舒.
-    private static final String IS_NOT_BEI_SHU = "1";
     private static final String NONE = "none";
 
     private Activity mActivity;
@@ -56,7 +56,9 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
 
     @Override
     public boolean isForViewType(DecorationNeedsListBean needsListBean, int position) {
-        return !IS_NOT_BEI_SHU.equals(needsListBean.getIs_beishu());
+        String wk_template_id = needsListBean.getWk_template_id();
+
+        return TextUtils.isEmpty(wk_template_id) || WkTemplateConstants.IS_BEISHU.equals(wk_template_id);
     }
 
     @Override

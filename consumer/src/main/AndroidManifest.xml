@@ -234,11 +234,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".personalcenter.consumer.activity.DecorationActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".personalcenter.consumer.activity.MeasureFormActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

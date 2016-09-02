@@ -75,13 +75,13 @@ public class Constant {
         public static final String ZERO = "0";
         public static final String ONE = "1";
         public static final String TWO = "2";
-        public static final String THREE = "3";
+        public static final String CERTIFIED_PASS_THREE = "3";
         public static final String FOUR = "4";
         public static final String FIVE = "5";
         public static final String SIX = "6";
         public static final String ZERO_ONE = "01";
         public static final String ZERO_TWO = "02";
-        public static final String ZERO_THREE = "03";
+        public static final String CERTIFIED_PASS_THREE_1 = "03";
 
         public static final String TWENTY_ONE = "21";
         public static final String TWENTY_TWO = "22";

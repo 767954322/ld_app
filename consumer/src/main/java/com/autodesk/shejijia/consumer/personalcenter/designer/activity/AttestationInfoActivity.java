@@ -92,7 +92,7 @@ public class AttestationInfoActivity extends NavigationBarActivity {
             img_audit_describe.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
             tv_audit_describe.setText(UIUtils.getString(R.string.congratulations_you));
 
-        } else if (Constant.NumKey.THREE.equals(audit_status)) {
+        } else if (Constant.NumKey.CERTIFIED_PASS_THREE.equals(audit_status)) {
             setTitleForNavbar(UIUtils.getString(R.string.audit_not_pass));
             tv_txt_audit_status_three.setText(UIUtils.getString(R.string.audit_not_pass));
             tv_pic_audit_status_three.setBackground(UIUtils.getDrawable(R.drawable.bg_attestation_info_pressed));

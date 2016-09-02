@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationDetailBean;
@@ -104,8 +105,14 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         super.initExtraBundle();
         Bundle extras = getIntent().getExtras();
         needs_id = (String) extras.get(Constant.ConsumerDecorationFragment.NEED_ID);
-        wk_template_id= (String) extras.get(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID);
+        wk_template_id = (String) extras.get(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID);
 
+        /**
+         * 控制修改和删除按钮显示、隐藏
+         */
+        if (!WkTemplateConstants.IS_AVERAGE.equals(wk_template_id)) {
+            mLlDemandModify.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -170,7 +177,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 if (!CustomProgress.dialog.isShowing()) {
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,DecorationDetailActivity.this);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, DecorationDetailActivity.this);
                 }
             }
         };
@@ -195,10 +202,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.dialog.cancel();
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, DecorationDetailActivity.this,
-//                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DecorationDetailActivity.this);
+                CustomProgress.cancelDialog();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DecorationDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getStopDesignerRequirement(needs_id,
@@ -271,71 +276,76 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         mTvPublicTime.setText(TextUtils.isEmpty(publish_time) ? UIUtils.getString(R.string.no_data) : publish_time);
 
         mTvDecorationName.setText(contacts_name + "/" + community_name);
+        if (WkTemplateConstants.IS_AVERAGE.equals(wk_template_id)) {
+            mLlDemandModify.setVisibility(View.VISIBLE);
 
-        /**
-         * custom_string_status 审核状态
-         */
-        if (Constant.NumKey.THREE.equals(custom_string_status)
-                || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
-            setButtonGray(mBtnAmendDemand);
-        }
-
-        /**
-         * 控制修改和终止按钮是否可以点击
-         */
-        List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
-        DecorationBiddersBean biddersBean = null;
-        if (null != bidders) {
-            if (bidders.size() == 1) {
-                biddersBean = bidders.get(0);
-            } else if (bidders.size() > 1) {
-                biddersBean = bidders.get(bidders.size() - 1);
-            } else if (bidders.size() < 1) {
-                return;
-            }
-            String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
-            if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= IS_BIDING) {
-                setButtonGray(mBtnStopDemand);
+            /**
+             * custom_string_status 审核状态
+             */
+            if (Constant.NumKey.CERTIFIED_PASS_THREE.equals(custom_string_status)
+                    || Constant.NumKey.CERTIFIED_PASS_THREE_1.equals(custom_string_status)) {
                 setButtonGray(mBtnAmendDemand);
             }
-        }
-
-        if (null != bidders && bidders.size() > 0) {
-            setButtonGray(mBtnStopDemand);
-            setButtonGray(mBtnAmendDemand);
 
             /**
-             * 审核通过，考虑应标人数情况,大于0时候，隐藏修改终止按钮
-             *
+             * 控制修改和终止按钮是否可以点击
              */
-            if (Constant.NumKey.THREE.equals(custom_string_status)
-                    || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
-
-                if (null != bidders) {
-                    if (bidders.size() <= 0) {
-                        mLlDemandModify.setVisibility(View.VISIBLE);
-                        mBtnAmendDemand.setVisibility(View.VISIBLE);
-                        mBtnStopDemand.setVisibility(View.VISIBLE);
-                        setButtonGray(mBtnAmendDemand);
-                    } else {
-                        mLlDemandModify.setVisibility(View.GONE);
-                    }
+            List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
+            DecorationBiddersBean biddersBean = null;
+            if (null != bidders) {
+                if (bidders.size() == 1) {
+                    biddersBean = bidders.get(0);
+                } else if (bidders.size() > 1) {
+                    biddersBean = bidders.get(bidders.size() - 1);
+                } else if (bidders.size() < 1) {
+                    return;
                 }
-            } else {
-                mLlDemandModify.setVisibility(View.VISIBLE);
-                mBtnAmendDemand.setVisibility(View.VISIBLE);
-                mBtnStopDemand.setVisibility(View.VISIBLE);
+                String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
+                if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= IS_BIDING) {
+                    setButtonGray(mBtnStopDemand);
+                    setButtonGray(mBtnAmendDemand);
+                }
             }
-            /**
-             * 当is_public为1,表示需求终止
-             */
-            if (IS_PUBLIC.equals(is_public)) {
-                mLlDemandModify.setVisibility(View.GONE);
+
+            if (null != bidders && bidders.size() > 0) {
+                setButtonGray(mBtnStopDemand);
+                setButtonGray(mBtnAmendDemand);
+
+                /**
+                 * 审核通过，考虑应标人数情况,大于0时候，隐藏修改终止按钮
+                 *
+                 */
+                if (Constant.NumKey.CERTIFIED_PASS_THREE.equals(custom_string_status)
+                        || Constant.NumKey.CERTIFIED_PASS_THREE_1.equals(custom_string_status)) {
+
+                    if (null != bidders) {
+                        if (bidders.size() <= 0) {
+                            mLlDemandModify.setVisibility(View.VISIBLE);
+                            mBtnAmendDemand.setVisibility(View.VISIBLE);
+                            mBtnStopDemand.setVisibility(View.VISIBLE);
+                            setButtonGray(mBtnAmendDemand);
+                        } else {
+                            mLlDemandModify.setVisibility(View.GONE);
+                        }
+                    }
+                } else {
+                    mLlDemandModify.setVisibility(View.VISIBLE);
+                    mBtnAmendDemand.setVisibility(View.VISIBLE);
+                    mBtnStopDemand.setVisibility(View.VISIBLE);
+                }
+                /**
+                 * 当is_public为1,表示需求终止
+                 */
+                if (IS_PUBLIC.equals(is_public)) {
+                    mLlDemandModify.setVisibility(View.GONE);
+                }
             }
-    }}
-        /**
-         * 按钮置灰，不可点击
-         */
+        }
+    }
+
+    /**
+     * 按钮置灰，不可点击
+     */
     private void setButtonGray(Button btn) {
         btn.setClickable(false);
         btn.setPressed(false);
