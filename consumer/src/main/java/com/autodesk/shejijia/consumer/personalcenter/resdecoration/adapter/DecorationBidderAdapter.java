@@ -11,7 +11,6 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -150,14 +149,20 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         holder.setOnClickListener(R.id.btn_designer_measure, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(designer_id)) {
-                    intent = new Intent(mActivity, FlowMeasureFormActivity.class);
-                    intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeeds_id);
-                    intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-                    /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
-                    mActivity.startActivity(intent);
+
+                if (null != mOnItemViewClickCallback) {
+                    mOnItemViewClickCallback.setOnItemViewClickCallback(designer_id);
                 }
+
+                // FIXME 此段代码导致竞优设计师列表无法更新
+//                Intent intent;
+//                if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(designer_id)) {
+//                    intent = new Intent(mActivity, FlowMeasureFormActivity.class);
+//                    intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeeds_id);
+//                    intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+//                    /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
+//                    mActivity.startActivity(intent);
+//                }
             }
         });
     }
@@ -218,11 +223,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
-//                new AlertView(UIUtils.getString(R.string.tip),
-//                        UIUtils.getString(R.string.network_error),
-//                        null, new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
-//                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,mActivity);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, mActivity);
             }
         };
         MPServerHttpManager.getInstance().refuseDesignerMeasure(needs_id, designer_id, okResponseCallback);

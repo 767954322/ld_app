@@ -13,9 +13,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.EliteFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.OrderBeiShuFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.OrderCommonFragment;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 /**
@@ -44,20 +42,7 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
 
     @Override
     protected void initData() {
-        //setTitleForNavbar(UIUtils.getString(R.string.decoration_order));
         setDefaultFragment();
-
-//        initMemberEntity();
-
-    }
-
-    private void initMemberEntity() {
-
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-
-        if (memberEntity == null) {
-            return;
-        }
     }
 
     @Override
@@ -80,6 +65,7 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
                 }
                 switchFragment(mBeishuMealFragment);
                 break;
+
             case R.id.tv_designer_order: /// 竟优项目 .
 
                 setColorAndBackgroundForTextView(mOrder);

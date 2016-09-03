@@ -11,11 +11,8 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.EliteFragment;
-import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.OrderBeiShuFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.OrderCommonFragment;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 /**
@@ -135,10 +132,8 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
     public void setDefaultFragment() {
         eliteFragment = new EliteFragment();
         fragmentManager = getChildFragmentManager();
-        /*  fragmentManager.beginTransaction().add(R.id.fl_designer_order_beishu_container, mBeishuMealFragment)
-                .commit();*/
         fragmentManager.beginTransaction().replace(R.id.fl_designer_order_beishu_container, eliteFragment)
-                .commit();
+                .commitAllowingStateLoss();
         fromFragment = eliteFragment;
     }
 
