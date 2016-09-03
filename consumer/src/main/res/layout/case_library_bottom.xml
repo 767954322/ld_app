@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_case_library_bottom"
     android:layout_width="wrap_content"
@@ -12,14 +13,12 @@
         android:layout_marginTop="@dimen/size_10"
         android:background="@android:color/white"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/size_90">
+        android:paddingLeft="@dimen/size_70">
 
 
         <LinearLayout
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
             <TextView
                 android:id="@+id/iv_consume_home_designer"
                 android:layout_width="wrap_content"
@@ -30,7 +29,7 @@
                 android:text="设计师"
                 android:textColor="@color/bg_40"
                 android:textSize="@dimen/font_16"
-                android:visibility="visible" />
+                android:visibility="visible"/>
 
             <TextView
                 android:id="@+id/tv_follow_designer"
@@ -38,11 +37,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_8"
                 android:layout_marginRight="@dimen/size_8"
-                android:background="@color/actionsheet_blue"
+                android:background="@drawable/textview_follow_bg"
                 android:paddingLeft="@dimen/size_8"
                 android:paddingRight="@dimen/size_8"
                 android:text="@string/attention_sure_add"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                />
 
         </LinearLayout>
 
@@ -60,7 +60,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="一室"
                 android:textColor="@color/bg_66"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_marginLeft="@dimen/size_4"
                 android:text="欧式"
                 android:textColor="@color/bg_66"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
 
             <TextView
@@ -82,7 +82,7 @@
                 android:layout_marginLeft="@dimen/size_4"
                 android:text="120"
                 android:textColor="@color/bg_66"
-                android:textSize="@dimen/font_13" />
+                android:textSize="@dimen/font_13"/>
 
 
         </LinearLayout>
@@ -99,7 +99,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:layout_marginRight="@dimen/size_15"
-        android:background="@drawable/icon_chat_common_normal" />
+        android:background="@drawable/icon_chat_common_normal"/>
 
     <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
         android:id="@+id/piv_img_customer_home_header"
@@ -108,10 +108,9 @@
         android:layout_marginBottom="20dp"
         android:layout_gravity="top"
         android:layout_marginLeft="@dimen/size_10"
-        android:layout_marginRight="@dimen/size_10"
         app:poly_border="true"
         app:poly_border_color="@color/bg_ff"
         app:poly_border_width="@dimen/size_5"
         app:poly_corner_radius="5"
-        app:poly_vertices="0" />
+        app:poly_vertices="0"/>
 </RelativeLayout>

@@ -63,7 +63,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.response_manage));
-
     }
 
     @Override

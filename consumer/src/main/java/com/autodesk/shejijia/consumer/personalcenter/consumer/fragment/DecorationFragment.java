@@ -544,8 +544,8 @@ public class DecorationFragment extends Fragment implements View.OnClickListener
                     mIbnDecorationModify.setVisibility(View.VISIBLE);
                     mIbnDecorationModify.setOnClickListener(this);
 
-                } else if (Constant.NumKey.THREE.equals(custom_string_status)
-                        || Constant.NumKey.ZERO_THREE.equals(custom_string_status)) {
+                } else if (Constant.NumKey.CERTIFIED_PASS_THREE.equals(custom_string_status)
+                        || Constant.NumKey.CERTIFIED_PASS_THREE_1.equals(custom_string_status)) {
                     /**
                      * 审核通过,但是有设计师应标，隐藏修改需求.
                      */

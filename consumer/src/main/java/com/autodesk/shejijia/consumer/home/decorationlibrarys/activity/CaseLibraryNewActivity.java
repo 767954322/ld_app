@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -65,16 +64,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @描述 :  案例库详情界面
- *
- * @Author  :willson
- *
  * @version : 0.0.0.30;
- *
- * @创建日期  :2016.8.29
+ * @描述 :  案例库详情界面
+ * @Author :willson
+ * @创建日期 :2016.8.29
  */
 public class CaseLibraryNewActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
-
 
 
     @Override
@@ -97,7 +92,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
-        mTvFollowedDesigner = (TextView) findViewById(R.id.tv_follow_designer);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
@@ -148,7 +142,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 //        };
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
-        CustomProgress.show(this,"",false,null);
+        CustomProgress.show(this, "", false, null);
         getCaseDetailData(case_id);
         pictureProcessingUtil = new PictureProcessingUtil();
     }
@@ -166,7 +160,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         ivCustomerIm.setOnClickListener(this);
         rlThumbUp.setOnClickListener(this);
         llThumbUp.setOnClickListener(this);
-        mTvFollowedDesigner.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
         mTvFollowedDesigner.setOnClickListener(this);
 
@@ -256,13 +249,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                         final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
                         final String hs_uid = caseDetailBean.getHs_designer_uid();
                         final String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
-                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
                         MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
-                                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
+                                ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
                             }
 
                             @Override
@@ -290,7 +283,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                                         @Override
                                         public void onErrorResponse(VolleyError volleyError) {
                                             MPNetworkUtils.logError(TAG, volleyError);
-                                            ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
+                                            ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
                                         }
 
                                         @Override
@@ -343,7 +336,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl =ApiManager.getHtml5Url(ApiManager.RUNNING_DEVELOPMENT,case_id);
+            String webUrl = ApiManager.getHtml5Url(case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
@@ -398,7 +391,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 rlThumbUp.setOnClickListener(CaseLibraryNewActivity.this);
                 llThumbUp.setOnClickListener(CaseLibraryNewActivity.this);
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
             }
         };
         MPServerHttpManager.getInstance().sendThumbUpRequest(assetId, okResponseCallback);
@@ -431,7 +424,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getThumbUpRequest(assetId, okResponseCallback);
@@ -459,7 +452,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryNewActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
                 CustomProgress.cancelDialog();
             }
         };
@@ -518,9 +511,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         caseLibraryNew.setAdapter(mCaseLibraryAdapter);
         //设置简介
         String introduction = caseDetailBean.getDescription();
-        if (introduction == null || introduction.equals("")){
+        if (introduction == null || introduction.equals("")) {
             mCaseLibraryText.setText(R.string.nodescription);
-        }else {
+        } else {
             mCaseLibraryText.setText("          " + introduction);
         }
 
@@ -607,12 +600,12 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
         if (is_following) {
             mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
-            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_border_beishu));
+            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_unfollow_bg));
             mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
 
         } else {
             mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
-            mTvFollowedDesigner.setBackgroundColor(UIUtils.getColor(R.color.actionsheet_blue));
+            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_follow_bg));
             mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
         }
     }
@@ -671,10 +664,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position != 2||position!=1 ) {
+        if (position != 2 || position != 1) {
             Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
             Bundle bundle = new Bundle();
-            intent.putExtra("JUMP_STATUS", 1); // 标记从哪里跳到图片放大界面
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
             bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position == 0 ? topPosition : position - 3);
             intent.putExtras(bundle);
@@ -685,12 +677,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     @Override
     protected void onStop() {
         super.onStop();
-
+       // mTimer.cancel();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+      //  mTimer.cancel();
     }
 
     private ListView caseLibraryNew;

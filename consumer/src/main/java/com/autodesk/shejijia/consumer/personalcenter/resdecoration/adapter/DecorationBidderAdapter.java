@@ -132,9 +132,9 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             @Override
             public void onClick(View v) {
                 new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.select_Ta_refuse),
-                        UIUtils.getString(R.string.cancel),
-                        new String[]{UIUtils.getString(R.string.sure)}, null, mActivity,
+                        "确认拒绝" + finalNick_name + "设计师？",
+                        UIUtils.getString(R.string.cancel), null,
+                        new String[]{UIUtils.getString(R.string.sure)}, mActivity,
                         AlertView.Style.Alert, new OnItemClickListener() {
                     @Override
                     public void onItemClick(Object object, int position) {

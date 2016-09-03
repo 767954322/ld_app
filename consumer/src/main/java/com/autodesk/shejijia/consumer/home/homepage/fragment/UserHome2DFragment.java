@@ -187,7 +187,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
             final String hs_uid = casesEntities.get(position).getHs_designer_uid();
             final String receiver_name = casesEntities.get(position).getDesigner_info().getNick_name();
             final String mMemberType = mMemberEntity.getMember_type();
-            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                 @Override

@@ -100,6 +100,15 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
         if (costBoolean) {
             holder.setText(R.id.tv_seek_designer_cost, UIUtils.getString(R.string.has_yet_to_fill_out));
         } else {
+            /// TODO DELETE .
+            //            if (StringUtils.isNumeric(design_price_min)) {
+            //                design_price_min = Integer.valueOf(design_price_min)/100 + "";
+            //            }
+            //
+            //            if (StringUtils.isNumeric(design_price_max)) {
+            //                design_price_max = Integer.valueOf(design_price_max)/100 + "";
+            //            }
+
             holder.setText(R.id.tv_seek_designer_cost, design_price_min + "-" + design_price_max + "元/m²");
         }
         audit_status = TextUtils.isEmpty(audit_status) ? "" : audit_status;

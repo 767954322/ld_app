@@ -23,9 +23,7 @@ public class Constant {
      * 第四位: 对QA测试的跳版编号.
      */
     private static final String WB = "W";
-    // private static final String WB = "B";
-    private static final String VERSION_IMIE = "0.0.0.10";
-    public static final String VERSION_NUMBER = "Version " + WB + ApiManager.getVersionNumber(ApiManager.RUNNING_DEVELOPMENT) +
+    public static final String VERSION_NUMBER = "Version " + WB + ApiManager.getVersionNumber() +
             CommonUtils.getAppVersionName(AdskApplication.getInstance());
 
     /**
@@ -77,13 +75,13 @@ public class Constant {
         public static final String ZERO = "0";
         public static final String ONE = "1";
         public static final String TWO = "2";
-        public static final String THREE = "3";
+        public static final String CERTIFIED_PASS_THREE = "3";
         public static final String FOUR = "4";
         public static final String FIVE = "5";
         public static final String SIX = "6";
         public static final String ZERO_ONE = "01";
         public static final String ZERO_TWO = "02";
-        public static final String ZERO_THREE = "03";
+        public static final String CERTIFIED_PASS_THREE_1 = "03";
 
         public static final String TWENTY_ONE = "21";
         public static final String TWENTY_TWO = "22";

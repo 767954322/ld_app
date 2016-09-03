@@ -1,7 +1,10 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -21,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -85,11 +89,15 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
     public void onStart() {
         super.onStart();
 
+    }
 
-        if (isLoginAgain){
-
-            onWindowFocusChanged();
-            isLoginAgain = false;
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sp = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        boolean refresh = sp.getBoolean("re_refresh",false);
+        if (refresh){
+            //TODO
         }
 
     }
@@ -296,13 +304,6 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
         MPServerHttpManager.getInstance().getMyBidData(memType, acsToken, offset, limit, designer_id, callback);
     }
 
-    //判断重新登陆时要及时刷新相关的fragment
-    public void setRestartFragment(boolean isLoginAgainJust){
-
-        this.isLoginAgain = isLoginAgainJust;
-
-    }
-
 
     /// 控件.
     private RelativeLayout rl_empty;
@@ -315,7 +316,6 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
     private static final String BE_BEING = "0";
     private String status;
     private boolean isFirstIn = true;
-    private boolean isLoginAgain = false;
 
     ///　集合，类.
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mList;

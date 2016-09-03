@@ -362,26 +362,4 @@ public class NodeBean {
         this.milestone = milestone;
     }
 
-    @Override
-    public String toString() {
-        return "NodeBean{" +
-                "docType='" + docType + '\'' +
-                ", taskId='" + taskId + '\'' +
-                ", taskTemplateId='" + taskTemplateId + '\'' +
-                ", projectId='" + projectId + '\'' +
-                ", planId='" + planId + '\'' +
-                ", status='" + status + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", category='" + category + '\'' +
-                ", assignee='" + assignee + '\'' +
-                ", planningTime=" + planningTime +
-                ", effectTime=" + effectTime +
-                ", reserveTime=" + reserveTime +
-                ", comments=" + comments +
-                ", taskFroms=" + taskFroms +
-                ", subtasks=" + subtasks +
-                ", milestone=" + milestone +
-                '}';
-    }
 }

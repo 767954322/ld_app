@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerEssentialInfoActivity;
@@ -119,17 +119,12 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 }
                 break;
 
-//            case R.id.rl_personal_b_fitment:    /// 我的装修项目 .
-//                intent = new Intent(ConsumerPersonalCenterActivity.this, DecorationActivity.class);
-//                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
-//                startActivity(intent);
-//                break;
             case R.id.ll_personal_designer_attention: /// 我的关注 .
                 if (mMemberEntity != null) {
                     Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this,AttentionActivity.class);
                     startActivity(intent2);
                 }else{
-                    AdskApplication.getInstance().doLogin(this);
+                    AdskApplication.doLogin(this);
                 }
                 break;
         }
@@ -198,7 +193,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ConsumerPersonalCenterActivity.this.RESULT_OK && requestCode == MORE_LOGOUT && data != null) {
+        if (resultCode == RESULT_OK && requestCode == MORE_LOGOUT && data != null) {
             finish();
         }
     }

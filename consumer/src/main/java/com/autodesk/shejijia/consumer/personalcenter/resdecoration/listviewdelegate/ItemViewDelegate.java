@@ -10,11 +10,11 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdele
  */
 public interface ItemViewDelegate<T> {
 
-    public abstract int getItemViewLayoutId();
+    int getItemViewLayoutId();
 
-    public abstract boolean isForViewType(T item, int position);
+    boolean isForViewType(T item, int position);
 
-    public abstract void convert(MultiItemViewHolder holder, T t, int position);
+    void convert(MultiItemViewHolder holder, T t, int position);
 
 
 }

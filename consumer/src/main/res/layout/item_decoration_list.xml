@@ -92,6 +92,8 @@
                     android:textSize="@dimen/font_15"/>
 
                 <TextView
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:id="@+id/tv_decoration_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -34,7 +34,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,26 +65,10 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvc_address = (TextView) findViewById(R.id.tvc_measure_form_address);
         tvc_estate = (TextViewContent) findViewById(R.id.tvc_measure_form_estate);
         tv_measure_fee = (TextView) findViewById(R.id.tv_measure_form_liangfangfei);
-//        ll_style = (LinearLayout) findViewById(R.id.ll_measure_form_style);
-//        ll_type = (LinearLayout) findViewById(R.id.ll_measure_form_type);
         btn_send_form = (Button) findViewById(R.id.btn_send_measure_house_form);
         tvc_measure_form_type = (TextView) findViewById(R.id.tvc_measure_form_type);
         tvc_measure_form_style = (TextView) findViewById(R.id.tvc_measure_form_style);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
-//        ll_time_restrict = (LinearLayout) findViewById(R.id.ll_time_restrict);
-//        btn_measure_form_send = (Button) findViewById(R.id.btn_measure_form_send);
-//        tvc_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (!hasFocus) {
-//                    String area = tvc_area.getText().toString().trim();
-//                    area = String.format("%.2f",Double.valueOf(area));
-//                    tvc_area.setText(area);
-//                }
-//            }
-//        });
-//        Log.i("aaa","bbbcreate");
-
     }
     @Override
     protected void initExtraBundle() {
@@ -116,15 +99,22 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
 
         tvc_area.setText(decorationNeedsListBean.getHouse_area());
         tvc_estate.setText(decorationNeedsListBean.getCommunity_name());
-        tvc_fitment_budget.setText(decorationNeedsListBean.getDecoration_budget());
+        tvc_fitment_budget.setText(decorationNeedsListBean.getDecoration_budget() != null?
+                                   decorationNeedsListBean.getDecoration_budget():
+                                   UIUtils.getString(R.string.no_select));
 
-        tvc_project_budget.setText( decorationNeedsListBean.getDesign_budget());
+        tvc_project_budget.setText( decorationNeedsListBean.getDesign_budget() != null?decorationNeedsListBean.getDesign_budget():UIUtils.getString(R.string.no_select));
         tvc_name.setText(decorationNeedsListBean.getContacts_name());
         tvc_phone.setText(decorationNeedsListBean.getContacts_mobile());
-        tvc_measure_form_type.setText(spaceMap.get(house_type));
-        tvc_house_type.setText(roomHallMap.get(decorationNeedsListBean.getLiving_room())
-                               +roomMap.get(decorationNeedsListBean.getRoom())
-                               +toiletMap.get(decorationNeedsListBean.getToilet()));//设置室 厅 卫
+        tvc_measure_form_type.setText(spaceMap.get(house_type) != null?spaceMap.get(house_type):UIUtils.getString(R.string.no_select));
+
+        String tvHouseType = roomHallMap.get(decorationNeedsListBean.getLiving_room())
+                +roomMap.get(decorationNeedsListBean.getRoom())
+                +toiletMap.get(decorationNeedsListBean.getToilet());
+        tvHouseType = tvHouseType.equals("nullnullnull")?UIUtils.getString(R.string.no_select):tvHouseType;
+
+
+        tvc_house_type.setText(tvHouseType);//设置室 厅 卫
         tvc_measure_form_style.setText(styleMap.get(decorationNeedsListBean.getDecoration_style()));//风格
 
         tvc_address.setText(province_name + city_name + district_name);

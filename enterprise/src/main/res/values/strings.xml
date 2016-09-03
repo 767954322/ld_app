@@ -15,8 +15,17 @@
     <string name="popup_save_update_save">保存修改</string>
     <string name="popup_save_update_delete">删除修改</string>
     <string name="popup_save_update_cancel">取消</string>
+    <string name="popup_clear_cache_title">清除缓存数据</string>
+    <string name="popup_clear_cache_confirm">确定</string>
 
     <!-- 节点详情添加备注提示语 -->
     <string name="editText_hint_text">添加品牌等信息</string>
+
+    <!-- 个人中心里的文本 -->
+    <string name="personal_center_my_project">全部项目</string>
+    <string name="personal_center_more">更多</string>
+    <string name="personal_center_more_clear">清除缓存</string>
+    <string name="personal_center_more_about">关于APP</string>
+    <string name="personal_center_more_logout">退出登陆</string>
 
 </resources>

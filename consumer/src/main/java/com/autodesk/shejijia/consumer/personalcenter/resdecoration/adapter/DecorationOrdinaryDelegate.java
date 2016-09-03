@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.SelectDesignerActivity;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationBidderActivity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
@@ -18,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -31,8 +34,6 @@ import java.util.Map;
  */
 public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNeedsListBean> {
 
-    ///is_beishu:0 北舒套餐 1 非北舒.
-    private static final String IS_NOT_BEI_SHU = "1";
     /// 支付了设计首款的节点 .
     private static final int PAYED_FIRST_COST = 41;
     /**
@@ -60,7 +61,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
     @Override
     public boolean isForViewType(DecorationNeedsListBean needsListBean, int position) {
-        return IS_NOT_BEI_SHU.equals(needsListBean.getIs_beishu());
+        String wk_template_id = needsListBean.getWk_template_id();
+        return (!StringUtils.isEmpty(wk_template_id)) && (!WkTemplateConstants.IS_BEISHU.equals(wk_template_id));
     }
 
     @Override
@@ -68,7 +70,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
         final ArrayList<DecorationBiddersBean> mBidders =
                 (ArrayList<DecorationBiddersBean>) decorationNeedsListBean.getBidders();
-        
+
         final String mNeeds_id = decorationNeedsListBean.getNeeds_id();
         String contacts_name = decorationNeedsListBean.getContacts_name();
         String community_name = decorationNeedsListBean.getCommunity_name();
@@ -92,7 +94,6 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? "其它" : house_type);
         }
 
-
         district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
         String address = province_name + city_name + district_name;
 
@@ -111,7 +112,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (styleMap.containsKey(decoration_style)) {
             holder.setText(R.id.tv_decoration_style, styleMap.get(decoration_style));
         } else {
-            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? "其它" : decoration_style);
+            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.str_others) : decoration_style);
         }
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
@@ -127,10 +128,10 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 如果是精选项目订单，则显示派单人数
          */
-        if (wk_template_id.equals("4")) {
-            if(mBidders.size() > 0){
+        if (WkTemplateConstants.IS_ELITE.equals(wk_template_id)) {
+            if (mBidders.size() > 0) {
                 holder.setVisible(R.id.rl_select_designer, true);
-            }else{
+            } else {
                 holder.setVisible(R.id.rl_select_designer, false);
             }
             holder.setVisible(R.id.rl_bidder_count, false);
@@ -149,6 +150,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                 holder.setVisible(R.id.rl_bidder_count, true);
 
                 // TODO 需求： 当有设计师支付了首款，隐藏应标人数条目布局
+                /// TODO DELETE 新需求.
 //             if (isBidding) {
 //                if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
 //                    holder.setVisible(R.id.rl_bidder_count, false);
@@ -255,8 +257,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         boolean isBiding = false;
         if (!TextUtils.isEmpty(custom_string_status)) {
             switch (custom_string_status) {
-                case Constant.NumKey.THREE:
-                case Constant.NumKey.ZERO_THREE:
+                case Constant.NumKey.CERTIFIED_PASS_THREE:
+                case Constant.NumKey.CERTIFIED_PASS_THREE_1:
                     isBiding = true;
                     break;
                 default:
@@ -278,80 +280,83 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      * @return 节点状态
      */
     private String getNeedsState(String is_public, String wk_template_id, String custom_string_status,
-                                 int wk_cur_sub_node_id_int,String needs_id) {
+                                 int wk_cur_sub_node_id_int, String needs_id) {
         String needsState = "未知状态";
-        if(Constant.NumKey.FOUR.equals(wk_template_id)){//如果时精选
-            needsState = getEliteNeedsState(needsState, custom_string_status,needs_id);
-            return needsState;
+        switch (wk_template_id) {
+            case WkTemplateConstants.IS_ELITE:
+                needsState = getEliteNeedsState(needsState, custom_string_status, needs_id);
+                return needsState;
 
-        }
-        //下面是竟优或者时其他的逻辑
-        if (Constant.NumKey.ONE.equals(is_public)) {
-            /**
-             * is_public=1,需求终止
-             */
-            needsState = UIUtils.getString(R.string.canceled);
-        } else {
-            if (Constant.NumKey.ONE.equals(wk_template_id)) {
-                /**
-                 * 自选:wk_template_id=2,直接审核通过
-                 * 应标:wk_template_id=1
-                 */
-                switch (custom_string_status) {
-                    case Constant.NumKey.ONE:
-                    case Constant.NumKey.ZERO_ONE:
-                        /**
-                         * 审核中,可以修改需求
-                         */
-                        needsState = UIUtils.getString(R.string.checking);
-                        break;
+            default:
+                //下面是竟优或者时其他的逻辑
+                if (IS_PUBLIC.equals(is_public)) {
+                    /**
+                     * is_public=1,需求终止
+                     */
+                    needsState = UIUtils.getString(R.string.canceled);
+                } else {
+                    /**
+                     * 自选:wk_template_id=2,直接审核通过
+                     * 应标:wk_template_id=1
+                     */
+                    if (WkTemplateConstants.IS_AVERAGE.equals(wk_template_id)) {
+                        switch (custom_string_status) {
+                            case Constant.NumKey.ONE:
+                            case Constant.NumKey.ZERO_ONE:
+                                /**
+                                 * 审核中,可以修改需求
+                                 */
+                                needsState = UIUtils.getString(R.string.checking);
+                                break;
 
-                    case Constant.NumKey.TWO:
-                    case Constant.NumKey.ZERO_TWO:
-                        /**
-                         * 审核失败,可以修改需求.
-                         */
-                        needsState = UIUtils.getString(R.string.disapprove);
-                        break;
+                            case Constant.NumKey.TWO:
+                            case Constant.NumKey.ZERO_TWO:
+                                /**
+                                 * 审核失败,可以修改需求.
+                                 */
+                                needsState = UIUtils.getString(R.string.disapprove);
+                                break;
 
-                    case Constant.NumKey.THREE:
-                    case Constant.NumKey.ZERO_THREE:
-                        /**
-                         * 审核通过,但是没有设计师应标.??
-                         */
-                        needsState = "应标中";
-                        break;
+                            case Constant.NumKey.CERTIFIED_PASS_THREE:
+                            case Constant.NumKey.CERTIFIED_PASS_THREE_1:
+                                /**
+                                 * 审核通过,但是没有设计师应标.??
+                                 */
+                                needsState = "应标中";
+                                break;
+                        }
+                    }
+
+                    if (wk_cur_sub_node_id_int >= 11) {
+                        if (wk_cur_sub_node_id_int < 41) {
+                            needsState = "应标中";
+                        }
+                        if (wk_cur_sub_node_id_int >= 41) {
+                            needsState = "设计中";
+                        }
+
+                        if (wk_cur_sub_node_id_int >= 63 && wk_cur_sub_node_id_int != 64) {
+                            needsState = "项目完成";
+                        }
+
+                        if (wk_cur_sub_node_id_int == 64) {
+                            needsState = "设计中";
+                        }
+                    }
                 }
-            }
-
-            if (wk_cur_sub_node_id_int >= 11) {
-                if (wk_cur_sub_node_id_int < 41) {
-                    needsState = "应标中";
-                }
-                if (wk_cur_sub_node_id_int >= 41) {
-                    needsState = "设计中";
-                }
-
-                if (wk_cur_sub_node_id_int >= 63 && wk_cur_sub_node_id_int != 64) {
-                    needsState = "项目完成";
-                }
-
-                if (wk_cur_sub_node_id_int == 64) {
-                    needsState = "设计中";
-                }
-            }
         }
         return needsState;
     }
 
     /**
      * 获取精选状态信息
+     *
      * @param needsState
      * @param custom_string_status
      * @param needs_id
      * @return
      */
-    private String getEliteNeedsState(String needsState, String custom_string_status,String needs_id) {
+    private String getEliteNeedsState(String needsState, String custom_string_status, String needs_id) {
         switch (custom_string_status) {
             case Constant.NumKey.TWENTY_ONE://21:审核中
                 needsState = UIUtils.getString(R.string.checking);
@@ -371,7 +376,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
 
     /**
-     * 移除为被选中的设计师
+     * 移除未被选中的设计师
      *
      * @param mBidders 应标列表结合
      * @return

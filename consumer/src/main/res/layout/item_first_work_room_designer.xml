@@ -33,9 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_100"
                 android:layout_centerInParent="true"
-                android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon"
                 />
             <TextView
                 android:id="@+id/tv_designer_name"
@@ -64,10 +62,8 @@
                 android:id="@+id/work_room_design_logo_two"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_100"
-                android:scaleType="fitXY"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon"
                 />
             <TextView
                 android:id="@+id/tv_designer_name_two"
@@ -98,9 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_100"
                 android:layout_centerInParent="true"
-                android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/icon"
                 />
             <TextView
                 android:id="@+id/tv_designer_name_three"

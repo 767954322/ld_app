@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Created by t_xuz on 8/26/16.
- *
+ * 主页同级fragment的管理
  */
 public abstract class BaseProjectListActivity extends BaseActivity{
 

@@ -157,7 +157,6 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
                 }
                 holder.setText(R.id.tv_bin_go_budget, UIUtils.getString(R.string.my_bid_black) + biddingNeedsListEntity.getRenovation_budget());
 
-//                final String is_beishu = biddingNeedsListEntity.getIs_beishu();
                 final int is_loho = ((MyBidActivity) getActivity()).is_loho;
                 holder.getView(R.id.item_lv_bingo_fragment_order).setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -233,6 +233,7 @@ public class AdskApplication extends Application {
         CommonUtils.clearCookie(this);
         CommonUtils.clearAppCache(this);
         SharedPreferencesUtils.clear(AdskApplication.getInstance(), SharedPreferencesUtils.CONFIG);
+
     }
 
 

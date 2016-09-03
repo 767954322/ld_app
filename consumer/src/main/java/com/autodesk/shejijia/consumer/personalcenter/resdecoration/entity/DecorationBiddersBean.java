@@ -35,7 +35,6 @@ public class DecorationBiddersBean implements Serializable {
     private String style_names;
     private String design_price_max;
     private String design_price_min;
-
     public String following_count;
 
     private PaymentBean payment;

@@ -26,6 +26,7 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -190,6 +191,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             @Override
             public void onItemClick(Object object, int position) {
                 if(position == 0){
+                    CustomProgress.show(WkFlowStateActivity.this, UIUtils.getString(R.string.data_submission), false, null);
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
@@ -218,11 +220,14 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MyToast.show(WkFlowStateActivity.this,"网络链接失败");
+                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 finish();
+
             }
         };
 
@@ -344,12 +349,10 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void eliteEstablishContract(int wk_cur_sub_node_idi,View view){
         if(Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi >= 11 && wk_cur_sub_node_idi != 24) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 11 && wk_cur_sub_node_idi != 24) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class,-1);
-            } else if (wk_cur_sub_node_idi == 33) { /// 量房交付物 .
-                showNewActivity(FlowUploadDeliveryActivity.class,-1);
-
-            } else {
+            }
+            else {
                 view.setClickable(false);
             }
             return;
@@ -357,12 +360,10 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (Integer.parseInt(wk_cur_sub_node_id) == 11) {
             new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                     AlertView.Style.Alert, null).show();
-        } else if (Integer.parseInt(wk_cur_sub_node_id) >= 31 && Integer.parseInt(wk_cur_sub_node_id) != 33) {
+        } else if (Integer.parseInt(wk_cur_sub_node_id) == 31) {
             showNewActivity(FlowEstablishContractActivity.class,-1);
-        } else if (Integer.parseInt(wk_cur_sub_node_id) == 33) {//上传量房交付物
-            showNewActivity(FlowUploadDeliveryActivity.class,-1);
-
-        } else {
+        }
+        else {
             view.setClickable(false);
         }
 
@@ -377,7 +378,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void establishContract(int wk_cur_sub_node_idi,View view){
         if(Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi >= 21 && wk_cur_sub_node_idi != 33) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 21 && wk_cur_sub_node_idi != 33) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class,-1);
             } else if (wk_cur_sub_node_idi == 33) { /// 量房交付物 .
                 showNewActivity(FlowUploadDeliveryActivity.class,-1);
@@ -390,11 +391,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (Integer.parseInt(wk_cur_sub_node_id) == 21 || Integer.parseInt(wk_cur_sub_node_id) == 22) {
             new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                     AlertView.Style.Alert, null).show();
-        } else if (Integer.parseInt(wk_cur_sub_node_id) >= 31 && Integer.parseInt(wk_cur_sub_node_id) != 33) {
+        } else if (Integer.parseInt(wk_cur_sub_node_id) == 31 && Integer.parseInt(wk_cur_sub_node_id) != 33) {
             showNewActivity(FlowEstablishContractActivity.class,-1);
-        } else if (Integer.parseInt(wk_cur_sub_node_id) == 33) {//上传量房交付物
-            showNewActivity(FlowUploadDeliveryActivity.class,-1);
-
         } else {
             view.setClickable(false);
         }
@@ -412,16 +410,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             if (wk_cur_sub_node_idi == 31) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer_send_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                         AlertView.Style.Alert, null).show();
-            } else if (wk_cur_sub_node_idi == 33) {
-                view.setClickable(false);
-            } else if (wk_cur_sub_node_idi >= 41) {
-                showNewActivity(FlowFirstDesignActivity.class,MPStatusMachine.NODE__DESIGN_FIRST_PAY);
             } else {
                 view.setClickable(false);
             }
             return;
         }
-        if (wk_cur_sub_node_idi >= 31 && wk_cur_sub_node_idi != 33) {
+        if (wk_cur_sub_node_idi== 31 && wk_cur_sub_node_idi != 33) {
             showNewActivity(FlowFirstDesignActivity.class,MPStatusMachine.NODE__DESIGN_FIRST_PAY);
         } else {
             view.setClickable(false);
@@ -438,14 +432,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if(Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
             if (wk_cur_sub_node_idi == 41 || wk_cur_sub_node_idi == 42) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer_send_design_end), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this, AlertView.Style.Alert, null).show();
-            } else if (wk_cur_sub_node_idi >= 51) {
-                showNewActivity(FlowLastDesignActivity.class,MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
             } else {
                 view.setClickable(false);
             }
             return;
         }
-        if (wk_cur_sub_node_idi >= 41) {
+        if (wk_cur_sub_node_idi == 41) {
             showNewActivity(FlowLastDesignActivity.class,MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
         }
 
@@ -458,7 +450,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void deliver(int wk_cur_sub_node_idi,View view){
         if(Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi >= 51) {
+            if (wk_cur_sub_node_idi == 51) {
                 showNewActivity(FlowUploadDeliveryActivity.class,-1);
             }
             return;

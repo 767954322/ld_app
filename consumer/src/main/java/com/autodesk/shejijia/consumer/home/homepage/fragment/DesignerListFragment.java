@@ -12,12 +12,12 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerSearchActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -26,11 +26,9 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
@@ -95,12 +93,9 @@ public class DesignerListFragment extends BaseFragment
     protected void initData() {
         mSeekDesignerAdapter = new SeekDesignerAdapter(getActivity(), mDesignerListEntities);
         mListView.setAdapter(mSeekDesignerAdapter);
-        mFindDesignerBean.setNick_name("");
-        mFindDesignerBean.setDesign_price_code("");
-        mFindDesignerBean.setStart_experience("");
-        mFindDesignerBean.setEnd_experience("");
-        mFindDesignerBean.setStyle_names("");
+        setDefaultFindDesignerBean();
     }
+
 
     @Override
     protected void initListener() {
@@ -111,15 +106,18 @@ public class DesignerListFragment extends BaseFragment
     }
 
     /**
-     * 处理
+     * 处理筛选逻辑
      */
     public void handleFilterOption() {
         intent = new Intent(getActivity(), DesignerFiltrateActivity.class);
         startActivityForResult(intent, REQUEST_FILTRATE_CODE);
     }
 
+    /**
+     * 处理搜索逻辑
+     */
     public void handleSearchOption() {
-        intent = new Intent(getActivity(), DesignerSearchActivity.class);
+        intent = new Intent(getActivity(), SearchActivity.class);
         startActivityForResult(intent, REQUEST_SEARCH_CODE);
     }
 
@@ -170,7 +168,7 @@ public class DesignerListFragment extends BaseFragment
             }
 
             final String receiver_name = designerListEntity.getNick_name();
-            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
             MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
                 @Override
@@ -236,6 +234,7 @@ public class DesignerListFragment extends BaseFragment
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 String filterDesignerString = GsonUtil.jsonToString(jsonObject);
                 SeekDesignerBean seekDesignerBean = GsonUtil.jsonToBean(filterDesignerString, SeekDesignerBean.class);
                 updateViewFromFindDesigner(seekDesignerBean, state);
@@ -245,17 +244,23 @@ public class DesignerListFragment extends BaseFragment
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                new AlertView(UIUtils.getString(R.string.tip),
-                        UIUtils.getString(R.string.network_error), null,
-                        new String[]{UIUtils.getString(R.string.sure)},
-                        null, getActivity(),
-                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
                 CustomProgress.cancelDialog();
             }
         };
         MPServerHttpManager.getInstance().findDesignerList(findDesignerBean, offset, limit, okResponseCallback);
     }
 
+    /**
+     * 设置查找设计师默认值
+     */
+    private void setDefaultFindDesignerBean() {
+        mFindDesignerBean.setNick_name("");
+        mFindDesignerBean.setDesign_price_code("");
+        mFindDesignerBean.setStart_experience("");
+        mFindDesignerBean.setEnd_experience("");
+        mFindDesignerBean.setStyle_names("");
+    }
 
     private void updateViewFromFindDesigner(SeekDesignerBean seekDesignerBean, int state) {
         CustomProgress.cancelDialog();
@@ -288,9 +293,9 @@ public class DesignerListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
+        CustomProgress.show(getActivity(), "", false, null);
         mPullToRefreshLayout.autoRefresh();
         onRefresh(mPullToRefreshLayout);
-        CustomProgress.show(getActivity(), "", false, null);
     }
 
     @Override
