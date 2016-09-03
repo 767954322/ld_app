@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.JavascriptInterface;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,6 +41,8 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
@@ -48,8 +51,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLDecoder;
 import java.text.DecimalFormat;
 
 /**
@@ -77,7 +82,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     }
 
-
     @Override
     protected void initView() {
         super.initView();
@@ -92,18 +96,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_designer_decorate_address.setEnabled(false);
 
 
-        //setConsumerContentView();
-        WebSettings webSettings = twvc_consumerContent.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAllowContentAccess(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setDefaultTextEncodingName(Constant.NetBundleKey.UTF_8);
-        webSettings.setBuiltInZoomControls(false);
-        webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
-
-        twvc_consumerContent.setWebViewClient(new webViewClient());
-
-
+        initWebViewConfig();
         /* To prevent the pop-up keyboard */
         TextView textView = (TextView) findViewById(R.id.tv_prevent_edit_text);
         textView.requestFocus();
@@ -144,7 +137,24 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     }
 
-    private void ViewlayoutContractContent() {
+    private void initWebViewConfig(){
+
+        WebSettings webSettings = twvc_consumerContent.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setDefaultTextEncodingName(Constant.NetBundleKey.UTF_8);
+        webSettings.setBuiltInZoomControls(false);
+        webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDefaultTextEncodingName("utf-8");
+
+        twvc_consumerContent.setWebViewClient(new webViewClient());
+        twvc_consumerContent.addJavascriptInterface(new WebViewJavaScriptCallback(), ANDROID);
+    }
+
+
+    private void UpdateUIlayoutContractContent() {
         if ( isRoleDesigner()){
             ll_contract_content_consumer.setVisibility(View.GONE);
             ll_contract_content_designer.setVisibility(View.VISIBLE);
@@ -269,10 +279,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     private void UpdateUIConsumer() {
-        setConsumerContentView();
+        UpdateUIsetConsumerContentView();
     }
 
-    private void setConsumerContentView() {
+    private void UpdateUIsetConsumerContentView() {
 
         try {
             //Return an AssetManager instance for your application's package
@@ -388,6 +398,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         CustomProgress.cancelDialog();
     }
 
+    private void doClickOpenContractDetail()
+    {
+        Intent intent = new Intent(FlowEstablishContractActivity.this, FlowWebContractDetailActivity.class);
+        startActivity(intent);
+
+    }
 
     // work flow related
     @Override
@@ -420,7 +436,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 designer_name=list.getReal_name().getReal_name();
                 designer_mobile=list.getReal_name().getMobile_number().toString();
                 designer_mail=list.getEmail();
-                setConsumerContentView();
+                UpdateUIsetConsumerContentView();
 
             }
 
@@ -431,7 +447,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         });
 
 
-        ViewlayoutContractContent();
+        UpdateUIlayoutContractContent();
 
         if (isRoleDesigner()) { /// 设计师　.
             UpdateUIDesigner();
@@ -443,8 +459,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
 
     //contract data method
-    private MPDesignContractBean getContractDataEntityFromFirstBidder()
-    {
+    private MPDesignContractBean getContractDataEntityFromFirstBidder() {
         MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
         if (null == designContractEntity) // 如果设计师没有发送设计合同 .
             return null;
@@ -452,8 +467,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         return designContractEntity;
     }
 
-    private MPContractDataBean getContractDetailData(MPDesignContractBean contractEntity)
-    {
+    private MPContractDataBean getContractDetailData(MPDesignContractBean contractEntity) {
         String contractData = contractEntity.getContract_data();
         final String str = contractData.toString().replace("@jr@", "\""); /// 将@jr@转换成引号格式，以便读取 .
         MPContractDataBean designContractDetail = GsonUtil.jsonToBean(str, MPContractDataBean.class);
@@ -649,6 +663,29 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         }
     }
 
+    //Web view client
+    private class webViewClient extends WebViewClient {
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+    }
+
+    private final class WebViewJavaScriptCallback {
+
+        @JavascriptInterface
+        public void onClickContractDetail() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    doClickOpenContractDetail();
+                    //mWebView.loadUrl("javascript: showFromHtml2('IT-homer blog')");
+                    //Toast.makeText(JSAndroidActivity.this, "clickBtn2", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
 
 
     ///others
@@ -813,14 +850,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
 
-    //Web view client
-    private class webViewClient extends WebViewClient {
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-    }
 
+
+    private static final String ANDROID = "android";
     private TextViewContent tvc_consumer_name;
     private TextViewContent tvc_consumer_phone;
     private TextViewContent tvc_consumer_email;

@@ -122,7 +122,7 @@
                 <div style="position:absolute; right:0px; top:8px">
                     <img src="img/right_arrow.png" style="display:block; width:60%">
                 </div>
-                <button onclick="onclickOpenDetail()" class="contract-detail-button" type="button" style="">查看合同详情</button>
+                <button  class="contract-detail-button" type="button" onclick="window.android.onClickContractDetail()">查看合同详情</button>
             </div>
         </div>
         <!-- THE FOOTER -->
