@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
 
+import java.io.Serializable;
+
 /**
  * @author he.liu .
  * @version v1.0 .
@@ -7,7 +9,7 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
  * @file CasesListBean.java .
  * @brief 案例库实体类 .
  */
-public class CasesListBean {
+public class CasesListBean implements Serializable {
     private Object bedroom;
     private String city;
     private Object description;
@@ -44,6 +46,7 @@ public class CasesListBean {
     private String room_area;
     private String room_type;
     private Object search_tag;
+
     public Object getBedroom() {
         return bedroom;
     }

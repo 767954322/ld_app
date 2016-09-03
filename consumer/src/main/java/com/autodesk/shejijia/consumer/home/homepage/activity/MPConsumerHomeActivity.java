@@ -585,7 +585,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return designerListFragment;
     }
 
-
     /**
      * 获取全流程节点提示信息
      */
@@ -646,7 +645,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         mDesignerIndentListBtn.setVisibility(View.GONE);
         tvGronMmsgNumber.setVisibility(View.GONE);
     }
-
 
     //判断是否聊过天，跳转到之前聊天室或新聊天室
     private void jumpToChatRoom(String scanResult) {

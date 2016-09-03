@@ -8,13 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.entity.BidHallDetailEntity;
 import com.autodesk.shejijia.consumer.bidhall.entity.RealNameBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.CertificationActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -23,11 +21,11 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
 
@@ -131,7 +129,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,BiddingHallDetailActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, BiddingHallDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getBidHallDetailData(needs_id, okResponseCallback);
@@ -171,8 +169,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,BiddingHallDetailActivity.this);
-              //  getAlertView(UIUtils.getString(R.string.designer_bid_detail_fail), null, false).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, BiddingHallDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().sendBidDemand(jsonObject, needs_id, designer_id, okResponseCallback);
@@ -220,12 +217,12 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             }
         } else {
             CustomProgress.cancelDialog();
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.designer_bid_detail_realy_no_finish), null, null, new String[]{UIUtils.getString(R.string.certification_immediately)}, BiddingHallDetailActivity.this,
+            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.msg_no_certification), null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object o, int position) {
                     if (position != AlertView.CANCELPOSITION) {
-                        CommonUtils.launchActivity(BiddingHallDetailActivity.this, CertificationActivity.class);
+                        finish();
                     }
                 }
             }).setCancelable(true).show();
@@ -272,12 +269,12 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
         setTitleForNavbar(community_name);
         mTvProjectNeedsId.setText(needs_id);
-        mTvHouseType.setText(TextUtils.isEmpty(house_type_convert)?UIUtils.getString(R.string.no_select):house_type_convert);
-        mTvHouseStyle.setText(TextUtils.isEmpty(decoration_style_convert)?UIUtils.getString(R.string.no_select):decoration_style_convert);
-        mTvHouseModel.setText(TextUtils.isEmpty(room_cn)?UIUtils.getString(R.string.no_select):room_cn);
+        mTvHouseType.setText(TextUtils.isEmpty(house_type_convert) ? UIUtils.getString(R.string.no_select) : house_type_convert);
+        mTvHouseStyle.setText(TextUtils.isEmpty(decoration_style_convert) ? UIUtils.getString(R.string.no_select) : decoration_style_convert);
+        mTvHouseModel.setText(TextUtils.isEmpty(room_cn) ? UIUtils.getString(R.string.no_select) : room_cn);
         mTvName.setText(mBidHallEntity.getContacts_name());
-        mTvDecorationBudget.setText(TextUtils.isEmpty(decoration_budget)?UIUtils.getString(R.string.no_select):decoration_budget);
-        mTvDesignBudget.setText(TextUtils.isEmpty(mBidHallEntity.getDesign_budget())?UIUtils.getString(R.string.no_select):mBidHallEntity.getDesign_budget());
+        mTvDecorationBudget.setText(TextUtils.isEmpty(decoration_budget) ? UIUtils.getString(R.string.no_select) : decoration_budget);
+        mTvDesignBudget.setText(TextUtils.isEmpty(mBidHallEntity.getDesign_budget()) ? UIUtils.getString(R.string.no_select) : mBidHallEntity.getDesign_budget());
         mTvHouseArea.setText(mBidHallEntity.getHouse_area() + "m²");
         mTvProjectAddress.setText(projectAddress);
         mTvPublishTime.setText(mBidHallEntity.getPublish_time());
