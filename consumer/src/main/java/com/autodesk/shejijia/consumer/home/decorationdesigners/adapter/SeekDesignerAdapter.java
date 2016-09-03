@@ -80,7 +80,7 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
 
         if (null != designerInfoBean) {
             case_count = designerInfoBean.getCase_count() + "";
-            style_long_names = designerInfoBean.getStyle_long_names();
+            style_long_names = designerInfoBean.getStyle_names();
             design_price_min = designerInfoBean.getDesign_price_min();
             design_price_max = designerInfoBean.getDesign_price_max();
             is_real_name = designerInfoBean.getIs_real_name();
@@ -101,21 +101,12 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
         if (costBoolean) {
             holder.setText(R.id.tv_seek_designer_cost, UIUtils.getString(R.string.has_yet_to_fill_out));
         } else {
-            /// TODO DELETE .
-            //            if (StringUtils.isNumeric(design_price_min)) {
-            //                design_price_min = Integer.valueOf(design_price_min)/100 + "";
-            //            }
-            //
-            //            if (StringUtils.isNumeric(design_price_max)) {
-            //                design_price_max = Integer.valueOf(design_price_max)/100 + "";
-            //            }
 
             holder.setText(R.id.tv_seek_designer_cost, design_price_min + "-" + design_price_max + "元/m²");
         }
         audit_status = TextUtils.isEmpty(audit_status) ? "" : audit_status;
 
         ///  TODO is_real_name 老字段  .
-
         if (IS_REAL_NAME.equals(audit_status) || is_real_name == 2) {
             holder.setVisible(R.id.img_seek_designer_authentication, true);
         } else {
