@@ -9,6 +9,7 @@
         android:id="@+id/ll_beishu_border"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_40"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <!--<TextView-->

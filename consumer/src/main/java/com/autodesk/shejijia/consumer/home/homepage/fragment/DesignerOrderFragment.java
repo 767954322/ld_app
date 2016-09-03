@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
@@ -23,26 +24,33 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  * @file DesignerOrderActivity.java .
  * @brief 普通设计师, 普通订单 .
  */
-public class DesignerOrderFragment extends BaseFragment implements View.OnClickListener{
+public class DesignerOrderFragment extends BaseFragment implements View.OnClickListener {
+
+    private LinearLayout mLlBeishuBorder;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_order;
     }
+
     @Override
     protected void initView() {
-
-        mOrderContainer = (FrameLayout)rootView.findViewById(R.id.fl_designer_order_beishu_container);
+        mLlBeishuBorder = (LinearLayout) rootView.findViewById(R.id.ll_beishu_border);
+        mOrderContainer = (FrameLayout) rootView.findViewById(R.id.fl_designer_order_beishu_container);
         mBeishuOrder = (TextView) rootView.findViewById(R.id.tv_designer_order_beishu);
         mOrder = (TextView) rootView.findViewById(R.id.tv_designer_order);
     }
 
     @Override
     protected void initData() {
-        setDefaultFragment();
+        ///   fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
+//        setEliteFragment();
+        setCommonOrderFragment();
     }
 
     @Override
@@ -80,6 +88,7 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
                 break;
         }
     }
+
     private void setTextColor(TextView[] textViews) {
         for (TextView textView : textViews) {
             setTvColor(textView);
@@ -91,7 +100,7 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
      * @param view
      * @brief set the view border and solid .
      */
-    private void setTvColor(TextView  view) {
+    private void setTvColor(TextView view) {
         drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE); // solid
         drawable.setStroke(UIUtils.dip2px(getActivity(), 1), UIUtils.getColor(R.color.bg_0084ff));
@@ -99,6 +108,7 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
         view.setBackground(drawable); // set background
 
     }
+
     private void setColorAndBackgroundForTextView(TextView textView) {
         textView.setTextColor(UIUtils.getColor(R.color.white));
         textView.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_blue_noradius));
@@ -118,10 +128,21 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
     }
 
     /**
-     * @brief 默认北舒套餐页面 .
+     * 精选
      */
-    public void setDefaultFragment() {
+    public void setEliteFragment() {
         mCommonOrderFragment = new EliteFragment();
+        fragmentManager = getChildFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fl_designer_order_beishu_container, mCommonOrderFragment)
+                .commit();
+        fromFragment = mCommonOrderFragment;
+    }
+
+    /**
+     * 竞优
+     */
+    public void setCommonOrderFragment() {
+        mCommonOrderFragment = new OrderCommonFragment();
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fl_designer_order_beishu_container, mCommonOrderFragment)
                 .commit();
@@ -131,7 +152,7 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
     private TextView mBeishuOrder, mOrder;
     private Context context = getActivity();
     private FrameLayout mOrderContainer;
-    private Fragment mBeishuMealFragment, mCommonOrderFragment,fromFragment;
+    private Fragment mBeishuMealFragment, mCommonOrderFragment, fromFragment;
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
     private GradientDrawable drawable;/// set Textview bordercolor .

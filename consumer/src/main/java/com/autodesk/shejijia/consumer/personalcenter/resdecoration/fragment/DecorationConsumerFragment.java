@@ -164,7 +164,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     public void onResume() {
         super.onResume();
 //        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (null !=memberEntity&& Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
+//        if (null !=memberEntity&& !Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
         getMyDecorationData(OFFSET, LIMIT, 1);
 //        }
     }
@@ -173,5 +173,6 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 
 }

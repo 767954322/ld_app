@@ -57,14 +57,6 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
     @Override
     public void onClick(View v) {
         transaction = fragmentManager.beginTransaction();
-//
-//        if (mBeishuMealFragment == null) {
-//            mBeishuMealFragment = new OrderBeiShuFragment();
-//        }
-//
-//        if (mCommonOrderFragment == null) {
-//            mCommonOrderFragment = new OrderCommonFragment();
-//        }
 
         switch (v.getId()) {
             case R.id.tv_elite_project:///精选项目
@@ -75,6 +67,7 @@ public class DesignerOrderBeiShuFragment extends BaseFragment implements View.On
                 }
                 switchFragment(eliteFragment);
                 break;
+
             case R.id.tv_designer_order: /// 竟优项目 .
 
                 setColorAndBackgroundForTextView(mOrder);

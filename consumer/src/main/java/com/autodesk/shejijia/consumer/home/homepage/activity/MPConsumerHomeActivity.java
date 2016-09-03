@@ -71,8 +71,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     protected static final String TAB_PROJECT = "TAB_PROJECT";      /// 我的订单 .
     protected static final String TAB_SEARCH = "TAB_SEARCH";      /// 我的订单 .
 
-    private MemberEntity memberEntity;
-
     public int is_loho;
 
     public MPConsumerHomeActivity() {
@@ -478,7 +476,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 chooseViewPointer.setWidthOrHeight(btWidth, btHeight, POINTER_START_END_NUMBER + POINTER_MIDDLE_END_NUMBER, POINTER_END_NUMBER - POINTER_MIDDLE_END_NUMBER);
                 //判断进入北舒套餐，，还是进入普通订单页面
                 if (null != designerInfoDetails) {
-                    if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
+                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
+                    /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
+                    //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
                         /// 北舒 .
                         mDesignerPersonalCenterFragment.setDesignBeiShuFragment();
                     } else {
@@ -616,12 +616,20 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
-                    high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
+                if (designerInfoDetails != null) {
+                    is_loho = designerInfoDetails.getDesigner().getIs_loho();
                 }
                 if (mDesignerPersonalCenterFragment != null) {
-                    mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit);
+                    mDesignerPersonalCenterFragment.setDefaultFragment(is_loho);
+
                 }
+                /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
+//                if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
+//                    high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
+//                }
+//                if (mDesignerPersonalCenterFragment != null) {
+//                    mDesignerPersonalCenterFragment.setEliteFragment(high_level_audit);
+//                }
             }
 
             @Override

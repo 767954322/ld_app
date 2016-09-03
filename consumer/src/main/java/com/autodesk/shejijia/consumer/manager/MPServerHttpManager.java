@@ -687,18 +687,28 @@ public class MPServerHttpManager {
      * @param limit
      */
     public void getDesignerBeiShuOrder(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_GET_BEI_SHU_ORDER + designer_id +
-                "/needs?" +
-                "sort_order=desc" +
-                "&limit=" + limit +
-                "&offset=" + offset +
-                "&media_type_id=53" +
-                "&software=96" +
-                "&asset_taxonomy=ezhome/beishu" +
-                "&sort_by=date" +
-                "&version=4.15";
+//        String url = UrlConstants.URL_GET_BEI_SHU_ORDER + designer_id +
+//                "/needs?" +
+//                "sort_order=desc" +
+//                "&limit=" + limit +
+//                "&offset=" + offset +
+//                "&media_type_id=53" +
+//                "&software=96" +
+//                "&asset_taxonomy=ezhome/beishu" +
+//                "&sort_by=date" +
+//                "&version=4.15";
 
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+        String urlV2 = UrlConstants.URL_GET_ORDER + designer_id + "/orders" +
+                "?offset=" + offset +
+                "&limit=" + limit + "" +
+                "&sort_order=desc" +
+                "&sort_by=date" +
+                "&version=2" +
+                "&service_modlue=4" +
+                "&node_ids=" +
+                "&sub_node_ids=" +
+                "&commend=";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, urlV2, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
@@ -725,7 +735,19 @@ public class MPServerHttpManager {
                 "&sort_order=desc" +
                 "&sort_by=date" +
                 "&limit=" + limit;
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+
+        String urlV2 = UrlConstants.URL_GET_ORDER + designer_id + "/orders" +
+                "?offset=" + offset +
+                "&limit=" + limit + "" +
+                "&sort_order=desc" +
+                "&sort_by=date" +
+                "&version=2" +
+                "&service_modlue=2" +
+                "&node_ids=" +
+                "&sub_node_ids=" +
+                "&commend=";
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, urlV2, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
