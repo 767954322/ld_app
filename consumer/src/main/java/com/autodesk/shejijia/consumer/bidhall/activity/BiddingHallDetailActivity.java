@@ -206,17 +206,24 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * 获取姓名信息，并更新
      */
     private void updateViewFromRealNameData() {
+        CustomProgress.cancelDialog();
+
         if (mRealNameBean.getDesigner().getIs_real_name() == 2) {
             if (bidder_count >= BIDDER_MAX) {
                 bidCountFullDialog();
             } else {
-                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                String designer_id = memberEntity.getAcs_member_id();
-                String user_name = mRealNameBean.getUser_name();
-                sendBidDemand("", user_name, needs_id, designer_id);
+                String measurement_price = mRealNameBean.getDesigner().getMeasurement_price();
+
+                if (TextUtils.isEmpty(measurement_price)) {
+                    noSetMeasureFee();
+                } else {
+                    MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                    String designer_id = memberEntity.getAcs_member_id();
+                    String user_name = mRealNameBean.getUser_name();
+                    sendBidDemand("", user_name, needs_id, designer_id);
+                }
             }
         } else {
-            CustomProgress.cancelDialog();
             new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.msg_no_certification), null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
@@ -227,6 +234,10 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 }
             }).setCancelable(true).show();
         }
+    }
+
+    private void noSetMeasureFee() {
+        getAlertView(UIUtils.getString(R.string.no_set_measure_fee), null, false).show();
     }
 
     /**
@@ -299,9 +310,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         if (memberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
 
             mBtnSendBid.setVisibility(View.GONE);
-
         }
-
     }
 
     /**
@@ -352,7 +361,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * 应标成功提示
      */
     public void bidCountFullDialog() {
-        CustomProgress.cancelDialog();
         getAlertView(UIUtils.getString(R.string.should_number_full), null, false).show();
     }
 

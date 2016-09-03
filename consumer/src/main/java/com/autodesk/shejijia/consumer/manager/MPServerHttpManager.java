@@ -312,14 +312,7 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, filterURl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-//                if (null != memberEntity && !TextUtils.isEmpty(memberEntity.getHs_accesstoken())) {
-//                    HashMap<String, String> header = new HashMap<>();
-//                    header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(memberEntity.getHs_accesstoken()));
-//                    return header;
-//                } else {
                 return super.getHeaders();
-//                }
             }
         };
         queue.add(okRequest);

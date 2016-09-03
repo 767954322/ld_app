@@ -99,7 +99,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             getMemberInfoData(designer_id);
 
             /// TODO 暂时去掉实名认证功能，后续模块增加 .
-            //getRealNameAuditStatus(designer_id, hs_uid);
+            getRealNameAuditStatus(designer_id, hs_uid);
         } else {
             mTvDesignerNickname.setText(R.string.no_data);
             mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
@@ -199,7 +199,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 if ("2".equals(audit_status)) {
                     mLlNoAttestation.setVisibility(View.GONE);
                     mImgCertificateIcon.setVisibility(View.VISIBLE);
-                } else {
+                } /*else {
                     mLlNoAttestation.setVisibility(View.VISIBLE);
                     if (null == audit_status) {
                         mTvAuditStatusAgo.setText(UIUtils.getString(R.string.please_go_to_certification));
@@ -210,7 +210,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                     } else if ("3".equals(audit_status)) {
                         mTvAuditStatusAgo.setText(UIUtils.getString(R.string.authentication_failed));
                     }
-                }
+                }*/
             }
 
             @Override
@@ -358,7 +358,6 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
 
                 case MORE_LOGOUT:
                     finish();
-                    //startActivity(new Intent(DesignerPersonalCenterActivity.this, DesignerPersonalCenterActivity.this.getClass()));
             }
         }
     }
@@ -369,20 +368,10 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             designer_id = memberEntity.getAcs_member_id();
             hs_uid = memberEntity.getHs_uid();
-//
-//            getDesignerInfoData(designer_id, hs_uid);
-//            getMemberInfoData(designer_id);
-//            getRealNameAuditStatus(designer_id, hs_uid);
-//        } else {
-//            mTvDesignerNickname.setText(R.string.no_data);
-//            mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
-//        }
-//    }
-
             getDesignerInfoData(designer_id, hs_uid);
             getMemberInfoData(designer_id);
             /// TODO 暂时去掉实名认证功能，后续模块增加 .
-            //  getRealNameAuditStatus(designer_id, hs_uid);
+            getRealNameAuditStatus(designer_id, hs_uid);
         } else {
             mTvDesignerNickname.setText(R.string.no_data);
             mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
