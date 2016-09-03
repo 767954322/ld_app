@@ -104,6 +104,7 @@
             android:layout_marginRight="@dimen/size_20"
             android:background="@drawable/bg_common_btn_blue"
             android:text="@string/stop_demand"
+            android:visibility="gone"
             android:textColor="@color/bg_ff"
             android:textSize="@dimen/font_20" />
     </RelativeLayout>
