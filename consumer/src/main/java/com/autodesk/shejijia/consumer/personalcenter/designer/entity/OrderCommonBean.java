@@ -13,27 +13,27 @@ import java.util.List;
 public class OrderCommonBean implements Serializable {
 
 
-    private int count;
-    private long date;
+    private String count;
+    private String date;
     private int limit;
     private int offset;
     private Object _link;
 
     private List<OrderListBean> order_list;
 
-    public int getCount() {
+    public String getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(String count) {
         this.count = count;
     }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -95,7 +95,7 @@ public class OrderCommonBean implements Serializable {
         private String consumer_name;
         private String contacts_mobile;
         private String contacts_name;
-        private int custom_string_status;
+        private String custom_string_status;
         private String decoration_budget;
         private String decoration_style;
         private String design_budget;
@@ -325,11 +325,11 @@ public class OrderCommonBean implements Serializable {
             this.contacts_name = contacts_name;
         }
 
-        public int getCustom_string_status() {
+        public String getCustom_string_status() {
             return custom_string_status;
         }
 
-        public void setCustom_string_status(int custom_string_status) {
+        public void setCustom_string_status(String custom_string_status) {
             this.custom_string_status = custom_string_status;
         }
 

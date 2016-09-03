@@ -43,11 +43,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * @author DongXueQiu .
- * @version 1.0 .
- * @date 2016/3/4 0007 9:42 .
- * @file BidHallFragment  .
- * @brief 应标大厅fragment, 展示可应标的事例 .
+ * <p>Description:设计师列表模块 </p>
+ *
+ * @author liuhea
+ * @date 16/9/4
+ *  
  */
 public class DesignerListFragment extends BaseFragment
         implements PullToRefreshLayout.OnRefreshListener,

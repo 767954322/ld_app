@@ -332,15 +332,6 @@ public class MPMeasureFormBean implements Serializable {
         private String uid;
         private String wk_cur_sub_node_id;
         private String declaration;
-        /**
-         * paid_fee : 0
-         * measurement_fee : 0.00
-         * unpaid_fee : 0
-         * create_date : null
-         * total_fee : 0.00
-         */
-
-        private PaymentBean payment;
         private String status;
         private String wk_current_step_id;
         private String design_price_max;
@@ -357,24 +348,12 @@ public class MPMeasureFormBean implements Serializable {
         private String measurement_fee;
         private String join_time;
         private String design_thread_id;
-        /**
-         * type : 0
-         * designer_id : null
-         * files : null
-         */
 
+        private PaymentBean payment;
         private DeliveryBean delivery;
         private List<WkStepsBean> wk_steps;
         private List<MPDesignContractBean> design_contract;
         private List<WkNextPossibleSubNodeIdsBean> wk_next_possible_sub_node_ids;
-        /**
-         * order_line_no : 4941
-         * designer_id : 20738079
-         * order_status : 1
-         * order_no : 3457
-         * order_type : 0
-         */
-
         private List<OrdersBean> orders;
 
 
@@ -716,7 +695,7 @@ public class MPMeasureFormBean implements Serializable {
         public static class DeliveryBean implements Serializable {
             private int type;
             private String designer_id;
-            private String files;
+            private List<MPFileBean> files;
 
             public int getType() {
                 return type;
@@ -734,18 +713,18 @@ public class MPMeasureFormBean implements Serializable {
                 this.designer_id = designer_id;
             }
 
-            public String getFiles() {
+            public List<MPFileBean> getFiles() {
                 return files;
             }
 
-            public void setFiles(String files) {
+            public void setFiles(List<MPFileBean> files) {
                 this.files = files;
             }
         }
 
         public static class OrdersBean implements Serializable {
             private String order_line_no;
-            private int designer_id;
+            private String designer_id;
             private String order_status;
             private String order_no;
             private String order_type;
@@ -758,11 +737,11 @@ public class MPMeasureFormBean implements Serializable {
                 this.order_line_no = order_line_no;
             }
 
-            public int getDesigner_id() {
+            public String getDesigner_id() {
                 return designer_id;
             }
 
-            public void setDesigner_id(int designer_id) {
+            public void setDesigner_id(String designer_id) {
                 this.designer_id = designer_id;
             }
 

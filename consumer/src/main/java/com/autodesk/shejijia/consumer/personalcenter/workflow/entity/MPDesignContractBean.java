@@ -15,9 +15,9 @@ public class MPDesignContractBean implements Serializable {
     public String contract_data;
     public String contract_first_charge;
     public String contract_no;
-    public int contract_status;
+    public String contract_status;
     public String contract_template_url;
-    public int contract_type;
+    public String contract_type;
     public String contract_update_date;
 
     public String getContract_charge() {
@@ -67,12 +67,12 @@ public class MPDesignContractBean implements Serializable {
         this.contract_no = contract_no;
     }
 
-    public int getContract_status() {
+    public String getContract_status() {
 
         return contract_status;
     }
 
-    public void setContract_status(int contract_status) {
+    public void setContract_status(String contract_status) {
         this.contract_status = contract_status;
     }
 
@@ -91,11 +91,11 @@ public class MPDesignContractBean implements Serializable {
         this.contract_template_url = contract_template_url;
     }
 
-    public int getContract_type() {
+    public String getContract_type() {
         return contract_type;
     }
 
-    public void setContract_type(int contract_type) {
+    public void setContract_type(String contract_type) {
         this.contract_type = contract_type;
     }
 
