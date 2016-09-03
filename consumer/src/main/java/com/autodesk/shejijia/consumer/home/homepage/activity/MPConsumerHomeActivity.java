@@ -205,10 +205,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             designer_main_radio_group.check(index);
         }
 
-        //未登录状态，会自动进入案例fragment
-        if (mMemberEntity == null) {
-            designer_main_radio_btn.setChecked(true);
-        }
+//        //未登录状态，会自动进入案例fragment
+//        if (mMemberEntity == null) {
+//            designer_main_radio_btn.setChecked(true);
+//        }
     }
 
 
@@ -280,7 +280,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
                     loadMainFragment(mDesignerPersonalCenterFragment, DESIGNER_PERSONAL_FRAGMENT_TAG);
                 }
-            } else {
+            } else if (memberEntity!=null && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
                 if (mConsumerPersonalCenterFragment == null) {
                     mConsumerPersonalCenterFragment = new DecorationConsumerFragment();
                     loadMainFragment(mConsumerPersonalCenterFragment, CONSUMER_PERSONAL_FRAGMENT_TAG);
@@ -477,8 +477,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 //判断进入北舒套餐，，还是进入普通订单页面
                 if (null != designerInfoDetails) {
                     if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-                    /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-                    //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
+                        /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
+                        //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
                         /// 北舒 .
                         mDesignerPersonalCenterFragment.setDesignBeiShuFragment();
                     } else {

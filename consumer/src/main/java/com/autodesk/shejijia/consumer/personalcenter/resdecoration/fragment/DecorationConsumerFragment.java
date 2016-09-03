@@ -173,6 +173,4 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
 }
