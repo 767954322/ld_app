@@ -209,12 +209,20 @@ public class RealNameBean implements Serializable {
         private String introduction;
         private int is_loho;
         private int is_real_name;
-        private double measurement_price;
+        private String measurement_price;
         private String personal_honour;
         private String style_long_names;
         private String style_names;
         private String styles;
         private String theme_pic;
+
+        public String getMeasurement_price() {
+            return measurement_price;
+        }
+
+        public void setMeasurement_price(String measurement_price) {
+            this.measurement_price = measurement_price;
+        }
 
         public void setAcs_member_id(int acs_member_id) {
             this.acs_member_id = acs_member_id;
@@ -244,9 +252,6 @@ public class RealNameBean implements Serializable {
             this.is_real_name = is_real_name;
         }
 
-        public void setMeasurement_price(double measurement_price) {
-            this.measurement_price = measurement_price;
-        }
 
         public void setPersonal_honour(String personal_honour) {
             this.personal_honour = personal_honour;
@@ -296,9 +301,7 @@ public class RealNameBean implements Serializable {
             return is_real_name;
         }
 
-        public double getMeasurement_price() {
-            return measurement_price;
-        }
+
 
         public String getPersonal_honour() {
             return personal_honour;

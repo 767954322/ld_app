@@ -70,7 +70,6 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mLlSetMeal = (LinearLayout) findViewById(R.id.ll_set_meal);
         mLlPersonalDesignerInfo = (LinearLayout) findViewById(R.id.ll_personal_designer_info);
         mLlPersonalDesignerManage = (LinearLayout) findViewById(R.id.ll_personal_designer_manage);
-        //  mLlPersonalDesignerDecorate = (LinearLayout) findViewById(R.id.ll_personal_designer_decorate);
         mLlPersonalDesignerProperty = (LinearLayout) findViewById(R.id.ll_personal_designer_property);
         mLlPersonalDesignerMore = (LinearLayout) findViewById(R.id.ll_personal_designer_more);
         mLlPersonalDesignerMsgCenter = (LinearLayout) findViewById(R.id.ll_personal_designer_msg_center);
@@ -92,13 +91,14 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         if (null == memberEntity) {
             return;
         }
-
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             designer_id = memberEntity.getAcs_member_id();
             hs_uid = memberEntity.getHs_uid();
 
             getDesignerInfoData(designer_id, hs_uid);
             getMemberInfoData(designer_id);
+
+            /// TODO 暂时去掉实名认证功能，后续模块增加 .
             getRealNameAuditStatus(designer_id, hs_uid);
         } else {
             mTvDesignerNickname.setText(R.string.no_data);
@@ -114,7 +114,6 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mLlNoAttestation.setOnClickListener(this);
         mLlPersonalDesignerInfo.setOnClickListener(this);
         mLlPersonalDesignerManage.setOnClickListener(this);
-        // mLlPersonalDesignerDecorate.setOnClickListener(this);
         mLlPersonalDesignerProperty.setOnClickListener(this);
         mLlPersonalDesignerMore.setOnClickListener(this);
         mTvDesignerNickname.setOnClickListener(this);
@@ -148,9 +147,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerPersonalCenterActivity.this,
-//                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerPersonalCenterActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerPersonalCenterActivity.this);
             }
         });
     }
@@ -180,9 +177,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 if (DesignerPersonalCenterActivity.this != null) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerPersonalCenterActivity.this,
-//                            AlertView.Style.Alert, null).show();
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerPersonalCenterActivity.this);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerPersonalCenterActivity.this);
                 }
             }
         });
@@ -204,7 +199,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 if ("2".equals(audit_status)) {
                     mLlNoAttestation.setVisibility(View.GONE);
                     mImgCertificateIcon.setVisibility(View.VISIBLE);
-                } else {
+                } /*else {
                     mLlNoAttestation.setVisibility(View.VISIBLE);
                     if (null == audit_status) {
                         mTvAuditStatusAgo.setText(UIUtils.getString(R.string.please_go_to_certification));
@@ -215,16 +210,14 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                     } else if ("3".equals(audit_status)) {
                         mTvAuditStatusAgo.setText(UIUtils.getString(R.string.authentication_failed));
                     }
-                }
+                }*/
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 if (DesignerPersonalCenterActivity.this != null) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, DesignerPersonalCenterActivity.this,
-//                            AlertView.Style.Alert, null).show();
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerPersonalCenterActivity.this);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerPersonalCenterActivity.this);
                 }
             }
         });
@@ -365,7 +358,6 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
 
                 case MORE_LOGOUT:
                     finish();
-                    //startActivity(new Intent(DesignerPersonalCenterActivity.this, DesignerPersonalCenterActivity.this.getClass()));
             }
         }
     }
@@ -376,18 +368,9 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             designer_id = memberEntity.getAcs_member_id();
             hs_uid = memberEntity.getHs_uid();
-//
-//            getDesignerInfoData(designer_id, hs_uid);
-//            getMemberInfoData(designer_id);
-//            getRealNameAuditStatus(designer_id, hs_uid);
-//        } else {
-//            mTvDesignerNickname.setText(R.string.no_data);
-//            mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
-//        }
-//    }
-
             getDesignerInfoData(designer_id, hs_uid);
             getMemberInfoData(designer_id);
+            /// TODO 暂时去掉实名认证功能，后续模块增加 .
             getRealNameAuditStatus(designer_id, hs_uid);
         } else {
             mTvDesignerNickname.setText(R.string.no_data);
@@ -398,12 +381,10 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
     private static final int QR = 1;
     private static final int MORE_LOGOUT = 0;
 
-    /// 控件.
     private LinearLayout mLlSetMeal;
     private LinearLayout mLlPersonalDesignerManage;
     private LinearLayout mLlPersonalDesignerProperty;
     private LinearLayout mLlPersonalDesignerMore;
-    //   private LinearLayout mLlPersonalDesignerDecorate;
     private LinearLayout mLlPersonalDesignerInfo;
     private LinearLayout mLlPersonalDesignerMsgCenter;
     private LinearLayout mLlNoAttestation;
@@ -413,11 +394,9 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
     private PolygonImageView mPolygonImageView;
     private LinearLayout mTvDesignerAttention;
 
-    /// 变量.
     private String designer_id, hs_uid;
     private String nick_name;
     private String audit_status;
-    /// 类.
     private MemberEntity memberEntity;
     private DesignerInfoDetails designerInfoDetails;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;

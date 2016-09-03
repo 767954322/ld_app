@@ -135,4 +135,7 @@
     <string name="error_state">未知状态</string>
 
 
+    <string name="no_set_measure_fee">未设置量房费，不能应标</string>
+
+
 </resources>

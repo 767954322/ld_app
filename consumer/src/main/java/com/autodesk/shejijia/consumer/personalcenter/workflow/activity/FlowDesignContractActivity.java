@@ -54,7 +54,7 @@ import java.text.DecimalFormat;
  * @file FlowEstablishContractActivity.java  .
  * @brief 全流程设计合同.
  */
-public class FlowEstablishContractActivity extends BaseWorkFlowActivity implements View.OnClickListener, OnItemClickListener, OnDismissListener {
+public class FlowDesignContractActivity extends BaseWorkFlowActivity implements View.OnClickListener, OnItemClickListener, OnDismissListener {
 
     @Override
     protected int getLayoutResId() {
@@ -127,7 +127,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_flow_examine_contract:
-                Intent intent = new Intent(FlowEstablishContractActivity.this, FlowWebContractDetailActivity.class);
+                Intent intent = new Intent(FlowDesignContractActivity.this, FlowWebContractDetailActivity.class);
 
                 if (tvc_design_sketch.getText().toString() != null) {
                     intent.putExtra(Constant.DesignerFlowEstablishContract.DESIGNSKETCH, tvc_design_sketch.getText().toString());
@@ -295,7 +295,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             setTvcCannotClickable();                                                                  /// 如果是消费者得话也不需要手动填写，都是带进去得数据，所以设计按键不可点击 .
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) { // 如果设计师没有发送设计合同 .
-                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowDesignContractActivity.this, AlertView.Style.Alert, FlowDesignContractActivity.this).setOnDismissListener(new OnDismissListener() {
                     @Override
                     public void onDismiss(Object o) {
                         finish();
@@ -358,7 +358,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                             btn_send.setBackgroundResource(R.drawable.bg_common_btn_blue);
                             btn_send.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(FlowEstablishContractActivity.this, FlowFirstDesignActivity.class);
+                                    Intent intent = new Intent(FlowDesignContractActivity.this, FlowFirstDesignActivity.class);
                                     intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                                     intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
                                     intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
@@ -445,7 +445,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                MyToast.show(FlowEstablishContractActivity.this, R.string.failure);
+                MyToast.show(FlowDesignContractActivity.this, R.string.failure);
             }
         };
         MPServerHttpManager.getInstance().getContractNumber(callback);
@@ -462,7 +462,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 KLog.d(TAG, jsonObject.toString());
                 ContractState = 0;
                 CustomProgress.cancelDialog();
-                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
+                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowDesignContractActivity.this, AlertView.Style.Alert, FlowDesignContractActivity.this).setOnDismissListener(FlowDesignContractActivity.this);
                 mDesignContract.show();
             }
 
@@ -470,7 +470,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
+                mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowDesignContractActivity.this, AlertView.Style.Alert, FlowDesignContractActivity.this).setOnDismissListener(FlowDesignContractActivity.this);
                 mDesignContract.show();
             }
         };
@@ -607,23 +607,23 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 String measurement_fee = mBiddersEntity.getMeasurement_fee();
                 measurement_fee = TextUtils.isEmpty(measurement_fee) ? "0" : measurement_fee;
                 if (firstCost > Double.valueOf(measurement_fee)) {
-                    CustomProgress.show(FlowEstablishContractActivity.this, UIUtils.getString(R.string.in_contract_sent), false, null);
+                    CustomProgress.show(FlowDesignContractActivity.this, UIUtils.getString(R.string.in_contract_sent), false, null);
                     sendEstablishContract(needs_id, ((memberEntity != null) ? memberEntity.getMember_type() : null), acsToken, jsonO);
                 } else {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowDesignContractActivity.this,
                             AlertView.Style.Alert, null).show();
                 }
             } else if (firstCost < discountCost) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_of_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_of_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowDesignContractActivity.this,
                         AlertView.Style.Alert, null).show();
             } else {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.total_quantity_room_first_is_not_greater_than_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.total_quantity_room_first_is_not_greater_than_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowDesignContractActivity.this,
                         AlertView.Style.Alert, null).show();
             }
         } else if (first_cost.isEmpty()) {
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_out_the_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_out_the_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowDesignContractActivity.this, AlertView.Style.Alert, null).show();
         } else if (Double.parseDouble(first_cost) < 0) {
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.costs_cannot_be_negative), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.costs_cannot_be_negative), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowDesignContractActivity.this, AlertView.Style.Alert, null).show();
         }
     }
 
@@ -810,7 +810,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     private void showAlertView(int content) {
-        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(content), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(content), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowDesignContractActivity.this,
                 AlertView.Style.Alert, null).show();
     }
 

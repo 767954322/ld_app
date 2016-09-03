@@ -8,11 +8,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -27,7 +27,6 @@ import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
@@ -67,6 +66,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         mBidHallAdapter = new BidHallAdapter(getActivity(), mNeedsListEntities);
         mPullListView = (PullListView) rootView.findViewById(R.id.lv_custom_bid);
         mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_view));
+
         mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
@@ -105,15 +105,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
             intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
             startActivity(intent);
         }
-    }
-
-    public void handleFilterOption1() {
-        mFiltrateContentBean = null;
-        OFFSET = 0;
-        getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
-//        mPullToRefreshLayout.autoRefresh();
-
-
     }
 
     public void handleFilterOption() {
@@ -194,15 +185,15 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         } else {
             mRlEmpty.setVisibility(View.VISIBLE);
         }
-//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-//        mIvTemp.setImageBitmap(bmp);
-//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-//        int height = wm.getDefaultDisplay().getHeight();
-//        android.view.ViewGroup.LayoutParams pp = mRlEmpty.getLayoutParams();
-//        mRlEmpty.getLayoutParams();
-//        pp.height = height - 50;
-//        mRlEmpty.setLayoutParams(pp);
-//        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+        mIvTemp.setImageBitmap(bmp);
+        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        android.view.ViewGroup.LayoutParams pp = mRlEmpty.getLayoutParams();
+        mRlEmpty.getLayoutParams();
+        pp.height = height - 50;
+        mRlEmpty.setLayoutParams(pp);
+        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
     }
 
     private List<BidHallEntity.NeedsListBean> getNeedsListEntitys(List<BidHallEntity.NeedsListBean> list) {

@@ -28,7 +28,8 @@
                 android:layout_height="@dimen/size_220"
                 android:background="@drawable/icon_photo_bg_dim"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -100,8 +101,8 @@
                 android:id="@+id/ll_set_meal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_50"
-                android:background="@color/white"
                 android:layout_marginBottom="@dimen/size_10"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -254,9 +255,9 @@
                 android:id="@+id/ll_personal_designer_attention"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_50"
+                android:layout_marginBottom="10dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <ImageView

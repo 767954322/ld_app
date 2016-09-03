@@ -105,7 +105,11 @@
     <string name="flow_basic_info">基本信息</string>
     <string name="flow_owner">甲方（消费者）：</string>
     <string name="flow_phone">手机号码：</string>
-    <string name="flow_postal_code">邮政编号：</string>
+
+    <!--string name="flow_postal_code">邮政编号：</string>-->
+
+
+
     <string name="flow_email_address">电子邮箱：</string>
     <string name="flow_decorate_address">装修地址：</string>
     <string name="flow_second_party">乙方(设计师)：</string>
@@ -590,6 +594,7 @@
     <string name="my_bid_demand_particulars">需求详情</string>
     <string name="bided">我已应标 </string>
     <string name="designer_bid_detail_realy_no_finish">你还尚未完成实名认证!</string>
+    <string name="msg_no_certification">未实名认证，不能应标，请先认证</string>
     <string name="certification_immediately">立即认证</string>
     <string name="is_biding">正在应标...</string>
     <string name="should_number_full">应标人数已满，目前无法应标</string>

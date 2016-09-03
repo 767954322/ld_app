@@ -109,8 +109,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
 
-//        construction = (TextView) contain_layout.findViewById(R.id.construction);
-
         setMyProjectTitleColorChange(design, bidding/*, construction*/);
 
         addRadioButtons(radioBtnDesigner);
@@ -388,6 +386,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
 
             case R.id.radio_btn_designer:
+                SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 FLAG_CLICK = TAB_DESIGNER;
                 setTitleForNavbar(UIUtils.getString(R.string.tab_designer));
                 setDesignerListTitle();
@@ -586,7 +585,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         return designerListFragment;
     }
 
-
     /**
      * 获取全流程节点提示信息
      */
@@ -647,7 +645,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         mDesignerIndentListBtn.setVisibility(View.GONE);
         tvGronMmsgNumber.setVisibility(View.GONE);
     }
-
 
     //判断是否聊过天，跳转到之前聊天室或新聊天室
     private void jumpToChatRoom(String scanResult) {
