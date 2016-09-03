@@ -170,9 +170,9 @@
             <LinearLayout
                 android:id="@+id/ll_issue_address"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:minHeight="@dimen/size_40"
+                android:layout_height="wrap_content"
                 android:background="@color/bg_ff"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10"
                 android:paddingRight="@dimen/size_10">
@@ -181,6 +181,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10"
                     android:text="@string/demand_project_address"
                     android:textSize="@dimen/font_16"/>
 
@@ -188,17 +189,19 @@
                     android:id="@+id/tv_issue_address"
                     android:layout_width="@dimen/size_1"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10"
+                    android:layout_marginBottom="@dimen/size_10"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_14"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal"
+                    android:visibility="gone"
+                    />
             </LinearLayout>
 
             <LinearLayout
