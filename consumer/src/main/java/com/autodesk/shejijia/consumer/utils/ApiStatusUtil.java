@@ -74,7 +74,7 @@ public class ApiStatusUtil {
 //                    showAlertView(context.getString(R.string.http402), 1);
                     break;
                 case 403: // 当前操作不合法（无权限再次操作）
-                    showAlertView(context.getString(R.string.caozuoerror), 1);
+                   // showAlertView(context.getString(R.string.caozuoerror), 1);
                     break;
                 case 404://请求失败，请求所希望得到的资源未被在服务器上发现。没有信息能够告诉用户这个状况到底是暂时的还是永久的
 //                    showAlertView(context.getString(R.string.http404), 1);
@@ -92,7 +92,7 @@ public class ApiStatusUtil {
 //                    showAlertView(context.getString(R.string.http402), 1);
                     break;
                 case 500: // API内部异常（服务器异常）
-                    showAlertView(context.getString(R.string.apierrror), 1);
+                   // showAlertView(context.getString(R.string.apierrror), 1);
                     break;
                 default:  //链接网络失败
                     showAlertView(UIUtils.getString(R.string.network_error), 1);
