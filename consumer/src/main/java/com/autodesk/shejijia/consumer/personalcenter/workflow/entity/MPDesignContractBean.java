@@ -53,6 +53,13 @@ public class MPDesignContractBean implements Serializable {
     }
 
     public String getContract_no() {
+
+        if (contract_no==null)
+            return "";
+
+        if (contract_no.equals("null"))
+            return "";
+
         return contract_no;
     }
 
@@ -61,6 +68,7 @@ public class MPDesignContractBean implements Serializable {
     }
 
     public int getContract_status() {
+
         return contract_status;
     }
 
@@ -69,6 +77,13 @@ public class MPDesignContractBean implements Serializable {
     }
 
     public String getContract_template_url() {
+
+        if (contract_template_url==null)
+            return "";
+
+        if (contract_template_url.equals("null"))
+            return "";
+
         return contract_template_url;
     }
 
@@ -85,6 +100,12 @@ public class MPDesignContractBean implements Serializable {
     }
 
     public String getContract_update_date() {
+        if (contract_update_date==null)
+            return "";
+
+        if (contract_update_date.equals("null"))
+            return "";
+
         return contract_update_date;
     }
 
