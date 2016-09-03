@@ -111,6 +111,7 @@
 
 
     <string name="flow_email_address">电子邮箱：</string>
+    <string name="flow_postal_code">邮箱编号：</string>
     <string name="flow_decorate_address">装修地址：</string>
     <string name="flow_second_party">乙方(设计师)：</string>
     <string name="flow_detail_address">详细地址：</string>

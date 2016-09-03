@@ -201,14 +201,15 @@ public class OrderCommonFragment extends BaseFragment {
             String decoration_style_convert = ConvertUtils.getConvert2CN(style, decoration_style);
             String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
 
-//            district_name = TextUtils.isEmpty(district_name) || "none".equals(district_name) ? "" : district_name;
-//            province_name = TextUtils.isEmpty(province_name) ? "" : province_name;
-//            city_name = TextUtils.isEmpty(city_name) ? "" : city_name;
+            district_name = TextUtils.isEmpty(district_name) || "none".equals(district_name) ? "" : district_name;
+            province_name = TextUtils.isEmpty(province_name) ? "" : province_name;
+            city_name = TextUtils.isEmpty(city_name) ? "" : city_name;
 
             String address = province_name + city_name + district_name;
             final String wk_template_id = orderListEntity.getWk_template_id();
             List<MPMeasureFormBean.BiddersBean> bidders = orderListEntity.getBidders();
             MPMeasureFormBean.BiddersBean biddersBean = null;
+
             if (bidders != null && bidders.size() > 0) {
                 biddersBean = bidders.get(0);
 
