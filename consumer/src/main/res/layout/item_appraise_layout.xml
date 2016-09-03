@@ -75,7 +75,7 @@
         </LinearLayout>
 
 
-        <TextView
+        <com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewTextView
             android:id="@+id/consumer_appraise_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
