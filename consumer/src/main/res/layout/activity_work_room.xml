@@ -45,11 +45,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/size_50"
-        android:background="@drawable/now_order_bg"
         android:gravity="center"
-        android:text="立即预约"
         android:textColor="@color/bg_ff"
+        android:background="@drawable/boutton"
         android:textSize="@dimen/font_16" />
+
 
 
 </RelativeLayout>

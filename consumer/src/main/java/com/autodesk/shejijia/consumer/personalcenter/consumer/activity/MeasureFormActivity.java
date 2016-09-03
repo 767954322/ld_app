@@ -273,12 +273,12 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housingType);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, mRoom);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, mHall);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, mHall);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, mRoom);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, mToilet);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
@@ -642,15 +642,15 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      */
     private void setStyleType() {
         final ArrayList<String> styleItems = new ArrayList<>();
-
-        if (styles != null) {
-
-
-        } else {
+//
+//        if (styles != null) {
+//
+//
+//        } else {
 
             styles = filledData(getResources().getStringArray(R.array.style));
 
-        }
+//        }
         pvStyleOptions = new OptionsPickerView(this);
         for (String item : styles) {
             styleItems.add(item);

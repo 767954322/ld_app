@@ -1,13 +1,18 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 
+import android.content.pm.ProviderInfo;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAppraiseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.AppraiseDesignBeen;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -34,23 +39,25 @@ public class DesignerAppraiseFragment extends BaseFragment {
     protected void initView() {
 
         mListView = (ListView) rootView.findViewById(R.id.lv_seek_appraise_detail_listview);
+        rating_star = (RatingBar) rootView.findViewById(R.id.rating_star);
         mListView.getLastVisiblePosition();
     }
 
     @Override
     protected void initData() {
-//        getEstimateList(String designer_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
-
-//            getEstimateList();
 
     }
 //展示数据
-    public void updateListView(List<AppraiseDesignBeen.EstimatesBean> estimates) {
+    public void updateListView(List<AppraiseDesignBeen.EstimatesBean> estimates,DesignerDetailHomeBean seekDesignerDetailHomeBean) {
         mSeekDesignerAppraiseAdapter = new SeekDesignerAppraiseAdapter(getActivity(), estimates);
         estimatesList.clear();
         estimatesList.addAll(estimates);
         mListView.setAdapter(mSeekDesignerAppraiseAdapter);
-//        setListViewHeightBasedOnChildren(mListView);
+
+        if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
+
+            rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
+        }
     }
 
     //加载更多数据
@@ -102,6 +109,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
 
     private ListView mListView;
     private AppraiseDesignBeen mAppraiseDesignBeen;
+    private RatingBar rating_star;
     private List<AppraiseDesignBeen.EstimatesBean> estimates;
     private SeekDesignerAppraiseAdapter mSeekDesignerAppraiseAdapter;
     private String designerId;

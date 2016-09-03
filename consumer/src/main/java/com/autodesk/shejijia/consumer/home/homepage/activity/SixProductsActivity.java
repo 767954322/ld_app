@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
@@ -16,6 +18,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.codiy.fragments.DIYFragme
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.fragment.GrandMasterFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.fragment.PackagesFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment.CoEliteFragment;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager;
 import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
@@ -72,9 +75,31 @@ public class SixProductsActivity extends NavigationBarActivity {
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
         pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 16));
+        pagerSlidingTabStrip.setOnClickItemListener(new MaterialTabs.OnClickItemListener() {
+            @Override
+            public void onClickItemListener(int position) {
+                Log.i("yaoxuehuadashen",""+position);
+                setImageForNavButton(ButtonType.RIGHT, R.drawable.work_room_explain);
+                if (position == 1){
+
+                    setVisibilityForNavButton(ButtonType.RIGHT, true);
+                }else {
+                    setVisibilityForNavButton(ButtonType.RIGHT, false);
+                }
+            }
+        });
 
         pagerSlidingTabStrip.setViewPager(noSlippingViewPager);
         noSlippingViewPager.setCurrentItem(2);
+
+    }
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+
+        new AlertView(UIUtils.getString(R.string.rule_instructions), UIUtils.getString(R.string.rule_instructions_content), null, null, new String[]{"关闭"}, SixProductsActivity.this,
+                AlertView.Style.Alert, null).show();
     }
 
     @Override

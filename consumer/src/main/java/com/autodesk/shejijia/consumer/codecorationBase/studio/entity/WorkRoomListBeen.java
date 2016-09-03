@@ -491,6 +491,16 @@ public class WorkRoomListBeen implements Serializable {
             private Object evalution_count;
             private String occupational_en;
             private String occupational_cn;
+            private DesignerProfileCoverAppBean designer_profile_cover_app;
+
+            public DesignerProfileCoverAppBean getDesignerProfileCoverAppBean() {
+                return designer_profile_cover_app;
+            }
+
+            public void setDesignerProfileCoverAppBean(DesignerProfileCoverAppBean designer_profile_cover_app) {
+                this.designer_profile_cover_app = designer_profile_cover_app;
+            }
+
             /**
              * name : t01344281e4a75c476a.jpg
              * file_id : 18151858
@@ -783,6 +793,37 @@ public class WorkRoomListBeen implements Serializable {
                     this.public_url = public_url;
                 }
             }
+
+            public static class DesignerProfileCoverAppBean {
+                private String name;
+                private String file_id;
+                private String public_url;
+
+                public String getName() {
+                    return name;
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public String getFile_id() {
+                    return file_id;
+                }
+
+                public void setFile_id(String file_id) {
+                    this.file_id = file_id;
+                }
+
+                public String getPublic_url() {
+                    return public_url;
+                }
+
+                public void setPublic_url(String public_url) {
+                    this.public_url = public_url;
+                }
+            }
+
 
             public static class DesignerDetailCoverBean {
                 private String name;

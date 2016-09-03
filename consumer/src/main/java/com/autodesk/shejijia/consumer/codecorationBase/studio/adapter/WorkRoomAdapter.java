@@ -65,8 +65,11 @@ public class WorkRoomAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.workRoomName.setText(list.get(position).getNick_name());//工作室名字
-        String sss = list.get(position).getDesigner().getDesigner_profile_cover().getPublic_url().replace(" ","");
-        ImageUtils.loadImage(viewHolder.workRoomImageView, sss/*list.get(position).getDesigner().getDesigner_profile_cover().getPublic_url()*/);
+        if (list.get(position).getDesigner().getDesignerProfileCoverAppBean() != null){
+            String sss = list.get(position).getDesigner().getDesignerProfileCoverAppBean().getPublic_url().replace(" ","");
+            ImageUtils.loadImage(viewHolder.workRoomImageView, sss/*list.get(position).getDesigner().getDesigner_profile_cover().getPublic_url()*/);
+
+        }
 
 
 

@@ -47,6 +47,8 @@
     <string name="warmTips">温馨提示：</string>
     <string name="Mrasuretips">提示：</string>
     <string name="illustrate">  量房费说明</string>
+    <string name="rule_instructions">规则说明</string>
+    <string name="rule_instructions_content">在线直接预约工作室,或直接填写您的设计需求,平台会在24小时内与您联系</string>
     <string name="update_measure_house_cost">量房费可更改</string>
     <string name="no_pay_rent">量房费为0时，不需要支付量房费。</string>
 

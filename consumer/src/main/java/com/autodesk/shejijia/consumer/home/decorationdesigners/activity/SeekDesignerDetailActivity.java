@@ -948,7 +948,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                     if (isRefreshOrLoadAppraise) {
 
-                        mDesignerAppraiseFragment.updateListView(estimates);
+                        mDesignerAppraiseFragment.updateListView(estimates,seekDesignerDetailHomeBean);
                         mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
                     } else {
                         mDesignerAppraiseFragment.loadMoreData(estimates);

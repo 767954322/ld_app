@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.dialog.OrderDialog
 import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomListBeen;
 import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
@@ -46,6 +48,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         work_room_listView = (ListView) rootView.findViewById(R.id.work_room_listView);
         now_order = (TextView) rootView.findViewById(R.id.now_order);
         viewHead = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_work_room, null);
+        img_header = (ImageView) viewHead.findViewById(R.id.img_header);
 
 
         work_room_listView.addHeaderView(viewHead);
@@ -171,11 +174,14 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                if (position >0){
 
-                Intent intent = new Intent(getActivity(), WorkRoomDetailActivity.class);
+                    Intent intent = new Intent(getActivity(), WorkRoomDetailActivity.class);
 
-                intent.putExtra("hs_uid", designerListBeenList.get(position - 1).getHs_uid());
-                getActivity().startActivity(intent);
+                    intent.putExtra("hs_uid", designerListBeenList.get(position - 1).getHs_uid());
+                    getActivity().startActivity(intent);
+
+                }
             }
         });
 
@@ -239,6 +245,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     private ListView work_room_listView;
     private View viewHead;
     private TextView now_order;
+    private ImageView img_header;
 
     private PullToRefreshLayout work_room_refresh_view;
     private WorkRoomListBeen workRoomListBeen;

@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4f4f4"
     android:orientation="vertical"
     >
 
@@ -33,9 +32,8 @@
         android:layout_marginBottom="@dimen/size_50"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:background="@drawable/now_order_bg"
+        android:background="@drawable/boutton"
         android:textSize="@dimen/font_16"
         android:textColor="@color/bg_ff"
-        android:text="立即预约"
         />
 </RelativeLayout>

@@ -34,6 +34,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,11 @@ public class MaterialTabs extends HorizontalScrollView {
         void onTabReselected(int position);
     }
 
+    public interface OnClickItemListener{
+
+        void onClickItemListener(int position);
+    }
+
     private static final int[] ATTRS = new int[]{android.R.attr.textColorPrimary, android.R.attr.textSize, android.R.attr.textColor,
             android.R.attr.padding, android.R.attr.paddingLeft, android.R.attr.paddingRight};
 
@@ -79,6 +85,7 @@ public class MaterialTabs extends HorizontalScrollView {
     private final PageListener pageListener = new PageListener();
     private OnTabReselectedListener tabReselectedListener = null;
     public OnPageChangeListener delegatePageListener;
+    public OnClickItemListener onClickItemListener;
 
     private final LinearLayout tabsContainer;
     private ViewPager pager;
@@ -298,7 +305,16 @@ public class MaterialTabs extends HorizontalScrollView {
                     notSelected(tab);
                     pager.setCurrentItem(position);
                 } else if (tabReselectedListener != null) {
+
                     tabReselectedListener.onTabReselected(position);
+                }
+
+                Log.i("yaoxuehua",""+position);
+
+                if (onClickItemListener != null){//监听选中哪一个页面
+
+                    onClickItemListener.onClickItemListener(position);
+
                 }
             }
         });
@@ -431,6 +447,10 @@ public class MaterialTabs extends HorizontalScrollView {
         this.tabReselectedListener = tabReselectedListener;
     }
 
+    public void setOnClickItemListener(OnClickItemListener mOnClickItemListener){
+
+        this.onClickItemListener = mOnClickItemListener;
+    }
     public void setOnPageChangeListener(OnPageChangeListener listener) {
         this.delegatePageListener = listener;
     }
