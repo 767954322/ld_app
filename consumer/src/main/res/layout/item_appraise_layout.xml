@@ -1,73 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/size_65"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
-    <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
-        android:id="@+id/piv_designer_avatar"
-        android:layout_width="@dimen/size_44"
-        android:layout_height="@dimen/size_44"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/size_16"
-        android:background="@drawable/icon_default_avator"
-        app:poly_vertices="0"/>
-    <RatingBar
-        android:id="@+id/rating_star"
-        style="@style/custom_rating_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/size_5"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/size_16"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:stepSize="1"
-        />
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_8"
-        android:layout_marginLeft="@dimen/size_12"
-        android:textSize="@dimen/font_15"
-        android:ellipsize="end"
-        android:maxEms="5"
-        android:singleLine="true"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/piv_designer_avatar"
-        android:text="赵大宝"
-        />
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_12"
-        android:layout_toRightOf="@id/tv_name"
-        android:layout_marginLeft="@dimen/size_10"
-        android:ellipsize="end"
-        android:maxEms="7"
-        android:singleLine="true"
-        android:textSize="@dimen/font_10"
-        android:text="2小时前说："
-        />
-    <TextView
-        android:id="@+id/consumer_appraise_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_name"
-        android:textSize="@dimen/font_15"
-        android:layout_marginRight="@dimen/size_15"
-        android:textStyle="bold"
-        android:layout_marginLeft="@dimen/size_12"
-        android:layout_toRightOf="@id/piv_designer_avatar"
-        android:text="很高兴你的服务"
+        android:layout_height="wrap_content">
 
 
-        />
+        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+            android:id="@+id/piv_designer_avatar"
+            android:layout_width="@dimen/size_44"
+            android:layout_height="@dimen/size_44"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_16"
+            android:background="@drawable/icon_default_avator"
+            app:poly_vertices="0" />
 
-    
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/ll_name_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/piv_designer_avatar"
+            >
+
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_12"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_toRightOf="@id/piv_designer_avatar"
+                android:ellipsize="end"
+                android:maxEms="5"
+                android:singleLine="true"
+                android:text="赵大宝"
+                android:textSize="@dimen/font_15"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_toRightOf="@id/tv_name"
+                android:ellipsize="end"
+                android:maxEms="7"
+                android:singleLine="true"
+                android:text="2小时前说："
+                android:textSize="@dimen/font_10" />
+
+            <RatingBar
+                android:id="@+id/rating_star"
+                style="@style/custom_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_5"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="1" />
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/consumer_appraise_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_name_time"
+            android:layout_marginLeft="@dimen/size_12"
+            android:layout_marginRight="@dimen/size_15"
+            android:layout_toRightOf="@id/piv_designer_avatar"
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_marginBottom="@dimen/size_5"
+            android:text="很高兴你的服务"
+            android:textSize="@dimen/font_15"
+            android:textStyle="bold"
+
+
+            />
+
+    </RelativeLayout>
+</LinearLayout>

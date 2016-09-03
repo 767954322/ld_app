@@ -1350,10 +1350,6 @@ public class MPServerHttpManager {
 
     /**
      * 获取设计师首页评价列表信息
-<<<<<<< HEAD
-=======
-     * <p/>
->>>>>>> feature-3.2
      */
     public void getEstimateList(String designer_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
         String estimateUrl = UrlConstants.MAIN_MEMBER + "/designers/" + designer_id + "/score?limit=" + limit + "&offset=" + offset;

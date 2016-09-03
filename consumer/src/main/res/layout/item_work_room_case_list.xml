@@ -8,6 +8,7 @@
         android:id="@+id/work_room_design_imageView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_180"
+        android:scaleType="fitXY"
         android:layout_below="@id/work_room_introduce"
         android:background="@drawable/common_case_icon" />
 </LinearLayout>
