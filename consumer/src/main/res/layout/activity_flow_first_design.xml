@@ -170,22 +170,22 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/size_10">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:padding="@dimen/size_10">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/flow_deduct_measure_cost" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/flow_deduct_measure_cost" />-->
 
-        <TextView
-            android:id="@+id/tv_flow_first_design_deduct_measure_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_flow_first_design_deduct_measure_cost"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/ll_flow_first_design_send"

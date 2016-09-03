@@ -498,8 +498,9 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mPtrLayout.onRefreshComplete();
         if(Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
             int  sub_node_id =wk_cur_sub_node_id != null? Integer.parseInt(wk_cur_sub_node_id):-1;
-            if(sub_node_id < 11 || sub_node_id >=31 || sub_node_id == 24){
-                btnStopDemand.setVisibility(View.GONE);
+
+            if(sub_node_id >= 11 && sub_node_id <41 && sub_node_id != 24){
+                btnStopDemand.setVisibility(View.VISIBLE);
             }
         }
 
