@@ -13,8 +13,8 @@
     <include
         android:id="@+id/design_contract_content_designer"
         layout="@layout/activity_flow_contract_subcontent_designer"
-        android:visibility="gone"
-        />
+
+         />
     <include
         android:id="@+id/design_contract_content_consumer"
         layout="@layout/activity_flow_contract_subcontent_consumer"
@@ -33,7 +33,7 @@
         android:layout_marginTop="@dimen/size_10"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/img_agree_establish_contract"
@@ -54,7 +54,7 @@
         android:background="@color/bg_f9"
         android:orientation="horizontal"
         android:padding="@dimen/size_10"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <Button
             android:id="@+id/btn_send_establish_contract"

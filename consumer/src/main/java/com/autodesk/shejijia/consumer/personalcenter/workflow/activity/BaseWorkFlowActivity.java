@@ -108,6 +108,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     private android.os.Handler handler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
+
             super.handleMessage(msg);
             mCurrentWorkFlowDetail = (WkFlowDetailsBean) msg.obj;
             requirement = mCurrentWorkFlowDetail.getRequirement();
