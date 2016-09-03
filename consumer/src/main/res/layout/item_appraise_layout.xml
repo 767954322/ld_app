@@ -74,22 +74,27 @@
 
         </LinearLayout>
 
-
-        <com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewTextView
-            android:id="@+id/consumer_appraise_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_name_time"
-            android:layout_marginBottom="@dimen/size_5"
-            android:layout_marginLeft="@dimen/size_12"
-            android:layout_marginRight="@dimen/size_15"
-            android:layout_marginTop="@dimen/size_5"
-            android:text="很高兴你的服务"
-            android:textSize="@dimen/font_15"
-            android:textStyle="bold"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/consumer_appraise_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_name_time"
+                android:layout_marginLeft="@dimen/size_12"
+                android:layout_marginRight="@dimen/size_15"
+                android:text="很高兴你的服务"
+                android:textSize="@dimen/font_15"
+                android:textStyle="bold"
 
 
-            />
+                />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
