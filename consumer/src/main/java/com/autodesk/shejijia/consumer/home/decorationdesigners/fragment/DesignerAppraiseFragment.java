@@ -50,7 +50,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
         estimatesList.clear();
         estimatesList.addAll(estimates);
         mListView.setAdapter(mSeekDesignerAppraiseAdapter);
-        setListViewHeightBasedOnChildren(mListView);
+//        setListViewHeightBasedOnChildren(mListView);
     }
 
     //加载更多数据
@@ -58,7 +58,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
 
         estimatesList.addAll(estimates);
         mSeekDesignerAppraiseAdapter.addMoreData(estimatesList);
-        setListViewHeightBasedOnChildren(mListView);
+//        setListViewHeightBasedOnChildren(mListView);
     }
 
     /**
