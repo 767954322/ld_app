@@ -3,29 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
+    <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+        android:id="@+id/piv_designer_avatar"
+        android:layout_width="@dimen/size_44"
+        android:layout_height="@dimen/size_44"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:background="@drawable/icon_default_avator"
+        app:poly_vertices="0" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/piv_designer_avatar"
+        android:orientation="vertical">
 
-
-        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
-            android:id="@+id/piv_designer_avatar"
-            android:layout_width="@dimen/size_44"
-            android:layout_height="@dimen/size_44"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/size_16"
-            android:background="@drawable/icon_default_avator"
-            app:poly_vertices="0" />
 
         <LinearLayout
             android:id="@+id/ll_name_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_8"
             android:orientation="horizontal"
-            android:layout_toRightOf="@id/piv_designer_avatar"
+
             >
 
 
@@ -33,8 +35,8 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/size_12"
-                android:layout_marginTop="@dimen/size_8"
                 android:layout_toRightOf="@id/piv_designer_avatar"
                 android:ellipsize="end"
                 android:maxEms="5"
@@ -47,8 +49,8 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/size_10"
-                android:layout_marginTop="@dimen/size_5"
                 android:layout_toRightOf="@id/tv_name"
                 android:ellipsize="end"
                 android:maxEms="7"
@@ -63,12 +65,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_5"
                 android:isIndicator="true"
                 android:numStars="5"
                 android:stepSize="1" />
-
 
 
         </LinearLayout>
@@ -79,11 +80,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_name_time"
+            android:layout_marginBottom="@dimen/size_5"
             android:layout_marginLeft="@dimen/size_12"
             android:layout_marginRight="@dimen/size_15"
-            android:layout_toRightOf="@id/piv_designer_avatar"
             android:layout_marginTop="@dimen/size_5"
-            android:layout_marginBottom="@dimen/size_5"
             android:text="很高兴你的服务"
             android:textSize="@dimen/font_15"
             android:textStyle="bold"
@@ -91,5 +91,6 @@
 
             />
 
-    </RelativeLayout>
+    </LinearLayout>
+
 </LinearLayout>
