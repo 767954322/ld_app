@@ -206,8 +206,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * 获取姓名信息，并更新
      */
     private void updateViewFromRealNameData() {
-        CustomProgress.cancelDialog();
-
         if (mRealNameBean.getDesigner().getIs_real_name() == 2) {
             if (bidder_count >= BIDDER_MAX) {
                 bidCountFullDialog();

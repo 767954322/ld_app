@@ -385,7 +385,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setVisibilityForNavButton(ButtonType.middle, true);
                 break;
 
-            case R.id.radio_btn_designer:
+            case R.id.radio_btn_designer:  /// 设计师搜索 .
                 SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 FLAG_CLICK = TAB_DESIGNER;
                 setTitleForNavbar(UIUtils.getString(R.string.tab_designer));
@@ -423,7 +423,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_title_add);
                     setTitleForNavbar(UIUtils.getString(R.string.consumer_decoration));
                 }
-
                 break;
 
             case R.id.designer_session_radio_btn:  /// 会話聊天.
