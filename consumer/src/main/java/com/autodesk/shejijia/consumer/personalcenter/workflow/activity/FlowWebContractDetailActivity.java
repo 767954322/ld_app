@@ -60,7 +60,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
 
             String text = new String(buffer, Constant.NetBundleKey.UTF_8);
 
-            String designSketch = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.DESIGNSKETCH);
+           /* String designSketch = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.DESIGNSKETCH);
             String effectivePicture = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.EFFECTIVEPICTURE);
             String addCurrency = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.ADDCURRENCY);
             String designPay = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.DESIGNPAY);
@@ -72,7 +72,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
             text = text.replace("<wf-addCurrency>", addCurrency); // 增加的钱数
             text = text.replace("<wf-designPay>", designPay); // 总额
             text = text.replace("<wf-designFirstFee>", designFirstFee); // 首款
-            text = text.replace("<wf-designBalanceFee>", designBalanceFee); // 尾款
+            text = text.replace("<wf-designBalanceFee>", designBalanceFee); // 尾款*/
 
             webView.loadDataWithBaseURL(null, text, Constant.NetBundleKey.MIME_TYPE_TEXT_HTML, Constant.NetBundleKey.UTF_8, "");
 

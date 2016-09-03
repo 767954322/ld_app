@@ -109,8 +109,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         bidding = (TextView) contain_layout.findViewById(R.id.bidding);
         design = (TextView) contain_layout.findViewById(R.id.design);
 
-//        construction = (TextView) contain_layout.findViewById(R.id.construction);
-
         setMyProjectTitleColorChange(design, bidding/*, construction*/);
 
         addRadioButtons(radioBtnDesigner);

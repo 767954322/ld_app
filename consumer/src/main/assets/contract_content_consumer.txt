@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    		<title>关于设计家 </title>
+    		<meta charset="utf-8">
+    		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    		<link rel="stylesheet" href="file:///android_asset/about/style/bootstrap.min.css">
+            <style type='text/css'>@import url('bootstrap.min.css');</style>
+
+    		<link rel="stylesheet" href="file:///android_asset/about/style/font-awesome.css">
+    <style type='text/css'>@import url('webpage.css');</style>
+
+    		<link rel="stylesheet" href="file:///android_asset/about/style/icon.css">
+    <style type='text/css'>@import url('font-awesome.css');</style>
+
+
+    		<link rel="stylesheet" href="file:///android_asset/about/style/idangerous.swiper.css">
+    <style type='text/css'>@import url('idangerous.swiper.css');</style>
+
+    		<link rel="stylesheet" href="file:///android_asset/about/style/stylesheet.css">
+    <style type='text/css'>@import url('stylesheet.css');</style>
+
+    	   <link rel="stylesheet" type="text/css" href="file:///android_asset/about/style/ie-9.css" />
+    <style type='text/css'>@import url('ie-9.css');</style>
+
+    	</head>
+    <body>
+        <!-- THE LOADER -->
+        <!-- MAIN CONTENT -->
+        <div id="content-block" style="background-color:#eef1f4;">
+            <div class="container-fluid" style="height:16px; margin: 0px 0%">
+                <div class="block" style=" margin-bottom: 0px !important; ">
+                    <h3 class="block-title2">住宅室内装饰合同</h3>
+                </div>
+            </div>
+            <div class="container-fluid" style="">
+                <div class="about-description" style="float:left;height:100%;" ata-pg-collapsed>
+                    <img class="img-responsive" src="img/logo.png" style="width:60%;height:40%;
+  margin-left: auto ;
+  margin-right: auto ;
+                                                      " lt="">
+                </div>
+            </div>
+            <div class="container-fluid" style="height:17px; margin: 0px 0%">
+                <div class="contract-info-text" style="float:left;width:55%; ">
+                    <h4 style="border-bottom:1px solid gray;">合同编号:#val(contract_number)</h4>
+                </div>
+                <div class="contract-info-text" style="float:right;width:45%;;text-align: right;">
+                    <h4 style="border-bottom:1px solid gray;">签定时间：#val(contract_date)</h4>
+                </div>
+                <div class="block" style="merge-left:20px;">
+</div>
+            </div>
+            <div class="container" style="">
+                <div class="contract-table-blosk">
+                    <div class="header">
+                        <h3>甲方(消费者)：#val(consumer_name)</h3>
+                    </div>
+                    <div class="tableblock">
+                        <table style="width:100%;border:1px solide red;table-layout:fixed; word-break: break-all; overflow:hidden;">
+                            <tr>
+                                <td style="text-align: right;width:65px;"><span>手機號碼:</span></td>
+                                <td><span>#val(consumer_mobile)</span></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><span style="margin-top:0px;">项目地址:</span></td>
+                                <td><span>#val(consumer_addr)</span></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><span>电子邮箱:</span></td>
+                                <td><span>#val(consumer_mail)</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="contract-table-blosk">
+                    <div class="header">
+                        <h3>乙方(设计师)：#val(designer_name)</h3>
+                    </div>
+                    <div class="tableblock">
+                        <table style="width:100%;border:1px solide red;table-layout:fixed; word-break: break-all; overflow:hidden;">
+                            <tr>
+                                <td style="text-align: right;width:67px;"><span>手機號碼:</span></td>
+                                <td><span>#val(designer_mobile)</span></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><span style="margin-top:0px;">服务地址:</span></td>
+                                <td style="width:78%"><span>#val(designer_addr)</span></td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"><span>电子邮箱:</span></td>
+                                <td><span>#val(designer_mail)</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="contract-info-text" style="margin-top:10px;margin-bottom:10px;" ata-pg-collapsed>
+                    <div class="detail" style="width:100%;height：100%；">
+                        <h4>本項目設計費用</h4>
+                        <p>本项目设计费总额：￥#val(design_amount)元<br />
+设计首款：￥#val(design_amount_first)元<br />
+设计尾款：￥#val(design_amount_balance)元<br />
+设计周期：#val(design_start_date) 至 #val(design_end_date)<br /></p>
+                    </div>
+                </div>
+                <div class="contract-info-text">
+                    <div class="detail" style="width:100%;">
+                        <h4>设计项目交付物</h4>
+                        <p>渲染图：#val(tree_d_renderimage)张<br />
+3D空间方案设计：1份<br />
+材料清单（包括：主材清单，家具清单，施工报价单）：一份<br />
+施工图纸：1套<br /></p>
+                    </div>
+                </div>
+            </div>
+            <div style="height:39px; margin: 0px 0%; line-height:39px;border-bottom:1px gray ; position:relative">
+                <div style="position:absolute; right:0px; top:8px">
+                    <img src="img/right_arrow.png" style="display:block; width:60%">
+                </div>
+                <button  class="contract-detail-button" type="button" onclick="window.android.onClickContractDetail()">查看合同详情</button>
+            </div>
+        </div>
+        <!-- THE FOOTER -->
+        <!-- SCRIPTS     -->
+        <!-- APP SCRIPTS IOS    -->
+        <script src="script/jquery.min.js"></script>
+        <script src="script/bootstrap.min.js"></script>
+    </div>
+</body>
