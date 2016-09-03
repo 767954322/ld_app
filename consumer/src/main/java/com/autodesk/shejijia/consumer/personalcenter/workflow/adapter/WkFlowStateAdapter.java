@@ -179,7 +179,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     textColor = StepDisEnableColor;
                     drawable = R.drawable.jiaofuwu_ico;
                 }
-                if(stateCode > 51){
+                if(stateCode == 51){
                     setItemAnimationForView(textColor,viewHolder);
                 }
             }else {
@@ -257,7 +257,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                     textColor = StepDisEnableColor;
                     drawable = R.drawable.shejishoukuan_ico;
                 }
-                if(stateCode == 41){
+                if(stateCode == 31){
                     setItemAnimationForView(textColor,viewHolder);
                 }
             }
