@@ -386,6 +386,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
 
             case R.id.radio_btn_designer:
+                SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 FLAG_CLICK = TAB_DESIGNER;
                 setTitleForNavbar(UIUtils.getString(R.string.tab_designer));
                 setDesignerListTitle();

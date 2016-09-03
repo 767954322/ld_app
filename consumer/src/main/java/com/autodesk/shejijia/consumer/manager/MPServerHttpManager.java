@@ -300,7 +300,6 @@ public class MPServerHttpManager {
     public void findDesignerList(FindDesignerBean findDesignerBean,
                                  int offset,
                                  int limit, OkJsonRequest.OKResponseCallback callback) {
-//        String filterURl = "http://192.168.120.217:8080/member-app/v1/api/designers/search?" +
         String filterURl = UrlConstants.MAIN_MEMBER + "/designers/search?" +
                 "nick_name=" + findDesignerBean.getNick_name() +
                 "&style_names=" + findDesignerBean.getStyle_names() +
@@ -313,9 +312,14 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, filterURl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+//                if (null != memberEntity && !TextUtils.isEmpty(memberEntity.getHs_accesstoken())) {
+//                    HashMap<String, String> header = new HashMap<>();
+//                    header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(memberEntity.getHs_accesstoken()));
+//                    return header;
+//                } else {
+                return super.getHeaders();
+//                }
             }
         };
         queue.add(okRequest);
@@ -589,7 +593,6 @@ public class MPServerHttpManager {
      */
     public void getCaseList3DDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_LIST_D3_DETAIL + case_id;
-        // http://192.168.88.175:8080/design-app/v1/api/d3/cases/{asset_id}
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
