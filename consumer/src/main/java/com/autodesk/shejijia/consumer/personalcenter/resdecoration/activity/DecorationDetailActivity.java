@@ -42,8 +42,6 @@ import java.util.Map;
  */
 public class DecorationDetailActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
 
-    /// 节点11,邀请量房状态 .
-    private static final int IS_BIDING = 11;
     /**
      * is_public=1,表示终止了需求
      */
@@ -309,7 +307,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         btn.setClickable(false);
         btn.setPressed(false);
         btn.setTextColor(UIUtils.getColor(R.color.white));
-        btn.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
+        btn.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_gray));
     }
 
     /**

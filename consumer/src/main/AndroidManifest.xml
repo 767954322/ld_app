@@ -499,7 +499,7 @@
 
         <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity"/>
         <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity"/>
-        <activity android:name=".personalcenter.consumer.activity.AttentionActivity"/>
+        <activity android:name=".personalcenter.consumer.activity.AttentionListActivity"/>
         <activity android:name=".home.decorationdesigners.activity.DesignerFiltrateActivity"/>
         <activity android:name=".home.decorationdesigners.activity.DesignerSearchActivity"/>
         <activity android:name=".personalcenter.resdecoration.activity.DecorationDetailActivity"/>

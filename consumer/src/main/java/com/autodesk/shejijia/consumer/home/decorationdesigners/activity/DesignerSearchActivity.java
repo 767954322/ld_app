@@ -53,6 +53,7 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        mCetSearchContent.setText("");
     }
 
     @Override
