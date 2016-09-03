@@ -721,20 +721,14 @@ public class MPServerHttpManager {
 
     /**
      * 设计师普通订单
-     *
-     * @param callback
-     * @param memType
-     * @param designer_id
-     * @param offset
-     * @param limit
      */
     public void getDesignerOrder(final String memType, final String designer_id, final int offset, final int limit, final OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.URL_GET_ORDER + designer_id +
-                "/orders?" +
-                "offset=" + offset +
-                "&sort_order=desc" +
-                "&sort_by=date" +
-                "&limit=" + limit;
+//        String url = UrlConstants.URL_GET_ORDER + designer_id +
+//                "/orders?" +
+//                "offset=" + offset +
+//                "&sort_order=desc" +
+//                "&sort_by=date" +
+//                "&limit=" + limit;
 
         String urlV2 = UrlConstants.URL_GET_ORDER + designer_id + "/orders" +
                 "?offset=" + offset +

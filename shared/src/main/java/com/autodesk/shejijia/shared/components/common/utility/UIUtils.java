@@ -385,6 +385,10 @@ public class UIUtils {
         return TextUtils.isEmpty(some) ? UIUtils.getString(R.string.no_data) : some;
     }
 
+    public static String getNoStringIfEmpty(String some) {
+        return TextUtils.isEmpty(some) ? "" : some;
+    }
+
     public static ProgressDialog createDialog(Context context, int type, String message) {
 
         ProgressDialog dialog = new ProgressDialog(context);
@@ -407,10 +411,8 @@ public class UIUtils {
     }
 
 
-    public static boolean isKeyboardVisible(View contentView)
-    {
-        if (contentView != null)
-        {
+    public static boolean isKeyboardVisible(View contentView) {
+        if (contentView != null) {
             Rect r = new Rect();
             contentView.getWindowVisibleDisplayFrame(r);
             int screenHeight = contentView.getRootView().getHeight();
@@ -419,6 +421,6 @@ public class UIUtils {
             return (screenHeight - r.bottom > screenHeight * 0.15);
         }
 
-        return  false;
+        return false;
     }
 }

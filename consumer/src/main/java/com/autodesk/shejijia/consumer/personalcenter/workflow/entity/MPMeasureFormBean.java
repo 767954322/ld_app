@@ -343,15 +343,15 @@ public class MPMeasureFormBean implements Serializable {
         private PaymentBean payment;
         private String status;
         private String wk_current_step_id;
-        private int design_price_max;
-        private int design_price_min;
+        private String design_price_max;
+        private String design_price_min;
         private String style_names;
         private String measure_time;
         private String avatar;
         private String selected_time;
         private String wk_id;
         private String user_name;
-        private int designer_id;
+        private String designer_id;
         private String wk_cur_node_id;
         private String refused_time;
         private String measurement_fee;
@@ -426,19 +426,19 @@ public class MPMeasureFormBean implements Serializable {
             this.wk_current_step_id = wk_current_step_id;
         }
 
-        public int getDesign_price_max() {
+        public String getDesign_price_max() {
             return design_price_max;
         }
 
-        public void setDesign_price_max(int design_price_max) {
+        public void setDesign_price_max(String design_price_max) {
             this.design_price_max = design_price_max;
         }
 
-        public int getDesign_price_min() {
+        public String getDesign_price_min() {
             return design_price_min;
         }
 
-        public void setDesign_price_min(int design_price_min) {
+        public void setDesign_price_min(String design_price_min) {
             this.design_price_min = design_price_min;
         }
 
@@ -490,11 +490,11 @@ public class MPMeasureFormBean implements Serializable {
             this.user_name = user_name;
         }
 
-        public int getDesigner_id() {
+        public String getDesigner_id() {
             return designer_id;
         }
 
-        public void setDesigner_id(int designer_id) {
+        public void setDesigner_id(String designer_id) {
             this.designer_id = designer_id;
         }
 
