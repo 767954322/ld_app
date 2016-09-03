@@ -386,7 +386,7 @@ public class UIUtils {
     }
 
     public static String getNoStringIfEmpty(String some) {
-        return TextUtils.isEmpty(some) ? "" : some;
+        return TextUtils.isEmpty(some)||"none".equals(some)||StringUtils.isEmpty(some) ? "" : some;
     }
 
     public static ProgressDialog createDialog(Context context, int type, String message) {

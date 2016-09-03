@@ -108,6 +108,7 @@ public class OrderCommonFragment extends BaseFragment {
         super.onResume();
     }
 
+
     /**
      * 获取普通订单数据
      *
@@ -189,8 +190,8 @@ public class OrderCommonFragment extends BaseFragment {
                 return;
             }
             final String needs_id = orderListEntity.getNeeds_id();
-            String consumer_name = orderListEntity.getConsumer_name();
-            String consumer_mobile = orderListEntity.getConsumer_mobile();
+            String consumer_name = orderListEntity.getContacts_name();
+            String consumer_mobile = orderListEntity.getContacts_mobile();
             String province_name = orderListEntity.getProvince_name();
             String city_name = orderListEntity.getCity_name();
             String district_name = orderListEntity.getDistrict_name();
@@ -201,9 +202,9 @@ public class OrderCommonFragment extends BaseFragment {
             String decoration_style_convert = ConvertUtils.getConvert2CN(style, decoration_style);
             String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
 
-            district_name = TextUtils.isEmpty(district_name) || "none".equals(district_name) ? "" : district_name;
-            province_name = TextUtils.isEmpty(province_name) ? "" : province_name;
-            city_name = TextUtils.isEmpty(city_name) ? "" : city_name;
+            district_name = UIUtils.getNoStringIfEmpty(district_name);
+            province_name =UIUtils.getNoStringIfEmpty(province_name);
+            city_name = UIUtils.getNoStringIfEmpty(city_name);
 
             String address = province_name + city_name + district_name;
             final String wk_template_id = orderListEntity.getWk_template_id();
