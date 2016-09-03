@@ -43,7 +43,7 @@ public class Constant {
      * Flow pass parameter .
      */
     public static class ProjectMaterialKey {
-//        public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
+        //        public static final String IM_TO_FLOW_DESIGNER_ID = "imToFlowDesigner";
 //        public static final String IM_TO_FLOW_NEEDS_ID = "imToFlowNeeds";
         public static final String IM_TO_FLOW_NODE_ID = "imToFlowNode";
         public static final String IM_TO_FLOW_THREAD_ID = "imToFlowThreadId";
@@ -73,15 +73,16 @@ public class Constant {
     public static class NumKey {
         public static final String _ONE = "-1";
         public static final String ZERO = "0";
-        public static final String ONE = "1";
-        public static final String TWO = "2";
-        public static final String CERTIFIED_PASS_THREE = "3";
         public static final String FOUR = "4";
         public static final String FIVE = "5";
         public static final String SIX = "6";
-        public static final String ZERO_ONE = "01";
-        public static final String ZERO_TWO = "02";
-        public static final String CERTIFIED_PASS_THREE_1 = "03";
+
+        public static final String CERTIFIED_PASS = "3";
+        public static final String CERTIFIED_PASS_1 = "03";
+        public static final String CERTIFIED_FAILED = "2";
+        public static final String CERTIFIED_FAILED_1 = "02";
+        public static final String CERTIFIED_CHECKING = "1";
+        public static final String CERTIFIED_CHECKING_1 = "01";
 
         public static final String TWENTY_ONE = "21";
         public static final String TWENTY_TWO = "22";
@@ -106,7 +107,7 @@ public class Constant {
      * 全流程分发到每个状态的key
      */
     public static class BundleKey {
-//        public static final String BUNDLE_ASSET_NEED_ID = "ASSET_NEEDS_ID";
+        //        public static final String BUNDLE_ASSET_NEED_ID = "ASSET_NEEDS_ID";
 //        public static final String BUNDLE_ACTION_NODE_ID = "WORK_ACTION_NODE_ID";
         public static final String BUNDLE_ASSET_NEED_ID = "ASSET_NEEDS_ID";
         public static final String BUNDLE_SUB_NODE_ID = "WORK_FLOW_SUB_NODE_ID";
@@ -129,6 +130,7 @@ public class Constant {
 
 
     }
+
     /**
      * 六大产品fragment消息KEY
      */

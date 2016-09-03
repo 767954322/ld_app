@@ -21,7 +21,6 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateCon
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
-import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
@@ -43,7 +42,6 @@ import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLogi
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -329,7 +327,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             startActivity(intent);
         }
 
-        if (isActiveFragment(MyDecorationProjectFragment.class) || isActiveFragment(DecorationConsumerFragment.class)) {
+        if (isActiveFragment(DecorationConsumerFragment.class)) {
             Intent intent = new Intent(this, IssueDemandActivity.class);
             startActivity(intent);
         }

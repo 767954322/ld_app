@@ -228,12 +228,12 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         }
         if (obj == mAmendDemandSuccessAlertView && position != AlertView.CANCELPOSITION) {
             if (amendDemandBean != null) {
-                if (Constant.NumKey.TWO.equals(custom_string_status)
-                        || Constant.NumKey.ZERO_TWO.equals(custom_string_status)) {
+                if (Constant.NumKey.CERTIFIED_FAILED.equals(custom_string_status)
+                        || Constant.NumKey.CERTIFIED_FAILED_1.equals(custom_string_status)) {
                     /**
                      * 审核未通过,修改需求表单后重新审核.
                      */
-                    amendDemandBean.setCustom_string_status(Constant.NumKey.ONE);
+                    amendDemandBean.setCustom_string_status(Constant.NumKey.CERTIFIED_CHECKING);
                 }
 
                 Intent intent = new Intent();
@@ -243,9 +243,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
 
                 intent.putExtras(bundle);
                 setResult(ResultCode,intent);
-
-
-
             }
 
             if (null != mDecorationDetailBean) {
@@ -372,7 +369,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         String publish_time = demandDetailBean.getPublish_time();
         String community_name = demandDetailBean.getCommunity_name();
 
-        if (this.custom_string_status.equals(Constant.NumKey.CERTIFIED_PASS_THREE) || this.custom_string_status.equals(Constant.NumKey.CERTIFIED_PASS_THREE_1)) {
+        if (this.custom_string_status.equals(Constant.NumKey.CERTIFIED_PASS) || this.custom_string_status.equals(Constant.NumKey.CERTIFIED_PASS_1)) {
             btnFitmentAmendDemand.setClickable(false);
             btnFitmentAmendDemand.setPressed(false);
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));

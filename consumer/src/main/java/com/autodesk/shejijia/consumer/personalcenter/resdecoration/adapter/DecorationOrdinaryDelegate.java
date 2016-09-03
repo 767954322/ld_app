@@ -257,8 +257,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         boolean isBiding = false;
         if (!TextUtils.isEmpty(custom_string_status)) {
             switch (custom_string_status) {
-                case Constant.NumKey.CERTIFIED_PASS_THREE:
-                case Constant.NumKey.CERTIFIED_PASS_THREE_1:
+                case Constant.NumKey.CERTIFIED_PASS:
+                case Constant.NumKey.CERTIFIED_PASS_1:
                     isBiding = true;
                     break;
                 default:
@@ -281,7 +281,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      */
     private String getNeedsState(String is_public, String wk_template_id, String custom_string_status,
                                  int wk_cur_sub_node_id_int, String needs_id) {
-        String needsState = "未知状态";
+        String needsState = UIUtils.getString(R.string.error_state);
         switch (wk_template_id) {
             case WkTemplateConstants.IS_ELITE:
                 needsState = getEliteNeedsState(needsState, custom_string_status, needs_id);
@@ -293,7 +293,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                     /**
                      * is_public=1,需求终止
                      */
-                    needsState = UIUtils.getString(R.string.canceled);
+                    needsState = UIUtils.getString(R.string.project_stop);
                 } else {
                     /**
                      * 自选:wk_template_id=2,直接审核通过
@@ -301,46 +301,47 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                      */
                     if (WkTemplateConstants.IS_AVERAGE.equals(wk_template_id)) {
                         switch (custom_string_status) {
-                            case Constant.NumKey.ONE:
-                            case Constant.NumKey.ZERO_ONE:
+                            case Constant.NumKey.CERTIFIED_CHECKING:
+                            case Constant.NumKey.CERTIFIED_CHECKING_1:
                                 /**
                                  * 审核中,可以修改需求
                                  */
                                 needsState = UIUtils.getString(R.string.checking);
                                 break;
 
-                            case Constant.NumKey.TWO:
-                            case Constant.NumKey.ZERO_TWO:
+                            case Constant.NumKey.CERTIFIED_FAILED:
+                            case Constant.NumKey.CERTIFIED_FAILED_1:
                                 /**
                                  * 审核失败,可以修改需求.
                                  */
                                 needsState = UIUtils.getString(R.string.disapprove);
                                 break;
 
-                            case Constant.NumKey.CERTIFIED_PASS_THREE:
-                            case Constant.NumKey.CERTIFIED_PASS_THREE_1:
+                            case Constant.NumKey.CERTIFIED_PASS:
+                            case Constant.NumKey.CERTIFIED_PASS_1:
                                 /**
-                                 * 审核通过,但是没有设计师应标.??
+                                 * 审核通过,但是没有设计师应标.
                                  */
-                                needsState = "应标中";
+                                needsState = UIUtils.getString(R.string.project_biding);
                                 break;
                         }
                     }
 
-                    if (wk_cur_sub_node_id_int >= 11) {
-                        if (wk_cur_sub_node_id_int < 41) {
-                            needsState = "应标中";
+                    if (wk_cur_sub_node_id_int >= WkTemplateConstants.INVITE_MEASURE) {
+                        if (wk_cur_sub_node_id_int < WkTemplateConstants.PAY_FOR_FIRST_FEE) {
+                            needsState = UIUtils.getString(R.string.project_biding);
                         }
-                        if (wk_cur_sub_node_id_int >= 41) {
-                            needsState = "设计中";
-                        }
-
-                        if (wk_cur_sub_node_id_int >= 63 && wk_cur_sub_node_id_int != 64) {
-                            needsState = "项目完成";
+                        if (wk_cur_sub_node_id_int >= WkTemplateConstants.PAY_FOR_FIRST_FEE) {
+                            needsState = UIUtils.getString(R.string.project_designing);
                         }
 
-                        if (wk_cur_sub_node_id_int == 64) {
-                            needsState = "设计中";
+                        if (wk_cur_sub_node_id_int >= WkTemplateConstants.CONFIRM_DESIGN_RESULTS
+                                && wk_cur_sub_node_id_int != WkTemplateConstants.DELAY_CONFIRM_DESIGN_RESULTS) {
+                            needsState = UIUtils.getString(R.string.project_finish);
+                        }
+
+                        if (wk_cur_sub_node_id_int == WkTemplateConstants.DELAY_CONFIRM_DESIGN_RESULTS) {
+                            needsState = UIUtils.getString(R.string.project_designing);
                         }
                     }
                 }

@@ -271,8 +271,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
              * custom_string_status 审核状态
              */
             List<DecorationBiddersBean> bidders = demandDetailBean.getBidders();
-            if (Constant.NumKey.CERTIFIED_PASS_THREE.equals(custom_string_status)
-                    || Constant.NumKey.CERTIFIED_PASS_THREE_1.equals(custom_string_status)) {
+            if (Constant.NumKey.CERTIFIED_PASS.equals(custom_string_status)
+                    || Constant.NumKey.CERTIFIED_PASS_1.equals(custom_string_status)) {
 
                 setButtonGray(mBtnAmendDemand);
 
