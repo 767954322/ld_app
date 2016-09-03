@@ -205,10 +205,10 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             designer_main_radio_group.check(index);
         }
 
-//        //未登录状态，会自动进入案例fragment
-//        if (mMemberEntity == null) {
-//            designer_main_radio_btn.setChecked(true);
-//        }
+        //未登录状态，会自动进入案例fragment
+        if (mMemberEntity == null) {
+            designer_main_radio_btn.setChecked(true);
+        }
     }
 
 
