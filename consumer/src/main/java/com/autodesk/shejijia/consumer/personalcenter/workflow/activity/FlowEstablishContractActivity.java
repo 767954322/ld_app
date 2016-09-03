@@ -113,7 +113,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         ll_agree_establish_contract = (LinearLayout) findViewById(R.id.ll_agree_establish_contract);
         ll_contract_content_designer = (LinearLayout) findViewById(R.id.design_contract_content_designer);
         ll_contract_content_consumer = (LinearLayout) findViewById(R.id.design_contract_content_consumer);
-
+        /////
 
         //Variables
         btn_send = (Button) findViewById(R.id.btn_send_establish_contract);
