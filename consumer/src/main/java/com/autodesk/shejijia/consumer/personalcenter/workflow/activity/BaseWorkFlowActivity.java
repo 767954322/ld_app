@@ -155,7 +155,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             if ((Constant.NumKey.ZERO.equals(order_type) && step == MPStatusMachine.NODE__MEANSURE_PAY)) {            /// 支付量房费 .
                 return order;
             }
-            if (Constant.NumKey.ONE.equals(order_type)) {
+            if (Constant.NumKey.CERTIFIED_CHECKING.equals(order_type)) {
                 order_status = order.getOrder_status();
                 if (Constant.NumKey.FIVE.equals(order_status) && step == MPStatusMachine.NODE__DESIGN_FIRST_PAY) { /// 支付设计首款 .
                     return order;

@@ -363,11 +363,6 @@
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_14"/>
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginRight="@dimen/size_18"-->
-                    <!--android:text="㎡"/>-->
             </LinearLayout>
 
             <LinearLayout

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +15,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionListActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerQrEntity;
@@ -59,7 +58,6 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
 
     private static final int IS_BEI_SHU = 1;
     private int mIsLoho;
-
 
     @Override
     protected int getLayoutResId() {
@@ -299,7 +297,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             case R.id.ll_personal_designer_attention: /// 我的关注 .
 
                 if (memberEntity != null) {
-                    Intent intent2 = new Intent(DesignerPersonalCenterActivity.this, AttentionActivity.class);
+                    Intent intent2 = new Intent(DesignerPersonalCenterActivity.this, AttentionListActivity.class);
                     startActivity(intent2);
                 } else {
                     AdskApplication.getInstance().doLogin(this);

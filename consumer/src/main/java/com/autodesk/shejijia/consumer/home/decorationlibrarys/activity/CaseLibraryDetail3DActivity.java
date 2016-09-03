@@ -133,12 +133,12 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
-        mTvFollowedDesigner = (TextView) findViewById(R.id.tv_follow_designer);
+        mTvFollowedDesigner = (TextView) findViewById(R.id.iv_follow_designer);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
-        mTvFollowedDesigner = (TextView) findViewById(R.id.tv_follow_designer);
+        mTvFollowedDesigner = (TextView) findViewById(R.id.iv_follow_designer);
 
         View view = LayoutInflater.from(this).inflate(R.layout.case_library_new_item, null);
         mdesignerAvater = (ImageView) view.findViewById(R.id.case_library_item_iv);
@@ -225,7 +225,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 }
                 break;
 
-            case R.id.tv_follow_designer://关注
+            case R.id.iv_follow_designer://关注
 
                 if (null != memberEntity) {
                     if (null != case3DDetailBean && null != case3DDetailBean.getDesigner_info()) {

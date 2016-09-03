@@ -48,6 +48,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
@@ -133,7 +134,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         showOrHideChatMeasure();
+
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
+        getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
 
         setDefaultFragment();
 
@@ -509,14 +512,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                if (null == jsonObject) {
-                    return;
-                }
+
                 String info = GsonUtil.jsonToString(jsonObject);
                 seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
-
-                getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
-
                 updateViewFromDesignerDetailData(seekDesignerDetailHomeBean);
             }
 
@@ -752,7 +750,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 CustomProgress.cancelDialog();
                 String followingOrUnFollowedDesignerString = GsonUtil.jsonToString(jsonObject);
                 FollowingDesignerBean followingDesignerBean = GsonUtil.jsonToBean(followingOrUnFollowedDesignerString, FollowingDesignerBean.class);
-                mTvFollowedNum.setText(" : " + followingDesignerBean.following_count);
+                String follows = followingDesignerBean.follows;
+                follows = StringUtils.isEmpty(follows) ? "0" : follows;
+                mTvFollowedNum.setText(" : " + follows);
 
                 setRightTitle(followsType);
                 if (followsType) {
@@ -814,10 +814,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         int height = myScrollView.getHeight();
         int scrollViewMeasuredHeight = myScrollView.getChildAt(0).getMeasuredHeight();
 
-        if(scrollViewMeasuredHeight <= y + height){
+        if (scrollViewMeasuredHeight <= y + height) {
 
             myScrollView.setIsLoad(true);
-        }else {
+        } else {
 
             myScrollView.setIsLoad(false);
         }

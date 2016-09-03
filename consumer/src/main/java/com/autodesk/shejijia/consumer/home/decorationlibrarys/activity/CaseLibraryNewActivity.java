@@ -96,7 +96,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
-        mTvFollowedDesigner = (TextView) findViewById(R.id.tv_follow_designer);
+        mIvFollowedDesigner = (ImageView) findViewById(R.id.iv_follow_designer);
 
         //顶部图片head
         View view = LayoutInflater.from(this).inflate(R.layout.case_library_new_item, null);
@@ -161,7 +161,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         rlThumbUp.setOnClickListener(this);
         llThumbUp.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
-        mTvFollowedDesigner.setOnClickListener(this);
+        mIvFollowedDesigner.setOnClickListener(this);
 
     }
 
@@ -193,7 +193,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 }
                 break;
 
-            case R.id.tv_follow_designer://关注
+            case R.id.iv_follow_designer://关注
                 if (null != memberEntity) {
                     if (null != caseDetailBean && null != caseDetailBean.getDesigner_info()) {
                         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
@@ -490,7 +490,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             if (!member_id.equals(designer_id)) {
                 setFollowedTitle(is_following);
             } else {
-                mTvFollowedDesigner.setVisibility(View.GONE);
+                mIvFollowedDesigner.setVisibility(View.GONE);
             }
         } else {
             setFollowedTitle(false);
@@ -599,14 +599,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private void setFollowedTitle(boolean is_following) {
 
         if (is_following) {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
-            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_unfollow_bg));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
+            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
 
         } else {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
-            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_follow_bg));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
+            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
         }
     }
 
@@ -700,7 +696,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private PolygonImageView pivImgCustomerHomeHeader;
     private ImageView ivCustomerIm;
     private TextView ivConsumeHomeDesigner;
-    private TextView mTvFollowedDesigner;
+    private ImageView mIvFollowedDesigner;
     private TextView tvCustomerHomeStyle;
     private TextView tvCustomerHomeRoom;
     private TextView tvCustomerHomeArea;

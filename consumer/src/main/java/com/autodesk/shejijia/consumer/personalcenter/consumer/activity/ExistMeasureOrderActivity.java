@@ -272,7 +272,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         int size = mList.size();
         for (int i = 0; i < size; i++) {
             String wk_template_id = mList.get(i).getWk_template_id();
-            if (wk_template_id != null && Constant.NumKey.ONE.equals(wk_template_id)) {
+            if (wk_template_id != null && Constant.NumKey.CERTIFIED_CHECKING.equals(wk_template_id)) {
                 if (mList.get(i).getContract() == null) {
                     dList.add(mList.get(i));
                 } else {

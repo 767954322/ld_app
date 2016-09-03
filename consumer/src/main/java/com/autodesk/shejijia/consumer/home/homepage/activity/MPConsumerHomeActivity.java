@@ -21,7 +21,6 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateCon
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectDesignerFragment;
-import com.autodesk.shejijia.consumer.home.homepage.fragment.MyDecorationProjectFragment;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.UserHomeFragment;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
@@ -43,7 +42,6 @@ import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLogi
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -324,12 +322,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
         /// 处理设计师搜索逻辑 .
+        if (isActiveFragment(DesignerListFragment.class)) {
+            designerListFragment.handleSearchOption();
+        }
+
         if (isActiveFragment(UserHomeFragment.class)) {
             Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
             startActivity(intent);
         }
 
-        if (isActiveFragment(MyDecorationProjectFragment.class) || isActiveFragment(DecorationConsumerFragment.class)) {
+        if (isActiveFragment(DecorationConsumerFragment.class)) {
             Intent intent = new Intent(this, IssueDemandActivity.class);
             startActivity(intent);
         }
@@ -386,7 +388,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 break;
 
             case R.id.radio_btn_designer:
-                SharedPreferencesUtils.writeBoolean("re_refresh", false);
                 FLAG_CLICK = TAB_DESIGNER;
                 setTitleForNavbar(UIUtils.getString(R.string.tab_designer));
                 setDesignerListTitle();
@@ -630,38 +631,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
-            }
-        });
-    }
-
-    /**
-     * 获取个人基本信息
-     *
-     * @param member_id
-     * @brief For details on consumers .
-     */
-    public void getConsumerInfoData(String member_id) {
-        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                if (designerInfoDetails != null) {
-                    is_loho = designerInfoDetails.getDesigner().getIs_loho();
-                }
-                // MERGE release/September
-                //mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-
-                // updateViewFromData();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                if (MPConsumerHomeActivity.this != null) {
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
-                }
             }
         });
     }

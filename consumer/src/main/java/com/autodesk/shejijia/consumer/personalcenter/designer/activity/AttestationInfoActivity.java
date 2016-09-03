@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -75,24 +76,24 @@ public class AttestationInfoActivity extends NavigationBarActivity {
             tv_txt_audit_status_two.setTextColor(UIUtils.getColor(R.color.bg_ed8e00));
             img_audit_describe.setVisibility(View.GONE);
             tv_audit_describe.setText(UIUtils.getString(R.string.information_review_please_patient));
-
-        } else if (Constant.NumKey.ONE.equals(audit_status)) {
+//1
+        } else if (Constant.NumKey.CERTIFIED_CHECKING.equals(audit_status)) {
             setTitleForNavbar(UIUtils.getString(R.string.audit_not_pass));
             tv_txt_audit_status_three.setText(UIUtils.getString(R.string.audit_not_pass));
             tv_pic_audit_status_three.setBackground(UIUtils.getDrawable(R.drawable.bg_attestation_info_pressed));
             tv_txt_audit_status_three.setTextColor(UIUtils.getColor(R.color.bg_ed8e00));
             img_audit_describe.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
             tv_audit_describe.setText(UIUtils.getString(R.string.you_identity_audit_failure));
-
-        } else if (Constant.NumKey.TWO.equals(audit_status)) {
+//2
+        } else if (Constant.NumKey.CERTIFIED_FAILED.equals(audit_status)) {
             setTitleForNavbar(UIUtils.getString(R.string.autonym_audit_pass));
             tv_txt_audit_status_three.setText(UIUtils.getString(R.string.autonym_audit_pass));
             tv_pic_audit_status_three.setBackground(UIUtils.getDrawable(R.drawable.bg_attestation_info_pressed));
             tv_txt_audit_status_three.setTextColor(UIUtils.getColor(R.color.bg_ed8e00));
             img_audit_describe.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
             tv_audit_describe.setText(UIUtils.getString(R.string.congratulations_you));
-
-        } else if (Constant.NumKey.CERTIFIED_PASS_THREE.equals(audit_status)) {
+//3
+        } else if (Constant.NumKey.CERTIFIED_PASS.equals(audit_status)) {
             setTitleForNavbar(UIUtils.getString(R.string.audit_not_pass));
             tv_txt_audit_status_three.setText(UIUtils.getString(R.string.audit_not_pass));
             tv_pic_audit_status_three.setBackground(UIUtils.getDrawable(R.drawable.bg_attestation_info_pressed));
@@ -127,7 +128,8 @@ public class AttestationInfoActivity extends NavigationBarActivity {
         super.leftNavButtonClicked(view);
 
     }
-    private static  final String AUDIT_STATUS ="AUDIT_STATUS";
+
+    private static final String AUDIT_STATUS = "AUDIT_STATUS";
 
 
     private TextView tv_pic_audit_status_one;

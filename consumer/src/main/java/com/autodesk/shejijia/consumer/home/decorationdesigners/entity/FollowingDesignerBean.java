@@ -10,7 +10,7 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.entity;
 public class FollowingDesignerBean {
 
 
-    public String following_count;
+    public String follows;
     public String avatar;
     public String nick_name;
     public String member_id;

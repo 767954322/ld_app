@@ -36,10 +36,9 @@ import java.util.List;
  * @author DongXueQiu .
  * @version 1.0 .
  * @date 2016/8/1 0029 17:32 .
- * @file AttentionActivity  .
  * @brief 关注列表 .
  */
-public class AttentionActivity extends NavigationBarActivity implements AttentionAdapter.OnItemClickListener, PullToRefreshLayout.OnRefreshListener {
+public class AttentionListActivity extends NavigationBarActivity implements AttentionAdapter.OnItemClickListener, PullToRefreshLayout.OnRefreshListener {
 
     @Override
     protected int getLayoutResId() {
@@ -260,7 +259,7 @@ public class AttentionActivity extends NavigationBarActivity implements Attentio
         unFollowedAlertView = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.attention_tip_message_first) + mNickName + UIUtils.getString(R.string.attention_tip_message_last),
                 UIUtils.getString(R.string.following_cancel), null,
                 new String[]{UIUtils.getString(R.string.following_sure)},
-                AttentionActivity.this,
+                AttentionListActivity.this,
                 AlertView.Style.Alert, new com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {

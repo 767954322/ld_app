@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionActivity;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AttentionListActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerEssentialInfoActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
@@ -44,6 +43,7 @@ import de.greenrobot.event.EventBus;
  * @brief 消费者个人中心 .
  */
 public class ConsumerPersonalCenterActivity extends NavigationBarActivity implements View.OnClickListener {
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_personal_center_consumer;
@@ -72,7 +72,6 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         }
         member_id = mMemberEntity.getAcs_member_id();
     }
-
 
 
     @Override
@@ -121,9 +120,9 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
 
             case R.id.ll_personal_designer_attention: /// 我的关注 .
                 if (mMemberEntity != null) {
-                    Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this,AttentionActivity.class);
+                    Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this, AttentionListActivity.class);
                     startActivity(intent2);
-                }else{
+                } else {
                     AdskApplication.doLogin(this);
                 }
                 break;
@@ -153,7 +152,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 if (ConsumerPersonalCenterActivity.this != null) {
 //                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, ConsumerPersonalCenterActivity.this,
 //                            AlertView.Style.Alert, null).show();
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,ConsumerPersonalCenterActivity.this);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, ConsumerPersonalCenterActivity.this);
                 }
             }
         });
