@@ -8,14 +8,13 @@ import android.widget.AdapterView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateAdapter;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateWorkYearAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +130,13 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         mStyle = mStyle.equals(all) ? BLANK : mStyle;
 
         FiltrateContentBean filtrateContentBean = new FiltrateContentBean();
-        filtrateContentBean.setHousingType(mLivingRoom);
+        if (mLivingRoom.equals("其它")){
+            filtrateContentBean.setHousingType("other");
+        }else {
+            filtrateContentBean.setHousingType(mLivingRoom);
+        }
+
+//        filtrateContentBean.setHousingType(mLivingRoom);
         filtrateContentBean.setArea(mArea);
         filtrateContentBean.setStyle(mStyle);
         filtrateContentBean.setAreaIndex(mAreaIndex);
