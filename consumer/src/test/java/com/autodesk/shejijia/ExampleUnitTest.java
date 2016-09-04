@@ -22,11 +22,7 @@ public class ExampleUnitTest {
 
         MPDesignFormatValidator Validator=new MPDesignFormatValidator();
 
-        String a,b,c;
-        a="省市區";
-        b="省市區";
-        c="省市區";
-        String str= Validator.getStrProvinceCityDistrict(a,b,c);
+
 
 
 

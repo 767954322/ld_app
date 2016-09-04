@@ -962,7 +962,7 @@ public class MPServerHttpManager {
     /**
      * 发送设计合同
      */
-    public void sendEstablishContract(final String need_id, final String Member_Type, final String acsToken, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+    public void sendEstablishContract(final String need_id, final String Member_Type, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_SEND_ESTABLISH_CONTRACT + need_id;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
 
@@ -971,7 +971,7 @@ public class MPServerHttpManager {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 header.put(Constant.NetBundleKey.MEMBER_TYPE, Member_Type);
-                header.put(Constant.NetBundleKey.ACS_TOKEN, acsToken);
+                header.put(Constant.NetBundleKey.ACS_TOKEN, acs_token);
                 return header;
             }
         };

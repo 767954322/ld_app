@@ -2,7 +2,14 @@ package com.autodesk.shejijia.consumer.utils.AppDataFormatValidator;
 
 import android.text.TextUtils;
 
+import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Created by franco on 2016/9/3.
@@ -40,13 +47,19 @@ public class MPFormatValidator {
         return  true;
     }
 
-    public boolean isStringNumberValid(String Number)
+    public boolean isStringPositiveNumberValid(String Number)
     {
         if  (isStringSemanticsNull(Number))
             return false;
 
         return  Number.matches(RegexUtil.POSITIVE_INTEGER_REGEX);
     }
+
+
+
+
+
+
 
 
 }

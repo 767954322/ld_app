@@ -86,7 +86,7 @@
     <string name="receiving_room_deliverable">接收量房交付物</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款少于设计总额的80%</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>
-    <string name="total_quantity_room_first_is_not_greater_than_design">量房首款不能大于设计总额</string>
+    <string name="total_quantity_room_first_is_not_greater_than_design">设计首款不能大于设计总额</string>
     <string name="please_fill_out_the_design_first">请填写设计首款</string>
     <string name="costs_cannot_be_negative">费用不能为负数</string>
     <string name="please_fill_in_the_total_project_design">请填写项目设计总额</string>

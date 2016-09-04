@@ -132,7 +132,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_last_cost = (TextViewContent) findViewById(R.id.tvc_flow_establish_contract_consumer_last_cost);
         img_agree_establish_contract = (ImageView) findViewById(R.id.img_agree_establish_contract);
         tvc_treeD_render_count = (TextViewContent) findViewById(R.id.tvc_flow_establish_contract_designer_render_map);
-
+        tvc_consumer_community_name= (TextViewContent) findViewById(R.id.flow_contract_community_name);
+        tvc_consumer_local_area= (TextView) findViewById(R.id.flow_establish_contract_consumer_decorate_address);
 
          /* init content for consumer form */
         twvc_consumerContent = (WebView) findViewById(R.id.contract_sub_content_webview);
@@ -156,6 +157,17 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         twvc_consumerContent.addJavascriptInterface(new WebViewJavaScriptCallback(), ANDROID);
     }
 
+    private void UpdateUIlayoutContract()
+    {
+        UpdateUIlayoutContractContent();
+
+        if (isRoleDesigner()) { /// 设计师　.
+            UpdateUIcontractContentDesigner();
+        } else if (isRoleCustomer()) { /// 消费者 .
+            UpdateUIcontractContentConsumer();
+        }
+
+    }
 
     private void UpdateUIlayoutContractContent() {
         if ( isRoleDesigner()){
@@ -189,6 +201,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     MyToast.show(FlowEstablishContractActivity.this, R.string.failure);
                 }
             });                                                                   /// 获取合同编号.
+
+            tvc_designer_name.setText(designer_name);
+            tvc_designer_phone.setText(designer_mobile);
+            tvc_designer_email.setText(designer_mail);
+
             tvc_consumer_name.setText(requirement.getContacts_name());
             tvc_consumer_phone.setText(requirement.getContacts_mobile());
 
@@ -202,8 +219,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             //  tvc_consumer_decorate_address.setText(province_name + " " + city_name + " " + district_name);
 
             String Community_name=Validator.getStringWithNullDefaultString(requirement.getCommunity_name(), UIUtils.getString(R.string.data_null));
-            tvc_consumer_detail_address.setText(Community_name);
+            tvc_consumer_community_name.setText(Community_name);
 
+
+            //tvc_consumer_detail_address.setText(requirement.);
+            //tvc_designer_decorate_address.setText(Community_name);
 
             if (WorkFlowSubNodeStep() == 31) {                                                            /// 设计师发完合同后可以继续发送按钮显示.
                 ll_send.setVisibility(View.VISIBLE);
@@ -270,7 +290,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     private void UpdateUIcontractContentConsumer() {
-        UpdateUIsetConsumerContentView();
+        UpdateUIsetContentViewConsumer();
 
         if (WorkFlowSubNodeStep() == 31) {
             ll_send.setVisibility(View.VISIBLE);
@@ -316,7 +336,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         }
     }
 
-    private void UpdateUIsetConsumerContentView() {
+    private void UpdateUIsetContentViewConsumer() {
 
         try {
             //Return an AssetManager instance for your application's package
@@ -359,22 +379,22 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
                 String consumer_name=contract_detail.getName();
                 String consumer_mobile=contract_detail.getMobile();
-                String consumer_addr=contract_detail.getAddr();
+                String consumer_addr=contract_detail.getAddrDe();
                 String consumer_mail=contract_detail.getEmail();
                 String tree_d_renderimage=contract_detail.getRender_map();
-                String designer_addr=contract_detail.getAddr();
+                String designer_addr=contract_detail.getAddrDe();
 
-                text = text.replace("#val(contract_number)", contract_number);
-                text = text.replace("#val(contract_date)", contract_date);
-                text = text.replace("#val(design_amount)", design_amount);
-                text = text.replace("#val(design_amount_first)", design_amount_first);
-                text = text.replace("#val(design_amount_balance)", design_amount_balance);
-                text = text.replace("#val(consumer_name)", consumer_name);
-                text = text.replace("#val(consumer_mobile)", consumer_mobile);
-                text = text.replace("#val(consumer_addr)", consumer_addr);
-                text = text.replace("#val(consumer_mail)", consumer_mail);
-                text = text.replace("#val(tree_d_renderimage)", tree_d_renderimage);
-                text = text.replace("#val(designer_addr)", designer_addr);
+                text = text.replace("#val(contract_number)", Validator.getStringWithNullDefaultString(contract_number,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(contract_date)", Validator.getStringWithNullDefaultString(contract_date,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(design_amount)", Validator.getStringWithNullDefaultString(design_amount,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(design_amount_first)", Validator.getStringWithNullDefaultString(design_amount_first,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(design_amount_balance)", Validator.getStringWithNullDefaultString(design_amount_balance,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(consumer_name)", Validator.getStringWithNullDefaultString(consumer_name,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(consumer_mobile)", Validator.getStringWithNullDefaultString(consumer_mobile,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(consumer_addr)", Validator.getStringWithNullDefaultString(consumer_addr,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(consumer_mail)", Validator.getStringWithNullDefaultString(consumer_mail,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(tree_d_renderimage)", Validator.getStringWithNullDefaultString(tree_d_renderimage,UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(designer_addr)", Validator.getStringWithNullDefaultString(designer_addr,UIUtils.getString(R.string.data_null)));
                 break;
             };
             twvc_consumerContent.loadDataWithBaseURL(null, text, Constant.NetBundleKey.MIME_TYPE_TEXT_HTML, Constant.NetBundleKey.UTF_8, "");
@@ -430,6 +450,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     protected void initListener() {
         super.initListener();
         ll_contract.setOnClickListener(this);
+        tvc_consumer_local_area.setOnClickListener(this);
         btn_send.setOnClickListener(this);
         tvc_consumer_detail_address.addTextChangedListener(new EditTextWatcher(tvc_consumer_detail_address));
         tvc_first_cost.addTextChangedListener(new EditTextWatcher(tvc_first_cost));
@@ -447,7 +468,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 getPCDAddress();
                 break;
             case R.id.btn_send_establish_contract:
-                 //sendEstablishContractCon();
+                if (checkValidFormInputWithErrorAlertView())
+                    submitDesignContract();
                 break;
         }
     }
@@ -503,7 +525,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 designer_name=list.getReal_name().getReal_name();
                 designer_mobile=list.getReal_name().getMobile_number().toString();
                 designer_mail=list.getEmail();
-                UpdateUIsetConsumerContentView();
+                UpdateUIlayoutContract();
 
             }
 
@@ -514,15 +536,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         });
 
 
-        UpdateUIlayoutContractContent();
 
-        if (isRoleDesigner()) { /// 设计师　.
-            UpdateUIcontractContentDesigner();
-        } else if (isRoleCustomer()) { /// 消费者 .
-            UpdateUIcontractContentConsumer();
-        }
-
+        UpdateUIlayoutContract();
     }
+
+
 
 
     //contract data method
@@ -565,7 +583,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     /**
      * 发送设计合同
      */
-    public void sendEstablishContract(String needs_id, String Member_Type, String ACS_Token, JSONObject jsonObject) {
+    //JSONObject jsonO = new JSONObject();
+    public void sendEstablishContract(String needs_id, String Member_Type , JSONObject jsonObject) {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -585,7 +604,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 mDesignContract.show();
             }
         };
-        MPServerHttpManager.getInstance().sendEstablishContract(needs_id, Member_Type, ACS_Token, jsonObject, callback);
+        MPServerHttpManager.getInstance().sendEstablishContract(needs_id, Member_Type, jsonObject, callback);
     }
 
     /**
@@ -593,37 +612,57 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
      *
      * @brief 发送设计合同内容 .
      */
-    private boolean checkValidFormInputWithAlertView() {
-        total_cost = tvc_total_cost.getText().toString();
-        first_cost = tvc_first_cost.getText().toString();
+    private boolean checkValidFormInputWithErrorAlertView() {
+
+        String total_cost = tvc_total_cost.getText().toString();
+        String first_cost = tvc_first_cost.getText().toString();
 
         String consumerName = tvc_consumer_name.getText().toString();
         String consumerPhone = tvc_consumer_phone.getText().toString();
         String consumerEmail = tvc_consumer_email.getText().toString();
         String detailAddress = tvc_consumer_detail_address.getText().toString();
         String renderCount = tvc_treeD_render_count.getText().toString();
-
-        boolean isMobile = consumerPhone.matches(RegexUtil.PHONE_REGEX);
-        boolean isEmail = consumerEmail.matches(RegexUtil.EMAIL_REGEX);
-        boolean isMap = renderCount.matches(RegexUtil.POSITIVE_INTEGER_REGEX); //　验证渲染图张数
-
+        String location_area = tvc_consumer_local_area.getText().toString();
+        String communityName = tvc_consumer_community_name.getText().toString();
         boolean bValid=true;
-
 
         while(true)
         {
             if (!Validator.isNameValid(consumerName))
             {showAlertView(R.string.no_input_name);  bValid =false; break;}
 
+            if (!Validator.isMobileValid(consumerPhone))
+            {showAlertView(R.string.please_fill_in_the_right_phone_number);  bValid =false; break;}
+
             if (!Validator.isEmailValid(consumerEmail))
             {showAlertView(R.string.please_fill_in_the_right_phone_email);  bValid =false; break;}
 
-            if (!Validator.isAddressValid(detailAddress))
-            {showAlertView(R.string.detailed_address_cannot_be_empty);  bValid =false; break;}
+            if (!Validator.isAddressValid(location_area))
+            {showAlertView(R.string.demand_please_address);  bValid =false; break;}
 
-            if (!Validator.isStringNumberValid(renderCount))
+
+            if (!Validator.isAddressValid(communityName))
+            {showAlertView(R.string.please_fill_detailed_address);  bValid =false; break;}
+
+            if (!Validator.isAddressValid(detailAddress))
+            {showAlertView(R.string.please_enter_correct_address);  bValid =false; break;}
+
+            if (!Validator.isStringPositiveNumberValid(renderCount))
             {showAlertView(R.string.please_fill_in_the_number_of_rendering);  bValid =false; break;}
 
+            if (!Validator.isStringValid(total_cost)){
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_in_the_total_project_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+                bValid = false; break;
+            }
+
+            if (!Validator.isStringValid(first_cost)){
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_out_the_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+                bValid = false; break;
+            }
+
+            if (!checkAmontContractValidwithResult(mBiddersEntity.getMeasurement_fee(),total_cost,first_cost)){
+                bValid =false; break;
+            }
 
             break;
         }
@@ -631,48 +670,102 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         return bValid;
     }
 
-    /// 发送设计合同方法 .
-    private void submitDesignContract(JSONObject jsonO) {
-        /// java中计算金额 .
-        BigDecimal loanAmount = new BigDecimal(total_cost); // 贷款金额
-        BigDecimal interestRate = new BigDecimal("0.8"); // 利率
-        BigDecimal interest = loanAmount.multiply(interestRate); // 相乘
+    public boolean  checkAmontContractValidwithResult(String meansurePrice,String total,String downpay)
+    {
+        String result;
+        String msg;
+        String balanceStrVal;
+
+
+        BigDecimal loanAmount = new BigDecimal(total); //
+        BigDecimal interestRate = new BigDecimal("0.8"); //
+        BigDecimal interest = loanAmount.multiply(interestRate); //
 
         BigDecimal decimal = new BigDecimal(interest.toString());
         decimal = decimal.setScale(3, RoundingMode.HALF_UP); // 保留小数点后三位
 
-        double totalCost = Double.parseDouble(total_cost);
+        double totalCost = Double.parseDouble(total);
         double discountCost = Double.parseDouble(decimal.toString());
-        if (!first_cost.isEmpty() && Double.parseDouble(first_cost) >= 0) {
-            double firstCost = Double.parseDouble(first_cost);
+        double firstCost = Double.parseDouble(downpay);
 
-            String acsToken = null;
-            if (memberEntity != null) {
-                acsToken = memberEntity.getAcs_token();
+        boolean bValid=true;
+
+        while(true)
+        {
+            if (!Validator.isStringValid(downpay)){
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_out_the_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+                bValid = false; break;
             }
 
-            if (firstCost >= discountCost && firstCost <= totalCost) {
-                String measurement_fee = mBiddersEntity.getMeasurement_fee();
-                measurement_fee = TextUtils.isEmpty(measurement_fee) ? "0" : measurement_fee;
-                if (firstCost > Double.valueOf(measurement_fee)) {
-                    CustomProgress.show(FlowEstablishContractActivity.this, UIUtils.getString(R.string.in_contract_sent), false, null);
-                    sendEstablishContract(needs_id, ((memberEntity != null) ? memberEntity.getMember_type() : null), acsToken, jsonO);
-                } else {
-                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
-                            AlertView.Style.Alert, null).show();
-                }
-            } else if (firstCost < discountCost) {
+
+            if (!Validator.isStringValid(downpay)){
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.costs_cannot_be_negative), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+                bValid = false; break;
+            }
+
+            if (firstCost < discountCost){
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_of_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
-            } else {
+                bValid = false; break;
+            }
+
+            if (firstCost > totalCost){
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.total_quantity_room_first_is_not_greater_than_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
+                bValid = false; break;
             }
-        } else if (first_cost.isEmpty()) {
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_out_the_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
-        } else if (Double.parseDouble(first_cost) < 0) {
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.costs_cannot_be_negative), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+
+            if (firstCost < Double.valueOf(meansurePrice)){
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+                        AlertView.Style.Alert, null).show();
+                bValid = false; break;
+            }
+            break;
         }
+
+
+
+        return bValid;
+    }
+    /// 发送设计合同方法 .
+    private void submitDesignContract() {
+
+        JSONObject jsonO = new JSONObject();
+        String total_cost = tvc_total_cost.getText().toString();
+        String first_cost = tvc_first_cost.getText().toString();
+
+        String consumerName = tvc_consumer_name.getText().toString();
+        String consumerPhone = tvc_consumer_phone.getText().toString();
+        String consumerEmail = tvc_consumer_email.getText().toString();
+        String detailAddress = tvc_consumer_detail_address.getText().toString();
+        String renderCount = tvc_treeD_render_count.getText().toString();
+        String location_area = tvc_consumer_local_area.getText().toString();
+        String communityName = tvc_consumer_community_name.getText().toString();
+
+        try {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put(Constant.EstablishContractKey.NAME, consumerName);
+            jsonObj.put(Constant.EstablishContractKey.MOBILE, consumerPhone);
+            jsonObj.put(Constant.EstablishContractKey.EMAIL, consumerEmail);
+            jsonObj.put(Constant.EstablishContractKey.ADDRDE, detailAddress);
+            jsonObj.put(Constant.EstablishContractKey.RENDER_MAP, renderCount);
+
+
+            contract_no = tv_contract_number.getText().toString().trim();
+            jsonO.put(Constant.EstablishContractKey.CONTRACT_NO, contract_no); // 合同编号
+            jsonO.put(Constant.EstablishContractKey.CONTRACT_CHARGE, total_cost); // 设计总额
+            jsonO.put(Constant.EstablishContractKey.CONTRACT_FIRST_CHARGE, first_cost); // 设计首款
+            jsonO.put(Constant.EstablishContractKey.DESIGNER_ID, designer_id);
+            jsonO.put(Constant.EstablishContractKey.CONTRACT_TYPE, 0);
+            jsonO.put(Constant.EstablishContractKey.CONTRACT_TEMPLATE_URL, "www.baidu.com");
+            jsonO.put(Constant.EstablishContractKey.CONTRACT_DATA, jsonObj.toString().replace("\"", "@jr@"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        CustomProgress.show(FlowEstablishContractActivity.this, UIUtils.getString(R.string.in_contract_sent), false, null);
+        sendEstablishContract(needs_id, ((memberEntity != null) ? memberEntity.getMember_type() : null), jsonO);
+
     }
 
     //Web view client
@@ -711,12 +804,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
                     public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
-                        if ("null".equals(area)
-                                || "none".equals(area)
-                                || TextUtils.isEmpty(area)) {
-                            area = "";
-                        }
-                        //tvc_consumer_decorate_address.setText(province + city + area);
+
+                        area=Validator.getStrProvinceCityDistrict(province,city,area);
+                        tvc_consumer_local_area.setText(area);
                         mChangeAddressDialog.dismiss();
                     }
 
@@ -741,6 +831,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
+
+            if (view == tvc_consumer_detail_address){
+
+                tvc_designer_decorate_address.setText(tvc_consumer_detail_address.getText());
+
+
+            }
             if (view == tvc_total_cost) { /// 监听总款 .
                 if (s.toString().contains(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > 2) {
@@ -876,6 +973,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private TextViewContent tvc_designer_phone;
     private TextViewContent tvc_designer_email;
     private TextViewContent tvc_designer_decorate_address;
+    private TextView tvc_consumer_local_area;
+    private TextViewContent tvc_consumer_community_name;
+
     private TextViewContent tvc_total_cost;
     private TextViewContent tvc_first_cost;
     private TextViewContent tvc_last_cost;
@@ -895,8 +995,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private WebView twvc_consumerContent;
 
     private String contract_no; // 设计合同编号
-    private String total_cost;
-    private String first_cost;
+    //private String total_cost;
+    //private String first_cost;
     private String memberType = null;
     private int ContractState = -1; // 判断合同是否发送成功弹出框的点击事件
     private int ContractForFirst = 0; //　从合同跳转到设计首款

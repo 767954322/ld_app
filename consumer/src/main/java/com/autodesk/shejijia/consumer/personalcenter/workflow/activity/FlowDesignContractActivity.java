@@ -474,7 +474,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
                 mDesignContract.show();
             }
         };
-        MPServerHttpManager.getInstance().sendEstablishContract(needs_id, Member_Type, ACS_Token, jsonObject, callback);
+        MPServerHttpManager.getInstance().sendEstablishContract(needs_id, Member_Type, jsonObject, callback);
     }
 
     /**

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
+    android:layout_height="800dp"
     android:layout_weight="1"
     android:background="@color/bg_ef"
     android:orientation="vertical">
@@ -120,7 +120,7 @@
                     android:text="@string/demand_village_name" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
-                    android:id="@+id/flow_contract_property_addr"
+                    android:id="@+id/flow_contract_community_name"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginLeft="@dimen/size_15"
@@ -159,7 +159,33 @@
                     android:textSize="@dimen/font_14" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:layout_marginTop="@dimen/size_1"
+                android:background="@color/bg_ff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flow_decorate_address" />
+
+                <TextView
+                    android:id="@+id/flow_establish_contract_consumer_decorate_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="@dimen/size_15"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_flow_edittext"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:textColor="@color/bg_80"
+                    android:textSize="@dimen/font_14" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

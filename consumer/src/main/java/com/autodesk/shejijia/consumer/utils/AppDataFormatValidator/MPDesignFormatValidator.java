@@ -36,6 +36,25 @@ public class MPDesignFormatValidator extends MPFormatValidator{
         return  true;
     }
 
+    public boolean isStringValid(String str)
+    {
+        if  (isStringSemanticsNull(str))
+            return false;
+
+        return  true;
+    }
+
+    public boolean isMobileValid(String mobinum)
+    {
+        if  (isStringSemanticsNull(mobinum))
+            return false;
+
+        if  (!mobinum.matches(RegexUtil.PHONE_REGEX))
+            return false;
+
+        return  true;
+    }
+
     public boolean isAddressValid(String Address)
     {
         if  (isStringSemanticsNull(Address))
