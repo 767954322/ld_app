@@ -99,7 +99,7 @@
             android:text="@string/optional_measure"/>
         <TextView
             android:id="@+id/tv_measure_invite"
-            android:layout_width="@dimen/size_80"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/size_30"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -107,7 +107,7 @@
             android:textColor="@color/bg_5f6062"
             android:background="@drawable/bg_actionsheet_cancel"
             android:visibility="gone"
-            android:text="@string/measure_invite"/>
+            android:text="@string/optional_measure"/>
     </RelativeLayout>
 
 </LinearLayout>
