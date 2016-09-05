@@ -37,7 +37,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -80,7 +79,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private PolygonImageView pivImgCustomerHomeHeader;
     private ImageView ivCustomerIm;
     private TextView ivConsumeHomeDesigner;
-    private TextView mTvFollowedDesigner;
+    private ImageView mIvFollowedDesigner;
     private TextView tvCustomerHomeStyle;
     private TextView tvCustomerHomeRoom;
     private TextView tvCustomerHomeArea;
@@ -133,12 +132,11 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
-        mTvFollowedDesigner = (TextView) findViewById(R.id.iv_follow_designer);
+        mIvFollowedDesigner = (ImageView) findViewById(R.id.iv_follow_designer);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
-        mTvFollowedDesigner = (TextView) findViewById(R.id.iv_follow_designer);
 
         View view = LayoutInflater.from(this).inflate(R.layout.case_library_new_item, null);
         mdesignerAvater = (ImageView) view.findViewById(R.id.case_library_item_iv);
@@ -189,9 +187,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         ivCustomerIm.setOnClickListener(this);
         rlThumbUp.setOnClickListener(this);
         llThumbUp.setOnClickListener(this);
-        mTvFollowedDesigner.setOnClickListener(this);
+        mIvFollowedDesigner.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
-        mTvFollowedDesigner.setOnClickListener(this);
 
     }
 
@@ -486,7 +483,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             if (!member_id.equals(designer_id)) {
                 setFollowedTitle(is_following);
             } else {
-                mTvFollowedDesigner.setVisibility(View.GONE);
+                mIvFollowedDesigner.setVisibility(View.GONE);
             }
         } else {
             setFollowedTitle(false);
@@ -555,13 +552,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 FollowingDesignerBean followingDesignerBean = GsonUtil.jsonToBean(followingOrUnFollowedDesignerString, FollowingDesignerBean.class);
 
                 setFollowedTitle(followsType);
-                if (followsType) {
-                    MyToast.show(CaseLibraryDetail3DActivity.this, UIUtils.getString(R.string.attention_success));
-                    /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
-                    mDesignerInfo.setIs_following(true);
-                } else {
-                    mDesignerInfo.setIs_following(false);
-                }
+
+//                if (followsType) {
+//                    MyToast.show(CaseLibraryDetail3DActivity.this, UIUtils.getString(R.string.attention_success));
+//                    /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
+//                    mDesignerInfo.setIs_following(true);
+//                } else {
+//                    mDesignerInfo.setIs_following(false);
+//                }
             }
 
             @Override
@@ -599,14 +597,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private void setFollowedTitle(boolean is_following) {
 
         if (is_following) {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
-            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_border_beishu));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
+            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
 
         } else {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
-            mTvFollowedDesigner.setBackgroundColor(UIUtils.getColor(R.color.actionsheet_blue));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
+            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
         }
     }
 
