@@ -77,8 +77,8 @@
     <string-array name="design_budget">
         <item>3000元以下</item>
         <item>3000元-6000元</item>
-        <item>6000元-10000元</item>
-        <item>10000元-50000元</item>
+        <item>6001元-10000元</item>
+        <item>10001元-50000元</item>
         <item>50000元以上</item>
     </string-array>
 

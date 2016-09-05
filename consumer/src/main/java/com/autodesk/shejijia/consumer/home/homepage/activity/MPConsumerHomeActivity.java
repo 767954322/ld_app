@@ -636,9 +636,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
-                if (mDesignerPersonalCenterFragment != null) {
-                    mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit);
-                }
             }
 
             @Override
