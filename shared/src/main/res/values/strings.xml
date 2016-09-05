@@ -111,19 +111,31 @@
 
 
     <string name="flow_email_address">电子邮箱：</string>
+    <string name="flow_address_email">邮箱地址：</string>
     <string name="flow_postal_code">邮箱编号：</string>
     <string name="flow_decorate_address">装修地址：</string>
     <string name="flow_second_party">乙方(设计师)：</string>
     <string name="flow_detail_address">详细地址：</string>
+    <string name="flow_hint_project_address">请输入项目地址</string>
+    <string name="flow_hint_email">请输入电子邮箱（选填）</string>
+    <string name="flow_hint_jiafang_name">请输入甲方姓名</string>
+    <string name="flow_hint_first_past_cost">设计首款不低于设计费总额的80%</string>
+    <string name="flow_material_list">材料清单(包括:主材清单.家具清单.施工报价单) 1 份</string>
+    <string name="flow_construction_drawings">施工图纸 1 套</string>
+    <string name="flow_3D_project">3D空间方案设计 1 份</string>
     <string name="flow_service_address">服务地址：</string>
-    <string name="flow_renderings">渲染图：</string>
+    <string name="flow_hint_jiafang_name_address">请输入甲方姓名</string>
+    <string name="flow_renderings">渲&#160;&#160;染&#160;&#160;图：</string>
     <string name="flow_monad_zhang">张</string>
     <string name="flow_every_increase_a_rendering_fee">每增加一张效果图费用：</string>
     <string name="flow_monad_rmb">元</string>
     <string name="flow_the_total_project_design">本项目设计费总额：</string>
+    <string name="flow_the_project_design">本项目设计费用</string>
     <string name="flow_first_design_cost">设计首款：</string>
     <string name="flow_last_design_cost">设计尾款：</string>
     <string name="flow_examine_contract_detail">查看合同详情</string>
+    <string name="flow_contract_detail">合同详情</string>
+    <string name="flow_project_deliverables">设计项目交付物</string>
     <string name="flow_have_read_all_contract_detail">我已阅读所有合同内容</string>
     <string name="flow_design_work_content">设计工作内容</string>
     <string name="flow_effect_picture">效果图：</string>
