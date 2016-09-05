@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -74,6 +72,11 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
     public void initItem(View view, Holder holder, int position) {
         if (null != mDatas && mDatas.size() > 0) {
             Case3DLibraryListBean.CasesBean casesEntity = mDatas.get(position);
+//
+//            if (null != casesEntity.getDesigner_info() && !TextUtils.isEmpty(casesEntity.getDesigner_info().getAvatar())) {
+//                ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
+//            }
+           // ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
             ((ViewHolder) holder).tvThumbUp.setText("点赞数 "+ casesEntity.getFavorite_count());
             List<Case3DLibraryListBean.CasesBean.DesignFileBean> images = casesEntity.getDesign_file();
             if (images != null && images.size() > 0) {
@@ -91,18 +94,19 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
 
 
             if (null != casesEntity) {
+                ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
                 if (casesEntity.getConception() == null) {
-                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     ((ViewHolder) holder).tvAddress.setText(casesEntity.getConception());
                 }
                 if (casesEntity.getRoom_area() == null) {
-                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + "m²");
                 }
                 if (casesEntity.getRoom_type() == null) {
-                    ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     String room_type = casesEntity.getRoom_type();
                     if (roomMap.containsKey(room_type)) {
@@ -112,7 +116,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                     }
                 }
                 if (casesEntity.getProject_style() == null) {
-                    ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     String project_style = casesEntity.getProject_style();
                     if (style.containsKey(project_style)) {
@@ -121,16 +125,14 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                         ((ViewHolder) holder).tvStyle.setText(casesEntity.getProject_style());
                     }
                 }
-                if (null != casesEntity.getDesigner_info() && !TextUtils.isEmpty(casesEntity.getDesigner_info().getAvatar())) {
-                    ImageUtils.displayAvatarImage(casesEntity.getDesigner_info().getAvatar(), ((ViewHolder) holder).ivHeadIcon);
-                }
+
             }
         } else {
             ((ViewHolder) holder).ivCase.setImageResource(R.drawable.common_case_icon);
-            ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.data_null));
+            ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.str_others));
         }
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
