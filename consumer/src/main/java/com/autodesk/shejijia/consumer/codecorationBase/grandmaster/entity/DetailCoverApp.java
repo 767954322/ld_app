@@ -1,15 +1,15 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity;
 
 /**
- * Created by allengu on 16-8-29.
+ * Created by allengu on 16-9-5.
  */
-public class DetailCover {
+public class DetailCoverApp {
 
     private  String name;
     private  String file_id;
     private  String public_url;
 
-    public DetailCover(String public_url, String name, String file_id) {
+    public DetailCoverApp(String public_url, String name, String file_id) {
         this.public_url = public_url;
         this.name = name;
         this.file_id = file_id;
@@ -41,7 +41,7 @@ public class DetailCover {
 
     @Override
     public String toString() {
-        return "DetailCover{" +
+        return "ProfileCover{" +
                 "name='" + name + '\'' +
                 ", file_id='" + file_id + '\'' +
                 ", public_url='" + public_url + '\'' +

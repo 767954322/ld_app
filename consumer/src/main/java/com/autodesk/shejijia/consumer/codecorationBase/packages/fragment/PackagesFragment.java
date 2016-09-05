@@ -21,9 +21,6 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 public class PackagesFragment extends BaseFragment implements View.OnClickListener, GridView.OnItemClickListener {
 
 
-    public PackagesFragment() {
-    }
-
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_packages;
@@ -31,23 +28,29 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initView() {
+
         gv_packages = (GridView) rootView.findViewById(R.id.gv_packages);
         bt_packages_yuyue = (ImageButton) rootView.findViewById(R.id.bt_packages_yuyue);
         iv_packages_tital = (ImageView) rootView.findViewById(R.id.iv_packages_tital);
+
     }
 
     @Override
     protected void initData() {
+
         PacksAdapter packasAdapter = new PacksAdapter();
         gv_packages.setAdapter(packasAdapter);
+
     }
 
 
     @Override
     protected void initListener() {
+
         bt_packages_yuyue.setOnClickListener(this);
         iv_packages_tital.setOnClickListener(this);
         gv_packages.setOnItemClickListener(this);
+
     }
 
     @Override

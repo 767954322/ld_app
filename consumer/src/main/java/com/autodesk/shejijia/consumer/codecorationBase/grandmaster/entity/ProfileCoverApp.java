@@ -1,17 +1,14 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity;
 
-import java.io.Serializable;
-
 /**
- * Created by allengu on 16-8-29.
+ * Created by allengu on 16-9-5.
  */
-public class ProfileCover implements Serializable{
+public class ProfileCoverApp {
+    private String name;
+    private String file_id;
+    private String public_url;
 
-    private  String name;
-    private  String file_id;
-    private  String public_url;
-
-    public ProfileCover(String public_url, String name, String file_id) {
+    public ProfileCoverApp(String public_url, String name, String file_id) {
         this.public_url = public_url;
         this.name = name;
         this.file_id = file_id;
@@ -49,4 +46,5 @@ public class ProfileCover implements Serializable{
                 ", public_url='" + public_url + '\'' +
                 '}';
     }
+
 }

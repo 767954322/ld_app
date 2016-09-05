@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -20,11 +21,14 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.GrandM
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.MasterInfo;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -35,15 +39,6 @@ import java.util.List;
  */
 public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
-
-    private ViewPager vp_grand_selection;
-    private ImageButton bt_grand_reservation;
-    private ViewGroup ll_grand_selection;
-    //    private int[] imgIdArray;
-    private ImageView[] tips;
-    private ImageView[] mImageViews;
-    private ArrayList<View> viewList;
-    private List<MasterInfo> designer_list;
 
     @Override
     protected int getLayoutResId() {
@@ -66,17 +61,11 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     protected void initData() {
-        getGrandMasterInfo();
-    }
-
-    private void getGrandMasterInfo() {
-
 
         MPServerHttpManager.getInstance().getGrandMasterInfo(0, 10, "61", new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-//                String detailInfo = volleyError.getMessage().toString();
 
             }
 
@@ -91,7 +80,59 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.bt_grand_reservation://大师列表预约监听
+
+                OrderDialogMaster orderDialog = new OrderDialogMaster(getActivity(), R.style.add_dialog, R.drawable.tital_yuyue);
+                orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
+                    @Override
+                    public void commitListener(String name, String phoneNumber) {
+
+                        JSONObject jsonObject = new JSONObject();
+
+                        int currentItem = vp_grand_selection.getCurrentItem();
+                        String nicke_name = "", member_id = "", hs_uid = "", login_member_id = "", login_hs_uid = "";
+                        if (currentItem != 0) {
+                            nicke_name = designer_list.get(currentItem - 1).getNick_name();
+                            member_id = designer_list.get(currentItem - 1).getMember_id();
+                            hs_uid = designer_list.get(currentItem - 1).getHs_uid();
+                        }
+                        if (isLoginUserJust) {
+                            login_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
+                            login_hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
+                        } else {
+                            login_member_id = "";
+                            login_hs_uid = "";
+                        }
+
+                        try {
+                            jsonObject.put("consumer_name", name);//姓名
+                            jsonObject.put("consumer_mobile", phoneNumber);//电话
+                            jsonObject.put("type", 1);//大师类型
+                            jsonObject.put("customer_id", login_member_id);//消费者ID
+                            jsonObject.put("consumer_uid", login_hs_uid);
+                            jsonObject.put("name", nicke_name);
+                            jsonObject.put("member_id", member_id);
+                            jsonObject.put("hs_uid", hs_uid);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        upOrderDataForService(jsonObject);
+                    }
+                });
+                orderDialog.show();
+
+                break;
+        }
+    }
+
     private void initPageData(String masterInfo) {
+
+        isLoginUserJust = isLoginUser();
 
         GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
         designer_list = grandMasterInfo.getDesigner_list();
@@ -123,9 +164,9 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 tv_grandmaster_detail.setText(designer_list.get(i).getDesigner().getIntroduction());
             }
 
-            if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover().getPublic_url()) {
+            if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
 
-                String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover().getPublic_url();
+                String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url();
                 ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
             }
             viewList.add(view2);
@@ -136,9 +177,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     }
 
-    /**
-     * 将点点加入到ViewGroup中
-     */
+    // 将圆点加入到ViewGroup中
     private void addImageViewtips() {
         tips = new ImageView[viewList.size()];
         for (int i = 0; i < tips.length; i++) {
@@ -155,9 +194,9 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
             ll_grand_selection.addView(imageView);
         }
-
     }
 
+    //设置pager页联动圆点样式
     private void setImageBackground(int selectItems) {
         for (int i = 0; i < tips.length; i++) {
             if (i == selectItems) {
@@ -166,38 +205,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 tips[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
             }
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.bt_grand_reservation:
-                OrderDialogMaster orderDialog = new OrderDialogMaster(getActivity(), R.style.add_dialog, R.drawable.tital_yuyue);
-                orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
-                    @Override
-                    public void commitListener(String name, String phoneNumber) {
-
-                    }
-                });
-                orderDialog.show();
-                break;
-        }
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        setImageBackground(position % viewList.size());
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     protected PagerAdapter pagerAdapter = new PagerAdapter() {
@@ -234,7 +241,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 view_parent.removeView(viewList.get(position));
             }
             container.addView(viewList.get(position));
-            if (position != 0) {
+            if (position != 0) {//大师列表点击监听
                 ImageView iv_grandmaster_pic = (ImageView) viewList.get(position).findViewById(R.id.iv_grandmaster_pic);
                 iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {
 
@@ -250,5 +257,62 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     };
 
+    /**
+     * 上传立即预约信息
+     */
+    public void upOrderDataForService(JSONObject jsonObject) {
 
+        MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                Toast.makeText(getActivity(), R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                Toast.makeText(getActivity(), R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    //判断该用户是否登陆了
+    public boolean isLoginUser() {
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
+        if (memberEntity == null) {
+
+            return false;//未登录
+        } else {
+
+            return true;//已登录
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        setImageBackground(position % viewList.size());
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+
+    private ViewPager vp_grand_selection;
+    private ViewGroup ll_grand_selection;
+    private ImageButton bt_grand_reservation;
+    private boolean isLoginUserJust = false;
+    private ImageView[] tips;
+    private ArrayList<View> viewList;
+    private List<MasterInfo> designer_list;
 }
