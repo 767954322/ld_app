@@ -16,6 +16,8 @@ public class WkTemplateConstants {
     public static final String IS_BEISHU = "3";
     public static final String IS_ELITE = "4";
 
+    public static final int IS_FOUR = 4;
+
     /*等待确认量房*/
     public static final int INVITE_MEASURE = 11;
     /*订单结束 取消量房*/

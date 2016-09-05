@@ -11,17 +11,27 @@ public class MasterInfo implements Serializable {
     private Designer designer;
     private String english_name;//大师英文名称
     private String nick_name;//大师中文名称
-    private String hs_uid;//大师中文名称
+    private String hs_uid;
+    private String member_id;//大师中文名称
 
 
     public MasterInfo() {
     }
 
-    public MasterInfo(Designer designer, String english_name, String nick_name, String hs_uid) {
+    public MasterInfo(Designer designer, String english_name, String nick_name, String hs_uid, String member_id) {
         this.designer = designer;
         this.english_name = english_name;
         this.nick_name = nick_name;
         this.hs_uid = hs_uid;
+        this.member_id = member_id;
+    }
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 
     public String getHs_uid() {
@@ -56,6 +66,7 @@ public class MasterInfo implements Serializable {
         this.nick_name = nick_name;
     }
 
+
     @Override
     public String toString() {
         return "MasterInfo{" +
@@ -63,6 +74,7 @@ public class MasterInfo implements Serializable {
                 ", english_name='" + english_name + '\'' +
                 ", nick_name='" + nick_name + '\'' +
                 ", hs_uid='" + hs_uid + '\'' +
+                ", member_id='" + member_id + '\'' +
                 '}';
     }
 }

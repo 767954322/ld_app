@@ -94,9 +94,12 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
             }
 
             String time = mDatas.get(position).getEstimate_date();
+
+            String timeNew = time.substring(0,10);
+
             if (!TextUtils.isEmpty(time)) {
 
-                ((ViewHolder) viewHolder).mTvTime.setText(time);
+                ((ViewHolder) viewHolder).mTvTime.setText(timeNew);
             }
 
             int grade = mDatas.get(position).getMember_grade();

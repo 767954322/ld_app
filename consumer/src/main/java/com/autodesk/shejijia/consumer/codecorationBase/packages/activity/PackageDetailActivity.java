@@ -23,27 +23,6 @@ import java.util.List;
  * Created by allengu on 16-8-24.
  */
 public class PackageDetailActivity extends BaseActivity implements View.OnClickListener {
-    private ListView lv_package_detail;
-    private ImageButton nav_left_imageButton;
-    private TextView nav_title_textView;
-
-    private BaseCommonAdapter<Bitmap> mAdapter;
-    private List<Bitmap> mData;
-    private int item_num;
-    private ImageButton bt_packages_yuyue;
-    /**
-     *
-     beishu
-     dongjie
-     nanyun
-     pinzhijia
-     xijing
-     xingfujia
-     yishujia
-     */
-    private Integer[] pic_detail = {  R.drawable.xijing,R.drawable.dongjie, R.drawable.xingfujia,R.drawable.beishu,
-            R.drawable.yishujia,R.drawable.nanyun,R.drawable.pinzhijia};
-    private String item_name;
 
     @Override
     protected int getLayoutResId() {
@@ -56,12 +35,6 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
         bt_packages_yuyue = (ImageButton) findViewById(R.id.bt_packages_yuyue);
         nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
-    }
-
-    @Override
-    protected void initListener() {
-        nav_left_imageButton.setOnClickListener(this);
-        bt_packages_yuyue.setOnClickListener(this);
     }
 
     @Override
@@ -84,7 +57,6 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
                 return ViewHolder.get(PackageDetailActivity.this, convertView, parent, R.layout.item_package_detail_activity, position);
             }
         };
-
         mData.clear();
         mData.addAll(setBitmap(this, pic_detail[item_num], lv_package_detail, 10));
         lv_package_detail.setAdapter(mAdapter);
@@ -92,6 +64,11 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    @Override
+    protected void initListener() {
+        nav_left_imageButton.setOnClickListener(this);
+        bt_packages_yuyue.setOnClickListener(this);
+    }
 
     @Override
     public void onClick(View v) {
@@ -114,15 +91,7 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    /**
-     * 设置显示的图片
-     *
-     * @param context
-     * @param resource
-     * @param view
-     * @param number
-     * @return
-     */
+    //设置显示的图片
     public List<Bitmap> setBitmap(Context context, int resource, View view, int number) {
         int viewWidth = view.getWidth();
         BitmapFactory.Options opts = new BitmapFactory.Options();
@@ -148,5 +117,17 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         }
         return list;
     }
+
+    private Integer[] pic_detail = {R.drawable.xijing, R.drawable.dongjie, R.drawable.xingfujia, R.drawable.beishu,
+            R.drawable.yishujia, R.drawable.nanyun, R.drawable.pinzhijia};//套餐详情集合
+
+    private int item_num;
+    private String item_name;
+    private List<Bitmap> mData;
+    private ListView lv_package_detail;
+    private TextView nav_title_textView;
+    private ImageButton bt_packages_yuyue;
+    private ImageButton nav_left_imageButton;
+    private BaseCommonAdapter<Bitmap> mAdapter;
 
 }

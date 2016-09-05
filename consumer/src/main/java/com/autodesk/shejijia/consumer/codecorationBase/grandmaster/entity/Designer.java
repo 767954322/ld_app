@@ -11,18 +11,17 @@ public class Designer implements Serializable {
     private String type_name;//社会化设计师
     private String type_code;//社会化设计师
     private String acs_member_id;//大师acsid
-    private ProfileCover designer_profile_cover;//大师列表图
+    private ProfileCoverApp designer_profile_cover_app;//大师列表图
 
     public Designer() {
     }
 
-
-    public Designer(String introduction, String type_name, String type_code, String acs_member_id, ProfileCover designer_profile_cover) {
+    public Designer(String introduction, String type_name, String type_code, String acs_member_id, ProfileCoverApp designer_profile_cover_app) {
         this.introduction = introduction;
         this.type_name = type_name;
         this.type_code = type_code;
         this.acs_member_id = acs_member_id;
-        this.designer_profile_cover = designer_profile_cover;
+        this.designer_profile_cover_app = designer_profile_cover_app;
     }
 
     public String getIntroduction() {
@@ -57,12 +56,12 @@ public class Designer implements Serializable {
         this.acs_member_id = acs_member_id;
     }
 
-    public ProfileCover getDesigner_profile_cover() {
-        return designer_profile_cover;
+    public ProfileCoverApp getDesigner_profile_cover_app() {
+        return designer_profile_cover_app;
     }
 
-    public void setDesigner_profile_cover(ProfileCover designer_profile_cover) {
-        this.designer_profile_cover = designer_profile_cover;
+    public void setDesigner_profile_cover_app(ProfileCoverApp designer_profile_cover_app) {
+        this.designer_profile_cover_app = designer_profile_cover_app;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class Designer implements Serializable {
                 ", type_name='" + type_name + '\'' +
                 ", type_code='" + type_code + '\'' +
                 ", acs_member_id='" + acs_member_id + '\'' +
-                ", designer_profile_cover=" + designer_profile_cover +
+                ", designer_profile_cover_app=" + designer_profile_cover_app +
                 '}';
     }
 }

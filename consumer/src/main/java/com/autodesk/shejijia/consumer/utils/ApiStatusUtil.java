@@ -92,7 +92,7 @@ public class ApiStatusUtil {
 //                    showAlertView(context.getString(R.string.http402), 1);
                     break;
                 case 500: // API内部异常（服务器异常）
-                   // showAlertView(context.getString(R.string.apierrror), 1);
+                    showAlertView(context.getString(R.string.network_error), 1);
                     break;
                 default:  //链接网络失败
                     showAlertView(UIUtils.getString(R.string.network_error), 1);
