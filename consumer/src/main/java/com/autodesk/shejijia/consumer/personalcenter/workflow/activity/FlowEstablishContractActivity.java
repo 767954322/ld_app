@@ -815,7 +815,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
                 tvc_last_cost.setText(df.format((dTotalCost - Double.parseDouble(firstCost))));
             }
-
         }
 
         @Override
