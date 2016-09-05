@@ -39,6 +39,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDis
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
@@ -563,10 +564,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
-            if (!Validator.isEmailValid(consumerEmail)) {
-                showAlertView(R.string.please_fill_in_the_right_phone_email);
-                bValid = false;
-                break;
+            if (!consumerEmail.equals("")) {
+                if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
+                    showAlertView(R.string.please_fill_in_the_right_phone_email);
+                    bValid = false;
+                    break;
+                }
             }
 
             if (!Validator.isAddressValid(location_area)) {
