@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,6 +59,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         bt_grand_reservation = (ImageButton) findViewById(R.id.bt_grand_reservation);
         ib_grand_detail_ico = (ImageButton) findViewById(R.id.ib_grand_detail_ico);
 
+        animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
+
     }
 
     @Override
@@ -72,7 +76,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         hs_uid = intent.getStringExtra("hs_uid");
         isLoginUserJust = isLoginUser();
         getGrandMasterInfo();
-
+        initAnimation();
+        ib_grand_detail_ico.startAnimation(animationIn);
     }
 
     //获取大师详情信息
@@ -354,7 +359,31 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         }
     }
 
-    //大师详情下滑案例假数据
+
+    private void initAnimation() {
+        animationVoice = AnimationUtils.loadAnimation(this, R.anim.voice_button_anim);
+        animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
+        //设置动画执行的回调函数
+        animationIn.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                ib_grand_detail_ico.startAnimation(animationVoice);    //开始呼吸动画
+                ib_grand_detail_ico.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+        //大师详情下滑案例假数据
     Integer[] list_Detail = {R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon,
             R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon};
     private ImageButton nav_left_imageButton;
@@ -377,6 +406,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private MasterDetail masterDetail;
     private VerticalViewPager vvp_viewpager;
     private MyListView ll_grand_master_detail;
+    private Animation animationIn,animationVoice;
 
 
 }
