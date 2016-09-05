@@ -83,6 +83,7 @@
     <string name="in_contract_sent">合同发送中...</string>
     <string name="agree_and_send_design_first">同意并支付设计首款</string>
     <string name="agree_and_send_design_first_new">立即付款</string>
+    <string name="confirmation_and_payment">确认并付款</string>
     <string name="receiving_room_deliverable">接收量房交付物</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款少于设计总额的80%</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>
