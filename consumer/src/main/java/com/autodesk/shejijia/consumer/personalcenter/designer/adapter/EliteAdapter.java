@@ -128,19 +128,6 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
                 /**
                  * 在线聊天 .
                  */
-//
-//                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-//                Intent intent = new Intent(context, ChatRoomActivity.class);
-//                String acs_member_id = mMemberEntity.getAcs_member_id();
-//                String member_type = mMemberEntity.getMember_type();
-//                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, contacts_name);
-//                intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
-//                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-//                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
-////                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, customer_id);
-//                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
-//                context.startActivity(intent);
-
                 OrderCommonEntity.OrderListEntity.BiddersBean biddersBean = bidders.get(0);
 
                 if (null == biddersBean) {
