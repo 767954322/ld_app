@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
@@ -54,9 +55,15 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         TextView textView = holder.getView(R.id.tv_measure_invite);
 
         String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
-        int  key=Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
+        int  sub_node_id =Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
 
-        verification(key,button,textView);
+        if(sub_node_id != MPWkFlowManager.START_NODE){
+            String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(context, MPWkFlowManager.PAYMENT_OF_FIRST_FEE, wk_cur_sub_node_id);
+            holder.setText(R.id.tv_measure_invite,wkSubNodeName);
+        }
+
+
+        verification(sub_node_id,button,textView);
 
 
         holder.setOnClickListener(R.id.img_consume_home_chat, new View.OnClickListener() {

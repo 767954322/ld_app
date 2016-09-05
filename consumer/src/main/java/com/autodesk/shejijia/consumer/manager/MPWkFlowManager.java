@@ -29,11 +29,11 @@ public class MPWkFlowManager {
     private static final int BEISHU = 3; // 北舒
     private static final int ELITE = 4; // 精选
 
-    private static final int START_NODE = -1;               // 应标中、自选中或者派单中
+    public static final int START_NODE = -1;               // 应标中、自选中或者派单中
     private static final String MEASURE = "1";              // 量房
     private static final String PAYMENT_OF_MEASURE = "2";   //支付量房费
     private static final String CONFIRM_CONTRACT = "3";     //创建设计合同
-    private static final String PAYMENT_OF_FIRST_FEE = "4"; //支付首款
+    public static final String PAYMENT_OF_FIRST_FEE = "4"; //支付首款
     private static final String PAYMENT_OF_LAST_FEE = "5";  //支付尾款
     private static final String DELIVERY = "6";             //设计交付物
     private static final String DELIVERY_ESTIMATE = "7";    //评价
