@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
@@ -62,7 +61,7 @@ public class List3DLibraryAdapter extends BaseAdapter {
 
             if (dto.getDesign_file().get(position).getType().equals("4")){
                 nameTV.setText("漫游图");
-            }else if (dto.getDesign_file().get(position).getType().equals("8")){
+            }else if (dto.getDesign_file().get(position).getType().equals("")){
                 nameTV.setText("渲染图");
             }else if (dto.getDesign_file().get(position).getType().equals("10")){
                 nameTV.setText("户型图");
