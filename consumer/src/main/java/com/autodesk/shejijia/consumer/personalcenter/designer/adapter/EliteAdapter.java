@@ -78,14 +78,19 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
 //        holder.setText(R.id.tv_decoration_state, status);
         holder.setText(R.id.tv_decoration_needs_id, needs_id);
         holder.setText(R.id.tv_decoration_address, address);
-        holder.setText(R.id.tv_decoration_house_type, house_type_convert);
-        holder.setText(R.id.tv_decoration_style, decoration_style_convert);
+        holder.setText(R.id.tv_decoration_house_type, house_type_convert != null && house_type_convert.length() > 0?
+                house_type_convert:UIUtils.getString(R.string.no_select));
+
+        holder.setText(R.id.tv_decoration_style, decoration_style_convert != null && decoration_style_convert.length() > 0?
+                decoration_style_convert:UIUtils.getString(R.string.no_select));
 
         holder.setText(R.id.tv_decoration_name, contacts_name+"/"+community_name);
         holder.setText(R.id.tv_decoration_mobile, orderListEntity.getContacts_mobile());
 
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_slite_photo);
+
         ImageUtils.displayAvatarImage(orderListEntity.getAvatar(), polygonImageView);
+
         holder.setText(R.id.tv_customer_name, contacts_name);
 
         holder.getView(R.id.bt_designer_projectdetail).setOnClickListener(/*this);*/
