@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.Decora
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView2;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -83,9 +84,9 @@ public class DecorationBidderActivity extends NavigationBarActivity implements D
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
 
-        new AlertView(UIUtils.getString(R.string.title_bidder_introduce),
+        new AlertView2(UIUtils.getString(R.string.title_bidder_introduce),
                 UIUtils.getString(R.string.alert_bidder_introduce),
-                null, null, new String[]{"确定"}, this, AlertView.Style.Alert, null).show();
+                null, null, new String[]{"确定"}, this, AlertView2.Style.Alert, null).show();
     }
 
     @Override

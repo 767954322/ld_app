@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
+
 
 /**
  * @author luchongbin .
@@ -21,6 +23,7 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+        LogManager.getLogger().d("location",getClass().getSimpleName());
         initView();
         initExtraBundle();
         initData(savedInstanceState);

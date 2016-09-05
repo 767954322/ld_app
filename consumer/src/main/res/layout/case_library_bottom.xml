@@ -35,14 +35,14 @@
                 android:textSize="@dimen/font_16"
                 android:visibility="visible"/>
 
-            <ImageView
+            <TextView
                 android:layout_gravity="center_vertical"
                 android:id="@+id/iv_follow_designer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_8"
                 android:layout_marginRight="@dimen/size_8"
-                android:src="@drawable/ic_followed_sure"
+                android:src="@drawable/textview_follow_bg"
                 android:paddingLeft="@dimen/size_8"
                 android:paddingRight="@dimen/size_8"
                 />
