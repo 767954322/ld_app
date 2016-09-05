@@ -2,12 +2,14 @@ package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -99,8 +101,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
         contain = (LinearLayout) findViewById(R.id.ll_contain);
-        tvGronMmsgNumber = (TextView) findViewById(R.id.tv_gron_msg_number);
-
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout, null);
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
@@ -109,6 +109,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         construction = (TextView) contain_layout.findViewById(R.id.construction);
 
         setMyProjectTitleColorChange(design, bidding, construction);
+        mConsumerEliteCircularBtn = (ImageButton)findViewById(R.id.consumer_elite_circularbtn);
 
         addRadioButtons(radioBtnDesigner);
         addRadioButtons(mDesignerMainRadioBtn);
@@ -160,6 +161,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         design.setOnClickListener(this);
         rbCustomerElite.setOnClickListener(this);
         construction.setOnClickListener(this);
+        mConsumerEliteCircularBtn.setOnClickListener(this);
     }
 
     @Override
@@ -179,6 +181,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         }
         super.onResume();
+        isShowBidHallFragment();
 
         //获取设计师信息
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -194,7 +197,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void onRestart() {
         super.onRestart();
-        isShowBidHallFragment();
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
@@ -460,9 +462,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         switch (v.getId()) {
             case R.id.rb_customer_elite:
-                startActivity(new Intent(this, SixProductsActivity.class));
-                mRadioGroup.check(R.id.consumer_main_radio_btn);
+                openCreateRequirementPage();
                 break;
+
+            case R.id.consumer_elite_circularbtn:
+                openCreateRequirementPage();
+                break;
+
 
             case R.id.bidding:
                 //指针
@@ -646,14 +652,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private void isShowBidHallFragment() {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+            mConsumerEliteCircularBtn.setVisibility(View.GONE);
             rbCustomerElite.setVisibility(View.GONE);
             mDesignerIndentListBtn.setVisibility(View.VISIBLE);
-            tvGronMmsgNumber.setVisibility(View.VISIBLE);
             return;
         }
+        mConsumerEliteCircularBtn.setVisibility(View.VISIBLE);
         rbCustomerElite.setVisibility(View.VISIBLE);
         mDesignerIndentListBtn.setVisibility(View.GONE);
-        tvGronMmsgNumber.setVisibility(View.GONE);
     }
 
     //判断是否聊过天，跳转到之前聊天室或新聊天室
@@ -740,6 +746,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
+    private void openCreateRequirementPage()
+    {
+        startActivity(new Intent(this, SixProductsActivity.class));
+        mRadioGroup.check(R.id.consumer_main_radio_btn);
+    }
+
     private final int CHAT_CODE = 0;
     private static final int IS_BEI_SHU = 1;
     private RadioButton mDesignerMainRadioBtn;
@@ -750,6 +762,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private RadioButton radioBtnDesigner;
     private RadioGroup designer_main_radio_group;
 
+    private ImageButton mConsumerEliteCircularBtn;
+
     private DecorationConsumerFragment mConsumerPersonalCenterFragment;
 
     private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
@@ -759,8 +773,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private TextView bidding;
     private TextView design;
+
     private TextView construction;
-    private TextView tvGronMmsgNumber;
+
     private LinearLayout contain;
     private View contain_layout;
     private ChooseViewPointer chooseViewPointer;

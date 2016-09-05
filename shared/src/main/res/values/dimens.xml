@@ -326,4 +326,9 @@
     <dimen name="textSize_alert_button">18sp</dimen><!--圆角-->
     <dimen name="radius_alertview">15px</dimen>
 
+    <dimen name="home_bottombar_height">70dp</dimen>
+    <dimen name="home_bottombar_circularbutton_marginbottom">17dp</dimen>
+    <dimen name="home_bottombar_circularbutton_side">50dp</dimen>
+    <dimen name="home_bottombar_radiogroup_margintop">15dp</dimen>
+
 </resources>
