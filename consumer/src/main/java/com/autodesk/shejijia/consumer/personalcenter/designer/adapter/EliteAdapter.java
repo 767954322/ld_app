@@ -14,6 +14,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowSta
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -48,7 +49,7 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
         if (orderListEntity == null) {
             return;
         }
-        String order_number = orderListEntity.getNeeds_id();
+        final String needs_id = orderListEntity.getNeeds_id();
         String community_name = orderListEntity.getCommunity_name();
         String province_name = orderListEntity.getProvince_name();
         String city_name = orderListEntity.getCity_name();
@@ -61,12 +62,10 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
         province_name = TextUtils.isEmpty(province_name) ? "" : province_name;
         city_name = TextUtils.isEmpty(city_name) ? "" : city_name;
         String address = province_name + city_name + district_name;
-        final String beishu_thread_id = orderListEntity.getBeishu_thread_id();
         final String contacts_name= orderListEntity.getContacts_name();
-//        String status =  getEliteNeedsState(orderListEntity.getCustom_string_status());
 
         final String wk_template_id = orderListEntity.getWk_template_id();
-        List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
+        final List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
 
         if (bidders != null && bidders.size() > 0) {
             String wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
@@ -77,7 +76,7 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
 
 
 //        holder.setText(R.id.tv_decoration_state, status);
-        holder.setText(R.id.tv_decoration_needs_id, order_number);
+        holder.setText(R.id.tv_decoration_needs_id, needs_id);
         holder.setText(R.id.tv_decoration_address, address);
         holder.setText(R.id.tv_decoration_house_type, house_type_convert);
         holder.setText(R.id.tv_decoration_style, decoration_style_convert);
@@ -129,17 +128,44 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
                 /**
                  * 在线聊天 .
                  */
+//
+//                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+//                Intent intent = new Intent(context, ChatRoomActivity.class);
+//                String acs_member_id = mMemberEntity.getAcs_member_id();
+//                String member_type = mMemberEntity.getMember_type();
+//                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, contacts_name);
+//                intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
+//                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+//                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
+////                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, customer_id);
+//                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
+//                context.startActivity(intent);
 
-                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+                OrderCommonEntity.OrderListEntity.BiddersBean biddersBean = bidders.get(0);
+
+                if (null == biddersBean) {
+                    return;
+                }
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                String member_id = memberEntity.getAcs_member_id();
+                String memType = memberEntity.getMember_type();
+                orderListEntity.getBidders().get(0).getDesigner_id();
+                String designer_thread_id = biddersBean.getDesign_thread_id();
+                String userName = biddersBean.getUser_name();
+                String designer_id = biddersBean.getDesigner_id();
+
+                if (TextUtils.isEmpty(designer_thread_id)) {
+                    designer_thread_id = "";
+                }
+
                 Intent intent = new Intent(context, ChatRoomActivity.class);
-                String acs_member_id = mMemberEntity.getAcs_member_id();
-                String member_type = mMemberEntity.getMember_type();
-                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, contacts_name);
-                intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
-                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
-//                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, customer_id);
-                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
+                intent.putExtra(ChatRoomActivity.THREAD_ID, designer_thread_id);
+                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, userName);
+                intent.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
+                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, memType);
+                intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                 context.startActivity(intent);
 
 

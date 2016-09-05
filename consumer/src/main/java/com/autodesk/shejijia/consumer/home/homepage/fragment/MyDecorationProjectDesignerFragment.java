@@ -34,9 +34,9 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     protected void initData() {
 
         /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//        int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
-        int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
-        setDefaultFragment(is_loho);
+        int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
+//        int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
+        setDefaultFragment(high_level_audit);
     }
 
     /**
@@ -106,8 +106,8 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     /**
      * 默认北舒套餐页面 .
      */
-    public void setDefaultFragment(int isLoho) {
-        if (isLoho == IS_BEI_SHU) {
+    public void setDefaultFragment(int high_level_audit) {
+        if (high_level_audit == 2) {
 
             /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
 //             if (high_level_audit == 2){

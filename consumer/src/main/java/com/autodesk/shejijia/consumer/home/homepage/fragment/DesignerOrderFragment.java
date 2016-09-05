@@ -65,14 +65,6 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
         transaction = fragmentManager.beginTransaction();
 
         switch (v.getId()) {
-            case R.id.tv_designer_order_beishu: /// 套餐 .
-                setColorAndBackgroundForTextView(mBeishuOrder);
-                setTextColor(new TextView[]{mOrder});
-                if (mBeishuMealFragment == null) {
-                    mBeishuMealFragment = new OrderBeiShuFragment();
-                }
-                switchFragment(mBeishuMealFragment);
-                break;
 
             case R.id.tv_designer_order: /// 竟优项目 .
 
@@ -84,6 +76,15 @@ public class DesignerOrderFragment extends BaseFragment implements View.OnClickL
                 }
                 switchFragment(mCommonOrderFragment);
                 break;
+            case R.id.tv_designer_order_beishu: /// 套餐 .
+                setColorAndBackgroundForTextView(mBeishuOrder);
+                setTextColor(new TextView[]{mOrder});
+                if (mBeishuMealFragment == null) {
+                    mBeishuMealFragment = new OrderBeiShuFragment();
+                }
+                switchFragment(mBeishuMealFragment);
+                break;
+
             default:
                 break;
         }

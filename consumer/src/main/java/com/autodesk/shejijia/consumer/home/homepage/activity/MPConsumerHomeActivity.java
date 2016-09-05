@@ -493,7 +493,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
             case R.id.construction:
                 chooseViewPointer.setConsumerAppraise(btWidth);
-                setMyProjectTitleColorChange(construction,design, bidding);
+                setMyProjectTitleColorChange(construction, design, bidding);
                 mDesignerPersonalCenterFragment.setConstructionFragment();
 
                 break;
@@ -626,12 +626,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//                if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
-//                    high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
-//                }
-//                if (mDesignerPersonalCenterFragment != null) {
-//                    mDesignerPersonalCenterFragment.setEliteFragment(high_level_audit);
-//                }
+//                int high_level_audit = 0;
+                if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
+                    high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
+                }
+                if (mDesignerPersonalCenterFragment != null) {
+                    mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit);
+                }
             }
 
             @Override
@@ -770,7 +771,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     final float POINTER_END_NUMBER = 1F;
     private int btWidth;
     private int btHeight;
-    public int high_level_audit;
+        public int high_level_audit;
     private String FLAG_CLICK = TAB_HOME_CASE;
     public static final int CASE_CODE = 0x92;
 

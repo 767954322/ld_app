@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderBeiShutEntity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -105,16 +106,16 @@ public class OrderBeiShuFragment extends BaseFragment {
     /**
      * 北舒套餐订单列表适配器
      */
-    private class MyBeiShuMealAdapter extends CommonAdapter<OrderBeiShutEntity.BeishuNeedsOrderListEntity> {
+    private class MyBeiShuMealAdapter extends CommonAdapter<OrderCommonBean.OrderListBean> {
         String customer_id;
-        public MyBeiShuMealAdapter(Context context, List<OrderBeiShutEntity.BeishuNeedsOrderListEntity> datas, int layoutId) {
+        public MyBeiShuMealAdapter(Context context, List<OrderCommonBean.OrderListBean> datas, int layoutId) {
             super(context, datas, layoutId);
         }
 
         @Override
-        public void convert(CommonViewHolder holder, OrderBeiShutEntity.BeishuNeedsOrderListEntity beishuNeedsOrderListEntity) {
+        public void convert(CommonViewHolder holder, OrderCommonBean.OrderListBean beishuNeedsOrderListEntity) {
             String community_name = beishuNeedsOrderListEntity.getCommunity_name();
-            int needs_id = beishuNeedsOrderListEntity.getNeeds_id();
+            String needs_id = beishuNeedsOrderListEntity.getNeeds_id();
             String contacts_mobile = beishuNeedsOrderListEntity.getContacts_mobile();
             final String contacts_name = beishuNeedsOrderListEntity.getContacts_name();
             province_name = beishuNeedsOrderListEntity.getProvince_name();
@@ -173,13 +174,14 @@ public class OrderBeiShuFragment extends BaseFragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                mOrderBeiShutEntity = GsonUtil.jsonToBean(userInfo, OrderBeiShutEntity.class);
+                mOrderBeiShutEntity = GsonUtil.jsonToBean(userInfo, OrderCommonBean.class);
+
                 if (offset == 0) {
                     mBeiShuNeedsOrderListEntities.clear();
                 }
                 OFFSET = offset + 10;
-                mBeiShuNeedsOrderListEntities.addAll(mOrderBeiShutEntity.getBeishu_needs_order_list());
-                if (mOrderBeiShutEntity.getBeishu_needs_order_list().size() < LIMIT) {
+                mBeiShuNeedsOrderListEntities.addAll(mOrderBeiShutEntity.getOrder_list());
+                if (mOrderBeiShutEntity.getOrder_list().size() < LIMIT) {
                     mListView.setHasLoadMore(false);
                 } else {
                     mListView.setHasLoadMore(true);
@@ -212,6 +214,6 @@ public class OrderBeiShuFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private MyBeiShuMealAdapter mMyBeiShuMealAdapter;
-    private OrderBeiShutEntity mOrderBeiShutEntity;
-    private ArrayList<OrderBeiShutEntity.BeishuNeedsOrderListEntity> mBeiShuNeedsOrderListEntities = new ArrayList<>();
+    private OrderCommonBean mOrderBeiShutEntity;
+    private ArrayList<OrderCommonBean.OrderListBean> mBeiShuNeedsOrderListEntities = new ArrayList<>();
 }
