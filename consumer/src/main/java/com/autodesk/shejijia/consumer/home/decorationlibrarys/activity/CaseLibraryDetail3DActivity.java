@@ -79,7 +79,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private PolygonImageView pivImgCustomerHomeHeader;
     private ImageView ivCustomerIm;
     private TextView ivConsumeHomeDesigner;
-    private ImageView mIvFollowedDesigner;
+    private TextView mIvFollowedDesigner;
     private TextView tvCustomerHomeStyle;
     private TextView tvCustomerHomeRoom;
     private TextView tvCustomerHomeArea;
@@ -132,7 +132,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
-        mIvFollowedDesigner = (ImageView) findViewById(R.id.iv_follow_designer);
+        mIvFollowedDesigner = (TextView) findViewById(R.id.iv_follow_designer);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
@@ -595,12 +595,15 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
      * false : 取消关注-->对应关注
      */
     private void setFollowedTitle(boolean is_following) {
-
         if (is_following) {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
+            mIvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_unfollow_bg));
+            mIvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
 
         } else {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
+            mIvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_follow_bg));
+            mIvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
         }
     }
 

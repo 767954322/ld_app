@@ -657,6 +657,7 @@
                         android:layout_height="match_parent"
                         android:background="@color/no_color"
                         android:gravity="center_vertical"
+                        android:singleLine="true"
                         android:textColor="@color/actionsheet_gray"
                         android:text="200"
                         android:textSize="@dimen/font_15" />
