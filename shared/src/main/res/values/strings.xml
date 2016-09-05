@@ -83,6 +83,7 @@
     <string name="in_contract_sent">合同发送中...</string>
     <string name="agree_and_send_design_first">同意并支付设计首款</string>
     <string name="agree_and_send_design_first_new">立即付款</string>
+    <string name="confirmation_and_payment">确认并付款</string>
     <string name="receiving_room_deliverable">接收量房交付物</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款少于设计总额的80%</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>
@@ -160,6 +161,7 @@
     <!-- FlowMeasureCostActivity -->
     <string name="flow_measure_house_cost">量&#160;&#160;房&#160;&#160;费：</string>
     <string name="pay">立即支付</string>
+    <string name="evaluation">立即评价</string>
     <string name="i_want_to_pay">我要支付</string>
     <string name="loding">加载中...</string>
     <string name="loding_end">已为最后一条需求。</string>

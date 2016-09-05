@@ -284,7 +284,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String needsState = UIUtils.getString(R.string.error_state);
         switch (wk_template_id) {
             case WkTemplateConstants.IS_ELITE:
-                needsState = getEliteNeedsState(needsState, custom_string_status, needs_id);
+                needsState = getEliteNeedsState(wk_cur_sub_node_id_int,needsState, custom_string_status);
                 return needsState;
 
             default:
@@ -354,10 +354,15 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      *
      * @param needsState
      * @param custom_string_status
-     * @param needs_id
      * @return
      */
-    private String getEliteNeedsState(String needsState, String custom_string_status, String needs_id) {
+    private String getEliteNeedsState(int wk_cur_sub_node_id_int,String needsState, String custom_string_status) {
+
+        if (wk_cur_sub_node_id_int >= WkTemplateConstants.CONFIRM_DESIGN_RESULTS
+                && wk_cur_sub_node_id_int != WkTemplateConstants.DELAY_CONFIRM_DESIGN_RESULTS) {
+            needsState = UIUtils.getString(R.string.project_finish);
+            return needsState;
+        }
         switch (custom_string_status) {
             case Constant.NumKey.TWENTY_ONE://21:审核中
                 needsState = UIUtils.getString(R.string.checking);

@@ -31,7 +31,6 @@
             android:layout_marginLeft="@dimen/size_8"
             android:isIndicator="true"
             android:numStars="5"
-            android:stepSize="1.0"
             />
 
     </LinearLayout>

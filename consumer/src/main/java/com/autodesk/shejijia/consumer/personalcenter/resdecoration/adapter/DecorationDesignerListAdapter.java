@@ -16,6 +16,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 
@@ -58,6 +59,15 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, wk_template_id, wk_cur_sub_node_id);
         holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
 
+        boolean falg = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63;
+        if(falg){
+            holder.setText(R.id.tv_decoration_mesure, UIUtils.getString(R.string.evaluation));
+            holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
+        }else{
+            holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
+            holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_actionsheet_cancel);
+        }
+
 
         holder.setText(R.id.tv_designer_name, user_name);
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_order_photo);
@@ -67,7 +77,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
          * 判断进入全流程逻辑还是进入评价页面
          * 节点63,进入评价页面;其它节点，进入全流程逻辑
          */
-        if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63) {
+        if (falg) {
             /**
              * 进入评价页面
              */

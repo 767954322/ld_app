@@ -41,14 +41,25 @@
             android:id="@+id/tv_decoration_mesure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/size_8"
+            android:layout_marginRight="@dimen/size_20"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/tv_decoration_mesure1"
+            android:text="@string/data_null"
+            android:textColor="@color/comment_blue"
+            android:textSize="@dimen/size_12"/>
+
+        <TextView
+            android:id="@+id/tv_decoration_mesure1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/size_5"
             android:drawablePadding="@dimen/size_8"
             android:drawableRight="@drawable/icon_unfold_normal"
-            android:text="@string/data_null"
             android:textColor="@color/comment_blue"
-            android:textSize="@dimen/size_12"/>
+            android:textSize="@dimen/size_20"/>
 
         <include layout="@layout/view_common_line"></include>
 
