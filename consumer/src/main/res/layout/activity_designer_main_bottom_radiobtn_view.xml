@@ -106,7 +106,7 @@
             android:id="@+id/tv_msg_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="12dp"
             android:background="@drawable/redsharp"
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
