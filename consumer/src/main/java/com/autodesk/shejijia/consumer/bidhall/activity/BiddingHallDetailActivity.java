@@ -24,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -188,7 +189,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 String info = GsonUtil.jsonToString(jsonObject);
                 mRealNameBean = GsonUtil.jsonToBean(info, RealNameBean.class);
                 KLog.json(info);
-
+                CustomProgress.cancelDialog();
                 updateViewFromRealNameData();
             }
 
@@ -207,19 +208,19 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      */
     private void updateViewFromRealNameData() {
         if (mRealNameBean.getDesigner().getIs_real_name() == 2) {
+            String measurement_price = mRealNameBean.getDesigner().getMeasurement_price();
+
+            if (TextUtils.isEmpty(measurement_price)) {
+                noSetMeasureFee();
+                return;
+            }
             if (bidder_count >= BIDDER_MAX) {
                 bidCountFullDialog();
             } else {
-                String measurement_price = mRealNameBean.getDesigner().getMeasurement_price();
-
-                if (TextUtils.isEmpty(measurement_price)) {
-                    noSetMeasureFee();
-                } else {
-                    MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-                    String designer_id = memberEntity.getAcs_member_id();
-                    String user_name = mRealNameBean.getUser_name();
-                    sendBidDemand("", user_name, needs_id, designer_id);
-                }
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                String designer_id = memberEntity.getAcs_member_id();
+                String user_name = mRealNameBean.getUser_name();
+                sendBidDemand("", user_name, needs_id, designer_id);
             }
         } else {
             new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.msg_no_certification), null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
@@ -232,6 +233,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 }
             }).setCancelable(true).show();
         }
+
     }
 
     private void noSetMeasureFee() {
@@ -270,10 +272,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
 //        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
 
-        district_name = TextUtils.isEmpty(mBidHallEntity.getDistrict())
-                || "none".equals(mBidHallEntity.getDistrict())
-                || TextUtils.isEmpty(district_name)
-                || district_name.equals("none") ? "" : district_name;
+        district_name = StringUtils.isEmpty(mBidHallEntity.getDistrict()) || StringUtils.isEmpty(district_name) ? "" : district_name;
         String projectAddress = UIUtils.getNoDataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNoDataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
         setTitleForNavbar(community_name);

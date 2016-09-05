@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +35,10 @@ public class StringUtils {
      * 判断字符串是否有值，如果为null或者是空字符串或者只有空格或者为"null"字符串，则返回true，否则则返回false
      */
     public static boolean isEmpty(String value) {
-        return !(value != null && !"".equalsIgnoreCase(value.trim()) && !"null".equalsIgnoreCase(value.trim()));
+        return !(value != null
+                && !"".equalsIgnoreCase(value.trim())
+                && !"none".equalsIgnoreCase(value.trim())
+                && !"null".equalsIgnoreCase(value.trim()));
     }
 
     /**
@@ -1251,8 +1253,7 @@ public class StringUtils {
         return arrayToDelimitedString(arr, ",");
     }
 
-    public static boolean isValidString(String str)
-    {
+    public static boolean isValidString(String str) {
         return !(str == null || str.isEmpty() || str.equalsIgnoreCase("0"));
     }
 }

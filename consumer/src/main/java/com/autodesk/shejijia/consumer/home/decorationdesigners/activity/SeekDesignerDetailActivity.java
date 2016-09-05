@@ -512,10 +512,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
-                String info = GsonUtil.jsonToString(jsonObject);
-                seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
-                updateViewFromDesignerDetailData(seekDesignerDetailHomeBean);
+                if (null != jsonObject) {
+                    String info = GsonUtil.jsonToString(jsonObject);
+                    seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
+                    updateViewFromDesignerDetailData(seekDesignerDetailHomeBean);
+                }
             }
 
             @Override
@@ -948,9 +949,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                     if (isRefreshOrLoadAppraise) {
 
-                        mDesignerAppraiseFragment.updateListView(estimates,seekDesignerDetailHomeBean);
-                        consumer_appraise.setText("评价"+"("+estimates.size()+")");
-                        consumer_appraise_replace_top.setText("评价"+"("+estimates.size()+")");
+                        mDesignerAppraiseFragment.updateListView(estimates, seekDesignerDetailHomeBean);
+                        consumer_appraise.setText("评价" + "(" + estimates.size() + ")");
+                        consumer_appraise_replace_top.setText("评价" + "(" + estimates.size() + ")");
                         mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
                     } else {
                         mDesignerAppraiseFragment.loadMoreData(estimates);
