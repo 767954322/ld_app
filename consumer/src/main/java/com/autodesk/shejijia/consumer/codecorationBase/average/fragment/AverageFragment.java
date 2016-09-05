@@ -34,7 +34,6 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout mRlAverage;
     private ImageView mIvAverageTip;
     private ImageView mIvSendDemand;
-    private Activity mActivity;
     private String mNick_name;
 
     public AverageFragment() {
@@ -54,7 +53,6 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initData() {
-        mActivity = getActivity();
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             getConsumerInfoData(mMemberEntity.getAcs_member_id());
@@ -76,9 +74,9 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
             case R.id.iv_send_demand: /// .
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 if (null == memberEntity){
-                    AdskApplication.getInstance().doLogin(getActivity());
+                    AdskApplication.getInstance().doLogin(activity);
                 }else {
-                    Intent intent = new Intent(mActivity, IssueDemandActivity.class);
+                    Intent intent = new Intent(activity, IssueDemandActivity.class);
                     intent.putExtra(Constant.SixProductsFragmentKey.SELECTION, false);
                     intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNick_name);
                     startActivity(intent);
@@ -116,9 +114,9 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
 
     private void showAlertView() {
         AlertView alertViewExt = new AlertView(UIUtils.getString(R.string.title_average_rule),
-                null, null, null, new String[]{UIUtils.getString(R.string.close_alert)}, mActivity, AlertView.Style.Alert, null);
+                null, null, null, new String[]{UIUtils.getString(R.string.close_alert)}, activity, AlertView.Style.Alert, null);
 
-        ViewGroup extView = (ViewGroup) LayoutInflater.from(mActivity).inflate(R.layout.alert_average, null);
+        ViewGroup extView = (ViewGroup) LayoutInflater.from(activity).inflate(R.layout.alert_average, null);
         TextView tvAlertMsg = (TextView) extView.findViewById(R.id.tv_alert_msg);
         tvAlertMsg.setText(UIUtils.getString(R.string.alert_average_rule_1) + "\n" +
                 UIUtils.getString(R.string.alert_average_rule_2) + "\n" +

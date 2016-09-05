@@ -47,7 +47,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         work_room_refresh_view = (PullToRefreshLayout) rootView.findViewById(R.id.work_room_refresh_view);
         work_room_listView = (ListView) rootView.findViewById(R.id.work_room_listView);
         now_order = (TextView) rootView.findViewById(R.id.now_order);
-        viewHead = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_work_room, null);
+        viewHead = LayoutInflater.from(activity).inflate(R.layout.fragment_work_room, null);
         img_header = (ImageView) viewHead.findViewById(R.id.img_header);
 
 
@@ -80,7 +80,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
             case R.id.now_order:
                 //工作室用户信息弹框
-                OrderDialog orderDialog = new OrderDialog(getActivity(), R.style.add_dialog);
+                OrderDialog orderDialog = new OrderDialog(activity, R.style.add_dialog);
                 orderDialog.setListenser(new OrderDialog.CommitListenser() {
                     @Override
                     public void commitListener(String name, String phoneNumber) {
@@ -168,7 +168,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     //给控件赋值
     public void upDataForView(final List<WorkRoomListBeen.DesignerListBean> designerListBeenList) {
 
-        workRoomAdapter = new WorkRoomAdapter(getActivity(), designerListBeenList);
+        workRoomAdapter = new WorkRoomAdapter(activity, designerListBeenList);
         work_room_listView.setAdapter(workRoomAdapter);
         work_room_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,10 +176,10 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
                 if (position >0){
 
-                    Intent intent = new Intent(getActivity(), WorkRoomDetailActivity.class);
+                    Intent intent = new Intent(activity, WorkRoomDetailActivity.class);
 
                     intent.putExtra("hs_uid", designerListBeenList.get(position - 1).getHs_uid());
-                    getActivity().startActivity(intent);
+                    activity.startActivity(intent);
 
                 }
             }
@@ -213,13 +213,13 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                Toast.makeText(getActivity(), R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                Toast.makeText(getActivity(), R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
             }
         });
 

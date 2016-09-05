@@ -80,7 +80,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         mImageViews = new ImageView[imgIdArray.length];
         for(int i=0; i<mImageViews.length; i++){
 
-            ImageView imageView = new ImageView(getActivity());
+            ImageView imageView = new ImageView(activity);
             mImageViews[i] = imageView;
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 //            ImageUtils.loadImage(imageView,"http://www.ciccphoto.com/01/02/201603/W020160301562832103832.jpg");
