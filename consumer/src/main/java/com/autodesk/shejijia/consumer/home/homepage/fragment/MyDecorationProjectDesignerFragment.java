@@ -77,6 +77,18 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
         switchFragment(mCommonOrderFragment);
     }
 
+    public void setConstructionFragment(){
+
+
+        if (mDesignerConstructionFragment == null) {
+            mDesignerConstructionFragment = new DesignerConstructionFragment();
+        }
+        switchFragment(mDesignerConstructionFragment);
+
+
+    }
+
+
 
     /**
      * 切换fragment

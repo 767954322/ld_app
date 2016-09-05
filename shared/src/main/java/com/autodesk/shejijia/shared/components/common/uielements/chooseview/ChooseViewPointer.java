@@ -59,7 +59,9 @@ public class ChooseViewPointer extends View{
         if (initWidth != 0){
             if (initBoolean){
 
-                canvas.drawLine(initWidth * 1/2f + initWidth * 1/9 ,0,initWidth * 1f - initWidth * 1/9f,0,paint);
+//                canvas.drawLine(initWidth * 1/3f + initWidth * 1/9 ,0,initWidth * 2/3f - initWidth * 1/9f,0,paint);
+                setCase3dBtn(initWidth);
+                initBoolean = false;
             }
         }
         canvas.drawLine(width * A + decreaseWidth,0,width * B - decreaseWidth,0,paint);
@@ -71,7 +73,6 @@ public class ChooseViewPointer extends View{
         this.height = height;
         this.A = a;
         this.B = b;
-        initBoolean = false;
         invalidate();
 
     }

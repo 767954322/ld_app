@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="应标"
+            android:text="应标中"
             android:textSize="17dp" />
 
         <TextView
@@ -26,17 +26,17 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="设计"
+            android:text="设计中"
             android:textSize="17dp" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/construction"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:text="施工"-->
-            <!--android:textSize="17dp" />-->
+        <TextView
+            android:id="@+id/construction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="施工中"
+            android:textSize="17dp" />
 
     </LinearLayout>
 
