@@ -213,5 +213,7 @@
     <!--我的项目-->
     <color name="my_project_title_pointer_color" >#0084ff</color>
     <color name="my_project_title_text_color">#333333</color>
+    <!--工作室列表-->
+    <color name="studio_list_item_bg">#eef1f4</color>
 
 </resources>

@@ -161,8 +161,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                 showAlertView();
                 break;
             case R.id.btn_send_measure_house_form:
-                btn_send_form.setEnabled(false);
-                    getJSONObject();
+                getJSONObject();
                 break;
             case R.id.tvc_measure_form_time:
                 pvTime.show();
@@ -236,18 +235,22 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
 
     private void postSendMeasureForm(final JSONObject jsonObject){
 
+        CustomProgress.showDefaultProgress(this);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
 
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 SolicitationSelection solicitationSelection = GsonUtil.jsonToBean(jsonString, SolicitationSelection.class);
-
                 CustomProgress.cancelDialog();
                 if(isPay){
                     pay(solicitationSelection.getElite().getMeasurement().getOrder_line_id(),
                             solicitationSelection.getElite().getMeasurement().getOrder_id());
+                }else {
+                    setResult(10058,new Intent());
+                    finish();
                 }
+
 
             }
 

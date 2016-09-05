@@ -30,9 +30,11 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHome3DCaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -41,10 +43,16 @@ import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -141,68 +149,67 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
-        startActivity(new Intent(getActivity(), SixProductsActivity.class));
-//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (mMemberEntity != null) {
-//            final String designer_id = case3DDetailBeen.get(position).getDesigner_id();
-//            final String hs_uid = case3DDetailBeen.get(position).getHs_designer_uid();
-//            final String receiver_name = case3DDetailBeen.get(position).getDesigner_info().getNick_name();
-//            final String mMemberType = mMemberEntity.getMember_type();
-//            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
-//
-//            MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-//                @Override
-//                public void onErrorResponse(VolleyError volleyError) {
-//                    MPNetworkUtils.logError(TAG, volleyError);
-//                }
-//
-//                @Override
-//                public void onResponse(String s) {
-//
-//                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-//
-//                    final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
-//                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-//                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-//                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-//                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-//
-//                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-//
-//                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-//                        int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-//                        intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-//                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-//                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-//                        getActivity().startActivity(intent);
-//
-//                    } else {
-//                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError volleyError) {
-//                                MPNetworkUtils.logError(TAG, volleyError);
-//                            }
-//
-//                            @Override
-//                            public void onResponse(String s) {
-//                                try {
-//                                    JSONObject jsonObject = new JSONObject(s);
-//                                    String thread_id = jsonObject.getString("thread_id");
-//                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-//                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-//                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-//                                    getActivity().startActivity(intent);
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
-//            });
-//        } else {
-//            AdskApplication.getInstance().doLogin(getActivity());
-//        }
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (mMemberEntity != null) {
+            final String designer_id = case3DLibraryListBean.getCases().get(position).getDesigner_id()+"";
+            final String hs_uid =  case3DLibraryListBean.getCases().get(position).getHs_designer_uid();
+            final String receiver_name = case3DLibraryListBean.getCases().get(position).getDesigner_info().getNick_name();
+            final String mMemberType = mMemberEntity.getMember_type();
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
+
+            MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    MPNetworkUtils.logError(TAG, volleyError);
+                }
+
+                @Override
+                public void onResponse(String s) {
+
+                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                    final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+
+                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
+                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+                        int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                        intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
+                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                        getActivity().startActivity(intent);
+
+                    } else {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
+                            }
+
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String thread_id = jsonObject.getString("thread_id");
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                    getActivity().startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            AdskApplication.getInstance().doLogin(getActivity());
+        }
 ////
 
     }
