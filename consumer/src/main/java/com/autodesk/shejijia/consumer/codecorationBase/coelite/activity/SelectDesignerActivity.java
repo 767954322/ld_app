@@ -40,14 +40,10 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     @Override
     protected void initData(Bundle savedInstanceState) {
         setTitleForNavbar(UIUtils.getString(R.string.send_design));
-        String payment_status=null;
         falg = false;
         isSelected();
-        if(decorationNeedsListBean.getElite() != null){
-            payment_status = decorationNeedsListBean.getElite().getMeasurement().getPayment_status();
-        }
         if(selectDesignAdapter == null){
-            selectDesignAdapter = new SelectDesignAdapter(this,decorationBiddersBeans,R.layout.item_select_designer,payment_status,falg);
+            selectDesignAdapter = new SelectDesignAdapter(this,decorationBiddersBeans,R.layout.item_select_designer,falg,decorationNeedsListBean.getNeeds_id());
         }
         lv_selection_design.setAdapter(selectDesignAdapter);
 
@@ -77,10 +73,6 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if(resultCode == 10058){
             finish();
-//            setResult(FlowMeasureCostActivity.RESULT_CODE,new Intent());
-//        }
-
     }
 }
