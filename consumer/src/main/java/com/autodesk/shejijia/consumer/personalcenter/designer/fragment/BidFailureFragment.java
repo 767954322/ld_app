@@ -121,6 +121,7 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
                 ViewGroup itemInfo = holder.getView(R.id.bid_item_info);
                 setTextColor(itemHeader, getResources().getColor(R.color.mybid_text_color_light));
                 setTextColor(itemInfo, getResources().getColor(R.color.mybid_text_color_light));
+                holder.setVisible(R.id.tv_decoration_detail, false);
            }
         };
     }
