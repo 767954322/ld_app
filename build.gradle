@@ -21,3 +21,10 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    androidCompileSdkVersion = 23
+    androidBuildToolsVersion = '23.0.1'
+    androidMinSdkVersion = 17
+    androidTargetSdkVersion = 23
+}
