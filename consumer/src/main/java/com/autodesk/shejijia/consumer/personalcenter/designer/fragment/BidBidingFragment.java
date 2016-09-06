@@ -147,10 +147,11 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
                 holder.setText(R.id.tv_decoration_house_type, getProjectHourseType(biddingNeedsListEntity));
                 holder.setText(R.id.tv_decoration_style, getProjectDecorationStyle(biddingNeedsListEntity));
 
-                holder.setText(R.id.tv_bidder_count, String.valueOf(biddingNeedsListEntity.getBidder_count()));
+                holder.setText(R.id.tv_bidder_count, String.format(getString(R.string.bid_designer_num),
+                        biddingNeedsListEntity.getBidder_count()));
                 holder.setText(R.id.tv_decoration_end_day, biddingNeedsListEntity.getEnd_day());
 
-                holder.getView(R.id.tv_decoration_address).setOnClickListener(new View.OnClickListener() {
+                holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         showDetail(biddingNeedsListEntity.getNeeds_id());
@@ -178,8 +179,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
         districtName = TextUtils.isEmpty(districtName) || "none".equals(districtName) ? "" : districtName;
         provinceName = TextUtils.isEmpty(provinceName) ? "" : provinceName;
         cityName = TextUtils.isEmpty(cityName) ? "" : cityName;
-        String address = provinceName + cityName + districtName;
-        return provinceName + cityName + districtName;
+        return provinceName.trim() + cityName.trim() + districtName.trim();
     }
 
     private String getProjectHourseType(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {

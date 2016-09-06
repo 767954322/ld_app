@@ -331,4 +331,6 @@
     <dimen name="home_bottombar_circularbutton_side">50dp</dimen>
     <dimen name="home_bottombar_radiogroup_margintop">15dp</dimen>
 
+    <dimen name="bid_list_divider_height">20dp</dimen>
+
 </resources>
