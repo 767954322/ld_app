@@ -96,6 +96,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+
         super.initData(savedInstanceState);
         setTitleForNavbar(getResources().getString(R.string.demand_measure_house_form)); /// 设置标题 .
 

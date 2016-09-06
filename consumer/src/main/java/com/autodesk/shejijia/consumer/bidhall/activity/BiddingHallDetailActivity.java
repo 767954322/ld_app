@@ -24,7 +24,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -223,7 +222,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 sendBidDemand("", user_name, needs_id, designer_id);
             }
         } else {
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.msg_no_certification), null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
+            new AlertView(UIUtils.getString(R.string.tip), "您还未通过实名认证\n请到网页端完成认证", null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object o, int position) {
@@ -272,17 +271,18 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
 //        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
 
-        district_name = StringUtils.isEmpty(mBidHallEntity.getDistrict()) || StringUtils.isEmpty(district_name) ? "" : district_name;
+        district_name = UIUtils.getNoStringIfEmpty(district_name);
         String projectAddress = UIUtils.getNoDataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNoDataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
         setTitleForNavbar(community_name);
         mTvProjectNeedsId.setText(needs_id);
-        mTvHouseType.setText(TextUtils.isEmpty(house_type_convert) ? UIUtils.getString(R.string.no_select) : house_type_convert);
-        mTvHouseStyle.setText(TextUtils.isEmpty(decoration_style_convert) ? UIUtils.getString(R.string.no_select) : decoration_style_convert);
-        mTvHouseModel.setText(TextUtils.isEmpty(room_cn) ? UIUtils.getString(R.string.no_select) : room_cn);
+        mTvHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type_convert));
+        mTvHouseStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style_convert));
+        mTvHouseModel.setText(UIUtils.getNoSelectIfEmpty(room_cn));
         mTvName.setText(mBidHallEntity.getContacts_name());
-        mTvDecorationBudget.setText(TextUtils.isEmpty(decoration_budget) ? UIUtils.getString(R.string.no_select) : decoration_budget);
-        mTvDesignBudget.setText(TextUtils.isEmpty(mBidHallEntity.getDesign_budget()) ? UIUtils.getString(R.string.no_select) : mBidHallEntity.getDesign_budget());
+        mTvDecorationBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget));
+        String design_budget = mBidHallEntity.getDesign_budget();
+        mTvDesignBudget.setText(UIUtils.getNoSelectIfEmpty(design_budget));
         mTvHouseArea.setText(mBidHallEntity.getHouse_area() + "m²");
         mTvProjectAddress.setText(projectAddress);
         mTvPublishTime.setText(mBidHallEntity.getPublish_time());
