@@ -57,7 +57,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
         if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
             //综合评分
             rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
-            if (rating_star.getRating() > 0){
+            if (seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores() != null){
 
                 appraise_ll.setVisibility(View.VISIBLE);
             }

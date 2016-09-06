@@ -1625,6 +1625,26 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 获取3D方案的数据
+     * */
+
+    public void get3DCaseData(int designer_id,int limit,int offset,String date,String desc,OkJsonRequest.OKResponseCallback callback){
+
+        String url = UrlConstants.MAIN_MEMBER + "/designers/studio?limit=" + limit + "&offset=" + offset;
+        String url1 = "http://192.168.88.175:8080/design-app/v1/api/hs/prints/anonymity/" +
+                "designers/"+designer_id+"/d3/d3dimensionals?limit="+limit+"&&offset="+offset;
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url1, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                return header;
+            }
+        };
+        queue.add(okRequest);
+
+    }
+
+    /**
      * 为X-Token 增加前缀
      *
      * @param xToken
