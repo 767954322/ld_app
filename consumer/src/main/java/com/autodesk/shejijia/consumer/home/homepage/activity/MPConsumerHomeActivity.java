@@ -109,7 +109,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         construction = (TextView) contain_layout.findViewById(R.id.construction);
 
         setMyProjectTitleColorChange(design, bidding, construction);
-        mConsumerEliteCircularBtn = (ImageButton)findViewById(R.id.consumer_elite_circularbtn);
+        mConsumerEliteCircularBtn = (ImageButton) findViewById(R.id.consumer_elite_circularbtn);
 
         addRadioButtons(radioBtnDesigner);
         addRadioButtons(mDesignerMainRadioBtn);
@@ -485,20 +485,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.design:
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setCase3dBtn(btWidth);
-                //判断进入北舒套餐，，还是进入普通订单页面
-                if (null != designerInfoDetails) {
-                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-                        /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-                        //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
-                        /// 北舒 .
-                        mDesignerPersonalCenterFragment.setDesignBeiShuFragment();
-                    } else {
-                        mDesignerPersonalCenterFragment.setDesignFragment();
-                    }
-                } else {
-                    mDesignerPersonalCenterFragment.setDesignFragment();
-                }
+                mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit, is_loho);
 
+                //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
+//                if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
+
+                //[1]高阶:high_level_audit=2
+                //[1.1] is_loho=1  精选、竞优、套餐
+                //[1.2] 精选、竞优、
+                //[2]不是高阶：
+                //[1.1] is_loho=1  竞优、套餐
+                //[1.2] 竞优
                 break;
 
             case R.id.construction:
@@ -640,6 +637,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
+                is_loho = designerInfoDetails.getDesigner().getIs_loho();
             }
 
             @Override
@@ -747,8 +745,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
-    private void openCreateRequirementPage()
-    {
+    private void openCreateRequirementPage() {
         startActivity(new Intent(this, SixProductsActivity.class));
         mRadioGroup.check(R.id.consumer_main_radio_btn);
     }
@@ -787,7 +784,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     final float POINTER_END_NUMBER = 1F;
     private int btWidth;
     private int btHeight;
-        public int high_level_audit;
+    public int high_level_audit;
     private String FLAG_CLICK = TAB_HOME_CASE;
     public static final int CASE_CODE = 0x92;
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.DesignBaseFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 /**
@@ -35,8 +36,8 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
         /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
         int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
-//        int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
-        setDefaultFragment(high_level_audit);
+        int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
+        setDefaultFragment(high_level_audit,is_loho);
     }
 
     /**
@@ -77,8 +78,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
         switchFragment(mCommonOrderFragment);
     }
 
-    public void setConstructionFragment(){
-
+    public void setConstructionFragment() {
 
         if (mDesignerConstructionFragment == null) {
             mDesignerConstructionFragment = new DesignerConstructionFragment();
@@ -87,7 +87,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
 
     }
-
 
 
     /**
@@ -106,15 +105,15 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     /**
      * 默认北舒套餐页面 .
      */
-    public void setDefaultFragment(int high_level_audit) {
-        if (high_level_audit == 2) {
+    public void setDefaultFragment(int status, int mIsLoho) {
+//        if (high_level_audit == 2) {
+//
+//            mCommonFragment = new DesignBaseFragment();
+//        } else {
+//        mCommonFragment = new DesignBaseFragment();
+//        }
+        mCommonFragment = DesignBaseFragment.newInstance(status, mIsLoho);
 
-            /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//             if (high_level_audit == 2){
-            mCommonFragment = new DesignerOrderBeiShuFragment();
-        } else {
-            mCommonFragment = new DesignerOrderFragment();
-        }
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.ll_contain, mCommonFragment)
                 .commit();

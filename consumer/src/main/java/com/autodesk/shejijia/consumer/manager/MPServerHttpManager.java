@@ -683,12 +683,7 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 北舒家装订单
-     *
-     * @param callback
-     * @param designer_id
-     * @param offset
-     * @param limit
+     * 套餐
      */
     public void getDesignerBeiShuOrder(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
 //        String url = UrlConstants.URL_GET_BEI_SHU_ORDER + designer_id +
@@ -724,7 +719,7 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 设计师普通订单
+     * 竞优
      */
     public void getDesignerOrder(final String memType, final String designer_id, final int offset, final int limit, final OkJsonRequest.OKResponseCallback callback) {
 //        String url = UrlConstants.URL_GET_ORDER + designer_id +
