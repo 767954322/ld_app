@@ -53,7 +53,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
         mListView.setAdapter(mSeekDesignerAppraiseAdapter);
 
         if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
-
+            //综合评分
             rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
         }
 
