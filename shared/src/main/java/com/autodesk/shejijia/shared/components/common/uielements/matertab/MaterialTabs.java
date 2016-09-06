@@ -92,6 +92,14 @@ public class MaterialTabs extends HorizontalScrollView {
 
     private int tabCount;
 
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
     private int currentPosition = 0;
     private float currentPositionOffset = 0f;
 
