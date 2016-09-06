@@ -234,7 +234,9 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
     //获取数据后，更新
     public void updateViewFromData(MyBidBean myBidBean) {
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-        fragmentCallBack.getMyBidBean(myBidBean);
+        if (fragmentCallBack != null) {
+            fragmentCallBack.getMyBidBean(myBidBean);
+        }
     }
 
     /**
@@ -276,7 +278,9 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        fragmentCallBack = (MyBidActivity) activity;
+        if (activity instanceof FragmentCallBack) {
+            fragmentCallBack = (FragmentCallBack)activity;
+        }
     }
 
 
