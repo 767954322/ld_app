@@ -25,7 +25,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_60"
+                android:layout_height="@dimen/size_50"
                 android:orientation="horizontal">
 
                 <TextView
@@ -67,7 +67,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="一室"
                             android:textColor="@color/bg_00"
-                            android:textSize="@dimen/font_13" />
+                            android:textSize="@dimen/font_17" />
 
                         <TextView
                             android:id="@+id/tv_customer_home_room"
@@ -77,7 +77,7 @@
                             android:layout_marginLeft="@dimen/size_9"
                             android:text="欧式"
                             android:textColor="@color/bg_00"
-                            android:textSize="@dimen/font_13" />
+                            android:textSize="@dimen/font_17" />
 
                         <TextView
                             android:id="@+id/tv_customer_home_area"
@@ -87,7 +87,7 @@
                             android:layout_marginLeft="@dimen/size_9"
                             android:text="120"
                             android:textColor="@color/bg_00"
-                            android:textSize="@dimen/font_13" />
+                            android:textSize="@dimen/font_17" />
 
                     </LinearLayout>
 
@@ -111,7 +111,7 @@
                             android:layout_marginLeft="@dimen/size_4"
                             android:layout_marginTop="@dimen/size_4"
                             android:text="点赞数111"
-                            android:textColor="@color/bg_66"
+                            android:textColor="@color/bg_80"
                             android:textSize="@dimen/size_13" />
                     </LinearLayout>
 
