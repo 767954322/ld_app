@@ -17,9 +17,14 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
@@ -36,6 +41,8 @@ import java.net.URLDecoder;
  * @brief 跳转到登录页面后执行的操作 .
  */
 public class RegisterOrLoginActivity extends BaseActivity implements View.OnClickListener {
+
+    private boolean isFirst = true;
 
     @Override
     protected int getLayoutResId() {
@@ -128,12 +135,32 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         public void getToken(String token) {
             try {
                 String strToken = URLDecoder.decode(token, Constant.NetBundleKey.UTF_8).substring(6);
-                AdskApplication.getInstance().saveSignInInfo(strToken);
+                MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
+
+                String member_type = entity.getMember_type();
+                if (!TextUtils.isEmpty(member_type) && ( member_type.equals("designer") || member_type.equals("member"))){//登陆账号为消费者或者设计师
+                    AdskApplication.getInstance().saveSignInInfo(strToken);
 //                /// 登录成功后,发送广播 .
-                Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
-                intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
-                sendBroadcast(intent);
-                finish();
+                    Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+                    intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
+                    sendBroadcast(intent);
+                    finish();
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            new AlertView(UIUtils.getString(R.string.tip), "您的账户无法在此平台登录", null, new String[]{UIUtils.getString(R.string.sure)}, null, RegisterOrLoginActivity.this,
+                                    AlertView.Style.Alert, new OnItemClickListener() {
+                                @Override
+                                public void onItemClick(Object object, int position) {
+                                    AdskApplication.getInstance().doLogout(RegisterOrLoginActivity.this);
+                                    finish();
+                                }
+                            }).show();
+                        }
+                    });
+
+                }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -144,6 +171,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
     protected void onDestroy() {
         super.onDestroy();
         CustomProgress.cancelDialog();
+//        if (CustomProgress.dialog != null){
+//            CustomProgress.dialog = null;
+//        }
     }
 
     /**
@@ -155,7 +185,8 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 //            KLog.d(TAG, url);
             super.onPageStarted(view, url, favicon);
-            if (CustomProgress.dialog != null && !CustomProgress.dialog.isShowing()) {
+            if (isFirst) {
+                isFirst = false;
                 CustomProgress.show(RegisterOrLoginActivity.this, "", false, null);
             }
         }
@@ -173,6 +204,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             pagerFinishedUrl = url;
             KLog.d(TAG, url);
             CustomProgress.cancelDialog();
+            isFirst = true;
         }
 
         @Override
