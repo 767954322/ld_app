@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -100,7 +99,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         mDesignerIndentListBtn = (RadioButton) findViewById(R.id.designer_indent_list_btn);
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
-        contain = (LinearLayout) findViewById(R.id.ll_contain);
+        contain = (LinearLayout) findViewById(R.id.navbar_tab_container);
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout, null);
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
@@ -384,7 +383,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setCaseLIbraryTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
-                contain.setVisibility(View.GONE);
                 break;
 
             case R.id.radio_btn_designer:  /// 设计师搜索 .
@@ -394,7 +392,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setDesignerListTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
-                contain.setVisibility(View.GONE);
                 break;
 
             case R.id.designer_indent_list_btn:    /// 应标大厅按钮.
@@ -403,7 +400,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 //TODO MERGE 825
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
-                contain.setVisibility(View.GONE);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.filtratenew);
 
                 Intent mIntent = new Intent(BidHallFragment.ACTION_NAME);
@@ -434,7 +430,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 FLAG_CLICK = TAB_IM;
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
                 setVisibilityForNavButton(ButtonType.middle, true);
-                contain.setVisibility(View.GONE);
                 String acs_Member_Type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                 Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.msg_file);

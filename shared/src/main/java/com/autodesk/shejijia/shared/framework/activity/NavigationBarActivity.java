@@ -418,7 +418,7 @@ public class NavigationBarActivity extends BaseActivity {
 
         ViewGroup viewGroup = null;
         if (type == ButtonType.middlecontain)
-            viewGroup = (ViewGroup) findViewById(R.id.ll_contain);
+            viewGroup = (ViewGroup) findViewById(R.id.navbar_tab_container);
 
         return viewGroup;
     }
