@@ -222,6 +222,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             e.printStackTrace();
         }
 
+        CustomProgress.show(ReservationFormActivity.this, "提交中...", false, null);
         sendPackageForm(jsonObject, acs_member_id);
 
     }
@@ -233,13 +234,13 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                CustomProgress.cancelDialog();
                 new AlertView(UIUtils.getString(R.string.tip), "预约失败", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
-
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
+                CustomProgress.cancelDialog();
                 new AlertView(UIUtils.getString(R.string.tip), "预约成功", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
 
             }
