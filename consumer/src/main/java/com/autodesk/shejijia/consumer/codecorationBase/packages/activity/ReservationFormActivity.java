@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
@@ -85,13 +86,12 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         setTitleForNavbar("预约表单");
         Intent intent = getIntent();
         item_num = intent.getIntExtra("item_num", -1);
-        item_name = intent.getStringExtra("item_name");
+        item_name = ImageUrlUtils.getPackagesListNames()[item_num];
         acs_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
 
         getConsumerInfoData(acs_member_id);
         setDecorationBudget();
         initAlertView();
-
     }
 
     @Override
@@ -216,7 +216,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             jsonObject.put(JsonConstants.JSON_PACKAGES_ADDRESS, detail_address);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PROJECT_AREA, area_project);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_EXPENSE_BUDGET, mDecorationBudget);///mCurrentProvince
-            jsonObject.put(JsonConstants.JSON_PACKAGES_PKG, item_num);///mCurrentProvince
+            jsonObject.put(JsonConstants.JSON_PACKAGES_PKG, item_num + 1);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PKG_NAME, item_name);///mCurrentProvince
         } catch (JSONException e) {
             e.printStackTrace();

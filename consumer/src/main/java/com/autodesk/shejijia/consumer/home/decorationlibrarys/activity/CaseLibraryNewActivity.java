@@ -336,11 +336,12 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl = ApiManager.getHtml5Url(case_id);
+//            String webUrl = ApiManager.getHtml5Url(case_id);
+            //TODO 后台现在只有这个环境的分享链接 别的环境还没有  暂时写死    by willson
+            String webUrl ="http://uat-www.gdfcx.net/share/2dcase.html?caseid="+case_id;
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
-
                     ifIsSharedToFriends = true;
                     try {
                         SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);

@@ -77,7 +77,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
 //                ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
 //            }
            // ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
-            ((ViewHolder) holder).tvThumbUp.setText("点赞数 "+ casesEntity.getFavorite_count());
+            ((ViewHolder) holder).tvThumbUp.setText(casesEntity.getFavorite_count());
             List<Case3DLibraryListBean.CasesBean.DesignFileBean> images = casesEntity.getDesign_file();
             if (images != null && images.size() > 0) {
                 for (int i = 0; i < casesEntity.getDesign_file().size(); i++) {
@@ -136,7 +136,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
         }
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
+            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.INVISIBLE);
            // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
 
         } else {
