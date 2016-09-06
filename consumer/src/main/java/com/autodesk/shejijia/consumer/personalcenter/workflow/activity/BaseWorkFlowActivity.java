@@ -65,7 +65,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initData(savedInstanceState);
 
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-        CustomProgress.showDefaultProgress(this);
         getOrderDetailsInfo(needs_id, designer_id);
 
     }
@@ -75,32 +74,32 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initListener();
     }
 
-    public int WorkFlowTemplateStep(){
+    public int WorkFlowTemplateStep() {
 
 
-         return  Integer.valueOf(wk_cur_template_id);
-
-    }
-
-    public int WorkFlowSubNodeStep(){
-        return  Integer.valueOf(wk_cur_sub_node_id);
+        return Integer.valueOf(wk_cur_template_id);
 
     }
 
-    public String GetRoleType(){
+    public int WorkFlowSubNodeStep() {
+        return Integer.valueOf(wk_cur_sub_node_id);
+
+    }
+
+    public String GetRoleType() {
         if (memberEntity != null) {
             return memberEntity.getMember_type();
         }
-        return  "";
-    }
-    public Boolean isRoleDesigner(){
-        return (Constant.UerInfoKey.DESIGNER_TYPE.equals(GetRoleType())) ;
-    }
-    public Boolean isRoleCustomer(){
-        return (Constant.UerInfoKey.CONSUMER_TYPE.equals(GetRoleType())) ;
+        return "";
     }
 
+    public Boolean isRoleDesigner() {
+        return (Constant.UerInfoKey.DESIGNER_TYPE.equals(GetRoleType()));
+    }
 
+    public Boolean isRoleCustomer() {
+        return (Constant.UerInfoKey.CONSUMER_TYPE.equals(GetRoleType()));
+    }
 
 
     private android.os.Handler handler = new android.os.Handler() {
@@ -153,13 +152,13 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
      * @param designer_id 　设计师的id
      */
     public void getOrderDetailsInfo(String needs_id, String designer_id) {
-
+        CustomProgress.show(this,"",false,null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(final JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 mCurrentWorkFlowDetail = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
- CustomProgress.cancelDialog();
+                CustomProgress.cancelDialog();
                 if (null != mCurrentWorkFlowDetail) {
                     Message msg = Message.obtain();
                     msg.obj = mCurrentWorkFlowDetail;
@@ -202,14 +201,15 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected void onWorkFlowData() {
     }
 
-    public interface commonJsonResponseCallback  {
+    public interface commonJsonResponseCallback {
         public void onJsonResponse(String jsonResponse);
+
         public void onError(VolleyError volleyError);
     }
 
 
     // Method when child class need some extra data from app-server
-    public void restgetDesignerInfoData(String designer_id, String hs_uid,final commonJsonResponseCallback callBack) {
+    public void restgetDesignerInfoData(String designer_id, String hs_uid, final commonJsonResponseCallback callBack) {
         MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -238,7 +238,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected String contacts_name;
 
     protected String needs_id;
-    protected  String measureFee;
+    protected String measureFee;
     protected MemberEntity memberEntity;
     protected WkFlowDetailsBean mCurrentWorkFlowDetail;
     protected WkFlowDetailsBean.RequirementEntity requirement;
