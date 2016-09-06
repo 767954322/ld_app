@@ -476,6 +476,7 @@
 
     <string name="please_select_form">请选择户型</string>
     <string name="please_select_addresses">请选择地址</string>
+    <string name="please_choose_addresses">提示请选择项目地址</string>
     <string name="please_enter_correct_address">请输入正确的小区地址（长度为二到三十二位且不包含特殊字符）</string>
     <string name="data_submission">数据提交中...</string>
 

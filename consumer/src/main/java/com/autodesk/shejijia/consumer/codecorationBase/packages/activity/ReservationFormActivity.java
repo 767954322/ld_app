@@ -1,53 +1,37 @@
 package com.autodesk.shejijia.consumer.codecorationBase.packages.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
-import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by allengu on 16-8-23.
@@ -145,14 +129,6 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         }
     }
 
-    @Override
-    public void onItemClick(Object obj, int position) {
-        if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
-            finish();
-        } else if (obj == alertViewExt) {
-            ReservationFormActivity.this.finish();
-        }
-    }
 
     //监听（提交套餐预约）
     private void sendPackageFormClick() {
@@ -203,11 +179,11 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         }
         //项目地址校验
         if (TextUtils.isEmpty(mCurrentDistrictCode)) {
-            showAlertView(R.string.please_select_addresses);
+            showAlertView(R.string.please_choose_addresses);
             return;
         }
         //小区名称校验
-        String detail_address = tv_issue_demand_detail_address.getText().toString();
+        String detail_address = tv_issue_demand_detail_address.getText().toString().trim();
         if (!TextUtils.isEmpty(detail_address.trim())) {
             boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
             if (TextUtils.isEmpty(detail_address) || !regex_address_right) {
@@ -251,14 +227,16 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                getAlertViewExt(UIUtils.getString(R.string.fail_grandmaster)).show();
+                success_ALert = getAlertViewExt(UIUtils.getString(R.string.fail_grandmaster));
+                success_ALert.show();
                 CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                getAlertViewExt(UIUtils.getString(R.string.succes_grandmaster)).show();
+                fail_ALert = getAlertViewExt(UIUtils.getString(R.string.succes_grandmaster));
+                fail_ALert.show();
                 CustomProgress.cancelDialog();
             }
         });
@@ -392,6 +370,14 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         return alertViewExt;
     }
 
+    @Override
+    public void onItemClick(Object obj, int position) {
+        if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
+            finish();
+        } else if (obj == success_ALert) {
+            ReservationFormActivity.this.finish();
+        }
+    }
 
     /// 控件.
     private TextView et_issue_demand_name;
@@ -401,6 +387,8 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private EditText et_issue_demand_mobile;
     private EditText et_issue_demand_area;
     private Button btn_send_demand;
+    private AlertView success_ALert;
+    private AlertView fail_ALert;
     private AlertView alertViewExt;
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;

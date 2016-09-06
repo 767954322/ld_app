@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/common_case_icon"/>
+                android:src="@drawable/home_page_icon"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,14 +32,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
 
                 <ImageView
                     android:id="@+id/iv_packages_two"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
             </LinearLayout>
 
             <LinearLayout
@@ -53,14 +55,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
 
                 <ImageView
                     android:id="@+id/iv_packages_four"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
             </LinearLayout>
 
             <LinearLayout
@@ -74,14 +78,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
 
                 <ImageView
                     android:id="@+id/iv_packages_six"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
             </LinearLayout>
 
             <LinearLayout
@@ -95,14 +101,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
 
                 <ImageView
                     android:id="@+id/iv_packages_eight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/default_icon"/>
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
             </LinearLayout>
 
 
