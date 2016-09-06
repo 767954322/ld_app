@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:padding="@dimen/size_10">
 
         <ImageView
@@ -46,7 +47,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/size_10"
+        android:paddingLeft="@dimen/size_10"
         android:background="#ffffff"
         android:orientation="vertical"
         android:paddingBottom="@dimen/size_1"
@@ -216,13 +217,15 @@
         android:orientation="horizontal">
 
         <RelativeLayout
+            android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
                 android:id="@+id/piv_consumer_slite_photo"
-                android:layout_width="@dimen/size_50"
-                android:layout_height="@dimen/size_50"
+                android:layout_centerVertical="true"
+                android:layout_width="@dimen/size_40"
+                android:layout_height="@dimen/size_40"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/size_10"
                 app:poly_vertices="0"/>
@@ -267,9 +270,13 @@
                 />
         </RelativeLayout>
     </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0.5"
+        android:background="@color/line_color"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_10"
         android:background="@color/light_blue_2"/>
 </LinearLayout>
