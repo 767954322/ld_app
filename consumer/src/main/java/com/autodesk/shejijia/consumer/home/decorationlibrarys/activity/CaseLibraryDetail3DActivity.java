@@ -213,7 +213,11 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case R.id.rl_thumb_up://点赞
                 if (null != memberEntity) {
                     if (!isMemberLike) {
-                        sendThumbUp(case3DDetailBean.getDesign_asset_id());
+                        String design_asset_id = case3DDetailBean.getDesign_asset_id();
+                        if (design_asset_id!=null){
+                            sendThumbUp(design_asset_id);
+                        }
+
                     } else {
                         //已经点过赞
                     }

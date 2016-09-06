@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,26 +71,12 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
     public void initItem(View view, Holder holder, int position) {
         if (null != mDatas && mDatas.size() > 0) {
             Case3DLibraryListBean.CasesBean casesEntity = mDatas.get(position);
-//
-//            if (null != casesEntity.getDesigner_info() && !TextUtils.isEmpty(casesEntity.getDesigner_info().getAvatar())) {
-//                ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
-//            }
-            // ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
             ((ViewHolder) holder).tvThumbUp.setText(casesEntity.getFavorite_count());
             List<Case3DLibraryListBean.CasesBean.DesignFileBean> images = casesEntity.getDesign_file();
             if (images != null && images.size() > 0) {
-                for (int i = 0; i < casesEntity.getDesign_file().size(); i++) {
-                    Case3DLibraryListBean.CasesBean.DesignFileBean imagesEntity = casesEntity.getDesign_file().get(i);
-                    if (imagesEntity.isIs_primary()) {
-                        imageOneUrl = imagesEntity.getLink();
-                    }
-                }
-                if (TextUtils.isEmpty(imageOneUrl)) {
-                    imageOneUrl = casesEntity.getDesign_file().get(position).getLink();
-                }
+                String imageOneUrl = images.get(0).getLink();
                 ImageUtils.loadImageIcon(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
             }
-
 
             if (null != casesEntity) {
                 ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);

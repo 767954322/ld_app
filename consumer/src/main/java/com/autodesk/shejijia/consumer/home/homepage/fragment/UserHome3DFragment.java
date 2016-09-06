@@ -25,7 +25,6 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibra
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetail3DActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
-import com.autodesk.shejijia.consumer.home.homepage.activity.SixProductsActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHome3DCaseAdapter;
@@ -122,17 +121,12 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// HeadIcon OnClickListener查看设计师详情页面 .
     @Override
     public void OnItemImageHeadClick(int position) {
+
+        Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
+        String acs_member_id = casesBean.getDesigner_info().getDesigner().getAcs_member_id();
+        hsUid = casesBean.getHs_designer_uid();
         Intent intent = new Intent(activity, SeekDesignerDetailActivity.class);
-        Case3DLibraryListBean.CasesBean.DesignerInfoBean designerInfoEntity = case3DLibraryListBean.getCases().get(position).getDesigner_info();
-        String designer_id = null;
-        if (designerInfoEntity != null) {
-            Case3DLibraryListBean.CasesBean.DesignerInfoBean.DesignerBean designer = designerInfoEntity.getDesigner();
-            if (designer != null) {
-                designer_id = designer.getAcs_member_id();
-            }
-        }
-        hsUid = case3DLibraryListBean.getCases().get(position).getHs_designer_uid();
-        intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
+        intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, acs_member_id);
         intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hsUid);
         startActivity(intent);
     }
@@ -140,9 +134,9 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// Case OnClickListener查看案例库详情页面 .
     @Override
     public void OnItemCaseClick(int position) {
-        String case_id = case3DLibraryListBean.getCases().get(position).getDesign_asset_id();
+        String design_asset_id = case3DBeanList.get(position).getDesign_asset_id();
         mIntent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
-        mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
+        mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, design_asset_id);
         activity.startActivity(mIntent);
     }
 
@@ -188,6 +182,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
+                                
                             }
 
                             @Override
@@ -276,35 +271,6 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             }
         });
     }
-
-//    /**
-//     * Network request 获取案例信息.
-//     *
-//     * @param offset 页面
-//     * @param limit  　每页条数
-//     */
-//    public void getCaseLibraryData(final int offset, final int limit) {
-//        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-//
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                String jsonString = GsonUtil.jsonToString(jsonObject);
-//                case3DLibraryListBean = GsonUtil.jsonToBean(jsonString, Case3DLibraryListBean.class);
-//                updateViewFromCaseLibraryData(offset);
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                MPNetworkUtils.logError(TAG, volleyError);
-//                if (getActivity() != null) {
-//                    mPtrLayout.onRefreshComplete();
-//                    mListView.onLoadMoreComplete();
-//                }
-//            }
-//        };
-//        MPServerHttpManager.getInstance().get3DCaseListData("", "", "", "", "", "", "", "", offset, limit, callback);
-//    }
-
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
                                    final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
