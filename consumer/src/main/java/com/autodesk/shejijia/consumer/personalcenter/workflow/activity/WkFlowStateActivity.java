@@ -359,6 +359,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
             if (wk_cur_sub_node_idi == 11  ||wk_cur_sub_node_idi == 31 ) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
+            } else if(wk_cur_sub_node_idi == 24 ||wk_cur_sub_node_idi == 33){
+                showNewActivity(FlowUploadDeliveryActivity.class, -1);
             } else {
                 view.setClickable(false);
             }
@@ -369,6 +371,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                     AlertView.Style.Alert, null).show();
         } else if (Integer.parseInt(wk_cur_sub_node_id) == 31) {
             showNewActivity(FlowEstablishContractActivity.class, -1);
+        }else if(wk_cur_sub_node_idi == 24 || wk_cur_sub_node_idi == 33){
+            showNewActivity(FlowUploadDeliveryActivity.class, -1);
         } else {
             view.setClickable(false);
         }
@@ -515,7 +519,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 rlStopContract.setVisibility(View.GONE);
             }
 
-            if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24) {
+            if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
                 btnStopDemand.setVisibility(View.VISIBLE);
             }
         }

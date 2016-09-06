@@ -361,6 +361,7 @@
     <string name="demand_please_style">请选择风格</string>
     <string name="demand_please_style_select">请选择风格(选填)</string>
     <string name="demand_please_address">请选择地址：省 市 区</string>
+    <string name="demand_please_project_address">请正确输入项目地址</string>
     <string name="demand_please_specific_address">请输入小区名称</string>
     <string name="termination_demand">终止需求</string>
     <string name="amend_demand">修改需求</string>
@@ -475,6 +476,7 @@
 
     <string name="please_select_form">请选择户型</string>
     <string name="please_select_addresses">请选择地址</string>
+    <string name="please_choose_addresses">提示请选择项目地址</string>
     <string name="please_enter_correct_address">请输入正确的小区地址（长度为二到三十二位且不包含特殊字符）</string>
     <string name="data_submission">数据提交中...</string>
 
@@ -934,10 +936,10 @@
     <!-- ReservationFormActivity -->
     <string name="reservation_please_enter_your_name">请输入姓名</string>
     <string name="reservation_please_enter_your_phone">请填写手机号码</string>
-    <string name="reservation_please_enter_your_area">请选择房屋面积</string>
+    <string name="reservation_please_enter_your_area">请选择房屋面积(可选)</string>
     <string name="reservation_please_enter_your_price">请选择装修预算</string>
     <string name="reservation_please_enter_your_address">请选择项目地址</string>
-    <string name="reservation_please_enter_your_community_name">请填写小区名称</string>
+    <string name="reservation_please_enter_your_community_name">请填写小区名称(可选)</string>
     <string name="jy_packages_name_null">姓名不能为空</string>
     <string name="jy_packages_phone_null">手机号不能为空</string>
     <string name="jy_packages_area_null">项目面积不能为空</string>

@@ -454,6 +454,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             @Override
             public void onJsonResponse(String jsonResponse) {
                 list = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
+
+                tvc_consumer_local_area.setText(list.getProvince_name()+list.getCity_name()+list.getDistrict_name());
+                tvc_designer_decorate_address.setText(list.getProvince_name()+list.getCity_name()+list.getDistrict_name());
+
                 designer_name = list.getReal_name().getReal_name();
                 designer_mobile = list.getReal_name().getMobile_number().toString();
                 designer_mail = list.getEmail();
@@ -570,7 +574,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
 
             if (!Validator.isAddressValid(location_area)) {
-                showAlertView(R.string.demand_please_address);
+                showAlertView(R.string.demand_please_project_address);
                 bValid = false;
                 break;
             }
