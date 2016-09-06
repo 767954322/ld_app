@@ -10,15 +10,11 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderActivity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderBeiShuActivity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
-import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
@@ -117,7 +113,7 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
     }
 
     private CommonAdapter getCommonAdapter() {
-        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities, R.layout.item_bid_suscuss) {
+        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities, R.layout.item_mybid_suscuss) {
             @Override
             public void convert(CommonViewHolder holder, final MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
                 holder.setText(R.id.tv_decoration_name, biddingNeedsListEntity.getNeeds_name());

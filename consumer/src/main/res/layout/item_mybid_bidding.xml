@@ -8,5 +8,5 @@
     <include layout="@layout/view_parting_line"></include>
     <include layout="@layout/item_bid_info"></include>
     <include layout="@layout/view_parting_line"></include>
-    <include layout="@layout/item_bid_bidding_footer"></include>
+    <include layout="@layout/item_mybid_bidding_footer"></include>
 </LinearLayout>

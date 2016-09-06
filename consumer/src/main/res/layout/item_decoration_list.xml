@@ -74,7 +74,7 @@
                 android:background="@drawable/icon_unfold_normal" />
         </RelativeLayout>
 
-        <include layout="@layout/item_bid_bidding_footer"></include>
+        <include layout="@layout/item_mybid_bidding_footer"></include>
         <include layout="@layout/view_parting_line"></include>
 
         <com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView

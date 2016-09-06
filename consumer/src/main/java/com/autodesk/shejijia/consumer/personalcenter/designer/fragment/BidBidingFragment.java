@@ -133,7 +133,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
 
     private CommonAdapter getCommonAdapter() {
 
-        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mList, R.layout.item_bid_bidding) {
+        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mList, R.layout.item_mybid_bidding) {
             @Override
             public void convert(CommonViewHolder holder, final MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
                 holder.setText(R.id.tv_decoration_name, biddingNeedsListEntity.getNeeds_name());
