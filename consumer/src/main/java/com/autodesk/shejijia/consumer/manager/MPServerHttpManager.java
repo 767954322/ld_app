@@ -762,17 +762,29 @@ public class MPServerHttpManager {
      * 精选订单
      */
     public void getSliteOder(HashMap<String, Object> map, final OkJsonRequest.OKResponseCallback callback) {
+//        {@"offset"   :offset,
+//            @"limit"    :limit,
+//            @"sort_by"  :@"date",
+//            @"sort_order":@"desc",
+//            @"version":version,
+//            @"service_modlue":servicemodlue,
+//            @"node_ids":@"",
+//            @"sub_node_ids":@"",
+//            @"commend":@""};
+
+
+
 
         String url = UrlConstants.URL_GET_ORDER + map.get(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID) + "/orders?" +
                 "offset=" + map.get(JsonConstants.JSON_DEMAND_LIST_OFFSET) +
                 "&limit=" + map.get(JsonConstants.JSON_DEMAND_LIST_LIMIT) +
-                "&sort_by=date" +
-                "&sort_order=desc" +
+                "&sort_by=desc" +
+                "&sort_order=date" +
                 "&version=2" +
                 "&service_modlue=5" +
-                "&node_ids=1" +
-                "&sub_node_ids=1" +
-                "&commend=5";
+                "&node_ids=" +""+
+                "&sub_node_ids=" +""+
+                "&commend="+"";
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
