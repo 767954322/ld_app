@@ -362,12 +362,9 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 UIUtils.getString(R.string.no_select):requirement.getDecoration_budget());
 
         tvc_measure_form_area.setText(requirement.getHouse_area() + "m²");
-        if ("none".equals(requirement.getDistrict())
-                || "null".equals(district_name)
-                || "none".equals(district_name)
-                || TextUtils.isEmpty(district_name)) {
-            district_name = "";
-        }
+
+        district_name = UIUtils.getNoStringIfEmpty(district_name);
+
         tvc_measure_form_address.setText(province_name + " " + city_name + " " + district_name);
         tvc_measure_form_estate.setText(requirement.getCommunity_name());
         if (TextUtils.isEmpty(amount)

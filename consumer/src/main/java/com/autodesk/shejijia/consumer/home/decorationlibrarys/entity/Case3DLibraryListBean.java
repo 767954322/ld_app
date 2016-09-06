@@ -119,6 +119,17 @@ public class Case3DLibraryListBean {
         private String custom_string_type;
         private String design_name;
         private String hs_designer_uid;
+
+        public String getOriginal_avatar() {
+            return original_avatar;
+        }
+
+        public void setOriginal_avatar(String original_avatar) {
+            this.original_avatar = original_avatar;
+        }
+
+        private String original_avatar;
+
         /**
          * designer : {"studio":null,"styles":null,"introduction":null,"experience":null,"acs_member_id":20730531,"style_names":null,"style_long_names":null,"measurement_price":null,"design_price_min":null,"design_price_max":null,"graduate_from":null,"personal_honour":null,"diy_count":null,"case_count":null,"is_loho":null,"is_real_name":null,"theme_pic":null,"type_code":null,"type_name":null,"store_id":null,"store_name":null,"company_id":null,"company_name":null,"design_price_code":null,"evalution_avg_scores":0,"evalution_count":null}
          * email : null

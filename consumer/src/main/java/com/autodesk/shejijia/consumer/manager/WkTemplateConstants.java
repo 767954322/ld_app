@@ -30,4 +30,16 @@ public class WkTemplateConstants {
     public static final int DELAY_CONFIRM_DESIGN_RESULTS = 64;
 
 
+    /**
+     * -1 未认证
+     * 0 认证中
+     * 1 认证失败
+     * 2 认证通过
+     */
+    public static final String CERHIGH_TYPE_UNAUTH = "-1";
+    public static final String CERHIGH_TYPE_AUTHORING = "0";
+    public static final String CERHIGH_TYPE_AUTH_FAILED = "1";
+    public static final String CERHIGH_TYPE_AUTH_PASSED = "2";
+
+
 }

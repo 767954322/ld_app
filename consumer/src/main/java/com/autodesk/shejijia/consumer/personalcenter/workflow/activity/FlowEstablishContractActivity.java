@@ -282,6 +282,19 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     private void UpdateUIcontractContentConsumer() {
+
+
+        if (getContractDataEntityFromFirstBidder() == null) { // 如果设计师没有发送设计合同 .
+            mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                @Override
+                public void onDismiss(Object o) {
+                    finish();
+                }
+            });
+            mDesignContract.show();
+            return;
+        }
+
         UpdateUIsetContentViewConsumer();
 
         if (WorkFlowSubNodeStep() == 31) {
@@ -352,27 +365,54 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     break;
 
                 MPContractDataBean contract_detail = getContractDetailData(contract_data_entity);
-                if (contract_detail == null)
-                    break;
 
-                String contract_number = contract_data_entity.getContract_no();
-                String contract_date = contract_data_entity.getContract_create_date();
-                String design_amount = contract_data_entity.getContract_charge();
-                String design_amount_first = contract_data_entity.getContract_first_charge();
+
+                String contract_number ="";
+                String contract_date ="";
+                String design_amount ="";
+                String design_amount_first ="";
+                String design_amount_balance ="";
+                String consumer_name ="";
+                String consumer_mobile ="";
+                String consumer_addr ="";
+                String consumer_mail ="";
+                String tree_d_renderimage ="";
+                String designer_addr ="";
+
+
+                if (contract_detail == null){
+                    text = text.replace("#val(contract_number)", Validator.getStringWithNullDefaultString(contract_number, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(contract_date)", Validator.getStringWithNullDefaultString(contract_date, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(design_amount)", Validator.getStringWithNullDefaultString(design_amount, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(design_amount_first)", Validator.getStringWithNullDefaultString(design_amount_first, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(design_amount_balance)", Validator.getStringWithNullDefaultString(design_amount_balance, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(consumer_name)", Validator.getStringWithNullDefaultString(consumer_name, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(consumer_mobile)", Validator.getStringWithNullDefaultString(consumer_mobile, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(consumer_addr)", Validator.getStringWithNullDefaultString(consumer_addr, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(consumer_mail)", Validator.getStringWithNullDefaultString(consumer_mail, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(tree_d_renderimage)", Validator.getStringWithNullDefaultString(tree_d_renderimage, UIUtils.getString(R.string.data_null)));
+                    text = text.replace("#val(designer_addr)", Validator.getStringWithNullDefaultString(designer_addr, UIUtils.getString(R.string.data_null)));
+                    break;
+                }
+
+                 contract_number = contract_data_entity.getContract_no();
+                 contract_date = contract_data_entity.getContract_create_date();
+                 design_amount = contract_data_entity.getContract_charge();
+                 design_amount_first = contract_data_entity.getContract_first_charge();
 
 
                 Double totalCost = Double.parseDouble(design_amount);
                 Double firstCost = Double.parseDouble(design_amount_first);
                 DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
-                String design_amount_balance = df.format(totalCost - firstCost);
+                design_amount_balance = df.format(totalCost - firstCost);
 
 
-                String consumer_name = contract_detail.getName();
-                String consumer_mobile = contract_detail.getMobile();
-                String consumer_addr = contract_detail.getAddrDe();
-                String consumer_mail = contract_detail.getEmail();
-                String tree_d_renderimage = contract_detail.getRender_map();
-                String designer_addr = contract_detail.getAddrDe();
+                consumer_name = contract_detail.getName();
+                consumer_mobile = contract_detail.getMobile();
+                consumer_addr = contract_detail.getAddrDe();
+                consumer_mail = contract_detail.getEmail();
+                tree_d_renderimage = contract_detail.getRender_map();
+                designer_addr = contract_detail.getAddrDe();
 
                 text = text.replace("#val(contract_number)", Validator.getStringWithNullDefaultString(contract_number, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(contract_date)", Validator.getStringWithNullDefaultString(contract_date, UIUtils.getString(R.string.data_null)));
@@ -385,6 +425,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 text = text.replace("#val(consumer_mail)", Validator.getStringWithNullDefaultString(consumer_mail, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(tree_d_renderimage)", Validator.getStringWithNullDefaultString(tree_d_renderimage, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(designer_addr)", Validator.getStringWithNullDefaultString(designer_addr, UIUtils.getString(R.string.data_null)));
+
                 break;
             }
             ;

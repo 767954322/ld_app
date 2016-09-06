@@ -385,6 +385,10 @@ public class UIUtils {
         return TextUtils.isEmpty(some) ? UIUtils.getString(R.string.no_data) : some;
     }
 
+    public static String getNoSelectIfEmpty(String some) {
+        return TextUtils.isEmpty(some) ? UIUtils.getString(R.string.no_select) : some;
+    }
+
     public static String getNoStringIfEmpty(String some) {
         return TextUtils.isEmpty(some)||"none".equals(some)||StringUtils.isEmpty(some) ? "" : some;
     }

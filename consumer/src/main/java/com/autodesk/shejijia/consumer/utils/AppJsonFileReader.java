@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.autodesk.shejijia.consumer.base.bean.AreaBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -163,14 +161,8 @@ public class AppJsonFileReader {
      */
     public static Map<String, String> getArea(Activity activity) {
         String fileName = Constant.JsonLocationKey.AREA_JSON;
-        String areaJSON = loadJSONFromAsset(activity, fileName);
-        AreaBean areaBean = new Gson().fromJson(areaJSON, AreaBean.class);
-        Map<String, String> areaMap = new HashMap<>();
-        areaMap.put("one", areaBean.getOne());
-        areaMap.put("two", areaBean.getTwo());
-        areaMap.put("three", areaBean.getThree());
-        areaMap.put("five", areaBean.getFive());
-        return areaMap;
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
     }
 
     /**

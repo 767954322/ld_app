@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * <p>Description:家装订单设计师实体类</p>
- * <p>Copyright: Copyright (c) 2016</p>
- * <p>Company: http://www.leediancn.com</p>
  *
  * @author he.liu .
  * @date 2016-07-17.
