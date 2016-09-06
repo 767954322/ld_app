@@ -52,12 +52,12 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     @Override
     protected void initView() {
         super.initView();
-        mLlPersonalDemand = (LinearLayout) findViewById(R.id.ll_personal_b_demand);
+        mLlPersonalDemand = (RelativeLayout) findViewById(R.id.ll_personal_b_demand);
         mRlPersonalCollect = (RelativeLayout) findViewById(R.id.rl_personal_b_collect);
         mRlPersonalSetting = (RelativeLayout) findViewById(R.id.rl_personal_b_setting);
         mPolygonImageView = (PolygonImageView) findViewById(R.id.ib_personal_b_photo);
         mTvLoginOrRegister = (TextView) findViewById(R.id.tv_loginOrRegister);
-        mDesignerAttention = (LinearLayout) findViewById(R.id.ll_personal_designer_attention);
+        mDesignerAttention = (RelativeLayout) findViewById(R.id.ll_personal_designer_attention);
 
     }
 
@@ -211,7 +211,8 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     private static final int MORE_LOGOUT = 0;
 
     /// 控件.
-    private LinearLayout mLlPersonalDemand;
+    private RelativeLayout mLlPersonalDemand;
+    private RelativeLayout mDesignerAttention;
     private RelativeLayout mRlPersonalCollect, mRlPersonalSetting, mRlPersonalFitment;
     private PolygonImageView mPolygonImageView;
     private TextView mTvLoginOrRegister;
@@ -220,6 +221,5 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
     private String member_id;
     private String nick_name;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
-    private LinearLayout mDesignerAttention;
     private MemberEntity mMemberEntity;
 }
