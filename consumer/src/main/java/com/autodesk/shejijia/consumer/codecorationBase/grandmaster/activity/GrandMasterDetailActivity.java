@@ -26,6 +26,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -211,6 +212,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        CustomProgress.show(GrandMasterDetailActivity.this, "提交中...", false, null);
                         upOrderDataForService(jsonObject);
                     }
                 });
@@ -230,12 +232,14 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                CustomProgress.cancelDialog();
                 Toast.makeText(GrandMasterDetailActivity.this, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
+                CustomProgress.cancelDialog();
                 Toast.makeText(GrandMasterDetailActivity.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
             }
         });
@@ -341,7 +345,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             //设置案例数据（假数据）
 //            mhHolder.iv_detail.setImageResource(cases_list);
             if (cases_list.get(position).getImages().size() > 0) {
-                ImageLoader.getInstance().displayImage(cases_list.get(position).getImages().get(0).getFile_url()+"HD.png", mhHolder.iv_detail);
+                ImageLoader.getInstance().displayImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", mhHolder.iv_detail);
             }
 
             mhHolder.tv_cn_name.setText(cases_list.get(position).getTitle());
@@ -383,7 +387,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             }
         });
     }
-        //大师详情下滑案例假数据
+
+    //大师详情下滑案例假数据
     Integer[] list_Detail = {R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon,
             R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon};
     private ImageButton nav_left_imageButton;
@@ -406,7 +411,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private MasterDetail masterDetail;
     private VerticalViewPager vvp_viewpager;
     private MyListView ll_grand_master_detail;
-    private Animation animationIn,animationVoice;
+    private Animation animationIn, animationVoice;
 
 
 }
