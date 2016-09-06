@@ -3,12 +3,10 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
@@ -20,7 +18,6 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -68,6 +65,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initData(savedInstanceState);
 
         memberEntity = AdskApplication.getInstance().getMemberEntity();
+        CustomProgress.showDefaultProgress(this);
         getOrderDetailsInfo(needs_id, designer_id);
 
     }
@@ -155,12 +153,13 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
      * @param designer_id 　设计师的id
      */
     public void getOrderDetailsInfo(String needs_id, String designer_id) {
+
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(final JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 mCurrentWorkFlowDetail = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
-
+ CustomProgress.cancelDialog();
                 if (null != mCurrentWorkFlowDetail) {
                     Message msg = Message.obtain();
                     msg.obj = mCurrentWorkFlowDetail;

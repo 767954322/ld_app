@@ -223,7 +223,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 sendBidDemand("", user_name, needs_id, designer_id);
             }
         } else {
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.msg_no_certification), null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
+            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.msg_no_certification_web), null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object o, int position) {
