@@ -84,7 +84,9 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         if (null != bundle) {
             mMPBidderBean = (MPBidderBean) bundle.getSerializable(FlowUploadDeliveryActivity.BIDDER_ENTITY);
             designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-            mMPBidderBean.getDesigner_id();
+            if (TextUtils.isEmpty(designer_id)) {
+                designer_id = mMPBidderBean.getDesigner_id();
+            }
             needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         }
     }
@@ -162,11 +164,11 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
     private boolean validateSubmitContent(String appeasementsContent, boolean regex_address_right) {
 
         float rating = mRatingBarStar.getRating();
-        if((int)rating==0){
+        if ((int) rating == 0) {
             showAlertView(R.string.you_have_not_score);
             return false;
         }
-        
+
         if (!TextUtils.isEmpty(appeasementsContent) && !regex_address_right) {
             showAlertView(R.string.please_enter_words);
             return false;
@@ -193,19 +195,19 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
     private void submitEvaluation(JSONObject jsonObject) {
         MPServerHttpManager.getInstance().submitAppraisement(needs_id, designer_id, jsonObject,
                 new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
-                mAppraiseDesignerSuccessAlertView.show();
-            }
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        CustomProgress.cancelDialog();
+                        mAppraiseDesignerSuccessAlertView.show();
+                    }
 
-            @Override
-            public void onErrorResponse(VolleyError volleyError) { /// 204 .
-                CustomProgress.cancelDialog();
-                MPNetworkUtils.logError(TAG, volleyError, true);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,AppraiseDesignerActivity.this);
-            }
-        });
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) { /// 204 .
+                        CustomProgress.cancelDialog();
+                        MPNetworkUtils.logError(TAG, volleyError, true);
+                        ApiStatusUtil.getInstance().apiStatuError(volleyError, AppraiseDesignerActivity.this);
+                    }
+                });
     }
 
     /**
