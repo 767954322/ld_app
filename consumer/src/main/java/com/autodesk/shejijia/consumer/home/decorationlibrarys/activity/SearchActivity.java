@@ -323,7 +323,7 @@ public class SearchActivity extends NavigationBarActivity implements
         };
 
 
-        if (currentPosition ==0) {
+        if (currentPosition ==0) {   //标示为0 说明是  2d搜索
             MPServerHttpManager.getInstance().getCaseListData(
                     custom_string_style,
                     custom_string_type,
@@ -335,7 +335,7 @@ public class SearchActivity extends NavigationBarActivity implements
                     custom_string_form,
                     offset, limit, callback);
         } else {
-            MPServerHttpManager.getInstance().get3DCaseListData(
+            MPServerHttpManager.getInstance().get3DCaseListData(  //标示 1说明是 3d搜索
                     custom_string_style,
                     custom_string_type,
                     custom_string_keywords,
