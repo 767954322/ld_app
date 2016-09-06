@@ -104,38 +104,6 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
     }
 
     /**
-     * 隐藏底部布局
-     * param 传入的信息集合
-     */
-//    private void hideFooterView(ArrayList<SeekDesignerDetailBean.CasesEntity> list) {
-//        if (list != null && list.size() > 0) {
-//            mRlEmpty.setVisibility(View.GONE);
-//        } else {
-//            mRlEmpty.setVisibility(View.VISIBLE);
-//        }
-//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-//        int height = wm.getDefaultDisplay().getHeight();
-//        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
-//        mRlEmpty.getLayoutParams();
-//        layoutParams.height = height / 2;
-//        mRlEmpty.setLayoutParams(layoutParams);
-//        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
-//    }
-
-//    /**
-//     * 单击某个item进入查看详情
-//     *
-//     * @param position item的位置
-//     */
-//    @Override
-//    public void OnItemCaseLibraryClick(int position) {
-//        String case_id = mCasesEntityArrayList.get(position).getId();
-//        Intent intent = new Intent(getActivity(), CaseLibraryDetailActivity.class);
-//        intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
-//        startActivity(intent);
-//    }
-
-    /**
      * 案例库为空时候显示的提示框
      */
     private AlertView getEmptyAlertView(String content) {
