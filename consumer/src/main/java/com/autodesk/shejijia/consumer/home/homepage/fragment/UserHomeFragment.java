@@ -57,19 +57,16 @@ public class UserHomeFragment extends BaseFragment {
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
         caseViewPager.setPageMargin(pageMargin);
         MPConsumerHomeActivity mpConsumerHomeActivity = (MPConsumerHomeActivity) activity;
-//
         MaterialTabs pagerSlidingTabStrip = mpConsumerHomeActivity.getMaterialTabs();
-        pagerSlidingTabStrip.setIndicatorColor(Color.BLUE);//下滑指示器的颜色
+        pagerSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.bg_0084ff));//下滑指示器的颜色
         pagerSlidingTabStrip.setIndicatorHeight(DensityUtil.dip2px(mpConsumerHomeActivity, 2));//下滑指示器的高度
-        pagerSlidingTabStrip.setTextColorSelected(Color.BLUE);//设置选中的tab字体颜色
+        pagerSlidingTabStrip.setTextColorSelected(getResources().getColor(R.color.bg_0084ff));//设置选中的tab字体颜色
         pagerSlidingTabStrip.setTextColorUnselected(Color.BLACK);//设置未选中的tab字体颜色
         pagerSlidingTabStrip.setTabPaddingLeftRight(40);//设置tab距离左右的padding值
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
         pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(mpConsumerHomeActivity, 16));
-//
         pagerSlidingTabStrip.setViewPager(caseViewPager);
         caseViewPager.setCurrentItem(0);
     }
-
 }

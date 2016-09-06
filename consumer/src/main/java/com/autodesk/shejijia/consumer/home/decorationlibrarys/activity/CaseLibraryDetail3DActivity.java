@@ -330,7 +330,9 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String webUrl = ApiManager.getHtml5Url(case_id);
+            //TODO 后台现在只有这个环境的分享链接 别的环境还没有  暂时写死    by willson
+            String webUrl ="http://alpha-www.gdfcx.net/share/3dcase.html?caseid="+case_id;
+//            String webUrl = ApiManager.getHtml5Url(case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
