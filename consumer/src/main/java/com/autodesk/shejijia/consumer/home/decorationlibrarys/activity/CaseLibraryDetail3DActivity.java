@@ -666,7 +666,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, case3DDetailBean);
             bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
-            bundle.putInt("moveState",1); // 代表从3D传过去的
+            bundle.putInt("moveState", 1); // 代表从3D传过去的
             intent.putExtras(bundle);
             this.startActivity(intent);
         }

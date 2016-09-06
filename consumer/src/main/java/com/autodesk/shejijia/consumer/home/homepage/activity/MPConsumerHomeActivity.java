@@ -56,6 +56,7 @@ import com.autodesk.shejijia.shared.components.im.fragment.MPThreadListFragment;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseHomeActivity;
+import com.pgyersdk.update.PgyUpdateManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,6 +117,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         addRadioButtons(mDesignerPersonCenterRadioBtn);
         //获取节点信息
         getWkFlowStatePointInformation();
+
+        //version update
+        PgyUpdateManager.register(this);
     }
 
     @Override
