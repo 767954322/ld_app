@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -93,6 +95,37 @@ public class MyBidBean implements Serializable {
         private String room;
         private String toilet;
         private String user_name;
+
+        @SerializedName("city_name")
+        private String cityName;
+        @SerializedName("district_name")
+        private String districtName;
+        @SerializedName("province_name")
+        private String provinceName;
+
+        public String getCityName() {
+            return cityName;
+        }
+
+        public void setCityName(String cityName) {
+            this.cityName = cityName;
+        }
+
+        public String getDistrictName() {
+            return districtName;
+        }
+
+        public void setDistrictName(String districtName) {
+            this.districtName = districtName;
+        }
+
+        public String getProvinceName() {
+            return provinceName;
+        }
+
+        public void setProvinceName(String provinceName) {
+            this.provinceName = provinceName;
+        }
 
         public void setAcs_member_id(String acs_member_id) {
             this.acs_member_id = acs_member_id;

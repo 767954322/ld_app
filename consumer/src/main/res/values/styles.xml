@@ -17,4 +17,18 @@
         <item name="android:maxHeight">20dp</item>
     </style>
 
+    <style name="BidItem">
+    </style>
+
+    <style name="BidItem.Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/bg_33</item>
+        <item name="android:textSize">@dimen/font_15</item>
+    </style>
+
+    <style name="BidItem.Text.Light">
+        <item name="android:textColor">@color/bg_9E</item>
+    </style>
 </resources>
