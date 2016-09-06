@@ -23,6 +23,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDia
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -66,7 +67,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-
+                initPageData("error");
             }
 
             @Override
@@ -121,6 +122,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        CustomProgress.show(activity, "提交中...", false, null);
                         upOrderDataForService(jsonObject);
                     }
                 });
@@ -133,44 +135,51 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     private void initPageData(String masterInfo) {
 
         isLoginUserJust = isLoginUser();
+        if (!"error".equals(masterInfo)) {
+            GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
+            designer_list = grandMasterInfo.getDesigner_list();
+            viewList = new ArrayList<View>();
 
-        GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
-        designer_list = grandMasterInfo.getDesigner_list();
-        viewList = new ArrayList<View>();
+            LayoutInflater lf = LayoutInflater.from(activity);
+            View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
+            viewList.add(view1);
+            for (int i = 0; i < designer_list.size(); i++) {
+                View view2 = lf.inflate(R.layout.viewpager_item_grandmaster_content, null);
+                ImageView iv_grandmaster_pic = (ImageView) view2.findViewById(R.id.iv_grandmaster_pic);
+                TextView tv_grandmaster_cn_name = (TextView) view2.findViewById(R.id.tv_grandmaster_cn_name);
+                TextView tv_grandmaster_en_name = (TextView) view2.findViewById(R.id.tv_grandmaster_en_name);
+                TextView tv_grandmaster_detail = (TextView) view2.findViewById(R.id.tv_grandmaster_detail);
 
-        LayoutInflater lf = LayoutInflater.from(activity);
-        View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
-        viewList.add(view1);
-        for (int i = 0; i < designer_list.size(); i++) {
-            View view2 = lf.inflate(R.layout.viewpager_item_grandmaster_content, null);
-            ImageView iv_grandmaster_pic = (ImageView) view2.findViewById(R.id.iv_grandmaster_pic);
-            TextView tv_grandmaster_cn_name = (TextView) view2.findViewById(R.id.tv_grandmaster_cn_name);
-            TextView tv_grandmaster_en_name = (TextView) view2.findViewById(R.id.tv_grandmaster_en_name);
-            TextView tv_grandmaster_detail = (TextView) view2.findViewById(R.id.tv_grandmaster_detail);
+                if (TextUtils.isEmpty(designer_list.get(i).getEnglish_name())) {
+                    tv_grandmaster_en_name.setText("后台无数据");
+                } else {
+                    tv_grandmaster_en_name.setText(designer_list.get(i).getEnglish_name());
+                }
+                if (TextUtils.isEmpty(designer_list.get(i).getNick_name())) {
+                    tv_grandmaster_cn_name.setText("后台无数据");
+                } else {
+                    tv_grandmaster_cn_name.setText(designer_list.get(i).getNick_name());
+                }
+                if (TextUtils.isEmpty(designer_list.get(i).getDesigner().getIntroduction())) {
+                    tv_grandmaster_detail.setText("后台无数据");
+                } else {
+                    tv_grandmaster_detail.setText(designer_list.get(i).getDesigner().getIntroduction());
+                }
 
-            if (TextUtils.isEmpty(designer_list.get(i).getEnglish_name())) {
-                tv_grandmaster_en_name.setText("后台无数据");
-            } else {
-                tv_grandmaster_en_name.setText(designer_list.get(i).getEnglish_name());
+                if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
+
+                    String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url();
+                    ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
+                }
+                viewList.add(view2);
             }
-            if (TextUtils.isEmpty(designer_list.get(i).getNick_name())) {
-                tv_grandmaster_cn_name.setText("后台无数据");
-            } else {
-                tv_grandmaster_cn_name.setText(designer_list.get(i).getNick_name());
-            }
-            if (TextUtils.isEmpty(designer_list.get(i).getDesigner().getIntroduction())) {
-                tv_grandmaster_detail.setText("后台无数据");
-            } else {
-                tv_grandmaster_detail.setText(designer_list.get(i).getDesigner().getIntroduction());
-            }
-
-            if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
-
-                String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url();
-                ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
-            }
-            viewList.add(view2);
+        } else {
+            viewList = new ArrayList<View>();
+            LayoutInflater lf = LayoutInflater.from(activity);
+            View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
+            viewList.add(view1);
         }
+
         addImageViewtips();
         vp_grand_selection.setAdapter(pagerAdapter);
         vp_grand_selection.setOnPageChangeListener(this);
@@ -266,12 +275,13 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                CustomProgress.cancelDialog();
                 Toast.makeText(getActivity(), R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
+                CustomProgress.cancelDialog();
                 Toast.makeText(getActivity(), R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
             }
         });

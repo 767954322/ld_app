@@ -12,7 +12,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
@@ -58,11 +57,11 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
         DesignerInfoBean designerInfoBean = designerListEntity.getDesigner();
         RealNameBean real_name = designerListEntity.getReal_name();
 
-        nick_name = TextUtils.isEmpty(nick_name) ? "暂无数据" : nick_name;
-        avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
+        nick_name = UIUtils.getNoDataIfEmpty(nick_name);
+        avatar = UIUtils.getNoStringIfEmpty(avatar);
         following_count = TextUtils.isEmpty(following_count) ? "0" : following_count;
         holder.setText(R.id.tv_seek_designer_name, nick_name);
-        holder.setText(R.id.tv_attention_num, UIUtils.getString(R.string.attention_num) + " : " + following_count);
+        holder.setText(R.id.tv_attention_num, UIUtils.getString(R.string.attention_num) + following_count);
 
         PolygonImageView polygonImageView = holder.getView(R.id.piv_seek_designer_photo);
         ImageUtils.displayAvatarImage(avatar, polygonImageView);

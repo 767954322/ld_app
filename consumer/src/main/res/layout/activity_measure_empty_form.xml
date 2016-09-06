@@ -189,18 +189,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_1"
-                android:background="@color/bg_ff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/bg_ef"/>
-            </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"

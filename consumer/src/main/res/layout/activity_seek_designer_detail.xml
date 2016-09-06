@@ -223,7 +223,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="2D案例"
+                                android:text="效果图"
                                 android:textColor="@color/bg_00"
                                 android:textSize="@dimen/font_16" />
 
@@ -233,7 +233,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="3D案例"
+                                android:text="3D方案"
                                 android:textColor="@color/bg_00"
                                 android:textSize="@dimen/font_16" />
 
@@ -340,7 +340,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="2D案例"
+                android:text="效果图"
                 android:textColor="@color/bg_00"
                 android:textSize="@dimen/font_16" />
 
@@ -350,7 +350,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="3D案例"
+                android:text="3D方案"
                 android:textColor="@color/bg_00"
                 android:textSize="@dimen/font_16" />
 
