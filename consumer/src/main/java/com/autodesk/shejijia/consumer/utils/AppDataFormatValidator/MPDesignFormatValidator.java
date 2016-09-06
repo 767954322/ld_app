@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -87,6 +90,23 @@ public class MPDesignFormatValidator extends MPFormatValidator{
 
         return getStringWithNullDefaultString(str,"");
     }
+
+
+    public  String getStrDateToString(String time) {
+
+        String re_StrTime = null;
+
+
+        long lcc_time = Long.valueOf(time);
+
+        Date date=new Date(lcc_time);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        String dateText = sdf.format(date);
+
+        return dateText;
+    }
+
 
     public String getStringWithNullDefaultString(String str,String defaultStr){
 

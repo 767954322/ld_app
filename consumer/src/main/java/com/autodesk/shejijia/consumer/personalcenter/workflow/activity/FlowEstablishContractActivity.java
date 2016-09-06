@@ -320,16 +320,22 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 MPContractDataBean contract_detail = getContractDetailData(contract_data_entity);
                 if (contract_detail == null)
                     break;
+                }
 
-                String contract_number = contract_data_entity.getContract_no();
-                String contract_date = contract_data_entity.getContract_create_date();
-                String design_amount = contract_data_entity.getContract_charge();
-                String design_amount_first = contract_data_entity.getContract_first_charge();
+
+                 contract_number = contract_data_entity.getContract_no();
+                 contract_date = contract_data_entity.getContract_create_date();
+                 design_amount = contract_data_entity.getContract_charge();
+                 design_amount_first = contract_data_entity.getContract_first_charge();
+
+                 contract_date=Validator.getStrDateToString(contract_date);
+
 
                 Double totalCost = Double.parseDouble(design_amount);
                 Double firstCost = Double.parseDouble(design_amount_first);
                 DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
-                String design_amount_balance = df.format(totalCost - firstCost);
+                //design_amount_balance = df.format(totalCost - firstCost);
+                design_amount_balance= String.format("%.2f", totalCost - firstCost);
 
                 String consumer_name = contract_detail.getName();
                 String consumer_mobile = contract_detail.getMobile();
@@ -564,7 +570,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 bValid = false;
                 break;
             }
-
+            //REFACTOR
             if (!consumerEmail.equals("")) {
                 if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
                     showAlertView(R.string.please_fill_in_the_right_phone_email);
@@ -780,7 +786,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                         return;
                     }
                 }
-
+                //REFACTOR
                 if (jusnFrist){
 
                     String firstCost;
