@@ -54,7 +54,6 @@ public class EliteFragment extends BaseFragment {
         }
         designer_id = mMemberEntity.getAcs_member_id();
         map = new HashMap<>();
-        map.put(JsonConstants.JSON_DEMAND_LIST_OFFSET,OFFSET);
         map.put(JsonConstants.JSON_DEMAND_LIST_LIMIT,LIMIT);
         map.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID,designer_id);
 
@@ -70,13 +69,16 @@ public class EliteFragment extends BaseFragment {
         ptrLayoutElite.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getSliteOder(map,0, LIMIT);
+                OFFSET = 0;
+                map.put(JsonConstants.JSON_DEMAND_LIST_OFFSET,OFFSET);
+                getSliteOder(map,OFFSET, LIMIT);
             }
         });
         ptrLayoutElite.setLastUpdateTimeRelateObject(this);
         mListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void loadMore() {
+                map.put(JsonConstants.JSON_DEMAND_LIST_OFFSET,OFFSET);
                 getSliteOder(map, OFFSET, LIMIT);
             }
         });

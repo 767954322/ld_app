@@ -171,7 +171,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
             ll_agree_establish_contract.setVisibility(View.GONE);
         }
 
-        restgetDesignerInfoData(designer_id, hs_uid,new commonJsonResponseCallback(){
+        restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
             public void onJsonResponse(String jsonResponse) {
                 list = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
@@ -694,6 +694,8 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
                     }
                 }
             }
+
+
             if (view == tvc_first_cost) { /// 监听首款 .
                 if (s.toString().contains(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > 2) {

@@ -8,22 +8,20 @@
         layout="@layout/view_navigation_header" />
 
 
-    <ListView
-        android:listSelector="@drawable/list_selector"
-        android:id="@+id/lv_package_detail"
+    <ImageView
+        android:id="@+id/iv_package_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:footerDividersEnabled="false"
-        android:layout_below="@+id/common_navbar" />
+        android:layout_below="@+id/common_navbar"
+        android:scaleType="centerInside" />
 
     <ImageButton
         android:id="@+id/bt_packages_yuyue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/boutton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/font_20"/>
+        android:layout_marginBottom="@dimen/font_20"
+        android:background="@drawable/boutton" />
 
 </RelativeLayout>

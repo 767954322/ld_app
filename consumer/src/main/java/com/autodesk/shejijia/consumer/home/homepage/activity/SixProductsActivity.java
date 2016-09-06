@@ -78,7 +78,6 @@ public class SixProductsActivity extends NavigationBarActivity {
         pagerSlidingTabStrip.setOnClickItemListener(new MaterialTabs.OnClickItemListener() {
             @Override
             public void onClickItemListener(int position) {
-                Log.i("yaoxuehuadashen",""+position);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.work_room_explain);
                 if (position == 1){
 

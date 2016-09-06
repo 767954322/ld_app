@@ -15,6 +15,8 @@ public class DIYFragment extends BaseFragment {
     public DIYFragment() {
     }
 
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_diy;
