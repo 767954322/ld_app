@@ -54,7 +54,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
+        contract_no = bundle.getString(Constant.SeekDesignerDetailKey.CONTRACT_NO);
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         mThreead_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);//thread_id
         nodeState = bundle.getInt(Constant.BundleKey.TEMPDATE_ID);
@@ -245,6 +245,5 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected MPBidderBean mBiddersEntity;
     protected List<MPBidderBean> mBidders;
     protected MPDeliveryBean mDeliveryBean;
-
-
+    private String contract_no; // 设计合同编号
 }

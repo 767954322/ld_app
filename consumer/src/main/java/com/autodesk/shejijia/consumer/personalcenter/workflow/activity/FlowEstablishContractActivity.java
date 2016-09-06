@@ -273,6 +273,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                                 Intent intent = new Intent(FlowEstablishContractActivity.this, FlowFirstDesignActivity.class);
                                 intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                                 intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                                intent.putExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO, contract_no);
                                 intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
 //                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                                 startActivityForResult(intent, ContractForFirst);
