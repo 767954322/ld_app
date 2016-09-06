@@ -106,7 +106,11 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = et_issue_demand_area.getText().toString().trim();
-                    area = String.format("%.2f", Double.valueOf(area));
+                    if (TextUtils.isEmpty(area)) {
+                        area = "";
+                    } else {
+                        area = String.format("%.2f", Double.valueOf(area));
+                    }
                     et_issue_demand_area.setText(area);
                 }
             }
@@ -168,24 +172,29 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         }
         //项目面积校验
         String area_project = et_issue_demand_area.getText().toString();
-        boolean ifOKArea = area_project.matches(RegexUtil.AREA_REGEX);
-        String subNum = "0";
-        if (area_project.contains(".")) {
-            subNum = area_project.substring(0, area_project.indexOf("."));
-        }
-        if (TextUtils.isEmpty(area_project) || Float.valueOf(area_project) == 0) {
-            showAlertView(R.string.please_input_correct_area);
-            return;
-        } else {
-            if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
+        if (!TextUtils.isEmpty(area_project.trim())) {
+            boolean ifOKArea = area_project.matches(RegexUtil.AREA_REGEX);
+            String subNum = "0";
+            if (area_project.contains(".")) {
+                subNum = area_project.substring(0, area_project.indexOf("."));
+            }
+            if (TextUtils.isEmpty(area_project) || Float.valueOf(area_project) == 0) {
                 showAlertView(R.string.please_input_correct_area);
                 return;
             } else {
-                if (!area_project.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
                     showAlertView(R.string.please_input_correct_area);
                     return;
+                } else {
+                    if (!area_project.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                        showAlertView(R.string.please_input_correct_area);
+                        return;
+                    }
                 }
             }
+
+        } else {
+            area_project = "";
         }
         //装修预算校验
         if (TextUtils.isEmpty(mDecorationBudget)) {
@@ -199,11 +208,17 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         }
         //小区名称校验
         String detail_address = tv_issue_demand_detail_address.getText().toString();
-        boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
-        if (TextUtils.isEmpty(detail_address) || !regex_address_right) {
-            showAlertView(R.string.please_enter_correct_address);
-            return;
+        if (!TextUtils.isEmpty(detail_address.trim())) {
+            boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
+            if (TextUtils.isEmpty(detail_address) || !regex_address_right) {
+                showAlertView(R.string.please_enter_correct_address);
+                return;
+            }
+        } else {
+            detail_address = "";
         }
+
+
         //提交的JSONObject
         JSONObject jsonObject = new JSONObject();
         try {
@@ -236,14 +251,14 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                showAlertDialog(UIUtils.getString(R.string.fail_grandmaster));
+                getAlertViewExt(UIUtils.getString(R.string.fail_grandmaster)).show();
                 CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                showAlertDialog(UIUtils.getString(R.string.fail_grandmaster));
+                getAlertViewExt(UIUtils.getString(R.string.succes_grandmaster)).show();
                 CustomProgress.cancelDialog();
             }
         });
@@ -367,13 +382,14 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         });
     }
 
-    private void showAlertDialog(String toast) {
+    private AlertView getAlertViewExt(String toast) {
         //UIUtils.getString(R.string.title_average_rule)
         if (alertViewExt == null) {
             alertViewExt = new AlertView(toast,
                     null, null, null, new String[]{UIUtils.getString(R.string.delivery_sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null);
         }
 
+        return alertViewExt;
     }
 
 
