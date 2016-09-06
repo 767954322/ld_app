@@ -136,6 +136,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         super.initData(savedInstanceState);
         showOrHideChatMeasure();
 
+        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
+
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
         getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
 
@@ -347,23 +350,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 //设置颜色
                 setTextColor(controlNumber);
                 break;
-
-            /// TODO  MERGE BUG.
-//            case R.id.consumer_appraise:
-//                case_2d_btn.setClickable(true);
-//                case_2d_btn_replace_top.setClickable(true);
-//                chooseViewPointer.setCase3dBtn(width);
-//                choose_point_replace.setCase3dBtn(width);
-//
-//                if (mDesignerPerson3DMasterPageFragment == null) {
-//                    mDesignerPerson3DMasterPageFragment = new DesignerPerson3DMasterPageFragment();
-//                }
-//                controlNumber = 2;
-//                switchFragment(shareFragment, mDesignerPerson3DMasterPageFragment);
-//                //设置颜色
-//                setTextColor(controlNumber);
-//
-//                break;
 
             case R.id.consumer_appraise:
                 case_2d_btn.setClickable(true);
@@ -896,7 +882,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         } else {
             setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
         }
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
     /**
