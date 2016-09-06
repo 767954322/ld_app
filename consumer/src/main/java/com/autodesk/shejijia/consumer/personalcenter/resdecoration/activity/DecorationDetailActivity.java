@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -68,6 +69,13 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private String needs_id;
     private DecorationDetailBean mDecorationDetailBean;
     private Map<String, String> mStyleJson, mSpaceJson, mLivingRoomJson, mRoomJson, mToiletJson;
+
+
+    public static void jumpTo(Context context,Bundle bundle){
+        Intent intent = new Intent(context, DecorationDetailActivity.class);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
 
     @Override
     protected int getLayoutResId() {

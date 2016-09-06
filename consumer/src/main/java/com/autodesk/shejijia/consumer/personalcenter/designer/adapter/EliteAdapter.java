@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.designer.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -112,17 +114,20 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
                     }
                 }
         );
-        holder.getView(R.id.ll_designer_elite_needdetail).setOnClickListener(/*this);*/new View.OnClickListener() {
+        holder.getView(R.id.ll_consumer_decoration).setOnClickListener(/*this);*/new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /**
                  * 需求详情 .
                  */
-                Intent intent = new Intent(context, BiddingHallDetailActivity.class);
-                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, orderListEntity.getNeeds_id());
-                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_DESIGNERORDER_ACTIVITY);
-                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
-                context.startActivity(intent);
+//                Intent intent = new Intent(context, BiddingHallDetailActivity.class);
+//                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, orderListEntity.getNeeds_id());
+//                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_DESIGNERORDER_ACTIVITY);
+//                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
+                bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, orderListEntity.getNeeds_id());
+                DecorationDetailActivity.jumpTo(context,bundle);
             }
         });
 
