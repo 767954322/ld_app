@@ -104,8 +104,7 @@
                         <h4>本項目設計費用</h4>
                         <p>本项目设计费总额：￥#val(design_amount)元<br />
 设计首款：￥#val(design_amount_first)元<br />
-设计尾款：￥#val(design_amount_balance)元<br />
-设计周期：#val(design_start_date) 至 #val(design_end_date)<br /></p>
+设计尾款：￥#val(design_amount_balance)元<br /></p>
                     </div>
                 </div>
                 <div class="contract-info-text">
