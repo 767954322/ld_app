@@ -67,22 +67,15 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.tv_finish_webview)
-        {
+        if (i == R.id.tv_finish_webview) {
             CommonUtils.clearCookie(this);
             finish();
-        }
-        else if (i == R.id.ll_webview_backup)
-        {
-            if (mWebView != null && mWebView.canGoBack())
-            {
-                if (!TextUtils.isEmpty(pagerFinishedUrl) && pagerFinishedUrl.contains(PAGER_FINISHED_TAG))
-                {
+        } else if (i == R.id.ll_webview_backup) {
+            if (mWebView != null && mWebView.canGoBack()) {
+                if (!TextUtils.isEmpty(pagerFinishedUrl) && pagerFinishedUrl.contains(PAGER_FINISHED_TAG)) {
                     CommonUtils.clearCookie(this);
                     finish();
-                }
-                else
-                {
+                } else {
                     mWebView.goBack();// 返回前一个页面
                     mTvFinishWebView.setVisibility(View.VISIBLE);
                 }
@@ -133,7 +126,6 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
 
         @JavascriptInterface
         public void getToken(String token) {
-            CustomProgress.show(RegisterOrLoginActivity.this,"登录中...",false,null);
             try {
                 String strToken = URLDecoder.decode(token, Constant.NetBundleKey.UTF_8).substring(6);
                 AdskApplication.getInstance().saveSignInInfo(strToken);
@@ -144,7 +136,6 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                 finish();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                CustomProgress.cancelDialog();
             }
         }
     }
@@ -164,6 +155,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 //            KLog.d(TAG, url);
             super.onPageStarted(view, url, favicon);
+            if (CustomProgress.dialog != null && !CustomProgress.dialog.isShowing()) {
+                CustomProgress.show(RegisterOrLoginActivity.this, "", false, null);
+            }
         }
 
         @Override
@@ -178,6 +172,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             mWebSettings.setBlockNetworkImage(false);
             pagerFinishedUrl = url;
             KLog.d(TAG, url);
+            CustomProgress.cancelDialog();
         }
 
         @Override
