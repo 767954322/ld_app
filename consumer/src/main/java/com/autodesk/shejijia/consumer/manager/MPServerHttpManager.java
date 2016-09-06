@@ -162,9 +162,13 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
+                if (xToken == null) {
+                    return super.getHeaders();
+                } else {
+                    HashMap<String, String> header = new HashMap<>();
+                    header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                    return header;
+                }
             }
         };
         queue.add(okRequest);

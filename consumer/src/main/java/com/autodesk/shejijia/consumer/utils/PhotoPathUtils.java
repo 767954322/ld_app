@@ -12,8 +12,6 @@ import android.provider.MediaStore;
 
 /**
  * <p>Description:处理寻找手机照片路径的工具类</p>
- * <p>Copyright: Copyright (c) 2016</p>
- * <p>Company: http://www.leediancn.com</p>
  *
  * @author he.liu .
  * @date 2016-07-14.

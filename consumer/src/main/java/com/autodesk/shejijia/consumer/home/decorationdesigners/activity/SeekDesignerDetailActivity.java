@@ -591,7 +591,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
 
     /**
-     * 获取设计师的信息,并刷新
+     * 获取3d案例数据
      */
     public void getSeekDesign3DDetailData(String designer_id, int offset, int limit,
                                           final int state) {

@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -222,7 +221,6 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         String decoration_budget = demandDetailBean.getDecoration_budget();
         String province_name = demandDetailBean.getProvince_name();
         String city_name = demandDetailBean.getCity_name();
-        String district = demandDetailBean.getDistrict();
         String design_budget = demandDetailBean.getDesign_budget();
         String decoration_style = demandDetailBean.getDecoration_style();
 
@@ -231,11 +229,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         String toilet = demandDetailBean.getToilet();
         String living_room = demandDetailBean.getLiving_room();
 
-        district_name = TextUtils.isEmpty(district)
-                || "none".equals(district) ||
-                TextUtils.isEmpty(district_name)
-                || district_name.equals("none") ? "" : district_name;
-
+        district_name = UIUtils.getNoStringIfEmpty(district_name);
         String address = province_name + city_name + district_name;
 
         decoration_style = convertEn2Cn(mStyleJson, decoration_style);
@@ -246,17 +240,17 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
         String livingRoom_room_toilet = room + living_room + toilet;
 
-        mTvAmendRoomType.setText(TextUtils.isEmpty(livingRoom_room_toilet) ? UIUtils.getString(R.string.no_select) : livingRoom_room_toilet);
-        mTvAmendStyle.setText(TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.no_select) : decoration_style);
-        mTvAmendHouseType.setText(TextUtils.isEmpty(house_type) ? UIUtils.getString(R.string.no_select) : house_type);
-        mTvAmendName.setText(TextUtils.isEmpty(contacts_name) ? UIUtils.getString(R.string.no_data) : contacts_name);
-        mTvAmendMobile.setText(TextUtils.isEmpty(contacts_mobile) ? UIUtils.getString(R.string.no_data) : contacts_mobile);
-        mTvDesignBudget.setText(TextUtils.isEmpty(design_budget) ? UIUtils.getString(R.string.no_select) : design_budget);
-        mTvAmendBudget.setText(TextUtils.isEmpty(decoration_budget) ? UIUtils.getString(R.string.no_select) : decoration_budget);
-        mTvAmendArea.setText(TextUtils.isEmpty(house_area) ? UIUtils.getString(R.string.no_select) : house_area);
-        mTvAddress.setText(TextUtils.isEmpty(address) ? UIUtils.getString(R.string.no_data) : address);
-        mTvCommunityName.setText(TextUtils.isEmpty(community_name) ? UIUtils.getString(R.string.no_data) : community_name);
-        mTvPublicTime.setText(TextUtils.isEmpty(publish_time) ? UIUtils.getString(R.string.no_data) : publish_time);
+        mTvAmendRoomType.setText(UIUtils.getNoSelectIfEmpty(livingRoom_room_toilet));
+        mTvAmendStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style));
+        mTvAmendHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type) );
+        mTvAmendName.setText(UIUtils.getNoDataIfEmpty(contacts_name));
+        mTvAmendMobile.setText(UIUtils.getNoDataIfEmpty(contacts_mobile));
+        mTvDesignBudget.setText(UIUtils.getNoSelectIfEmpty(design_budget));
+        mTvAmendBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget) );
+        mTvAmendArea.setText(UIUtils.getNoSelectIfEmpty(house_area) );
+        mTvAddress.setText(UIUtils.getNoDataIfEmpty(address));
+        mTvCommunityName.setText(UIUtils.getNoDataIfEmpty(community_name));
+        mTvPublicTime.setText(UIUtils.getNoDataIfEmpty(publish_time));
 
         mTvDecorationName.setText(contacts_name + "/" + community_name);
         if (WkTemplateConstants.IS_AVERAGE.equals(wk_template_id)) {
