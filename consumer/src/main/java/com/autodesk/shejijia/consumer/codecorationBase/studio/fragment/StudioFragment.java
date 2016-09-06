@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomLis
 import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
@@ -209,10 +210,13 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
      */
     public void upOrderDataForService(JSONObject jsonObject) {
 
+
+
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
                 Toast.makeText(activity, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 

@@ -52,15 +52,12 @@ public class DesignerAppraiseFragment extends BaseFragment {
         estimatesList.addAll(estimates);
         mListView.setAdapter(mSeekDesignerAppraiseAdapter);
 
-//        if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
-//
-//            rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
-//        }
-        rating_star.setStepSize(0.5f);
-        rating_star.setRating(2.5f);
+        if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
+
+            rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
+        }
 
 
-        Log.d(TAG, "updateListView: ddddd");
     }
 
     //加载更多数据

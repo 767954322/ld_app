@@ -904,6 +904,29 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                         return;
                     }
                 }
+
+                if (jusnFrist){
+
+                    String firstCost;
+                    String totalCost;
+                    if (tvc_total_cost.getText().toString().isEmpty()) {
+                        totalCost = "0";
+                    } else {
+                        totalCost = tvc_total_cost.getText().toString();
+                    }
+                    if (tvc_first_cost.getText().toString().isEmpty()) {
+                        firstCost = "0";
+                    } else {
+                        firstCost = tvc_first_cost.getText().toString();
+                    }
+                    Double dTotalCost = Double.parseDouble(totalCost);
+                    DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
+                    tvc_last_cost.setText(df.format((dTotalCost - Double.parseDouble(firstCost))));
+
+                }
+
+                jusnFrist = true;
+
             }
             if (view == tvc_first_cost) { /// 监听首款 .
                 if (s.toString().contains(".")) {
@@ -1037,6 +1060,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private WebView twvc_consumerContent;
 
     private String contract_no; // 设计合同编号
+    private boolean jusnFrist = false;
     //private String total_cost;
     //private String first_cost;
     private String memberType = null;
