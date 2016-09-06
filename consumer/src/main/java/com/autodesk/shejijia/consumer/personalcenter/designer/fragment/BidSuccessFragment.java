@@ -1,17 +1,21 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.DesignerOrderBeiShuActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
@@ -19,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -112,65 +117,65 @@ public class BidSuccessFragment extends BaseFragment implements PullToRefreshLay
     }
 
     private CommonAdapter getCommonAdapter() {
-        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities, R.layout.item_lv_bingo_fragment) {
+        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities, R.layout.item_bid_suscuss) {
             @Override
-            public void convert(CommonViewHolder holder, MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
+            public void convert(CommonViewHolder holder, final MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
+                holder.setText(R.id.tv_decoration_name, biddingNeedsListEntity.getNeeds_name());
+                holder.setText(R.id.tv_decoration_buget, biddingNeedsListEntity.getRenovation_budget());
 
-                holder.setText(R.id.tv_bin_go_address, biddingNeedsListEntity.getNeeds_name());
-                holder.setText(R.id.tv_bin_go_time, biddingNeedsListEntity.getEnd_day());
-                String lRoom = biddingNeedsListEntity.getRoom();
-                String livingRoom = biddingNeedsListEntity.getLiving_room();
-                String mToilet = biddingNeedsListEntity.getToilet();
-                String house_area = biddingNeedsListEntity.getHouse_area();
+                holder.setText(R.id.tv_decoration_needs_id, biddingNeedsListEntity.getNeeds_id());
+                holder.setText(R.id.tv_decoration_address, getProjectAddress(biddingNeedsListEntity));
+                holder.setVisible(R.id.decoration_phone_container, false);
+                holder.setText(R.id.tv_decoration_house_type, getProjectHourseType(biddingNeedsListEntity));
+                holder.setText(R.id.tv_decoration_style, getProjectDecorationStyle(biddingNeedsListEntity));
 
-                if (living_room.containsKey(livingRoom)) {
-                    holder.setText(R.id.tv_bin_go_living_room, living_room.get(livingRoom));
-                } else {
-                    holder.setText(R.id.tv_bin_go_living_room, biddingNeedsListEntity.getLiving_room());
-                }
-                if (room.containsKey(lRoom)) {
-                    holder.setText(R.id.tv_bin_go_room, room.get(lRoom));
-                } else {
-                    holder.setText(R.id.tv_bin_go_room, biddingNeedsListEntity.getRoom());
-                }
-                if (toilet.containsKey(mToilet)) {
-                    holder.setText(R.id.tv_bin_go_toilet, toilet.get(mToilet));
-                } else {
-                    holder.setText(R.id.tv_bin_go_toilet, biddingNeedsListEntity.getToilet());
-                }
-                if (area.containsKey(house_area)) {
-                    holder.setText(R.id.tv_bin_go_area, area.get(house_area) + "m²");
-                } else {
-                    holder.setText(R.id.tv_bin_go_area, biddingNeedsListEntity.getHouse_area() + "m²");
-                }
-                String house_type = biddingNeedsListEntity.getHouse_type();
-                if (space.containsKey(house_type)) {
-                    holder.setText(R.id.tv_bin_go_type, space.get(house_type));
-                } else {
-                    holder.setText(R.id.tv_bin_go_type, biddingNeedsListEntity.getHouse_type());
-                }
-                String renovation_style = biddingNeedsListEntity.getRenovation_style();
-                if (style.containsKey(renovation_style)) {
-                    holder.setText(R.id.tv_bin_go_style, style.get(renovation_style));
-                } else {
-                    holder.setText(R.id.tv_bin_go_style, biddingNeedsListEntity.getRenovation_style());
-                }
-                holder.setText(R.id.tv_bin_go_budget, UIUtils.getString(R.string.my_bid_black) + biddingNeedsListEntity.getRenovation_budget());
-
-                final int is_loho = ((MyBidActivity) getActivity()).is_loho;
-                holder.getView(R.id.item_lv_bingo_fragment_order).setOnClickListener(new View.OnClickListener() {
+                holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        if (IS_BEI_SHU == is_loho) {
-                            /// 北舒 .
-                            CommonUtils.launchActivity(getActivity(), DesignerOrderBeiShuActivity.class);
-                        } else {
-                            CommonUtils.launchActivity(getActivity(), DesignerOrderActivity.class);
-                        }
+                    public void onClick(View view) {
+                        showDetail(biddingNeedsListEntity.getNeeds_id());
                     }
                 });
             }
         };
+    }
+
+    private void showDetail(String needsId) {
+        Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
+        Bundle bundle = new Bundle();
+        KLog.d(TAG, needsId);
+        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needsId);
+        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT);
+        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    private String getProjectAddress(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
+        String provinceName = biddingNeedsListEntity.getProvinceName();
+        String cityName = biddingNeedsListEntity.getCityName();
+        String districtName = biddingNeedsListEntity.getDistrictName();
+        districtName = TextUtils.isEmpty(districtName) || "none".equals(districtName) ? "" : districtName;
+        provinceName = TextUtils.isEmpty(provinceName) ? "" : provinceName;
+        cityName = TextUtils.isEmpty(cityName) ? "" : cityName;
+        return provinceName.trim() + cityName.trim() + districtName.trim();
+    }
+
+    private String getProjectHourseType(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
+        String houseType = biddingNeedsListEntity.getHouse_type();
+        if (space.containsKey(houseType)) {
+            return space.get(houseType);
+        } else {
+            return houseType;
+        }
+    }
+
+    private String getProjectDecorationStyle(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
+        String decorationStyle = biddingNeedsListEntity.getRenovation_style();
+        if (style.containsKey(decorationStyle)) {
+            return style.get(decorationStyle);
+        } else {
+            return decorationStyle;
+        }
     }
 
     private ArrayList<MyBidBean.BiddingNeedsListEntity> getData(int index) {
