@@ -30,11 +30,11 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author   xueqiudong .
- * @version  v1.0 .
- * @date       2016-6-13 .
- * @file          ImageUtils.java .
- * @brief        .
+ * @author xueqiudong .
+ * @version v1.0 .
+ * @date 2016-6-13 .
+ * @file ImageUtils.java .
+ * @brief .
  */
 public class ImageUtils {
     private static final String IMAGE_CACHE = "image_cache";
@@ -46,6 +46,15 @@ public class ImageUtils {
             .showImageOnLoading(R.drawable.common_case_icon)
             .showImageOnFail(R.drawable.common_case_icon)
             .showImageForEmptyUri(R.drawable.common_case_icon)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
+
+    private static final DisplayImageOptions optionsIcon = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.home_page_icon)
+            .showImageOnFail(R.drawable.home_page_icon)
+            .showImageForEmptyUri(R.drawable.home_page_icon)
             .cacheInMemory(true)
             .cacheOnDisk(true)
             .bitmapConfig(Bitmap.Config.RGB_565)
@@ -129,8 +138,24 @@ public class ImageUtils {
                 + File.separator + "demo/" + IMAGE_CACHE;
     }
 
+    /**
+     * 默认图片是小房子的
+     *
+     * @param target
+     * @param imageUrl
+     */
     public static void loadImage(ImageView target, String imageUrl) {
         ImageLoader.getInstance().displayImage(imageUrl, target, options);
+    }
+
+    /**
+     * 首页案例默认图片
+     *
+     * @param target
+     * @param imageUrl
+     */
+    public static void loadImageIcon(ImageView target, String imageUrl) {
+        ImageLoader.getInstance().displayImage(imageUrl, target, optionsIcon);
     }
 
     /**
@@ -179,15 +204,14 @@ public class ImageUtils {
      */
     public static void displayIconImage(String imageUrl, ImageView imageView) {
         if (imageView != null)
-          ImageLoader.getInstance().displayImage(imageUrl, imageView, iconOptions);
+            ImageLoader.getInstance().displayImage(imageUrl, imageView, iconOptions);
     }
 
     public static void loadImageRound(ImageView target, String imageUrl) {
         ImageLoader.getInstance().displayImage(imageUrl, target, RoundOptions);
     }
 
-    public static void loadUserAvatar(ImageView target, String imageUrl)
-    {
+    public static void loadUserAvatar(ImageView target, String imageUrl) {
         ImageLoader.getInstance().displayImage(imageUrl, target, userAvatarOptions);
     }
 

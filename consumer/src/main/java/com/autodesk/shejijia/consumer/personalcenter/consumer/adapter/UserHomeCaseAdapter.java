@@ -82,7 +82,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                 if (TextUtils.isEmpty(imageOneUrl)) {
                     imageOneUrl = casesEntity.getImages().get(0).getFile_url();
                 }
-                ImageUtils.loadImage(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
+                ImageUtils.loadImageIcon(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
             }
             MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
             if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
