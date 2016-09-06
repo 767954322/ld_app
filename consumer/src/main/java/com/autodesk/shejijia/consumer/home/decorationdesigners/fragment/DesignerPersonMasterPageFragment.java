@@ -73,7 +73,7 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
 
         mCasesEntityArrayList.addAll(mSeekDesignerDetailBean.getCases());
         if (mCasesEntityArrayList.size() < 1) {
-            getEmptyAlertView(UIUtils.getString(R.string.case_is_empty)).show();
+           // getEmptyAlertView(UIUtils.getString(R.string.case_is_empty)).show();
         }
 //        hideFooterView(mCasesEntityArrayList);
         if (mSeekDesignerDetailAdapter == null) {

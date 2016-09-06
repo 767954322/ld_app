@@ -155,8 +155,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         case_2d_btn_replace_top.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
 
 
-        if (mDesignerAppraiseFragment == null) {
-            mDesignerAppraiseFragment = new DesignerAppraiseFragment();
+        if (getAppraiseCount) {
             getAppraiseData(mDesignerId, LIMIT, OFFSET);//获取评价数据
 
         }
@@ -364,6 +363,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 chooseViewPointer.setConsumerAppraise(width);
                 choose_point_replace.setConsumerAppraise(width);
                 controlNumber = 3;
+                getAppraiseCount = false;
 
                 if (mDesignerAppraiseFragment == null) {
                     mDesignerAppraiseFragment = new DesignerAppraiseFragment();
@@ -416,13 +416,13 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 case_2d_btn_replace_top.setClickable(true);
                 chooseViewPointer.setConsumerAppraise(width);
                 choose_point_replace.setConsumerAppraise(width);
+                getAppraiseCount = false;
                 controlNumber = 3;
                 if (mDesignerAppraiseFragment == null) {
                     mDesignerAppraiseFragment = new DesignerAppraiseFragment();
                     getAppraiseData(mDesignerId, LIMIT, OFFSET);//获取评价数据
                 }
                 switchFragment(shareFragment, mDesignerAppraiseFragment);
-
                 setTextColor(controlNumber);
                 break;
 
@@ -947,10 +947,18 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     default_ll_bg.setVisibility(View.GONE);
                     if (isRefreshOrLoadAppraise) {
 
-                        mDesignerAppraiseFragment.updateListView(estimates, seekDesignerDetailHomeBean);
                         consumer_appraise.setText("评价" + "(" + estimates.size() + ")");
                         consumer_appraise_replace_top.setText("评价" + "(" + estimates.size() + ")");
-                        mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
+                        if (getAppraiseCount){
+
+
+                        }else {
+
+                            mDesignerAppraiseFragment.updateListView(estimates, seekDesignerDetailHomeBean);
+                            mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
+                            getAppraiseCount = false;
+
+                        }
                     } else {
                         mDesignerAppraiseFragment.loadMoreData(estimates);
                         mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
@@ -1060,6 +1068,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private boolean isTitleTwoShow = true;
     private boolean isScrollToTop = false;
     private boolean isFrist = true;//只走一次
+    private boolean getAppraiseCount = true;//获取评价数量
     private int scrollLastMoveDistance = 0;//ScrollView的最后一次纵坐标记录
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;

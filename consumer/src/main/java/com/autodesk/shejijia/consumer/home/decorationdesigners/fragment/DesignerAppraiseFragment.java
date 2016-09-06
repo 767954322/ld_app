@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAppraiseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.AppraiseDesignBeen;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
+import com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewListView;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
     @Override
     protected void initView() {
 
-        mListView = (ListView) rootView.findViewById(R.id.lv_seek_appraise_detail_listview);
+        mListView = (ScrollViewListView) rootView.findViewById(R.id.lv_seek_appraise_detail_listview);
         rating_star = (RatingBar) rootView.findViewById(R.id.rating_star);
         appraise_ll = (LinearLayout) rootView.findViewById(R.id.appraise_ll);
         mListView.getLastVisiblePosition();
@@ -49,10 +50,15 @@ public class DesignerAppraiseFragment extends BaseFragment {
     }
 //展示数据
     public void updateListView(List<AppraiseDesignBeen.EstimatesBean> estimates,DesignerDetailHomeBean seekDesignerDetailHomeBean) {
-        mSeekDesignerAppraiseAdapter = new SeekDesignerAppraiseAdapter(getActivity(), estimates);
-        estimatesList.clear();
-        estimatesList.addAll(estimates);
-        mListView.setAdapter(mSeekDesignerAppraiseAdapter);
+        if (mSeekDesignerAppraiseAdapter == null ){
+
+            mSeekDesignerAppraiseAdapter = new SeekDesignerAppraiseAdapter(getActivity(), estimates);
+            estimatesList.clear();
+            estimatesList.addAll(estimates);
+            mListView.setAdapter(mSeekDesignerAppraiseAdapter);
+
+
+        }
 
         if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
             //综合评分
