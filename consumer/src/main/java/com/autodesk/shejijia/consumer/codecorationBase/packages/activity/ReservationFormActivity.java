@@ -145,6 +145,8 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     public void onItemClick(Object obj, int position) {
         if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
             finish();
+        } else if (obj == alertViewExt) {
+            ReservationFormActivity.this.finish();
         }
     }
 
@@ -234,15 +236,15 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                showAlertDialog(UIUtils.getString(R.string.fail_grandmaster));
                 CustomProgress.cancelDialog();
-                new AlertView(UIUtils.getString(R.string.tip), "预约失败", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
-                new AlertView(UIUtils.getString(R.string.tip), "预约成功", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
 
+                showAlertDialog(UIUtils.getString(R.string.fail_grandmaster));
+                CustomProgress.cancelDialog();
             }
         });
     }
@@ -365,6 +367,16 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         });
     }
 
+    private void showAlertDialog(String toast) {
+        //UIUtils.getString(R.string.title_average_rule)
+        if (alertViewExt == null) {
+            alertViewExt = new AlertView(toast,
+                    null, null, null, new String[]{UIUtils.getString(R.string.delivery_sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null);
+        }
+
+    }
+
+
     /// 控件.
     private TextView et_issue_demand_name;
     private TextView tv_issue_demand_budget;
@@ -373,6 +385,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private EditText et_issue_demand_mobile;
     private EditText et_issue_demand_area;
     private Button btn_send_demand;
+    private AlertView alertViewExt;
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;
     private OptionsPickerView pvDecorationBudgetOptions;

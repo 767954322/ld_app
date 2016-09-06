@@ -104,7 +104,7 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
                     intent_yuyue.putExtra("item_name", "");
                     activity.startActivity(intent_yuyue);
                 } else {
-                    Toast.makeText(activity, "先登录", Toast.LENGTH_LONG).show();
+                    AdskApplication.getInstance().doLogin(activity);
                 }
 
                 break;
@@ -152,6 +152,12 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
                 break;
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isLoginUserJust = isLoginUser();
     }
 
     //判断该用户是否登陆了
