@@ -11,10 +11,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.adapter.BaseCommonAdapter;
+import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,7 @@ import java.util.List;
  */
 public class PackageDetailActivity extends BaseActivity implements View.OnClickListener {
 
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_package_detail;
@@ -31,10 +37,10 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initView() {
-        lv_package_detail = (ListView) findViewById(R.id.lv_package_detail);
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
         bt_packages_yuyue = (ImageButton) findViewById(R.id.bt_packages_yuyue);
         nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
+        iv_package_detail = (ImageView) findViewById(R.id.iv_package_detail);
     }
 
     @Override
@@ -42,26 +48,10 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
 
         Intent intent = getIntent();
         item_num = intent.getIntExtra("item_num", -1);
-        item_name = intent.getStringExtra("item_name");
         nav_title_textView.setText("套餐详情");
-        mData = new ArrayList<>();
-        mAdapter = new BaseCommonAdapter<Bitmap>(this, mData) {
-            @Override
-            public void convert(ViewHolder holder, Bitmap item, int position, View convertView, ViewGroup parent) {
-                ImageView imageview = holder.getView(R.id.item_package_detail_activity_iv);
-                imageview.setImageBitmap(item);
-            }
+        isLoginUserJust = isLoginUser();
 
-            @Override
-            public ViewHolder getViewHolder(int position, View convertView, ViewGroup parent) {
-                return ViewHolder.get(PackageDetailActivity.this, convertView, parent, R.layout.item_package_detail_activity, position);
-            }
-        };
-        mData.clear();
-        mData.addAll(setBitmap(this, pic_detail[item_num], lv_package_detail, 10));
-        lv_package_detail.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-
+        ImageLoader.getInstance().displayImage(ImageUrlUtils.getPackagesDetailImage()[item_num], iv_package_detail);
     }
 
     @Override
@@ -80,10 +70,15 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.bt_packages_yuyue:
 
-                Intent intent_yuyue = new Intent(PackageDetailActivity.this, ReservationFormActivity.class);
-                intent_yuyue.putExtra("item_num", item_num);
-                intent_yuyue.putExtra("item_name", item_name);
-                startActivity(intent_yuyue);
+
+                if (isLoginUserJust) {
+                    Intent intent_yuyue = new Intent(PackageDetailActivity.this, ReservationFormActivity.class);
+                    intent_yuyue.putExtra("item_num", item_num);
+                    intent_yuyue.putExtra("item_name", item_name);
+                    startActivity(intent_yuyue);
+                } else {
+                    AdskApplication.getInstance().doLogin(PackageDetailActivity.this);
+                }
 
                 break;
             default:
@@ -91,40 +86,36 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    //设置显示的图片
-    public List<Bitmap> setBitmap(Context context, int resource, View view, int number) {
-        int viewWidth = view.getWidth();
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inJustDecodeBounds = true;   //只去读图片的附加信息,不去解析真实的位图
-        Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), resource, opts);
-        int picWidth = opts.outWidth;// 得到图片宽度
-        int picHeight = opts.outHeight;// 得到图片高度
-        opts.outHeight = picHeight * viewWidth / picWidth;
-        opts.outWidth = viewWidth;
-        opts.inJustDecodeBounds = false;//真正的去解析位图
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resource, opts);
-        //新图片的宽高
-        int bitmapWidth = bitmap.getWidth();
-        int bitmapHeight = bitmap.getHeight();
-        int itemHeight = bitmapHeight / number;
-        List<Bitmap> list = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
-            Bitmap bit = Bitmap.createBitmap(bitmap, 0, itemHeight * i, bitmapWidth, itemHeight);
-            list.add(bit);
-        }
-        if (!bitmap.isRecycled()) {
-            bitmap.recycle();
-        }
-        return list;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLoginUserJust = isLoginUser();
     }
 
-    private Integer[] pic_detail = {R.drawable.xijing, R.drawable.dongjie, R.drawable.xingfujia, R.drawable.beishu,
-            R.drawable.yishujia, R.drawable.nanyun, R.drawable.pinzhijia};//套餐详情集合
+    //判断该用户是否登陆了
+    public boolean isLoginUser() {
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
+        if (memberEntity == null) {
+
+            return false;//未登录
+        } else {
+
+            return true;//已登录
+        }
+    }
+
+//    private Integer[] pic_detail = {R.drawable.xijing, R.drawable.dongjie, R.drawable.xingfujia, R.drawable.beishu,
+//            R.drawable.yishujia, R.drawable.nanyun, R.drawable.pinzhijia};//套餐详情集合
 
     private int item_num;
     private String item_name;
     private List<Bitmap> mData;
     private ListView lv_package_detail;
+    private boolean isLoginUserJust;
+    private ImageView iv_package_detail;
+
     private TextView nav_title_textView;
     private ImageButton bt_packages_yuyue;
     private ImageButton nav_left_imageButton;

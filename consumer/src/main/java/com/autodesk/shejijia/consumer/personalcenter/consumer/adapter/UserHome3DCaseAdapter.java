@@ -76,8 +76,8 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
 //            if (null != casesEntity.getDesigner_info() && !TextUtils.isEmpty(casesEntity.getDesigner_info().getAvatar())) {
 //                ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
 //            }
-           // ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
-            ((ViewHolder) holder).tvThumbUp.setText("点赞数 "+ casesEntity.getFavorite_count());
+            // ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
+            ((ViewHolder) holder).tvThumbUp.setText(casesEntity.getFavorite_count());
             List<Case3DLibraryListBean.CasesBean.DesignFileBean> images = casesEntity.getDesign_file();
             if (images != null && images.size() > 0) {
                 for (int i = 0; i < casesEntity.getDesign_file().size(); i++) {
@@ -89,7 +89,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                 if (TextUtils.isEmpty(imageOneUrl)) {
                     imageOneUrl = casesEntity.getDesign_file().get(position).getLink();
                 }
-                ImageUtils.loadImage(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
+                ImageUtils.loadImageIcon(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
             }
 
 
@@ -136,12 +136,12 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
         }
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
+            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.INVISIBLE);
+            // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
 
         } else {
             ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
+            // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
         }
 
         ((ViewHolder) holder).ivHeadIcon.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));

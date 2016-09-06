@@ -3,12 +3,10 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
@@ -20,7 +18,6 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -57,7 +54,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
+        contract_no = bundle.getString(Constant.SeekDesignerDetailKey.CONTRACT_NO);
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         mThreead_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);//thread_id
         nodeState = bundle.getInt(Constant.BundleKey.TEMPDATE_ID);
@@ -77,32 +74,32 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initListener();
     }
 
-    public int WorkFlowTemplateStep(){
+    public int WorkFlowTemplateStep() {
 
 
-         return  Integer.valueOf(wk_cur_template_id);
-
-    }
-
-    public int WorkFlowSubNodeStep(){
-        return  Integer.valueOf(wk_cur_sub_node_id);
+        return Integer.valueOf(wk_cur_template_id);
 
     }
 
-    public String GetRoleType(){
+    public int WorkFlowSubNodeStep() {
+        return Integer.valueOf(wk_cur_sub_node_id);
+
+    }
+
+    public String GetRoleType() {
         if (memberEntity != null) {
             return memberEntity.getMember_type();
         }
-        return  "";
-    }
-    public Boolean isRoleDesigner(){
-        return (Constant.UerInfoKey.DESIGNER_TYPE.equals(GetRoleType())) ;
-    }
-    public Boolean isRoleCustomer(){
-        return (Constant.UerInfoKey.CONSUMER_TYPE.equals(GetRoleType())) ;
+        return "";
     }
 
+    public Boolean isRoleDesigner() {
+        return (Constant.UerInfoKey.DESIGNER_TYPE.equals(GetRoleType()));
+    }
 
+    public Boolean isRoleCustomer() {
+        return (Constant.UerInfoKey.CONSUMER_TYPE.equals(GetRoleType()));
+    }
 
 
     private android.os.Handler handler = new android.os.Handler() {
@@ -155,12 +152,13 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
      * @param designer_id 　设计师的id
      */
     public void getOrderDetailsInfo(String needs_id, String designer_id) {
+//        CustomProgress.show(this,"",false,null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(final JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 mCurrentWorkFlowDetail = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
-
+//                CustomProgress.cancelDialog();
                 if (null != mCurrentWorkFlowDetail) {
                     Message msg = Message.obtain();
                     msg.obj = mCurrentWorkFlowDetail;
@@ -170,7 +168,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                CustomProgress.cancelDialog();
+//                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
@@ -203,14 +201,15 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected void onWorkFlowData() {
     }
 
-    public interface commonJsonResponseCallback  {
+    public interface commonJsonResponseCallback {
         public void onJsonResponse(String jsonResponse);
+
         public void onError(VolleyError volleyError);
     }
 
 
     // Method when child class need some extra data from app-server
-    public void restgetDesignerInfoData(String designer_id, String hs_uid,final commonJsonResponseCallback callBack) {
+    public void restgetDesignerInfoData(String designer_id, String hs_uid, final commonJsonResponseCallback callBack) {
         MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -239,13 +238,12 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected String contacts_name;
 
     protected String needs_id;
-    protected  String measureFee;
+    protected String measureFee;
     protected MemberEntity memberEntity;
     protected WkFlowDetailsBean mCurrentWorkFlowDetail;
     protected WkFlowDetailsBean.RequirementEntity requirement;
     protected MPBidderBean mBiddersEntity;
     protected List<MPBidderBean> mBidders;
     protected MPDeliveryBean mDeliveryBean;
-
-
+    private String contract_no; // 设计合同编号
 }

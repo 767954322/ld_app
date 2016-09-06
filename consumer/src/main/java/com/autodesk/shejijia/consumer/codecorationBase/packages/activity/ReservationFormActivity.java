@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
@@ -85,13 +86,12 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         setTitleForNavbar("预约表单");
         Intent intent = getIntent();
         item_num = intent.getIntExtra("item_num", -1);
-        item_name = intent.getStringExtra("item_name");
+        item_name = ImageUrlUtils.getPackagesListNames()[item_num];
         acs_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
 
         getConsumerInfoData(acs_member_id);
         setDecorationBudget();
         initAlertView();
-
     }
 
     @Override
@@ -145,6 +145,8 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     public void onItemClick(Object obj, int position) {
         if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
             finish();
+        } else if (obj == alertViewExt) {
+            ReservationFormActivity.this.finish();
         }
     }
 
@@ -216,12 +218,13 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             jsonObject.put(JsonConstants.JSON_PACKAGES_ADDRESS, detail_address);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PROJECT_AREA, area_project);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_EXPENSE_BUDGET, mDecorationBudget);///mCurrentProvince
-            jsonObject.put(JsonConstants.JSON_PACKAGES_PKG, item_num);///mCurrentProvince
+            jsonObject.put(JsonConstants.JSON_PACKAGES_PKG, item_num + 1);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PKG_NAME, item_name);///mCurrentProvince
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        CustomProgress.show(ReservationFormActivity.this, "提交中...", false, null);
         sendPackageForm(jsonObject, acs_member_id);
 
     }
@@ -233,15 +236,15 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                new AlertView(UIUtils.getString(R.string.tip), "预约失败", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
-
+                showAlertDialog(UIUtils.getString(R.string.fail_grandmaster));
+                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                new AlertView(UIUtils.getString(R.string.tip), "预约成功", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
-
+                showAlertDialog(UIUtils.getString(R.string.fail_grandmaster));
+                CustomProgress.cancelDialog();
             }
         });
     }
@@ -364,6 +367,16 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         });
     }
 
+    private void showAlertDialog(String toast) {
+        //UIUtils.getString(R.string.title_average_rule)
+        if (alertViewExt == null) {
+            alertViewExt = new AlertView(toast,
+                    null, null, null, new String[]{UIUtils.getString(R.string.delivery_sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null);
+        }
+
+    }
+
+
     /// 控件.
     private TextView et_issue_demand_name;
     private TextView tv_issue_demand_budget;
@@ -372,6 +385,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private EditText et_issue_demand_mobile;
     private EditText et_issue_demand_area;
     private Button btn_send_demand;
+    private AlertView alertViewExt;
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;
     private OptionsPickerView pvDecorationBudgetOptions;

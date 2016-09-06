@@ -2,11 +2,13 @@ package com.autodesk.shejijia.shared.components.common.tools.login;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,12 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.socks.library.KLog;
 
 import java.io.UnsupportedEncodingException;
@@ -64,22 +67,15 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.tv_finish_webview)
-        {
+        if (i == R.id.tv_finish_webview) {
             CommonUtils.clearCookie(this);
             finish();
-        }
-        else if (i == R.id.ll_webview_backup)
-        {
-            if (mWebView != null && mWebView.canGoBack())
-            {
-                if (!TextUtils.isEmpty(pagerFinishedUrl) && pagerFinishedUrl.contains(PAGER_FINISHED_TAG))
-                {
+        } else if (i == R.id.ll_webview_backup) {
+            if (mWebView != null && mWebView.canGoBack()) {
+                if (!TextUtils.isEmpty(pagerFinishedUrl) && pagerFinishedUrl.contains(PAGER_FINISHED_TAG)) {
                     CommonUtils.clearCookie(this);
                     finish();
-                }
-                else
-                {
+                } else {
                     mWebView.goBack();// 返回前一个页面
                     mTvFinishWebView.setVisibility(View.VISIBLE);
                 }
@@ -137,7 +133,6 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                 Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
                 intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
                 sendBroadcast(intent);
-
                 finish();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -145,6 +140,11 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CustomProgress.cancelDialog();
+    }
 
     /**
      * 加载网页过程,用于处理加具体的网页跳转
@@ -155,6 +155,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
 //            KLog.d(TAG, url);
             super.onPageStarted(view, url, favicon);
+            if (CustomProgress.dialog != null && !CustomProgress.dialog.isShowing()) {
+                CustomProgress.show(RegisterOrLoginActivity.this, "", false, null);
+            }
         }
 
         @Override
@@ -169,6 +172,14 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             mWebSettings.setBlockNetworkImage(false);
             pagerFinishedUrl = url;
             KLog.d(TAG, url);
+            CustomProgress.cancelDialog();
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            handler.proceed();
+            //     handler.cancel();
+            //     handler.handleMessage(null);
         }
 
         @Override

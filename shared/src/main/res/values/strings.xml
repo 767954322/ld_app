@@ -361,6 +361,7 @@
     <string name="demand_please_style">请选择风格</string>
     <string name="demand_please_style_select">请选择风格(选填)</string>
     <string name="demand_please_address">请选择地址：省 市 区</string>
+    <string name="demand_please_project_address">请正确输入项目地址</string>
     <string name="demand_please_specific_address">请输入小区名称</string>
     <string name="termination_demand">终止需求</string>
     <string name="amend_demand">修改需求</string>
@@ -610,6 +611,7 @@
     <string name="bided">我已应标 </string>
     <string name="designer_bid_detail_realy_no_finish">你还尚未完成实名认证!</string>
     <string name="msg_no_certification">未实名认证，不能应标，请先认证</string>
+    <string name="msg_no_certification_web">您还未通过实名认证请到网页端完成认证</string>
     <string name="certification_immediately">立即认证</string>
     <string name="is_biding">正在应标...</string>
     <string name="should_number_full">应标人数已满，目前无法应标</string>
@@ -951,7 +953,7 @@
     <string name="work_room_name_text">姓名</string>
     <string name="work_room_name">请填写您的姓名</string>
     <string name="work_room_phone_text">电话</string>
-    <string name="work_room_phone_number">请填写您的电话</string>
+    <string name="work_room_phone_number">请填写您的手机号码</string>
     <!--工作室列表-->
     <string name="work_room_commit_successful">提交成功</string>
     <string name="work_room_commit_fail">提交失败</string>

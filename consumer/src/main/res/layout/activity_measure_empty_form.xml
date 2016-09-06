@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_eef1f4"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_eef1f4"
+                android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
+        layout="@layout/view_navigation_header"/>
 
     <TextView
         android:id="@+id/text_notuse"
@@ -15,14 +15,14 @@
         android:layout_height="@dimen/size_0"
         android:layout_below="@id/common_navbar"
         android:focusable="true"
-        android:focusableInTouchMode="true" />
+        android:focusableInTouchMode="true"/>
 
     <TextView
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
         android:layout_below="@id/text_notuse"
-        android:background="@color/bg_d5" />
+        android:background="@color/bg_d5"/>
 
 
     <ScrollView
@@ -49,9 +49,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/name_space" />
+                    android:text="@string/name_space"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_name"
@@ -59,13 +59,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:textSize="@dimen/size_15"
                     android:ellipsize="end"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_enter_your_name"
                     android:singleLine="true"
-                 />
+                    android:textSize="@dimen/size_15"
+                    />
 
             </LinearLayout>
 
@@ -78,7 +77,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
             <LinearLayout
@@ -93,9 +92,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/phone" />
+                    android:text="@string/phone"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_phone"
@@ -105,8 +104,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_enter_your_phone"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
             </LinearLayout>
 
@@ -119,25 +117,25 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
-<!--住宅空间-->
+            <!--住宅空间-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
+                android:layout_marginTop="@dimen/size_15"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10"
-                android:layout_marginTop="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_project_types" />
+                    android:text="@string/demand_project_types"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_house_type"
@@ -147,8 +145,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/bidding_room_space"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
@@ -160,10 +157,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
-<!--房屋面积-->
+            <!--房屋面积-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
@@ -176,9 +173,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/are" />
+                    android:text="@string/are"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_area"
@@ -188,26 +185,8 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_enter_area"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginRight="@dimen/size_10"-->
-                <!--android:text="m²" />-->
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_1"
-                android:background="@color/bg_ff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
             </LinearLayout>
 
 
@@ -220,10 +199,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
-<!--设计预算-->
+            <!--设计预算-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
@@ -236,9 +215,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_planning_budget" />
+                    android:text="@string/demand_planning_budget"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_project_budget"
@@ -248,8 +227,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_select_design_budget"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
@@ -261,10 +239,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
-<!--装修预算-->
+            <!--装修预算-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -275,7 +253,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
             <LinearLayout
@@ -287,10 +265,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
-<!--装修预算-->
+            <!--装修预算-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
@@ -303,9 +281,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_project_budget" />
+                    android:text="@string/demand_project_budget"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_fitment_budget"
@@ -315,8 +293,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_select_decorate_budget"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
@@ -328,9 +305,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
-<!--风格-->
+            <!--风格-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
@@ -343,9 +320,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_style" />
+                    android:text="@string/demand_style"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_house_style"
@@ -355,7 +332,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
@@ -367,7 +344,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
             <!--户型-->
@@ -380,7 +357,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
             <!--户型-->
@@ -396,9 +373,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_house_model" />
+                    android:text="@string/demand_house_model"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_house_type_model"
@@ -408,8 +385,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_select_family"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
 
@@ -422,25 +398,25 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
+                android:layout_marginTop="@dimen/size_15"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/size_15"
                 android:paddingLeft="@dimen/size_10"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_measure_house_address" />
+                    android:text="@string/demand_measure_house_address"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_address"
@@ -451,9 +427,8 @@
                     android:ellipsize="end"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_select_address"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
@@ -465,7 +440,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
             <LinearLayout
@@ -480,9 +455,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_village_name" />
+                    android:text="@string/demand_village_name"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_estate"
@@ -493,9 +468,8 @@
                     android:ellipsize="end"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_select_community_name"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
@@ -507,7 +481,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
             <LinearLayout
@@ -522,9 +496,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_measure_house_time" />
+                    android:text="@string/demand_measure_house_time"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_time"
@@ -534,8 +508,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_select_quantity_room_time"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
 
@@ -548,7 +521,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_ef" />
+                    android:background="@color/bg_ef"/>
             </LinearLayout>
 
 
@@ -565,9 +538,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:text="@string/demand_style" />
+                    android:text="@string/demand_style"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tvc_measure_form_style"
@@ -577,44 +550,45 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="@string/please_select_style"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
 
-<!--消费者——量房费用-->
+            <!--消费者——量房费用-->
             <RelativeLayout
                 android:id="@+id/rl_house_charge_show"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_35"
                 android:layout_marginLeft="@dimen/size_10"
-                android:visibility="gone"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_30"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_15"
                         android:layout_marginLeft="@dimen/size_10"
-                        android:text="@string/demand_measure_house_charge" />
+                        android:text="@string/demand_measure_house_charge"
+                        android:textSize="@dimen/font_15"/>
 
                     <TextView
                         android:id="@+id/tv_measure_form_liangfangfei"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/font_15"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_15"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_15"
-                        android:text="@string/flow_monad_rmb" />
+                        android:text="@string/flow_monad_rmb"
+                        android:textSize="@dimen/font_15"/>
 
                 </LinearLayout>
 
@@ -624,58 +598,20 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/font_15"
-                    android:drawableLeft="@drawable/icon_instruction"
                     android:layout_marginRight="@dimen/size_10"
+                    android:drawableLeft="@drawable/icon_instruction"
+                    android:text="@string/illustrate"
                     android:textColor="@color/actionsheet_blue"
-                    android:visibility="gone"
-                    android:text="@string/illustrate" />
+                    android:textSize="@dimen/font_15"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <!--设计师——量房费-->
-                <LinearLayout
-                    android:id="@+id/designer_house_charge_show"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_45"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:background="@color/bg_ff"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_15"
-                        android:layout_marginLeft="@dimen/size_20"
-                        android:text="@string/demand_measure_house_charge" />
-
-                    <EditText
-                        android:id="@+id/tv_measure_form_designer_liangfangfeit"
-                        android:layout_width="@dimen/size_100"
-                        android:layout_height="match_parent"
-                        android:background="@color/no_color"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/actionsheet_gray"
-                        android:text="200"
-                        android:textSize="@dimen/font_15" />
-                    <TextView
-                        android:id="@+id/rmb_show"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/size_15"
-                        android:text="元"
-                        />
-                </LinearLayout>
-
-            <!--消费者——量房费-已经发送过之后-->
             <LinearLayout
-                android:id="@+id/consumer_house_charge_show"
+                android:id="@+id/designer_house_charge_show"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_45"
                 android:layout_marginTop="@dimen/size_10"
-                android:layout_marginBottom="@dimen/size_40"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -685,9 +621,48 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_15"
                     android:layout_marginLeft="@dimen/size_20"
-                    android:text="@string/demand_measure_house_charge" />
+                    android:text="@string/demand_measure_house_charge"
+                    android:textSize="@dimen/font_15"/>
+
+                <EditText
+                    android:id="@+id/tv_measure_form_designer_liangfangfeit"
+                    android:layout_width="@dimen/size_100"
+                    android:layout_height="match_parent"
+                    android:background="@color/no_color"
+                    android:gravity="center_vertical"
+                    android:text="200"
+                    android:textColor="@color/actionsheet_gray"
+                    android:textSize="@dimen/font_15"/>
+
+                <TextView
+                    android:id="@+id/rmb_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textSize="@dimen/size_15"
+                    />
+            </LinearLayout>
+
+            <!--消费者——量房费-已经发送过之后-->
+            <LinearLayout
+                android:id="@+id/consumer_house_charge_show"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_45"
+                android:layout_marginBottom="@dimen/size_40"
+                android:layout_marginTop="@dimen/size_10"
+                android:background="@color/bg_ff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:text="@string/demand_measure_house_charge"
+                    android:textSize="@dimen/font_15"/>
 
 
                 <TextView
@@ -703,9 +678,10 @@
                 android:id="@+id/rlWarmTips"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_9"
                 android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginTop="@dimen/size_9"
                 >
+
                 <TextView
                     android:id="@+id/tvWarmTips"
                     android:layout_width="wrap_content"
@@ -713,12 +689,13 @@
                     android:layout_marginLeft="@dimen/size_10"
                     android:textSize="@dimen/font_12"
                     android:textStyle="bold"/>
+
                 <TextView
                     android:id="@+id/tvWarmTipsContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_12"
-                    android:layout_toRightOf="@+id/tvWarmTips"/>
+                    android:layout_toRightOf="@+id/tvWarmTips"
+                    android:textSize="@dimen/font_12"/>
 
             </RelativeLayout>
             <!--双按钮，同意或拒绝-->
@@ -735,30 +712,32 @@
                     android:id="@+id/btn_measure_form_refuse"
                     android:layout_width="@dimen/size_0"
                     android:layout_height="@dimen/size_44"
-                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/size_17"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_common_btn_condition"
                     android:text="@string/refuse"
-                    android:textColor="@color/bg_0084ff" />
+                    android:textColor="@color/bg_0084ff"/>
+
                 <Button
                     android:id="@+id/btn_measure_form_accept"
                     android:layout_width="@dimen/size_0"
                     android:layout_height="@dimen/size_44"
-                    android:layout_weight="1"
                     android:layout_marginLeft="@dimen/size_17"
                     android:layout_marginRight="@dimen/size_16"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_common_btn_sure_condition"
                     android:text="@string/agreed_home"
-                    android:textColor="@color/bg_ff" />
+                    android:textColor="@color/bg_ff"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_measure_form_consumer_send"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginTop="@dimen/size_41"
                 android:background="@color/bg_eef1f4"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/size_41"
                 android:padding="@dimen/size_20"
                 android:visibility="gone">
 
@@ -768,7 +747,7 @@
                     android:layout_height="@dimen/size_40"
                     android:background="@drawable/bg_common_btn_blue"
                     android:text="@string/flow_send"
-                    android:textColor="@color/bg_ff" />
+                    android:textColor="@color/bg_ff"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -777,18 +756,20 @@
     <RelativeLayout
         android:id="@+id/rlMeasureWarmTips"
         android:layout_width="match_parent"
-        android:paddingLeft="@dimen/size_10"
+        android:layout_height="@dimen/size_40"
         android:layout_below="@id/line"
         android:background="@color/font_gray"
-        android:layout_height="@dimen/size_40"
+        android:paddingLeft="@dimen/size_10"
         android:paddingRight="@dimen/size_10"
         android:visibility="gone"
         >
+
         <TextView
             android:id="@+id/tvMeasureWarmTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_10"/>
+
         <TextView
             android:id="@+id/tvMeasureWarmTipsContent"
             android:layout_width="wrap_content"

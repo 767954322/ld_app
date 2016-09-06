@@ -85,7 +85,7 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:ems="10"
-                android:hint="@string/reservation_please_enter_your_phone"
+                android:hint="@string/work_room_phone_number"
                 android:maxLength="11"
                 android:phoneNumber="true"
                 android:textColor="@color/black"

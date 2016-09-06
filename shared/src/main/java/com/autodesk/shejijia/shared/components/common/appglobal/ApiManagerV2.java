@@ -13,7 +13,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
  */
 public class ApiManagerV2 {
 
-    private static final String PROPERTY_PATH = "apiurl.properties";
+    public static final String PROPERTY_PATH = "apiurl.properties";
     private static final String API_DOMAIN = "apiDomain";
     private static final String LOGIN_URL = "loginPath";
     private static final String MEMBER_APP = "memberApp";

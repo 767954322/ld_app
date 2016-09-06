@@ -53,6 +53,11 @@ public class ApiStatusUtil {
         for (String key : headers.keySet()) {
             Log.e("RESPONSE HEADERS", key + "=" + headers.get(key));
         }
+        if (headers.get("X-Android-Sent-Millis") != null && headers.get("X-Android-Received-Millis") != null){
+            long received = Long.valueOf(headers.get("X-Android-Received-Millis"));
+            long sent = Long.valueOf(headers.get("X-Android-Sent-Millis"));
+            Log.i("RESPONSE_TIME",(received - sent)+"MS");
+        }
         Log.e("RESPONSE CODE", "ERROR CODE = " + response.statusCode);
         byte[] htmlBodyBytes = response.data;  //回应的报文的包体内容
         Log.e("Response body--->", new String(htmlBodyBytes));

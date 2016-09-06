@@ -1,13 +1,18 @@
 package com.autodesk.shejijia.consumer.codecorationBase.studio.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +53,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         return R.layout.activity_work_room;
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void initView() {
 
@@ -56,7 +62,14 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         work_room_detail_content = (LinearLayout) findViewById(R.id.work_room_detail_content);
         work_room_detail_content.addView(workRoomDetailHeader);
         listView = (ListView) findViewById(R.id.listview);
-//        work_room_design_imageView = (ImageView) workRoomDetailHeader.findViewById(R.id.work_room_design_imageView);
+        common_navbar = (RelativeLayout) findViewById(R.id.common_navbar);
+        view_navigation_header_view = findViewById(R.id.view_navigation_header_view);
+        nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
+        nav_left_imageButton.setImageResource(R.drawable.work_room_back);
+        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
+        nav_title_textView.setTextColor(Color.WHITE);
+        common_navbar.getBackground().setAlpha(0);//让标题栏透明
+        view_navigation_header_view.setVisibility(View.GONE);
         header_work_room_name = (TextView) workRoomDetailHeader.findViewById(R.id.header_work_room_name);
         header_work_room_design_year = (TextView) workRoomDetailHeader.findViewById(R.id.header_work_room_design_year);
         work_room_introduce = (TextView) workRoomDetailHeader.findViewById(R.id.work_room_introduce);
@@ -84,7 +97,6 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
         getWorkRoomDetailData(acs_member_id, 0, 10, hs_uid);
 
         isLoginUserJust = isLoginUser();
@@ -92,25 +104,25 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
     public void upDataForView(WorkRoomDetailsBeen workRoomDetailsBeen) {
 
-            work_room_name_title.setText(workRoomDetailsBeen.getNick_name());
-            header_work_room_name.setText(workRoomDetailsBeen.getNick_name());
-            if (workRoomDetailsBeen.getDesigner() != null && workRoomDetailsBeen.getDesigner().getDesigner_profile_cover() != null) {
+        setTitleForNavbar(workRoomDetailsBeen.getNick_name());
+        header_work_room_name.setText(workRoomDetailsBeen.getNick_name());
+        if (workRoomDetailsBeen.getDesigner() != null && workRoomDetailsBeen.getDesigner().getDesigner_profile_cover() != null) {
 
-                ImageUtils.loadImage(work_room_detail_six_imageView, workRoomDetailsBeen.getDesigner().getDesigner_profile_cover().getPublic_url().replace(" ", ""));
-            }
-            work_room_introduce.setText("工作室介绍：" + workRoomDetailsBeen.getDesigner().getIntroduction());
+            ImageUtils.loadImage(work_room_detail_six_imageView, workRoomDetailsBeen.getDesigner().getDesigner_detail_cover().getPublic_url().replace(" ", ""));
+        }
+        work_room_introduce.setText("工作室介绍：" + workRoomDetailsBeen.getDesigner().getIntroduction());
 
-            if (workRoomDetailsBeen.getDesigner() != null) {
-                //目前没有年限，但是PD还没有确定以后有没有，所以暂时GONE掉，需要时直接解开
-                header_work_room_design_year.setText("设计年限 ：" + workRoomDetailsBeen.getDesigner().getExperience() + "年");
-                header_work_room_design_year.setVisibility(View.GONE);
-            }
-            if (workRoomDetailsBeen.getCases_list() != null) {
+        if (workRoomDetailsBeen.getDesigner() != null) {
+            //目前没有年限，但是PD还没有确定以后有没有，所以暂时GONE掉，需要时直接解开
+            header_work_room_design_year.setText("设计年限 ：" + workRoomDetailsBeen.getDesigner().getExperience() + "年");
+            header_work_room_design_year.setVisibility(View.GONE);
+        }
+        if (workRoomDetailsBeen.getCases_list() != null) {
 
-                WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain, workRoomDetailsBeen.getCases_list());
-                listView.setAdapter(workRoomAdapter);
-                HeightUtils.setListViewHeightBasedOnChildren(listView);
-            }
+            WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain, workRoomDetailsBeen.getCases_list());
+            listView.setAdapter(workRoomAdapter);
+            HeightUtils.setListViewHeightBasedOnChildren(listView);
+        }
 
 
     }
@@ -318,10 +330,14 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
     private View workRoomDetailHeader;
     private LinearLayout work_room_detail_content;
+    private RelativeLayout common_navbar;
     private ImageView back;
+    private View view_navigation_header_view;
+    private ImageButton nav_left_imageButton;
     //    private ImageView work_room_design_imageView;
     private ImageView work_room_detail_six_imageView;
     private TextView now_order;
+    private TextView nav_title_textView;
     private int acs_member_id;
     private String hs_uid;
     private TextView header_work_room_name;

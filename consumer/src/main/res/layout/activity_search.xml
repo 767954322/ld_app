@@ -34,6 +34,7 @@
             android:drawableLeft="@drawable/icon_search_or"
             android:gravity="center_vertical"
             android:hint="@string/search"
+            android:textSize="@dimen/size_12"
             android:imeOptions="actionSearch"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"

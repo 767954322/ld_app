@@ -310,6 +310,7 @@ public class MPServerHttpManager {
                 "&start_experience=" + findDesignerBean.getStart_experience() +
                 "&end_experience=" + findDesignerBean.getEnd_experience() +
                 "&design_price_code=" + findDesignerBean.getDesign_price_code() +
+                "&styles=" + findDesignerBean.getNick_name() +
                 "&offset=" + offset +
                 "&limit=" + limit;
 
@@ -433,6 +434,31 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
+
+    /**
+     * 节点锁接口31变32接口
+     *
+     * @param callback
+     * @param needs_id    asset_id 就是needs_id
+     * @param designer_id
+     * @param contract_no
+     */
+    public void getNodeLock(final String needs_id, final String designer_id, final String contract_no, OkJsonRequest.OKResponseCallback callback) {
+
+        // demands/{asset_id}/designers/{designer_id}/contracts/{contract_no}/options/payment/delay
+        String url = UrlConstants.URL_GET_DESIGNER_INFO + "demands/" + needs_id + "/designers/" + designer_id + "/contracts/" + contract_no + "/options/payment/delay";
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
 
     /**
      * 获取消费者\设计师个人基本信息
@@ -593,9 +619,14 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
+                if (xToken!=null){
+                    HashMap<String, String> header = new HashMap<>();
+                    header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                    return header;
+                }else {
+                    return  super.getHeaders();
+                }
+
             }
         };
         queue.add(okRequest);
@@ -757,17 +788,27 @@ public class MPServerHttpManager {
      * 精选订单
      */
     public void getSliteOder(HashMap<String, Object> map, final OkJsonRequest.OKResponseCallback callback) {
+//        {@"offset"   :offset,
+//            @"limit"    :limit,
+//            @"sort_by"  :@"date",
+//            @"sort_order":@"desc",
+//            @"version":version,
+//            @"service_modlue":servicemodlue,
+//            @"node_ids":@"",
+//            @"sub_node_ids":@"",
+//            @"commend":@""};
+
 
         String url = UrlConstants.URL_GET_ORDER + map.get(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID) + "/orders?" +
                 "offset=" + map.get(JsonConstants.JSON_DEMAND_LIST_OFFSET) +
                 "&limit=" + map.get(JsonConstants.JSON_DEMAND_LIST_LIMIT) +
-                "&sort_by=date" +
-                "&sort_order=desc" +
+                "&sort_by=desc" +
+                "&sort_order=date" +
                 "&version=2" +
                 "&service_modlue=5" +
-                "&node_ids=1" +
-                "&sub_node_ids=1" +
-                "&commend=5";
+                "&node_ids=" + "" +
+                "&sub_node_ids=" + "" +
+                "&commend=" + "";
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override

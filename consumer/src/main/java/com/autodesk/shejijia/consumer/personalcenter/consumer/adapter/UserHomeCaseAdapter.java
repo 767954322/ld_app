@@ -35,7 +35,6 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         this.mOnItemImageHeadClickListener = mOnItemImageHeadClickListener;
         this.mOnItemCaseClickListener = mOnItemCaseClickListener;
         this.OnItemHomechatclickListener = OnItemHomechatclickListener;
-
     }
 
     public UserHomeCaseAdapter(Context context, List<CaseLibraryBean.CasesEntity> datas, Activity activity, int screenWidth, int screenHeight) {
@@ -46,7 +45,6 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         roomMap = AppJsonFileReader.getRoomHall(activity);
         style = AppJsonFileReader.getStyle(activity);
     }
-
 
     @Override
     public int getLayoutId() {
@@ -72,7 +70,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
     public void initItem(View view, Holder holder, int position) {
         if (null != mDatas && mDatas.size() > 0) {
             CaseLibraryBean.CasesEntity casesEntity = mDatas.get(position);
-            ((ViewHolder) holder).tvThumbUp.setText("点赞数 "+casesEntity.getFavorite_count());
+            ((ViewHolder) holder).tvThumbUp.setText(casesEntity.getFavorite_count() + "");
             List<CaseLibraryBean.CasesEntity.ImagesEntity> images = casesEntity.getImages();
             if (images != null && images.size() > 0) {
                 for (int i = 0; i < casesEntity.getImages().size(); i++) {
@@ -84,16 +82,13 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                 if (TextUtils.isEmpty(imageOneUrl)) {
                     imageOneUrl = casesEntity.getImages().get(0).getFile_url();
                 }
-                ImageUtils.loadImage(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
+                ImageUtils.loadImageIcon(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
             }
             MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
             if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-                ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
-                // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
-
+                ((ViewHolder) holder).imgConsumeChat.setVisibility(View.INVISIBLE);
             } else {
                 ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
-                // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
             }
 
             if (null != casesEntity) {

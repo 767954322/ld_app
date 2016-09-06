@@ -65,7 +65,7 @@
 
     <!--关注相关内容-->
     <string name="my_attention">我的关注</string>
-    <string name="attention_num">关注人数</string>
+    <string name="attention_num">关注人数:</string>
     <string name="attention_success">关注成功</string>
     <string name="attention_sure">关注</string>
     <string name="attention_sure_add">+关注</string>
@@ -131,11 +131,12 @@
     <string name="project_biding">应标中</string>
     <string name="project_designing">设计中</string>
     <string name="project_finish">项目完成</string>
-    <string name="project_stop">项目结束</string>
+    <string name="project_stop">订单结束</string>
     <string name="error_state">未知状态</string>
 
 
     <string name="no_set_measure_fee">未设置量房费 不能应标</string>
-
-
+<!-- 大师 -->
+    <string name="succes_grandmaster">大师预约成功</string>
+    <string name="fail_grandmaster">大师预约失败</string>
 </resources>

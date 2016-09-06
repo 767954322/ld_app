@@ -1,40 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/fl_empty_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/pb_loading"
-        style="@style/Widget.AppCompat.ProgressBar"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_empty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+
+    <ImageView
+        android:id="@+id/iv_default_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"
+        android:src="@drawable/icon_order_empty" />
 
-    <RelativeLayout
-        android:id="@+id/rl_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+    <TextView
+        android:id="@+id/tv_empty_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_default_empty"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/size_10"
+        android:text="@string/empty_order_fitment_add"
+        android:textColor="@color/gray" />
 
-        <ImageView
-            android:id="@+id/iv_default_empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@color/transparent"
-            android:src="@drawable/icon_order_empty"/>
-
-        <TextView
-            android:id="@+id/tv_empty_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iv_default_empty"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/size_10"
-            android:text="@string/empty_order_fitment_add"
-            android:textColor="@color/gray"/>
-    </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>
