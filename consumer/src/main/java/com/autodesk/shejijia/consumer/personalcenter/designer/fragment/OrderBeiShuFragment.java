@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -41,22 +42,25 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  * @version v1.0 .
  * @date 2016-6-7 .
  * @file OrderBeiShuFragment.java .
- * @brief 我的订单:北舒订单页面 .
+ * @brief taocan .
  */
 public class OrderBeiShuFragment extends BaseFragment {
+
+    private RelativeLayout mRlEmpty;
 
     public OrderBeiShuFragment() {
     }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_beishu_meal;
+        return R.layout.fragment_elite;
     }
 
     @Override
     protected void initView() {
-        mListView = (ListViewFinal) rootView.findViewById(R.id.lv_designer_beishu_order);
-        mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
+        mListView = (ListViewFinal) rootView.findViewById(R.id.lv_designer_elite);
+        mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout_elite);
+        mRlEmpty = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
 
         mMyBeiShuMealAdapter = new MyBeiShuMealAdapter(UIUtils.getContext(), mBeiShuNeedsOrderListEntities, R.layout.item_lv_designer_beishu_order);
         mListView.setAdapter(mMyBeiShuMealAdapter);
@@ -186,9 +190,17 @@ public class OrderBeiShuFragment extends BaseFragment {
                 } else {
                     mListView.setHasLoadMore(true);
                 }
+
+                if (mOrderBeiShutEntity ==null || mOrderBeiShutEntity.getOrder_list().size()==0){
+                    mRlEmpty.setVisibility(View.VISIBLE);
+                }else{
+                    mRlEmpty.setVisibility(View.GONE);
+                }
+
                 Message msg = Message.obtain();
                 msg.obj = offset;
                 handler.sendMessage(msg);
+                mMyBeiShuMealAdapter.notifyDataSetChanged();
             }
 
             @Override

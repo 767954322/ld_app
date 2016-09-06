@@ -169,6 +169,7 @@ public class Constant {
         public static String MEASURE_FREE = "MEASURE_FREE";
         public static String DESIGNER_ID = "DESIGNER_ID";
         public static String NEEDS_ID = "NEEDS_ID";
+        public static String CONTRACT_NO = "CONTRACT_NO";
         public static String SEEK_TYPE = "TYPE";
         public static String SEEK_DESIGNER_DETAIL = "SEEK_DESIGNER_DETAIL";
         public static String HS_UID = "HS_UID";

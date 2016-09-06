@@ -76,10 +76,10 @@ public class WkFlowStateAdapter extends BaseAdapter {
             if (tipWorkflowInfoBeans.size() < 1) {
                 return convertView;
             }
-            if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
-                viewHolder.tv_meal_title.setText(tipWorkflowInfoBean.getTip_for_consumer());//消费者
+            if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {//消费者
+                viewHolder.tv_meal_title.setText(tipWorkflowInfoBean.getTip_for_consumer());
             } else {
-                viewHolder.tv_meal_title.setText(tipWorkflowInfoBean.getTip_for_designer());//设计师
+                viewHolder.tv_meal_title.setText(tipWorkflowInfoBean.getTip_for_designer());
             }
 
             if (tempdate_id == 4) {
@@ -117,9 +117,6 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 measureFormNode(viewHolder, stateCode);
                 break;
             case 1://接受量房、设计交付物(或者签订设计合同)
-                if (stateCode == 33) {
-                    viewHolder.tv_meal_title.setText("量房交付物");//量房交付物
-                }
                 eliteEstablishContract(viewHolder, stateCode);
                 break;
             case 2://支付设计首款(或者 接收设计首款)
@@ -253,25 +250,25 @@ public class WkFlowStateAdapter extends BaseAdapter {
         int textColor;
         int drawable;
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
-            if (stateCode >= 31) {
+            if (stateCode >= 32 && stateCode != 33) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_zhifushejishoukuan;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.shejishoukuan_ico;
             }
-            if (stateCode == 31) {
+            if (stateCode == 32) {
                 setItemAnimationForView(textColor, viewHolder);
             }
         } else {
-            if (stateCode == 31 || stateCode >= 41) {
+            if (stateCode == 32 || stateCode >= 41) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_zhifushejishoukuan;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.shejishoukuan_ico;
             }
-            if (stateCode == 31) {
+            if (stateCode == 32) {
                 setItemAnimationForView(textColor, viewHolder);
             }
         }
@@ -289,6 +286,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
         int textColor;
         int drawable;
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
+            if (stateCode == 33 || stateCode == 24) {
+                viewHolder.tv_meal_title.setText(R.string.receiving_room_deliverable);//量房交付物
+            }
             if (stateCode >= 11) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_jieshoushejihetong;
@@ -297,6 +297,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 drawable = R.drawable.jieshoushejihetong_ico;
             }
         } else {
+            if (stateCode == 33 || stateCode == 24) {
+                viewHolder.tv_meal_title.setText(R.string.uploaded_deliverable);//量房交付物
+            }
             if (stateCode >= 11) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_jieshoushejihetong;
@@ -307,7 +310,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
         }
 
-        if (stateCode == 11) {
+        if (stateCode == 11 ||stateCode == 31||stateCode == 24 ||stateCode == 33) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);

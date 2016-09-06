@@ -51,7 +51,7 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         nav_title_textView.setText("套餐详情");
         isLoginUserJust = isLoginUser();
 
-        ImageLoader.getInstance().displayImage(ImageUrlUtils.getPackagesListImage()[item_num], iv_package_detail);
+        ImageLoader.getInstance().displayImage(ImageUrlUtils.getPackagesDetailImage()[item_num], iv_package_detail);
     }
 
     @Override
@@ -77,13 +77,19 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
                     intent_yuyue.putExtra("item_name", item_name);
                     startActivity(intent_yuyue);
                 } else {
-                    Toast.makeText(PackageDetailActivity.this, "先登录", Toast.LENGTH_LONG).show();
+                    AdskApplication.getInstance().doLogin(PackageDetailActivity.this);
                 }
 
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isLoginUserJust = isLoginUser();
     }
 
     //判断该用户是否登陆了

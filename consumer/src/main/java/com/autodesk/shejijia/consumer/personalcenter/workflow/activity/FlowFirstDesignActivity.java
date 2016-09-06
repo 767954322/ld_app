@@ -20,6 +20,7 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.SplitStringUtils;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -65,6 +66,17 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         setTitleForNavbar(getResources().getString(R.string.flow_cost_detail)); /// 设置标题 .
     }
 
+    /**
+     * 当点击返回按键后调用节点优化接口，使原31节点变成32节点
+     *
+     * @param view
+     */
+    @Override
+    protected void leftNavButtonClicked(View view) {
+        super.leftNavButtonClicked(view);
+        getNodeLock(needs_id,designer_id,contract_no);
+    }
+
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
@@ -99,6 +111,29 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         });
     }
 
+    /**
+     * @param needs_id
+     * @param designer_id
+     * @param contract_no
+     * @brief 节点变动接口31变动成32 .
+     */
+    public void getNodeLock(String needs_id, String designer_id, String contract_no) {
+        MPServerHttpManager.getInstance().getNodeLock(needs_id, designer_id, contract_no, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                MyToast.show(FlowFirstDesignActivity.this, "成功了");
+                //　成功跳转
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MyToast.show(FlowFirstDesignActivity.this, "失败了");
+                //　失败跳转
+            }
+        });
+    }
+
     private void updateViewFromData() {
         MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
         if (null == designContractEntity) {
@@ -115,7 +150,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
         tv_flow_first_design_last.setText(df.format(totalCost - firstCost)); // 设计尾款
 
-        if (Integer.valueOf(wk_cur_sub_node_id) == 31) {
+        if (Integer.valueOf(wk_cur_sub_node_id) == 31||Integer.valueOf(wk_cur_sub_node_id) == 32) {
             ll_flow_first_design_send.setVisibility(View.VISIBLE);
             btn_flow_first_design_send.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -150,8 +185,8 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
             if (null == designContractEntity) {
                 return;
             }
-            String  amout = UIUtils.getString(R.string.flow_deduct_measure_cost)+measurement_price+UIUtils.getString(R.string.deduct_measure_cost);
-            tv_flow_first_design_aggregate_amount.setText(designContractEntity.getContract_charge()+"("+amout+")");
+            String amout = UIUtils.getString(R.string.flow_deduct_measure_cost) + measurement_price + UIUtils.getString(R.string.deduct_measure_cost);
+            tv_flow_first_design_aggregate_amount.setText(designContractEntity.getContract_charge() + "(" + amout + ")");
             Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             Double measureCost = Double.parseDouble(mBidders.get(0).getMeasurement_fee());
             DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
@@ -232,10 +267,11 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     private TextView tv_flow_first_design_contract_no;
     private TextView tv_flow_first_design_should_first;
     private TextView tv_flow_first_design_aggregate_amount;
-//    private TextView tv_flow_first_design_deduct_measure_cost;
+    //    private TextView tv_flow_first_design_deduct_measure_cost;
     private Button btn_flow_first_design_send;
     private int FirstForContract = 1; // 首款调到设计合同
 
     protected DesignerInfoDetails designerInfoList;
     private boolean isLock = true; // 是否锁定按键
+    private String contract_no; // 设计合同编号
 }

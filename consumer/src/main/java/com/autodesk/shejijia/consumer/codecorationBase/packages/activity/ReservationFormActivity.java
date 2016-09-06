@@ -1,53 +1,37 @@
 package com.autodesk.shejijia.consumer.codecorationBase.packages.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.IssueDemandBean;
-import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by allengu on 16-8-23.
@@ -106,7 +90,11 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = et_issue_demand_area.getText().toString().trim();
-                    area = String.format("%.2f", Double.valueOf(area));
+                    if (TextUtils.isEmpty(area)) {
+                        area = "";
+                    } else {
+                        area = String.format("%.2f", Double.valueOf(area));
+                    }
                     et_issue_demand_area.setText(area);
                 }
             }
@@ -141,12 +129,6 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         }
     }
 
-    @Override
-    public void onItemClick(Object obj, int position) {
-        if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
-            finish();
-        }
-    }
 
     //监听（提交套餐预约）
     private void sendPackageFormClick() {
@@ -166,24 +148,29 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         }
         //项目面积校验
         String area_project = et_issue_demand_area.getText().toString();
-        boolean ifOKArea = area_project.matches(RegexUtil.AREA_REGEX);
-        String subNum = "0";
-        if (area_project.contains(".")) {
-            subNum = area_project.substring(0, area_project.indexOf("."));
-        }
-        if (TextUtils.isEmpty(area_project) || Float.valueOf(area_project) == 0) {
-            showAlertView(R.string.please_input_correct_area);
-            return;
-        } else {
-            if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
+        if (!TextUtils.isEmpty(area_project.trim())) {
+            boolean ifOKArea = area_project.matches(RegexUtil.AREA_REGEX);
+            String subNum = "0";
+            if (area_project.contains(".")) {
+                subNum = area_project.substring(0, area_project.indexOf("."));
+            }
+            if (TextUtils.isEmpty(area_project) || Float.valueOf(area_project) == 0) {
                 showAlertView(R.string.please_input_correct_area);
                 return;
             } else {
-                if (!area_project.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
                     showAlertView(R.string.please_input_correct_area);
                     return;
+                } else {
+                    if (!area_project.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+                        showAlertView(R.string.please_input_correct_area);
+                        return;
+                    }
                 }
             }
+
+        } else {
+            area_project = "";
         }
         //装修预算校验
         if (TextUtils.isEmpty(mDecorationBudget)) {
@@ -192,16 +179,22 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         }
         //项目地址校验
         if (TextUtils.isEmpty(mCurrentDistrictCode)) {
-            showAlertView(R.string.please_select_addresses);
+            showAlertView(R.string.please_choose_addresses);
             return;
         }
         //小区名称校验
-        String detail_address = tv_issue_demand_detail_address.getText().toString();
-        boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
-        if (TextUtils.isEmpty(detail_address) || !regex_address_right) {
-            showAlertView(R.string.please_enter_correct_address);
-            return;
+        String detail_address = tv_issue_demand_detail_address.getText().toString().trim();
+        if (!TextUtils.isEmpty(detail_address.trim())) {
+            boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
+            if (TextUtils.isEmpty(detail_address) || !regex_address_right) {
+                showAlertView(R.string.please_enter_correct_address);
+                return;
+            }
+        } else {
+            detail_address = "";
         }
+
+
         //提交的JSONObject
         JSONObject jsonObject = new JSONObject();
         try {
@@ -222,6 +215,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             e.printStackTrace();
         }
 
+        CustomProgress.show(ReservationFormActivity.this, "提交中...", false, null);
         sendPackageForm(jsonObject, acs_member_id);
 
     }
@@ -233,15 +227,17 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                new AlertView(UIUtils.getString(R.string.tip), "预约失败", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
-
+                success_ALert = getAlertViewExt(UIUtils.getString(R.string.fail_grandmaster));
+                success_ALert.show();
+                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                new AlertView(UIUtils.getString(R.string.tip), "预约成功", null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
-
+                fail_ALert = getAlertViewExt(UIUtils.getString(R.string.succes_grandmaster));
+                fail_ALert.show();
+                CustomProgress.cancelDialog();
             }
         });
     }
@@ -364,6 +360,25 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         });
     }
 
+    private AlertView getAlertViewExt(String toast) {
+        //UIUtils.getString(R.string.title_average_rule)
+        if (alertViewExt == null) {
+            alertViewExt = new AlertView(toast,
+                    null, null, null, new String[]{UIUtils.getString(R.string.delivery_sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null);
+        }
+
+        return alertViewExt;
+    }
+
+    @Override
+    public void onItemClick(Object obj, int position) {
+        if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
+            finish();
+        } else if (obj == success_ALert) {
+            ReservationFormActivity.this.finish();
+        }
+    }
+
     /// 控件.
     private TextView et_issue_demand_name;
     private TextView tv_issue_demand_budget;
@@ -372,6 +387,9 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private EditText et_issue_demand_mobile;
     private EditText et_issue_demand_area;
     private Button btn_send_demand;
+    private AlertView success_ALert;
+    private AlertView fail_ALert;
+    private AlertView alertViewExt;
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;
     private OptionsPickerView pvDecorationBudgetOptions;

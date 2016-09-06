@@ -6,29 +6,119 @@
     android:orientation="vertical"
     tools:context=".codecorationBase.packages.fragment.PackagesFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <ImageView
-            android:id="@+id/iv_packages_tital"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter" />
-
-        <com.autodesk.shejijia.consumer.codecorationBase.packages.view.MyGridView
-            android:id="@+id/gv_packages"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/iv_packages_tital"
-            android:layout_marginTop="@dimen/font_15"
-            android:horizontalSpacing="@dimen/font_10"
-            android:numColumns="2"
-            android:verticalSpacing="@dimen/font_10" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_packages_tital"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_page_icon"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/font_20"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_packages_one"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+
+                <ImageView
+                    android:id="@+id/iv_packages_two"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/font_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_packages_three"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+
+                <ImageView
+                    android:id="@+id/iv_packages_four"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/font_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_packages_five"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+
+                <ImageView
+                    android:id="@+id/iv_packages_six"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/font_10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_packages_seven"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+
+                <ImageView
+                    android:id="@+id/iv_packages_eight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/home_page_icon"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
 
 
     <ImageButton

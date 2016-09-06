@@ -436,6 +436,31 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 节点锁接口31变32接口
+     *
+     * @param callback
+     * @param needs_id    asset_id 就是needs_id
+     * @param designer_id
+     * @param contract_no
+     */
+    public void getNodeLock(final String needs_id, final String designer_id, final String contract_no, OkJsonRequest.OKResponseCallback callback) {
+
+        // demands/{asset_id}/designers/{designer_id}/contracts/{contract_no}/options/payment/delay
+        String url = UrlConstants.URL_GET_DESIGNER_INFO + "demands/" + needs_id + "/designers/" + designer_id + "/contracts/" + contract_no + "/options/payment/delay";
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+
+    /**
      * 获取消费者\设计师个人基本信息
      */
     public void getConsumerInfoData(String member_id, OkJsonRequest.OKResponseCallback callback) {
@@ -594,9 +619,14 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                return header;
+                if (xToken!=null){
+                    HashMap<String, String> header = new HashMap<>();
+                    header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                    return header;
+                }else {
+                    return  super.getHeaders();
+                }
+
             }
         };
         queue.add(okRequest);
@@ -684,12 +714,7 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 北舒家装订单
-     *
-     * @param callback
-     * @param designer_id
-     * @param offset
-     * @param limit
+     * 套餐
      */
     public void getDesignerBeiShuOrder(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
 //        String url = UrlConstants.URL_GET_BEI_SHU_ORDER + designer_id +
@@ -725,7 +750,7 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 设计师普通订单
+     * 竞优
      */
     public void getDesignerOrder(final String memType, final String designer_id, final int offset, final int limit, final OkJsonRequest.OKResponseCallback callback) {
 //        String url = UrlConstants.URL_GET_ORDER + designer_id +
@@ -774,8 +799,6 @@ public class MPServerHttpManager {
 //            @"commend":@""};
 
 
-
-
         String url = UrlConstants.URL_GET_ORDER + map.get(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID) + "/orders?" +
                 "offset=" + map.get(JsonConstants.JSON_DEMAND_LIST_OFFSET) +
                 "&limit=" + map.get(JsonConstants.JSON_DEMAND_LIST_LIMIT) +
@@ -783,9 +806,9 @@ public class MPServerHttpManager {
                 "&sort_order=date" +
                 "&version=2" +
                 "&service_modlue=5" +
-                "&node_ids=" +""+
-                "&sub_node_ids=" +""+
-                "&commend="+"";
+                "&node_ids=" + "" +
+                "&sub_node_ids=" + "" +
+                "&commend=" + "";
 
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override

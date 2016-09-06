@@ -357,8 +357,10 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void eliteEstablishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 11 && wk_cur_sub_node_idi != 24) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 11  ||wk_cur_sub_node_idi == 31 ) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
+            } else if(wk_cur_sub_node_idi == 24 ||wk_cur_sub_node_idi == 33){
+                showNewActivity(FlowUploadDeliveryActivity.class, -1);
             } else {
                 view.setClickable(false);
             }
@@ -369,6 +371,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                     AlertView.Style.Alert, null).show();
         } else if (Integer.parseInt(wk_cur_sub_node_id) == 31) {
             showNewActivity(FlowEstablishContractActivity.class, -1);
+        }else if(wk_cur_sub_node_idi == 24 || wk_cur_sub_node_idi == 33){
+            showNewActivity(FlowUploadDeliveryActivity.class, -1);
         } else {
             view.setClickable(false);
         }
@@ -415,7 +419,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void firstPay(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 31) {
+            if (wk_cur_sub_node_idi == 32) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer_send_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                         AlertView.Style.Alert, null).show();
             } else {
@@ -423,7 +427,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             }
             return;
         }
-        if (wk_cur_sub_node_idi == 31 && wk_cur_sub_node_idi != 33) {
+        if (wk_cur_sub_node_idi == 32) {
             showNewActivity(FlowFirstDesignActivity.class, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
         } else {
             view.setClickable(false);
@@ -460,12 +464,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void deliver(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 51) {
+            if (wk_cur_sub_node_idi >= 51 && wk_cur_sub_node_idi != 63) {
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
             }
             return;
         }
-        if (wk_cur_sub_node_idi >= 51) {
+        if (wk_cur_sub_node_idi >= 51&& wk_cur_sub_node_idi != 63) {
             showNewActivity(FlowUploadDeliveryActivity.class, -1);
 
         }
@@ -515,7 +519,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 rlStopContract.setVisibility(View.GONE);
             }
 
-            if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24) {
+            if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
                 btnStopDemand.setVisibility(View.VISIBLE);
             }
         }
