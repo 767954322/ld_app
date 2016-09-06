@@ -253,25 +253,25 @@ public class WkFlowStateAdapter extends BaseAdapter {
         int textColor;
         int drawable;
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
-            if (stateCode >= 31) {
+            if (stateCode >= 32) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_zhifushejishoukuan;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.shejishoukuan_ico;
             }
-            if (stateCode == 31) {
+            if (stateCode == 32) {
                 setItemAnimationForView(textColor, viewHolder);
             }
         } else {
-            if (stateCode == 31 || stateCode >= 41) {
+            if (stateCode == 32 || stateCode >= 41) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_zhifushejishoukuan;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.shejishoukuan_ico;
             }
-            if (stateCode == 31) {
+            if (stateCode == 32) {
                 setItemAnimationForView(textColor, viewHolder);
             }
         }
@@ -307,7 +307,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
         }
 
-        if (stateCode == 11) {
+        if (stateCode == 11 ||stateCode == 31) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);
