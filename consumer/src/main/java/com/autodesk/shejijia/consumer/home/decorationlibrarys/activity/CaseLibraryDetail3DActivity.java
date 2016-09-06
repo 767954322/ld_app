@@ -28,6 +28,7 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetai
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.consumer.wxapi.SendWXShared;
@@ -447,8 +448,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryDetail3DActivity.this,
-                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryDetail3DActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getCaseList3DDetail(case_id, okResponseCallback);
