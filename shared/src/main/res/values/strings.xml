@@ -110,7 +110,6 @@
     <!--string name="flow_postal_code">邮政编号：</string>-->
 
 
-
     <string name="flow_email_address">电子邮箱：</string>
     <string name="flow_address_email">邮箱地址：</string>
     <string name="flow_postal_code">邮箱编号：</string>
@@ -121,7 +120,7 @@
     <string name="flow_hint_email">请输入电子邮箱（选填）</string>
     <string name="flow_hint_jiafang_name">请输入甲方姓名</string>
     <string name="flow_hint_first_past_cost">设计首款不低于设计费总额的80%</string>
-    <string name="flow_material_list">材料清单(包括:主材清单.家具清单.施工报价单) 1 份</string>
+    <string name="flow_material_list">材料清单(包括:主材清单、家具清单、施工报价单) 1 份</string>
     <string name="flow_construction_drawings">施工图纸 1 套</string>
     <string name="flow_3D_project">3D空间方案设计 1 份</string>
     <string name="flow_service_address">服务地址：</string>
@@ -303,7 +302,7 @@
     <!-- SeekDesignerDetailActivity -->
     <string name="work">作品：</string>
     <string name="be_good_at">擅长：</string>
-     <!--<string name="be_good_at">擅长风格：</string>-->
+    <!--<string name="be_good_at">擅长风格：</string>-->
     <string name="has_yet_to_fill_out">尚未填写</string>
     <string name="temporarily_no_data">暂无数据</string>
     <string name="find_designer">设计师</string>

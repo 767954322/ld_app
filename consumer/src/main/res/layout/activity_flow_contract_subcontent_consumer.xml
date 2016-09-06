@@ -15,15 +15,15 @@
 
         >
 
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/contract_sub_content_webview"
-        android:layout_weight="0.89"
+        <WebView
+            android:id="@+id/contract_sub_content_webview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.89"
 
-        />
+            />
 
-     </ScrollView>
+    </ScrollView>
 
 </LinearLayout>
 

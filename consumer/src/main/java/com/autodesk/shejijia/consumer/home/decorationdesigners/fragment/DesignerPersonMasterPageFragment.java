@@ -3,7 +3,6 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -75,7 +74,7 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
         if (mCasesEntityArrayList.size() < 1) {
             getEmptyAlertView(UIUtils.getString(R.string.case_is_empty)).show();
         }
-        hideFooterView(mCasesEntityArrayList);
+//        hideFooterView(mCasesEntityArrayList);
         if (mSeekDesignerDetailAdapter == null) {
 
             mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(getActivity(), mCasesEntityArrayList, getActivity());
@@ -107,20 +106,20 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
      * 隐藏底部布局
      * param 传入的信息集合
      */
-    private void hideFooterView(ArrayList<SeekDesignerDetailBean.CasesEntity> list) {
-        if (list != null && list.size() > 0) {
-            mRlEmpty.setVisibility(View.GONE);
-        } else {
-            mRlEmpty.setVisibility(View.VISIBLE);
-        }
-        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
-        mRlEmpty.getLayoutParams();
-        layoutParams.height = height / 2;
-        mRlEmpty.setLayoutParams(layoutParams);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
-    }
+//    private void hideFooterView(ArrayList<SeekDesignerDetailBean.CasesEntity> list) {
+//        if (list != null && list.size() > 0) {
+//            mRlEmpty.setVisibility(View.GONE);
+//        } else {
+//            mRlEmpty.setVisibility(View.VISIBLE);
+//        }
+//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+//        int height = wm.getDefaultDisplay().getHeight();
+//        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
+//        mRlEmpty.getLayoutParams();
+//        layoutParams.height = height / 2;
+//        mRlEmpty.setLayoutParams(layoutParams);
+//        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+//    }
 
 //    /**
 //     * 单击某个item进入查看详情
