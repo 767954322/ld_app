@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
