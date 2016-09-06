@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -38,6 +39,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
 
         mListView = (ListView) rootView.findViewById(R.id.lv_seek_appraise_detail_listview);
         rating_star = (RatingBar) rootView.findViewById(R.id.rating_star);
+        appraise_ll = (LinearLayout) rootView.findViewById(R.id.appraise_ll);
         mListView.getLastVisiblePosition();
     }
 
@@ -55,6 +57,10 @@ public class DesignerAppraiseFragment extends BaseFragment {
         if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
             //综合评分
             rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
+            if (rating_star.getRating() > 0){
+
+                appraise_ll.setVisibility(View.VISIBLE);
+            }
         }
 
 
@@ -70,6 +76,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
     private ListView mListView;
     private AppraiseDesignBeen mAppraiseDesignBeen;
     private RatingBar rating_star;
+    private LinearLayout appraise_ll;
     private List<AppraiseDesignBeen.EstimatesBean> estimates;
     private SeekDesignerAppraiseAdapter mSeekDesignerAppraiseAdapter;
     private String designerId;

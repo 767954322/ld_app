@@ -62,7 +62,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         work_room_detail_content = (LinearLayout) findViewById(R.id.work_room_detail_content);
         work_room_detail_content.addView(workRoomDetailHeader);
         listView = (ListView) findViewById(R.id.listview);
-        common_navbar = (RelativeLayout)findViewById(R.id.common_navbar);
+        common_navbar = (RelativeLayout) findViewById(R.id.common_navbar);
         view_navigation_header_view = findViewById(R.id.view_navigation_header_view);
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
         nav_left_imageButton.setImageResource(R.drawable.work_room_back);
@@ -104,25 +104,25 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
     public void upDataForView(WorkRoomDetailsBeen workRoomDetailsBeen) {
 
-            setTitleForNavbar(workRoomDetailsBeen.getNick_name());
-            header_work_room_name.setText(workRoomDetailsBeen.getNick_name());
-            if (workRoomDetailsBeen.getDesigner() != null && workRoomDetailsBeen.getDesigner().getDesigner_profile_cover() != null) {
+        setTitleForNavbar(workRoomDetailsBeen.getNick_name());
+        header_work_room_name.setText(workRoomDetailsBeen.getNick_name());
+        if (workRoomDetailsBeen.getDesigner() != null && workRoomDetailsBeen.getDesigner().getDesigner_profile_cover() != null) {
 
-                ImageUtils.loadImage(work_room_detail_six_imageView, workRoomDetailsBeen.getDesigner().getDesigner_profile_cover().getPublic_url().replace(" ", ""));
-            }
-            work_room_introduce.setText("工作室介绍：" + workRoomDetailsBeen.getDesigner().getIntroduction());
+            ImageUtils.loadImage(work_room_detail_six_imageView, workRoomDetailsBeen.getDesigner().getDesigner_detail_cover().getPublic_url().replace(" ", ""));
+        }
+        work_room_introduce.setText("工作室介绍：" + workRoomDetailsBeen.getDesigner().getIntroduction());
 
-            if (workRoomDetailsBeen.getDesigner() != null) {
-                //目前没有年限，但是PD还没有确定以后有没有，所以暂时GONE掉，需要时直接解开
-                header_work_room_design_year.setText("设计年限 ：" + workRoomDetailsBeen.getDesigner().getExperience() + "年");
-                header_work_room_design_year.setVisibility(View.GONE);
-            }
-            if (workRoomDetailsBeen.getCases_list() != null) {
+        if (workRoomDetailsBeen.getDesigner() != null) {
+            //目前没有年限，但是PD还没有确定以后有没有，所以暂时GONE掉，需要时直接解开
+            header_work_room_design_year.setText("设计年限 ：" + workRoomDetailsBeen.getDesigner().getExperience() + "年");
+            header_work_room_design_year.setVisibility(View.GONE);
+        }
+        if (workRoomDetailsBeen.getCases_list() != null) {
 
-                WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain, workRoomDetailsBeen.getCases_list());
-                listView.setAdapter(workRoomAdapter);
-                HeightUtils.setListViewHeightBasedOnChildren(listView);
-            }
+            WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain, workRoomDetailsBeen.getCases_list());
+            listView.setAdapter(workRoomAdapter);
+            HeightUtils.setListViewHeightBasedOnChildren(listView);
+        }
 
 
     }
