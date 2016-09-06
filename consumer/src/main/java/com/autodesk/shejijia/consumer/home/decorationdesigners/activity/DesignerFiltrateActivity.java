@@ -56,6 +56,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.bid_filter));
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.bg_0084ff));
 
         allListBean = new RelateInformationListBean();
         allListBean.setName("全部");
@@ -205,7 +206,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerExperiences(okResponseCallback);
@@ -230,7 +231,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerCost(okResponseCallback);
@@ -255,7 +256,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerStyles(okResponseCallback);
