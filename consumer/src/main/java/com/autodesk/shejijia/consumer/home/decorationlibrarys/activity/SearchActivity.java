@@ -97,6 +97,12 @@ public class SearchActivity extends NavigationBarActivity implements
     }
 
     @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        currentPosition = getIntent().getIntExtra("currentPosition", 0);
+    }
+
+    @Override
     protected void initData(Bundle savedInstanceState) {
         screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
@@ -315,16 +321,32 @@ public class SearchActivity extends NavigationBarActivity implements
                 mUserHomeCaseAdapter.notifyDataSetChanged();
             }
         };
-        MPServerHttpManager.getInstance().getCaseListData(
-                custom_string_style,
-                custom_string_type,
-                custom_string_keywords,
-                custom_string_area,
-                custom_string_bedroom,
-                taxonomy_id,
-                custom_string_restroom,
-                custom_string_form,
-                offset, limit, callback);
+
+
+        if (currentPosition ==0) {
+            MPServerHttpManager.getInstance().getCaseListData(
+                    custom_string_style,
+                    custom_string_type,
+                    custom_string_keywords,
+                    custom_string_area,
+                    custom_string_bedroom,
+                    taxonomy_id,
+                    custom_string_restroom,
+                    custom_string_form,
+                    offset, limit, callback);
+        } else {
+            MPServerHttpManager.getInstance().get3DCaseListData(
+                    custom_string_style,
+                    custom_string_type,
+                    custom_string_keywords,
+                    custom_string_area,
+                    custom_string_bedroom,
+                    taxonomy_id,
+                    custom_string_restroom,
+                    custom_string_form,
+                    offset, limit, callback);
+        }
+
     }
 
     /**
@@ -623,7 +645,7 @@ public class SearchActivity extends NavigationBarActivity implements
     private PopupWindow mSearchPopupWindow;
     private View mSearchLayout;
     private View mFooterView;
-
+    private int currentPosition;
     private int LIMIT = 10;
     private int OFFSET = 0;
     private int screenWidth;
