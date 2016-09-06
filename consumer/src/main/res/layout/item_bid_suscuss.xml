@@ -13,8 +13,9 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rl_bidder_count"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/mybid_item_footer_height"
         android:layout_marginLeft="@dimen/size_10"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/size_10"
         android:paddingTop="@dimen/size_10">
