@@ -115,7 +115,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
         tv_flow_first_design_last.setText(df.format(totalCost - firstCost)); // 设计尾款
 
-        if (Integer.valueOf(wk_cur_sub_node_id) == 31) {
+        if (Integer.valueOf(wk_cur_sub_node_id) == 31||Integer.valueOf(wk_cur_sub_node_id) == 32) {
             ll_flow_first_design_send.setVisibility(View.VISIBLE);
             btn_flow_first_design_send.setOnClickListener(new View.OnClickListener() {
                 @Override
