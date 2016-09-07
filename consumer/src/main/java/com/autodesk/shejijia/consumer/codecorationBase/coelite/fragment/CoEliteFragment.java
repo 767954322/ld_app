@@ -75,6 +75,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             addBackgroundForImageView(innerPicListBeans);
         }else{
             ImageView imageView = new ImageView(activity);
+            mImageViews = new ImageView[1];
             mImageViews[0] = imageView;
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setBackgroundResource(R.drawable.pic1_ico2x);
