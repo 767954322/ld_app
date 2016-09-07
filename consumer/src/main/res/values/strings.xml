@@ -65,7 +65,7 @@
 
     <!--关注相关内容-->
     <string name="my_attention">我的关注</string>
-    <string name="attention_num">关注人数:</string>
+    <string name="attention_num">关注人数：</string>
     <string name="attention_success">关注成功</string>
     <string name="attention_sure">关注</string>
     <string name="attention_sure_add">+关注</string>

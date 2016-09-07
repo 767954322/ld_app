@@ -27,6 +27,7 @@ import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
@@ -148,14 +149,16 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 String member_type = mMemberEntity.getMember_type();
                 intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, mBiddersEntity.getUser_name());
                 intentChart.putExtra(ChatRoomActivity.THREAD_ID, mThreead_id);
-                intentChart.putExtra(ChatRoomActivity.ASSET_ID, "");
+                intentChart.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
                 intentChart.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
                 intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                 intentChart.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
                 context.startActivity(intentChart);
+
                 break;
             case R.id.btn_stop_demand:
                 isStopFlow();
+
                 break;
             case R.id.demand_details:
                 /**
