@@ -231,10 +231,10 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         }
 
         @Override
-        public void destroyItem(ViewGroup container, int position,
-                                Object object) {
-            container.removeView(viewList.get(position));
-
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            if(position <= viewList.size()){
+                container.removeView(viewList.get(position));
+            }
         }
 
         @Override

@@ -94,7 +94,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
         tips = new ImageView[imgIdArray.length];
         for(int i=0; i<tips.length; i++){
-            ImageView imageView = new ImageView(getActivity());
+            ImageView imageView = new ImageView(activity);
             LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             LayoutParams.setMargins(10,0,10,0);
             imageView.setLayoutParams(LayoutParams);
