@@ -20,13 +20,17 @@ import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DesignWork
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * 精选
@@ -35,11 +39,9 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     private ViewPager vpSelection;
     private ViewGroup vgSelection;
     private ImageButton imReservationButton;
+    private boolean falg = false;
 
-    /**
-     * 图片资源id
-     */
-    private int[] imgIdArray ;
+
     /**
      * 装点点的ImageView数组
      */
@@ -61,40 +63,56 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
     @Override
     protected void initData() {
-        //载入图片资源ID
-//        getDesignWorks();
+        if(falg){
+            return;
+        }
+        //载入图片资源
+        getDesignWorks();
+    }
 
-        imgIdArray = new int[]{R.drawable.pic1, R.drawable.pic2,R.drawable.pic3,R.drawable.pic4};
-        addImageViewtips();
-        addBackgroundForImageView();
+    /**
+     * 更新UI
+     * @param myBidBean
+     */
+    private void updataView(DesignWorksBean myBidBean){
+        int size = 1;
+        if(myBidBean != null){
+            List<DesignWorksBean.InnerPicListBean> innerPicListBeans=  myBidBean.getInnerPicList();
+            size = innerPicListBeans.size();
+            addBackgroundForImageView(innerPicListBeans);
+        }else{
+            ImageView imageView = new ImageView(activity);
+            mImageViews[0] = imageView;
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setBackgroundResource(R.drawable.pic1_ico2x);
 
+        }
+        addImageViewtips(size);
         vpSelection.setAdapter(new SelectionAdapter(mImageViews));
         vpSelection.setOnPageChangeListener(this);
-        vpSelection.setCurrentItem((mImageViews.length) * 100);
-
     }
     /**
      * 给每一个ImageView添加背景图
      */
-    private void addBackgroundForImageView(){
-        mImageViews = new ImageView[imgIdArray.length];
-        for(int i=0; i<mImageViews.length; i++){
-
+    private void addBackgroundForImageView( List<DesignWorksBean.InnerPicListBean> innerPicListBeans){
+        int i=0;
+        mImageViews = new ImageView[innerPicListBeans.size()];
+        for(DesignWorksBean.InnerPicListBean innerPicListBean:innerPicListBeans){
             ImageView imageView = new ImageView(activity);
             mImageViews[i] = imageView;
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//            ImageUtils.loadImage(imageView,"http://www.ciccphoto.com/01/02/201603/W020160301562832103832.jpg");
-            imageView.setBackgroundResource(imgIdArray[i]);
+            ImageUtils.loadImageIcon(imageView,innerPicListBean.getAndroid());
+            i++;
         }
     }
     /**
      * 将点点加入到ViewGroup中
      */
-    private void addImageViewtips(){
+    private void addImageViewtips(int size){
 
-        tips = new ImageView[imgIdArray.length];
+        tips = new ImageView[size];
         for(int i=0; i<tips.length; i++){
-            ImageView imageView = new ImageView(activity);
+            ImageView imageView = new ImageView(getActivity());
             LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             LayoutParams.setMargins(10,0,10,0);
             imageView.setLayoutParams(LayoutParams);
@@ -137,23 +155,25 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
         intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
         startActivity(intent);
-//        getActivity().startActivityForResult(intent,1002);
     }
 
     //载入设计师作品
     private void getDesignWorks(){
+        CustomProgress.showDefaultProgress(activity);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-
+                falg = true;
+                CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
                 DesignWorksBean myBidBean = GsonUtil.jsonToBean(str, DesignWorksBean.class);
-                myBidBean.getInnerPicList();
+                updataView(myBidBean);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                MyToast.show(getActivity(),"001");
+                CustomProgress.cancelDialog();
+                updataView(null);
             }
         };
         MPServerHttpManager.getInstance().getDesignWorks(okResponseCallback);
@@ -170,7 +190,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     public void onPageScrolled(int arg0, float arg1, int arg2) {
 
     }
-
     @Override
     public void onPageSelected(int arg0) {
         setImageBackground(arg0 % mImageViews.length);
