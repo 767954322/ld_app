@@ -68,7 +68,7 @@ public class SeekDesiger3DCaseAdapter extends BaseAdapter {
 
             if (datas.get(position).getDesign_file().get(0).getLink() != null) {
 
-                ImageUtils.displayAvatarImage(datas.get(position).getDesign_file().get(0).getLink(), viewHolder.item_3D_case_img);
+                ImageUtils.displayAvatarImage(datas.get(position).getDesign_file().get(0).getLink()+"HD.jpg", viewHolder.item_3D_case_img);
             }
         }
 

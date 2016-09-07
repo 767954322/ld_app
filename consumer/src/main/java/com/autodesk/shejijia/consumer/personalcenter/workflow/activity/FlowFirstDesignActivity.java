@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -20,9 +21,9 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.SplitStringUtils;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -78,8 +79,32 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
      */
     @Override
     protected void leftNavButtonClicked(View view) {
-        super.leftNavButtonClicked(view);
-        getNodeLock(needs_id,designer_id,contract_no);
+        promptDialog();
+    }
+
+    // 捕获返回键的方法
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            promptDialog();
+        }
+        return false;
+    }
+
+    private void promptDialog() {
+        new AlertView(UIUtils.getString(R.string.tip), "确定放弃本次支付吗？", null, new String[]{UIUtils.getString(R.string.sure), UIUtils.getString(R.string.pickerview_cancel)}, null, this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                switch (position) {
+                    case 0:
+                        getNodeLock(needs_id, designer_id, contract_no);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }).show();
     }
 
     @Override
@@ -116,14 +141,12 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-//                MyToast.show(FlowFirstDesignActivity.this, "成功了");
-                //　成功跳转
+                finish();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                MyToast.show(FlowFirstDesignActivity.this, "失败了");
-                //　失败跳转
+                finish();
             }
         });
     }
@@ -144,7 +167,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
         tv_flow_first_design_last.setText(df.format(totalCost - firstCost)); // 设计尾款
 
-        if (Integer.valueOf(wk_cur_sub_node_id) == 31||Integer.valueOf(wk_cur_sub_node_id) == 32) {
+        if (Integer.valueOf(wk_cur_sub_node_id) == 31 || Integer.valueOf(wk_cur_sub_node_id) == 32) {
             ll_flow_first_design_send.setVisibility(View.VISIBLE);
             btn_flow_first_design_send.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -267,5 +290,4 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
 
     protected DesignerInfoDetails designerInfoList;
     private boolean isLock = true; // 是否锁定按键
-    private String contract_no; // 设计合同编号
 }

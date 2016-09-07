@@ -89,7 +89,7 @@ public class SixProductsActivity extends NavigationBarActivity {
         });
 
         pagerSlidingTabStrip.setViewPager(noSlippingViewPager);
-        noSlippingViewPager.setCurrentItem(2);
+        noSlippingViewPager.setCurrentItem(0);
 
     }
 

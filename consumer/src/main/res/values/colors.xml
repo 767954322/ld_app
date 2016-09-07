@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="golden_stars">#FFC619</color>
+
+    <color name="mybid_text_color_normal">@color/bg_33</color>
+    <color name="mybid_text_color_light">@color/bg_9E</color>
 </resources>

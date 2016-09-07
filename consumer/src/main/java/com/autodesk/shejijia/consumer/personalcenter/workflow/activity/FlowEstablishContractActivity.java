@@ -287,7 +287,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                                 Intent intent = new Intent(FlowEstablishContractActivity.this, FlowFirstDesignActivity.class);
                                 intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                                 intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                                intent.putExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO, contract_no);
+                                intent.putExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO, contract_number);
                                 intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
 //                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
                                 startActivityForResult(intent, ContractForFirst);
@@ -334,12 +334,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 MPContractDataBean contract_detail = getContractDetailData(contract_data_entity);
                 if (contract_detail == null)
                     break;
-
-                String contract_number;
-                String contract_date;
-                String design_amount;
-                String design_amount_first;
-                String design_amount_balance;
 
                 contract_number = contract_data_entity.getContract_no();
                 contract_date = contract_data_entity.getContract_create_date();
@@ -971,4 +965,10 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private String designer_name = "";
     private String designer_mobile = "";
     private String designer_mail = "";
+
+    private String contract_number; //　合同编号
+    private String contract_date;
+    private String design_amount;
+    private String design_amount_first;
+    private String design_amount_balance;
 }
