@@ -105,7 +105,10 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
      */
     @Override
     protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
+
         super.initData(savedInstanceState);
+
         setTitleForNavbar(getResources().getString(R.string.design_contract)); /// 设置标题 .
     }
 
@@ -163,6 +166,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+
         /**
          * 如果超过了33节点，就隐藏上传量房按钮
          */
@@ -185,6 +189,8 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
 
             }
         });
+        CustomProgress.cancelDialog();
+
         int wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
         if (memberEntity != null) {
             memberType = memberEntity.getMember_type();

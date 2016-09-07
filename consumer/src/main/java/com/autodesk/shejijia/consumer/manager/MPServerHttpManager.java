@@ -1391,6 +1391,7 @@ public class MPServerHttpManager {
                 "/demands/" + demands_id +
                 "/designers/" + designer_id +
                 "/score";
+
         KLog.d(TAG, makeSureUrl);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, makeSureUrl, jsonObject, okResponseCallback) {
             @Override
