@@ -15,7 +15,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,7 +42,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.Logger;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -57,7 +55,6 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -340,8 +337,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         @Override
         public void onClick(View v) {
             //TODO 后台现在只有这个环境的分享链接 别的环境还没有  暂时写死    by willson
-            String webUrl ="http://alpha-www.gdfcx.net/share/3dcase.html?caseid="+case_id;
-//            String webUrl = ApiManager.getHtml5Url(case_id);
+//            String webUrl ="http://alpha-www.gdfcx.net/share/3dcase.html?caseid="+case_id;
+            String webUrl = ApiManager.getHtml5Url(case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:

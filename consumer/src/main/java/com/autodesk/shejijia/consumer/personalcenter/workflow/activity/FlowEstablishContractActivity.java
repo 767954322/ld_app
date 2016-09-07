@@ -173,7 +173,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_last_cost.setEnabled(false);
 
 
-        if (getContractDataEntityFromFirstBidder() == null) {  /// 如果是新的合同.
+        if (getContractDataEntityFromFirstBidder() == null) { /// 如果是新的合同.
             AsyncGetContractNumber(new commonJsonResponseCallback() {
                 @Override
                 public void onJsonResponse(String jsonResponse) {
@@ -190,10 +190,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             tvc_consumer_name.setText(requirement.getContacts_name());
             tvc_consumer_phone.setText(requirement.getContacts_mobile());
+            tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
+            tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
 
             if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示.
                 ll_send.setVisibility(View.VISIBLE);
-                btn_send.setText(R.string.send_design_contract);
+                btn_send.setText(R.string.flow_send);
                 UIsetSendButtonCenter();
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
                 ll_send.setVisibility(View.GONE);
@@ -743,24 +745,24 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
 
     ///others
-
-    /**
-     * @brief 获取省市区地址 .
-     */
-    private void getPCDAddress() {
-        mChangeAddressDialog = new AddressDialog();
-        mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
-        mChangeAddressDialog
-                .setAddressListener(new AddressDialog.OnAddressCListener() {
-                    @Override
-                    public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
-
-                        area = Validator.getStrProvinceCityDistrict(province, city, area);
-                        tvc_consumer_local_area.setText(area);
-                        mChangeAddressDialog.dismiss();
-                    }
-                });
-    }
+//
+//    /**
+//     * @brief 获取省市区地址 .
+//     */
+//    private void getPCDAddress() {
+//        mChangeAddressDialog = new AddressDialog();
+//        mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
+//        mChangeAddressDialog
+//                .setAddressListener(new AddressDialog.OnAddressCListener() {
+//                    @Override
+//                    public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
+//
+//                        area = Validator.getStrProvinceCityDistrict(province, city, area);
+//                        tvc_consumer_local_area.setText(area);
+//                        mChangeAddressDialog.dismiss();
+//                    }
+//                });
+//    }
 
     /**
      * 监听EditText内容变化的内部类 .

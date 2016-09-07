@@ -138,11 +138,15 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private void sendPackageFormClick() {
 
         //姓名未作校验
-        String demand_name = et_issue_demand_name.getText().toString();
-        if (TextUtils.isEmpty(demand_name)) {
-            showAlertView(R.string.jy_packages_name_null);
+        String demand_name = et_issue_demand_name.getText().toString().trim();
+
+        boolean ifNameMatch = demand_name.matches("^\\\\s{1,}$");
+        if (demand_name.length() < 2 || demand_name.length() > 10 || ifNameMatch) {
+
+            showAlertView(R.string.jy_packages_name_error);
             return;
         }
+
         //手机号码校验
         String phone_num = et_issue_demand_mobile.getText().toString();
         Boolean ifOKPhoneNum = phone_num.matches(RegexUtil.PHONE_REGEX);

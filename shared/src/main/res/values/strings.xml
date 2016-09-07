@@ -227,6 +227,7 @@
     <string name="in_design_deliverable_three">设计交付中3</string>
     <string name="waiting_designer_upload_design_deliverable">请耐心等待设计师发送设计交付物</string>
     <string name="waiting_designer_uploaded_room_deliverable">请耐心等待设计师发送量房交付物</string>
+    <string name="waiting_cons_uploaded_room_deliverable">请耐心等待消费者支付量房费</string>
     <string name="please_enter_web_page_submitted_room_deliverable">请登陆Web端上传量房交付物</string>
     <string name="please_enter_web_page_submitted_design_deliverable">您还没有做设计方案\n请到网页端完成设计方案</string>
     <string name="please_select_3d_design">请先选择3D设计方案</string>
@@ -942,11 +943,11 @@
     <string name="reservation_please_enter_your_address">请选择项目地址</string>
     <string name="reservation_please_enter_your_community_name">请填写小区名称(可选)</string>
     <string name="jy_packages_name_null">姓名不能为空</string>
+    <string name="jy_packages_name_error">请输入正确的姓名</string>
     <string name="jy_packages_phone_null">手机号不能为空</string>
     <string name="jy_packages_area_null">项目面积不能为空</string>
     <string name="jy_packages_zx_price_null">装修预算不能为空</string>
     <string name="jy_packages_address_null">小区名称不能为空</string>
-    <string name="jy_packages_name_error">姓名不能为空</string>
     <string name="jy_packages_phone_error">手机号不能为空</string>
     <string name="jy_packages_area_error">项目面积不能为空</string>
     <string name="jy_packages_zx_price_error">装修预算不能为空</string>

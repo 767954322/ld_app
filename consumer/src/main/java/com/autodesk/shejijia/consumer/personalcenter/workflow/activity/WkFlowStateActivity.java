@@ -27,6 +27,7 @@ import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
@@ -148,14 +149,16 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 String member_type = mMemberEntity.getMember_type();
                 intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, mBiddersEntity.getUser_name());
                 intentChart.putExtra(ChatRoomActivity.THREAD_ID, mThreead_id);
-                intentChart.putExtra(ChatRoomActivity.ASSET_ID, "");
+                intentChart.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
                 intentChart.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
                 intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                 intentChart.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
                 context.startActivity(intentChart);
+
                 break;
             case R.id.btn_stop_demand:
                 isStopFlow();
+
                 break;
             case R.id.demand_details:
                 /**
@@ -315,38 +318,52 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      * @param view
      */
     private void costMeasureFeeNode(int wk_cur_sub_node_idi, View view) {
+
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (WorkFlowTemplateStep() == 1) {     // 应标
-                if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
-                    view.setClickable(false);
-                } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
-                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-                }
-            } else if (WorkFlowTemplateStep() == 2) {    /// 自选量房阶段 .
-                if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
-                    view.setClickable(false);
-                } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
-                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-                }
+            if (wk_cur_sub_node_idi == 21) {
+                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+            }else if(wk_cur_sub_node_idi == 13){
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.waiting_cons_uploaded_room_deliverable), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }else{
+                view.setClickable(false);
             }
+//            if (WorkFlowTemplateStep() == 1) {     // 应标
+//                if (wk_cur_sub_node_idi == 21) {
+//                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//                } else if (wk_cur_sub_node_idi == 21 ) {
+//                    view.setClickable(false);
+//                }
+//            } else if (WorkFlowTemplateStep() == 2) {    /// 自选量房阶段 .
+//                if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
+//                    view.setClickable(false);
+//                } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
+//                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//                }
+//            }
             return;
         }
+        if (wk_cur_sub_node_idi == 13) {
+            showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
 
-        if (WorkFlowTemplateStep() == 1) { // 应标
-            if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
-                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-
-            } else {
-                view.setClickable(false);
-            }
-        } else if (WorkFlowTemplateStep() == 2) {
-            // 自选或北舒
-            if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
-                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-            } else {
-                view.setClickable(false);
-            }
+        }else{
+            view.setClickable(false);
         }
+
+//        if (WorkFlowTemplateStep() == 1) { //竞优
+//            if (wk_cur_sub_node_idi == 13) {
+//                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//
+//            } else {
+//                view.setClickable(false);
+//            }
+//        } else if (WorkFlowTemplateStep() == 2) { // 套餐
+//            if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
+//                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//            } else {
+//                view.setClickable(false);
+//            }
+//        }
 
 
     }
