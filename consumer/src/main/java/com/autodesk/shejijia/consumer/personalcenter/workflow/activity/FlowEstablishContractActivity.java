@@ -126,7 +126,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private void initWebViewConfig() {
 
         WebSettings webSettings = twvc_consumerContent.getSettings();
-        webSettings.setJavaScriptEnabled(true);
         webSettings.setAllowContentAccess(true);
         webSettings.setAllowFileAccess(true);
         webSettings.setDefaultTextEncodingName(Constant.NetBundleKey.UTF_8);
@@ -147,7 +146,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         } else if (isRoleCustomer()) { /// 消费者 .
             UpdateUIcontractContentConsumer();
         }
-
     }
 
     private void UpdateUIlayoutContractContent() {
@@ -253,9 +251,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
 
     }
-    private void UIsetSendButtonCenter()
-    {
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)btn_send.getLayoutParams();
+
+    private void UIsetSendButtonCenter() {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) btn_send.getLayoutParams();
         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         btn_send.setLayoutParams(params); //causes layout update
 
@@ -342,7 +340,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 String design_amount_balance;
 
                 contract_number = contract_data_entity.getContract_no();
-                contract_date= contract_data_entity.getContract_create_date();
+                contract_date = contract_data_entity.getContract_create_date();
                 design_amount = contract_data_entity.getContract_charge();
                 design_amount_first = contract_data_entity.getContract_first_charge();
 
@@ -481,8 +479,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             public void onJsonResponse(String jsonResponse) {
                 list = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
 
-                tvc_consumer_local_area.setText(list.getProvince_name()+list.getCity_name()+list.getDistrict_name());
-                tvc_designer_decorate_address.setText(list.getProvince_name()+list.getCity_name()+list.getDistrict_name());
+                tvc_consumer_local_area.setText(list.getProvince_name() + list.getCity_name() + list.getDistrict_name());
+                tvc_designer_decorate_address.setText(list.getProvince_name() + list.getCity_name() + list.getDistrict_name());
 
                 designer_name = list.getReal_name().getReal_name();
                 designer_mobile = list.getReal_name().getMobile_number().toString();
@@ -807,7 +805,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     }
                 }
                 //REFACTOR
-                if (jusnFrist){
+                if (jusnFrist) {
 
                     String firstCost;
                     String totalCost;

@@ -503,7 +503,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             if (images.get(i).is_primary() == true) {
                 topPosition = i;
                 firstCaseLibraryImageUrl = images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
-                ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+//                ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+                ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG);
             }
         }
 
@@ -535,7 +536,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 + caseDetailBean.getFavorite_count());
         ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name()
         );
-        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+//        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+        ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, caseDetailBean.getDesigner_info().getAvatar());
     }
 
     /**

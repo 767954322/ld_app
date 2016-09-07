@@ -67,7 +67,8 @@ public class CaseLibraryAdapter extends BaseAdapter {
 
         if (!items.get(position).is_primary()) {
             final String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
-            ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
+//            ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
+            ImageUtils.loadImageIcon(holder.mCaseLibraryLImage, imageUrl);
         } else {
             holder.mCaseLibraryLImage.setVisibility(View.GONE);
         }

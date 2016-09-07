@@ -35,6 +35,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -182,6 +183,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
+        CustomProgress.show(activity,"",false,null);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
             final String designer_id = casesEntities.get(position).getDesigner_id();
@@ -194,11 +196,12 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     MPNetworkUtils.logError(TAG, volleyError);
+                    CustomProgress.cancelDialog();
                 }
 
                 @Override
                 public void onResponse(String s) {
-
+                    CustomProgress.cancelDialog();
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
                     final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
@@ -221,10 +224,12 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
+                                CustomProgress.cancelDialog();
                             }
 
                             @Override
                             public void onResponse(String s) {
+                                CustomProgress.cancelDialog();
                                 try {
                                     JSONObject jsonObject = new JSONObject(s);
                                     String thread_id = jsonObject.getString("thread_id");
@@ -611,6 +616,10 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     @Override
     public void onResume() {
         super.onResume();
+
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()){
+            CustomProgress.cancelDialog();
+        }
         if (null != mFloatingActionsMenu) {
             mFloatingActionsMenu.close(true);
         }

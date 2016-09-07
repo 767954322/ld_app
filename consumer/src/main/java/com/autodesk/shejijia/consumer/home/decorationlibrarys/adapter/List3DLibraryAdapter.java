@@ -73,7 +73,7 @@ public class List3DLibraryAdapter extends BaseAdapter {
                 view[i] = inflater.inflate(R.layout.dynamic_add_3d_view, null);
 
                 ImageView img = (ImageView) view[i].findViewById(R.id.image_3d_photo);
-                ImageUtils.loadImage(img, dto.getDesign_file().get(i).getLink() + "HD.png");
+                ImageUtils.loadImageIcon(img, dto.getDesign_file().get(i).getLink() + "HD.png");
                 index = i;
                 view[i].setId(index);
                 view[i].setOnClickListener(new View.OnClickListener() {

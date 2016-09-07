@@ -42,7 +42,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_5"
-            android:background="@drawable/common_case_icon"
+            android:background="@drawable/home_page_icon"
             android:orientation="vertical" />
     </LinearLayout>
 
