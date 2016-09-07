@@ -161,8 +161,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         }
         setChooseViewWidth();
-        consumer_appraise.setText("评价" + "(" + 0 + ")");
-        consumer_appraise_replace_top.setText("评价" + "(" + 0 + ")");
+        appraiseCountSet();
     }
 
     @Override
@@ -942,7 +941,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.FAIL);
                 }
-                consumer_appraise.setText("评价" + "(" +0+")");
+                appraiseCountSet();//设置评价数量
                 CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
             }
@@ -955,14 +954,13 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mAppraiseDesignBeen = GsonUtil.jsonToBean(jsonString, AppraiseDesignBeen.class);
                 estimates = mAppraiseDesignBeen.getEstimates();
 
+
                 if (estimates != null) {
-                    default_ll_bg.setVisibility(View.GONE);
                     if (isRefreshOrLoadAppraise) {
-                        consumer_appraise.setText("评价" + "(" + estimates.size() + ")");
-                        consumer_appraise_replace_top.setText("评价" + "(" + estimates.size() + ")");
                         if (getAppraiseCount) {
 
-
+                            appraiseCount = appraiseCount + estimates.size();
+                            appraiseCountSet();//设置评价数量
                         } else {
 
                             mDesignerAppraiseFragment.updateListView(estimates, seekDesignerDetailHomeBean);
@@ -973,13 +971,20 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         }
                     } else {
                         mDesignerAppraiseFragment.loadMoreData(estimates);
+                        appraiseCount = appraiseCount + estimates.size();
+                        appraiseCountSet();//设置评价数量
                         mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                     }
 
 
-                } else {
-                    default_ll_bg.setVisibility(View.VISIBLE);
+                }
 
+                if (appraiseCount == 0){
+
+                    default_ll_bg.setVisibility(View.VISIBLE);
+                }else {
+
+                    default_ll_bg.setVisibility(View.GONE);
                 }
                 mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
 
@@ -1027,6 +1032,14 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             getAppraiseData(mDesignerId, LIMIT, OFFSET++);//获取评价数据
         }
     }
+    //评价数量
+    public void appraiseCountSet(){
+
+        consumer_appraise.setText("评价" + "(" + appraiseCount + ")");
+        consumer_appraise_replace_top.setText("评价" + "(" + appraiseCount + ")");
+    }
+
+
     private LinearLayout mLlChatMeasure;
     private RelativeLayout mRlEmpty;
     private PullToRefreshLayout mPullToRefreshLayout;
@@ -1067,6 +1080,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private int btHeight = 0;
     private int controlNumber = 1;//控制2D案例的评价的颜色，以及要加载或刷新的fragment
     private int OFFSETCOUNT = 10;
+    private int appraiseCount = 0;
     private boolean isTitleTwoShow = true;
     private boolean isScrollToTop = true;//判断第一次是否滑动置顶
     private boolean isFrist = true;//只走一次

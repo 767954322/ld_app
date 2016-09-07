@@ -62,14 +62,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         this.case3DBeen = case3DBeen;
         datas = new ArrayList<Case3DBeen.CasesBean>();
 
-            updateViewFromDesignerData(state);
 
-    }
-
-    /**
-     * @param state
-     */
-    public void updateViewFromDesignerData(int state) {
         //如果是刷新数据，就将该集合清空
         if (state == 0) {
             datas.clear();
@@ -89,6 +82,8 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
 
         }
 
+        Log.i("yaoxuehua",""+datas.size());
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -99,6 +94,16 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
 
             }
         });
+
+
+        updateViewFromDesignerData(state);
+
+    }
+
+    /**
+     * @param state
+     */
+    public void updateViewFromDesignerData(int state) {
 
 
     }
