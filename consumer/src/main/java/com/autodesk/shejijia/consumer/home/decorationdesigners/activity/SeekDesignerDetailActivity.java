@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.os.CancellationSignal;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -142,7 +143,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
 
-        customProgress = new CustomProgress(SeekDesignerDetailActivity.this);
+        CustomProgress.show(this, "", false, null);
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
         getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
 
@@ -158,7 +159,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         if (getAppraiseCount) {
             getAppraiseData(mDesignerId, LIMIT, OFFSET);//获取评价数据
-            customProgress.show();
 
         }
         setChooseViewWidth();
@@ -344,14 +344,15 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             case R.id.case_3d_btn:
 
-                getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 10, "data", "desc");
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
                 chooseViewPointer.setCase3dBtn(width);
                 choose_point_replace.setCase3dBtn(width);
 
                 if (mDesignerPerson3DMasterPageFragment == null) {
+                    CustomProgress.show(this, "", false, null);
                     mDesignerPerson3DMasterPageFragment = new DesignerPerson3DMasterPageFragment();
+                    getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 10, "data", "desc");
                 }
                 controlNumber = 2;
                 switchFragment(shareFragment, mDesignerPerson3DMasterPageFragment);
@@ -368,6 +369,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 getAppraiseCount = false;
 
                 if (mDesignerAppraiseFragment == null) {
+                    CustomProgress.show(this, "", false, null);
                     mDesignerAppraiseFragment = new DesignerAppraiseFragment();
                     getAppraiseData(mDesignerId, LIMIT, OFFSET);//获取评价数据
 
@@ -389,6 +391,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 choose_point_replace.setCase2dBtn(width);
                 controlNumber = 1;
                 if (mDesignerPersonMasterPageFragment == null) {
+                    CustomProgress.show(this, "", false, null);
                     mDesignerPersonMasterPageFragment = new DesignerPersonMasterPageFragment();
                 }
                 switchFragment(shareFragment, mDesignerPersonMasterPageFragment);
@@ -398,13 +401,14 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             case R.id.case_3d_btn_replace_top:
 
-                getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 10, "data", "desc");
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
 
                 chooseViewPointer.setCase3dBtn(width);
                 choose_point_replace.setCase3dBtn(width);
                 if (mDesignerPerson3DMasterPageFragment == null) {
+                    CustomProgress.show(this, "", false, null);
+                    getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 10, "data", "desc");
                     mDesignerPerson3DMasterPageFragment = new DesignerPerson3DMasterPageFragment();
                 }
                 controlNumber = 2;
@@ -421,6 +425,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 getAppraiseCount = false;
                 controlNumber = 3;
                 if (mDesignerAppraiseFragment == null) {
+                    CustomProgress.show(this, "", false, null);
                     mDesignerAppraiseFragment = new DesignerAppraiseFragment();
                     getAppraiseData(mDesignerId, LIMIT, OFFSET);//获取评价数据
                 }
@@ -565,7 +570,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                     default_ll_bg.setVisibility(View.VISIBLE);
                 }
-                customProgress.dismiss();
+                CustomProgress.cancelDialog();
 
             }
 
@@ -581,7 +586,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.FAIL);
                 }
 
-                customProgress.dismiss();
+                CustomProgress.cancelDialog();
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this, AlertView.Style.Alert, null).show();
             }
 
@@ -607,7 +612,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.FAIL);
                 }
-                customProgress.dismiss();
+                CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this, AlertView.Style.Alert, null).show();
 
@@ -638,7 +643,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                     default_ll_bg.setVisibility(View.VISIBLE);
                 }
-                customProgress.dismiss();
+                CustomProgress.cancelDialog();
 
             }
         });
@@ -942,7 +947,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.FAIL);
                 }
                 consumer_appraise.setText("评价" + "(" +0+")");
-                customProgress.dismiss();
+                CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
             }
 
@@ -966,7 +971,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                             mDesignerAppraiseFragment.updateListView(estimates, seekDesignerDetailHomeBean);
                             mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
-                            customProgress.dismiss();
+                            CustomProgress.cancelDialog();
                             getAppraiseCount = false;
 
                         }
@@ -991,7 +996,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     @Override
     public void onRefresh(MyScrollViewLayout pullToRefreshLayout) {
 
-        customProgress.show();
+        CustomProgress.show(this, "", false, null);
         if (controlNumber == 1) {
             isRefreshOrLoad = true;
 
@@ -1010,7 +1015,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     @Override
     public void onLoadMore(MyScrollViewLayout pullToRefreshLayout) {
 
-        customProgress.show();
+        CustomProgress.show(this, "", false, null);
         if (controlNumber == 1) {
             isRefreshOrLoad = false;
             getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, 0);
