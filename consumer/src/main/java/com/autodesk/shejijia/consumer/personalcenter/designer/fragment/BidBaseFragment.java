@@ -43,6 +43,8 @@ import java.util.Map;
 public abstract class BidBaseFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
 
     protected abstract int getEmptyDataMessage();
+    protected abstract boolean validateData(String status);
+    protected abstract CommonAdapter getCommonAdapter();
 
     @Override
     protected int getLayoutResId() {
@@ -57,17 +59,48 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         living_room = AppJsonFileReader.getLivingRoom(getActivity());
         room = AppJsonFileReader.getRoomHall(getActivity());
         toilet = AppJsonFileReader.getToilet(getActivity());
+
+        mPullToRefreshLayout.setOnRefreshListener(this);
+        mBiddingNeedsListEntities = new ArrayList<>();
+        mBiddingNeedsListEntityArrayList = new ArrayList<>();
+        mCommonAdapter = getCommonAdapter();
+        mPullListView.setAdapter(mCommonAdapter);
     }
 
     @Override
     protected void initView() {
         mPullListView = (PullListView) rootView.findViewById(R.id.pullable_listview);
         mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.pull_to_refresh_layout));
-        RelativeLayout emptyView = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
-        TextView tvEmptyMessage = (TextView) emptyView.findViewById(R.id.tv_empty_message);
+        mEmptyView = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
+        TextView tvEmptyMessage = (TextView) mEmptyView.findViewById(R.id.tv_empty_message);
         tvEmptyMessage.setText(getEmptyDataMessage());
-        emptyView.setVisibility(View.VISIBLE);
-        mPullListView.setEmptyView(emptyView);
+    }
+
+    public void onFragmentShown(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys) {
+        if (mPullListView.getEmptyView() == null) {
+            mPullListView.setEmptyView(mEmptyView);
+        }
+
+        mBiddingNeedsListEntityArrayList.clear();
+        for (MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity : biddingNeedsListEntitys) {
+            MyBidBean.BiddingNeedsListEntity.BidderEntity bidderEntity = biddingNeedsListEntity.getBidder();
+            if (bidderEntity != null && validateData(bidderEntity.getStatus())) {
+                mBiddingNeedsListEntityArrayList.add(biddingNeedsListEntity);
+            }
+        }
+        mBiddingNeedsListEntities.clear();
+        mBiddingNeedsListEntities.addAll(getData(0));
+        mCommonAdapter.notifyDataSetChanged();
+    }
+
+    protected ArrayList<MyBidBean.BiddingNeedsListEntity> getData(int index) {
+        int length = index + 10;
+        ArrayList<MyBidBean.BiddingNeedsListEntity> list = new ArrayList<MyBidBean.BiddingNeedsListEntity>();
+        for (int i = index; i < length && i < mBiddingNeedsListEntityArrayList.size(); i++) {
+            MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity = mBiddingNeedsListEntityArrayList.get(i);
+            list.add(biddingNeedsListEntity);
+        }
+        return list;
     }
 
     protected void setupBidItemView(CommonViewHolder holder, MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
@@ -130,5 +163,12 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
     ///控件.
     protected PullToRefreshLayout mPullToRefreshLayout;
     protected PullListView mPullListView;
+    protected RelativeLayout mEmptyView;
 
+    protected CommonAdapter mCommonAdapter;
+    protected ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntities;
+    protected ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntityArrayList;
+
+    protected static final String BE_BEING = "0";
+    protected static final String IS_SUCCESS = "1";
 }
