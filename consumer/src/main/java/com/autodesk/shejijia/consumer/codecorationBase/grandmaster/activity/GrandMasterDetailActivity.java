@@ -23,6 +23,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDia
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.MyListView;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.VerticalViewPager;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -87,8 +88,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         MPServerHttpManager.getInstance().getGrandMasterDetailInfo(0, 10, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
-                ToastUtil.showCustomToast(GrandMasterDetailActivity.this, "获取大师详情信息失败");
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,GrandMasterDetailActivity.this);
 
             }
 
@@ -132,7 +132,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     //为pager页添加数据（目前案例列表为假数据）
     private void initListData() {
 
-        nav_title_textView.setText("套餐详情");
+        nav_title_textView.setText("大师详情");
         tv_detail_cn_name = (TextView) view1.findViewById(R.id.tv_detail_cn_name);
         tv_detail_en_name = (TextView) view1.findViewById(R.id.tv_detail_en_name);
         tv_detail_content = (TextView) view1.findViewById(R.id.tv_detail_content);
@@ -231,9 +231,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,GrandMasterDetailActivity.this);
                 CustomProgress.cancelDialog();
-                Toast.makeText(GrandMasterDetailActivity.this, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override

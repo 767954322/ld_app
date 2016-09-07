@@ -21,6 +21,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.GrandM
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.MasterInfo;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -63,10 +64,12 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     @Override
     protected void initData() {
 
+
         MPServerHttpManager.getInstance().getGrandMasterInfo(0, 10, "61", new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
                 initPageData("error");
             }
 
@@ -276,7 +279,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             public void onErrorResponse(VolleyError volleyError) {
 
                 CustomProgress.cancelDialog();
-                Toast.makeText(getActivity(), R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
             }
 
             @Override
