@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -193,14 +194,18 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示.
                 ll_send.setVisibility(View.VISIBLE);
                 btn_send.setText(R.string.send_design_contract);
+                UIsetSendButtonCenter();
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
                 ll_send.setVisibility(View.GONE);
             } else if (WorkFlowSubNodeStep() == 33) {
                 ll_send.setVisibility(View.VISIBLE);
                 btn_send.setText(R.string.uploaded_deliverable);
+                UIsetSendButtonCenter();
             } else {
                 ll_send.setVisibility(View.VISIBLE);
+                UIsetSendButtonCenter();
                 btn_send.setText(R.string.send_design_contract);
+
             }
         } else {  /// 已有合同
 
@@ -209,11 +214,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
             if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
                 ll_send.setVisibility(View.VISIBLE);
+                UIsetSendButtonCenter();
                 btn_send.setText(R.string.send_design_contract);
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) {   /// 当消费者发完设计首款按钮隐藏 .
                 ll_send.setVisibility(View.GONE);
             } else if (WorkFlowSubNodeStep() == 33) {
                 ll_send.setVisibility(View.VISIBLE);
+                UIsetSendButtonCenter();
                 btn_send.setText(R.string.uploaded_deliverable);
             }
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
@@ -244,6 +251,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
         }
 
+
+    }
+    private void UIsetSendButtonCenter()
+    {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)btn_send.getLayoutParams();
+        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        btn_send.setLayoutParams(params); //causes layout update
 
     }
 
@@ -321,15 +335,25 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 if (contract_detail == null)
                     break;
 
-                String contract_number = contract_data_entity.getContract_no();
-                String contract_date = contract_data_entity.getContract_create_date();
-                String design_amount = contract_data_entity.getContract_charge();
-                String design_amount_first = contract_data_entity.getContract_first_charge();
+                String contract_number;
+                String contract_date;
+                String design_amount;
+                String design_amount_first;
+                String design_amount_balance;
+
+                contract_number = contract_data_entity.getContract_no();
+                contract_date= contract_data_entity.getContract_create_date();
+                design_amount = contract_data_entity.getContract_charge();
+                design_amount_first = contract_data_entity.getContract_first_charge();
+
+                contract_date = Validator.getStrDateToString(contract_date);
+
 
                 Double totalCost = Double.parseDouble(design_amount);
                 Double firstCost = Double.parseDouble(design_amount_first);
                 DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
-                String design_amount_balance = df.format(totalCost - firstCost);
+                //design_amount_balance = df.format(totalCost - firstCost);
+                design_amount_balance = String.format("%.2f", totalCost - firstCost);
 
                 String consumer_name = contract_detail.getName();
                 String consumer_mobile = contract_detail.getMobile();
@@ -352,10 +376,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
             ;
+
             twvc_consumerContent.loadDataWithBaseURL(null, text, Constant.NetBundleKey.MIME_TYPE_TEXT_HTML, Constant.NetBundleKey.UTF_8, "");
 
         } catch (IOException e) {
-            // Should never happen!
+
             throw new RuntimeException(e);
         }
     }
@@ -446,6 +471,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) >= 33) {
             btn_send.setVisibility(View.GONE);
+
             ll_agree_establish_contract.setVisibility(View.GONE);
         }
 
@@ -564,7 +590,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 bValid = false;
                 break;
             }
-
+            //REFACTOR
             if (!consumerEmail.equals("")) {
                 if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
                     showAlertView(R.string.please_fill_in_the_right_phone_email);
@@ -780,7 +806,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                         return;
                     }
                 }
-
+                //REFACTOR
                 if (jusnFrist){
 
                     String firstCost;
