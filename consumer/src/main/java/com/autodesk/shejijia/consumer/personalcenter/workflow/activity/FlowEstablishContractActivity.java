@@ -103,10 +103,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
          /* init content for designer form */
         ll_contract = (LinearLayout) findViewById(R.id.ll_flow_examine_contract);
         ll_send = (LinearLayout) findViewById(R.id.ll_send_establish_contract);
+        ll_designer_send = (LinearLayout) findViewById(R.id.ll_flow_designer_send_contract);
+
         ll_agree_establish_contract = (LinearLayout) findViewById(R.id.ll_agree_establish_contract);
         ll_contract_content_designer = (LinearLayout) findViewById(R.id.design_contract_content_designer);
         ll_contract_content_consumer = (LinearLayout) findViewById(R.id.design_contract_content_consumer);
         //Variables
+        btn_send_contract = (Button) findViewById(R.id.btn_send_establish_contract_designer);
         btn_send = (Button) findViewById(R.id.btn_send_establish_contract);
         tvc_consumer_name = (TextViewContent) findViewById(R.id.flow_establish_contract_consumer_name);
         tvc_consumer_phone = (TextViewContent) findViewById(R.id.flow_establish_contract_consumer_phone);
@@ -170,6 +173,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     private void UpdateUIcontractContentDesigner() {
         ll_agree_establish_contract.setVisibility(View.GONE);
+        ll_send.setVisibility(View.GONE);
         tvc_last_cost.setEnabled(false);
 
 
@@ -194,19 +198,16 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
 
             if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示.
-                ll_send.setVisibility(View.VISIBLE);
-                btn_send.setText(R.string.flow_send);
-                UIsetSendButtonCenter();
+
+                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.send_design_contract));
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
-                ll_send.setVisibility(View.GONE);
+                UIsetDesignerSendButtonActive(false,null);
             } else if (WorkFlowSubNodeStep() == 33) {
-                ll_send.setVisibility(View.VISIBLE);
-                btn_send.setText(R.string.uploaded_deliverable);
-                UIsetSendButtonCenter();
+                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.uploaded_deliverable));
+
             } else {
-                ll_send.setVisibility(View.VISIBLE);
-                UIsetSendButtonCenter();
-                btn_send.setText(R.string.send_design_contract);
+                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.send_design_contract));
+
 
             }
         } else {  /// 已有合同
@@ -215,15 +216,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 UpdateUIdisableFieldsInput();  /// 如果是已有的合同设置所有得按键都不可点击 .
             }
             if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
-                ll_send.setVisibility(View.VISIBLE);
-                UIsetSendButtonCenter();
+                UIsetDesignerSendButtonActive(true,null);
+
                 btn_send.setText(R.string.send_design_contract);
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) {   /// 当消费者发完设计首款按钮隐藏 .
-                ll_send.setVisibility(View.GONE);
+                UIsetDesignerSendButtonActive(false,null);
             } else if (WorkFlowSubNodeStep() == 33) {
-                ll_send.setVisibility(View.VISIBLE);
-                UIsetSendButtonCenter();
-                btn_send.setText(R.string.uploaded_deliverable);
+                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.uploaded_deliverable));
+
             }
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) {
@@ -256,14 +256,33 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     }
 
-    private void UIsetSendButtonCenter() {
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) btn_send.getLayoutParams();
-        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        btn_send.setLayoutParams(params); //causes layout update
+    private void UIsetDesignerSendButtonActive(boolean bVivible,String buttonText ) {
+
+        if (bVivible) {
+            ll_designer_send.setVisibility(View.VISIBLE);
+
+            if (buttonText!=null)
+                btn_send.setText(R.string.send_design_contract);
+        }else{
+            ll_designer_send.setVisibility(View.GONE);
+        }
+
 
     }
 
     private void UpdateUIcontractContentConsumer() {
+
+        if (getContractDataEntityFromFirstBidder() == null) {
+            mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                @Override
+                public void onDismiss(Object o) {
+                    finish();
+                }
+            });
+            mDesignContract.show();
+            return;
+        }
+
         UpdateUIsetContentViewConsumer();
 
         if (WorkFlowSubNodeStep() == 31) {
@@ -941,8 +960,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private TextViewContent tvc_last_cost;
     private ImageView img_agree_establish_contract;
     private Button btn_send;
+    private Button btn_send_contract;
     private LinearLayout ll_contract;
     private LinearLayout ll_send;
+    private LinearLayout ll_designer_send;
+
     private LinearLayout ll_agree_establish_contract;
     private LinearLayout ll_contract_content_designer;
     private LinearLayout ll_contract_content_consumer;

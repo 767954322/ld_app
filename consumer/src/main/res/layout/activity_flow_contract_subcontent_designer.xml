@@ -561,6 +561,32 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_flow_designer_send_contract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_60"
+                android:layout_marginBottom="@dimen/size_120"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btn_send_establish_contract_designer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_40"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentLeft="true"
+                    android:radius="4dip"
+                    android:background="@drawable/bg_common_btn_blue"
+                    android:text="@string/sure_and_send"
+                    android:textColor="@color/bg_ff" />
+
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
