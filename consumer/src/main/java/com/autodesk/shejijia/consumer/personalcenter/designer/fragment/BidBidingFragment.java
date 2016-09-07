@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -18,16 +19,13 @@ import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
@@ -47,7 +45,7 @@ import java.util.Map;
  * @file BidBidingFragment.java  .
  * @brief 我的应标:应标中 .
  */
-public class BidBidingFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
+public class BidBidingFragment extends BidBaseFragment {
 
     @Override
     protected int getLayoutResId() {
@@ -66,17 +64,10 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
 
     @Override
     protected void initData() {
+        super.initData();
         setListener();
         mList = new ArrayList<>();
         beBeingList = new ArrayList<>();
-
-        style = AppJsonFileReader.getStyle(getActivity());
-        area = AppJsonFileReader.getArea(getActivity());
-        space = AppJsonFileReader.getSpace(getActivity());
-        living_room = AppJsonFileReader.getLivingRoom(getActivity());
-        room = AppJsonFileReader.getRoomHall(getActivity());
-        toilet = AppJsonFileReader.getToilet(getActivity());
-
         commonAdapter = getCommonAdapter();
         mListView.setAdapter(commonAdapter);
 //        addFooterViewForMListView();
@@ -135,84 +126,18 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
 
     private CommonAdapter getCommonAdapter() {
 
-        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mList, R.layout.item_lv_my_bid_be_being) {
+        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mList, R.layout.item_mybid_bidding) {
             @Override
             public void convert(CommonViewHolder holder, final MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
-                holder.setText(R.id.tv_be_being_address, biddingNeedsListEntity.getNeeds_name());
-                holder.setText(R.id.tv_be_being_time, biddingNeedsListEntity.getEnd_day());
-                String livingRoom = biddingNeedsListEntity.getLiving_room();
-                String roomHall = biddingNeedsListEntity.getRoom();
-                String mToilet = biddingNeedsListEntity.getToilet();
-                String house_area = biddingNeedsListEntity.getHouse_area();
-                String house_type = biddingNeedsListEntity.getHouse_type();
-                String renovation_style = biddingNeedsListEntity.getRenovation_style();
-                final String needs_id = biddingNeedsListEntity.getNeeds_id();
+                setupBidItemView(holder, biddingNeedsListEntity);
+                holder.setText(R.id.tv_bidder_count, String.format(getString(R.string.bid_designer_num),
+                        biddingNeedsListEntity.getBidder_count()));
+                holder.setText(R.id.tv_decoration_end_day, biddingNeedsListEntity.getEnd_day());
 
-                if (living_room.containsKey(livingRoom)) {
-                    holder.setText(R.id.tv_be_being_living_room, living_room.get(livingRoom));
-                } else {
-                    holder.setText(R.id.tv_be_being_living_room, biddingNeedsListEntity.getLiving_room());
-                }
-                if (room.containsKey(roomHall)) {
-                    holder.setText(R.id.tv_be_being_room, room.get(roomHall));
-                } else {
-                    holder.setText(R.id.tv_be_being_room, biddingNeedsListEntity.getRoom());
-                }
-                if (toilet.containsKey(mToilet)) {
-                    holder.setText(R.id.tv_be_being_toilet, toilet.get(mToilet));
-                } else {
-                    holder.setText(R.id.tv_be_being_toilet, biddingNeedsListEntity.getToilet());
-                }
-                if (area.containsKey(house_area)) {
-                    holder.setText(R.id.tv_be_being_area, area.get(house_area) + "m²");
-                } else {
-                    holder.setText(R.id.tv_be_being_area, biddingNeedsListEntity.getHouse_area() + "m²");
-                }
-                if (space.containsKey(house_type)) {
-                    holder.setText(R.id.tv_be_being_type, space.get(house_type));
-                } else {
-                    holder.setText(R.id.tv_be_being_type, biddingNeedsListEntity.getHouse_type());
-                }
-                if (style.containsKey(renovation_style)) {
-                    holder.setText(R.id.tv_be_being_style, style.get(renovation_style));
-                } else {
-                    holder.setText(R.id.tv_be_being_style, biddingNeedsListEntity.getRenovation_style());
-                }
-                holder.setText(R.id.tv_be_being_budget, biddingNeedsListEntity.getRenovation_budget());
-
-                holder.getView(R.id.btn_be_being_demand_details).setOnClickListener(new View.OnClickListener() {
+                holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
-                        Bundle bundle = new Bundle();
-                        KLog.d(TAG, needs_id);
-                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
-                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT);
-                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-                });
-
-                holder.getView(R.id.into_charRoom).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                        String loggedInUserId = mMemberEntity.getAcs_member_id();
-                        String member_type = mMemberEntity.getMember_type();
-                        String designer_thread_id = biddingNeedsListEntity.getBidder().getDesign_thread_id();
-                        String userName = biddingNeedsListEntity.getUser_name();
-                        String acs_member_id = biddingNeedsListEntity.getAcs_member_id();
-
-                        Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, loggedInUserId);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, userName);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
-                        intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, acs_member_id);
-                        intent.putExtra(ChatRoomActivity.THREAD_ID, designer_thread_id);
-                        intent.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
-                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                        getActivity().startActivity(intent);
+                        showDetail(biddingNeedsListEntity.getNeeds_id());
                     }
                 });
             }
@@ -255,7 +180,9 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
     //获取数据后，更新
     public void updateViewFromData(MyBidBean myBidBean) {
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-        fragmentCallBack.getMyBidBean(myBidBean);
+        if (fragmentCallBack != null) {
+            fragmentCallBack.getMyBidBean(myBidBean);
+        }
     }
 
     /**
@@ -297,7 +224,9 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        fragmentCallBack = (MyBidActivity) activity;
+        if (activity instanceof FragmentCallBack) {
+            fragmentCallBack = (FragmentCallBack)activity;
+        }
     }
 
 
@@ -316,12 +245,6 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
     ///　集合，类.
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mList;
     private List<MyBidBean.BiddingNeedsListEntity> beBeingList;
-    private Map<String, String> living_room;
-    private Map<String, String> style;
-    private Map<String, String> area;
-    private Map<String, String> room;
-    private Map<String, String> toilet;
-    private Map<String, String> space;
-    private CommonAdapter commonAdapter;
     private FragmentCallBack fragmentCallBack;
+    private CommonAdapter commonAdapter;
 }

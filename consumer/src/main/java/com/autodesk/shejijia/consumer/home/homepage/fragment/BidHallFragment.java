@@ -27,6 +27,7 @@ import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
@@ -120,10 +121,12 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     private void getShouldHallData(final int state, int offset, int limit,
                                    String custom_string_area, String custom_string_form, String custom_string_type, String custom_string_bedroom,
                                    String custom_string_style, String custom_string_restroom, String asset_taxonomy) {
+        CustomProgress.show(getActivity(),"",false,null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 if (jsonObject == null) {
                     return;
                 }
@@ -159,6 +162,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 if (null != getActivity()) {
@@ -190,8 +194,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         android.view.ViewGroup.LayoutParams pp = mRlEmpty.getLayoutParams();
-        mRlEmpty.getLayoutParams();
-        pp.height = height - 50;
+        pp.height = height - 100;
         mRlEmpty.setLayoutParams(pp);
         mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
     }
