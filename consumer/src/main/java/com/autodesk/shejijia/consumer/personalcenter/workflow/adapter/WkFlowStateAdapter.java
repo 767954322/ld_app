@@ -332,6 +332,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.jieshoushejihetong_ico;
             }
+
         } else {
             if ((stateCode == 21 || stateCode == 22) || (stateCode >= 31 && stateCode != 33) || stateCode == 33) {
                 textColor = StepEnableColor;
@@ -342,7 +343,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 drawable = R.drawable.jieshoushejihetong_ico;
             }
         }
-        if (stateCode == 31||stateCode == 33) {
+        if (stateCode == 21|| stateCode == 22) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);
@@ -361,6 +362,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
             if (stateCode == 13) {
                 textColor = StepEnableColor;
+                setItemAnimationForView(textColor, viewHolder);
             } else if (stateCode > 14) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_liangfang;
@@ -368,6 +370,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.liangfangfei_ico;
             }
+
         } else {
             if (stateCode == 13 || stateCode >= 21) {
                 drawable = R.drawable.icon_liangfang;
@@ -377,7 +380,12 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.liangfangfei_ico;
             }
+            if (stateCode == 13) {
+                setItemAnimationForView(textColor, viewHolder);
+            }
         }
+
+
         initViewHolder(viewHolder, drawable, textColor);
     }
 

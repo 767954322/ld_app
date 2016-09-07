@@ -315,38 +315,52 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      * @param view
      */
     private void costMeasureFeeNode(int wk_cur_sub_node_idi, View view) {
+
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (WorkFlowTemplateStep() == 1) {     // 应标
-                if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 12 || wk_cur_sub_node_idi == 14) {
-                    view.setClickable(false);
-                } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
-                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-                }
-            } else if (WorkFlowTemplateStep() == 2) {    /// 自选量房阶段 .
-                if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
-                    view.setClickable(false);
-                } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
-                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-                }
+            if (wk_cur_sub_node_idi == 21) {
+                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+            }else if(wk_cur_sub_node_idi == 13){
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.waiting_cons_uploaded_room_deliverable), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
+                        AlertView.Style.Alert, null).show();
+            }else{
+                view.setClickable(false);
             }
+//            if (WorkFlowTemplateStep() == 1) {     // 应标
+//                if (wk_cur_sub_node_idi == 21) {
+//                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//                } else if (wk_cur_sub_node_idi == 21 ) {
+//                    view.setClickable(false);
+//                }
+//            } else if (WorkFlowTemplateStep() == 2) {    /// 自选量房阶段 .
+//                if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
+//                    view.setClickable(false);
+//                } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
+//                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//                }
+//            }
             return;
         }
+        if (wk_cur_sub_node_idi == 13) {
+            showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
 
-        if (WorkFlowTemplateStep() == 1) { // 应标
-            if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
-                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-
-            } else {
-                view.setClickable(false);
-            }
-        } else if (WorkFlowTemplateStep() == 2) {
-            // 自选或北舒
-            if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
-                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-            } else {
-                view.setClickable(false);
-            }
+        }else{
+            view.setClickable(false);
         }
+
+//        if (WorkFlowTemplateStep() == 1) { //竞优
+//            if (wk_cur_sub_node_idi == 13) {
+//                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//
+//            } else {
+//                view.setClickable(false);
+//            }
+//        } else if (WorkFlowTemplateStep() == 2) { // 套餐
+//            if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
+//                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
+//            } else {
+//                view.setClickable(false);
+//            }
+//        }
 
 
     }
