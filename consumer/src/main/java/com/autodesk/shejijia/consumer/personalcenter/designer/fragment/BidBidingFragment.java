@@ -79,7 +79,7 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
 
         commonAdapter = getCommonAdapter();
         mListView.setAdapter(commonAdapter);
-        addFooterViewForMListView();
+//        addFooterViewForMListView();
 
         onWindowFocusChanged();
     }
@@ -92,17 +92,17 @@ public class BidBidingFragment extends BaseFragment implements PullToRefreshLayo
         }
     }
 
-    private void addFooterViewForMListView() {
-        rl_empty.setVisibility(View.GONE);
-        mListView.addFooterView(mFooterView);
-        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams pp = rl_empty.getLayoutParams();
-        rl_empty.getLayoutParams();
-        pp.height = height - height / 5;
-        rl_empty.setLayoutParams(pp);
-        tv_empty_message.setText(UIUtils.getString(R.string.bidbiding_no_data_massage));
-    }
+//    private void addFooterViewForMListView() {
+//        rl_empty.setVisibility(View.GONE);
+//        mListView.addFooterView(mFooterView);
+//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+//        int height = wm.getDefaultDisplay().getHeight();
+//        android.view.ViewGroup.LayoutParams pp = rl_empty.getLayoutParams();
+//        rl_empty.getLayoutParams();
+//        pp.height = height - height / 5;
+//        rl_empty.setLayoutParams(pp);
+//        tv_empty_message.setText(UIUtils.getString(R.string.bidbiding_no_data_massage));
+//    }
 
     public void onFragmentShown(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys) {
         beBeingList.clear();
