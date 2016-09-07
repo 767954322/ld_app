@@ -4,7 +4,7 @@
     android:id="@+id/rl_empty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/iv_default_empty"

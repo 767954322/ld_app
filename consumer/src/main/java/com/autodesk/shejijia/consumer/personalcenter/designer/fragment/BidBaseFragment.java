@@ -42,6 +42,13 @@ import java.util.Map;
  */
 public abstract class BidBaseFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
 
+    protected abstract int getEmptyDataMessage();
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.fragment_my_bid;
+    }
+
     @Override
     protected void initData() {
         style = AppJsonFileReader.getStyle(getActivity());
@@ -50,6 +57,17 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         living_room = AppJsonFileReader.getLivingRoom(getActivity());
         room = AppJsonFileReader.getRoomHall(getActivity());
         toilet = AppJsonFileReader.getToilet(getActivity());
+    }
+
+    @Override
+    protected void initView() {
+        mPullListView = (PullListView) rootView.findViewById(R.id.pullable_listview);
+        mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.pull_to_refresh_layout));
+        RelativeLayout emptyView = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
+        TextView tvEmptyMessage = (TextView) emptyView.findViewById(R.id.tv_empty_message);
+        tvEmptyMessage.setText(getEmptyDataMessage());
+        emptyView.setVisibility(View.VISIBLE);
+        mPullListView.setEmptyView(emptyView);
     }
 
     protected void setupBidItemView(CommonViewHolder holder, MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
@@ -108,5 +126,9 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
     private Map<String, String> room;
     private Map<String, String> toilet;
     private Map<String, String> space;
+
+    ///控件.
+    protected PullToRefreshLayout mPullToRefreshLayout;
+    protected PullListView mPullListView;
 
 }

@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -10,20 +8,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
-import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * @author DongXueQiu .
@@ -35,17 +27,8 @@ import java.util.Map;
 public class BidFailureFragment extends BidBaseFragment {
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.fragment_my_bid_outflow;
-    }
-
-    @Override
-    protected void initView() {
-        mListView = (PullListView) rootView.findViewById(R.id.lv_out_bid);
-        mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_my_out_view));
-        mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
-        rl_empty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
-        tv_empty_message = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
+    protected int getEmptyDataMessage() {
+        return R.string.bid_failure_no_data_massage;
     }
 
     @Override
@@ -53,23 +36,10 @@ public class BidFailureFragment extends BidBaseFragment {
         super.initData();
         setListener();
         mCommonAdapter = getCommonAdapter();
-        mListView.setAdapter(mCommonAdapter);
-        addFooterViewForMListView();
+        mPullListView.setAdapter(mCommonAdapter);
         Bundle data = getArguments();
         ArrayList<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys = (ArrayList<MyBidBean.BiddingNeedsListEntity>) data.getSerializable("FragmentData");
         onFragmentShown(biddingNeedsListEntitys);
-    }
-
-    private void addFooterViewForMListView() {
-        rl_empty.setVisibility(View.GONE);
-        mListView.addFooterView(mFooterView);
-        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams pp = rl_empty.getLayoutParams();
-        rl_empty.getLayoutParams();
-        pp.height = height - height / 5;
-        rl_empty.setLayoutParams(pp);
-        tv_empty_message.setText(UIUtils.getString(R.string.bid_failure_no_data_massage));
     }
 
     public void onFragmentShown(ArrayList<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys) {
@@ -85,16 +55,7 @@ public class BidFailureFragment extends BidBaseFragment {
         }
         mBiddingNeedsListEntities1.clear();
         mBiddingNeedsListEntities1.addAll(getData(0));
-        isHideMFooterView(mBiddingNeedsListEntities1.size());
         mCommonAdapter.notifyDataSetChanged();
-    }
-
-    private void isHideMFooterView(int size) {
-        if (size <= 0) {
-            rl_empty.setVisibility(View.VISIBLE);
-        } else {
-            rl_empty.setVisibility(View.GONE);
-        }
     }
 
     ///适配器.
@@ -143,7 +104,6 @@ public class BidFailureFragment extends BidBaseFragment {
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         mBiddingNeedsListEntities1.clear();
         mBiddingNeedsListEntities1.addAll(getData(0));
-        isHideMFooterView(mBiddingNeedsListEntities1.size());
         mCommonAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
 
@@ -151,19 +111,10 @@ public class BidFailureFragment extends BidBaseFragment {
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-
         mBiddingNeedsListEntities1.addAll(getData(mBiddingNeedsListEntities1.size()));
-        isHideMFooterView(mBiddingNeedsListEntities1.size());
         mCommonAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
-
-    /// 控件.
-    private PullToRefreshLayout mPullToRefreshLayout;
-    private RelativeLayout rl_empty;
-    private PullListView mListView;
-    private TextView tv_empty_message;
-    private View mFooterView;
 
     //变量
     private static final String BE_BEING = "0";
