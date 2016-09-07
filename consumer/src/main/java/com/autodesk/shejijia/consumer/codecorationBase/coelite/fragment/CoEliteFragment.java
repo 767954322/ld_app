@@ -9,19 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.IssueEliteDemanActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SelectionAdapter;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DesignWorksBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -39,7 +35,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     private ViewPager vpSelection;
     private ViewGroup vgSelection;
     private ImageButton imReservationButton;
-    private boolean falg = false;
 
 
     /**
@@ -63,9 +58,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
     @Override
     protected void initData() {
-        if(falg){
-            return;
-        }
+
         //载入图片资源
         getDesignWorks();
     }
@@ -159,12 +152,9 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
     //载入设计师作品
     private void getDesignWorks(){
-        CustomProgress.showDefaultProgress(activity);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                falg = true;
-                CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
                 DesignWorksBean myBidBean = GsonUtil.jsonToBean(str, DesignWorksBean.class);
                 updataView(myBidBean);
@@ -172,7 +162,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                CustomProgress.cancelDialog();
                 updataView(null);
             }
         };
