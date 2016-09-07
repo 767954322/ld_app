@@ -19,6 +19,7 @@ public class FindDesignerBean implements Serializable {
 
 //    nick_name 昵称
 //    style_names  风格
+//    style　  风格对应的英文
 //    start_experience 工作年限开始时间
 //    end_experience   工作年限结束时间
 //    design_price_code 设计师设计费区间code
@@ -28,6 +29,19 @@ public class FindDesignerBean implements Serializable {
     private String start_experience;
     private String end_experience;
     private String design_price_code;
+    private String style;
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        if (TextUtils.isEmpty(style)) {
+            this.style = "";
+        } else {
+            this.style = style;
+        }
+    }
 
     public void setNick_name(String nick_name) {
         if (!TextUtils.isEmpty(nick_name)) {

@@ -101,7 +101,8 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
 
         mYear = mWorkTimeList.get(mYearIndex).getCode();
 
-        mStyle = mStyleList.get(mStyleIndex).getName();
+        mStyleName = mStyleList.get(mStyleIndex).getName();
+        mStyleCode = mStyleList.get(mStyleIndex).getCode();
 
         mPrice = mCostList.get(mPriceIndex).getCode();
 
@@ -122,10 +123,12 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
 
         FindDesignerBean findDesignerBean = new FindDesignerBean();
         findDesignerBean.setNick_name("");
-        if ("全部".equals(mStyle)) {
-            mStyle = "";
+        if ("全部".equals(mStyleName)) {
+            mStyleName = "";
+            mStyleCode = "";
         }
-        findDesignerBean.setStyle_names(mStyle);
+        findDesignerBean.setStyle_names(mStyleName);
+        findDesignerBean.setStyle(mStyleCode);
         findDesignerBean.setStart_experience(start_experience);
         findDesignerBean.setEnd_experience(end_experience);
         findDesignerBean.setDesign_price_code(mPrice);
@@ -270,7 +273,8 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     private int mStyleIndex = 0;
     private int mPriceIndex = 0;
     private String mYear;
-    private String mStyle;
+    private String mStyleName;
+    private String mStyleCode;
     private String mPrice;
 
     private FiltrateWorkYearAdapter mYAdapter;

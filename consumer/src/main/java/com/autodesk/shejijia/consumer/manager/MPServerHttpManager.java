@@ -310,7 +310,7 @@ public class MPServerHttpManager {
                 "&start_experience=" + findDesignerBean.getStart_experience() +
                 "&end_experience=" + findDesignerBean.getEnd_experience() +
                 "&design_price_code=" + findDesignerBean.getDesign_price_code() +
-                "&styles=" + "" +
+                "&styles=" + findDesignerBean.getStyle() +
                 "&offset=" + offset +
                 "&limit=" + limit;
 
