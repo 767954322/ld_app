@@ -74,7 +74,7 @@ public class SixProductsActivity extends NavigationBarActivity {
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
         pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 16));
-        pagerSlidingTabStrip.setPaddingMiddle(true);//设置tab控件居中
+//        pagerSlidingTabStrip.setPaddingMiddle(true);//设置tab控件居中
         pagerSlidingTabStrip.setOnClickItemListener(new MaterialTabs.OnClickItemListener() {
             @Override
             public void onClickItemListener(int position) {
