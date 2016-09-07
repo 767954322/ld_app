@@ -188,9 +188,6 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.jiaofuwu_ico;
             }
-            if (stateCode == 51) {
-                setItemAnimationForView(textColor, viewHolder);
-            }
         } else {
             if (stateCode == 51 || stateCode > 51) {
                 textColor = StepEnableColor;
@@ -199,9 +196,10 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.jiaofuwu_ico;
             }
-            if (stateCode == 51) {
-                setItemAnimationForView(textColor, viewHolder);
-            }
+
+        }
+        if (stateCode >= 51 && stateCode != 63) {
+            setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);
     }
