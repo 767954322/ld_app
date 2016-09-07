@@ -1,49 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/size_5"
+    android:gravity="center_vertical"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <LinearLayout
-
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:padding="@dimen/list_padding"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <ImageView
+            android:id="@+id/img_type_icon"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_type_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            tools:text="渲染图" />
 
-            <TextView
-                android:id="@+id/image_aaa"
-                android:layout_width="30dip"
-                android:layout_height="30dip"
-                android:layout_marginLeft="15dip"
-                android:layout_marginRight="15dip"
-                android:background="@drawable/icon"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/nameTV"
-                android:layout_width="wrap_content"
-                android:layout_height="50dip"
-                android:gravity="center"
-                android:text="111"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_photo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_5"
-            android:background="@drawable/home_page_icon"
-            android:orientation="vertical" />
     </LinearLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rly_type_details"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
