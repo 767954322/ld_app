@@ -62,7 +62,7 @@
                         <div class="tableblock">
                             <table style="width:100%;border:1px solide red;table-layout:fixed; word-break: break-all; overflow:hidden;">
                                 <tr>
-                                    <td style="text-align: right;width:70px;"><span>手機號碼：</span></td>
+                                    <td style="text-align: right;width:70px;"><span>手机号码：</span></td>
                                     <td><span>#val(consumer_mobile)</span></td>
                                 </tr>
                                 <tr>
@@ -83,7 +83,7 @@
                         <div class="tableblock">
                             <table style="width:100%;border:1px solide red;table-layout:fixed; word-break: break-all; overflow:hidden;">
                                 <tr>
-                                    <td style="text-align: right;width:70px;"><span>手機號碼：</span></td>
+                                    <td style="text-align: right;width:70px;"><span>手机号码：</span></td>
                                     <td><span>#val(designer_mobile)</span></td>
                                 </tr>
                                 <tr>
