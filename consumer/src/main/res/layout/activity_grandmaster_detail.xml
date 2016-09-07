@@ -26,10 +26,9 @@
                 android:layout_height="@dimen/size_40"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/transparent"
+                android:background="@drawable/arrow"
                 android:padding="@dimen/navbar_icon_padding"
                 android:scaleType="centerInside"
-                android:src="@drawable/icon_back_normal_z"
                 android:visibility="visible" />
 
 
