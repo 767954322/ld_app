@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bid_item_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/view_parting_line"></include>
     <include layout="@layout/item_bid_info_header"></include>
     <include layout="@layout/view_parting_line" style="@style/BidItem.Divider_Internal"></include>
     <include layout="@layout/item_bid_info"></include>
     <include layout="@layout/view_parting_line" style="@style/BidItem.Divider_Internal"></include>
     <include layout="@layout/item_mybid_bidding_footer"></include>
-    <include layout="@layout/view_parting_line"></include>
 </LinearLayout>
