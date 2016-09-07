@@ -4,9 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/view_parting_line"></include>
     <include layout="@layout/item_bid_info_header"></include>
-    <include layout="@layout/view_parting_line"></include>
+    <include layout="@layout/view_parting_line" style="@style/BidItem.Divider_Internal"></include>
     <include layout="@layout/item_bid_info"></include>
-    <include layout="@layout/view_parting_line"></include>
+    <include layout="@layout/view_parting_line" style="@style/BidItem.Divider_Internal"></include>
     <include layout="@layout/item_mybid_bidding_footer"></include>
+    <include layout="@layout/view_parting_line"></include>
 </LinearLayout>

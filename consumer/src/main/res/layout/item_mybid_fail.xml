@@ -5,10 +5,11 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
+    <include layout="@layout/view_parting_line"></include>
     <include layout="@layout/item_bid_info_header"></include>
-    <include layout="@layout/view_parting_line"></include>
+    <include layout="@layout/view_parting_line" style="@style/BidItem.Divider_Internal"></include>
     <include layout="@layout/item_bid_info"></include>
-    <include layout="@layout/view_parting_line"></include>
+    <include layout="@layout/view_parting_line" style="@style/BidItem.Divider_Internal"></include>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rl_bidder_count"
@@ -25,5 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
+    <include layout="@layout/view_parting_line"></include>
 </LinearLayout>
 

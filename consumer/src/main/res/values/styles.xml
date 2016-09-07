@@ -31,4 +31,11 @@
     <style name="BidItem.Text.Light">
         <item name="android:textColor">@color/mybid_text_color_light</item>
     </style>
+
+    <style name="BidItem.Divider_Internal">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">@dimen/mybid_item_margin_horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 </resources>

@@ -335,4 +335,5 @@
     <dimen name="mybid_item_header_height">51dp</dimen>
     <dimen name="mybid_item_footer_height">51dp</dimen>
     <dimen name="mybid_item_header_name_text_size">20dp</dimen>
+    <dimen name="mybid_item_margin_horizontal">10dp</dimen>
 </resources>
