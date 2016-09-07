@@ -63,6 +63,7 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
             holder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
             holder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
             holder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
+            holder.tv_thumb_up = (TextView) container.findViewById(R.id.tv_thumb_up);
 
             container.setTag(holder);
         }else {
@@ -132,7 +133,7 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
                 holder.mSeekArea.setText(R.string.str_others);
             }
             if (null!=mDatas.get(position).getFavorite_count()){
-                  //      holder.tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
+                        holder.tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
             }
         } else {
             holder.mSeekCase.setImageResource(R.drawable.common_case_icon);
