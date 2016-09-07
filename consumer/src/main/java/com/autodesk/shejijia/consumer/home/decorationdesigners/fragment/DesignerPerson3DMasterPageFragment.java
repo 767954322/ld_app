@@ -55,41 +55,34 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     }
 
 
-
-
     //获取更多数据
     public void getMore3DCase(Case3DBeen case3DBeen, int state) {
-        this.case3DBeen = case3DBeen;
-        datas = new ArrayList<Case3DBeen.CasesBean>();
+        myDatas = new ArrayList<Case3DBeen.CasesBean>();
 
 
         //如果是刷新数据，就将该集合清空
         if (state == 0) {
-            datas.clear();
-            for (int i = 0; i < case3DBeen.getCases().size();i++){
-                datas.add(case3DBeen.getCases().get(i));
+            seekDesigner3DCaseAdapter = new SeekDesiger3DCaseAdapter(getActivity(), case3DBeen.getCases());
+            myDatas.clear();
+            myDatas.addAll(case3DBeen.getCases());
 
-            }
-            seekDesigner3DCaseAdapter = new SeekDesiger3DCaseAdapter(getActivity(),datas);
             mListView.setAdapter(seekDesigner3DCaseAdapter);
-        }else {
+        } else {
 
-            for (int i = 0; i < case3DBeen.getCases().size();i++){
-                datas.add(case3DBeen.getCases().get(i));
+            myDatas.addAll(case3DBeen.getCases());
 
-            }
-            seekDesigner3DCaseAdapter.addMoreData(datas);
+            seekDesigner3DCaseAdapter.addMoreData(myDatas);
 
         }
 
-        Log.i("yaoxuehua",""+datas.size());
+        Log.i("yaoxuehua", "" + myDatas.size());
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(getActivity(),CaseLibraryDetail3DActivity.class);
-                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, datas.get(position).getDesign_asset_id());
+                Intent intent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
+                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, myDatas.get(position).getDesign_asset_id());
                 getActivity().startActivity(intent);
 
             }
@@ -109,8 +102,6 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     }
 
 
-
-
     private LinearLayout view_refresh_head;
     private PullToRefreshLayout refresh_view;
     private PullListView lv_seek_detail_listview;
@@ -122,7 +113,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private ListView mListView;
-    private List<Case3DBeen.CasesBean> datas;
+    private List<Case3DBeen.CasesBean> myDatas;
     private SeekDesiger3DCaseAdapter seekDesigner3DCaseAdapter;
 
 

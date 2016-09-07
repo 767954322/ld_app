@@ -48,9 +48,10 @@ public class DesignerAppraiseFragment extends BaseFragment {
     protected void initData() {
 
     }
-//展示数据
-    public void updateListView(List<AppraiseDesignBeen.EstimatesBean> estimates,DesignerDetailHomeBean seekDesignerDetailHomeBean) {
-        if (mSeekDesignerAppraiseAdapter == null ){
+
+    //展示数据
+    public void updateListView(List<AppraiseDesignBeen.EstimatesBean> estimates, DesignerDetailHomeBean seekDesignerDetailHomeBean) {
+        if (mSeekDesignerAppraiseAdapter == null) {
 
             mSeekDesignerAppraiseAdapter = new SeekDesignerAppraiseAdapter(getActivity(), estimates);
             estimatesList.clear();
@@ -60,25 +61,25 @@ public class DesignerAppraiseFragment extends BaseFragment {
 
         }
 
-            if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null &&
+        if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null &&
 
-                    seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores() != null){
+                seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores() != null) {
 
-                rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
+            rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
 
-            }
+        }
 
-            if (estimates.size() > 0){
+        if (estimates.size() > 0) {
 
-                appraise_ll.setVisibility(View.VISIBLE);
-            }
+            appraise_ll.setVisibility(View.VISIBLE);
+        }
 
 
     }
 
     //加载更多数据
     public void loadMoreData(List<AppraiseDesignBeen.EstimatesBean> estimates) {
-        if (estimates != null && estimates.size() > 0){
+        if (estimates != null && estimates.size() > 0) {
 
             estimatesList.addAll(estimates);
             mSeekDesignerAppraiseAdapter.addMoreData(estimatesList);
