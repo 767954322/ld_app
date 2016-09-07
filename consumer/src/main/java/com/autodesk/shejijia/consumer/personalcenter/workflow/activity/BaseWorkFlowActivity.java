@@ -11,6 +11,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBea
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowDetailsBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -52,10 +53,9 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         Bundle bundle = intent.getExtras();
         designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
         needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
+
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
-        designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
         contract_no = bundle.getString(Constant.SeekDesignerDetailKey.CONTRACT_NO);
-        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         mThreead_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);//thread_id
         nodeState = bundle.getInt(Constant.BundleKey.TEMPDATE_ID);
     }
@@ -170,6 +170,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             public void onErrorResponse(VolleyError volleyError) {
 //                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, BaseWorkFlowActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getOrderDetailsInfoData(needs_id, designer_id, okResponseCallback);
