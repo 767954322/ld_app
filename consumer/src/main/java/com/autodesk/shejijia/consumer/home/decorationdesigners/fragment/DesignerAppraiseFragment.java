@@ -60,14 +60,10 @@ public class DesignerAppraiseFragment extends BaseFragment {
 
         }
 
-        if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null){
-            //综合评分
-            rating_star.setRating(Float.parseFloat(seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores()));
-            if (seekDesignerDetailHomeBean.getDesigner().getEvalution_avg_scores() != null){
+            if (estimates.size() > 0){
 
                 appraise_ll.setVisibility(View.VISIBLE);
             }
-        }
 
 
     }

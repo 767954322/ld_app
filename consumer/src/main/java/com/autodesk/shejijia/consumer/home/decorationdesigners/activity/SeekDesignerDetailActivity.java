@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.os.CancellationSignal;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -149,12 +150,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         setDefaultFragment();
 
-        chooseViewPointer.setDecreaseWidth(width * 1 / 20f);
-        chooseViewPointer.setWidthOrHeight(width, 0, 0f, 1 / 3f);
+        chooseViewPointer.setCase2dBtn(width);
         case_2d_btn.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
 
-        choose_point_replace.setDecreaseWidth(width * 1 / 20f);
-        choose_point_replace.setWidthOrHeight(width, 0, 0f, 1 / 3f);
+        choose_point_replace.setCase2dBtn(width);
         case_2d_btn_replace_top.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
 
         if (getAppraiseCount) {
@@ -162,6 +161,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         }
         setChooseViewWidth();
+        consumer_appraise.setText("评价" + "(" + 0 + ")");
+        consumer_appraise_replace_top.setText("评价" + "(" + 0 + ")");
     }
 
     @Override
@@ -339,7 +340,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 //设置颜色
                 controlNumber = 1;
                 setTextColor(controlNumber);
-
+                myScrollView.scrollTo(1, 1);
                 break;
 
             case R.id.case_3d_btn:
@@ -358,6 +359,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 switchFragment(shareFragment, mDesignerPerson3DMasterPageFragment);
                 //设置颜色
                 setTextColor(controlNumber);
+                myScrollView.scrollTo(1, 1);
                 break;
 
             case R.id.consumer_appraise:
@@ -811,22 +813,16 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         }
         //判断是否可以加载更多
-        int myScrollViewChildHeight = myScrollView.getChildAt(0).getHeight();//myScrollView中子类的高度
+        int myScrollViewChildHeight = myScrollView.getChildAt(0).getMeasuredHeight();//myScrollView中子类的高度
         int myScrollViewHeight = myScrollView.getHeight();//myScrollView的高度
-//        if ((myScrollViewChildHeight == myScrollViewHeight + y) || (myScrollViewChildHeight - myScrollViewHeight - y < 5) || myScrollViewChildHeight < myScrollViewHeight) {
-//
-//            Log.i(TAG, "YAOmyScrollView子类" + myScrollView.getChildAt(0).getHeight());
-//            Log.i(TAG, "YAOmyScrollView高度" + myScrollView.getHeight());
-//            Log.i(TAG, "YAOmyScrollView滑动的距离" + y);
-//            myScrollView.setIsLoad(true);
-//        } else {
-//
-//            myScrollView.setIsLoad(false);
-//        }
 
         int height = myScrollView.getHeight();
         int scrollViewMeasuredHeight = myScrollView.getChildAt(0).getMeasuredHeight();
 
+
+        Log.i(TAG, "YAOmyScrollView子类" + myScrollView.getChildAt(0).getMeasuredHeight());
+            Log.i(TAG, "YAOmyScrollView高度" + myScrollView.getHeight());
+            Log.i(TAG, "YAOmyScrollView滑动的距离" + y);
         if (scrollViewMeasuredHeight <= y + height) {
 
             myScrollView.setIsLoad(true);
@@ -987,6 +983,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 }
                 mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
 
+                CustomProgress.cancelDialog();
+                myScrollView.scrollTo(1, scrollLastMoveDistance);
+
             }
         });
 
@@ -1028,21 +1027,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             getAppraiseData(mDesignerId, LIMIT, OFFSET++);//获取评价数据
         }
     }
-
-
-    //    /**
-//     * 第一次进入要刷新页面
-//     *
-//     * @param hasFocus 判断是否刷新
-//     */
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if (isFirstIn) {
-//            mPullToRefreshLayout.autoRefresh();
-//            isFirstIn = false;
-//        }
-//    }
     private LinearLayout mLlChatMeasure;
     private RelativeLayout mRlEmpty;
     private PullToRefreshLayout mPullToRefreshLayout;
@@ -1084,7 +1068,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private int controlNumber = 1;//控制2D案例的评价的颜色，以及要加载或刷新的fragment
     private int OFFSETCOUNT = 10;
     private boolean isTitleTwoShow = true;
-    private boolean isScrollToTop = false;
+    private boolean isScrollToTop = true;//判断第一次是否滑动置顶
     private boolean isFrist = true;//只走一次
     private boolean getAppraiseCount = true;//获取评价数量
     private int scrollLastMoveDistance = 0;//ScrollView的最后一次纵坐标记录

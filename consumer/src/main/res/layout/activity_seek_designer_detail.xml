@@ -269,19 +269,17 @@
                     </LinearLayout>
 
                 </LinearLayout>
-                <!--替换的container-->
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_10"
-                    android:background="@color/bg_ef"
-                    />
+                    android:background="@color/bg_ef" />
 
-
+                <!--替换的container-->
                 <RelativeLayout
                     android:id="@+id/container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/size_10"
                     android:background="@color/white">
 
                     <LinearLayout

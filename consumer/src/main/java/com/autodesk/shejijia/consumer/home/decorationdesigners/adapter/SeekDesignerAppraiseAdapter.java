@@ -37,10 +37,6 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
         this.mDatas = datas;
     }
 
-    public SeekDesignerAppraiseAdapter(Context context, List<AppraiseDesignBeen.EstimatesBean> datas, ImageLoader imageLoader) {
-
-    }
-
 
     @Override
     public int getCount() {
