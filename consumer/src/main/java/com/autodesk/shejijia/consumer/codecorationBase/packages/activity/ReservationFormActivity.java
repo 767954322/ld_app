@@ -10,12 +10,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -28,8 +30,10 @@ import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,11 +138,15 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private void sendPackageFormClick() {
 
         //姓名未作校验
-        String demand_name = et_issue_demand_name.getText().toString();
-        if (TextUtils.isEmpty(demand_name)) {
-            showAlertView(R.string.jy_packages_name_null);
+        String demand_name = et_issue_demand_name.getText().toString().trim();
+
+        boolean ifNameMatch = demand_name.matches("^\\\\s{1,}$");
+        if (demand_name.length() < 2 || demand_name.length() > 10 || ifNameMatch) {
+
+            showAlertView(R.string.jy_packages_name_error);
             return;
         }
+
         //手机号码校验
         String phone_num = et_issue_demand_mobile.getText().toString();
         Boolean ifOKPhoneNum = phone_num.matches(RegexUtil.PHONE_REGEX);
@@ -226,17 +234,16 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         MPServerHttpManager.getInstance().sendPackagesForm(jsonObject, customer_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
-                success_ALert = getAlertViewExt(UIUtils.getString(R.string.fail_grandmaster));
-                success_ALert.show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, ReservationFormActivity.this);
                 CustomProgress.cancelDialog();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                fail_ALert = getAlertViewExt(UIUtils.getString(R.string.succes_grandmaster));
-                fail_ALert.show();
+                success_ALert = new AlertView(UIUtils.getString(R.string.succes_grandmaster),
+                        null, null, null, new String[]{UIUtils.getString(R.string.delivery_sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null);
+                success_ALert.show();
                 CustomProgress.cancelDialog();
             }
         });
@@ -360,16 +367,6 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         });
     }
 
-    private AlertView getAlertViewExt(String toast) {
-        //UIUtils.getString(R.string.title_average_rule)
-        if (alertViewExt == null) {
-            alertViewExt = new AlertView(toast,
-                    null, null, null, new String[]{UIUtils.getString(R.string.delivery_sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null);
-        }
-
-        return alertViewExt;
-    }
-
     @Override
     public void onItemClick(Object obj, int position) {
         if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
@@ -388,8 +385,6 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private EditText et_issue_demand_area;
     private Button btn_send_demand;
     private AlertView success_ALert;
-    private AlertView fail_ALert;
-    private AlertView alertViewExt;
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;
     private OptionsPickerView pvDecorationBudgetOptions;

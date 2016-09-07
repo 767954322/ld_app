@@ -173,7 +173,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_last_cost.setEnabled(false);
 
 
-        if (getContractDataEntityFromFirstBidder() == null) {  /// 如果是新的合同.
+        if (getContractDataEntityFromFirstBidder() == null) { /// 如果是新的合同.
             AsyncGetContractNumber(new commonJsonResponseCallback() {
                 @Override
                 public void onJsonResponse(String jsonResponse) {

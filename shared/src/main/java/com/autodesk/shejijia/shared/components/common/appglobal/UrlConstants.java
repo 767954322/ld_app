@@ -134,6 +134,11 @@ public final class UrlConstants {
     public static final String URL_GET_SEEK_DESIGNER_DETAIL = MAIN_DESIGN + "/designers/";
 
     /**
+     * 节点优化.
+     */
+    public static final String URL_GET_NODE_CHANGE = MAIN_DESIGN;
+
+    /**
      * 设计师个人中心3d详情
      */
     public static final String URL_GET_SEEK_DESIGNER_ANONYMITY = MAIN_DESIGN + "/hs/prints/anonymity/designers/";
