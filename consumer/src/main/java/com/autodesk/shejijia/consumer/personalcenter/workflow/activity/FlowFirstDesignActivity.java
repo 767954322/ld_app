@@ -20,7 +20,6 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.SplitStringUtils;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -122,13 +121,13 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                MyToast.show(FlowFirstDesignActivity.this, "成功了");
+//                MyToast.show(FlowFirstDesignActivity.this, "成功了");
                 //　成功跳转
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                MyToast.show(FlowFirstDesignActivity.this, "失败了");
+//                MyToast.show(FlowFirstDesignActivity.this, "失败了");
                 //　失败跳转
             }
         });
