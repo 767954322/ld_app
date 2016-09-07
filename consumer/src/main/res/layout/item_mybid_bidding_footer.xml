@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--应标人数-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_bidder_count"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/mybid_item_footer_height"
+    android:gravity="center_vertical"
+    android:layout_marginLeft="@dimen/size_10"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/size_10"
+    android:paddingTop="@dimen/size_10">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/BidItem.Text.Light"
+            android:id="@+id/tv_bid_num"
+            android:text="@string/bid_num"/>
+
+        <TextView
+            style="@style/BidItem.Text.Light"
+            android:id="@+id/tv_bidder_count"
+            android:layout_centerVertical="true"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            style="@style/BidItem.Text.Light"
+            android:text="@string/end_day_prefix"/>
+
+        <TextView
+            style="@style/BidItem.Text"
+            android:id="@+id/tv_decoration_end_day"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/font_16"
+            tools:text="10"/>
+
+        <TextView
+            style="@style/BidItem.Text.Light"
+            android:layout_marginRight="@dimen/size_10"
+            android:text="@string/end_day_postfix"/>
+    </LinearLayout>
+
+</RelativeLayout>

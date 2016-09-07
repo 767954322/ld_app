@@ -1,12 +1,17 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
@@ -15,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -26,7 +32,7 @@ import java.util.Map;
  * @file BidFailureFragment.java  .
  * @brief 我的应标, 应标失败  .
  */
-public class BidFailureFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
+public class BidFailureFragment extends BidBaseFragment {
 
     @Override
     protected int getLayoutResId() {
@@ -44,14 +50,8 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
 
     @Override
     protected void initData() {
+        super.initData();
         setListener();
-        living_room = AppJsonFileReader.getLivingRoom(getActivity());
-        style = AppJsonFileReader.getStyle(getActivity());
-        area = AppJsonFileReader.getArea(getActivity());
-        room = AppJsonFileReader.getRoomHall(getActivity());
-        toilet = AppJsonFileReader.getToilet(getActivity());
-        space = AppJsonFileReader.getSpace(getActivity());
-
         mCommonAdapter = getCommonAdapter();
         mListView.setAdapter(mCommonAdapter);
         addFooterViewForMListView();
@@ -99,49 +99,30 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
 
     ///适配器.
     private CommonAdapter getCommonAdapter() {
-        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities1, R.layout.item_lv_out_bid) {
+        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities1, R.layout.item_mybid_fail) {
             @Override
             public void convert(CommonViewHolder holder, MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
-                holder.setText(R.id.tv_out_bid_address, biddingNeedsListEntity.getNeeds_name());
-                String lRoom = biddingNeedsListEntity.getRoom();
-                String livingRoom = biddingNeedsListEntity.getLiving_room();
-                String mToilet = biddingNeedsListEntity.getToilet();
-                String house_area = biddingNeedsListEntity.getHouse_area();
-                String house_type = biddingNeedsListEntity.getHouse_type();
-                if (living_room.containsKey(livingRoom)) {
-                    holder.setText(R.id.tv_out_bid_living_room, living_room.get(livingRoom));
-                } else {
-                    holder.setText(R.id.tv_out_bid_living_room, biddingNeedsListEntity.getLiving_room());
-                }
-                if (room.containsKey(lRoom)) {
-                    holder.setText(R.id.tv_out_bid_room, room.get(lRoom));
-                } else {
-                    holder.setText(R.id.tv_out_bid_room, biddingNeedsListEntity.getRoom());
-                }
-                if (toilet.containsKey(mToilet)) {
-                    holder.setText(R.id.tv_out_bid_toilet, toilet.get(mToilet));
-                } else {
-                    holder.setText(R.id.tv_out_bid_toilet, biddingNeedsListEntity.getToilet());
-                }
-                if (area.containsKey(house_area)) {
-                    holder.setText(R.id.tv_out_bid_area, area.get(house_area) + "m²");
-                } else {
-                    holder.setText(R.id.tv_out_bid_area, biddingNeedsListEntity.getHouse_area() + "m²");
-                }
-                if (space.containsKey(house_type)) {
-                    holder.setText(R.id.tv_out_bid_type, space.get(house_type));
-                } else {
-                    holder.setText(R.id.tv_out_bid_type, biddingNeedsListEntity.getHouse_type());
-                }
-                String renovation_style = biddingNeedsListEntity.getRenovation_style();
-                if (style.containsKey(renovation_style)) {
-                    holder.setText(R.id.tv_out_bid_style, style.get(renovation_style));
-                } else {
-                    holder.setText(R.id.tv_out_bid_style, biddingNeedsListEntity.getRenovation_style());
-                }
-                holder.setText(R.id.tv_out_bid_budget, UIUtils.getString(R.string.my_bid_black) + biddingNeedsListEntity.getRenovation_budget());
-            }
+                setupBidItemView(holder, biddingNeedsListEntity);
+
+                ViewGroup itemHeader = holder.getView(R.id.mybid_item_header);
+                ViewGroup itemInfo = holder.getView(R.id.bid_item_info);
+                setTextColor(itemHeader, getResources().getColor(R.color.mybid_text_color_light));
+                setTextColor(itemInfo, getResources().getColor(R.color.mybid_text_color_light));
+                holder.setVisible(R.id.tv_decoration_detail, false);
+           }
         };
+    }
+
+    private void setTextColor(View view, int color) {
+        if(view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            int count = vg.getChildCount();
+            for(int i=0; i<count; i++) {
+                setTextColor(vg.getChildAt(i), color);
+            }
+        } else if(view instanceof TextView) {
+            ((TextView) view).setTextColor(color);
+        }
     }
 
     private void setListener() {
@@ -189,12 +170,6 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
     private static final String IS_SUCCESS = "1";
 
     ///集合，类.
-    private Map<String, String> living_room;
-    private Map<String, String> style;
-    private Map<String, String> area;
-    private Map<String, String> room;
-    private Map<String, String> toilet;
-    private Map<String, String> space;
     private CommonAdapter mCommonAdapter;
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntities = new ArrayList<MyBidBean.BiddingNeedsListEntity>();
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntities1 = new ArrayList<>();

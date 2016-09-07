@@ -22,8 +22,8 @@
 
             <ImageButton
                 android:id="@+id/nav_left_imageButton"
-                android:layout_width="@dimen/size_27"
-                android:layout_height="@dimen/size_27"
+                android:layout_width="@dimen/size_22"
+                android:layout_height="@dimen/size_22"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/arrow"
@@ -43,7 +43,7 @@
             android:maxEms="6"
             android:singleLine="true"
             android:textColor="#ffffff"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/font_19"
             android:textStyle="bold" />
 
 

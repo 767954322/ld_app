@@ -448,7 +448,7 @@ public class MPServerHttpManager {
         // demands/{asset_id}/designers/{designer_id}/contracts/{contract_no}/options/payment/delay
         String url = UrlConstants.URL_GET_DESIGNER_INFO + "demands/" + needs_id + "/designers/" + designer_id + "/contracts/" + contract_no + "/options/payment/delay";
 
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
@@ -458,7 +458,6 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
-
 
     /**
      * 获取消费者\设计师个人基本信息

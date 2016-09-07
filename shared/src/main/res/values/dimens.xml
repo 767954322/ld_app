@@ -331,4 +331,9 @@
     <dimen name="home_bottombar_circularbutton_side">50dp</dimen>
     <dimen name="home_bottombar_radiogroup_margintop">15dp</dimen>
 
+    <dimen name="bid_list_divider_height">20dp</dimen>
+    <dimen name="mybid_item_header_height">51dp</dimen>
+    <dimen name="mybid_item_footer_height">51dp</dimen>
+    <dimen name="mybid_item_header_name_text_size">20dp</dimen>
+    <dimen name="mybid_item_margin_horizontal">10dp</dimen>
 </resources>

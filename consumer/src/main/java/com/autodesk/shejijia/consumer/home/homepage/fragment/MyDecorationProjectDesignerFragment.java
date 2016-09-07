@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.DesignBaseFragment;
+import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidBidingFragment;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 /**
@@ -47,7 +48,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
         if (mBidBidingFragment == null) {
 
-            mBidBidingFragment = new BidingFragment();
+            mBidBidingFragment = new BidBidingFragment();
         }
 
         switchFragment(mBidBidingFragment);
