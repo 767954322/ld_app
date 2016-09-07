@@ -20,6 +20,7 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -64,6 +65,8 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
+
         super.initData(savedInstanceState);
 
         setTitleForNavbar(getResources().getString(R.string.flow_cost_detail)); /// 设置标题 .
@@ -77,37 +80,27 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+        CustomProgress.cancelDialog();
 
-        getDesignerInfoData(designer_id, hs_uid);
+        restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
+            @Override
+            public void onJsonResponse(String jsonResponse) {
+
+                designerInfoList = new Gson().fromJson(jsonResponse, DesignerInfoDetails.class);
+                updateViewFromInfoData();
+
+            }
+
+            @Override
+            public void onError(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowLastDesignActivity.this);
+
+            }
+        });
 
         updateViewFromData();
     }
-
-    /**
-     * @param designer_id
-     * @param hs_uid
-     * @brief 获取设计师基础信息 .
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                designerInfoList = new Gson().fromJson(jsonString, DesignerInfoDetails.class);
-
-                updateViewFromInfoData();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowLastDesignActivity.this,
-//                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowLastDesignActivity.this);
-            }
-        });
-    }
-
 
     private void updateViewFromData() {
         MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();

@@ -74,6 +74,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
      */
     @Override
     protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
+
         super.initData(savedInstanceState);
     }
 
@@ -458,6 +460,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         /**
          * 如果超过了33节点，就隐藏上传合同按钮
          */
+        CustomProgress.cancelDialog();
 
         //Here we can determine if we already have a contract
         contract_data_entity = getContractDataEntityFromFirstBidder();

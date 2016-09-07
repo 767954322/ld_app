@@ -96,8 +96,8 @@ public class DecorationBidderActivity extends NavigationBarActivity implements D
              * 如果消费者选TA量房，根据量房表单的操作，进行逻辑操作
              */
             intent = new Intent(DecorationBidderActivity.this, FlowMeasureFormActivity.class);
-            intent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeeds_id);
-            intent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designer_id);
+            intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeeds_id);
+            intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
             intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_DECORATION);
             startActivityForResult(intent, 0);
         }

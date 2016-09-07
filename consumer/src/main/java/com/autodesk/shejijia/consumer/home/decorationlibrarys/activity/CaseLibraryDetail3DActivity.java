@@ -25,7 +25,9 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesi
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FollowingDesignerBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.List3DLibraryAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
+import com.autodesk.shejijia.consumer.home.widget.ScrollListView;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
@@ -41,6 +43,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.Logger;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -54,6 +57,7 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,7 +69,7 @@ import java.util.Map;
 
 public class CaseLibraryDetail3DActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
-    private ListView caseLibraryNew;
+    private ScrollListView caseLibraryNew;
     private LinearLayout llThumbUp;
     private String case_id;
     private Case3DDetailBean case3DDetailBean;
@@ -122,7 +126,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     @Override
     protected void initView() {
         super.initView();
-        caseLibraryNew = (ListView) findViewById(R.id.case_library_new);
+        caseLibraryNew = (ScrollListView) findViewById(R.id.case_library_new);
         llThumbUp = (LinearLayout) findViewById(R.id.rl_thumb_up);
         ll_fenxiang_up = (LinearLayout) findViewById(R.id.ll_fenxiang);
         viewHead = findViewById(R.id.case_head);
@@ -507,11 +511,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         for (int i = 0; i < images.size(); i++) {
             if (images.get(i).isIs_primary() == true) {
                 firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+//                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+                ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
             }
         }
 
-        mCase3DLibraryAdapter = new List3DLibraryAdapter(CaseLibraryDetail3DActivity.this, case3DDetailList);
+        List<Case3DDetailImageListBean> imageListBeanList = getImageLists(images);
+        //设置 listView 中间部分的图片列表
+        mCase3DLibraryAdapter = new List3DLibraryAdapter(CaseLibraryDetail3DActivity.this, imageListBeanList);
 
         caseLibraryNew.setAdapter(mCase3DLibraryAdapter);
         //设置简介
@@ -537,7 +544,70 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         tvheadThumbUp.setText(getString(R.string.thumbup_conunt) + case3DDetailBean.getFavorite_count());
         ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name()
         );
-        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+//        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+        ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, case3DDetailBean.getDesigner_info().getAvatar());
+    }
+
+
+    /*
+    * 通过design_file"对应的列表重新组装listView中的数据源
+    * return 返回含有类型及图片列表的集合
+    * */
+    private List<Case3DDetailImageListBean> getImageLists(List<Case3DDetailBean.DesignFileBean> imageBeanLists) {
+        List<Case3DDetailImageListBean> detailImageListBeanList = new ArrayList<>();
+        Case3DDetailImageListBean case3DDetailImageListBeanXuanRan = new Case3DDetailImageListBean();
+        Case3DDetailImageListBean case3DDetailImageListBeanManYou = new Case3DDetailImageListBean();
+        Case3DDetailImageListBean case3DDetailImageListBeanHuXing = new Case3DDetailImageListBean();
+        ArrayList<String> imageListsXuanRan = new ArrayList<>();
+        ArrayList<String> imageListsManYou = new ArrayList<>();
+        ArrayList<String> imageListsHuXing = new ArrayList<>();
+
+        //遍历服务器接口返回的DesignFile列表,重新组装不同类型对应的图片列表(目前支持,"0"/"4"/"10"类型对应的图片列表)
+        for (int i = 0; i < imageBeanLists.size(); i++) {
+            String type = imageBeanLists.get(i).getType();
+            if (type.equalsIgnoreCase("0")) {
+                imageListsXuanRan.add(imageBeanLists.get(i).getLink()+ "HD.jpg");
+            } else if (type.equalsIgnoreCase("4")) {
+                imageListsManYou.add(imageBeanLists.get(i).getLink()+ "HD.jpg");
+            } else if (type.equalsIgnoreCase("10")) {
+                imageListsHuXing.add(imageBeanLists.get(i).getLink()+ "HD.jpg");
+            }
+        }
+        //设置重新组装的bean内的类型
+        case3DDetailImageListBeanXuanRan.setType("0");
+        case3DDetailImageListBeanManYou.setType("4");
+        case3DDetailImageListBeanHuXing.setType("10");
+        if (imageListsXuanRan.size() > 0) {
+            case3DDetailImageListBeanXuanRan.setImageList(imageListsXuanRan);
+            case3DDetailImageListBeanXuanRan.setLocal(false);
+        } else { //给定默认图片路径,ImageLoader加载本地图片的路径规则
+            imageListsXuanRan.add("drawable://" + R.drawable.default_3d_details);
+            case3DDetailImageListBeanXuanRan.setImageList(imageListsXuanRan);
+            case3DDetailImageListBeanXuanRan.setLocal(true);
+        }
+        detailImageListBeanList.add(case3DDetailImageListBeanXuanRan);
+
+        if (imageListsHuXing.size() > 0) {
+            case3DDetailImageListBeanHuXing.setImageList(imageListsHuXing);
+            case3DDetailImageListBeanHuXing.setLocal(false);
+        } else { //给定默认图片路径,ImageLoader加载本地图片的路径规则
+            imageListsHuXing.add("drawable://" + R.drawable.default_3d_details);
+            case3DDetailImageListBeanHuXing.setImageList(imageListsHuXing);
+            case3DDetailImageListBeanHuXing.setLocal(true);
+        }
+        detailImageListBeanList.add(case3DDetailImageListBeanHuXing);
+
+        if (imageListsManYou.size() > 0) {
+            case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
+            case3DDetailImageListBeanManYou.setLocal(false);
+        } else { //给定默认图片路径,ImageLoader加载本地图片的路径规则
+            imageListsManYou.add("drawable://" + R.drawable.default_3d_details);
+            case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
+            case3DDetailImageListBeanManYou.setLocal(true);
+        }
+        detailImageListBeanList.add(case3DDetailImageListBeanManYou);
+
+        return detailImageListBeanList;
     }
 
     /**

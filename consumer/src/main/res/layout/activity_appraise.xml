@@ -76,9 +76,8 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_appraise_designer_tag"
             android:layout_marginLeft="@dimen/size_8"
-            android:isIndicator="false"
             android:numStars="5"
-            android:stepSize="1"
+            android:stepSize="0.5"
             />
 
     </LinearLayout>

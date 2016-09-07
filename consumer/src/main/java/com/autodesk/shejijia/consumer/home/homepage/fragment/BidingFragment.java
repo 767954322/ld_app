@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,7 +22,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -79,7 +76,7 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
 
         commonAdapter = getCommonAdapter();
         mListView.setAdapter(commonAdapter);
-        addFooterViewForMListView();
+//        addFooterViewForMListView();
 
         onWindowFocusChanged();
 
@@ -110,17 +107,17 @@ public class BidingFragment extends BaseFragment implements PullToRefreshLayout.
         }
     }
 
-    private void addFooterViewForMListView() {
-        rl_empty.setVisibility(View.GONE);
-        mListView.addFooterView(mFooterView);
-        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams pp = rl_empty.getLayoutParams();
-        rl_empty.getLayoutParams();
-        pp.height = height - height / 5;
-        rl_empty.setLayoutParams(pp);
-        tv_empty_message.setText(UIUtils.getString(R.string.bidbiding_no_data_massage));
-    }
+//    private void addFooterViewForMListView() {
+//        rl_empty.setVisibility(View.GONE);
+//        mListView.addFooterView(mFooterView);
+//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
+//        int height = wm.getDefaultDisplay().getHeight();
+//        android.view.ViewGroup.LayoutParams pp = rl_empty.getLayoutParams();
+//        rl_empty.getLayoutParams();
+//        pp.height = height - height / 5;
+//        rl_empty.setLayoutParams(pp);
+//        tv_empty_message.setText(UIUtils.getString(R.string.bidbiding_no_data_massage));
+//    }
 
     public void onFragmentShown(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys) {
         beBeingList.clear();

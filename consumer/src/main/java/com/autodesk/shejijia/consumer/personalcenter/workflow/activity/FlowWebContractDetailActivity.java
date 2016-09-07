@@ -7,6 +7,7 @@ import android.webkit.WebViewClient;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
+
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAllowContentAccess(true);
@@ -42,6 +45,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
 
         setContentView();
+        CustomProgress.cancelDialog();
 
         //设置Web视图
         webView.setWebViewClient(new webViewClient());
