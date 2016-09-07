@@ -98,4 +98,15 @@ public class CustomProgress extends Dialog {
             CustomProgress.show(activity, "", false, null);
         }
     }
+
+    /**
+     * 是否显示
+     * @return
+     */
+    public static boolean isOnShowing(){
+        if (dialog != null){
+            return dialog.isShowing();
+        }
+        return false;
+    }
 }

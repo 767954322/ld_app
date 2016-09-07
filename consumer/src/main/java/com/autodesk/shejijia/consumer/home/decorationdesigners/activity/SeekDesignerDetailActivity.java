@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.AppraiseDesignBeen;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.Case3DBeen;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FollowingDesignerBean;
@@ -118,6 +119,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         mBtnMeasure = (Button) findViewById(R.id.btn_seek_designer_detail_optional_measure);
 
         chooseViewPointer = (ChooseViewPointer) findViewById(R.id.choose_point);
+        default_ll_bg = (LinearLayout) findViewById(R.id.default_ll_bg);
 
         width = getWindowWidth(1);
         height = getWindowWidth(0);
@@ -153,6 +155,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         case_2d_btn_replace_top.setTextColor(getResources().getColor(R.color.my_project_title_pointer_color));
 
 
+        if (getAppraiseCount) {
+            getAppraiseData(mDesignerId, LIMIT, OFFSET);//获取评价数据
+
+        }
         setChooseViewWidth();
     }
 
@@ -336,7 +342,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             case R.id.case_3d_btn:
 
-                getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 50, 0);
+                getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 10, "data","desc");
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
                 chooseViewPointer.setCase3dBtn(width);
@@ -357,6 +363,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 chooseViewPointer.setConsumerAppraise(width);
                 choose_point_replace.setConsumerAppraise(width);
                 controlNumber = 3;
+                getAppraiseCount = false;
 
                 if (mDesignerAppraiseFragment == null) {
                     mDesignerAppraiseFragment = new DesignerAppraiseFragment();
@@ -389,7 +396,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             case R.id.case_3d_btn_replace_top:
 
-                getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 50, 0);
+                getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 10, "data","desc");
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
 
@@ -409,13 +416,13 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 case_2d_btn_replace_top.setClickable(true);
                 chooseViewPointer.setConsumerAppraise(width);
                 choose_point_replace.setConsumerAppraise(width);
+                getAppraiseCount = false;
                 controlNumber = 3;
                 if (mDesignerAppraiseFragment == null) {
                     mDesignerAppraiseFragment = new DesignerAppraiseFragment();
                     getAppraiseData(mDesignerId, LIMIT, OFFSET);//获取评价数据
                 }
                 switchFragment(shareFragment, mDesignerAppraiseFragment);
-
                 setTextColor(controlNumber);
                 break;
 
@@ -535,7 +542,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 String info = GsonUtil.jsonToString(jsonObject);
                 mSeekDesignerDetailBean = GsonUtil.jsonToBean(info, SeekDesignerDetailBean.class);
                 if (mSeekDesignerDetailBean.getCases().size() > 0) {
-
+                    default_ll_bg.setVisibility(View.GONE);
 
                     if (isRefreshOrLoad) {
                         mDesignerPersonMasterPageFragment.getMore2DCaseData(mSeekDesignerDetailBean, 0);//刷新
@@ -552,6 +559,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
                     Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
+                    default_ll_bg.setVisibility(View.VISIBLE);
                 }
 
 
@@ -580,43 +588,12 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
      * 获取3d案例数据
      */
     public void getSeekDesign3DDetailData(String designer_id, int offset, int limit,
-                                          final int state) {
+                                          String date, String desc) {
 
-        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                String info = GsonUtil.jsonToString(jsonObject);
-                mSeekDesignerDetailBean = GsonUtil.jsonToBean(info, SeekDesignerDetailBean.class);
-                if (mSeekDesignerDetailBean.getCases().size() > 0) {
-
-
-                    if (isRefreshOrLoad) {
-                        mDesignerPerson3DMasterPageFragment.getMore2DCaseData(mSeekDesignerDetailBean, 0);//刷新
-
-                        mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
-                    } else {
-                        mDesignerPerson3DMasterPageFragment.getMore2DCaseData(mSeekDesignerDetailBean, 1);//加载
-
-                        mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
-                        myScrollView.setIsLoad(false);
-                    }
-
-                } else {
-                    //没有更多案例时
-                    mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
-                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
-                    mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
-                }
-
-
-            }
-
+        MPServerHttpManager.getInstance().get3DCaseData(Integer.parseInt(designer_id), limit, offset, date, desc, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this,
-                        AlertView.Style.Alert, null).show();
+
                 if (isRefreshOrLoad) {
 
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.FAIL);
@@ -626,9 +603,37 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 }
 
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this, AlertView.Style.Alert, null).show();
+
             }
-        };
-        MPServerHttpManager.getInstance().getSeekDesigner3DDetailData(designer_id, offset, limit, okResponseCallback);
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+
+                String info = GsonUtil.jsonToString(jsonObject);
+                 case3DBeen = GsonUtil.jsonToBean(info, Case3DBeen.class);
+                if (case3DBeen.getCases().size() > 0) {
+                    default_ll_bg.setVisibility(View.GONE);
+
+                    if (isRefreshOrLoad) {
+                        mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen, 0);//刷新
+                        mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
+                    } else {
+                        mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen, 1);//加载
+
+                        mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
+                    }
+
+                } else {
+                    //没有更多案例时
+                    mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
+                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
+                    mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
+                    default_ll_bg.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
     }
 
     /**
@@ -939,18 +944,29 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 estimates = mAppraiseDesignBeen.getEstimates();
 
                 if (estimates != null) {
-
+                    default_ll_bg.setVisibility(View.GONE);
                     if (isRefreshOrLoadAppraise) {
 
-                        mDesignerAppraiseFragment.updateListView(estimates, seekDesignerDetailHomeBean);
                         consumer_appraise.setText("评价" + "(" + estimates.size() + ")");
                         consumer_appraise_replace_top.setText("评价" + "(" + estimates.size() + ")");
-                        mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
+                        if (getAppraiseCount){
+
+
+                        }else {
+
+                            mDesignerAppraiseFragment.updateListView(estimates, seekDesignerDetailHomeBean);
+                            mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
+                            getAppraiseCount = false;
+
+                        }
                     } else {
                         mDesignerAppraiseFragment.loadMoreData(estimates);
                         mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                     }
 
+
+                }else {
+                    default_ll_bg.setVisibility(View.VISIBLE);
 
                 }
                 mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
@@ -970,7 +986,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
             OFFSETCOUNT = 10;
         } else if (controlNumber == 2) {
-            getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, LIMIT, 0);
+            getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, LIMIT, "data","desc");
             OFFSETCOUNT = 10;
         } else {
             isRefreshOrLoadAppraise = true;
@@ -987,7 +1003,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, 0);
             OFFSETCOUNT = OFFSETCOUNT + 10;
         } else if (controlNumber == 2) {
-            getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, 0);
+            getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, "data","desc");
             OFFSETCOUNT = OFFSETCOUNT + 10;
         } else {
             isRefreshOrLoadAppraise = false;
@@ -1014,6 +1030,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private PullToRefreshLayout mPullToRefreshLayout;
     private View mFooterView;
     private ListView mListView;
+    private LinearLayout default_ll_bg;
     private TextView mTvEmptyMessage;
     private TextView mTvYeas, mTvStyle;
     private TextView mTvDesignFee, mTvMeasureFee;
@@ -1051,6 +1068,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private boolean isTitleTwoShow = true;
     private boolean isScrollToTop = false;
     private boolean isFrist = true;//只走一次
+    private boolean getAppraiseCount = true;//获取评价数量
     private int scrollLastMoveDistance = 0;//ScrollView的最后一次纵坐标记录
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -1070,5 +1088,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private MemberEntity memberEntity;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
     private DesignerDetailHomeBean seekDesignerDetailHomeBean;
+    private Case3DBeen case3DBeen;
 
 }
