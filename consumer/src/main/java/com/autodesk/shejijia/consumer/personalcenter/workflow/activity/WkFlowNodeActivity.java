@@ -44,7 +44,7 @@ public class WkFlowNodeActivity extends BaseWorkFlowActivity implements AdapterV
         mPtrLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
         polygonImageView = (PolygonImageView)findViewById(R.id.piv_consumer_order_photo_01);
         btnStopDemand = (Button)findViewById(R.id.btn_stop_demand);
-        rl_piv = (RelativeLayout) findViewById(R.id.rl_piv);
+        ll_piv = (LinearLayout) findViewById(R.id.ll_piv);
         rlStopContract = (RelativeLayout) findViewById(R.id.rl_stop_contract);
         ibFlowChart = (ImageButton) findViewById(R.id.ib_flow_chart);
         //右上角三个按钮设置；
@@ -127,7 +127,7 @@ public class WkFlowNodeActivity extends BaseWorkFlowActivity implements AdapterV
     private ImageView demandDetails;
     private ImageView projectInformation;
     private ImageButton ibFlowChart;
-    private RelativeLayout rl_piv;
+    private LinearLayout ll_piv;
     private RelativeLayout rlStopContract;
     private PolygonImageView polygonImageView;
     private Button btnStopDemand;
