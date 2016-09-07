@@ -507,7 +507,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         for (int i = 0; i < images.size(); i++) {
             if (images.get(i).isIs_primary() == true) {
                 firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+//                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+                ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
             }
         }
 
@@ -537,7 +538,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         tvheadThumbUp.setText(getString(R.string.thumbup_conunt) + case3DDetailBean.getFavorite_count());
         ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name()
         );
-        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+//        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+        ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, case3DDetailBean.getDesigner_info().getAvatar());
     }
 
     /**
