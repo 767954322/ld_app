@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -337,10 +338,11 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
 //        MPServerHttpManager.getInstance().getCaseListData("", "", "", "", "", "01", "", "", offset, limit, callback);
 //    }
 
+    private long starttime = 0;
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
                                    final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
-
+        starttime = System.currentTimeMillis();
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -348,6 +350,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
                 updateViewFromCaseLibraryData(offset);
+                Log.i("UserHome2D","2d案例响应时间："+(System.currentTimeMillis() - starttime));
             }
 
             @Override

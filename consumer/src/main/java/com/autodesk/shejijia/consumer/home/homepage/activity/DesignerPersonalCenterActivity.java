@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -129,6 +130,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
      * @param hs_uid
      */
     public void getDesignerInfoData(String designer_id, String hs_uid) {
+        final long start = System.currentTimeMillis();
         MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -142,6 +144,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 } else {
                     mLlSetMeal.setVisibility(View.GONE);
                 }
+                Log.i("DesignerCenter","设计师个人信息接口时间："+(System.currentTimeMillis() - start));
             }
 
             @Override

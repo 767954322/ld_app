@@ -253,6 +253,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     @Override
     public void onDestroy() {
         super.onDestroy();
+        getActivity().unregisterReceiver(myBroadCastReceivr);
     }
 
     /// 应标改变.
