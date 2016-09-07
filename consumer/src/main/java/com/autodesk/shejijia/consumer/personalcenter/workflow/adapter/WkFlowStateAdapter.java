@@ -152,7 +152,11 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 break;
             case 2://接受量房、设计交付物(或者签订设计合同)
                 if (stateCode == 33) {
-                    viewHolder.tv_meal_title.setText("量房交付物");//量房交付物
+                    if (Constant.UerInfoKey.CONSUMER_TYPE.equalsIgnoreCase(member_type)) {
+                        viewHolder.tv_meal_title.setText(R.string.receiving_room_deliverable);//量房交付物
+                    } else {
+                        viewHolder.tv_meal_title.setText("量房交付物");//量房交付物
+                    }
                 }
                 establishContract(viewHolder, stateCode);
                 break;
@@ -296,7 +300,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
         } else {
             if (stateCode == 33 || stateCode == 24) {
-                viewHolder.tv_meal_title.setText(R.string.uploaded_deliverable);//量房交付物
+                viewHolder.tv_meal_title.setText("量房交付物");//量房交付物
             }
             if (stateCode >= 11) {
                 textColor = StepEnableColor;
@@ -308,7 +312,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
         }
 
-        if (stateCode == 11 ||stateCode == 31||stateCode == 24 ||stateCode == 33) {
+        if (stateCode == 11 || stateCode == 31 || stateCode == 24 || stateCode == 33) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);
