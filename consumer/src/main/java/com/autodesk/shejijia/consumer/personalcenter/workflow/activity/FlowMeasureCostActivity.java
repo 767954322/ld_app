@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -53,6 +55,12 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
     }
 
     @Override
+    protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
+        super.initData(savedInstanceState);
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay_measure: /// 支付量房费 .
@@ -64,12 +72,12 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
                 if (order == null) {
                     return;
                 }
-                if(order_line_id!= null && order_id != null){
+                if (order_line_id != null && order_id != null) {
                     if (isLock) {
                         getAliPayDetailsInfo(order_id, order_line_id);
                         isLock = false;
                     }
-                }else{
+                } else {
                     String order_line_no = order.getOrder_line_no();
                     String order_no = order.getOrder_no();
                     if (isLock) {
@@ -88,36 +96,28 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
-        getDesignerInfoData(designer_id, hs_uid);
-        updateViewFromData();
-    }
+        CustomProgress.cancelDialog();
 
-    /**
-     * @param designer_id
-     * @param hs_uid
-     * @brief 获取设计师基础信息 .
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-
+        restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                designerInfoList = new Gson().fromJson(jsonString, DesignerInfoDetails.class);
+            public void onJsonResponse(String jsonResponse) {
+
+                designerInfoList = new Gson().fromJson(jsonResponse, DesignerInfoDetails.class);
                 if (null != designerInfoList) {
-                    tv_name.setText(designerInfoList.getReal_name().getReal_name());
-                    tv_phone.setText(designerInfoList.getReal_name().getMobile_number().toString());
+                    DesignerInfoDetails.RealNameBean real_name = designerInfoList.getReal_name();
+                    tv_name.setText(real_name.getReal_name());
+                    tv_phone.setText(real_name.getMobile_number().toString());
                 }
             }
 
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onError(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowMeasureCostActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowMeasureCostActivity.this);
+
             }
         });
+        updateViewFromData();
     }
 
     private void updateViewFromData() {
@@ -125,9 +125,9 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
         if (TextUtils.isEmpty(measurement_fee) || "0.0".equals(measurement_fee)) {
             measurement_fee = "0.00";
         }
-        if(measureFee != null && measureFee.length() > 0){
+        if (measureFee != null && measureFee.length() > 0) {
             tv_house_cost.setText(measureFee);
-        }else{
+        } else {
             tv_house_cost.setText(measurement_fee);
         }
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
@@ -194,27 +194,23 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
 
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
         public void onOK() {
-//            MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success));
             Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
             payOk = true;
-            setResult(RESULT_CODE,new Intent());
+            setResult(RESULT_CODE, new Intent());
             finish();
         }
 
         public void onFail() {
             Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
             toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
-//            MyToast.show(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed));
             payOk = false;
             isLock = true;
             Intent intent = new Intent();
-            intent.putExtra(Constant.SixProductsFragmentKey.SELECTION,Constant.SixProductsFragmentKey.ISELITE);
-            setResult(RESULT_CODE,intent);
+            intent.putExtra(Constant.SixProductsFragmentKey.SELECTION, Constant.SixProductsFragmentKey.ISELITE);
+            setResult(RESULT_CODE, intent);
         }
     };
 

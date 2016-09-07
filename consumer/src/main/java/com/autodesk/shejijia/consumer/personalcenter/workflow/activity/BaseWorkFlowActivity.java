@@ -65,6 +65,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initData(savedInstanceState);
 
         memberEntity = AdskApplication.getInstance().getMemberEntity();
+
         getOrderDetailsInfo(needs_id, designer_id);
 
     }
@@ -102,7 +103,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     }
 
 
-    private android.os.Handler handler = new android.os.Handler() {
+    private final android.os.Handler handler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
 
@@ -152,13 +153,11 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
      * @param designer_id 　设计师的id
      */
     public void getOrderDetailsInfo(String needs_id, String designer_id) {
-//        CustomProgress.show(this,"",false,null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(final JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 mCurrentWorkFlowDetail = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
-//                CustomProgress.cancelDialog();
                 if (null != mCurrentWorkFlowDetail) {
                     Message msg = Message.obtain();
                     msg.obj = mCurrentWorkFlowDetail;
@@ -168,7 +167,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                CustomProgress.cancelDialog();
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, BaseWorkFlowActivity.this);
             }

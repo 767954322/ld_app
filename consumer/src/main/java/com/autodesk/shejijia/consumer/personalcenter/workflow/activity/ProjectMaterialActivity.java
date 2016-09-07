@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 
 /**
  * @author Malidong .
@@ -70,13 +71,17 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
         super.initData(savedInstanceState);
+
         setTitleForNavbar(getResources().getString(R.string.flow_project_data));
     }
 
     @Override
     protected void onWorkFlowData() { // 判断项目资料显示节点
         super.onWorkFlowData();
+        CustomProgress.cancelDialog();
+
         wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
         if (wk_cur_sub_node_idi >= 11) {
             ll_project_material_measure_house.setVisibility(View.VISIBLE);

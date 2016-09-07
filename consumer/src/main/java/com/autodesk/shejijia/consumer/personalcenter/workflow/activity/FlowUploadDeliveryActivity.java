@@ -94,6 +94,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        CustomProgress.show(this, "", false, null);
+
         initAlertView();
 
     }
@@ -113,6 +115,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+        CustomProgress.cancelDialog();
+
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
 
         /// [1]节点33，设计师尚未上传交付物，mDeliveryBean为null，提示：消费者等待，设计师上传 .

@@ -20,9 +20,13 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.SplitStringUtils;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.google.gson.Gson;
 import com.socks.library.KLog;
 
 import org.json.JSONObject;
@@ -62,6 +66,8 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        CustomProgress.show(this, "", false, null);
+
         setTitleForNavbar(getResources().getString(R.string.flow_cost_detail)); /// 设置标题 .
     }
 
@@ -79,33 +85,22 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+        CustomProgress.cancelDialog();
+
         updateViewFromData();
-        getDesignerInfoData(designer_id, hs_uid);
-    }
-
-    /**
-     * @param designer_id
-     * @param hs_uid
-     * @brief 获取设计师基础信息 .
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            String jsonString;
-
+        restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                jsonString = GsonUtil.jsonToString(jsonObject);
-                designerInfoList = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                KLog.json("FlowFirstDesignActivity", jsonString);
+            public void onJsonResponse(String jsonResponse) {
+
+                designerInfoList = new Gson().fromJson(jsonResponse, DesignerInfoDetails.class);
                 updateViewFromInfoData();
             }
 
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onError(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowFirstDesignActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowFirstDesignActivity.this);
+
             }
         });
     }
