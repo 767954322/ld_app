@@ -310,7 +310,7 @@ public class MPServerHttpManager {
                 "&start_experience=" + findDesignerBean.getStart_experience() +
                 "&end_experience=" + findDesignerBean.getEnd_experience() +
                 "&design_price_code=" + findDesignerBean.getDesign_price_code() +
-                "&styles=" + findDesignerBean.getNick_name() +
+                "&styles=" + "" +
                 "&offset=" + offset +
                 "&limit=" + limit;
 
@@ -618,12 +618,12 @@ public class MPServerHttpManager {
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                if (xToken!=null){
+                if (xToken != null) {
                     HashMap<String, String> header = new HashMap<>();
                     header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                     return header;
-                }else {
-                    return  super.getHeaders();
+                } else {
+                    return super.getHeaders();
                 }
 
             }
@@ -1649,14 +1649,14 @@ public class MPServerHttpManager {
 
     /**
      * 获取3D方案的数据
-     * */
+     */
 
-    public void get3DCaseData(int designer_id,int limit,int offset,String date,String desc,OkJsonRequest.OKResponseCallback callback){
+    public void get3DCaseData(int designer_id, int limit, int offset, String date, String desc, OkJsonRequest.OKResponseCallback callback) {
 
         String url = UrlConstants.MAIN_MEMBER + "/designers/studio?limit=" + limit + "&offset=" + offset;
 //        http://192.168.88.175:8080/design-app/v1/api
-        String url1 = UrlConstants.MAIN_DESIGN+"/hs/prints/anonymity/" +
-                "designers/"+designer_id+"/d3/d3dimensionals?limit="+limit+"&&offset="+offset;
+        String url1 = UrlConstants.MAIN_DESIGN + "/hs/prints/anonymity/" +
+                "designers/" + designer_id + "/d3/d3dimensionals?limit=" + limit + "&&offset=" + offset;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url1, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
