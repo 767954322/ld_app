@@ -342,6 +342,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 drawable = R.drawable.jieshoushejihetong_ico;
             }
         }
+        if (stateCode == 31||stateCode == 33) {
+            setItemAnimationForView(textColor, viewHolder);
+        }
         initViewHolder(viewHolder, drawable, textColor);
 
     }
@@ -397,6 +400,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
             if (stateCode >= 11) {
                 drawable = R.drawable.icon_xuanzeshejishi;
                 textColor = StepEnableColor;
+            }
+            if (stateCode == 11) {
+                setItemAnimationForView(textColor, viewHolder);
             }
         }
 
