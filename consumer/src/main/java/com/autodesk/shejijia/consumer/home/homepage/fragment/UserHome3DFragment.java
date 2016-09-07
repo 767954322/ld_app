@@ -34,6 +34,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -143,11 +144,17 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
+        CustomProgress.show(activity,"",false,null);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
-            final String designer_id = case3DLibraryListBean.getCases().get(position).getDesigner_id()+"";
-            final String hs_uid =  case3DLibraryListBean.getCases().get(position).getHs_designer_uid();
-            final String receiver_name = case3DLibraryListBean.getCases().get(position).getDesigner_info().getNick_name();
+            Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
+            final int designer_id = casesBean.getDesigner_id();
+            final String hs_uid = casesBean.getHs_designer_uid();
+            final String receiver_name = casesBean.getDesigner_info().getNick_name();
+
+//            final String designer_id = case3DLibraryListBean.getCases().get(position).getDesigner_id()+"";
+//            final String hs_uid =  case3DLibraryListBean.getCases().get(position).getHs_designer_uid();
+//            final String receiver_name = case3DLibraryListBean.getCases().get(position).getDesigner_info().getNick_name();
             final String mMemberType = mMemberEntity.getMember_type();
             final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
@@ -155,11 +162,12 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     MPNetworkUtils.logError(TAG, volleyError);
+                    CustomProgress.cancelDialog();
                 }
 
                 @Override
                 public void onResponse(String s) {
-
+                    CustomProgress.cancelDialog();
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
                     final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
@@ -178,16 +186,17 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                         getActivity().startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id+"", new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
-                                
+                                CustomProgress.cancelDialog();
                             }
 
                             @Override
                             public void onResponse(String s) {
                                 try {
+                                    CustomProgress.cancelDialog();
                                     JSONObject jsonObject = new JSONObject(s);
                                     String thread_id = jsonObject.getString("thread_id");
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, "");
@@ -539,6 +548,9 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     @Override
     public void onResume() {
         super.onResume();
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()){
+            CustomProgress.cancelDialog();
+        }
         if (null != mFloatingActionsMenu) {
             mFloatingActionsMenu.close(true);
         }

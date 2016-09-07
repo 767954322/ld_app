@@ -27,14 +27,14 @@ public class ImageUrlUtils {
 
         String url_header = getEvUrl();
         String[] packagesList = {
-                url_header + "list/juranzhuangshidongjiekuaican@3x.png",
-                url_header + "list/juranzhumeixingfujia@3x.png",
-                url_header + "list/juranzhuangshibeishutaocan@3x.png",
-                url_header + "list/juranzhumeiyishujia@3x.png",
-                url_header + "list/juranzhuangshinanyuntaocan@3x.png",
-                url_header + "list/juranzhumeipinzhijia@3x.png",
-                url_header + "list/juranzhuangshixijingtaocan@3x.png",
-                url_header + "list/juranzhumeizunxiangjia@3x.png"
+                url_header + "list/juranzhuangshidongjiekuaican@3x.jpg",
+                url_header + "list/juranzhumeixingfujia@3x.jpg",
+                url_header + "list/juranzhuangshibeishutaocan@3x.jpg",
+                url_header + "list/juranzhumeiyishujia@3x.jpg",
+                url_header + "list/juranzhuangshinanyuntaocan@3x.jpg",
+                url_header + "list/juranzhumeipinzhijia@3x.jpg",
+                url_header + "list/juranzhuangshixijingtaocan@3x.jpg",
+                url_header + "list/juranzhumeizunxiangjia@3x.jpg"
         };
 
         return packagesList;
@@ -44,14 +44,14 @@ public class ImageUrlUtils {
 
         String url_header = getEvUrl();
         String[] packagesDetail = {
-                url_header + "detail/dongjie@3x.png",
-                url_header + "detail/xingfujia@3x.png",
-                url_header + "detail/beishu@3x.png",
-                url_header + "detail/yishujia@3x.png",
-                url_header + "detail/nanyun@3x.png",
-                url_header + "detail/pinzhijia@3x.png",
-                url_header + "detail/xijing@3x.png",
-                url_header + "detail/zunxiang@3x.png"
+                url_header + "detail/dongjie@3x.jpg",
+                url_header + "detail/xingfujia@3x.jpg",
+                url_header + "detail/beishu@3x.jpg",
+                url_header + "detail/yishujia@3x.jpg",
+                url_header + "detail/nanyun@3x.jpg",
+                url_header + "detail/pinzhijia@3x.jpg",
+                url_header + "detail/xijing@3x.jpg",
+                url_header + "detail/zunxiang@3x.jpg"
         };
         return packagesDetail;
     }
@@ -59,7 +59,7 @@ public class ImageUrlUtils {
     public static String getPackagesListBanner() {
         String url_header = getEvUrl();
 
-        return url_header + "list/banner@2x.png";
+        return url_header + "list/banner@2x.jpg";
     }
 
     public static String[] getPackagesListNames() {
