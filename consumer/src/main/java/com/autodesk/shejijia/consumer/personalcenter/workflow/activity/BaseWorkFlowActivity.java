@@ -51,8 +51,11 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         super.initExtraBundle();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
         needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
+        contract_no = intent.getStringExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO);
+        designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
+        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
 
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
         contract_no = bundle.getString(Constant.SeekDesignerDetailKey.CONTRACT_NO);
@@ -67,7 +70,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         memberEntity = AdskApplication.getInstance().getMemberEntity();
 
         getOrderDetailsInfo(needs_id, designer_id);
-
     }
 
     @Override
@@ -245,5 +247,5 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected MPBidderBean mBiddersEntity;
     protected List<MPBidderBean> mBidders;
     protected MPDeliveryBean mDeliveryBean;
-    private String contract_no; // 设计合同编号
+    protected String contract_no; // 设计合同编号
 }

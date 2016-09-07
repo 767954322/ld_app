@@ -124,8 +124,6 @@ public class ApiStatusUtil {
                 } else {
 
                 }
-
-
             }
         }).show();
     }
