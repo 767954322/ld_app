@@ -5,19 +5,18 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SixProductsAdapter;
 import com.autodesk.shejijia.consumer.codecorationBase.average.fragment.AverageFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.codiy.fragments.DIYFragment;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SixProductsAdapter;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment.CoEliteFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.fragment.GrandMasterFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.fragment.PackagesFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment.CoEliteFragment;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager;
@@ -71,10 +70,11 @@ public class SixProductsActivity extends NavigationBarActivity {
         pagerSlidingTabStrip.setIndicatorHeight(DensityUtil.dip2px(this, 2));//下滑指示器的高度
         pagerSlidingTabStrip.setTextColorSelected(Color.BLUE);//设置选中的tab字体颜色
         pagerSlidingTabStrip.setTextColorUnselected(Color.BLACK);//设置未选中的tab字体颜色
-        pagerSlidingTabStrip.setTabPaddingLeftRight(60);//设置tab距离左右的padding值
+        pagerSlidingTabStrip.setTabPaddingLeftRight(35);//设置tab距离左右的padding值
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
         pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 16));
+        pagerSlidingTabStrip.setPaddingMiddle(true);//设置tab控件居中
         pagerSlidingTabStrip.setOnClickItemListener(new MaterialTabs.OnClickItemListener() {
             @Override
             public void onClickItemListener(int position) {
