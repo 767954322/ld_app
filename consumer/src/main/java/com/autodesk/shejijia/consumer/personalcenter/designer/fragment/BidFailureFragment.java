@@ -32,7 +32,7 @@ import java.util.Map;
  * @file BidFailureFragment.java  .
  * @brief 我的应标, 应标失败  .
  */
-public class BidFailureFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
+public class BidFailureFragment extends BidBaseFragment {
 
     @Override
     protected int getLayoutResId() {
@@ -50,14 +50,8 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
 
     @Override
     protected void initData() {
+        super.initData();
         setListener();
-        living_room = AppJsonFileReader.getLivingRoom(getActivity());
-        style = AppJsonFileReader.getStyle(getActivity());
-        area = AppJsonFileReader.getArea(getActivity());
-        room = AppJsonFileReader.getRoomHall(getActivity());
-        toilet = AppJsonFileReader.getToilet(getActivity());
-        space = AppJsonFileReader.getSpace(getActivity());
-
         mCommonAdapter = getCommonAdapter();
         mListView.setAdapter(mCommonAdapter);
         addFooterViewForMListView();
@@ -108,14 +102,7 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
         return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities1, R.layout.item_mybid_fail) {
             @Override
             public void convert(CommonViewHolder holder, MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
-                holder.setText(R.id.tv_decoration_name, biddingNeedsListEntity.getNeeds_name());
-                holder.setText(R.id.tv_decoration_buget, biddingNeedsListEntity.getRenovation_budget());
-
-                holder.setText(R.id.tv_decoration_needs_id, biddingNeedsListEntity.getNeeds_id());
-                holder.setText(R.id.tv_decoration_address, getProjectAddress(biddingNeedsListEntity));
-                holder.setVisible(R.id.decoration_phone_container, false);
-                holder.setText(R.id.tv_decoration_house_type, getProjectHourseType(biddingNeedsListEntity));
-                holder.setText(R.id.tv_decoration_style, getProjectDecorationStyle(biddingNeedsListEntity));
+                setupBidItemView(holder, biddingNeedsListEntity);
 
                 ViewGroup itemHeader = holder.getView(R.id.mybid_item_header);
                 ViewGroup itemInfo = holder.getView(R.id.bid_item_info);
@@ -135,45 +122,6 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
             }
         } else if(view instanceof TextView) {
             ((TextView) view).setTextColor(color);
-        }
-    }
-
-    private void showDetail(String needsId) {
-        Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
-        Bundle bundle = new Bundle();
-        KLog.d(TAG, needsId);
-        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needsId);
-        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT);
-        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    private String getProjectAddress(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
-        String provinceName = biddingNeedsListEntity.getProvinceName();
-        String cityName = biddingNeedsListEntity.getCityName();
-        String districtName = biddingNeedsListEntity.getDistrictName();
-        districtName = TextUtils.isEmpty(districtName) || "none".equals(districtName) ? "" : districtName;
-        provinceName = TextUtils.isEmpty(provinceName) ? "" : provinceName;
-        cityName = TextUtils.isEmpty(cityName) ? "" : cityName;
-        return provinceName.trim() + cityName.trim() + districtName.trim();
-    }
-
-    private String getProjectHourseType(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
-        String houseType = biddingNeedsListEntity.getHouse_type();
-        if (space.containsKey(houseType)) {
-            return space.get(houseType);
-        } else {
-            return houseType;
-        }
-    }
-
-    private String getProjectDecorationStyle(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
-        String decorationStyle = biddingNeedsListEntity.getRenovation_style();
-        if (style.containsKey(decorationStyle)) {
-            return style.get(decorationStyle);
-        } else {
-            return decorationStyle;
         }
     }
 
@@ -222,12 +170,6 @@ public class BidFailureFragment extends BaseFragment implements PullToRefreshLay
     private static final String IS_SUCCESS = "1";
 
     ///集合，类.
-    private Map<String, String> living_room;
-    private Map<String, String> style;
-    private Map<String, String> area;
-    private Map<String, String> room;
-    private Map<String, String> toilet;
-    private Map<String, String> space;
     private CommonAdapter mCommonAdapter;
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntities = new ArrayList<MyBidBean.BiddingNeedsListEntity>();
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntities1 = new ArrayList<>();
