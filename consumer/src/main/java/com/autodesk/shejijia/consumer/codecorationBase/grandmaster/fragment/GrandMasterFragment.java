@@ -137,18 +137,16 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     }
 
     private void initPageData(String masterInfo) {
-
         isLoginUserJust = isLoginUser();
         if (!"error".equals(masterInfo)) {
             GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
             mMasterInfoList = grandMasterInfo.getDesigner_list();
-            mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
         }
-
-        addImageViewtips();
+        mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
         vp_grand_selection.setAdapter(mPagerAdapter);
         vp_grand_selection.setOnPageChangeListener(this);
 
+        addImageViewtips();
     }
 
     // 将圆点加入到ViewGroup中
