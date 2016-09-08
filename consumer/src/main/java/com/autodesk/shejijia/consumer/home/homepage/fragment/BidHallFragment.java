@@ -166,8 +166,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 if (null != getActivity()) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-//                            AlertView.Style.Alert, null).show();
                     ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
                 }
                 hideFooterView(mNeedsListEntities);
