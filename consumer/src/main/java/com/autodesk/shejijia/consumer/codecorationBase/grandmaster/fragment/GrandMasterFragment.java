@@ -138,16 +138,15 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     private void initPageData(String masterInfo) {
 
         isLoginUserJust = isLoginUser();
+        viewList = new ArrayList<View>();
+        LayoutInflater lf = LayoutInflater.from(activity);
+        View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
+        ImageView iv_grandmaster_pic_first = (ImageView) view1.findViewById(R.id.iv_grandmaster_pic_first);
+        ImageUtils.displayIconImage("file://" + R.drawable.shouye, iv_grandmaster_pic_first);
+        viewList.add(view1);
         if (!"error".equals(masterInfo)) {
             GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
             designer_list = grandMasterInfo.getDesigner_list();
-            viewList = new ArrayList<View>();
-
-            LayoutInflater lf = LayoutInflater.from(activity);
-            View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
-            ImageView iv_grandmaster_pic_first = (ImageView) view1.findViewById(R.id.iv_grandmaster_pic_first);
-            ImageUtils.displayIconImage("file://" + R.drawable.shouye, iv_grandmaster_pic_first);
-            viewList.add(view1);
             for (int i = 0; i < designer_list.size(); i++) {
                 View view2 = lf.inflate(R.layout.viewpager_item_grandmaster_content, null);
                 ImageView iv_grandmaster_pic = (ImageView) view2.findViewById(R.id.iv_grandmaster_pic);
@@ -178,11 +177,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 }
                 viewList.add(view2);
             }
-        } else {
-            viewList = new ArrayList<View>();
-            LayoutInflater lf = LayoutInflater.from(activity);
-            View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
-            viewList.add(view1);
         }
 
         addImageViewtips();

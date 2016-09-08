@@ -299,7 +299,6 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
                 vvp_viewpager.setBackground(null);
             } else if (position == 1) {//Ｐager第二页设置
                 nav_title_textView.setText("大师详情页");
-                vvp_viewpager.setBackgroundResource(R.drawable.master_bgone);
                 vvp_viewpager.setBackground(null);
             }
             return viewList.get(position);
