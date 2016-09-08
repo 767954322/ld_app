@@ -89,9 +89,9 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                     mMPBidderBean.setDesigner_id(designerId);
 
                     Intent evaluateIntent = new Intent(mActivity, AppraiseDesignerActivity.class);
-                    evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeedsId);
+                    evaluateIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeedsId);
                     evaluateIntent.putExtra(FlowUploadDeliveryActivity.BIDDER_ENTITY, mMPBidderBean);
-                    evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designerId);
+                    evaluateIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
                     mActivity.startActivity(evaluateIntent);
                 }
             });

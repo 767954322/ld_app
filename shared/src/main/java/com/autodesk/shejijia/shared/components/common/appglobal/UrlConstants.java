@@ -30,7 +30,7 @@ public final class UrlConstants {
     private static String MAIN_TRANSACTION = ApiManagerV2.TRANSACTION_PATH;
 
     //分享界面的url
-    public static final String MP_MAIN_SHARE = ApiManagerV2.SHARE_PATH + "/share/2dcase.html?caseid=";
+    public static final String MP_MAIN_SHARE = ApiManagerV2.SHARE_PATH;
 
     /**
      * 搜索.

@@ -70,7 +70,7 @@ public class SixProductsActivity extends NavigationBarActivity {
         pagerSlidingTabStrip.setIndicatorHeight(DensityUtil.dip2px(this, 2));//下滑指示器的高度
         pagerSlidingTabStrip.setTextColorSelected(Color.BLUE);//设置选中的tab字体颜色
         pagerSlidingTabStrip.setTextColorUnselected(Color.BLACK);//设置未选中的tab字体颜色
-        pagerSlidingTabStrip.setTabPaddingLeftRight(29);//设置tab距离左右的padding值
+//        pagerSlidingTabStrip.setTabPaddingLeftRight(29);//设置tab距离左右的padding值
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
         pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 16));

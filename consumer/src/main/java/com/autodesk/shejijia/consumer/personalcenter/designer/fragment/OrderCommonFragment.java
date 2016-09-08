@@ -164,6 +164,7 @@ public class OrderCommonFragment extends BaseFragment {
                 getDesignerOder(mMemberType, designer_id, 0, LIMIT);
             }
         });
+
         mPtrLayout.setLastUpdateTimeRelateObject(this);
         mListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override

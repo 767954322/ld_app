@@ -500,23 +500,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setCase3dBtn(btWidth);
                 mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit, is_loho);
-
-                //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
-//                if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-
-                //[1]高阶:high_level_audit=2
-                //[1.1] is_loho=1  精选、竞优、套餐
-                //[1.2] 精选、竞优、
-                //[2]不是高阶：
-                //[1.1] is_loho=1  竞优、套餐
-                //[1.2] 竞优
                 break;
 
             case R.id.construction:
                 chooseViewPointer.setConsumerAppraise(btWidth);
                 setMyProjectTitleColorChange(construction, design, bidding);
                 mDesignerPersonalCenterFragment.setConstructionFragment();
-
                 break;
         }
     }
@@ -646,8 +635,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//                int high_level_audit = 0;
                 if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
@@ -701,23 +688,43 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     public void onResponse(String s) {
                         MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                        Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
+                        final Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
                         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
 
                         if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
                             MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                             int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                             intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                             intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                            intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                        } else {
                             intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                            MPConsumerHomeActivity.this.startActivity(intent);
+
+                        } else {
+                            MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    MPNetworkUtils.logError(TAG, volleyError);
+                                }
+
+                                @Override
+                                public void onResponse(String s) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(s);
+                                        String thread_id = jsonObject.getString("thread_id");
+                                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                        intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                        MPConsumerHomeActivity.this.startActivity(intent);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
-                        startActivity(intent);
                     }
                 });
 

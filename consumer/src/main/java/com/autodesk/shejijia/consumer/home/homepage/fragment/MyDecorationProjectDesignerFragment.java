@@ -35,58 +35,29 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
         int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
         int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
-        setDefaultFragment(high_level_audit,is_loho);
+        setDefaultFragment(high_level_audit, is_loho);
     }
 
     /**
-     * 设置应标的fragment
+     * 应标
      */
     public void setBidingFragment() {
-
         if (mBidBidingFragment == null) {
-
             mBidBidingFragment = new BidBidingFragment();
         }
-
         switchFragment(mBidBidingFragment);
     }
 
     /**
-     * 设置设计的fragment
+     * 施工
      */
-    public void setDesignBeiShuFragment() {
-
-        if (mBeishuMealFragment == null) {
-
-            mBeishuMealFragment = new DesignerOrderBeiShuFragment();
-
-        }
-
-        switchFragment(mBeishuMealFragment);
-    }
-
-    /**
-     * 设置设计的fragment
-     */
-    public void setDesignFragment() {
-
-        if (mCommonOrderFragment == null) {
-            mCommonOrderFragment = new DesignerOrderFragment();
-        }
-        switchFragment(mCommonOrderFragment);
-    }
-
     public void setConstructionFragment() {
-
         if (mDesignerConstructionFragment == null) {
             mDesignerConstructionFragment = new DesignerConstructionFragment();
         }
         switchFragment(mDesignerConstructionFragment);
-
-
     }
 
 
@@ -104,30 +75,17 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     }
 
     /**
-     * 默认北舒套餐页面 .
+     * 设计 .
      */
     public void setDefaultFragment(int status, int mIsLoho) {
-//        if (high_level_audit == 2) {
-//
-//            mCommonFragment = new DesignBaseFragment();
-//        } else {
-//        mCommonFragment = new DesignBaseFragment();
-//        }
         mCommonFragment = DesignBaseFragment.newInstance(status, mIsLoho);
-
         fragmentManager = getChildFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.ll_contain, mCommonFragment)
                 .commit();
         fromFragment = mCommonFragment;
     }
 
-    private LinearLayout llFragmentContain;
-    private TextView mBeishuOrder, mOrder;
-    private Context context = getActivity();
-    private FrameLayout mOrderContainer;
-    private int mIsLoho;
-    private static final int IS_BEI_SHU = 1;
-    private Fragment mBeishuMealFragment, mCommonOrderFragment, mCommonFragment;
+    private Fragment mCommonFragment;
     private FragmentManager fragmentManager;
     private Fragment fromFragment;
     private Fragment mDesignerConstructionFragment;

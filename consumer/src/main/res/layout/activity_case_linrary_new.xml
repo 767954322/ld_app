@@ -12,7 +12,7 @@
         layout="@layout/view_navigation_header" />
 
 
-    <com.autodesk.shejijia.consumer.home.widget.ScrollListView
+    <ListView
         android:id="@+id/case_library_new"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
