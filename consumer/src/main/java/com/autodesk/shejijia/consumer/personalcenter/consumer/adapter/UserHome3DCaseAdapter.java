@@ -101,7 +101,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                         ((ViewHolder) holder).tvRoom.setText(casesEntity.getRoom_type());
                     }
                 }
-                if (casesEntity.getProject_style() == null) {
+                if (casesEntity.getProject_style() == null || casesEntity.getProject_style().equals("med")) { // 数据中如果又med字段也改为其他
                     ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     String project_style = casesEntity.getProject_style();
@@ -111,7 +111,6 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                         ((ViewHolder) holder).tvStyle.setText(casesEntity.getProject_style());
                     }
                 }
-
             }
         } else {
             ((ViewHolder) holder).ivCase.setImageResource(R.drawable.common_case_icon);
