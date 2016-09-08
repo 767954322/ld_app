@@ -99,14 +99,12 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
 
         tvc_area.setText(decorationNeedsListBean.getHouse_area());
         tvc_estate.setText(decorationNeedsListBean.getCommunity_name());
-        tvc_fitment_budget.setText(decorationNeedsListBean.getDecoration_budget() != null?
-                                   decorationNeedsListBean.getDecoration_budget():
-                                   UIUtils.getString(R.string.no_select));
+        tvc_fitment_budget.setText(UIUtils.getNoSelectIfEmpty(decorationNeedsListBean.getDecoration_budget()));
 
-        tvc_project_budget.setText( decorationNeedsListBean.getDesign_budget() != null?decorationNeedsListBean.getDesign_budget():UIUtils.getString(R.string.no_select));
+        tvc_project_budget.setText(UIUtils.getNoSelectIfEmpty(decorationNeedsListBean.getDesign_budget()));
         tvc_name.setText(decorationNeedsListBean.getContacts_name());
         tvc_phone.setText(decorationNeedsListBean.getContacts_mobile());
-        tvc_measure_form_type.setText(spaceMap.get(house_type) != null?spaceMap.get(house_type):UIUtils.getString(R.string.no_select));
+        tvc_measure_form_type.setText(UIUtils.getNoSelectIfEmpty(spaceMap.get(house_type)));
 
         String tvHouseType = roomHallMap.get(decorationNeedsListBean.getLiving_room())
                 +roomMap.get(decorationNeedsListBean.getRoom())
@@ -115,7 +113,8 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
 
 
         tvc_house_type.setText(tvHouseType);//设置室 厅 卫
-        tvc_measure_form_style.setText(styleMap.get(decorationNeedsListBean.getDecoration_style()));//风格
+        String style = styleMap.get(decorationNeedsListBean.getDecoration_style());
+        tvc_measure_form_style.setText(UIUtils.getNoSelectIfEmpty(style));//风格
 
         tvc_address.setText(province_name + city_name + district_name);
         SelectionBean selectionBean = decorationNeedsListBean.getElite();

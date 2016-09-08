@@ -234,8 +234,11 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
         String house_type = demandDetailBean.getHouse_type();
         String room = demandDetailBean.getRoom();
+        room = (room!=null&&room.length() > 0)?room.replace(" ",""):room;
         String toilet = demandDetailBean.getToilet();
+        toilet = (toilet !=null && toilet.length() > 0)?toilet.replace(" ",""):toilet;
         String living_room = demandDetailBean.getLiving_room();
+        living_room = (living_room != null && living_room.length() > 0)?living_room.replace(" ",""):living_room;
 
         district_name = UIUtils.getNoStringIfEmpty(district_name);
         String address = province_name + city_name + district_name;
@@ -245,10 +248,9 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         room = convertEn2Cn(mRoomJson, room);
         living_room = convertEn2Cn(mLivingRoomJson, living_room);
         toilet = convertEn2Cn(mToiletJson, toilet);
-
         String livingRoom_room_toilet = room + living_room + toilet;
-
         mTvAmendRoomType.setText(UIUtils.getNoSelectIfEmpty(livingRoom_room_toilet));
+
         mTvAmendStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style));
         mTvAmendHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type));
         mTvAmendName.setText(UIUtils.getNoDataIfEmpty(contacts_name));

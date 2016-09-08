@@ -154,7 +154,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         super.initData(savedInstanceState);
         if (savedInstanceState == null) {
             showFragment(getDesignerMainRadioBtnId());
+
+            // make sure we create the activity with main radio button
+            mRadioGroup.check(R.id.designer_main_radio_btn);
         }
+
         isShowBidHallFragment();
     }
 
@@ -212,10 +216,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             designer_main_radio_group.check(index);
         }
 
-        //未登录状态，会自动进入案例fragment
-        if (mMemberEntity == null) {
-            designer_main_radio_btn.setChecked(true);
-        }
+
     }
 
 
@@ -297,6 +298,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
     @Override
+    protected void onUserLogout(){
+        mRadioGroup.check(getDesignerMainRadioBtnId());
+    }
+
+
+    @Override
     protected Fragment getFragmentByButtonId(int id) {
         Fragment fragmentByButtonId = super.getFragmentByButtonId(id);
         if (id == R.id.designer_indent_list_btn) {
@@ -309,7 +316,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 fragmentByButtonId = mConsumerPersonalCenterFragment;
         } else if (id == getDesignerMainRadioBtnId()) {
             fragmentByButtonId = mUserHomeFragment;
-        }
+        } else if (id == R.id.radio_btn_designer)
+            fragmentByButtonId = designerListFragment;
         return fragmentByButtonId;
     }
 
@@ -490,23 +498,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setCase3dBtn(btWidth);
                 mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit, is_loho);
-
-                //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
-//                if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-
-                //[1]高阶:high_level_audit=2
-                //[1.1] is_loho=1  精选、竞优、套餐
-                //[1.2] 精选、竞优、
-                //[2]不是高阶：
-                //[1.1] is_loho=1  竞优、套餐
-                //[1.2] 竞优
                 break;
 
             case R.id.construction:
                 chooseViewPointer.setConsumerAppraise(btWidth);
                 setMyProjectTitleColorChange(construction, design, bidding);
                 mDesignerPersonalCenterFragment.setConstructionFragment();
-
                 break;
         }
     }
@@ -574,8 +571,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-        if (checkedId == getDesignerMainRadioBtnId())
-            showFragment(getDesignerMainRadioBtnId());
+        if (checkedId == getDesignerMainRadioBtnId() || checkedId == getDesignerButtonId())
+            showFragment(checkedId);
 
         super.onCheckedChanged(group, checkedId);
     }
@@ -636,8 +633,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//                int high_level_audit = 0;
                 if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
