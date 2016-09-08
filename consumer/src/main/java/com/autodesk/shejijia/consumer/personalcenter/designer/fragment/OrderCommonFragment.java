@@ -109,8 +109,16 @@ public class OrderCommonFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        Log.d(TAG, "onResume: ddd");
+
     }
 
+    @Override
+    public void onFragmentShown()
+    {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+    }
 
     /**
      * 获取普通订单数据
