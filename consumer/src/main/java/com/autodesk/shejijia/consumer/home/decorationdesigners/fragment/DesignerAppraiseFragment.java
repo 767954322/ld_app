@@ -54,12 +54,12 @@ public class DesignerAppraiseFragment extends BaseFragment {
         if (mSeekDesignerAppraiseAdapter == null) {
 
             mSeekDesignerAppraiseAdapter = new SeekDesignerAppraiseAdapter(getActivity(), estimates);
-            estimatesList.clear();
-            estimatesList.addAll(estimates);
-            mListView.setAdapter(mSeekDesignerAppraiseAdapter);
-
-
         }
+        estimatesList.clear();
+        estimatesList.addAll(estimates);
+        mListView.setAdapter(mSeekDesignerAppraiseAdapter);
+
+
 
         if (seekDesignerDetailHomeBean != null && seekDesignerDetailHomeBean.getDesigner() != null &&
 

@@ -629,10 +629,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     default_ll_bg.setVisibility(View.GONE);
 
                     if (isRefreshOrLoad) {
-                        mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen, 0);//刷新
+                        mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen.getCases(), 0);//刷新
                         mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
                     } else {
-                        mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen, 1);//加载
+                        mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen.getCases(), 1);//加载
 
                         mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                     }
@@ -1025,6 +1025,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, 0);
             OFFSETCOUNT = OFFSETCOUNT + 10;
         } else if (controlNumber == 2) {
+            isRefreshOrLoad = false;
             getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, "data", "desc");
             OFFSETCOUNT = OFFSETCOUNT + 10;
         } else {

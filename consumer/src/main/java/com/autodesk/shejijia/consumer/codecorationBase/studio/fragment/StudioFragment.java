@@ -157,7 +157,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                             designerRetrieveRspAll.add(designerListBeen.get(i));
 
                         }
-                        upDataForView(designerListBeen);
+                        upDataForView(designerRetrieveRspAll);
 
                     }
                 }
@@ -179,7 +179,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
                     Intent intent = new Intent(activity, WorkRoomDetailActivity.class);
 
-                    intent.putExtra("hs_uid", designerListBeenList.get(position - 1).getHs_uid());
+                    intent.putExtra("hs_uid", designerRetrieveRspAll.get(position - 1).getHs_uid());
                     activity.startActivity(intent);
 
                 }
@@ -200,7 +200,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
         isLoadMore = true;
         OFFSET = OFFSET + 10;
-        getWorkRoomData(str, OFFSET, LIMIT);
+        getWorkRoomData("91", OFFSET, LIMIT);
 
     }
 

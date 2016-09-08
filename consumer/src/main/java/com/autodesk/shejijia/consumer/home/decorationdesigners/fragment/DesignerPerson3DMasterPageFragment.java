@@ -56,20 +56,22 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
 
 
     //获取更多数据
-    public void getMore3DCase(Case3DBeen case3DBeen, int state) {
-        myDatas = new ArrayList<Case3DBeen.CasesBean>();
-
+    public void getMore3DCase(List<Case3DBeen.CasesBean> myData, int state) {
 
         //如果是刷新数据，就将该集合清空
         if (state == 0) {
-            seekDesigner3DCaseAdapter = new SeekDesiger3DCaseAdapter(getActivity(), case3DBeen.getCases());
+            if (seekDesigner3DCaseAdapter == null){
+
+                seekDesigner3DCaseAdapter = new SeekDesiger3DCaseAdapter(getActivity(), myData);
+            }
             myDatas.clear();
-            myDatas.addAll(case3DBeen.getCases());
+            myDatas.addAll(myData);
 
             mListView.setAdapter(seekDesigner3DCaseAdapter);
         } else {
 
-            myDatas.addAll(case3DBeen.getCases());
+            myDatas.addAll(myData);
+            Log.i("yaoxuehua", "ooop" + myData.size());
 
             seekDesigner3DCaseAdapter.addMoreData(myDatas);
 
@@ -113,7 +115,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private ListView mListView;
-    private List<Case3DBeen.CasesBean> myDatas;
+    private List<Case3DBeen.CasesBean> myDatas = new ArrayList<Case3DBeen.CasesBean>();
     private SeekDesiger3DCaseAdapter seekDesigner3DCaseAdapter;
 
 
