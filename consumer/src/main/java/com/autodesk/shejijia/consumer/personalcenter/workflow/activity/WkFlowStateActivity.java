@@ -375,7 +375,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void eliteEstablishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 11  ||wk_cur_sub_node_idi == 31 ) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 11  ||wk_cur_sub_node_idi == 31 || wk_cur_sub_node_idi == 32) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
             } else if(wk_cur_sub_node_idi == 24 ||wk_cur_sub_node_idi == 33){
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
@@ -437,12 +437,13 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void firstPay(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 32) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer_send_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
-                        AlertView.Style.Alert, null).show();
-            } else {
-                view.setClickable(false);
-            }
+            view.setClickable(false);
+//            if (wk_cur_sub_node_idi == 32) {
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer_send_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
+//                        AlertView.Style.Alert, null).show();
+//            } else {
+//                view.setClickable(false);
+//            }
             return;
         }
         if (wk_cur_sub_node_idi == 32) {

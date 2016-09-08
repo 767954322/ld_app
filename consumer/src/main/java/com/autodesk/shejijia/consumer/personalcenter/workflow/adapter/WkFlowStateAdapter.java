@@ -263,16 +263,16 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 setItemAnimationForView(textColor, viewHolder);
             }
         } else {
-            if (stateCode == 32 || stateCode >= 41) {
+            if (stateCode >= 41) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.icon_zhifushejishoukuan;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.shejishoukuan_ico;
             }
-            if (stateCode == 32) {
-                setItemAnimationForView(textColor, viewHolder);
-            }
+//            if (stateCode == 32) {
+//                setItemAnimationForView(textColor, viewHolder);
+//            }
         }
         initViewHolder(viewHolder, drawable, textColor);
 
@@ -310,6 +310,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.jieshoushejihetong_ico;
             }
+            if (stateCode == 32) {
+                setItemAnimationForView(textColor, viewHolder);
+            }
         }
 
         if (stateCode == 11 || stateCode == 31 || stateCode == 24 || stateCode == 33) {
@@ -346,8 +349,11 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.jieshoushejihetong_ico;
             }
+            if (stateCode == 32) {
+                setItemAnimationForView(textColor, viewHolder);
+            }
         }
-        if (stateCode == 21 || stateCode == 22 || stateCode == 31|| stateCode == 32) {
+        if (stateCode == 21 || stateCode == 22 || stateCode == 31) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);
@@ -413,7 +419,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 drawable = R.drawable.icon_xuanzeshejishi;
                 textColor = StepEnableColor;
             }
-            if (stateCode == 11) {
+            if (stateCode == 11 && tempdate_id != 4) {
                 setItemAnimationForView(textColor, viewHolder);
             }
         }
