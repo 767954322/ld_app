@@ -530,12 +530,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mPtrLayout.onRefreshComplete();
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
-
-            if (WkTemplateConstants.IS_FOUR == wk_cur_template_id) {
-                rlStopContract.setVisibility(View.VISIBLE);
-            } else {
-                rlStopContract.setVisibility(View.GONE);
-            }
+//
+//            if (WkTemplateConstants.IS_FOUR == wk_cur_template_id) {
+//                rlStopContract.setVisibility(View.VISIBLE);
+//            } else {
+//                rlStopContract.setVisibility(View.GONE);
+//            }
 
             if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
                 btnStopDemand.setVisibility(View.VISIBLE);
