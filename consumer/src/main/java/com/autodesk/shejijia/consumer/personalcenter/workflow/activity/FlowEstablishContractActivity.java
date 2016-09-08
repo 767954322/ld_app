@@ -181,12 +181,30 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 public void onJsonResponse(String jsonResponse) {
                     contractNo = new Gson().fromJson(jsonResponse.toString(), MPContractNoBean.class);
                     contract_no = contractNo.getContractNO(); /// 获取合同编号 .
+
+
+
                 }
 
                 @Override
                 public void onError(VolleyError volleyError) {
                     MPNetworkUtils.logError(TAG, volleyError);
-                    MyToast.show(FlowEstablishContractActivity.this, R.string.failure);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.error_on_get_contract_number), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                                @Override
+                                public void onDismiss(Object o) {
+                                    finish();
+                                }
+                            });
+                            mDesignContract.show();
+                        }
+                    });
+
+
+
                 }
             });
 
@@ -368,8 +386,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
                 Double totalCost = Double.parseDouble(design_amount);
                 Double firstCost = Double.parseDouble(design_amount_first);
-                DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
-                //design_amount_balance = df.format(totalCost - firstCost);
+
+                design_amount = String.format("%.2f", totalCost);
+                design_amount_first = String.format("%.2f", firstCost);
                 design_amount_balance = String.format("%.2f", totalCost - firstCost);
 
                 String consumer_name = contract_detail.getName();
@@ -387,7 +406,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 text = text.replace("#val(consumer_name)", Validator.getStringWithNullDefaultString(consumer_name, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(consumer_mobile)", Validator.getStringWithNullDefaultString(consumer_mobile, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(consumer_addr)", Validator.getStringWithNullDefaultString(consumer_addr, UIUtils.getString(R.string.data_null)));
-                text = text.replace("#val(consumer_mail)", Validator.getStringWithNullDefaultString(consumer_mail, UIUtils.getString(R.string.data_null)));
+                text = text.replace("#val(consumer_mail)", Validator.getStringWithNullDefaultString(consumer_mail, ""));
                 text = text.replace("#val(tree_d_renderimage)", Validator.getStringWithNullDefaultString(tree_d_renderimage, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(designer_addr)", Validator.getStringWithNullDefaultString(designer_addr, UIUtils.getString(R.string.data_null)));
                 break;
