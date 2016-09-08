@@ -24,7 +24,8 @@ public class SixProductsAdapter extends FragmentStatePagerAdapter {
         FRAGMENT_COELITE,
         FRAGMENT_AVERAGE,
         FRAGMENT_PACKAGES,
-        FRAGMENT_DIY};
+        FRAGMENT_DIY
+    };
 
     private String[]tabItems;
     public SixProductsAdapter(FragmentManager fm) {
