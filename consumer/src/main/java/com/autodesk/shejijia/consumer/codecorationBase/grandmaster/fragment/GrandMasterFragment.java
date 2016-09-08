@@ -142,7 +142,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         LayoutInflater lf = LayoutInflater.from(activity);
         View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
         ImageView iv_grandmaster_pic_first = (ImageView) view1.findViewById(R.id.iv_grandmaster_pic_first);
-        ImageUtils.displayIconImage("file://" + R.drawable.shouye, iv_grandmaster_pic_first);
+        ImageUtils.displayIconImage("drawable://" + R.drawable.shouye, iv_grandmaster_pic_first);
         viewList.add(view1);
         if (!"error".equals(masterInfo)) {
             GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
@@ -169,7 +169,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 } else {
                     tv_grandmaster_detail.setText(designer_list.get(i).getDesigner().getIntroduction());
                 }
-
                 if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
 
                     String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url();

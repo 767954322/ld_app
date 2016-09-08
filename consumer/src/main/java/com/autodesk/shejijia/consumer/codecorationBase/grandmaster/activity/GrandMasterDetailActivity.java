@@ -88,7 +88,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         MPServerHttpManager.getInstance().getGrandMasterDetailInfo(0, 10, hs_uid, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,GrandMasterDetailActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, GrandMasterDetailActivity.this);
 
             }
 
@@ -231,7 +231,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,GrandMasterDetailActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, GrandMasterDetailActivity.this);
                 CustomProgress.cancelDialog();
             }
 
@@ -341,9 +341,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             mhHolder = (MyHolder) convertView.getTag();
 
             //设置案例数据（假数据）
-//            mhHolder.iv_detail.setImageResource(cases_list);
             if (cases_list.get(position).getImages().size() > 0) {
-                ImageLoader.getInstance().displayImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", mhHolder.iv_detail);
+                ImageUtils.displayIconImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", mhHolder.iv_detail);
             }
 
             mhHolder.tv_cn_name.setText(cases_list.get(position).getTitle());
