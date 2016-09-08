@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.widget.SegmentTabLayout;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,11 +110,10 @@ public class DesignBaseFragment extends BaseFragment {
 
     @Override
     public void onFragmentShown() {
-        Log.d(TAG, "onFragmentShown: onFragmentShown");
+        KLog.d(TAG, "onFragmentShown: onFragmentShown");
 
-        for (int i = 0; i < fragments.size(); ++i)
-        {
-            BaseFragment f1 = (BaseFragment)fragments.get(i);
+        for (int i = 0; i < fragments.size(); ++i) {
+            BaseFragment f1 = (BaseFragment) fragments.get(i);
             f1.onFragmentShown();
         }
     }

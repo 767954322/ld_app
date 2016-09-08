@@ -64,6 +64,11 @@ public class OrderBeiShuFragment extends BaseFragment {
 
         mMyBeiShuMealAdapter = new MyBeiShuMealAdapter(UIUtils.getContext(), mBeiShuNeedsOrderListEntities, R.layout.item_lv_designer_beishu_order);
         mListView.setAdapter(mMyBeiShuMealAdapter);
+    }
+
+
+    @Override
+    public void onFragmentShown() {
         setSwipeRefreshInfo();
     }
 
@@ -112,6 +117,7 @@ public class OrderBeiShuFragment extends BaseFragment {
      */
     private class MyBeiShuMealAdapter extends CommonAdapter<OrderCommonBean.OrderListBean> {
         String customer_id;
+
         public MyBeiShuMealAdapter(Context context, List<OrderCommonBean.OrderListBean> datas, int layoutId) {
             super(context, datas, layoutId);
         }
@@ -191,9 +197,9 @@ public class OrderBeiShuFragment extends BaseFragment {
                     mListView.setHasLoadMore(true);
                 }
 
-                if (mOrderBeiShutEntity ==null || mOrderBeiShutEntity.getOrder_list().size()==0){
+                if (mOrderBeiShutEntity == null || mOrderBeiShutEntity.getOrder_list().size() == 0) {
                     mRlEmpty.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mRlEmpty.setVisibility(View.GONE);
                 }
 
@@ -207,7 +213,7 @@ public class OrderBeiShuFragment extends BaseFragment {
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 if (getActivity() != null) {
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
                 }
             }
         };

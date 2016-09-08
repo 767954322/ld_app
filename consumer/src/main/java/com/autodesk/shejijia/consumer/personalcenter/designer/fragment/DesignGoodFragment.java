@@ -36,7 +36,7 @@ public class DesignGoodFragment extends BaseFragment {
     private ListViewFinal mListView;
     private PtrClassicFrameLayout ptrLayoutElite;
 
-    private HashMap<String,Object > map;
+    private HashMap<String, Object> map;
     private ArrayList<OrderCommonEntity.OrderListEntity> orders = new ArrayList<>();
 
     private int model;
@@ -51,13 +51,19 @@ public class DesignGoodFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        if (getArguments()!=null)
+        if (getArguments() != null)
             model = getArguments().getInt("model");
 
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_designer_elite);
         ptrLayoutElite = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout_elite);
         mRlEmpty = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
     }
+
+    @Override
+    public void onFragmentShown() {
+        onLoad2Refresh2Api();
+    }
+
 
     @Override
     protected void initData() {
@@ -68,13 +74,13 @@ public class DesignGoodFragment extends BaseFragment {
 
         String acs_member_id = mMemberEntity.getAcs_member_id();
         map = new HashMap<>();
-        map.put(JsonConstants.JSON_DEMAND_LIST_OFFSET,OFFSET);
-        map.put(JsonConstants.JSON_DEMAND_LIST_LIMIT,LIMIT);
-        map.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID,acs_member_id);
+        map.put(JsonConstants.JSON_DEMAND_LIST_OFFSET, OFFSET);
+        map.put(JsonConstants.JSON_DEMAND_LIST_LIMIT, LIMIT);
+        map.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, acs_member_id);
 
         eliteAdapter = new EliteAdapter(getActivity(), orders, R.layout.item_lv_designer_slite_order, acs_member_id);
         mListView.setAdapter(eliteAdapter);
-        onLoad2Refresh2Api();
+//        onLoad2Refresh2Api();
     }
 
 
@@ -82,7 +88,7 @@ public class DesignGoodFragment extends BaseFragment {
         ptrLayoutElite.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                connectOrder2Api(map,0, LIMIT);
+                connectOrder2Api(map, 0, LIMIT);
             }
         });
         ptrLayoutElite.setLastUpdateTimeRelateObject(this);
@@ -108,7 +114,7 @@ public class DesignGoodFragment extends BaseFragment {
                 orders.addAll(entity.getOrder_list());
                 if (entity.getOrder_list().size() < LIMIT)
                     mListView.setHasLoadMore(false);
-                 else
+                else
                     mListView.setHasLoadMore(true);
 
                 if (offset == 0)
@@ -116,7 +122,7 @@ public class DesignGoodFragment extends BaseFragment {
                 else
                     mListView.onLoadMoreComplete();
 
-                mRlEmpty.setVisibility(entity==null||entity.getOrder_list().size() ==0?View.VISIBLE:View.GONE);
+                mRlEmpty.setVisibility(entity == null || entity.getOrder_list().size() == 0 ? View.VISIBLE : View.GONE);
 
                 eliteAdapter.notifyDataSetChanged();
             }

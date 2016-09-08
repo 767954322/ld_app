@@ -573,6 +573,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
 
                 String info = GsonUtil.jsonToString(jsonObject);
                 mSeekDesignerDetailBean = GsonUtil.jsonToBean(info, SeekDesignerDetailBean.class);
