@@ -66,7 +66,7 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_Empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 return;
             } else if (!matches) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_error), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); // 此方法为了在弹出框得前提下隐藏软键盘
                 imm.hideSoftInputFromWindow(tvc_content.getWindowToken(), 0);
                 return;
@@ -84,7 +84,7 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_Empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 return;
             } else if (!matches) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_error), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(tvc_content.getWindowToken(), 0);
                 return;

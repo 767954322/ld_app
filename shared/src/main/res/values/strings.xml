@@ -661,6 +661,7 @@
     <string name="content_cannot_empty">内容不能为空</string>
     <string name="project_cost">设计费</string>
     <string name="dialog_hint">支持2-10个中、英文、数字</string>
+    <string name="nick_name_format">昵称应为2-10个字符</string>
 
     <!--DesignerOrderBeiShuActivity -->
     <string name="my_project_bei_shu">套餐项目</string>
