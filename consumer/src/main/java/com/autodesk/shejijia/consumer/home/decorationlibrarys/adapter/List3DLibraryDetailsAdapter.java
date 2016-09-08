@@ -12,13 +12,10 @@ import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -55,8 +52,8 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, CaseLibraryDetailActivity.class);
                 Bundle bundle = new Bundle();
-//                bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, mCaseDetails);
-                bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position + 1);
+                bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, (Serializable) imageLists);
+                bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
                 bundle.putInt("moveState",1);
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
