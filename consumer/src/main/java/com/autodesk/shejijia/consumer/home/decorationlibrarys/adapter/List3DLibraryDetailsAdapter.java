@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryRoamingWebView;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -26,11 +28,15 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
     private List<String> imageLists;
     private int resId;
     private Context mContext;
+    private  String  mType;
 
-    public List3DLibraryDetailsAdapter(List<String> imageLists, int resId, Context mContext){
+    public List3DLibraryDetailsAdapter(String type,List<String> imageLists, int resId, Context mContext){
         this.imageLists = imageLists;
         this.resId = resId;
         this.mContext = mContext;
+        this.mType=type;
+
+
     }
 
     @Override
@@ -43,20 +49,34 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         List3dViewVH viewVH = (List3dViewVH) holder;
         if (!TextUtils.isEmpty(imageLists.get(position))){
-            ImageLoader.getInstance().displayImage(imageLists.get(position),viewVH.m3DDetailsImage);
+            if (mType.equals("4")){
+                viewVH.m3DDetailsImage.setBackgroundResource(R.drawable.default_3d_details);
+            }else {
+                 ImageLoader.getInstance().displayImage(imageLists.get(position),viewVH.m3DDetailsImage);
+            }
+
         }
 
         //监听,跳转到图片放大页面:CaseLibraryDetailActivity
         viewVH.m3DDetailsImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, CaseLibraryDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, (Serializable) imageLists);
-                bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
-                bundle.putInt("moveState",1);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
+                if (mType.equals("4")){
+                    Toast.makeText(mContext, "漫游图", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, CaseLibraryRoamingWebView.class);
+                    String webUrl = imageLists.get(0);
+                    intent.putExtra("roaming",webUrl);
+                    mContext.startActivity(intent);
+                }else {
+                    Intent intent = new Intent(mContext, CaseLibraryDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, (Serializable) imageLists);
+                    bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
+                    bundle.putInt("moveState",1);
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+
             }
         });
     }

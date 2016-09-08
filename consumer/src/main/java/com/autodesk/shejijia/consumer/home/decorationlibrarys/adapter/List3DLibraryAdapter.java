@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,18 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class List3DLibraryAdapter extends BaseAdapter {
@@ -95,7 +86,8 @@ public class List3DLibraryAdapter extends BaseAdapter {
 
         //set data to recyclerView
         if (mImageLists.get(position).getImageList() !=null && mImageLists.get(position).getImageList().size()>0){
-            myViewHolder.mTypeDetailsList.setAdapter(new List3DLibraryDetailsAdapter(mImageLists.get(position).getImageList(),R.layout.dynamic_add_3d_view,mContext));
+            String type = mImageLists.get(position).getType();
+            myViewHolder.mTypeDetailsList.setAdapter(new List3DLibraryDetailsAdapter(type,mImageLists.get(position).getImageList(),R.layout.dynamic_add_3d_view,mContext));
         }
     }
 
