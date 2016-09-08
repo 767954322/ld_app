@@ -84,9 +84,6 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         if (null != bundle) {
             mMPBidderBean = (MPBidderBean) bundle.getSerializable(FlowUploadDeliveryActivity.BIDDER_ENTITY);
             designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-            if (TextUtils.isEmpty(designer_id)) {
-                designer_id = mMPBidderBean.getDesigner_id();
-            }
             needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         }
     }

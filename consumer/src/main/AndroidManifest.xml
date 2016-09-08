@@ -69,7 +69,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Translucent"
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
