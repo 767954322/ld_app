@@ -123,6 +123,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         chooseViewPointer = (ChooseViewPointer) findViewById(R.id.choose_point);
         default_ll_bg = (LinearLayout) findViewById(R.id.default_ll_bg);
+        empty_Text = (TextView) findViewById(R.id.empty_Text);
+
 
         width = getWindowWidth(1);
         height = getWindowWidth(0);
@@ -144,7 +146,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
 
-        CustomProgress.show(this, "", false, null);
 
         handler = new Handler() {
 
@@ -163,6 +164,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 }
             }
         };
+        CustomProgress.show(this, "", false, null);
 
         getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
         getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
@@ -362,6 +364,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 controlNumber = 1;
                 setTextColor(controlNumber);
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
+                setEmptyText();//判断是评价还是其他空白页面
                 break;
 
             case R.id.case_3d_btn:
@@ -384,6 +387,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 //设置颜色
                 setTextColor(controlNumber);
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
+                setEmptyText();//判断是评价还是其他空白页面
                 break;
 
             case R.id.consumer_appraise:
@@ -407,6 +411,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 setTextColor(controlNumber);
 
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
+                setEmptyText();//判断是评价还是其他空白页面
 
 
                 break;
@@ -423,6 +428,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 switchFragment(shareFragment, mDesignerPersonMasterPageFragment);
 
                 setTextColor(controlNumber);
+                setEmptyText();//判断是评价还是其他空白页面
                 break;
 
             case R.id.case_3d_btn_replace_top:
@@ -441,7 +447,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 switchFragment(shareFragment, mDesignerPerson3DMasterPageFragment);
                 //设置颜色
                 setTextColor(controlNumber);
-
+                setEmptyText();//判断是评价还是其他空白页面
 
                 break;
             case R.id.consumer_appraise_replace_top:
@@ -458,6 +464,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 }
                 switchFragment(shareFragment, mDesignerAppraiseFragment);
                 setTextColor(controlNumber);
+                setEmptyText();//判断是评价还是其他空白页面
                 break;
 
 
@@ -548,6 +555,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 if (null != jsonObject) {
                     String info = GsonUtil.jsonToString(jsonObject);
                     seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
@@ -557,8 +565,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this, AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hsUid, okResponseCallback);
@@ -654,6 +663,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
 
                 mDesignerPerson3DMasterPageFragment.setHandler(handler);
                 String info = GsonUtil.jsonToString(jsonObject);
@@ -682,7 +692,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                 }
-                CustomProgress.cancelDialog();
 
 
             }
@@ -1162,6 +1171,16 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         }
     }
 
+    public void setEmptyText(){
+        if (controlNumber == 3){
+
+            empty_Text.setText("暂无评价");
+        }else {
+
+            empty_Text.setText("暂无案例");
+        }
+    }
+
 
     private LinearLayout mLlChatMeasure;
     private View mFooterView;
@@ -1181,6 +1200,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private TextView case_3d_btn_replace_top;//3d案例代替
     private TextView consumer_appraise_replace_top;//评价按钮代替
     private TextView consumer_appraise;//评价按钮
+    private TextView empty_Text;//空白页面文字
     private ChooseViewPointer chooseViewPointer;//滚动条
     private ChooseViewPointer choose_point_replace;//滚动条代替
     private MyScrollView myScrollView;

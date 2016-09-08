@@ -300,11 +300,12 @@
                             android:background="@drawable/default_icon" />
 
                         <TextView
+                            android:id="@+id/empty_Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/size_10"
-                            android:text="暂无评价" />
+                            android:text="暂无案例" />
 
 
                     </LinearLayout>

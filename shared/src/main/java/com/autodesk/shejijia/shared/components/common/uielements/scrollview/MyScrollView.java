@@ -21,7 +21,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.P
 public class MyScrollView extends ScrollView implements Pullable {
 
     private MyScrollViewListener myScrollViewListener;
-    private boolean isRefresh = false;
+    private boolean isRefresh = true;
     private boolean isLoad = false;
 
     public MyScrollView(Context context) {

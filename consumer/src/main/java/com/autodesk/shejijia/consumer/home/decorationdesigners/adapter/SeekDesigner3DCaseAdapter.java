@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.Case3DBeen;
+import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yaoxuehua on 16-9-6.
@@ -21,6 +24,8 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
 
     private List<Case3DBeen.CasesBean> datas;
     private Context context;
+    private Map<String, String> styleJson;
+    private Map<String, String> RoomHall;
 
     public SeekDesigner3DCaseAdapter(Context context, List datas) {
         this.context = context;
@@ -72,17 +77,32 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
             }
         }
 
+        styleJson = AppJsonFileReader.getStyle((Activity) context);
+
+
+
         if (datas.get(position).getCustom_string_style() != null){
 
-            viewHolder.style.setText(datas.get(position).getCustom_string_style());
+            //将风格转换成汉字
+            if (styleJson.containsKey(datas.get(position).getCustom_string_style())){
+
+                viewHolder.style.setText(styleJson.get(datas.get(position).getCustom_string_style()));
+
+            }
         }
         if (datas.get(position).getCustom_string_type() != null){
 
-            viewHolder.hall.setText(datas.get(position).getCustom_string_type());
+            //获取户型，英文转汉字
+            RoomHall = AppJsonFileReader.getRoomHall((Activity) context);
+            if (RoomHall.containsKey(datas.get(position).getCustom_string_type())){
+
+                viewHolder.hall.setText(RoomHall.get(datas.get(position).getCustom_string_type()));
+
+            }
         }
         if (datas.get(position).getCustom_string_area() != null){
 
-            viewHolder.room_area.setText(datas.get(position).getCustom_string_area()+"m²");
+            viewHolder.room_area.setText(datas.get(position).getRoom_area()+"m²");
         }
 
         viewHolder.favorite_count.setText(datas.get(position).getFavorite_count()+"");
