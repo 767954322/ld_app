@@ -458,7 +458,7 @@ public class Case3DLibraryListBean {
             private String is_validated_by_mobile;
             private String is_email_binding;
             private String has_secreted;
-            private boolean is_following;
+            public boolean is_following;
             private String following_count;
 
             public DesignerBean getDesigner() {

@@ -380,7 +380,7 @@ public class Case3DDetailBean implements Serializable {
         private int is_validated_by_mobile;
         private int is_email_binding;
         private int has_secreted;
-        private boolean is_following;
+        public boolean is_following;
         private int following_count;
         private int evalution_avg_scores;
         private int evalution_count;

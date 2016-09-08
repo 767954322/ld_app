@@ -141,7 +141,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         super.initData(savedInstanceState);
         showOrHideChatMeasure();
 
-        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
+//        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
 
         CustomProgress.show(this, "", false, null);

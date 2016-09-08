@@ -560,7 +560,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 setFollowedTitle(followsType);
                 if (followsType) {
                     MyToast.show(CaseLibraryNewActivity.this, UIUtils.getString(R.string.attention_success));
-                    /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
                     mDesignerInfo.is_following = true;
                 } else {
                     mDesignerInfo.is_following = false;
