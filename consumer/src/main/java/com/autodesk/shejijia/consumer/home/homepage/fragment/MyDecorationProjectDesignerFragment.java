@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.home.homepage.fragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
@@ -18,8 +19,6 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  * @brief 我的装修项目--设计师.
  */
 public class MyDecorationProjectDesignerFragment extends BaseFragment {
-    private Fragment mContent;
-    private DesignBaseFragment designBaseFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -79,7 +78,15 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
         switchContent(mDesignerConstructionFragment);
     }
 
-    private Fragment fromFragment;
+
+    @Override
+    public void onFragmentShown() {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+        designBaseFragment.onFragmentShown();
+    }
+
+    private Fragment mContent;
+    private DesignBaseFragment designBaseFragment;
     private Fragment mDesignerConstructionFragment;
     private Fragment mBidBidingFragment;
 
