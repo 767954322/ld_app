@@ -122,7 +122,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvIllustrate:
-                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null, new String[]{UIUtils.getString(R.string.finish_cur_pager)},ExistMeasureOrderActivity.this,
+                new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null, null, new String[]{UIUtils.getString(R.string.finish_cur_pager)}, ExistMeasureOrderActivity.this,
                         AlertView.Style.Alert, null).show();
                 break;
             case R.id.btn_exist_measure_order_send:
