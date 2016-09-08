@@ -64,6 +64,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     public static final int ESTIMATE = 71;//设计完成　评价.
 
 
+
+
     private List<MPFileBean> mFiles;
 
     @Override
