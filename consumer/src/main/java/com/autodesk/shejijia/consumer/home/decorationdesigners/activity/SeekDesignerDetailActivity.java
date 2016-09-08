@@ -68,6 +68,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 /**
  * @author DongXueQiu .
@@ -358,7 +359,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 switchFragment(shareFragment, mDesignerPerson3DMasterPageFragment);
                 //设置颜色
                 setTextColor(controlNumber);
-                myScrollView.scrollTo(1, 1);
                 break;
 
             case R.id.consumer_appraise:
@@ -416,6 +416,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 switchFragment(shareFragment, mDesignerPerson3DMasterPageFragment);
                 //设置颜色
                 setTextColor(controlNumber);
+
 
                 break;
             case R.id.consumer_appraise_replace_top:
@@ -572,7 +573,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     default_ll_bg.setVisibility(View.VISIBLE);
                 }
                 CustomProgress.cancelDialog();
-
+//                justControlNumberCount();
             }
 
             @Override
@@ -645,6 +646,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     default_ll_bg.setVisibility(View.VISIBLE);
                 }
                 CustomProgress.cancelDialog();
+
+//                justControlNumberCount();
 
             }
         });
@@ -989,7 +992,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
 
                 CustomProgress.cancelDialog();
-                myScrollView.scrollTo(1, scrollLastMoveDistance);
+
+               // onScrollChange(myScrollView, 0, 1, 0, 0);
+//                justControlNumberCount();
+
+
 
             }
         });
@@ -1039,6 +1046,36 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         consumer_appraise.setText("评价" + "(" + appraiseCount + ")");
         consumer_appraise_replace_top.setText("评价" + "(" + appraiseCount + ")");
     }
+    //根据数值判断实在那个选项下
+    public void justControlNumberCount(){
+
+        if (controlNumber == 1){
+            justSubClassHeightCount();
+
+        }else if (controlNumber ==2){
+
+            justSubClassHeightCount();
+        }else {
+
+            justSubClassHeightCount();
+        }
+    }
+
+    //判断当前子类高度是否已经达到可以加载更多的底部
+    public void justSubClassHeightCount(){
+
+        int scrollViewMeasuredHeight = myScrollView.getChildAt(0).getMeasuredHeight();
+        int height = myScrollView.getHeight();
+        if (scrollViewMeasuredHeight <= scrollLastMoveDistance + height) {
+
+            myScrollView.setIsLoad(true);
+        } else {
+
+            myScrollView.setIsLoad(false);
+        }
+        Log.i("yaoxuehua","--------->"+scrollViewMeasuredHeight);
+
+    }
 
 
     private LinearLayout mLlChatMeasure;
@@ -1082,6 +1119,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private int controlNumber = 1;//控制2D案例的评价的颜色，以及要加载或刷新的fragment
     private int OFFSETCOUNT = 10;
     private int appraiseCount = 0;
+    private Handler handler;
     private boolean isTitleTwoShow = true;
     private boolean isScrollToTop = true;//判断第一次是否滑动置顶
     private boolean isFrist = true;//只走一次

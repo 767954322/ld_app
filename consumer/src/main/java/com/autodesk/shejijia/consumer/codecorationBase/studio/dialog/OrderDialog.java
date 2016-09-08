@@ -103,12 +103,12 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                             (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
                             (name.getText().toString().length() > 10)) {
 
-                        line_name.setBackgroundColor(Color.parseColor("#ff0000"));
+                        line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
                         write_name.setVisibility(View.VISIBLE);
                         nameSure = false;
                     } else {
 
-                        line_name.setBackgroundColor(Color.BLACK);
+                        line_name.setBackgroundColor(Color.parseColor("#d7d7d7"));
                         write_name.setVisibility(View.GONE);
                         nameSure = true;
                     }
@@ -134,11 +134,11 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                     } else {
                         if (mobile.equals("") || (mobile.length() > 0 && mobile.length() <= 11)) {
 
-                            line_phone.setBackgroundColor(Color.parseColor("#ff0000"));
+                            line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
                             write_phone.setVisibility(View.VISIBLE);
                         } else {
 
-                            line_phone.setBackgroundColor(Color.BLACK);
+                            line_phone.setBackgroundColor(Color.parseColor("#d7d7d7"));
                             write_phone.setVisibility(View.GONE);
                         }
                     }
@@ -175,12 +175,12 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                         (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
                         (name.getText().toString().length() > 10)) {
 
-                    line_name.setBackgroundColor(Color.parseColor("#ff0000"));
+                    line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
                     write_name.setVisibility(View.VISIBLE);
                     nameSure = false;
                 } else {
 
-                    line_name.setBackgroundColor(Color.BLACK);
+                    line_name.setBackgroundColor(Color.parseColor("#d7d7d7"));
                     write_name.setVisibility(View.GONE);
                     nameSure = true;
                 }
@@ -189,13 +189,13 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                 phoneRight = isMobileNum(mobile);
                 if (phoneRight) {
 
-                    line_phone.setBackgroundColor(Color.BLACK);
+                    line_phone.setBackgroundColor(Color.parseColor("#d7d7d7"));
                     write_phone.setVisibility(View.GONE);
 
                 } else {
                     if (mobile.equals("") || (mobile.length() > 0 && mobile.length() <= 11)) {
 
-                        line_phone.setBackgroundColor(Color.parseColor("#ff0000"));
+                        line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
                         write_phone.setVisibility(View.VISIBLE);
                     } else {
 
