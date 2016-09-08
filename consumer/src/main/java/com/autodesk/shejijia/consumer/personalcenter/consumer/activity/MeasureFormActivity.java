@@ -114,11 +114,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        if(iselite){
+        if (iselite) {
             getExtraData();
             return;
         }
-        if (first){
+        if (first) {
             first = false;
             Bundle extras = getIntent().getExtras();
             flow_state = (int) extras.get(Constant.SeekDesignerDetailKey.FLOW_STATE);
@@ -129,9 +129,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             String styleAll = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
             // String styleAll = getIntent().getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
             styles = new ArrayList<String>();
-            if (styleAll != null && styleAll.length() > 0){
+            if (styleAll != null && styleAll.length() > 0) {
                 String Style[] = styleAll.split("，");
-                for (int i = 0; i < Style.length; i++){
+                for (int i = 0; i < Style.length; i++) {
                     String styleItem = Style[i];
                     styles.add(styleItem);
                 }
@@ -139,12 +139,13 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
         }
     }
-     //获取精选装修模式传递过来的数据
-    private void getExtraData(){
+
+    //获取精选装修模式传递过来的数据
+    private void getExtraData() {
         Intent intent = getIntent();
-        decorationNeedsListBean = (DecorationNeedsListBean)intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
+        decorationNeedsListBean = (DecorationNeedsListBean) intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
         designer_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        iselite = intent.getBooleanExtra(Constant.SixProductsFragmentKey.ISELITE,false);
+        iselite = intent.getBooleanExtra(Constant.SixProductsFragmentKey.ISELITE, false);
 
     }
 
@@ -153,7 +154,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.demand_measure_house_form));
-        if(iselite){
+        if (iselite) {
             return;
         }
         if (flow_state == 1) {
@@ -326,6 +327,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     houseArea = "0";
                 }
                 houseArea = String.format("%.2f", Double.valueOf(houseArea));
+                if (Double.valueOf(houseArea) < 1) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.alert_msg_area));
+                    return;
+                }
+
                 tvc_area.setText(houseArea);
                 String subNum = "0";
                 if (houseArea.contains(".")) {
@@ -648,7 +654,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //
 //        } else {
 
-            styles = filledData(getResources().getStringArray(R.array.style));
+        styles = filledData(getResources().getStringArray(R.array.style));
 
 //        }
         pvStyleOptions = new OptionsPickerView(this);

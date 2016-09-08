@@ -1,12 +1,8 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
@@ -34,7 +30,6 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
         int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
         int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
         setDefaultFragment(high_level_audit, is_loho);
