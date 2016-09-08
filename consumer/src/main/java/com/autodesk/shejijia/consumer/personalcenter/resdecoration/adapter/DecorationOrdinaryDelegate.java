@@ -115,7 +115,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.str_others) : decoration_style);
         }
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
-        holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
+        holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day());
 
         /**
          * 当前家装订单状态
@@ -284,7 +284,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String needsState = UIUtils.getString(R.string.error_state);
         switch (wk_template_id) {
             case WkTemplateConstants.IS_ELITE:
-                needsState = getEliteNeedsState(wk_cur_sub_node_id_int,needsState, custom_string_status);
+                needsState = getEliteNeedsState(wk_cur_sub_node_id_int, needsState, custom_string_status);
                 return needsState;
 
             default:
@@ -356,7 +356,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      * @param custom_string_status
      * @return
      */
-    private String getEliteNeedsState(int wk_cur_sub_node_id_int,String needsState, String custom_string_status) {
+    private String getEliteNeedsState(int wk_cur_sub_node_id_int, String needsState, String custom_string_status) {
 
         if (wk_cur_sub_node_id_int >= WkTemplateConstants.CONFIRM_DESIGN_RESULTS
                 && wk_cur_sub_node_id_int != WkTemplateConstants.DELAY_CONFIRM_DESIGN_RESULTS) {

@@ -78,7 +78,7 @@ public class AppJsonFileReader {
      * @return
      */
     public static Map<String, String> getRoomHall(Activity activity) {
-        String fileName = Constant.JsonLocationKey.LIVING_ROOM_JSON;
+        String fileName = Constant.JsonLocationKey.ROOM_JSON;
         JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
         return jsonObj2Map(xmlJsonObject);
     }
@@ -91,7 +91,7 @@ public class AppJsonFileReader {
      * five : 五厅
      */
     public static Map<String, String> getLivingRoom(Activity activity) {
-        String fileName = Constant.JsonLocationKey.ROOM_JSON;
+        String fileName = Constant.JsonLocationKey.LIVING_ROOM_JSON;
         JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
         return jsonObj2Map(xmlJsonObject);
     }

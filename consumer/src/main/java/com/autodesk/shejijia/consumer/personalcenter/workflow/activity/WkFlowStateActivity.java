@@ -27,16 +27,15 @@ import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -75,7 +74,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mPtrLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
         polygonImageView = (PolygonImageView) findViewById(R.id.piv_consumer_order_photo_01);
         btnStopDemand = (Button) findViewById(R.id.btn_stop_demand);
-        rl_piv = (RelativeLayout) findViewById(R.id.rl_piv);
+        ll_piv = (LinearLayout) findViewById(R.id.ll_piv);
         rlStopContract = (RelativeLayout) findViewById(R.id.rl_stop_contract);
         ibFlowChart = (ImageButton) findViewById(R.id.ib_flow_chart);
 
@@ -94,7 +93,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
-            rl_piv.setVisibility(View.VISIBLE);
+            ll_piv.setVisibility(View.VISIBLE);
         }
     }
 
@@ -589,7 +588,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private ImageView demandDetails;
     private ImageView projectInformation;
     private ImageButton ibFlowChart;
-    private RelativeLayout rl_piv;
+    private LinearLayout ll_piv;
     private RelativeLayout rlStopContract;
     private PolygonImageView polygonImageView;
     private Button btnStopDemand;

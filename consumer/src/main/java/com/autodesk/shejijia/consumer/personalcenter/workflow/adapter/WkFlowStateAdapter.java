@@ -347,7 +347,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 drawable = R.drawable.jieshoushejihetong_ico;
             }
         }
-        if (stateCode == 21|| stateCode == 22) {
+        if (stateCode == 21 || stateCode == 22 || stateCode == 31) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);

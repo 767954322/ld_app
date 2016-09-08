@@ -260,6 +260,7 @@ public class DesignerListFragment extends BaseFragment
         mFindDesignerBean.setStart_experience("");
         mFindDesignerBean.setEnd_experience("");
         mFindDesignerBean.setStyle_names("");
+        mFindDesignerBean.setStyle("");
     }
 
     private void updateViewFromFindDesigner(SeekDesignerBean seekDesignerBean, int state) {
