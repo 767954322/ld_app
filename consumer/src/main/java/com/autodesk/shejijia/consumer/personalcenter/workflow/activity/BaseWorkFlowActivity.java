@@ -157,8 +157,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     public void getOrderDetailsInfo(String needs_id, String designer_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
-            public void onResponse(final JSONObject jsonObject) {
-                String userInfo = GsonUtil.jsonToString(jsonObject);
+            public void onResponse(final JSONObject jsonObject) {String userInfo = GsonUtil.jsonToString(jsonObject);
                 mCurrentWorkFlowDetail = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
                 if (null != mCurrentWorkFlowDetail) {
                     Message msg = Message.obtain();
