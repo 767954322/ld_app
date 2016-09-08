@@ -16,12 +16,12 @@ import java.util.List;
  * Created by luchongbin on 16-8-17.
  */
 public class SelectionAdapter extends PagerAdapter {
-    private List<DesignWorksBean.InnerPicListBean> innerPicListBeans;
+    private List<DesignWorksBean.InnerPicListBean> mInnerPicListBeans;
     private Activity mContext;
 
     public SelectionAdapter(Activity context, List<DesignWorksBean.InnerPicListBean> innerPicListBeans) {
         this.mContext = context;
-        this.innerPicListBeans = innerPicListBeans;
+        this.mInnerPicListBeans = innerPicListBeans;
     }
 
     @Override
@@ -43,14 +43,14 @@ public class SelectionAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(View container, int position) {
         ImageView imageView;
-        if (innerPicListBeans == null) {
+        if (mInnerPicListBeans == null) {
             imageView = new ImageView(mContext);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             ImageUtils.displayIconImage("drawable://"+R.drawable.pic1_ico2x, imageView);
         } else {
             imageView = new ImageView(mContext);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            DesignWorksBean.InnerPicListBean innerPicListBean = innerPicListBeans.get(position % innerPicListBeans.size());
+            DesignWorksBean.InnerPicListBean innerPicListBean = mInnerPicListBeans.get(position % mInnerPicListBeans.size());
             ImageUtils.loadImageIcon(imageView, innerPicListBean.getAndroid());
         }
 

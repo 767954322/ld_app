@@ -18,13 +18,13 @@ import java.util.ArrayList;
  * Created by luchongbin on 16-8-16.
  */
 public class SixProductsAdapter extends FragmentStatePagerAdapter {
-    private static final int NUM_ITEMS = 6;
-    private static final int FRAGMENT_GRANDMASTER_POSITION = 0;
-    private static final int FRAGMENT_STUDIO_POSITION = 1;
-    private static final int FRAGMENT_COELITE_POSITION = 2;
-    private static final int FRAGMENT_AVERAGE_POSITION = 3;
-    private static final int FRAGMENT_PACKAGES_POSITION = 4;
-    private static final int FRAGMENT_DIY_POSITION = 5;
+    private enum FragmentEnum {
+        FRAGMENT_GRANDMASTER,
+        FRAGMENT_STUDIO,
+        FRAGMENT_COELITE,
+        FRAGMENT_AVERAGE,
+        FRAGMENT_PACKAGES,
+        FRAGMENT_DIY};
 
     private String[]tabItems;
     public SixProductsAdapter(FragmentManager fm) {
@@ -39,23 +39,23 @@ public class SixProductsAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
-        switch(position) {
-            case FRAGMENT_GRANDMASTER_POSITION:
+        switch(FragmentEnum.values()[position]) {
+            case FRAGMENT_GRANDMASTER:
                 fragment = new GrandMasterFragment();
                 break;
-            case FRAGMENT_STUDIO_POSITION:
+            case FRAGMENT_STUDIO:
                 fragment = new StudioFragment();
                 break;
-            case FRAGMENT_COELITE_POSITION:
+            case FRAGMENT_COELITE:
                 fragment = new CoEliteFragment();
                 break;
-            case FRAGMENT_AVERAGE_POSITION:
+            case FRAGMENT_AVERAGE:
                 fragment = new AverageFragment();
                 break;
-            case FRAGMENT_PACKAGES_POSITION:
+            case FRAGMENT_PACKAGES:
                 fragment = new PackagesFragment();
                 break;
-            case FRAGMENT_DIY_POSITION:
+            case FRAGMENT_DIY:
                 fragment = new DIYFragment();
                 break;
             default:
@@ -71,6 +71,6 @@ public class SixProductsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return NUM_ITEMS;
+        return FragmentEnum.values().length;
     }
 }

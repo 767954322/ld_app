@@ -142,18 +142,18 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         if (!"error".equals(masterInfo)) {
             GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
             mMasterInfoList = grandMasterInfo.getDesigner_list();
-            pagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
+            mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
         }
 
         addImageViewtips();
-        vp_grand_selection.setAdapter(pagerAdapter);
+        vp_grand_selection.setAdapter(mPagerAdapter);
         vp_grand_selection.setOnPageChangeListener(this);
 
     }
 
     // 将圆点加入到ViewGroup中
     private void addImageViewtips() {
-        tips = new ImageView[pagerAdapter.getCount()];
+        tips = new ImageView[mPagerAdapter.getCount()];
         for (int i = 0; i < tips.length; i++) {
             ImageView imageView = new ImageView(activity);
             LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -305,7 +305,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-        setImageBackground(position % pagerAdapter.getCount());
+        setImageBackground(position % mPagerAdapter.getCount());
     }
 
     @Override
@@ -320,5 +320,5 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     private boolean isLoginUserJust = false;
     private ImageView[] tips;
     private List<MasterInfo> mMasterInfoList = new ArrayList<>();
-    private MastersPagerAdapter pagerAdapter;
+    private MastersPagerAdapter mPagerAdapter;
 }
