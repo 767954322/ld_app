@@ -21,7 +21,7 @@
                 android:id="@+id/img_customer_home_case"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_180"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:src="@drawable/common_case_icon" />
 
             <LinearLayout
