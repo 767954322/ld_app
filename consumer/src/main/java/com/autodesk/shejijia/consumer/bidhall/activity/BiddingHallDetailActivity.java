@@ -188,7 +188,6 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 String info = GsonUtil.jsonToString(jsonObject);
                 mRealNameBean = GsonUtil.jsonToBean(info, RealNameBean.class);
                 KLog.json(info);
-                CustomProgress.cancelDialog();
                 updateViewFromRealNameData();
             }
 
