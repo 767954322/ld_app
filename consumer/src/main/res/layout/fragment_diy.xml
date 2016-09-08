@@ -3,81 +3,73 @@
     android:layout_height="match_parent"
     android:scrollbars="none">
 
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_diy"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:src="@drawable/bg_diy"/>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F7F8FA"
+        android:background="@color/bg_color_diy"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="26dp"
-            android:text="为有设计创意的客户提供"
-            android:textColor="#333333"
+            android:layout_marginBottom="@dimen/size_11"
+            android:layout_marginTop="@dimen/size_25"
+            android:text="@string/diy_one"
+            android:textColor="@color/my_project_title_text_color"
             android:textStyle="bold"
-            android:textSize="30dp" />
+            android:textSize="@dimen/font_28" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="13dp"
-                android:text="简单"
-                android:textColor="#55adff"
+                android:layout_marginRight="@dimen/size_13"
+                android:text="@string/diy_easy"
+                android:textColor="@color/bg_color_diy_easy"
                 android:textStyle="bold"
-                android:textSize="30dp" />
+                android:textSize="@dimen/font_28" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="13dp"
+                android:layout_marginRight="@dimen/size_13"
                 android:text="/"
                 android:textStyle="bold"
-                android:textColor="#55adff"
-                android:textSize="30dp" />
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="13dp"
-                android:text="易用"
+                android:layout_marginRight="@dimen/size_13"
+                android:text="@string/diy_user"
                 android:textStyle="bold"
-                android:textColor="#55adff"
-                android:textSize="30dp" />
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="13dp"
+                android:layout_marginRight="@dimen/size_13"
                 android:textStyle="bold"
                 android:text="/"
-                android:textColor="#55adff"
-                android:textSize="30dp" />
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="13dp"
-                android:text="免费"
+                android:layout_marginRight="@dimen/size_13"
+                android:text="@string/diy_free"
                 android:textStyle="bold"
-                android:textColor="#55adff"
-                android:textSize="30dp" />
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
 
         </LinearLayout>
 
@@ -85,10 +77,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="DIY设计工具"
-            android:textColor="#333333"
+            android:text="@string/diy_tool"
+            android:textColor="@color/my_project_title_text_color"
             android:textStyle="bold"
-            android:textSize="30dp" />
+            android:textSize="@dimen/font_28" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -100,70 +92,70 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="14dp"
-            android:text="可以生成施工图和参考报价"
-            android:textColor="#333333"
-            android:textSize="15dp" />
+            android:layout_marginBottom="@dimen/size_9"
+            android:text="@string/diy_two"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="14dp"
-            android:text="免费使用3D工具，设计自己的家"
-            android:textColor="#333333"
-            android:textSize="15dp" />
+            android:layout_marginBottom="@dimen/size_9"
+            android:text="@string/diy_three"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="14dp"
-            android:text="自由搭配真实家居产品，提前预览装修效果，"
-            android:textColor="#333333"
-            android:textSize="15dp" />
+            android:layout_marginBottom="@dimen/size_9"
+            android:text="@string/diy_four"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="27dp"
-            android:text="免费获取施工图纸和参考报价。"
-            android:textColor="#333333"
-            android:textSize="15dp" />
+            android:layout_marginBottom="@dimen/size_23"
+            android:text="@string/diy_five"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
 
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="@dimen/size_30"
             android:gravity="center"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="@dimen/size_10"
             android:orientation="horizontal">
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_1"
                 android:layout_weight="1"
-                android:background="#55ADEF">
+                android:background="@color/bg_color_diy_easy">
 
             </View>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="请在网页端开启设计之旅"
+                android:text="@string/diy_six"
                 android:gravity="center"
-                android:textColor="#55ADEF"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="18dp" />
+                android:textColor="@color/bg_color_diy_easy"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginRight="@dimen/size_10"
+                android:textSize="@dimen/font_17" />
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_1"
                 android:layout_weight="1"
-                android:background="#55ADEF">
+                android:background="@color/bg_color_diy_easy">
 
             </View>
         </LinearLayout>
