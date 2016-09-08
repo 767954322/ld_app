@@ -78,16 +78,26 @@ public class List3DLibraryAdapter extends BaseAdapter {
     }
 
     private void set3DDetailsImageList(MyViewHolder myViewHolder, int position) {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setAutoMeasureEnabled(true);
-        myViewHolder.mTypeDetailsList.setHasFixedSize(true);
-        myViewHolder.mTypeDetailsList.setItemAnimator(new DefaultItemAnimator());
-        myViewHolder.mTypeDetailsList.setLayoutManager(linearLayoutManager);
+
 
         //set data to recyclerView
         if (mImageLists.get(position).getImageList() !=null && mImageLists.get(position).getImageList().size()>0){
             String type = mImageLists.get(position).getType();
-            myViewHolder.mTypeDetailsList.setAdapter(new List3DLibraryDetailsAdapter(type,mImageLists.get(position).getImageList(),R.layout.dynamic_add_3d_view,mContext));
+            if (type.equals("4")){
+                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(mContext);
+                linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                myViewHolder.mTypeDetailsList.setLayoutManager(linearLayoutManager);
+                myViewHolder.mTypeDetailsList.setAdapter(new List3DLibraryDetailsAdapter(type,mImageLists.get(position).getImageList(),R.layout.dynamic_add_3d_view,mContext));
+
+            }else {
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+                linearLayoutManager.setAutoMeasureEnabled(true);
+                myViewHolder.mTypeDetailsList.setHasFixedSize(true);
+                myViewHolder.mTypeDetailsList.setItemAnimator(new DefaultItemAnimator());
+                myViewHolder.mTypeDetailsList.setLayoutManager(linearLayoutManager);
+                myViewHolder.mTypeDetailsList.setAdapter(new List3DLibraryDetailsAdapter(type,mImageLists.get(position).getImageList(),R.layout.dynamic_add_3d_view,mContext));
+
+            }
         }
     }
 
