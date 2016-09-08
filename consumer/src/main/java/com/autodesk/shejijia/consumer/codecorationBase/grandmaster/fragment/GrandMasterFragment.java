@@ -69,7 +69,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, activity);
                 initPageData("error");
             }
 
@@ -145,6 +145,8 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
             LayoutInflater lf = LayoutInflater.from(activity);
             View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
+            ImageView iv_grandmaster_pic_first = (ImageView) view1.findViewById(R.id.iv_grandmaster_pic_first);
+            ImageUtils.displayIconImage("file://" + R.drawable.shouye, iv_grandmaster_pic_first);
             viewList.add(view1);
             for (int i = 0; i < designer_list.size(); i++) {
                 View view2 = lf.inflate(R.layout.viewpager_item_grandmaster_content, null);
@@ -235,7 +237,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            if(position <= viewList.size()){
+            if (position <= viewList.size()) {
                 container.removeView(viewList.get(position));
             }
         }
@@ -279,7 +281,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             public void onErrorResponse(VolleyError volleyError) {
 
                 CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, activity);
             }
 
             @Override

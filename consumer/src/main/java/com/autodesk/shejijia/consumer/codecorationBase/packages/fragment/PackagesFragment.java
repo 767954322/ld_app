@@ -42,7 +42,6 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initData() {
-
         isLoginUserJust = isLoginUser();
         packages = ImageUrlUtils.getPackagesListImage();
         banner_image = ImageUrlUtils.getPackagesListBanner();
