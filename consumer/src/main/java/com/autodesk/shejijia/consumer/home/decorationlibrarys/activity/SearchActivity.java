@@ -166,7 +166,7 @@ public class SearchActivity extends NavigationBarActivity implements
     @Override
     public void OnItemCaseClick(int position) {
         String case_id = mCasesEntities.get(position).getId();
-        mIntent = new Intent(this, CaseLibraryNewActivity.class);
+        mIntent = new Intent(this, CaseLibraryNewActivity2.class);
         mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(mIntent);
     }

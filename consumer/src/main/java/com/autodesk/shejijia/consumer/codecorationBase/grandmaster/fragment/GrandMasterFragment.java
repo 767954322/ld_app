@@ -69,7 +69,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, activity);
                 initPageData("error");
             }
 
@@ -138,14 +138,15 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     private void initPageData(String masterInfo) {
 
         isLoginUserJust = isLoginUser();
+        viewList = new ArrayList<View>();
+        LayoutInflater lf = LayoutInflater.from(activity);
+        View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
+        ImageView iv_grandmaster_pic_first = (ImageView) view1.findViewById(R.id.iv_grandmaster_pic_first);
+        ImageUtils.displayIconImage("drawable://" + R.drawable.shouye, iv_grandmaster_pic_first);
+        viewList.add(view1);
         if (!"error".equals(masterInfo)) {
             GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
             designer_list = grandMasterInfo.getDesigner_list();
-            viewList = new ArrayList<View>();
-
-            LayoutInflater lf = LayoutInflater.from(activity);
-            View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
-            viewList.add(view1);
             for (int i = 0; i < designer_list.size(); i++) {
                 View view2 = lf.inflate(R.layout.viewpager_item_grandmaster_content, null);
                 ImageView iv_grandmaster_pic = (ImageView) view2.findViewById(R.id.iv_grandmaster_pic);
@@ -168,7 +169,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 } else {
                     tv_grandmaster_detail.setText(designer_list.get(i).getDesigner().getIntroduction());
                 }
-
                 if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
 
                     String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url();
@@ -176,11 +176,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 }
                 viewList.add(view2);
             }
-        } else {
-            viewList = new ArrayList<View>();
-            LayoutInflater lf = LayoutInflater.from(activity);
-            View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
-            viewList.add(view1);
         }
 
         addImageViewtips();
@@ -235,7 +230,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            if(position <= viewList.size()){
+            if (position <= viewList.size()) {
                 container.removeView(viewList.get(position));
             }
         }
@@ -279,7 +274,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             public void onErrorResponse(VolleyError volleyError) {
 
                 CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,activity);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, activity);
             }
 
             @Override

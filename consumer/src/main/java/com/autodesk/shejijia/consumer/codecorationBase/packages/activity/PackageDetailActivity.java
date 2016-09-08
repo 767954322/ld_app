@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.adapter.BaseCommonAdapter;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -51,7 +52,7 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         nav_title_textView.setText("套餐详情");
         isLoginUserJust = isLoginUser();
 
-        ImageLoader.getInstance().displayImage(ImageUrlUtils.getPackagesDetailImage()[item_num], iv_package_detail);
+        ImageUtils.displayIconImage(ImageUrlUtils.getPackagesDetailImage()[item_num], iv_package_detail);
     }
 
     @Override

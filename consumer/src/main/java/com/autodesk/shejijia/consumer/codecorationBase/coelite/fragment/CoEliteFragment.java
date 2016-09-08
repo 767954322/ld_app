@@ -78,8 +78,8 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             mImageViews = new ImageView[1];
             mImageViews[0] = imageView;
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setBackgroundResource(R.drawable.pic1_ico2x);
-
+            ImageUtils.displayIconImage("drawable://"+R.drawable.pic1_ico2x,imageView);
+//            imageView.setBackgroundResource(R.drawable.pic1_ico2x);
         }
         addImageViewtips(size);
         vpSelection.setAdapter(new SelectionAdapter(mImageViews));

@@ -23,7 +23,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryActivity;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity2;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -175,7 +175,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     @Override
     public void OnItemCaseClick(int position) {
         String case_id = casesEntities.get(position).getId();
-        mIntent = new Intent(getActivity(), CaseLibraryNewActivity.class);
+        mIntent = new Intent(getActivity(), CaseLibraryNewActivity2.class);
         mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         activity.startActivity(mIntent);
     }

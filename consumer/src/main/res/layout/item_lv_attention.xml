@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_60"
         android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <FrameLayout
@@ -47,7 +48,8 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="" />
+            android:maxLength="13"
+            android:text=""/>
 
         <ImageView
             android:id="@+id/iv_cancel_attention"
