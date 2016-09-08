@@ -545,7 +545,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         if (mCaseLibraryBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
         } else {
-            mListView.setHasLoadMore(true);
+            mListView.setHasLoadMore(false);
         }
         Message msg = Message.obtain();
         msg.obj = offset;
@@ -654,7 +654,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     private LinearLayout.LayoutParams mShadeViewLayoutParams;
     private UserHomeCaseAdapter mAdapter;
     private int mOffset = 0;
-    private int LIMIT = 10;
+    private int LIMIT = 50;
     private int screenWidth, screenHeight;
 
     private String mNickNameConsumer;

@@ -143,7 +143,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         super.initData(savedInstanceState);
         showOrHideChatMeasure();
 
-        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
+//        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.attention_sure));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
 
 
@@ -582,6 +582,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
 
                 String info = GsonUtil.jsonToString(jsonObject);
                 mSeekDesignerDetailBean = GsonUtil.jsonToBean(info, SeekDesignerDetailBean.class);

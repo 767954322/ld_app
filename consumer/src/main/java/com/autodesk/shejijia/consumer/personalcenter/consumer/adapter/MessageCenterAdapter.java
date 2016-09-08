@@ -81,6 +81,9 @@ public class MessageCenterAdapter extends BaseAdapter {
 
         title = TextUtils.isEmpty(title) ? "消息中心" : title;
 
+        if(title.length()>12){
+            title = title.substring(0,12)+"...";
+        }
         myHolder.tv_msg_title.setText(title);
         myHolder.tv_msg_date.setText(timeMY);
 
@@ -89,12 +92,12 @@ public class MessageCenterAdapter extends BaseAdapter {
 
             Log.d("test", messageCenterBody.toString());
             if (ifIsDesiner) {
-                myHolder.item_msg_content.setText(messageCenterBody.getFor_designer());
+                myHolder.item_msg_content.setText(messageCenterBody.getFor_designer().replace("&gt;",">"));
             } else {
-                myHolder.item_msg_content.setText(messageCenterBody.getFor_consumer());
+                myHolder.item_msg_content.setText(messageCenterBody.getFor_consumer().replace("&gt;",">"));
             }
         } else {
-            myHolder.item_msg_content.setText(body);
+            myHolder.item_msg_content.setText(body.replace("&gt;",">"));
         }
 
 

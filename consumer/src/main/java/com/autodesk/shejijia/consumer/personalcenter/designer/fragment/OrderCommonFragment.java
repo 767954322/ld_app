@@ -83,7 +83,7 @@ public class OrderCommonFragment extends BaseFragment {
 
         mCommonOrderAdapter = new MyCommonOrderAdapter(UIUtils.getContext(), commonOrderListEntities, R.layout.item_designer_order_list);
         mListView.setAdapter(mCommonOrderAdapter);
-        setSwipeRefreshInfo();
+//        setSwipeRefreshInfo();
     }
 
     private android.os.Handler handler = new android.os.Handler() {
@@ -109,15 +109,11 @@ public class OrderCommonFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        Log.d(TAG, "onResume: ddd");
-
     }
 
     @Override
-    public void onFragmentShown()
-    {
-        Log.d(TAG, "onFragmentShown: onFragmentShown");
+    public void onFragmentShown() {
+        setSwipeRefreshInfo();
     }
 
     /**
@@ -129,7 +125,7 @@ public class OrderCommonFragment extends BaseFragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                Log.d(TAG, "onResponse: userInfo"+userInfo);
+                Log.d(TAG, "onResponse: userInfo" + userInfo);
                 mOrderCommonEntity = GsonUtil.jsonToBean(userInfo, OrderCommonBean.class);
                 KLog.json(TAG, userInfo);
                 if (offset == 0) {
@@ -145,7 +141,7 @@ public class OrderCommonFragment extends BaseFragment {
 
                 if (null == commonOrderListEntities || commonOrderListEntities.size() == 0) {
                     mRlEmpty.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mRlEmpty.setVisibility(View.GONE);
                 }
 
@@ -214,7 +210,7 @@ public class OrderCommonFragment extends BaseFragment {
             String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
 
             district_name = UIUtils.getNoStringIfEmpty(district_name);
-            province_name =UIUtils.getNoStringIfEmpty(province_name);
+            province_name = UIUtils.getNoStringIfEmpty(province_name);
             city_name = UIUtils.getNoStringIfEmpty(city_name);
 
             String address = province_name + city_name + district_name;
@@ -281,7 +277,7 @@ public class OrderCommonFragment extends BaseFragment {
                     Bundle bundle = new Bundle();
                     bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
                     bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, orderListEntity.getNeeds_id());
-                    DecorationDetailActivity.jumpTo(getActivity(),bundle);
+                    DecorationDetailActivity.jumpTo(getActivity(), bundle);
                 }
             });
 
