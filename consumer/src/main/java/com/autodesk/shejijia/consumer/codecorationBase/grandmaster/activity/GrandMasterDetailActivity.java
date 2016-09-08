@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,7 @@ import java.util.List;
 /**
  * Created by allengu on 16-8-23.
  */
-public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener {
+public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
 
     @Override
@@ -60,6 +62,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
         bt_grand_reservation = (ImageButton) findViewById(R.id.bt_grand_reservation);
         ib_grand_detail_ico = (ImageButton) findViewById(R.id.ib_grand_detail_ico);
+        rl_navr_header = (RelativeLayout) findViewById(R.id.rl_navr_header);
 
         animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
 
@@ -69,6 +72,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     protected void initListener() {
         nav_left_imageButton.setOnClickListener(this);
         bt_grand_reservation.setOnClickListener(this);
+        vvp_viewpager.setOnPageChangeListener(this);
     }
 
     @Override
@@ -126,7 +130,6 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         viewList.add(view2);
 
         vvp_viewpager.setAdapter(pagerAdapter);
-
     }
 
     //为pager页添加数据（目前案例列表为假数据）
@@ -306,6 +309,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
     };
 
+
     //案例列表Ａdapter
     class MasterAdapter extends BaseAdapter {
 
@@ -333,7 +337,6 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
                 convertView = LayoutInflater.from(GrandMasterDetailActivity.this).inflate(R.layout.item_listview_grandmaster_detail, null);
                 mhHolder.iv_detail = (ImageView) convertView.findViewById(R.id.iv_item_listview_pic);
                 mhHolder.tv_cn_name = (TextView) convertView.findViewById(R.id.tv_item_listview_cn_tital);
-                mhHolder.tv_en_name = (TextView) convertView.findViewById(R.id.tv_item_listview_en_tital);
 
                 convertView.setTag(mhHolder);
             }
@@ -346,7 +349,6 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             }
 
             mhHolder.tv_cn_name.setText(cases_list.get(position).getTitle());
-            mhHolder.tv_en_name.setText(cases_list.get(position).getCommunity_name());
 
             return convertView;
         }
@@ -354,7 +356,6 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         class MyHolder {
 
             TextView tv_cn_name;
-            TextView tv_en_name;
             ImageView iv_detail;
 
         }
@@ -385,9 +386,27 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         });
     }
 
-    //大师详情下滑案例假数据
-    Integer[] list_Detail = {R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon,
-            R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon};
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+        if (position == 0) {
+            rl_navr_header.setVisibility(View.VISIBLE);
+        } else {
+            rl_navr_header.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
     private ImageButton nav_left_imageButton;
     private ImageButton bt_grand_reservation;
     private ImageButton ib_grand_detail_ico;
@@ -398,6 +417,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private TextView tv_detail_en_position;
     private TextView tv_detail_content;
     private TextView nav_title_textView;
+    private RelativeLayout rl_navr_header;
     private boolean isLoginUserJust = false;
 
     private View view1;

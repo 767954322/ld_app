@@ -7,7 +7,8 @@
     <ImageView
         android:id="@+id/iv_item_listview_pic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_165"
+        android:scaleType="fitXY"
         android:src="@drawable/common_case_icon" />
 
     <TextView
@@ -20,14 +21,5 @@
         android:text="小明"
         android:textSize="@dimen/font_19"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tv_item_listview_en_tital"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_item_listview_cn_tital"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/font_5"
-        android:text="xiaoming" />
 
 </RelativeLayout>
