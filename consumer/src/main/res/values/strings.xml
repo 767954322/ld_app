@@ -139,7 +139,9 @@
     <string name="no_set_measure_fee">未设置量房费 不能应标</string>
     <!-- 大师 -->
     <string name="succes_grandmaster">大师预约成功</string>
+    <string name="succes_package">预约成功</string>
     <string name="fail_grandmaster">大师预约失败</string>
+    <string name="fail_package">预约失败</string>
 
 
     <string name="key_words">请输入关键字搜索</string>

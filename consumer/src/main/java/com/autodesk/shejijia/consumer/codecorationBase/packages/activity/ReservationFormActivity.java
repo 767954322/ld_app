@@ -240,9 +240,13 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                success_ALert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.succes_package), null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        ReservationFormActivity.this.finish();
+                    }
+                });
 
-                success_ALert = new AlertView(UIUtils.getString(R.string.succes_grandmaster),
-                        null, null, null, new String[]{UIUtils.getString(R.string.delivery_sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null);
                 success_ALert.show();
                 CustomProgress.cancelDialog();
             }
@@ -371,8 +375,6 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     public void onItemClick(Object obj, int position) {
         if (obj == mSendDesignRequirementSuccessAlertView && position != AlertView.CANCELPOSITION) {
             finish();
-        } else if (obj == success_ALert) {
-            ReservationFormActivity.this.finish();
         }
     }
 
