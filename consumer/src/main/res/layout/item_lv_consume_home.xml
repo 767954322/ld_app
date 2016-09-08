@@ -37,8 +37,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/size_9"
+                    android:layout_marginTop="9dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -155,7 +155,7 @@
             android:layout_width="@dimen/size_48"
             android:layout_height="@dimen/size_48"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/size_30"
+            android:layout_marginBottom="@dimen/size_16"
             android:layout_marginLeft="@dimen/size_10"
             android:layout_marginRight="@dimen/size_20"
             app:poly_border="true"
