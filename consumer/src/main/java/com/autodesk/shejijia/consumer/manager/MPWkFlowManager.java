@@ -86,7 +86,7 @@ public class MPWkFlowManager {
         if (wk_template_id_int < 1) {
             return wkSubNodeName;
         }
-        if (wkFlowBeans.size() < 0) {
+        if (wkFlowBeans.size() <= 0) {
             return wkSubNodeName;
         }
 

@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -199,30 +198,29 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示.
 
-                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.send_design_contract));
+                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.send_design_contract));
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
-                UIsetDesignerSendButtonActive(false,null);
+                UIsetDesignerSendButtonActive(false, null);
             } else if (WorkFlowSubNodeStep() == 33) {
-                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.uploaded_deliverable));
+                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.uploaded_deliverable));
 
             } else {
-                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.send_design_contract));
-
-
+                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.send_design_contract));
             }
         } else {  /// 已有合同
 
             if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {// 从项目资料跳转.
                 UpdateUIdisableFieldsInput();  /// 如果是已有的合同设置所有得按键都不可点击 .
             }
-            if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示 .
-                UIsetDesignerSendButtonActive(true,null);
+
+            if (WorkFlowSubNodeStep() == 31 || WorkFlowSubNodeStep() == 32) { /// 设计师发完合同后可以继续发送按钮显示 .
+                UIsetDesignerSendButtonActive(true, null);
 
                 btn_send.setText(R.string.send_design_contract);
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) {   /// 当消费者发完设计首款按钮隐藏 .
-                UIsetDesignerSendButtonActive(false,null);
+                UIsetDesignerSendButtonActive(false, null);
             } else if (WorkFlowSubNodeStep() == 33) {
-                UIsetDesignerSendButtonActive(true,getResources().getString(R.string.uploaded_deliverable));
+                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.uploaded_deliverable));
 
             }
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
@@ -239,7 +237,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tvc_first_cost.setText(designContractEntity.getContract_first_charge());
             tvc_consumer_local_area.setText(designContractBean.getAddr());
             tvc_designer_decorate_address.setText(designContractBean.getAddr());
-            tvc_consumer_email.setText(designContractBean.getEmail());
+
+            if (designContractBean.getEmail().equals("null") || designContractBean == null) {
+                tvc_consumer_email.setText("");
+            } else {
+                tvc_consumer_email.setText(designContractBean.getEmail());
+            }
             tvc_treeD_render_count.setText(designContractBean.getRender_map());
             Double totalCost = Double.parseDouble(designContractEntity.getContract_charge());
             Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
@@ -256,14 +259,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     }
 
-    private void UIsetDesignerSendButtonActive(boolean bVivible,String buttonText ) {
+    private void UIsetDesignerSendButtonActive(boolean bVivible, String buttonText) {
 
         if (bVivible) {
             ll_designer_send.setVisibility(View.VISIBLE);
 
-            if (buttonText!=null)
+            if (buttonText != null)
                 btn_send.setText(R.string.send_design_contract);
-        }else{
+        } else {
             ll_designer_send.setVisibility(View.GONE);
         }
 
@@ -434,6 +437,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         btn_send.setOnClickListener(this);
         tvc_first_cost.addTextChangedListener(new EditTextWatcher(tvc_first_cost));
         tvc_total_cost.addTextChangedListener(new EditTextWatcher(tvc_total_cost));
+        tvc_consumer_local_area.addTextChangedListener(new EditTextWatcher(tvc_consumer_local_area));
     }
 
     @Override
@@ -892,6 +896,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 tvc_last_cost.setText(df.format((dTotalCost - Double.parseDouble(firstCost))));
             }
 
+            if (view == tvc_consumer_local_area) { /// 监听项目地址，服务地址跟项目地址同步 .
+                tvc_designer_decorate_address.setText(s.toString());
+            }
         }
 
         @Override
