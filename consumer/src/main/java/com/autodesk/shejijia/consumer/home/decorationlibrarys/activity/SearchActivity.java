@@ -214,7 +214,7 @@ public class SearchActivity extends NavigationBarActivity implements
                         SearchActivity.this.startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
@@ -323,7 +323,7 @@ public class SearchActivity extends NavigationBarActivity implements
         };
 
 
-        if (currentPosition ==0) {   //标示为0 说明是  2d搜索
+        if (currentPosition == 0) {   //标示为0 说明是  2d搜索
             MPServerHttpManager.getInstance().getCaseListData(
                     custom_string_style,
                     custom_string_type,

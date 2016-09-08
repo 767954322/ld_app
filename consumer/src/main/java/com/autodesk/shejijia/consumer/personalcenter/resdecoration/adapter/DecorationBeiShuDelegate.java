@@ -20,6 +20,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesConta
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -28,6 +29,9 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -151,25 +155,43 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
                 public void onResponse(String s) {
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                    Intent intent = new Intent(mActivity, ChatRoomActivity.class);
-                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                    final Intent intent = new Intent(mActivity, ChatRoomActivity.class);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-
+                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
 
                     if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
 
+                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                         int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                        intent.putExtra(ChatRoomActivity.THREAD_ID, beishu_thread_id);
+                        intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                    } else {
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                        mActivity.startActivity(intent);
+
+                    } else {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+//                                MPNetworkUtils.logError(TAG, volleyError);
+                            }
+
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String thread_id = jsonObject.getString("thread_id");
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                    mActivity.startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
-                    mActivity.startActivity(intent);
                 }
             });
 
