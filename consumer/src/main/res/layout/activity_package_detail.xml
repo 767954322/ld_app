@@ -7,12 +7,21 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header" />
 
-    <ImageView
-        android:id="@+id/iv_package_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
         android:layout_below="@+id/common_navbar"
-        android:scaleType="fitCenter" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.autodesk.shejijia.consumer.codecorationBase.packages.view.ResizableImageView
+            android:id="@+id/iv_package_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/common_navbar"
+            android:scaleType="fitXY" />
+
+
+    </ScrollView>
+
 
 
     <ImageButton
