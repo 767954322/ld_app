@@ -3,17 +3,12 @@ package com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
-
 import com.autodesk.shejijia.consumer.codecorationBase.average.fragment.AverageFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.codiy.fragments.DIYFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment.CoEliteFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.fragment.GrandMasterFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.fragment.PackagesFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
-
-import java.util.ArrayList;
-
 /**
  * Created by luchongbin on 16-8-16.
  */
