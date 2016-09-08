@@ -1,7 +1,8 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 
 import android.content.Intent;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -10,15 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesiger3DCaseAdapter;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesigner3DCaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.Case3DBeen;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetail3DActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewListView;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -44,13 +43,20 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
-        mListView = (ListView) rootView.findViewById(R.id.lv_seek_detail_listview);
+        mListView = (ScrollViewListView) rootView.findViewById(R.id.lv_seek_detail_listview);
 
 
     }
 
     @Override
     protected void initData() {
+
+    }
+
+    //设置handler
+    public void setHandler(Handler hanler){
+
+        this.myHanler = hanler;
 
     }
 
@@ -62,7 +68,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         if (state == 0) {
             if (seekDesigner3DCaseAdapter == null){
 
-                seekDesigner3DCaseAdapter = new SeekDesiger3DCaseAdapter(getActivity(), myData);
+                seekDesigner3DCaseAdapter = new SeekDesigner3DCaseAdapter(getActivity(), myData);
             }
             myDatas.clear();
             myDatas.addAll(myData);
@@ -71,13 +77,12 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         } else {
 
             myDatas.addAll(myData);
-            Log.i("yaoxuehua", "ooop" + myData.size());
 
             seekDesigner3DCaseAdapter.addMoreData(myDatas);
+            seekDesigner3DCaseAdapter.notifyDataSetChanged();
 
         }
 
-        Log.i("yaoxuehua", "" + myDatas.size());
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,6 +95,9 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
             }
         });
 
+        Message message = myHanler.obtainMessage();
+        message.what = 0;
+        myHanler.sendMessage(message);
 
         updateViewFromDesignerData(state);
 
@@ -115,8 +123,9 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private ListView mListView;
+    private Handler myHanler;
     private List<Case3DBeen.CasesBean> myDatas = new ArrayList<Case3DBeen.CasesBean>();
-    private SeekDesiger3DCaseAdapter seekDesigner3DCaseAdapter;
+    private SeekDesigner3DCaseAdapter seekDesigner3DCaseAdapter;
 
 
 }

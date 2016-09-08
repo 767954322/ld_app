@@ -127,7 +127,6 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
     public void addMoreData(List<AppraiseDesignBeen.EstimatesBean> moreData) {
 
         this.mDatas = moreData;
-        notifyDataSetChanged();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +76,10 @@ public class DesignerAppraiseFragment extends BaseFragment {
             appraise_ll.setVisibility(View.VISIBLE);
         }
 
+        Message message = myHandler.obtainMessage();
+        message.what = 0;
+        myHandler.sendMessage(message);
+
 
     }
 
@@ -83,8 +89,22 @@ public class DesignerAppraiseFragment extends BaseFragment {
 
             estimatesList.addAll(estimates);
             mSeekDesignerAppraiseAdapter.addMoreData(estimatesList);
+            mSeekDesignerAppraiseAdapter.notifyDataSetChanged();
         }
+
+        Message message = myHandler.obtainMessage();
+        message.what = 0;
+        myHandler.sendMessage(message);
+
     }
+    //设置handler
+    public void setHandler(Handler handler){
+
+        this.myHandler = handler;
+
+    }
+
+
 
     private ListView mListView;
     private AppraiseDesignBeen mAppraiseDesignBeen;
@@ -94,4 +114,6 @@ public class DesignerAppraiseFragment extends BaseFragment {
     private SeekDesignerAppraiseAdapter mSeekDesignerAppraiseAdapter;
     private String designerId;
     private List<AppraiseDesignBeen.EstimatesBean> estimatesList = new ArrayList<AppraiseDesignBeen.EstimatesBean>();
+
+    private Handler myHandler;
 }

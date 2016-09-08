@@ -17,12 +17,12 @@ import java.util.List;
 /**
  * Created by yaoxuehua on 16-9-6.
  */
-public class SeekDesiger3DCaseAdapter extends BaseAdapter {
+public class SeekDesigner3DCaseAdapter extends BaseAdapter {
 
     private List<Case3DBeen.CasesBean> datas;
     private Context context;
 
-    public SeekDesiger3DCaseAdapter(Context context, List datas) {
+    public SeekDesigner3DCaseAdapter(Context context, List datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -103,7 +103,6 @@ public class SeekDesiger3DCaseAdapter extends BaseAdapter {
     public void addMoreData(List<Case3DBeen.CasesBean> datas){
 
         this.datas = datas;
-        notifyDataSetChanged();
 
     }
 }

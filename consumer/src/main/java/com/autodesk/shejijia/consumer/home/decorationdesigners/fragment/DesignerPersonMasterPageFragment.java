@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 
 import android.content.Intent;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 /**
  * @author yaoxuehua .
@@ -56,6 +58,11 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
     public void getMore2DCaseData(SeekDesignerDetailBean mSeekDesignerDetailBean, int state) {
         this.mSeekDesignerDetailBean = mSeekDesignerDetailBean;
         updateViewFromDesignerData(state);
+    }
+
+    public void setHandler(android.os.Handler handler){
+        this.myHandler = handler;
+
     }
 
 
@@ -100,6 +107,10 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
             }
         });
         setListViewHeightBasedOnChildren(mListView);
+
+        Message message = myHandler.obtainMessage();
+        message.what = 0;
+        myHandler.sendMessage(message);
     }
 
     /**
@@ -163,6 +174,7 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private int width;
+    private android.os.Handler myHandler;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
     private SeekDesignerDetailAdapter mSeekDesignerDetailAdapter;
     private ListView mListView;
