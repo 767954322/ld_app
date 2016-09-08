@@ -407,7 +407,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void establishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 21 && wk_cur_sub_node_idi != 33) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 31|| wk_cur_sub_node_idi == 32) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
             } else if (wk_cur_sub_node_idi == 33) { /// 量房交付物 .
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
