@@ -497,7 +497,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.design:
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setCase3dBtn(btWidth);
-                mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit, is_loho);
+                // 这里面跳转design base fragment
+                mDesignerPersonalCenterFragment.setDesigneBaseFragment(high_level_audit, is_loho);
                 break;
 
             case R.id.construction:
