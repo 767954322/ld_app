@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.os.Bundle;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -37,8 +36,11 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
         wvRoaming.getSettings().setJavaScriptEnabled(true);
         wvRoaming.getSettings().setSupportZoom(true);
         wvRoaming.getSettings().setBuiltInZoomControls(true);
-        wvRoaming.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        wvRoaming.getSettings().setDefaultFontSize(18);
+        wvRoaming.loadUrl(roaming);
+        //  wvRoaming.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        // wvRoaming.getSettings().setDefaultFontSize(18);
+        //  wvRoaming.getSettings().setLoadsImagesAutomatically(true);
+        //wvRoaming.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         wvRoaming.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -47,7 +49,7 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
             }
         });
 
-        wvRoaming.loadUrl(roaming);
+
 //        wvRoaming.loadUrl("http://www.baidu.com/");
     }
 
