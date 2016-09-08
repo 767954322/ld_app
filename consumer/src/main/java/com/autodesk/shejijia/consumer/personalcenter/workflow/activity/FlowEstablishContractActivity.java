@@ -429,6 +429,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     protected void initListener() {
         super.initListener();
         ll_contract.setOnClickListener(this);
+        btn_send_contract.setOnClickListener(this);
         tvc_consumer_local_area.setOnClickListener(this);
         btn_send.setOnClickListener(this);
         tvc_first_cost.addTextChangedListener(new EditTextWatcher(tvc_first_cost));
@@ -443,9 +444,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 startActivity(intent);
                 break;
             case R.id.btn_send_establish_contract:
+
+                break;
+            case R.id.btn_send_establish_contract_designer:
                 if (checkValidFormInputWithErrorAlertView())
                     submitDesignContract();
                 break;
+
         }
     }
 
