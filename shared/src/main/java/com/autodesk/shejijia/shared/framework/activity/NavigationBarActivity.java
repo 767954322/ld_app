@@ -175,7 +175,7 @@ public class NavigationBarActivity extends BaseActivity {
         titleTextView.setVisibility(View.GONE);
         materialTabs.setVisibility(View.VISIBLE);
         setImageForNavButton(ButtonType.RIGHT,R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY,R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.SECONDARY,R.drawable.common_screen_icon);
         setVisibilityForNavButton(ButtonType.RIGHT, true);
         setVisibilityForNavButton(ButtonType.SECONDARY, true);
 

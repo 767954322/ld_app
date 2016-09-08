@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -36,7 +35,6 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
@@ -154,7 +152,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         super.initData(savedInstanceState);
         if (savedInstanceState == null) {
             showFragment(getDesignerMainRadioBtnId());
+
+            // make sure we create the activity with main radio button
+            mRadioGroup.check(R.id.designer_main_radio_btn);
         }
+
         isShowBidHallFragment();
     }
 
@@ -212,10 +214,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             designer_main_radio_group.check(index);
         }
 
-        //未登录状态，会自动进入案例fragment
-        if (mMemberEntity == null) {
-            designer_main_radio_btn.setChecked(true);
-        }
+
     }
 
 
@@ -297,6 +296,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
     @Override
+    protected void onUserLogout(){
+        mRadioGroup.check(getDesignerMainRadioBtnId());
+    }
+
+
+    @Override
     protected Fragment getFragmentByButtonId(int id) {
         Fragment fragmentByButtonId = super.getFragmentByButtonId(id);
         if (id == R.id.designer_indent_list_btn) {
@@ -309,7 +314,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 fragmentByButtonId = mConsumerPersonalCenterFragment;
         } else if (id == getDesignerMainRadioBtnId()) {
             fragmentByButtonId = mUserHomeFragment;
-        }
+        } else if (id == R.id.radio_btn_designer)
+            fragmentByButtonId = designerListFragment;
         return fragmentByButtonId;
     }
 
@@ -446,7 +452,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
-                    changLohoDesigner(acs_Member_Id, hs_uid);
+//                    changLohoDesigner(acs_Member_Id, hs_uid);
+                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
                 } else {
                     setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
@@ -457,9 +465,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
+    /**
+     * 设置共用title部分图标
+     */
     private void setDesignerListTitle() {
         setImageForNavButton(ButtonType.RIGHT, com.autodesk.shejijia.shared.R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.common_screen_icon);
         setVisibilityForNavButton(ButtonType.RIGHT, true);
         setVisibilityForNavButton(ButtonType.SECONDARY, true);
     }
@@ -489,24 +500,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.design:
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setCase3dBtn(btWidth);
-                mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit, is_loho);
-
-                //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
-//                if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-
-                //[1]高阶:high_level_audit=2
-                //[1.1] is_loho=1  精选、竞优、套餐
-                //[1.2] 精选、竞优、
-                //[2]不是高阶：
-                //[1.1] is_loho=1  竞优、套餐
-                //[1.2] 竞优
+                // 这里面跳转design base fragment
+                mDesignerPersonalCenterFragment.setDesigneBaseFragment(high_level_audit, is_loho);
                 break;
 
             case R.id.construction:
                 chooseViewPointer.setConsumerAppraise(btWidth);
                 setMyProjectTitleColorChange(construction, design, bidding);
                 mDesignerPersonalCenterFragment.setConstructionFragment();
-
                 break;
         }
     }
@@ -517,28 +518,28 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
     }
 
-    private void changLohoDesigner(String desiner_id, String hs_uid) {
-
-        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                try {
-                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
-                    int is_loho = jsonObject1.getInt("is_loho");
-                    //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
-                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
-                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    }
+//    private void changLohoDesigner(String desiner_id, String hs_uid) {
+//
+//        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//            }
+//
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                try {
+//                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
+//                    int is_loho = jsonObject1.getInt("is_loho");
+//                    //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
+//                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+//                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
+//    }
 
     @Override
     protected void secondaryNavButtonClicked(View view) {
@@ -574,8 +575,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-        if (checkedId == getDesignerMainRadioBtnId())
-            showFragment(getDesignerMainRadioBtnId());
+        if (checkedId == getDesignerMainRadioBtnId() || checkedId == getDesignerButtonId())
+            showFragment(checkedId);
 
         super.onCheckedChanged(group, checkedId);
     }
@@ -636,8 +637,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//                int high_level_audit = 0;
                 if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
@@ -691,23 +690,43 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     public void onResponse(String s) {
                         MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                        Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
+                        final Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
                         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
 
                         if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
                             MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                             int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                             intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                             intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                            intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                        } else {
                             intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                            MPConsumerHomeActivity.this.startActivity(intent);
+
+                        } else {
+                            MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    MPNetworkUtils.logError(TAG, volleyError);
+                                }
+
+                                @Override
+                                public void onResponse(String s) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(s);
+                                        String thread_id = jsonObject.getString("thread_id");
+                                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                        intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                        MPConsumerHomeActivity.this.startActivity(intent);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
-                        startActivity(intent);
                     }
                 });
 

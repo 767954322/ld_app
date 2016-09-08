@@ -64,8 +64,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     public static final int ESTIMATE = 71;//设计完成　评价.
 
 
-
-
     private List<MPFileBean> mFiles;
 
     @Override
@@ -126,8 +124,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
 
         /// [1]节点33，设计师尚未上传交付物，mDeliveryBean为null，提示：消费者等待，设计师上传 .
-        /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物体，消费者可以查看，需要隐藏延期及确认按钮.
-        if (DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int || 24 == wk_sub_node_id_int) {
+        /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物，消费者可以查看，需要隐藏延期及确认按钮.
+        if (DELIVER_MEASURE_FILE == wk_sub_node_id_int
+                || DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int
+                || 24 == wk_sub_node_id_int) {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
             show3DAndHideLevel();
             handleMeasureDelivery();

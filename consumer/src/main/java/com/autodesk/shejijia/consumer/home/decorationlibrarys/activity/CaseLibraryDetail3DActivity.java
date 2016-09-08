@@ -15,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,6 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.List3DLibr
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
-import com.autodesk.shejijia.consumer.home.widget.ScrollListView;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
@@ -60,13 +60,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class CaseLibraryDetail3DActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
-    private ScrollListView caseLibraryNew;
+    private ListView caseLibraryNew;
     private LinearLayout llThumbUp;
     private String case_id;
     private Case3DDetailBean case3DDetailBean;
@@ -123,7 +124,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     @Override
     protected void initView() {
         super.initView();
-        caseLibraryNew = (ScrollListView) findViewById(R.id.case_library_new);
+        caseLibraryNew = (ListView) findViewById(R.id.case_library_new);
         llThumbUp = (LinearLayout) findViewById(R.id.rl_thumb_up);
         ll_fenxiang_up = (LinearLayout) findViewById(R.id.ll_fenxiang);
         viewHead = findViewById(R.id.case_head);
@@ -154,8 +155,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
         mCaseLibraryText = (TextView) viewText.findViewById(R.id.case_library_text);
         caseLibraryNew.addHeaderView(view);
-        caseLibraryNew.addHeaderView(viewHead);
-        caseLibraryNew.addHeaderView(viewText);
+        caseLibraryNew.addHeaderView(viewHead,null,false);
+        caseLibraryNew.addHeaderView(viewText,null,false);
         case3DDetailList = new ArrayList<>();
     }
 
@@ -289,24 +290,47 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
                         @Override
                         public void onResponse(String s) {
+
                             MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                            Intent intent = new Intent(CaseLibraryDetail3DActivity.this, ChatRoomActivity.class);
-                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                            final Intent intent = new Intent(CaseLibraryDetail3DActivity.this, ChatRoomActivity.class);
+                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
                             intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
                             intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
 
                             if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
                                 MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                                 int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                                 intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                                 intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                            } else {
                                 intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                CaseLibraryDetail3DActivity.this.startActivity(intent);
+
+                            } else {
+                                MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id,member_id, new OkStringRequest.OKResponseCallback() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError volleyError) {
+                                        MPNetworkUtils.logError(TAG, volleyError);
+                                    }
+
+                                    @Override
+                                    public void onResponse(String s) {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(s);
+                                            String thread_id = jsonObject.getString("thread_id");
+                                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                            intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                            intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                            CaseLibraryDetail3DActivity.this.startActivity(intent);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
-                            startActivity(intent);
+
                         }
                     });
                 } else {
@@ -460,7 +484,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         };
         MPServerHttpManager.getInstance().getCaseList3DDetail(case_id, okResponseCallback);
     }
-
+    List<Case3DDetailImageListBean> imageListBean;
     /**
      * 获取案例的数据，更新页面
      */
@@ -508,12 +532,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         for (int i = 0; i < images.size(); i++) {
             if (images.get(i).isIs_primary() == true) {
                 firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-//                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
-                ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
+                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+               // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
             }
         }
 
         List<Case3DDetailImageListBean> imageListBeanList = getImageLists(images);
+        imageListBean=imageListBeanList;
         //设置 listView 中间部分的图片列表
         mCase3DLibraryAdapter = new List3DLibraryAdapter(CaseLibraryDetail3DActivity.this, imageListBeanList);
 
@@ -734,14 +759,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position != 2) {
-            Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
+        List<String> imageList =new ArrayList<>();
+        imageList.add(firstCaseLibraryImageUrl);
+        Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, case3DDetailBean);
+            bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, (Serializable)imageList);
             bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
             bundle.putInt("moveState", 1); // 代表从3D传过去的
             intent.putExtras(bundle);
             this.startActivity(intent);
-        }
     }
 }

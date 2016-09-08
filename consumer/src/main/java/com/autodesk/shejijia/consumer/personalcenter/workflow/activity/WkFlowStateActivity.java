@@ -92,6 +92,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        ibFlowChart.setEnabled(false);
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             ll_piv.setVisibility(View.VISIBLE);
         }
@@ -527,17 +528,11 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         setTitleForNavbar(contacts_name + "/" + community_name); /// 设置标题 .
+        ibFlowChart.setEnabled(true);
         tvCreateDate.setText(UIUtils.getString(R.string.create_date) + requirement.getPublish_time());
         mPtrLayout.onRefreshComplete();
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
-//
-//            if (WkTemplateConstants.IS_FOUR == wk_cur_template_id) {
-//                rlStopContract.setVisibility(View.VISIBLE);
-//            } else {
-//                rlStopContract.setVisibility(View.GONE);
-//            }
-
             if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
                 btnStopDemand.setVisibility(View.VISIBLE);
             }
@@ -555,6 +550,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mAdapter.notifyDataSetChanged();
         ImageUtils.displayAvatarImage(mBiddersEntity.getAvatar(), polygonImageView);
         tvDesignerName.setText(mBiddersEntity.getUser_name());
+
     }
 
     @Override

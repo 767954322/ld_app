@@ -71,7 +71,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
 
         setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.SECONDARY, R.drawable.common_screen_icon);
 
         mRlEmpty = (RelativeLayout) findViewById(R.id.rl_empty);
         mIvDefaultEmpty = (ImageView) findViewById(R.id.iv_default_empty);
@@ -197,7 +197,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
                         startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id,member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);

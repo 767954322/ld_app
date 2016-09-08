@@ -27,7 +27,7 @@
             <LinearLayout
                 android:id="@+id/ll_3d_case_list_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_50"
+                android:layout_height="@dimen/size_48"
                 android:orientation="horizontal">
 
                 <TextView
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/size_9"
+                    android:layout_marginLeft="@dimen/size_13"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -70,27 +70,27 @@
                             android:layout_gravity="center_vertical"
                             android:text="一室"
                             android:textColor="@color/bg_00"
-                            android:textSize="@dimen/size_16" />
+                            android:textSize="@dimen/size_15" />
 
                         <TextView
                             android:id="@+id/tv_customer_home_room"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/size_9"
+                            android:layout_marginLeft="@dimen/size_10"
                             android:text="欧式"
                             android:textColor="@color/bg_00"
-                            android:textSize="@dimen/size_16" />
+                            android:textSize="@dimen/size_15" />
 
                         <TextView
                             android:id="@+id/tv_customer_home_area"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/size_9"
+                            android:layout_marginLeft="@dimen/size_10"
                             android:text="120"
                             android:textColor="@color/bg_00"
-                            android:textSize="@dimen/size_16" />
+                            android:textSize="@dimen/size_15" />
 
                     </LinearLayout>
 
@@ -111,8 +111,8 @@
                             android:id="@+id/tv_thumb_up"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/size_4"
-                            android:text="点赞数111"
+                            android:layout_marginLeft="@dimen/size_5"
+                            android:text="1"
                             android:textColor="@color/bg_80"
                             android:textSize="@dimen/size_13" />
                     </LinearLayout>
@@ -137,12 +137,11 @@
 
                     <ImageView
                         android:id="@+id/img_consume_home_chat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/size_19"
+                        android:layout_height="@dimen/size_19"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/size_5"
-                        android:layout_marginRight="@dimen/size_10"
-                        android:padding="10dp"
+                        android:layout_marginLeft="@dimen/size_24"
+                        android:layout_marginRight="@dimen/size_14"
                         android:src="@drawable/im_ico" />
 
                 </LinearLayout>
@@ -155,7 +154,7 @@
             android:layout_width="@dimen/size_48"
             android:layout_height="@dimen/size_48"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/size_30"
+            android:layout_marginBottom="@dimen/size_15"
             android:layout_marginLeft="@dimen/size_10"
             android:layout_marginRight="@dimen/size_20"
             app:poly_border="true"

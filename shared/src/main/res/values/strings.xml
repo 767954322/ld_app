@@ -473,6 +473,7 @@
     <string name="requirements">发布设计需求</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
     <string name="please_input_correct_area">请填写正确的面积（整数部分不超过四位，小数部分不超过两位）</string>
+    <string name="alert_msg_area">请输入1-9999之间的数字</string>
     <string name="please_input_correct_area_point">整数部分不允许全部为0</string>
 
     <string name="please_select_form">请选择户型</string>

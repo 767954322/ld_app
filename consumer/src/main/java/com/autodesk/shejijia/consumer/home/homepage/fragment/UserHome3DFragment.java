@@ -144,7 +144,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
-        CustomProgress.show(activity,"",false,null);
+        CustomProgress.show(activity, "", false, null);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
             Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
@@ -186,7 +186,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                         getActivity().startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id+"", new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id + "",member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
@@ -280,6 +280,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             }
         });
     }
+
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
                                    final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
@@ -548,7 +549,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     @Override
     public void onResume() {
         super.onResume();
-        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()){
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()) {
             CustomProgress.cancelDialog();
         }
         if (null != mFloatingActionsMenu) {

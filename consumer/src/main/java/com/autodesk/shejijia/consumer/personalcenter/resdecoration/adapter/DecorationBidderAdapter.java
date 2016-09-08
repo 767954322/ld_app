@@ -85,11 +85,11 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             holder.setText(R.id.tv_designer_cost, design_price_min + "-" + design_price_max + "元/m²");
         }
         holder.setText(R.id.tv_designer_name, nick_name);
-        holder.setText(R.id.tv_designer_production, String.format(("作品：%s"), "0"));
+//        holder.setText(R.id.tv_designer_production, String.format(("作品：%s"), "0"));
 
 
         holder.setText(R.id.tv_designer_good, be_good_at_prefix + (TextUtils.isEmpty(style_names) ? "尚未填写" : style_names));
-        holder.setText(R.id.tv_attention_num, String.format(("关注人数：%s"), "0"));
+//        holder.setText(R.id.tv_attention_num, String.format(("关注人数：%s"), "0"));
 
         /**
          *控制显示拒绝、选TA量房，还是显示全流程状态

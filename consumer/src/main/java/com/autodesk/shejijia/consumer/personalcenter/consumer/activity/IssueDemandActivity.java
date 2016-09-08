@@ -224,6 +224,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     area = "0";
                 }
                 area = String.format("%.2f", Double.valueOf(area));
+                if (Double.valueOf(area) < 1) {
+                    showAlertView(R.string.alert_msg_area);
+                    return;
+                }
+
                 et_issue_demand_area.setText(area);
                 String subNum = "0";
                 if (area.contains(".")) {
@@ -353,7 +358,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
      * @param jsonObject
      */
     private void sendDesignRequirements(JSONObject jsonObject) {
-        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject,false,new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject, false, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
@@ -374,7 +379,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 MPNetworkUtils.logError(TAG, volleyError);
                 isSendState = true;
                 CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,IssueDemandActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, IssueDemandActivity.this);
             }
         });
     }
@@ -642,7 +647,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String mDesignBudget;
     private String mDecorationBudget;
     private String nick_name;
-//    private boolean isSelection = false;
+    //    private boolean isSelection = false;
     private String room, living_room, toilet;
     private boolean isSendState = true;
     private String success = "";

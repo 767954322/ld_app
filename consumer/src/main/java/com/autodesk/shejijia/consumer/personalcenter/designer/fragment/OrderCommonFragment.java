@@ -109,8 +109,16 @@ public class OrderCommonFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        Log.d(TAG, "onResume: ddd");
+
     }
 
+    @Override
+    public void onFragmentShown()
+    {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+    }
 
     /**
      * 获取普通订单数据
@@ -164,6 +172,7 @@ public class OrderCommonFragment extends BaseFragment {
                 getDesignerOder(mMemberType, designer_id, 0, LIMIT);
             }
         });
+
         mPtrLayout.setLastUpdateTimeRelateObject(this);
         mListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override

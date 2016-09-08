@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_60"
         android:background="@color/white"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
             android:id="@+id/piv_consumer_order_photo_01"
@@ -53,13 +53,14 @@
                 android:id="@+id/ib_flow_chart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="false"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/size_5"
                 android:background="@color/white"
                 android:drawablePadding="@dimen/size_8"
-                android:src="@drawable/icon_chat_common_normal" />
+                android:src="@drawable/im_ico" />
 
         </RelativeLayout>
     </LinearLayout>

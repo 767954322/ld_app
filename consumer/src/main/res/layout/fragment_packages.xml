@@ -1,36 +1,50 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/font_5"
+    android:orientation="vertical"
+    tools:context=".codecorationBase.packages.fragment.PackagesFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_packages_tital"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_170"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_page_icon" />
+
+
+            <com.autodesk.shejijia.consumer.codecorationBase.packages.view.MyGridView
+                android:id="@+id/gv_packages"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/font_5"
-                android:orientation="vertical"
-                tools:context=".codecorationBase.packages.fragment.PackagesFragment">
+                android:layout_below="@+id/iv_packages_tital"
+                android:layout_marginTop="@dimen/size_10"
+                android:horizontalSpacing="@dimen/size_10"
+                android:numColumns="2"
+                android:verticalSpacing="@dimen/size_10" />
+
+        </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_packages_tital"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_170"
-        android:scaleType="fitXY"
-        android:src="@drawable/home_page_icon"/>
+    </ScrollView>
 
-
-    <GridView
-        android:id="@+id/gv_packages"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_10"
-        android:layout_below="@+id/iv_packages_tital"
-        android:verticalSpacing="@dimen/size_10"
-        android:horizontalSpacing="@dimen/size_10"
-        android:numColumns="2"/>
 
     <ImageButton
         android:id="@+id/bt_packages_yuyue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/size_120"
+        android:layout_height="@dimen/size_37"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/font_20"
-        android:background="@drawable/boutton"/>
+        android:background="@drawable/boutton" />
 </RelativeLayout>

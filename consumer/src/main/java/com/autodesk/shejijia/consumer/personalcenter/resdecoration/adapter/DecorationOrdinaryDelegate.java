@@ -91,7 +91,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (spaceMap.containsKey(house_type)) {
             holder.setText(R.id.tv_decoration_house_type, spaceMap.get(house_type));
         } else {
-            holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? "其它" : house_type);
+            holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? UIUtils.getString(R.string.no_select) : house_type);
         }
 
         district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
@@ -99,7 +99,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
         /// 项目地址
         if (TextUtils.isEmpty(city_name)) {
-            holder.setText(R.id.tv_decoration_address, UIUtils.getString(R.string.nodata));
+            holder.setText(R.id.tv_decoration_address, UIUtils.getString(R.string.no_select));
         } else {
             holder.setText(R.id.tv_decoration_address, address);
         }
@@ -112,7 +112,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (styleMap.containsKey(decoration_style)) {
             holder.setText(R.id.tv_decoration_style, styleMap.get(decoration_style));
         } else {
-            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.str_others) : decoration_style);
+            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.no_select) : decoration_style);
         }
         holder.setText(R.id.tv_bidder_count, bidder_count + "人");
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day());

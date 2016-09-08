@@ -2,7 +2,10 @@ package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.widget.SegmentTabLayout;
@@ -21,8 +24,11 @@ public class DesignBaseFragment extends BaseFragment {
 
     private SegmentTabLayout tab_design_layout;
     private FrameLayout design_container;
+    private static DesignBaseFragment fragment;
+    private RelativeLayout rlt_tab_view;
 
     public static DesignBaseFragment newInstance(int status, int loho) {
+//        if (fragment ==null)
         DesignBaseFragment fragment = new DesignBaseFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("status", status);
@@ -41,6 +47,7 @@ public class DesignBaseFragment extends BaseFragment {
     protected void initView() {
         tab_design_layout = (SegmentTabLayout) rootView.findViewById(R.id.tab_design_layout);
         design_container = (FrameLayout) rootView.findViewById(R.id.design_container);
+        rlt_tab_view = (RelativeLayout) rootView.findViewById(R.id.rlt_tab_view);
     }
 
     @Override
@@ -49,7 +56,6 @@ public class DesignBaseFragment extends BaseFragment {
         int status = arguments.getInt("status");
         int loho = arguments.getInt("loho");
         updateFragmentContent(status, loho);
-
     }
 
     private void updateFragmentContent(int status, int loho) {
@@ -77,7 +83,11 @@ public class DesignBaseFragment extends BaseFragment {
         }
 
         String[] mTitles = mTabNames.toArray(new String[mTabNames.size()]);
-        tab_design_layout.setTabData(mTitles, this.getActivity(), R.id.design_container, fragments);
+        if (mTitles.length == 1) {
+            rlt_tab_view.setVisibility(View.GONE);
+        }
+        if (mTitles != null && mTitles.length > 0)
+            tab_design_layout.setTabData(mTitles, this.getActivity(), R.id.design_container, fragments);
     }
 
     public void addDesignGood2Content() {
@@ -95,4 +105,17 @@ public class DesignBaseFragment extends BaseFragment {
         mTabNames.add("套餐项目");
         fragments.add(new OrderBeiShuFragment());
     }
+
+
+    @Override
+    public void onFragmentShown() {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+
+        for (int i = 0; i < fragments.size(); ++i)
+        {
+            BaseFragment f1 = (BaseFragment)fragments.get(i);
+            f1.onFragmentShown();
+        }
+    }
+
 }

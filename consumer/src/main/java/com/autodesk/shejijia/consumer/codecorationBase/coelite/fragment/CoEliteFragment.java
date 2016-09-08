@@ -42,8 +42,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
      */
     private ImageView[] tips;
 
-    private ImageView[] mImageViews;
-
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_selection;
@@ -72,33 +70,12 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         if(myBidBean != null){
             List<DesignWorksBean.InnerPicListBean> innerPicListBeans=  myBidBean.getInnerPicList();
             size = innerPicListBeans.size();
-            addBackgroundForImageView(innerPicListBeans);
-        }else{
-            ImageView imageView = new ImageView(activity);
-            mImageViews = new ImageView[1];
-            mImageViews[0] = imageView;
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            ImageUtils.displayIconImage("drawable://"+R.drawable.pic1_ico2x,imageView);
-//            imageView.setBackgroundResource(R.drawable.pic1_ico2x);
         }
         addImageViewtips(size);
-        vpSelection.setAdapter(new SelectionAdapter(mImageViews));
+        vpSelection.setAdapter(new SelectionAdapter(getActivity(), myBidBean == null ? null : myBidBean.getInnerPicList()));
         vpSelection.setOnPageChangeListener(this);
     }
-    /**
-     * 给每一个ImageView添加背景图
-     */
-    private void addBackgroundForImageView( List<DesignWorksBean.InnerPicListBean> innerPicListBeans){
-        int i=0;
-        mImageViews = new ImageView[innerPicListBeans.size()];
-        for(DesignWorksBean.InnerPicListBean innerPicListBean:innerPicListBeans){
-            ImageView imageView = new ImageView(activity);
-            mImageViews[i] = imageView;
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            ImageUtils.loadImageIcon(imageView,innerPicListBean.getAndroid());
-            i++;
-        }
-    }
+
     /**
      * 将点点加入到ViewGroup中
      */
@@ -182,7 +159,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     }
     @Override
     public void onPageSelected(int arg0) {
-        setImageBackground(arg0 % mImageViews.length);
+        setImageBackground(arg0 % tips.length);
     }
 
     private void setImageBackground(int selectItems){

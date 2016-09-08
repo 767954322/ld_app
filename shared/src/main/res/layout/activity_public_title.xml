@@ -105,7 +105,7 @@
             <ImageView
                 android:layout_width="@dimen/size_20"
                 android:layout_height="@dimen/size_20"
-                android:background="@drawable/icon_filtrate_normal"/>
+                android:background="@drawable/common_screen_icon"/>
         </LinearLayout>
 
         <LinearLayout

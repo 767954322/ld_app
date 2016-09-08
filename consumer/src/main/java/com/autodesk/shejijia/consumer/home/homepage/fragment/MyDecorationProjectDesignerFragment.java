@@ -1,12 +1,9 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.util.Log;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
@@ -34,102 +31,62 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
-        /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
         int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
         int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
-        setDefaultFragment(high_level_audit,is_loho);
+        setDesigneBaseFragment(high_level_audit, is_loho);
+    }
+
+    public void switchContent(Fragment to) {
+        if (mContent != to) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            if (mContent == null) {
+                transaction.add(R.id.ll_contain, to).commit();
+            } else {
+                if (!to.isAdded()) { // 先判断是否被add过
+                    transaction.hide(mContent).add(R.id.ll_contain, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
+                } else {
+                    transaction.hide(mContent).show(to).commit(); // 隐藏当前的fragment，显示下一个
+                }
+            }
+            mContent = to;
+        }
     }
 
     /**
-     * 设置应标的fragment
+     * 应标
      */
     public void setBidingFragment() {
-
         if (mBidBidingFragment == null) {
-
             mBidBidingFragment = new BidBidingFragment();
         }
+        switchContent(mBidBidingFragment);
+    }
 
-        switchFragment(mBidBidingFragment);
+    public void setDesigneBaseFragment(int high_level_audit, int is_loho) {
+        if (designBaseFragment == null)
+            designBaseFragment = DesignBaseFragment.newInstance(high_level_audit, is_loho);
+        switchContent(designBaseFragment);
     }
 
     /**
-     * 设置设计的fragment
+     * 施工
      */
-    public void setDesignBeiShuFragment() {
-
-        if (mBeishuMealFragment == null) {
-
-            mBeishuMealFragment = new DesignerOrderBeiShuFragment();
-
-        }
-
-        switchFragment(mBeishuMealFragment);
-    }
-
-    /**
-     * 设置设计的fragment
-     */
-    public void setDesignFragment() {
-
-        if (mCommonOrderFragment == null) {
-            mCommonOrderFragment = new DesignerOrderFragment();
-        }
-        switchFragment(mCommonOrderFragment);
-    }
-
     public void setConstructionFragment() {
-
         if (mDesignerConstructionFragment == null) {
             mDesignerConstructionFragment = new DesignerConstructionFragment();
         }
-        switchFragment(mDesignerConstructionFragment);
-
-
+        switchContent(mDesignerConstructionFragment);
     }
 
 
-    /**
-     * 切换fragment
-     */
-    private void switchFragment(Fragment to) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (!to.isAdded()) {
-            transaction.hide(fromFragment).add(R.id.ll_contain, to).commit();
-        } else {
-            transaction.hide(fromFragment).show(to).commit();
-        }
-        fromFragment = to;
+    @Override
+    public void onFragmentShown() {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+        designBaseFragment.onFragmentShown();
     }
 
-    /**
-     * 默认北舒套餐页面 .
-     */
-    public void setDefaultFragment(int status, int mIsLoho) {
-//        if (high_level_audit == 2) {
-//
-//            mCommonFragment = new DesignBaseFragment();
-//        } else {
-//        mCommonFragment = new DesignBaseFragment();
-//        }
-        mCommonFragment = DesignBaseFragment.newInstance(status, mIsLoho);
-
-        fragmentManager = getChildFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.ll_contain, mCommonFragment)
-                .commit();
-        fromFragment = mCommonFragment;
-    }
-
-    private LinearLayout llFragmentContain;
-    private TextView mBeishuOrder, mOrder;
-    private Context context = getActivity();
-    private FrameLayout mOrderContainer;
-    private int mIsLoho;
-    private static final int IS_BEI_SHU = 1;
-    private Fragment mBeishuMealFragment, mCommonOrderFragment, mCommonFragment;
-    private FragmentManager fragmentManager;
-    private Fragment fromFragment;
+    private Fragment mContent;
+    private DesignBaseFragment designBaseFragment;
     private Fragment mDesignerConstructionFragment;
     private Fragment mBidBidingFragment;
 

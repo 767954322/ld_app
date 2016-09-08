@@ -112,7 +112,7 @@ public class MaterialTabs extends HorizontalScrollView {
     private int underlineColor;
 
     private int tabPadding = 12;
-    private int tabTextSize = 14;
+    private int tabTextSize = 18;
 
     private int tabTextColorUnselected;
     private int tabTextColorSelected;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
@@ -38,7 +39,7 @@ import java.util.List;
  * @date 2016/8/1 0029 17:32 .
  * @brief 关注列表 .
  */
-public class AttentionListActivity extends NavigationBarActivity implements AttentionAdapter.OnItemClickListener, PullToRefreshLayout.OnRefreshListener {
+public class AttentionListActivity extends NavigationBarActivity implements AttentionAdapter.OnItemClickListener, PullToRefreshLayout.OnRefreshListener{
 
     @Override
     protected int getLayoutResId() {
@@ -95,6 +96,17 @@ public class AttentionListActivity extends NavigationBarActivity implements Atte
         super.initListener();
         attentionAdapter.setOnItemClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
+        mLvAttention.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Intent intent = new Intent(AttentionListActivity.this, SeekDesignerDetailActivity.class);
+                String hs_uid = attentionList.get(position).getHs_uid();
+                String member_id = attentionList.get(position).getMember_id();
+                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, member_id);
+                intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
+                startActivity(intent);
+            }
+        });
     }
 
     /**

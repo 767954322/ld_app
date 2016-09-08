@@ -314,7 +314,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                                     SeekDesignerDetailActivity.this.startActivity(intent);
 
                                 } else {
-                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id,member_id, new OkStringRequest.OKResponseCallback() {
                                         @Override
                                         public void onErrorResponse(VolleyError volleyError) {
                                             MPNetworkUtils.logError(TAG, volleyError);
@@ -728,7 +728,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             String follows = seekDesignerDetailHomeBean.getFollows();
             follows = TextUtils.isEmpty(follows) ? "0" : follows;
 
-            mTvFollowedNum.setText(" : " + follows);
+            mTvFollowedNum.setText(follows);
             mNickName = seekDesignerDetailHomeBean.getNick_name();
             mNickName = TextUtils.isEmpty(mNickName) ? "" : mNickName;
             setTitleForNavbar(mNickName);
@@ -805,7 +805,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 FollowingDesignerBean followingDesignerBean = GsonUtil.jsonToBean(followingOrUnFollowedDesignerString, FollowingDesignerBean.class);
                 String follows = followingDesignerBean.follows;
                 follows = StringUtils.isEmpty(follows) ? "0" : follows;
-                mTvFollowedNum.setText(" : " + follows);
+                mTvFollowedNum.setText(follows);
 
                 setRightTitle(followsType);
                 if (followsType) {
