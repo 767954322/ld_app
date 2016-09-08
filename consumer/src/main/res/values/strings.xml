@@ -143,4 +143,17 @@
 
 
     <string name="key_words">请输入关键字搜索</string>
+
+
+    <!--DIY -->
+    <string name="diy_one">为有设计创意的客户提供</string>
+    <string name="diy_easy">简单</string>
+    <string name="diy_user">易用</string>
+    <string name="diy_free">免费</string>
+    <string name="diy_tool">DIY设计工具</string>
+    <string name="diy_two">可以生成施工图和参考报价</string>
+    <string name="diy_three">免费使用3D工具，设计自己的家</string>
+    <string name="diy_four">自由搭配真实家居产品，提前预览装修效果，</string>
+    <string name="diy_five">免费获取施工图纸和参考报价。</string>
+    <string name="diy_six">请在网页端开启设计之旅</string>
 </resources>

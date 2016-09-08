@@ -692,7 +692,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             String follows = seekDesignerDetailHomeBean.getFollows();
             follows = TextUtils.isEmpty(follows) ? "0" : follows;
 
-            mTvFollowedNum.setText(" : " + follows);
+            mTvFollowedNum.setText(follows);
             mNickName = seekDesignerDetailHomeBean.getNick_name();
             mNickName = TextUtils.isEmpty(mNickName) ? "" : mNickName;
             setTitleForNavbar(mNickName);
@@ -769,7 +769,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 FollowingDesignerBean followingDesignerBean = GsonUtil.jsonToBean(followingOrUnFollowedDesignerString, FollowingDesignerBean.class);
                 String follows = followingDesignerBean.follows;
                 follows = StringUtils.isEmpty(follows) ? "0" : follows;
-                mTvFollowedNum.setText(" : " + follows);
+                mTvFollowedNum.setText(follows);
 
                 setRightTitle(followsType);
                 if (followsType) {

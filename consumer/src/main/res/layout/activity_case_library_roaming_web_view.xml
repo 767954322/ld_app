@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryRoamingWebView">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header"/>
+
+    <WebView
+        android:id="@+id/wv_roaming"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/common_navbar">
+
+    </WebView>
+</RelativeLayout>

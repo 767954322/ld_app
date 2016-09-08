@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -41,7 +40,6 @@ public class UserHomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         caseViewPager = (NoSlippingViewPager) rootView.findViewById(R.id.case_library_viewPager);
-
     }
 
     @Override
@@ -61,7 +59,7 @@ public class UserHomeFragment extends BaseFragment {
         pagerSlidingTabStrip.setIndicatorColor(getResources().getColor(R.color.bg_0084ff));//下滑指示器的颜色
         pagerSlidingTabStrip.setIndicatorHeight(DensityUtil.dip2px(mpConsumerHomeActivity, 2));//下滑指示器的高度
         pagerSlidingTabStrip.setTextColorSelected(getResources().getColor(R.color.bg_0084ff));//设置选中的tab字体颜色
-        pagerSlidingTabStrip.setTextColorUnselected(Color.BLACK);//设置未选中的tab字体颜色
+        pagerSlidingTabStrip.setTextColorUnselected(getResources().getColor(R.color.bg_00));//设置未选中的tab字体颜色
         pagerSlidingTabStrip.setTabPaddingLeftRight(40);//设置tab距离左右的padding值
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体

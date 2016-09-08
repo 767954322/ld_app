@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -36,7 +35,6 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
@@ -454,7 +452,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
-                    changLohoDesigner(acs_Member_Id, hs_uid);
+//                    changLohoDesigner(acs_Member_Id, hs_uid);
+                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
                 } else {
                     setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
@@ -465,9 +465,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
+    /**
+     * 设置共用title部分图标
+     */
     private void setDesignerListTitle() {
         setImageForNavButton(ButtonType.RIGHT, com.autodesk.shejijia.shared.R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.common_screen_icon);
         setVisibilityForNavButton(ButtonType.RIGHT, true);
         setVisibilityForNavButton(ButtonType.SECONDARY, true);
     }
@@ -515,28 +518,28 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
     }
 
-    private void changLohoDesigner(String desiner_id, String hs_uid) {
-
-        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                try {
-                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
-                    int is_loho = jsonObject1.getInt("is_loho");
-                    //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
-                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
-                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    }
+//    private void changLohoDesigner(String desiner_id, String hs_uid) {
+//
+//        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//            }
+//
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                try {
+//                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
+//                    int is_loho = jsonObject1.getInt("is_loho");
+//                    //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
+//                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+//                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
+//    }
 
     @Override
     protected void secondaryNavButtonClicked(View view) {

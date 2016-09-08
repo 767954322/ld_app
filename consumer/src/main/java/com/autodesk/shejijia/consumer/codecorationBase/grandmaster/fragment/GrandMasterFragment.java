@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -101,9 +102,9 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                         int currentItem = vp_grand_selection.getCurrentItem();
                         String nicke_name = "", member_id = "", hs_uid = "", login_member_id = "", login_hs_uid = "";
                         if (currentItem != 0) {
-                            nicke_name = designer_list.get(currentItem - 1).getNick_name();
-                            member_id = designer_list.get(currentItem - 1).getMember_id();
-                            hs_uid = designer_list.get(currentItem - 1).getHs_uid();
+                            nicke_name = mMasterInfoList.get(currentItem - 1).getNick_name();
+                            member_id = mMasterInfoList.get(currentItem - 1).getMember_id();
+                            hs_uid = mMasterInfoList.get(currentItem - 1).getHs_uid();
                         }
                         if (isLoginUserJust) {
                             login_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
@@ -138,55 +139,21 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     private void initPageData(String masterInfo) {
 
         isLoginUserJust = isLoginUser();
-        viewList = new ArrayList<View>();
-        LayoutInflater lf = LayoutInflater.from(activity);
-        View view1 = lf.inflate(R.layout.viewpager_item_grandmaster_first, null);
-        ImageView iv_grandmaster_pic_first = (ImageView) view1.findViewById(R.id.iv_grandmaster_pic_first);
-        ImageUtils.displayIconImage("drawable://" + R.drawable.shouye, iv_grandmaster_pic_first);
-        viewList.add(view1);
         if (!"error".equals(masterInfo)) {
             GrandMasterInfo grandMasterInfo = GsonUtil.jsonToBean(masterInfo, GrandMasterInfo.class);
-            designer_list = grandMasterInfo.getDesigner_list();
-            for (int i = 0; i < designer_list.size(); i++) {
-                View view2 = lf.inflate(R.layout.viewpager_item_grandmaster_content, null);
-                ImageView iv_grandmaster_pic = (ImageView) view2.findViewById(R.id.iv_grandmaster_pic);
-                TextView tv_grandmaster_cn_name = (TextView) view2.findViewById(R.id.tv_grandmaster_cn_name);
-                TextView tv_grandmaster_en_name = (TextView) view2.findViewById(R.id.tv_grandmaster_en_name);
-                TextView tv_grandmaster_detail = (TextView) view2.findViewById(R.id.tv_grandmaster_detail);
-
-                if (TextUtils.isEmpty(designer_list.get(i).getEnglish_name())) {
-                    tv_grandmaster_en_name.setText("后台无数据");
-                } else {
-                    tv_grandmaster_en_name.setText(designer_list.get(i).getEnglish_name());
-                }
-                if (TextUtils.isEmpty(designer_list.get(i).getNick_name())) {
-                    tv_grandmaster_cn_name.setText("后台无数据");
-                } else {
-                    tv_grandmaster_cn_name.setText(designer_list.get(i).getNick_name());
-                }
-                if (TextUtils.isEmpty(designer_list.get(i).getDesigner().getIntroduction())) {
-                    tv_grandmaster_detail.setText("后台无数据");
-                } else {
-                    tv_grandmaster_detail.setText(designer_list.get(i).getDesigner().getIntroduction());
-                }
-                if (null != designer_list.get(i).getDesigner() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app() && null != designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
-
-                    String img_url = designer_list.get(i).getDesigner().getDesigner_profile_cover_app().getPublic_url();
-                    ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
-                }
-                viewList.add(view2);
-            }
+            mMasterInfoList = grandMasterInfo.getDesigner_list();
+            mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
         }
 
         addImageViewtips();
-        vp_grand_selection.setAdapter(pagerAdapter);
+        vp_grand_selection.setAdapter(mPagerAdapter);
         vp_grand_selection.setOnPageChangeListener(this);
 
     }
 
     // 将圆点加入到ViewGroup中
     private void addImageViewtips() {
-        tips = new ImageView[viewList.size()];
+        tips = new ImageView[mPagerAdapter.getCount()];
         for (int i = 0; i < tips.length; i++) {
             ImageView imageView = new ImageView(activity);
             LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -212,56 +179,87 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 tips[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
             }
         }
+
     }
 
-    protected PagerAdapter pagerAdapter = new PagerAdapter() {
+    private static class MastersPagerAdapter extends PagerAdapter {
+        private Activity mContext;
+        private List<MasterInfo> mMasterInfoList;
+
+        public MastersPagerAdapter(Activity context, List<MasterInfo> masterDesigners) {
+            mMasterInfoList = masterDesigners;
+            mContext = context;
+        }
 
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
-
             return arg0 == arg1;
         }
 
         @Override
         public int getCount() {
-
-            return viewList.size();
+            return mMasterInfoList.size() + 1;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            if (position <= viewList.size()) {
-                container.removeView(viewList.get(position));
-            }
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-
-            return super.getItemPosition(object);
+            container.removeView((View) object);
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
-            ViewGroup view_parent = (ViewGroup) viewList.get(position).getParent();
-            if (view_parent != null) {
-                view_parent.removeView(viewList.get(position));
-            }
-            container.addView(viewList.get(position));
-            if (position != 0) {//大师列表点击监听
-                ImageView iv_grandmaster_pic = (ImageView) viewList.get(position).findViewById(R.id.iv_grandmaster_pic);
-                iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {
+            View view;
+            LayoutInflater layoutInflater =LayoutInflater.from(mContext);
+            switch(position) {
+                case 0:
+                    view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_first, null);
+                    ImageView iv_grandmaster_pic_first = (ImageView) view.findViewById(R.id.iv_grandmaster_pic_first);
+                    ImageUtils.displayIconImage("drawable://" + R.drawable.shouye, iv_grandmaster_pic_first);
+                    break;
+                default:
+                    view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);
+                    ImageView iv_grandmaster_pic = (ImageView) view.findViewById(R.id.iv_grandmaster_pic);
+                    TextView tv_grandmaster_cn_name = (TextView) view.findViewById(R.id.tv_grandmaster_cn_name);
+                    TextView tv_grandmaster_en_name = (TextView) view.findViewById(R.id.tv_grandmaster_en_name);
+                    TextView tv_grandmaster_detail = (TextView) view.findViewById(R.id.tv_grandmaster_detail);
 
-                    public void onClick(View v) {
-                        Intent intent = new Intent(activity, GrandMasterDetailActivity.class);
-                        intent.putExtra("hs_uid", designer_list.get(position - 1).getHs_uid());
-                        startActivity(intent);
+                    final MasterInfo masterInfo = mMasterInfoList.get(position - 1);
+                    if (TextUtils.isEmpty(masterInfo.getEnglish_name())) {
+                        tv_grandmaster_en_name.setText("后台无数据");
+                    } else {
+                        tv_grandmaster_en_name.setText(masterInfo.getEnglish_name());
                     }
-                });
-            }
-            return viewList.get(position);
-        }
+                    if (TextUtils.isEmpty(masterInfo.getNick_name())) {
+                        tv_grandmaster_cn_name.setText("后台无数据");
+                    } else {
+                        tv_grandmaster_cn_name.setText(masterInfo.getNick_name());
+                    }
+                    if (TextUtils.isEmpty(masterInfo.getDesigner().getIntroduction())) {
+                        tv_grandmaster_detail.setText("后台无数据");
+                    } else {
+                        tv_grandmaster_detail.setText(masterInfo.getDesigner().getIntroduction());
+                    }
 
+                    if (null != masterInfo.getDesigner() && null != masterInfo.getDesigner().getDesigner_profile_cover_app()
+                            && null != masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
+                        String img_url = masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url();
+                        ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
+                    }
+
+                    //大师列表点击监听
+                    iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, GrandMasterDetailActivity.class);
+                            intent.putExtra("hs_uid", masterInfo.getHs_uid());
+                            mContext.startActivity(intent);
+                        }
+                    });
+                    break;
+            }
+
+            container.addView(view);
+            return view;
+        }
     };
 
     /**
@@ -307,7 +305,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     public void onPageSelected(int position) {
-        setImageBackground(position % viewList.size());
+        setImageBackground(position % mPagerAdapter.getCount());
     }
 
     @Override
@@ -321,6 +319,6 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     private ImageButton bt_grand_reservation;
     private boolean isLoginUserJust = false;
     private ImageView[] tips;
-    private ArrayList<View> viewList;
-    private List<MasterInfo> designer_list;
+    private List<MasterInfo> mMasterInfoList = new ArrayList<>();
+    private MastersPagerAdapter mPagerAdapter;
 }

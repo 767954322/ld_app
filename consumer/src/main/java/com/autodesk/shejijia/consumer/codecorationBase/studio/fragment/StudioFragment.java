@@ -51,10 +51,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         viewHead = LayoutInflater.from(activity).inflate(R.layout.fragment_work_room, null);
         img_header = (ImageView) viewHead.findViewById(R.id.img_header);
 
-
         work_room_listView.addHeaderView(viewHead);
-
-
     }
 
     @Override

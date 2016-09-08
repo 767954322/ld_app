@@ -43,7 +43,7 @@
 
     <!-- 蒲公英 -->
     <!-- Optional -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <!-- 自动获取焦点的权限 -->
     <uses-feature android:name="android.hardware.camera.autofocus"/>
@@ -168,7 +168,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".home.homepage.activity.ConsumerPersonalCenterActivity"
             android:alwaysRetainTaskState="true"
@@ -509,20 +508,65 @@
         <!-- Pgy Required -->
         <meta-data
             android:name="PGYER_APPID"
-            android:value="bc822ecc80d0a32593a2ff1306d438f8" >
+            android:value="bc822ecc80d0a32593a2ff1306d438f8">
         </meta-data>
 
-        <activity android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity"/>
-        <activity android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity"/>
-        <activity android:name=".personalcenter.consumer.activity.AttentionListActivity"/>
-        <activity android:name=".home.decorationdesigners.activity.DesignerFiltrateActivity"/>
-        <activity android:name=".home.decorationdesigners.activity.DesignerSearchActivity"/>
-        <activity android:name=".personalcenter.resdecoration.activity.DecorationDetailActivity"/>
-        <activity android:name=".home.decorationlibrarys.activity.CaseLibraryDetail3DActivity"/>
-        <activity android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"/>
-        <activity android:name=".personalcenter.resdecoration.activity.DecorationBidderActivity"></activity>
-        <activity android:name=".codecorationBase.coelite.activity.IssueEliteDemanActivity"></activity>
-
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".personalcenter.workflow.activity.DeliveryDelayedInstructionsActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".personalcenter.consumer.activity.AppraiseDesignerActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".personalcenter.consumer.activity.AttentionListActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".home.decorationdesigners.activity.DesignerFiltrateActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".home.decorationdesigners.activity.DesignerSearchActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".personalcenter.resdecoration.activity.DecorationDetailActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".home.decorationlibrarys.activity.CaseLibraryDetail3DActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".personalcenter.resdecoration.activity.DecorationBidderActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".codecorationBase.coelite.activity.IssueEliteDemanActivity"/>
+        <activity
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:name=".home.decorationlibrarys.activity.CaseLibraryRoamingWebView">
+        </activity>
     </application>
 
 </manifest>

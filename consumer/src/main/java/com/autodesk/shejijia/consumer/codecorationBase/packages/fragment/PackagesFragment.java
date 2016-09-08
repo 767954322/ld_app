@@ -46,8 +46,11 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
         packages = ImageUrlUtils.getPackagesListImage();
         banner_image = ImageUrlUtils.getPackagesListBanner();
 
+        iv_packages_tital.setFocusable(true);
+        iv_packages_tital.setFocusableInTouchMode(true);
+        iv_packages_tital.requestFocus();
+
         ImageUtils.loadImageIcon(iv_packages_tital,banner_image);
-//        ImageLoader.getInstance().displayImage(banner_image, iv_packages_tital);
         PacksAdapter pagerAdapter = new PacksAdapter();
         gv_packages.setAdapter(pagerAdapter);
 
