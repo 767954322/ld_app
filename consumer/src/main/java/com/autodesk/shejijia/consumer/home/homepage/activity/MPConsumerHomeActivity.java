@@ -498,23 +498,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setCase3dBtn(btWidth);
                 mDesignerPersonalCenterFragment.setDefaultFragment(high_level_audit, is_loho);
-
-                //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
-//                if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-
-                //[1]高阶:high_level_audit=2
-                //[1.1] is_loho=1  精选、竞优、套餐
-                //[1.2] 精选、竞优、
-                //[2]不是高阶：
-                //[1.1] is_loho=1  竞优、套餐
-                //[1.2] 竞优
                 break;
 
             case R.id.construction:
                 chooseViewPointer.setConsumerAppraise(btWidth);
                 setMyProjectTitleColorChange(construction, design, bidding);
                 mDesignerPersonalCenterFragment.setConstructionFragment();
-
                 break;
         }
     }
@@ -644,8 +633,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//                int high_level_audit = 0;
                 if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
