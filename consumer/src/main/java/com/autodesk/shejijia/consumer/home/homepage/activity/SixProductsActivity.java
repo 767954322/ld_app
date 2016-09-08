@@ -31,7 +31,6 @@ public class SixProductsActivity extends NavigationBarActivity {
 
     private SixProductsAdapter sixProductsAdapter;
     private NoSlippingViewPager noSlippingViewPager;
-    private ArrayList<Fragment> fragments;
     private MaterialTabs pagerSlidingTabStrip;
 
     @Override
@@ -47,17 +46,10 @@ public class SixProductsActivity extends NavigationBarActivity {
     protected void initData(Bundle savedInstanceState) {
         setTitleForNavbar(UIUtils.getString(R.string.tab_six_products));
         noSlippingViewPager.setPagingEnabled(false);
-        fragments = new ArrayList<>();
-        fragments.add(new GrandMasterFragment());
-        fragments.add(new StudioFragment());
-        fragments.add(new CoEliteFragment());
-        fragments.add(new AverageFragment());
-        fragments.add(new PackagesFragment());
-        fragments.add(new DIYFragment());
 
         String[] tabItems =this.getResources().getStringArray(R.array.sixProducts);
 
-        sixProductsAdapter = new SixProductsAdapter(getSupportFragmentManager(),fragments,tabItems);
+        sixProductsAdapter = new SixProductsAdapter(getSupportFragmentManager(), tabItems);
         noSlippingViewPager.setAdapter(sixProductsAdapter);
 
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()

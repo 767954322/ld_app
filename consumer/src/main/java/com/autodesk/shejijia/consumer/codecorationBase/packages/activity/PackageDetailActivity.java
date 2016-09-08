@@ -120,6 +120,6 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
     private TextView nav_title_textView;
     private ImageButton bt_packages_yuyue;
     private ImageButton nav_left_imageButton;
-    private BaseCommonAdapter<Bitmap> mAdapter;
+//    private BaseCommonAdapter<Bitmap> mAdapter;
 
 }
