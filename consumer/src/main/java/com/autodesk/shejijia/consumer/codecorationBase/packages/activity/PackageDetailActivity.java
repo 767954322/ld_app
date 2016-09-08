@@ -107,9 +107,6 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-//    private Integer[] pic_detail = {R.drawable.xijing, R.drawable.dongjie, R.drawable.xingfujia, R.drawable.beishu,
-//            R.drawable.yishujia, R.drawable.nanyun, R.drawable.pinzhijia};//套餐详情集合
-
     private int item_num;
     private String item_name;
     private List<Bitmap> mData;
@@ -120,6 +117,4 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
     private TextView nav_title_textView;
     private ImageButton bt_packages_yuyue;
     private ImageButton nav_left_imageButton;
-//    private BaseCommonAdapter<Bitmap> mAdapter;
-
 }
