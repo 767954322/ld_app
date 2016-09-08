@@ -4,18 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.average.fragment.AverageFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.codiy.fragments.DIYFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SixProductsAdapter;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment.CoEliteFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.fragment.GrandMasterFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.packages.fragment.PackagesFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
@@ -24,8 +17,9 @@ import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
-import java.util.ArrayList;
-
+/**
+ * Created by luchongbin on 16-8-16.
+ */
 public class SixProductsActivity extends NavigationBarActivity {
 
 

@@ -13,6 +13,7 @@
     <include layout="@layout/activity_designer_main_content_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_bottombar_radiogroup_height"
         android:layout_below="@id/common_navbar" />
 
     <include layout="@layout/activity_designer_main_bottom_radiobtn_view"
