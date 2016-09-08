@@ -15,6 +15,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.packages.activity.Package
 import com.autodesk.shejijia.consumer.codecorationBase.packages.activity.ReservationFormActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -46,7 +47,8 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
         packages = ImageUrlUtils.getPackagesListImage();
         banner_image = ImageUrlUtils.getPackagesListBanner();
 
-        ImageLoader.getInstance().displayImage(banner_image, iv_packages_tital);
+        ImageUtils.loadImageIcon(iv_packages_tital,banner_image);
+//        ImageLoader.getInstance().displayImage(banner_image, iv_packages_tital);
         PacksAdapter pagerAdapter = new PacksAdapter();
         gv_packages.setAdapter(pagerAdapter);
 
@@ -140,7 +142,7 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
                 convertView.setTag(myHolder);
             }
             myHolder = (MyHolder) convertView.getTag();
-            ImageLoader.getInstance().displayImage(packages[position], myHolder.iv_packets);
+            ImageUtils.loadImageIcon(myHolder.iv_packets,packages[position]);
             return convertView;
         }
 
