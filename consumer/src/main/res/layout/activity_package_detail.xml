@@ -17,8 +17,8 @@
 
     <ImageButton
         android:id="@+id/bt_packages_yuyue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/size_120"
+        android:layout_height="@dimen/size_37"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/font_20"
