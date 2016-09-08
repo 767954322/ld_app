@@ -407,7 +407,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void establishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 21 && wk_cur_sub_node_idi != 33) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 31|| wk_cur_sub_node_idi == 32) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
             } else if (wk_cur_sub_node_idi == 33) { /// 量房交付物 .
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
@@ -530,12 +530,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mPtrLayout.onRefreshComplete();
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
-
-            if (WkTemplateConstants.IS_FOUR == wk_cur_template_id) {
-                rlStopContract.setVisibility(View.VISIBLE);
-            } else {
-                rlStopContract.setVisibility(View.GONE);
-            }
+//
+//            if (WkTemplateConstants.IS_FOUR == wk_cur_template_id) {
+//                rlStopContract.setVisibility(View.VISIBLE);
+//            } else {
+//                rlStopContract.setVisibility(View.GONE);
+//            }
 
             if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
                 btnStopDemand.setVisibility(View.VISIBLE);

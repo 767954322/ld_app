@@ -90,7 +90,7 @@
         android:id="@+id/rl_stop_contract"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_100"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/tv_create_date"

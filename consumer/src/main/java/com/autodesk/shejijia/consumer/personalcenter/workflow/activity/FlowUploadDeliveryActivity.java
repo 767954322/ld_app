@@ -53,12 +53,18 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
     public static final int PAY_FOR_MEASURE = 21;
     public static final int OPEN_3D_DESIGN = 22;
-    public static final int DELIVER_MEASURE_FILE = 33;
-    public static final int PAY_FOR_FIRST_FEE = 41;
-    public static final int NO_UPLOAD_DELIVERY = 51;
-    public static final int DOWN_DELIVERY_UPLOADED_DELIVERY = 61;
-    public static final int CONSUMER_AFFIRM_DELIVERY = 63;
-    public static final int CONSUMER_DELAY_DELIVERY = 64;
+    public static final int DELIVER_MEASURE_FILE = 23; //  精选，消费者：等待提交量房交付物　设计师：提交量房交付物
+    public static final int DELIVER_MEASURE_FILE_1 = 33; // 精选-竞优-套餐，消费者：订单结束, 设计师：订单结束 未上传量房交付物
+    public static final int PAY_FOR_FIRST_FEE = 41; // 消费者：未支付设计尾款　设计师：等待客户支付设计师尾款 ．
+    public static final int NO_UPLOAD_DELIVERY = 51; // 消费者：等待设计师上传设计交付物　设计师：未上传设计交付物
+    public static final int DOWN_DELIVERY_UPLOADED_DELIVERY = 61;// 消费者：未确认设计交付物　设计师：等待客户确认设计交付物．
+    public static final int CONSUMER_AFFIRM_DELIVERY = 63; // 设计完成．
+    public static final int CONSUMER_DELAY_DELIVERY = 64;//消费者：未确认设计交付物　设计师：客户已延期确认设计交付.
+    public static final int DELAY_ESTIMATE = 72;//设计完成　评价.
+    public static final int ESTIMATE = 71;//设计完成　评价.
+
+
+
 
     private List<MPFileBean> mFiles;
 
@@ -121,7 +127,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
         /// [1]节点33，设计师尚未上传交付物，mDeliveryBean为null，提示：消费者等待，设计师上传 .
         /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物体，消费者可以查看，需要隐藏延期及确认按钮.
-        if (DELIVER_MEASURE_FILE == wk_sub_node_id_int || 24==wk_sub_node_id_int) {
+        if (DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int || 24 == wk_sub_node_id_int) {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
             show3DAndHideLevel();
             handleMeasureDelivery();
@@ -603,12 +609,12 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    if (jsonObject!=null){
+                    if (jsonObject != null) {
                         String userInfo = GsonUtil.jsonToString(jsonObject);
                         KLog.json(TAG, userInfo);
                         mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
                         updateViewFrom3DPlanList(design_asset_id);
-                    }else {
+                    } else {
                         new AlertView(" ",
                                 UIUtils.getString(R.string.fanganflow),
                                 null, null,
@@ -619,7 +625,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
                     }
 
-                } catch (Exception e){
+                } catch (Exception e) {
 
                     Toast.makeText(FlowUploadDeliveryActivity.this, "e:" + e, Toast.LENGTH_SHORT).show();
                 }
