@@ -71,7 +71,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private Map<String, String> mStyleJson, mSpaceJson, mLivingRoomJson, mRoomJson, mToiletJson;
 
 
-    public static void jumpTo(Context context,Bundle bundle){
+    public static void jumpTo(Context context, Bundle bundle) {
         Intent intent = new Intent(context, DecorationDetailActivity.class);
         intent.putExtras(bundle);
         context.startActivity(intent);
@@ -250,12 +250,12 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
         mTvAmendRoomType.setText(UIUtils.getNoSelectIfEmpty(livingRoom_room_toilet));
         mTvAmendStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style));
-        mTvAmendHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type) );
+        mTvAmendHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type));
         mTvAmendName.setText(UIUtils.getNoDataIfEmpty(contacts_name));
         mTvAmendMobile.setText(UIUtils.getNoDataIfEmpty(contacts_mobile));
         mTvDesignBudget.setText(UIUtils.getNoSelectIfEmpty(design_budget));
-        mTvAmendBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget) );
-        mTvAmendArea.setText(UIUtils.getNoSelectIfEmpty(house_area) );
+        mTvAmendBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget));
+        mTvAmendArea.setText(UIUtils.getNoSelectIfEmpty(house_area));
         mTvAddress.setText(UIUtils.getNoDataIfEmpty(address));
         mTvCommunityName.setText(UIUtils.getNoDataIfEmpty(community_name));
         mTvPublicTime.setText(UIUtils.getNoDataIfEmpty(publish_time));

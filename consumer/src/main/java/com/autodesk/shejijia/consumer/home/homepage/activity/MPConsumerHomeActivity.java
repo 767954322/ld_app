@@ -332,9 +332,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (isActiveFragment(UserHomeFragment.class)) {
             //传递标记    0 是2d案例的搜索    1 3d是的案例搜索
             int currentPosition = this.getMaterialTabs().getCurrentPosition();
-           // Toast.makeText(this, "currentPosition:" + currentPosition, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "currentPosition:" + currentPosition, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
-            intent.putExtra("currentPosition",currentPosition);
+            intent.putExtra("currentPosition", currentPosition);
             startActivity(intent);
         }
 

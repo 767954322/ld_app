@@ -227,6 +227,7 @@
     <string name="in_design_deliverable_three">设计交付中3</string>
     <string name="waiting_designer_upload_design_deliverable">请耐心等待设计师发送设计交付物</string>
     <string name="waiting_designer_uploaded_room_deliverable">请耐心等待设计师发送量房交付物</string>
+    <string name="waiting_cons_uploaded_room_deliverable">请耐心等待消费者支付量房费</string>
     <string name="please_enter_web_page_submitted_room_deliverable">请登陆Web端上传量房交付物</string>
     <string name="please_enter_web_page_submitted_design_deliverable">您还没有做设计方案\n请到网页端完成设计方案</string>
     <string name="please_select_3d_design">请先选择3D设计方案</string>
@@ -354,6 +355,7 @@
     <string name="demand_please_project_types">请选择房屋类型</string>
     <string name="demand_please_project_types_select">请选择房屋类型(选填)</string>
     <string name="demand_import_area">请输入面积</string>
+    <string name="demand_import_limit">请输入1-9999数值</string>
     <string name="issue_room">请选择户型：室 厅 卫</string>
 
     <string name="issue_room_select">请选择户型：室 厅 卫(选填)</string>

@@ -8,7 +8,7 @@
         android:id="@+id/item_3D_case_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_218"
-        android:background="@drawable/common_case_icon"
+        android:background="@drawable/home_page_icon"
         />
 
     <RelativeLayout
@@ -43,7 +43,6 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/hall"
             android:layout_marginLeft="@dimen/size_15"
-            android:text="110m2"
             android:textSize="@dimen/font_17" />
 
         <TextView

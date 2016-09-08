@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
@@ -45,31 +46,40 @@
                 android:textSize="@dimen/font_15"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/size_10"
-                android:layout_toRightOf="@id/tv_name"
-                android:ellipsize="end"
-                android:maxEms="7"
-                android:singleLine="true"
-                android:text="2小时前说："
-                android:textSize="@dimen/font_10" />
+                >
 
-            <RatingBar
-                android:id="@+id/rating_star"
-                style="@style/custom_rating_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/size_16"
-                android:isIndicator="true"
-                android:numStars="5"
-                android:stepSize="1" />
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_toLeftOf="@+id/rating_star"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="end"
+                    android:maxEms="7"
+                    android:singleLine="true"
+                    android:text="2小时前说："
+                    android:textSize="@dimen/font_10" />
+
+                <RatingBar
+                    android:id="@+id/rating_star"
+                    style="@style/custom_rating_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/size_16"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:stepSize="1" />
+
+
+            </RelativeLayout>
 
 
         </LinearLayout>

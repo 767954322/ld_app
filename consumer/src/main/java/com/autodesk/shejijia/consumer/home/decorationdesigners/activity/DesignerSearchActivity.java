@@ -84,6 +84,7 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
             findDesignerBean.setNick_name(mSearchKeywords);
 
             findDesignerBean.setStyle_names("");
+            findDesignerBean.setStyle("");
             findDesignerBean.setStart_experience("");
             findDesignerBean.setEnd_experience("");
             findDesignerBean.setDesign_price_code("");

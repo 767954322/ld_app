@@ -86,6 +86,9 @@ public class MPWkFlowManager {
         if (wk_template_id_int < 1) {
             return wkSubNodeName;
         }
+        if (wkFlowBeans.size() < 0) {
+            return wkSubNodeName;
+        }
 
         tipWkFlowTemplateBean = wkFlowBeans.get(wk_template_id_int - 1);
         workflowInFos = tipWkFlowTemplateBean.getTip_workflow_infos();

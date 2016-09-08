@@ -55,14 +55,43 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     }
 
 
-
-
     //获取更多数据
-    public void getMore3DCase(Case3DBeen case3DBeen, int state) {
-        this.case3DBeen = case3DBeen;
-        datas = new ArrayList<Case3DBeen.CasesBean>();
+    public void getMore3DCase(List<Case3DBeen.CasesBean> myData, int state) {
 
-            updateViewFromDesignerData(state);
+        //如果是刷新数据，就将该集合清空
+        if (state == 0) {
+            if (seekDesigner3DCaseAdapter == null){
+
+                seekDesigner3DCaseAdapter = new SeekDesiger3DCaseAdapter(getActivity(), myData);
+            }
+            myDatas.clear();
+            myDatas.addAll(myData);
+
+            mListView.setAdapter(seekDesigner3DCaseAdapter);
+        } else {
+
+            myDatas.addAll(myData);
+            Log.i("yaoxuehua", "ooop" + myData.size());
+
+            seekDesigner3DCaseAdapter.addMoreData(myDatas);
+
+        }
+
+        Log.i("yaoxuehua", "" + myDatas.size());
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
+                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, myDatas.get(position).getDesign_asset_id());
+                getActivity().startActivity(intent);
+
+            }
+        });
+
+
+        updateViewFromDesignerData(state);
 
     }
 
@@ -70,40 +99,9 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
      * @param state
      */
     public void updateViewFromDesignerData(int state) {
-        //如果是刷新数据，就将该集合清空
-        if (state == 0) {
-            datas.clear();
-            for (int i = 0; i < case3DBeen.getCases().size();i++){
-                datas.add(case3DBeen.getCases().get(i));
-
-            }
-            seekDesigner3DCaseAdapter = new SeekDesiger3DCaseAdapter(getActivity(),datas);
-            mListView.setAdapter(seekDesigner3DCaseAdapter);
-        }else {
-
-            for (int i = 0; i < case3DBeen.getCases().size();i++){
-                datas.add(case3DBeen.getCases().get(i));
-
-            }
-            seekDesigner3DCaseAdapter.addMoreData(datas);
-
-        }
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(getActivity(),CaseLibraryDetail3DActivity.class);
-                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, datas.get(position).getDesign_asset_id());
-                getActivity().startActivity(intent);
-
-            }
-        });
 
 
     }
-
-
 
 
     private LinearLayout view_refresh_head;
@@ -117,7 +115,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private ListView mListView;
-    private List<Case3DBeen.CasesBean> datas;
+    private List<Case3DBeen.CasesBean> myDatas = new ArrayList<Case3DBeen.CasesBean>();
     private SeekDesiger3DCaseAdapter seekDesigner3DCaseAdapter;
 
 

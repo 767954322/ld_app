@@ -1,27 +1,16 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -29,14 +18,11 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author DongXueQiu .
@@ -48,30 +34,24 @@ import java.util.Map;
 public class BidBidingFragment extends BidBaseFragment {
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.fragment_my_bid_be_being;
+    protected int getEmptyDataMessage() {
+        return R.string.bidbiding_no_data_massage;
+    }
+
+    @Override
+    protected boolean validateData(String status) {
+        return BE_BEING.equals(status);
     }
 
     @Override
     protected void initView() {
-        mListView = (PullListView) rootView.findViewById(R.id.lv_my_bid);
-        mPullToRefreshLayout = ((PullToRefreshLayout) rootView.findViewById(R.id.refresh_my_bid_view));
-        mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
-        rl_empty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
-        tv_empty_message = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
+        super.initView();
         CustomProgress.show(getActivity(), "", false, null);
     }
 
     @Override
     protected void initData() {
         super.initData();
-        setListener();
-        mList = new ArrayList<>();
-        beBeingList = new ArrayList<>();
-        commonAdapter = getCommonAdapter();
-        mListView.setAdapter(commonAdapter);
-//        addFooterViewForMListView();
-
         onWindowFocusChanged();
     }
 
@@ -83,50 +63,9 @@ public class BidBidingFragment extends BidBaseFragment {
         }
     }
 
-//    private void addFooterViewForMListView() {
-//        rl_empty.setVisibility(View.GONE);
-//        mListView.addFooterView(mFooterView);
-//        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-//        int height = wm.getDefaultDisplay().getHeight();
-//        android.view.ViewGroup.LayoutParams pp = rl_empty.getLayoutParams();
-//        rl_empty.getLayoutParams();
-//        pp.height = height - height / 5;
-//        rl_empty.setLayoutParams(pp);
-//        tv_empty_message.setText(UIUtils.getString(R.string.bidbiding_no_data_massage));
-//    }
+    protected CommonAdapter getCommonAdapter() {
 
-    public void onFragmentShown(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys) {
-        beBeingList.clear();
-        for (MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity : biddingNeedsListEntitys) {
-            MyBidBean.BiddingNeedsListEntity.BidderEntity bidderEntity = biddingNeedsListEntity.getBidder();
-            if (bidderEntity != null) {
-                status = bidderEntity.getStatus();
-                if (BE_BEING.equals(status)) {
-                    beBeingList.add(biddingNeedsListEntity);
-                }
-            }
-        }
-        mList.clear();
-        mList.addAll(getData(0));
-        commonAdapter.notifyDataSetChanged();
-        isHideMFooterView(mList.size());
-    }
-
-    private void isHideMFooterView(int size) {
-        if (size <= 0) {
-            rl_empty.setVisibility(View.VISIBLE);
-        } else {
-            rl_empty.setVisibility(View.GONE);
-        }
-    }
-
-    private void setListener() {
-        mPullToRefreshLayout.setOnRefreshListener(this);
-    }
-
-    private CommonAdapter getCommonAdapter() {
-
-        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mList, R.layout.item_mybid_bidding) {
+        return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities, R.layout.item_mybid_bidding) {
             @Override
             public void convert(CommonViewHolder holder, final MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
                 setupBidItemView(holder, biddingNeedsListEntity);
@@ -142,16 +81,6 @@ public class BidBidingFragment extends BidBaseFragment {
                 });
             }
         };
-    }
-
-    private ArrayList<MyBidBean.BiddingNeedsListEntity> getData(int index) {
-        int length = index + 10;
-        ArrayList<MyBidBean.BiddingNeedsListEntity> list = new ArrayList<MyBidBean.BiddingNeedsListEntity>();
-        for (int i = index; i < length && i < beBeingList.size(); i++) {
-            MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity = beBeingList.get(i);
-            list.add(biddingNeedsListEntity);
-        }
-        return list;
     }
 
     @Override
@@ -170,10 +99,8 @@ public class BidBidingFragment extends BidBaseFragment {
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-
-        mList.addAll(getData(mList.size()));
-        isHideMFooterView(mList.size());
-        commonAdapter.notifyDataSetChanged();
+        mBiddingNeedsListEntities.addAll(getData(mBiddingNeedsListEntities.size()));
+        mCommonAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 
@@ -229,22 +156,8 @@ public class BidBidingFragment extends BidBaseFragment {
         }
     }
 
-
-    /// 控件.
-    private RelativeLayout rl_empty;
-    private PullListView mListView;
-    private PullToRefreshLayout mPullToRefreshLayout;
-    private TextView tv_empty_message;
-    private View mFooterView;
-
     /// 变量.
-    private static final String BE_BEING = "0";
-    private String status;
     private boolean isFirstIn = true;
 
-    ///　集合，类.
-    private ArrayList<MyBidBean.BiddingNeedsListEntity> mList;
-    private List<MyBidBean.BiddingNeedsListEntity> beBeingList;
     private FragmentCallBack fragmentCallBack;
-    private CommonAdapter commonAdapter;
 }

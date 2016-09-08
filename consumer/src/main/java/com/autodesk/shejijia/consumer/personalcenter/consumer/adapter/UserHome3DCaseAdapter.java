@@ -64,6 +64,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
         viewHolder.tvThumbUp = (TextView) container.findViewById(R.id.tv_thumb_up);
         viewHolder.imgConsumeChat = (ImageView) container.findViewById(R.id.img_consume_home_chat);
         viewHolder.mLine = (TextView) container.findViewById(R.id.view_consume_home_line);
+        viewHolder.llContent = (LinearLayout) container.findViewById(R.id.ll_item_content);
         return viewHolder;
     }
 
@@ -130,7 +131,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
         }
 
         ((ViewHolder) holder).ivHeadIcon.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
-        ((ViewHolder) holder).ivCase.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
+        ((ViewHolder) holder).llContent.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         ((ViewHolder) holder).imgConsumeChat.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((ViewHolder) holder).ivCase.getLayoutParams();
         lp.width = screenWidth;
@@ -141,6 +142,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
 
     public class ViewHolder extends Holder {
         public ImageView ivCase;
+        public LinearLayout llContent;
         public PolygonImageView ivHeadIcon;
         public TextView tvRoom;
         public TextView tvStyle;
@@ -167,7 +169,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                         mOnItemImageHeadClickListener.OnItemImageHeadClick(position);
                     }
                     break;
-                case R.id.img_customer_home_case:
+                case R.id.ll_item_content:
                     if (mOnItemCaseClickListener != null) {
                         mOnItemCaseClickListener.OnItemCaseClick(position);
                     }
