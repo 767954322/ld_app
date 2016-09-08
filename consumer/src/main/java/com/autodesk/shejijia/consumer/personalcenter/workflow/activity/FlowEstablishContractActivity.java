@@ -29,7 +29,6 @@ import com.autodesk.shejijia.consumer.utils.AppDataFormatValidator.MPDesignForma
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
@@ -771,8 +770,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         }
     }
 
-
-    ///others
 //
 //    /**
 //     * @brief 获取省市区地址 .
@@ -976,28 +973,23 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private LinearLayout ll_contract;
     private LinearLayout ll_send;
     private LinearLayout ll_designer_send;
-
     private LinearLayout ll_agree_establish_contract;
     private LinearLayout ll_contract_content_designer;
     private LinearLayout ll_contract_content_consumer;
 
+    private MPDesignContractBean contract_data_entity;
     private DesignerInfoDetails list;
     private MPContractNoBean contractNo; // 设计合同编号对象
-    private AddressDialog mChangeAddressDialog;
     private AlertView mDesignContract;
     private WebView twvc_consumerContent;
 
-    private String contract_no; // 设计合同编号
     private boolean jusnFrist = false;
-    //private String total_cost;
-    //private String first_cost;
-    private String memberType = null;
     private int ContractState = -1; // 判断合同是否发送成功弹出框的点击事件
     private int ContractForFirst = 0; //　从合同跳转到设计首款
     private int FirstForContract = 1; // 首款调到设计合同
     private boolean isAgree = false;
 
-    private MPDesignContractBean contract_data_entity;
+    private String contract_no; // 设计合同编号
     private String designer_name = "";
     private String designer_mobile = "";
     private String designer_mail = "";
