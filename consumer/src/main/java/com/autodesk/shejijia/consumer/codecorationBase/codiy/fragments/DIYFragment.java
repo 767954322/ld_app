@@ -25,6 +25,7 @@ public class DIYFragment extends BaseFragment {
     @Override
     protected void initView() {
         mIvDIY = (ImageView) rootView.findViewById(R.id.iv_diy);
+//        mIvDIY.getBackground().setAlpha(100);
     }
 
     @Override
