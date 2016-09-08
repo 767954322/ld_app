@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,7 +25,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -273,15 +271,15 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT, mCurrentDistrictCode);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housingType);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, mHall);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housType);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, hall);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, mRoom);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, room);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, mToilet);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, toilet);
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
                     if (null == mThread_id || "".equals(mThread_id)) {
                         jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
@@ -586,6 +584,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onOptionsSelect(int options1, int option2, int options3) {
                 housingType = houseTypeItems.get(options1);
                 tvc_measure_form_type.setText(housingType);
+
+                Map<String, String> space = AppJsonFileReader.getSpace(MeasureFormActivity.this); // 转换成英文
+                housType = ConvertUtils.getKeyByValue(space, housingType);
             }
         });
     }
@@ -595,7 +596,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      */
     private void setRoomType() {
         List<String> rooms = filledData(getResources().getStringArray(R.array.mlivingroom));
-        List<String> halls = filledData(getResources().getStringArray(R.array.hall));
+        final List<String> halls = filledData(getResources().getStringArray(R.array.hall));
         List<String> toilets = filledData(getResources().getStringArray(R.array.toilet));
         pvRoomTypeOptions = new OptionsPickerView(this);
         //room
@@ -637,6 +638,13 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 mRoom = roomsList.get(options1);
                 mHall = hallsList.get(options1).get(option2);
                 mToilet = toiletsList.get(options1).get(option2).get(options3);
+
+                Map<String, String> roomHall = AppJsonFileReader.getRoomHall(MeasureFormActivity.this); // 转换成英文
+                Map<String, String> livingRoom = AppJsonFileReader.getLivingRoom(MeasureFormActivity.this); // 转换成英文
+                Map<String, String> toiletMap = AppJsonFileReader.getToilet(MeasureFormActivity.this); // 转换成英文
+                room = ConvertUtils.getKeyByValue(roomHall, mRoom);
+                hall = ConvertUtils.getKeyByValue(livingRoom, mHall);
+                toilet = ConvertUtils.getKeyByValue(toiletMap, mToilet);
 
                 tvc_house_type.setText(livingType);
             }
@@ -882,7 +890,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private String nick_name;
     private String user_id;
     private String currentData;
+    private String housType;
     private String mRoom, mHall, mToilet;
+    private String room, hall, toilet;
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String memberId;
