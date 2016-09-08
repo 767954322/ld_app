@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.autodesk.shejijia.consumer.R;
@@ -95,4 +96,17 @@ public class DesignBaseFragment extends BaseFragment {
         mTabNames.add("套餐项目");
         fragments.add(new OrderBeiShuFragment());
     }
+
+
+    @Override
+    public void onFragmentShown() {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+
+        for (int i = 0; i < fragments.size(); ++i)
+        {
+            BaseFragment f1 = (BaseFragment)fragments.get(i);
+            f1.onFragmentShown();
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.home.homepage.fragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
@@ -80,7 +81,17 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
         fromFragment = mCommonFragment;
     }
 
-    private Fragment mCommonFragment;
+
+
+    @Override
+    public void onFragmentShown()
+    {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+        mCommonFragment.onFragmentShown();
+    }
+
+
+    private DesignBaseFragment mCommonFragment;
     private FragmentManager fragmentManager;
     private Fragment fromFragment;
     private Fragment mDesignerConstructionFragment;
