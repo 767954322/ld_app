@@ -71,7 +71,7 @@ public class SeekDesignerActivity extends NavigationBarActivity implements SeekD
         mPullToRefreshLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
 
         setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY, R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.SECONDARY, R.drawable.common_screen_icon);
 
         mRlEmpty = (RelativeLayout) findViewById(R.id.rl_empty);
         mIvDefaultEmpty = (ImageView) findViewById(R.id.iv_default_empty);
