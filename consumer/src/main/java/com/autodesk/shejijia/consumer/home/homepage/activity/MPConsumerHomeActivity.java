@@ -41,6 +41,7 @@ import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
@@ -281,7 +282,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             //判断是消费者，还是设计师，，从而区分消费者和设计师
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
-                if (mDesignerPersonalCenterFragment == null) {
+                if (mDesignerPersonalCenterFragment == null || SharedPreferencesUtils.readBoolean("islogin")) {
                     mDesignerPersonalCenterFragment = new MyDecorationProjectDesignerFragment();
 
                     loadMainFragment(mDesignerPersonalCenterFragment, DESIGNER_PERSONAL_FRAGMENT_TAG);
@@ -296,7 +297,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
     @Override
-    protected void onUserLogout(){
+    protected void onUserLogout() {
         mRadioGroup.check(getDesignerMainRadioBtnId());
     }
 
@@ -641,6 +642,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
                 }
                 is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                LogManager.getLogger().d("url", "high_level_audit:" + high_level_audit + "is_loho:" + is_loho);
             }
 
             @Override

@@ -27,6 +27,8 @@ public class DesignBaseFragment extends BaseFragment {
     private FrameLayout design_container;
     private static DesignBaseFragment fragment;
     private RelativeLayout rlt_tab_view;
+    private int status;
+    private int loho;
 
     public static DesignBaseFragment newInstance(int status, int loho) {
 //        if (fragment ==null)
@@ -54,15 +56,19 @@ public class DesignBaseFragment extends BaseFragment {
     @Override
     protected void initData() {
         Bundle arguments = getArguments();
-        int status = arguments.getInt("status");
-        int loho = arguments.getInt("loho");
+        status = arguments.getInt("status");
+        loho = arguments.getInt("loho");
         updateFragmentContent(status, loho);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void updateFragmentContent(int status, int loho) {
         mTabNames.clear();
         fragments.clear();
-
         if (status == 2 && loho == 1) {
             this.addDesignGood2Content();
             this.addDesignCompetition2Content();
@@ -118,4 +124,10 @@ public class DesignBaseFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mTabNames.clear();
+        fragments.clear();
+    }
 }
