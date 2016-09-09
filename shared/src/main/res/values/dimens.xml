@@ -228,6 +228,7 @@
     <dimen name="chat_room_cell_datelabel_margintop">10dp</dimen>
     <dimen name="chat_room_cell_datelabel_fontsize">14sp</dimen>
     <dimen name="chat_room_cell_avatar_side">60dp</dimen>
+    <dimen name="chat_room_cell_message_sidemargin">6dp</dimen>
     <dimen name="chat_room_cell_message_fontsize">15sp</dimen>
     <dimen name="chat_room_cell_messagetime_fontsize">12sp</dimen>
     <dimen name="chat_room_cell_avatar_borderwidth">1dp</dimen>
@@ -257,8 +258,8 @@
 
     <dimen name="chat_room_audiocell_content_margin">10dp</dimen>
     <dimen name="chat_room_audiocell_content_paddingtop">13dp</dimen>
-    <dimen name="chat_room_audiocell_content_inner_width">125dp</dimen>
-    <dimen name="chat_room_audiocell_content_inner_height">55dp</dimen>
+    <dimen name="chat_room_audiocell_content_inner_width">200dp</dimen>
+    <dimen name="chat_room_audiocell_content_inner_height">50dp</dimen>
     <dimen name="chat_room_audiocell_content_inner_margintop">30dp</dimen>
     <dimen name="chat_room_audiocell_content_inner_padding">4dp</dimen>
     <dimen name="chat_room_audiocell_audioimage_width">25dp</dimen>

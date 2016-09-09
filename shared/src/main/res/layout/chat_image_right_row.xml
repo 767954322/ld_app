@@ -36,6 +36,7 @@
         <RelativeLayout
             android:id="@+id/chat_image_right_row_rl2"
             android:layout_marginTop="@dimen/chat_room_imagecell_image_margintop"
+            android:layout_marginRight="@dimen/chat_room_cell_message_sidemargin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
