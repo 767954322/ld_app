@@ -295,7 +295,7 @@ public class DesignerListFragment extends BaseFragment
     public void onResume() {
         super.onResume();
         CustomProgress.show(getActivity(), "", false, null);
-        mPullToRefreshLayout.autoRefresh();
+//        mPullToRefreshLayout.autoRefresh();
         onRefresh(mPullToRefreshLayout);
     }
 

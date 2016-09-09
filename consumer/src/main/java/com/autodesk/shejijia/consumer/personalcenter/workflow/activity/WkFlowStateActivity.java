@@ -531,7 +531,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         ibFlowChart.setEnabled(true);
         tvCreateDate.setText(UIUtils.getString(R.string.create_date) + requirement.getPublish_time());
         mPtrLayout.onRefreshComplete();
-        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && WorkFlowTemplateStep() == 4) {
             int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
             if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
                 btnStopDemand.setVisibility(View.VISIBLE);

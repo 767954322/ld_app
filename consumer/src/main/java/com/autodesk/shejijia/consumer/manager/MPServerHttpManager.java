@@ -692,7 +692,7 @@ public class MPServerHttpManager {
     /**
      * 个人中心 我要应标
      */
-    public void getMyBidData(final String memType, final String acsToken, int offset, int limit, String designer_id, OkJsonRequest.OKResponseCallback callback) {
+    public void getMyBidData(final String memType, final String acsToken, int offset, int limit, int designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_MY_BID + designer_id +
                 "/bidders?" +
                 "offset=" + offset +

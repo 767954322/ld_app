@@ -537,8 +537,13 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                         strCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
-                        mCurrentDistrict = area;
-                        mCurrentDistrictCode = areaCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
+                        mCurrentDistrict = TextUtils.isEmpty(area) || area.equals("none") ? "none" : area;
+                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
+                                || "none".equals(mCurrentDistrict)
+                                || TextUtils.isEmpty(areaCode)
+                                || "0".equals(areaCode) ? "0" : areaCode;
+
                         JSONObject jsonObject = new JSONObject();
                         int intSex;
                         try {
@@ -566,17 +571,24 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                         }
                         CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.area_changes), false, null);
 
-                        String xToken = null;
-                        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-
-                        if (memberEntity != null)
-                            xToken = memberEntity.getHs_accesstoken();
+//                        String xToken = null;
+//                        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+//
+//                        if (memberEntity != null)
+//                            xToken = memberEntity.getHs_accesstoken();
 
                         putAmendDesignerInfoData(strDesignerId, jsonObject);
-                        String address = strCurrentProvince + " " + mCurrentCity + " " + mCurrentDistrict;
+
                         if (TextUtils.isEmpty(mCurrentCity)) {
                             address = UIUtils.getString(R.string.no_data);
                         }
+
+                        if (TextUtils.isEmpty(mCurrentDistrict) || mCurrentDistrict.equals("none")) {
+                            address = strCurrentProvince + " " + mCurrentCity + " ";
+                        } else {
+                            address = strCurrentProvince + " " + mCurrentCity + " " + mCurrentDistrict;
+                        }
+
                         tvLocation.setText(address);
                         mChangeAddressDialog.dismiss();
                     }
@@ -905,7 +917,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
 
     //获取量房费用设计区间，
-    public void getDesignerDesignCostRange(){
+    public void getDesignerDesignCostRange() {
 
         MPServerHttpManager.getInstance().getDesignerDesignCost(new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -917,11 +929,11 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             public void onResponse(JSONObject jsonObject) {
 
                 String designerDesignCostData = GsonUtil.jsonToString(jsonObject);
-                DesignerDesignCostBean mDecorationListBean =GsonUtil.jsonToBean(designerDesignCostData, DesignerDesignCostBean.class);
+                DesignerDesignCostBean mDecorationListBean = GsonUtil.jsonToBean(designerDesignCostData, DesignerDesignCostBean.class);
                 relate_information_list = mDecorationListBean.getRelate_information_list();
                 //projectCosts
                 projectCosts = new String[relate_information_list.size()];
-                for (int i = 0; i <relate_information_list.size(); i++){
+                for (int i = 0; i < relate_information_list.size(); i++) {
                     String costStringName = relate_information_list.get(i).getName();
 //                    String costStringUnit = relate_information_list.get(i).getDescription();
 //                    String costString = costStringName + costStringUnit;
@@ -1037,6 +1049,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
     private List<DesignerDesignCostBean.RelateInformationListBean> relate_information_list;
 
+    private String address;
     private PictureProcessingUtil mPictureProcessingUtil;
     private ImageProcessingUtil mImageProcessingUtil;
 }
