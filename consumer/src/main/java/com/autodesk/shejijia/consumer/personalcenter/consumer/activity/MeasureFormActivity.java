@@ -253,42 +253,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 name = tvc_name.getText().toString().trim();
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
-                houseArea = tvc_area.getText().toString().trim();
-                JSONObject jsonObject = new JSONObject();
-                try {
-
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_AMOUNT, mFree);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CHANNEL_TYPE, "IOS");
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY, mCurrentCityCode);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY__NAME, mCurrentCity);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_COMMUNITY_NAME, communityName);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_MOBILE, mobileNumber);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_NAME, name);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_BUDGET, decorateBudget);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_STYLE, style);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, designBudget);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT, mCurrentDistrictCode);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housType);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, hall);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, room);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, toilet);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
-                    if (null == mThread_id || "".equals(mThread_id)) {
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
-                    } else {
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
                 boolean bName = name.matches("^[^ ]+[\\s\\S]*[^ ]+$"); /// 中间可以有空格 .
                 boolean bMobile = mobileNumber.matches(RegexUtil.PHONE_REGEX);
@@ -403,6 +367,44 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                try {
 //                    if (formatDate(date, currentData)) {
                 CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
+
+//                houseArea = tvc_area.getText().toString().trim();
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_AMOUNT, mFree);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CHANNEL_TYPE, "IOS");
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY, mCurrentCityCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY__NAME, mCurrentCity);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_COMMUNITY_NAME, communityName);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_MOBILE, mobileNumber);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_NAME, name);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_BUDGET, decorateBudget);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_STYLE, style);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, designBudget);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT, mCurrentDistrictCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housType);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, hall);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, room);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, toilet);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
+                    if (null == mThread_id || "".equals(mThread_id)) {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                    } else {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 postSendMeasureForm(jsonObject);
 //                    } else {
 //                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
