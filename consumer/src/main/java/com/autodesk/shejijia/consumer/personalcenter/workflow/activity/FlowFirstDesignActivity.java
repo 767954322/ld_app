@@ -61,7 +61,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         tv_flow_first_design_should_first = (TextView) findViewById(R.id.tv_flow_first_design_should_first);
         ll_flow_first_design_send = (LinearLayout) findViewById(R.id.ll_flow_first_design_send);
         btn_flow_first_design_send = (Button) findViewById(R.id.btn_flow_first_design_send);
-//        tv_flow_first_design_deduct_measure_cost = (TextView) findViewById(R.id.tv_flow_first_design_deduct_measure_cost);
+        tv_flow_first_design_deduct_measure_cost = (TextView) findViewById(R.id.tv_flow_first_design_deduct_measure_cost);
     }
 
     @Override
@@ -197,13 +197,12 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 measurement_price = "0.00";
             }
             measurement_price = SplitStringUtils.splitStringDot(measurement_price);
-//            tv_flow_first_design_deduct_measure_cost.setText(measurement_price); // 已扣除量房费
+            tv_flow_first_design_deduct_measure_cost.setText(measurement_price); // 已扣除量房费
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) {
                 return;
             }
-            String amout = UIUtils.getString(R.string.flow_deduct_measure_cost) + measurement_price + UIUtils.getString(R.string.deduct_measure_cost);
-            tv_flow_first_design_aggregate_amount.setText(designContractEntity.getContract_charge() + "(" + amout + ")");
+            tv_flow_first_design_aggregate_amount.setText(designContractEntity.getContract_charge());
             Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             Double measureCost = Double.parseDouble(mBidders.get(0).getMeasurement_fee());
             DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
@@ -284,7 +283,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     private TextView tv_flow_first_design_contract_no;
     private TextView tv_flow_first_design_should_first;
     private TextView tv_flow_first_design_aggregate_amount;
-    //    private TextView tv_flow_first_design_deduct_measure_cost;
+    private TextView tv_flow_first_design_deduct_measure_cost;
     private Button btn_flow_first_design_send;
     private int FirstForContract = 1; // 首款调到设计合同
 
