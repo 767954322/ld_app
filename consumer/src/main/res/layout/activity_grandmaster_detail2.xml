@@ -39,7 +39,6 @@
                     android:layout_marginLeft="@dimen/font_15"
                     android:layout_marginTop="@dimen/font_30"
                     android:fontFamily="Regular"
-                    android:text="菲尔普·斯塔克"
                     android:textColor="#0084FF"
                     android:textSize="@dimen/font_36" />
 
@@ -51,7 +50,6 @@
                     android:layout_marginLeft="@dimen/font_15"
                     android:layout_marginTop="@dimen/font_5"
                     android:fontFamily="serif"
-                    android:text="Whillin stark"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/font_26"
                     android:textStyle="bold" />
@@ -64,7 +62,6 @@
                     android:layout_marginLeft="@dimen/font_15"
                     android:layout_marginTop="@dimen/font_10"
                     android:fontFamily="Regular"
-                    android:text="法国艺术总监"
                     android:textColor="#0084FF"
                     android:textSize="@dimen/font_26" />
 
@@ -76,7 +73,6 @@
                     android:layout_marginLeft="@dimen/font_15"
                     android:layout_marginTop="@dimen/font_5"
                     android:fontFamily="serif"
-                    android:text="French art director"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="@dimen/font_17"
                     android:textStyle="bold" />
@@ -101,7 +97,6 @@
                         android:layout_width="@dimen/font_230"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/font_10"
-                        android:text="大师介绍： 符合就算打开粉红色的看法和肯定是发送的看法和打扫房间快速的回复健康第三方的可沙发看电视"
                         android:textColor="@color/white"
                         android:maxLines="5"
                         android:textSize="@dimen/font_15" />

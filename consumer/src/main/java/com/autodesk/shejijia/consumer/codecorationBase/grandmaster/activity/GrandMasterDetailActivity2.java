@@ -6,26 +6,32 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.DatailCase;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.MasterDetail;
+import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.MyListView;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -53,6 +59,7 @@ public class GrandMasterDetailActivity2 extends BaseActivity implements View.OnC
     private List<DatailCase> cases_list;
     private ArrayList<View> viewList;
     private MasterDetail masterDetail;
+    private Animation animationIn, animationVoice;
 
 
     private ImageView mHeadImageView;
@@ -96,9 +103,7 @@ public class GrandMasterDetailActivity2 extends BaseActivity implements View.OnC
     protected void initData(Bundle savedInstanceState) {
 
 
-        Intent intent = getIntent();
-        hs_uid = intent.getStringExtra("hs_uid");
-        nav_title_textView.setText("大师详情");
+        hs_uid = getIntent().getStringExtra("hs_uid");
         isLoginUserJust = isLoginUser();
 
         getGrandMasterInfo();
@@ -107,7 +112,18 @@ public class GrandMasterDetailActivity2 extends BaseActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.nav_left_imageButton://返回键
 
+                finish();
+
+                break;
+            case R.id.bt_grand_reservation://提交大师预约
+
+                onClickFromReservation();
+
+                break;
+        }
     }
 
     //获取大师详情信息
@@ -123,26 +139,28 @@ public class GrandMasterDetailActivity2 extends BaseActivity implements View.OnC
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                String detailInfo = GsonUtil.jsonToString(jsonObject);
+                masterDetail = GsonUtil.jsonToBean(GsonUtil.jsonToString(jsonObject), MasterDetail.class);
 
-                initDetailData(detailInfo);
+                cases_list = masterDetail.getCases_list();
+
+                initDetailData();
+
             }
         });
 
     }
 
     //初始化详情信息
-    private void initDetailData(String detailInfo) {
-
-        masterDetail = GsonUtil.jsonToBean(detailInfo, MasterDetail.class);
-        cases_list = masterDetail.getCases_list();
-
+    private void initDetailData() {
 
         //初始化大师详情
         initPageTopInfo();
 
         //初始化大师案例展示
         initPageBottomInfo();
+
+        //添加图标动画
+        initAnimation();
 
     }
 
@@ -192,6 +210,35 @@ public class GrandMasterDetailActivity2 extends BaseActivity implements View.OnC
 
     }
 
+    //添加图标动画
+    private void initAnimation() {
+        animationVoice = AnimationUtils.loadAnimation(this, R.anim.voice_button_anim);
+        animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
+        //设置动画执行的回调函数
+        animationIn.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //开始呼吸动画
+                ib_grand_detail_ico.startAnimation(animationVoice);
+                ib_grand_detail_ico.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ib_grand_detail_ico.startAnimation(animationIn);
+    }
+
+
     //判断该用户是否登陆了
     public boolean isLoginUser() {
 
@@ -204,6 +251,68 @@ public class GrandMasterDetailActivity2 extends BaseActivity implements View.OnC
 
             return true;//已登录
         }
+    }
+
+
+     //上传立即预约信息
+    public void upOrderDataForService(JSONObject jsonObject) {
+
+        MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, GrandMasterDetailActivity2.this);
+                CustomProgress.cancelDialog();
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                CustomProgress.cancelDialog();
+                Toast.makeText(GrandMasterDetailActivity2.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void onClickFromReservation(){
+
+
+        OrderDialogMaster orderDialog = new OrderDialogMaster(GrandMasterDetailActivity2.this, R.style.add_dialog, R.drawable.tital_yuyue);
+        orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
+            @Override
+            public void commitListener(String name, String phoneNumber) {
+
+                JSONObject jsonObject = new JSONObject();
+                String nicke_name = masterDetail.getNick_name();
+                String member_id = masterDetail.getDesigner().getAcs_member_id();
+                String hs_uid = masterDetail.getHs_uid();
+                String login_member_id = "", login_hs_uid = "";
+
+                if (isLoginUserJust) {
+                    login_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
+                    login_hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
+                } else {
+                    login_member_id = "";
+                    login_hs_uid = "";
+                }
+                try {
+                    jsonObject.put("consumer_name", name);//姓名
+                    jsonObject.put("consumer_mobile", phoneNumber);//电话
+                    jsonObject.put("type", 1);//大师类型
+                    jsonObject.put("customer_id", login_member_id);//消费者ID
+                    jsonObject.put("consumer_uid", login_hs_uid);
+                    jsonObject.put("name", nicke_name);
+                    jsonObject.put("member_id", member_id);
+                    jsonObject.put("hs_uid", hs_uid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                CustomProgress.show(GrandMasterDetailActivity2.this, "提交中...", false, null);
+                upOrderDataForService(jsonObject);
+            }
+        });
+        orderDialog.show();
+
     }
 
 }

@@ -42,6 +42,7 @@
             android:ellipsize="end"
             android:maxEms="6"
             android:singleLine="true"
+            android:text="大师详情"
             android:textColor="#ffffff"
             android:textSize="@dimen/font_19"
             android:textStyle="bold" />
