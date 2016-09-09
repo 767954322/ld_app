@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -22,11 +24,13 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommon
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -41,29 +45,7 @@ import java.util.List;
  */
 public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    private ImageButton nav_left_imageButton;
-    private ImageButton bt_grand_reservation;
-    private ImageButton ib_grand_detail_ico;
-    private ImageView iv_detail_desiner;
-    private TextView tv_detail_cn_name;
-    private TextView tv_detail_en_name;
-    private TextView tv_detail_cn_position;
-    private TextView tv_detail_en_position;
-    private TextView tv_detail_content;
-    private TextView nav_title_textView;
-    private RelativeLayout rl_navr_header;
-    private boolean isLoginUserJust = false;
 
-    private String hs_uid;
-    private List<DatailCase> cases_list;
-    private ArrayList<View> viewList;
-    private MasterDetail masterDetail;
-    private Animation animationIn, animationVoice;
-
-
-    private ImageView mHeadImageView;
-
-    private RecyclerView mRecyclerView;
 
     @Override
     protected int getLayoutResId() {
@@ -73,7 +55,6 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     @Override
     protected void initView() {
 
-        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
         bt_grand_reservation = (ImageButton) findViewById(R.id.bt_grand_reservation);
         ib_grand_detail_ico = (ImageButton) findViewById(R.id.ib_grand_detail_ico);
@@ -85,6 +66,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         tv_detail_cn_position = (TextView) findViewById(R.id.tv_detail_cn_position);
         tv_detail_en_position = (TextView) findViewById(R.id.tv_detail_en_position);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        coordinator_layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
 
     }
 
@@ -307,10 +289,29 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             public void onResponse(JSONObject jsonObject) {
 
                 CustomProgress.cancelDialog();
-                Toast.makeText(GrandMasterDetailActivity.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+                ToastUtil.showCustomToast(GrandMasterDetailActivity.this, UIUtils.getString(R.string.work_room_commit_successful));
             }
         });
 
     }
+
+    private ImageButton nav_left_imageButton;
+    private ImageButton bt_grand_reservation;
+    private ImageButton ib_grand_detail_ico;
+    private ImageView iv_detail_desiner;
+    private TextView tv_detail_cn_name;
+    private TextView tv_detail_en_name;
+    private TextView tv_detail_cn_position;
+    private TextView tv_detail_en_position;
+    private TextView tv_detail_content;
+    private RelativeLayout rl_navr_header;
+
+    private String hs_uid;
+    private boolean isLoginUserJust = false;
+    private List<DatailCase> cases_list;
+    private MasterDetail masterDetail;
+    private RecyclerView mRecyclerView;
+    private CoordinatorLayout coordinator_layout;
+    private Animation animationIn, animationVoice;
 
 }
