@@ -171,4 +171,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
 
     protected static final String BE_BEING = "0";
     protected static final String IS_SUCCESS = "1";
+
+    /// 变量.
+    protected boolean mIsFirstIn = true;
 }

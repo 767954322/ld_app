@@ -38,10 +38,6 @@ import java.util.ArrayList;
  */
 public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener, BidBidingFragment.FragmentCallBack {
 
-
-
-    public int is_loho;
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_my_bid_view;
@@ -58,6 +54,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         mOutFlowLine = (TextView) findViewById(R.id.tv_my_bid_outflow_bid_line);
 
         resetTextTitleColor();
+        setDefaultFragment();
     }
 
     @Override
@@ -128,38 +125,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        //获取设计师信息
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity) {
-            return;
-        }
-        String member_id = mMemberEntity.getAcs_member_id();
-        String hs_uid = mMemberEntity.getHs_uid();
-        getDesignerInfoData(member_id, hs_uid);
-        setDefaultFragment();
-    }
-
-    /**
-     * 设计师个人信息
-     *
-     * @param designer_id
-     * @param hs_uid
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                DesignerInfoDetails designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                is_loho = designerInfoDetails.getDesigner().getIs_loho();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError, MyBidActivity.this);
-            }
-        });
     }
 
     @Override
@@ -263,10 +228,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         } else {
         }
     }
-
-
-
-
 
     private TextView tv_bid_be_being_bid;
     private TextView tv_my_bid_bingo_bid;

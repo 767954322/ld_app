@@ -41,6 +41,15 @@ public class BidFailureFragment extends BidBaseFragment {
         onFragmentShown(biddingNeedsListEntitys);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mIsFirstIn) {
+            mPullToRefreshLayout.autoRefresh();
+        }
+        mIsFirstIn = false;
+    }
+
     ///适配器.
     protected CommonAdapter getCommonAdapter() {
         return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities, R.layout.item_mybid_fail) {

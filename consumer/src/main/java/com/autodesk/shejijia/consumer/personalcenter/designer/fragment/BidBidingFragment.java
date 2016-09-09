@@ -46,21 +46,13 @@ public class BidBidingFragment extends BidBaseFragment {
     @Override
     protected void initView() {
         super.initView();
-        CustomProgress.show(getActivity(), "", false, null);
     }
 
     @Override
-    protected void initData() {
-        super.initData();
-        onWindowFocusChanged();
-    }
-
-    private void onWindowFocusChanged() {
-        // 第一次进入自动刷新
-        if (isFirstIn) {
-            onRefresh(mPullToRefreshLayout);
-            isFirstIn = false;
-        }
+    public void onResume() {
+        super.onResume();
+        mPullToRefreshLayout.autoRefresh();
+        mIsFirstIn = false;
     }
 
     protected CommonAdapter getCommonAdapter() {
@@ -125,7 +117,6 @@ public class BidBidingFragment extends BidBaseFragment {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
                 MyBidBean myBidBean = GsonUtil.jsonToBean(str, MyBidBean.class);
                 onFragmentShown(myBidBean.getBidding_needs_list());
@@ -135,7 +126,6 @@ public class BidBidingFragment extends BidBaseFragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.cancelDialog();
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
 //                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
 //                        AlertView.Style.Alert, null).show();

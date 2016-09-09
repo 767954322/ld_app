@@ -42,6 +42,15 @@ public class BidSuccessFragment extends BidBaseFragment {
         onFragmentShown(biddingNeedsListEntitys);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mIsFirstIn) {
+            mPullToRefreshLayout.autoRefresh();
+        }
+        mIsFirstIn = false;
+    }
+
     protected CommonAdapter getCommonAdapter() {
         return new CommonAdapter<MyBidBean.BiddingNeedsListEntity>(UIUtils.getContext(), mBiddingNeedsListEntities, R.layout.item_mybid_suscuss) {
             @Override
