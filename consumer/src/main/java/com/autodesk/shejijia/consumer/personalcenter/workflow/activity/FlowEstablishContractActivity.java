@@ -141,16 +141,16 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     private void UpdateUIlayoutContract() {
-        UpdateUIlayoutContractContent();
+        UpdateUILayoutContractContent();
 
         if (isRoleDesigner()) { /// 设计师　.
             UpdateUIcontractContentDesigner();
         } else if (isRoleCustomer()) { /// 消费者 .
-            UpdateUIcontractContentConsumer();
+            UpdateUIContractContentConsumer();
         }
     }
 
-    private void UpdateUIlayoutContractContent() {
+    private void UpdateUILayoutContractContent() {
 
         /* 填充设计师个人信息 */
         tvc_designer_phone.setText(designer_mobile);
@@ -287,7 +287,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     }
 
-    private void UpdateUIcontractContentConsumer() {
+    private void UpdateUIContractContentConsumer() {
 
         if (getContractDataEntityFromFirstBidder() == null) {
             mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
@@ -302,7 +302,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         UpdateUIsetContentViewConsumer();
 
-        if (WorkFlowSubNodeStep() == 31) {
+        if (WorkFlowSubNodeStep() == 31 || WorkFlowSubNodeStep() == 32) {
             ll_send.setVisibility(View.VISIBLE);
             ll_agree_establish_contract.setVisibility(View.VISIBLE);
 
