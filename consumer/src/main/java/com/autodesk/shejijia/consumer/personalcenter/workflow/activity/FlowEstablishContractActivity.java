@@ -173,16 +173,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         ll_send.setVisibility(View.GONE);
         tvc_last_cost.setEnabled(false);
 
-
         if (getContractDataEntityFromFirstBidder() == null) { /// 如果是新的合同.
             AsyncGetContractNumber(new commonJsonResponseCallback() {
                 @Override
                 public void onJsonResponse(String jsonResponse) {
                     contractNo = new Gson().fromJson(jsonResponse.toString(), MPContractNoBean.class);
                     contract_no = contractNo.getContractNO(); /// 获取合同编号 .
-
-
-
                 }
 
                 @Override
@@ -203,21 +199,18 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     });
 
 
-
                 }
             });
 
             tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
             tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
 
-            if (WorkFlowSubNodeStep() == 31) { /// 设计师发完合同后可以继续发送按钮显示.
-
+            if (WorkFlowSubNodeStep() == 31 || WorkFlowSubNodeStep() == 32) { /// 设计师发完合同后可以继续发送按钮显示.
                 UIsetDesignerSendButtonActive(true, getResources().getString(R.string.send_design_contract));
             } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
                 UIsetDesignerSendButtonActive(false, null);
             } else if (WorkFlowSubNodeStep() == 33) {
                 UIsetDesignerSendButtonActive(true, getResources().getString(R.string.uploaded_deliverable));
-
             } else {
                 UIsetDesignerSendButtonActive(true, getResources().getString(R.string.send_design_contract));
             }
@@ -229,9 +222,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             if (WorkFlowSubNodeStep() == 31 || WorkFlowSubNodeStep() == 32) { /// 设计师发完合同后可以继续发送按钮显示 .
                 UIsetDesignerSendButtonActive(true, null);
-
-                btn_send.setText(R.string.send_design_contract);
-            } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) {   /// 当消费者发完设计首款按钮隐藏 .
+                btn_send.setText(R.string.sure_modify_send); // 再次修改合同按钮应为“修改发送”
+            } else if (WorkFlowSubNodeStep() > 32 && WorkFlowSubNodeStep() != 33) {   /// 当消费者发完设计首款按钮隐藏 .
                 UIsetDesignerSendButtonActive(false, null);
             } else if (WorkFlowSubNodeStep() == 33) {
                 UIsetDesignerSendButtonActive(true, getResources().getString(R.string.uploaded_deliverable));
@@ -683,7 +675,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         double totalCost = Double.parseDouble(total);
         double discountCost = Double.parseDouble(decimal.toString());
-         double firstCost = Double.parseDouble(downpay);
+        double firstCost = Double.parseDouble(downpay);
 
         boolean bValid = true;
 
