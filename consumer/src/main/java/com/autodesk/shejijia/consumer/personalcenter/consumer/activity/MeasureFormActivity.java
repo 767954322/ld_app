@@ -289,7 +289,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     houseArea = "0";
                 }
                 houseArea = String.format("%.2f", Double.valueOf(houseArea));
-                if (Double.valueOf(houseArea) < 1) {
+                if (Double.valueOf(houseArea) < 1 || Double.valueOf(houseArea) > 9999) {
                     getErrorHintAlertView(UIUtils.getString(R.string.alert_msg_area));
                     return;
                 }
