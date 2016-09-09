@@ -103,6 +103,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private static final int CROP_SMALL_PICTURE_1 = 6;//截图
 
     private int is_validated_by_mobile;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_essential_info;
@@ -191,7 +192,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     @Override
     protected void onResume() {
         super.onResume();
-        if(mConsumerEssentialInfoEntity!= null){
+        if (mConsumerEssentialInfoEntity != null) {
             getConsumerInfoData(member_id);
         }
     }
@@ -395,10 +396,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                         province = province_1;
                         city = city_1;
 
-                        district_name = TextUtils.isEmpty(district_name_1) ? "" : district_name_1;
-                        district = TextUtils.isEmpty(district_1)
-                                || TextUtils.isEmpty(district_name)
-                                || "none".equals(district_name) ? "" : district_1;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
+                        district_name = TextUtils.isEmpty(district_name_1) || district_name_1.equals("none") ? "none" : district_name_1;
+                        district = TextUtils.isEmpty(district_name_1)
+                                || "none".equals(district_name)
+                                || TextUtils.isEmpty(district_1)
+                                || "0".equals(district_1) ? "0" : district_1;
 
                         JSONObject jsonObject = new JSONObject();
                         int intSex;
@@ -427,7 +430,11 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                         CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.information_on_the_cross), false, null);
 
                         putAmendConsumerInfoData(member_id, jsonObject);
-                        mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
+                        if (TextUtils.isEmpty(district_name) || district_name.equals("none")) {
+                            mTvConsumeAddress.setText(province_name + " " + city_name + " ");
+                        } else {
+                            mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
+                        }
                         mChangeAddressDialog.dismiss();
                     }
                 });
@@ -787,7 +794,6 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             }
         });
     }
-
 
 
     /**
