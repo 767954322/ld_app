@@ -277,7 +277,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         mTvProjectNeedsId.setText(needs_id);
         mTvHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type_convert));
         mTvHouseStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style_convert));
-        mTvHouseModel.setText(UIUtils.getNoSelectIfEmpty(room_cn));
+        mTvHouseModel.setText(UIUtils.getNoSelectIfEmpty(living_room_cn)+UIUtils.getNoSelectIfEmpty(room_cn)+UIUtils.getNoSelectIfEmpty(toilet_cn));
         mTvName.setText(mBidHallEntity.getContacts_name());
         mTvDecorationBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget));
         String design_budget = mBidHallEntity.getDesign_budget();
