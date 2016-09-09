@@ -366,7 +366,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         }
 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
-            MyToast.show(FlowUploadDeliveryActivity.this, "立即评价");
             mLinerDelayedShow.setVisibility(View.GONE);
             Intent intent = new Intent(this, AppraiseDesignerActivity.class);
             intent.putExtra(BIDDER_ENTITY, mBiddersEntity);
@@ -374,7 +373,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
             startActivityForResult(intent, BIDDER_ENTITY_TAG);
         } else if (object == mDeliverySureAlertView) {
-            MyToast.show(FlowUploadDeliveryActivity.this, "稍后评价");
             mLinerDelayedShow.setVisibility(View.GONE);
         }
     }
