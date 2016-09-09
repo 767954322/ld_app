@@ -153,8 +153,8 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
             district = mDistrictModelArrayList.get(0).CODE;
             mDistrictWheelView.setCurrentItem(0);
         } else {
-            district_name = "none";
-            district = "0";
+            district_name = DEFAULT_DISTRICT_NAME;
+            district = DEFAULT_DISTRICT_CDOE;
         }
     }
 
@@ -195,6 +195,9 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         }
     }
 
+    private static final String DEFAULT_DISTRICT_CDOE = "0";/*区的默认code值*/
+    private static final String DEFAULT_DISTRICT_NAME = "none";/*区的名字默认值*/
+
     private static final int TEXT_SIZE = 7;//选择器的字体大小
     private WheelView mProvinceWheelView;
     private WheelView mCityWheelView;
@@ -205,6 +208,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
     private String province, province_name;
     private String city, city_name;
     private String district, district_name;
+
 
     private List<ProvinceModel> mProvinceModelArrayList = new ArrayList<>();
     private List<CityModel> mCityModelArrayList = new ArrayList<>();
