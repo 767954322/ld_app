@@ -30,7 +30,6 @@ import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
@@ -684,7 +683,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         double totalCost = Double.parseDouble(total);
         double discountCost = Double.parseDouble(decimal.toString());
-        double firstCost = Double.parseDouble(downpay);
+         double firstCost = Double.parseDouble(downpay);
 
         boolean bValid = true;
 
@@ -715,12 +714,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
-            if (firstCost < Double.valueOf(meansurePrice)) {
+            if (firstCost <= Double.valueOf(meansurePrice)) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
                 bValid = false;
                 break;
             }
+            System.out.println(11111);
             break;
         }
 
