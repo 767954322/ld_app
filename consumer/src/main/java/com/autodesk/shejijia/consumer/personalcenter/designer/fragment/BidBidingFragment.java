@@ -93,7 +93,8 @@ public class BidBidingFragment extends BidBaseFragment {
         String memType = memberEntity.getMember_type();
         String acsToken = memberEntity.getAcs_token();
         String designer_id = memberEntity.getAcs_member_id();
-        getMyBidData(memType, acsToken, designer_id, 0, 100);
+        int designerId = Integer.parseInt(designer_id);
+        getMyBidData(memType, acsToken, designerId, 0, 100);
 
     }
 
@@ -120,7 +121,7 @@ public class BidBidingFragment extends BidBaseFragment {
      * @param limit
      * @brief 获取我的应标中所有得数据 .
      */
-    public void getMyBidData(final String memType, final String acsToken, String designer_id, int offset, int limit) {
+    public void getMyBidData(final String memType, final String acsToken, int designer_id, int offset, int limit) {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {

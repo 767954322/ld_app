@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/bg_eef1f4"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_eef1f4"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header"/>
+        layout="@layout/view_navigation_header" />
 
     <TextView
         android:id="@+id/text_notuse"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_0"
         android:focusable="true"
-        android:focusableInTouchMode="true"/>
+        android:focusableInTouchMode="true" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
-        android:background="@color/bg_d5"/>
+        android:background="@color/bg_d5" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/name_space"/>
+                    android:text="@string/name_space" />
 
                 <TextView
                     android:id="@+id/tvc_measure_form_name"
@@ -56,7 +56,7 @@
                     android:gravity="center_vertical"
                     android:hint="请输入姓名"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
 
             </LinearLayout>
@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
 
@@ -87,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/consume_phone"/>
+                    android:text="@string/consume_phone" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/tvc_measure_form_phone"
@@ -99,7 +99,7 @@
                     android:hint="@string/please_enter_your_phone"
                     android:maxLength="11"
                     android:phoneNumber="true"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
             </LinearLayout>
 
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_project_types"/>
+                    android:text="@string/demand_project_types" />
 
                 <TextView
                     android:id="@+id/tvc_measure_form_type"
@@ -129,12 +129,12 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:hint="请选择房屋类型"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -147,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -162,7 +162,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/fitment_area"/>
+                    android:text="@string/fitment_area" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/tvc_measure_form_area"
@@ -173,15 +173,15 @@
                     android:ems="10"
                     android:hint="请输入面积（平米）"
                     android:inputType="numberDecimal"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
 
                 <TextView
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/size_20"
-                android:text="m²" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:text="m²" />
             </LinearLayout>
 
             <LinearLayout
@@ -194,7 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -210,7 +210,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_planning_budget"/>
+                    android:text="@string/demand_planning_budget" />
 
                 <TextView
                     android:id="@+id/tvc_measure_form_project_budget"
@@ -221,12 +221,12 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:hint="请选择设计预算"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -239,7 +239,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -254,7 +254,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_project_budget"/>
+                    android:text="@string/demand_project_budget" />
 
                 <TextView
                     android:id="@+id/tvc_measure_fitment_budget"
@@ -265,12 +265,12 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:hint="请选择装修预算"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -283,7 +283,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -298,7 +298,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_house_model"/>
+                    android:text="@string/demand_house_model" />
 
                 <TextView
                     android:id="@+id/tvc_measure_form_house_type"
@@ -309,12 +309,12 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:hint="请选择户型：室 厅 卫"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -327,7 +327,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -343,7 +343,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_style"/>
+                    android:text="@string/demand_style" />
 
                 <TextView
                     android:id="@+id/tvc_measure_form_style"
@@ -354,12 +354,12 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:hint="请选择风格"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
 
@@ -373,7 +373,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -389,7 +389,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_project_address"/>
+                    android:text="@string/demand_project_address" />
 
                 <TextView
                     android:id="@+id/tvc_measure_form_address"
@@ -400,12 +400,12 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:hint="请选择地址：省 市 区"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -418,7 +418,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -433,7 +433,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_village_name"/>
+                    android:text="@string/demand_village_name" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/tvc_measure_form_estate"
@@ -443,7 +443,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:hint="@string/please_select_community_name"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
             </LinearLayout>
 
             <LinearLayout
@@ -456,7 +456,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
             <LinearLayout
@@ -472,7 +472,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/demand_measure_house_time"/>
+                    android:text="@string/demand_measure_house_time" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/tvc_measure_form_time"
@@ -482,28 +482,30 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:hint="请选择量房时间"
-                    android:textSize="@dimen/font_12"/>
+                    android:textSize="@dimen/font_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_unfold_normal"/>
+                    android:background="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_40"
-                android:paddingLeft="@dimen/size_10"
-                android:paddingRight="@dimen/size_10"
+                android:gravity="center_vertical"
                 android:paddingBottom="@dimen/size_10"
-                android:gravity="center_vertical">
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_30"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true">
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -527,11 +529,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:drawableLeft="@drawable/icon_instruction"
                     android:layout_marginRight="@dimen/size_10"
-                    android:textColor="@color/actionsheet_blue"
-                    android:text="@string/illustrate" />
+                    android:drawableLeft="@drawable/icon_instruction"
+                    android:text="@string/illustrate"
+                    android:textColor="@color/actionsheet_blue" />
             </RelativeLayout>
+
             <Button
                 android:id="@+id/btn_send_measure_house_form"
                 android:layout_width="match_parent"
@@ -543,7 +546,7 @@
                 android:background="@drawable/bg_common_btn_blue"
                 android:text="@string/demand_send"
                 android:textColor="@color/bg_ff"
-                android:textSize="@dimen/font_18"/>
+                android:textSize="@dimen/font_18" />
 
         </LinearLayout>
     </ScrollView>

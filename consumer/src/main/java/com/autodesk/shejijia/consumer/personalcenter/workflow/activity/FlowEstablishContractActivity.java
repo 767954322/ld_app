@@ -208,8 +208,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 }
             });
 
-            tvc_consumer_name.setText(requirement.getContacts_name());
-            tvc_consumer_phone.setText(requirement.getContacts_mobile());
             tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
             tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
 
@@ -862,6 +860,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     } else {
                         firstCost = tvc_first_cost.getText().toString();
                     }
+
+
                     Double dTotalCost = Double.parseDouble(totalCost);
                     DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
                     tvc_last_cost.setText(df.format((dTotalCost - Double.parseDouble(firstCost))));
