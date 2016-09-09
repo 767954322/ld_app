@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.personalcenter.designer.entity;
+package com.autodesk.shejijia.shared.components.common.tools.chatroom;
 
 import java.io.Serializable;
 
