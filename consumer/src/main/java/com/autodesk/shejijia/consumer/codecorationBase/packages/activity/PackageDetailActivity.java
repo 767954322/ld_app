@@ -49,7 +49,6 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
 
         Intent intent = getIntent();
         item_num = intent.getIntExtra("item_num", -1);
-        item_name = ImageUrlUtils.getPackagesListNames()[item_num];
         nav_title_textView.setText("套餐详情");
         isLoginUserJust = isLoginUser();
 
@@ -76,7 +75,6 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
                 if (isLoginUserJust) {
                     Intent intent_yuyue = new Intent(PackageDetailActivity.this, ReservationFormActivity.class);
                     intent_yuyue.putExtra("item_num", item_num + 1);
-                    intent_yuyue.putExtra("item_name", item_name);
                     startActivity(intent_yuyue);
                 } else {
                     AdskApplication.getInstance().doLogin(PackageDetailActivity.this);
@@ -109,7 +107,6 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private int item_num;
-    private String item_name;
     private List<Bitmap> mData;
     private ListView lv_package_detail;
     private boolean isLoginUserJust;

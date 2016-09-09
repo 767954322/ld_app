@@ -74,7 +74,12 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         setTitleForNavbar("预约表单");
         Intent intent = getIntent();
         item_num = intent.getIntExtra("item_num", -1);
-        item_name = ImageUrlUtils.getPackagesListNames()[item_num];
+        if (item_num == 0) {
+            item_name = "";
+        } else {
+            item_name = ImageUrlUtils.getPackagesListNames()[item_num - 1];
+        }
+
         acs_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
 
         getConsumerInfoData(acs_member_id);
