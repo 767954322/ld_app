@@ -538,11 +538,8 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
                         // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
-                        mCurrentDistrict = TextUtils.isEmpty(area) || area.equals("none") ? "none" : area;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
-                                || "none".equals(mCurrentDistrict)
-                                || TextUtils.isEmpty(areaCode)
-                                || "0".equals(areaCode) ? "0" : areaCode;
+                        mCurrentDistrict = area;
+                        mCurrentDistrictCode = areaCode;
 
                         JSONObject jsonObject = new JSONObject();
                         int intSex;
@@ -571,24 +568,10 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                         }
                         CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.area_changes), false, null);
 
-//                        String xToken = null;
-//                        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-//
-//                        if (memberEntity != null)
-//                            xToken = memberEntity.getHs_accesstoken();
-
                         putAmendDesignerInfoData(strDesignerId, jsonObject);
 
-                        if (TextUtils.isEmpty(mCurrentCity)) {
-                            address = UIUtils.getString(R.string.no_data);
-                        }
-
-                        if (TextUtils.isEmpty(mCurrentDistrict) || mCurrentDistrict.equals("none")) {
-                            address = strCurrentProvince + " " + mCurrentCity + " ";
-                        } else {
-                            address = strCurrentProvince + " " + mCurrentCity + " " + mCurrentDistrict;
-                        }
-
+                        area = UIUtils.getNoStringIfEmpty(area);
+                        address = strCurrentProvince + " " + mCurrentCity + " " + area;
                         tvLocation.setText(address);
                         mChangeAddressDialog.dismiss();
                     }

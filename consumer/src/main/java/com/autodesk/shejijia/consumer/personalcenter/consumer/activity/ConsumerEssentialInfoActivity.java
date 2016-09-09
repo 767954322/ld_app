@@ -399,11 +399,8 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                         city = city_1;
 
                         // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
-                        district_name = TextUtils.isEmpty(district_name_1) || district_name_1.equals("none") ? "none" : district_name_1;
-                        district = TextUtils.isEmpty(district_name_1)
-                                || "none".equals(district_name)
-                                || TextUtils.isEmpty(district_1)
-                                || "0".equals(district_1) ? "0" : district_1;
+                        district_name = district_name_1;
+                        district = district_1;
 
                         JSONObject jsonObject = new JSONObject();
                         int intSex;
@@ -430,13 +427,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                             e.printStackTrace();
                         }
                         CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.information_on_the_cross), false, null);
-
                         putAmendConsumerInfoData(member_id, jsonObject);
-                        if (TextUtils.isEmpty(district_name) || district_name.equals("none")) {
-                            mTvConsumeAddress.setText(province_name + " " + city_name + " ");
-                        } else {
-                            mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
-                        }
+
+                        district_name_1 = UIUtils.getNoStringIfEmpty(district_name);
+                        String address = province_name + " " + city_name + " " + district_name_1;
+
+                        mTvConsumeAddress.setText(address);
                         mChangeAddressDialog.dismiss();
                     }
                 });

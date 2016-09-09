@@ -159,7 +159,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                 intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                 intent.putExtra(BaseChatRoomActivity.RECIEVER_USER_NAME, name);
-                intent.putExtra("project_title",community_name);
+                intent.putExtra("project_title", community_name);
                 startActivity(intent);
                 finish();
             }
@@ -230,10 +230,14 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                     public void onClick(String province, String proviceCode, String city, String cityCode, String area, String areaCode) {
                         mCurrentProvince = province;
                         mCurrentProvinceCode = proviceCode;
+
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
+
                         mCurrentDistrict = area;
                         mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
                         tv_consumer_address.setText(province + city + area);
                         mChangeAddressDialog.dismiss();
                     }
@@ -330,7 +334,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
     }
 
     private TextView tv_consumer_name;
-    private String  community_name;
+    private String community_name;
     private TextView tv_consumer_address;
     private EditText et_consumer_phone, et_consumer_detail_address;
     private Button btn_consumer_finish;

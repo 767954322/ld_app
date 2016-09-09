@@ -341,11 +341,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
                         // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
-                        mCurrentDistrict = TextUtils.isEmpty(area) || area.equals("none") ? "none" : area;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
-                                || "none".equals(mCurrentDistrict)
-                                || TextUtils.isEmpty(areaCode)
-                                || "0".equals(areaCode) ? "0" : areaCode;
+                        mCurrentDistrict = area;
+                        mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
 
                         tv_issue_address.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();

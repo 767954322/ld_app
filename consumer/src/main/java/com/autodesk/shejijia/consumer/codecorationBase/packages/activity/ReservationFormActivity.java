@@ -279,9 +279,10 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
                         mCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
-                        mCurrentDistrict = TextUtils.isEmpty(area) ? "none" : area;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) || "none".equals(mCurrentDistrict) || TextUtils.isEmpty(areaCode) || "none".equals(areaCode) ? "none" :
-                                areaCode;
+                        mCurrentDistrict = area;
+                        mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
 
                         tv_issue_address.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();

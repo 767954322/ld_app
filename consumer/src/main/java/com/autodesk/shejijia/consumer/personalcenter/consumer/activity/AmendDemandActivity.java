@@ -32,6 +32,8 @@ import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.StreamUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.socks.library.KLog;
@@ -216,11 +218,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             if (!TextUtils.isEmpty(is_public_amend)) {
 
                 Intent intent = new Intent();
-                intent.putExtra("is_public_amend",is_public_amend);
-                intent.putExtra("custom_string_status",custom_string_status_amend);
-                intent.putExtra("wk_template_id",wk_template_id_amend);
+                intent.putExtra("is_public_amend", is_public_amend);
+                intent.putExtra("custom_string_status", custom_string_status_amend);
+                intent.putExtra("wk_template_id", wk_template_id_amend);
                 intent.putExtra(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, needs_id);
-                setResult(AmendDemandActivity.REFUSEResultCode,intent);
+                setResult(AmendDemandActivity.REFUSEResultCode, intent);
 
             }
             finish();
@@ -242,7 +244,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 bundle.putSerializable(JsonConstants.AMENDEMANDBEAN, amendDemandBean);
 
                 intent.putExtras(bundle);
-                setResult(ResultCode,intent);
+                setResult(ResultCode, intent);
             }
 
             if (null != mDecorationDetailBean) {
@@ -277,7 +279,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, AmendDemandActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getAmendDemand(need_id, okResponseCallback);
@@ -306,7 +308,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, AmendDemandActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getStopDesignerRequirement(needs_id,
@@ -335,11 +337,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 if (!CustomProgress.dialog.isShowing()) {
 //                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
 //                            AlertView.Style.Alert, null).show();
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, AmendDemandActivity.this);
                 }
             }
         };
-        MPServerHttpManager.getInstance().getModifyDesignerRequirement(needs_id,wk_template_id, amendJson, okResponseCallback);
+        MPServerHttpManager.getInstance().getModifyDesignerRequirement(needs_id, wk_template_id, amendJson, okResponseCallback);
     }
 
     /**
@@ -375,7 +377,8 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
         }
 
-        district_name = TextUtils.isEmpty(district) || "none".equals(district) || TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
+        district_name = UIUtils.getNoStringIfEmpty(district_name);
+
         String address = province_name + city_name + district_name;
 
         convertEn2Cn();
@@ -425,17 +428,15 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
 
                                             province_name = province_name_1;
                                             city_name = city_name_1;
-                                            if (!TextUtils.isEmpty(district_name) || !TextUtils.isEmpty(district)) {
-                                                district_name = "";
-                                                district = "";
-                                            }
                                             district_name = district_name_1;
-                                            district_name = TextUtils.isEmpty(district_name) || "none".equals(district_name) ? "" : district_name;
 
                                             province = province_1;
                                             city = city_1;
-                                            district = TextUtils.isEmpty(district_name) || "none".equals(district_name) || TextUtils.isEmpty(district_1) ? "none" : district_1;
-                                            String address = province_name + city_name + district_name;
+                                            district = district_1;
+
+                                            district_name_1 = UIUtils.getNoStringIfEmpty(district_name);
+
+                                            String address = province_name + city_name + district_name_1;
                                             tvIssueAddress.setText(address);
                                             mChangeAddressDialog.dismiss();
                                         }
@@ -705,7 +706,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     private String province, city, district;
     private String province_name, city_name, district_name;
     private String living_room, room, toilet;
-    private String house_type, house_area, needs_id,wk_template_id;
+    private String house_type, house_area, needs_id, wk_template_id;
     private int click_number;
     private String consumer_mobile, consumer_name, contacts_mobile, contacts_name;
     private String detail_desc, decoration_budget, design_budget, custom_string_status;
