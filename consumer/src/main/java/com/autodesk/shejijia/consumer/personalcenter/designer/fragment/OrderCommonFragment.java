@@ -83,7 +83,7 @@ public class OrderCommonFragment extends BaseFragment {
 
         mCommonOrderAdapter = new MyCommonOrderAdapter(UIUtils.getContext(), commonOrderListEntities, R.layout.item_designer_order_list);
         mListView.setAdapter(mCommonOrderAdapter);
-//        setSwipeRefreshInfo();
+
     }
 
     private android.os.Handler handler = new android.os.Handler() {
@@ -109,6 +109,7 @@ public class OrderCommonFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        setSwipeRefreshInfo();
     }
 
     @Override

@@ -340,12 +340,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                         mCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
-                        mCurrentDistrict = TextUtils.isEmpty(area) ? "none" : area;
+                        mCurrentDistrict = TextUtils.isEmpty(area) || area.equals("none") ? "none" : area;
                         mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
                                 || "none".equals(mCurrentDistrict)
                                 || TextUtils.isEmpty(areaCode)
-                                || "0".equals(areaCode) ? "0" :
-                                areaCode;
+                                || "0".equals(areaCode) ? "0" : areaCode;
 
                         tv_issue_address.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();

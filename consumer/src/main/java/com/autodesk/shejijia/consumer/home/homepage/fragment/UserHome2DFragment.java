@@ -64,40 +64,6 @@ import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 
-
-// getCaseLibraryData(mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, BLANK,
-// mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), BLANK, "01", 0, LIMIT, BLANK,
-// mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), 0);
-
-
-//public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
-//final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
-//final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
-//        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-//@Override
-//public void onResponse(JSONObject jsonObject) {
-//        String jsonString = GsonUtil.jsonToString(jsonObject);
-//        CaseLibraryBean mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
-//
-//        updateViewFromData(mCaseLibraryBean, state);
-//        }
-//
-//@Override
-//public void onErrorResponse(VolleyError volleyError) {
-//        MPNetworkUtils.logError(TAG, volleyError);
-//        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-//        ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryActivity.this);
-////                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, mContext,
-////                        AlertView.Style.Alert, null).show();
-//        hideFooterView(mCasesEntities);
-//        }
-//        };
-//        MPServerHttpManager.getInstance().getCaseListData(custom_string_style, custom_string_type, custom_string_keywords,
-//        custom_string_area, custom_string_bedroom, taxonomy_id,
-//        custom_string_restroom, custom_string_form, offset, limit,  callback);
-//        }
-
-
 /**
  * @author DongXueQiu .
  * @version 1.0 .
@@ -183,7 +149,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
-        CustomProgress.show(activity,"",false,null);
+        CustomProgress.show(activity, "", false, null);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
             final String designer_id = casesEntities.get(position).getDesigner_id();
@@ -220,7 +186,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                         getActivity().startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id,member_id , new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
@@ -344,6 +310,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
 //    }
 
     private long starttime = 0;
+
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
                                    final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
@@ -355,7 +322,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
                 updateViewFromCaseLibraryData(offset);
-                Log.i("UserHome2D","2d案例响应时间："+(System.currentTimeMillis() - starttime));
+                Log.i("UserHome2D", "2d案例响应时间：" + (System.currentTimeMillis() - starttime));
             }
 
             @Override
@@ -617,7 +584,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     public void onResume() {
         super.onResume();
 
-        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()){
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()) {
             CustomProgress.cancelDialog();
         }
         if (null != mFloatingActionsMenu) {
