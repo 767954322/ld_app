@@ -357,7 +357,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      * @return
      */
     private String getEliteNeedsState(int wk_cur_sub_node_id_int, String needsState, String custom_string_status) {
-
+        needsState = UIUtils.getString(R.string.checking);
         if (wk_cur_sub_node_id_int >= WkTemplateConstants.CONFIRM_DESIGN_RESULTS
                 && wk_cur_sub_node_id_int != WkTemplateConstants.DELAY_CONFIRM_DESIGN_RESULTS) {
             needsState = UIUtils.getString(R.string.project_finish);
