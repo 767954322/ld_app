@@ -63,9 +63,9 @@ public class ImageUrlUtils {
     }
 
     public static String[] getPackagesListNames() {
-        String[] packages_name = {"居然装饰东捷套餐", "居然装饰东捷套餐",
-                "居然装饰东捷套餐", "居然住美幸福家", "居然装饰北舒套餐",
-                "居然住美艺术家", "居然装饰南韵套餐", "居然住美品质家"};
+        String[] packages_name = {"居然装饰东捷套餐", "居然住美幸福家",
+                "居然装饰北舒套餐", "居然住美艺术家", "居然装饰南韵套餐",
+                "居然住美品质家", "居然装饰西境套餐", "居然住美尊享家"};
 
         return packages_name;
     }
