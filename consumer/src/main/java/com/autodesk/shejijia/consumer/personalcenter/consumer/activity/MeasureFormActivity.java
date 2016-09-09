@@ -701,17 +701,13 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
                         // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
-                        mCurrentDistrict = TextUtils.isEmpty(district) || district.equals("none") ? "none" : district;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
-                                || "none".equals(mCurrentDistrict)
-                                || TextUtils.isEmpty(areaCode)
-                                || "0".equals(areaCode) ? "0" : areaCode;
 
-                        if ("null".equals(district) || "none".equals(district) || TextUtils.isEmpty(district)) {
-                            address = province + " " + city + " ";
-                        } else {
-                            address = province + " " + city + " " + district;
-                        }
+                        mCurrentDistrict = district;
+                        mCurrentDistrictCode = areaCode;
+
+                        district = UIUtils.getNoStringIfEmpty(mCurrentDistrict);
+
+                        address = province + " " + city + " " + district;
                         tvc_address.setText(address);
                         mChangeAddressDialog.dismiss();
                     }

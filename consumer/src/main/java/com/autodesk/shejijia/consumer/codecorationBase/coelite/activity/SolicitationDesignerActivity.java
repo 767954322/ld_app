@@ -42,11 +42,12 @@ import java.util.Map;
  * 量房邀约
  * Created by luchongbin on 16-8-19.
  */
-public class SolicitationDesignerActivity extends NavigationBarActivity implements View.OnClickListener{
+public class SolicitationDesignerActivity extends NavigationBarActivity implements View.OnClickListener {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_measure_form;
     }
+
     @Override
     protected void initView() {
         super.initView();
@@ -70,6 +71,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvc_measure_form_style = (TextView) findViewById(R.id.tvc_measure_form_style);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
     }
+
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
@@ -90,11 +92,11 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
 
         String house_type = decorationNeedsListBean.getHouse_type();
 
-        Map<String, String> spaceMap= AppJsonFileReader.getSpace(this);
-        Map<String, String> styleMap= AppJsonFileReader.getStyle(this);
+        Map<String, String> spaceMap = AppJsonFileReader.getSpace(this);
+        Map<String, String> styleMap = AppJsonFileReader.getStyle(this);
 
-        Map<String, String> roomHallMap= AppJsonFileReader.getRoomHall(this);
-        Map<String, String> roomMap =AppJsonFileReader.getLivingRoom(this);
+        Map<String, String> roomHallMap = AppJsonFileReader.getRoomHall(this);
+        Map<String, String> roomMap = AppJsonFileReader.getLivingRoom(this);
         Map<String, String> toiletMap = AppJsonFileReader.getToilet(this);
 
         tvc_area.setText(decorationNeedsListBean.getHouse_area());
@@ -107,9 +109,9 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvc_measure_form_type.setText(UIUtils.getNoSelectIfEmpty(spaceMap.get(house_type)));
 
         String tvHouseType = roomHallMap.get(decorationNeedsListBean.getLiving_room())
-                +roomMap.get(decorationNeedsListBean.getRoom())
-                +toiletMap.get(decorationNeedsListBean.getToilet());
-        tvHouseType = tvHouseType.equals("nullnullnull")?UIUtils.getString(R.string.no_select):tvHouseType;
+                + roomMap.get(decorationNeedsListBean.getRoom())
+                + toiletMap.get(decorationNeedsListBean.getToilet());
+        tvHouseType = tvHouseType.equals("nullnullnull") ? UIUtils.getString(R.string.no_select) : tvHouseType;
 
 
         tvc_house_type.setText(tvHouseType);//设置室 厅 卫
@@ -119,25 +121,25 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvc_address.setText(province_name + city_name + district_name);
         SelectionBean selectionBean = decorationNeedsListBean.getElite();
 
-        if(selectionBean != null){
-            if(selectionBean.getMeasurement()!= null){
+        if (selectionBean != null) {
+            if (selectionBean.getMeasurement() != null) {
                 measureFee = selectionBean.getMeasurement().getFee();
                 order_line_id = selectionBean.getMeasurement().getOrder_line_id();
-                order_id= selectionBean.getMeasurement().getOrder_id();
-                tv_measure_fee.setText(measureFee==null?"":measureFee);
+                order_id = selectionBean.getMeasurement().getOrder_id();
+                tv_measure_fee.setText(measureFee == null ? "" : measureFee);
 
-                String payment_status =selectionBean.getMeasurement().getPayment_status();
-                if(payment_status.equals("0")){//0：未支付量房费 1：已支付量房费
+                String payment_status = selectionBean.getMeasurement().getPayment_status();
+                if (payment_status.equals("0")) {//0：未支付量房费 1：已支付量房费
                     btn_send_form.setText(UIUtils.getString(R.string.pay_p));
                     isPay = true;
                 }
             }
         }
-        for(DecorationBiddersBean decorationBiddersBean:list){
-            if(decorationBiddersBean.getDesigner_id().equals(designer_id)){
+        for (DecorationBiddersBean decorationBiddersBean : list) {
+            if (decorationBiddersBean.getDesigner_id().equals(designer_id)) {
                 tvc_name.setText(decorationBiddersBean.getUser_name());
 
-               orders =decorationBiddersBean.getOrders();
+                orders = decorationBiddersBean.getOrders();
                 hs_uid = decorationBiddersBean.getUid();
             }
         }
@@ -145,6 +147,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         setMeasureTime();
 
     }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -153,9 +156,10 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvc_time.setOnClickListener(this);
         tvc_address.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tvIllustrate:
                 showAlertView();
                 break;
@@ -167,10 +171,11 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                 break;
             default:
                 break;
-         }
+        }
 
     }
-    private void getJSONObject(){
+
+    private void getJSONObject() {
         name = tvc_name.getText().toString().trim();
         mobileNumber = tvc_phone.getText().toString().trim();
         communityName = tvc_estate.getText().toString().trim();
@@ -196,19 +201,21 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         }
 
     }
+
     private void getErrorHintAlertView(String content) {
         if (error_AlertView != null) {
             error_AlertView = null;
         }
-        error_AlertView = new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)},this,
+        error_AlertView = new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, this,
                 AlertView.Style.Alert, null);
         error_AlertView.show();
 
     }
-    private void isSendMeasureForm(JSONObject jsonObject){
-        if(isPay){
-            if(order_line_id != null && order_id != null&& !order_line_id.equals("0") && !order_id.equals("0")){
-                pay(order_line_id,order_id);
+
+    private void isSendMeasureForm(JSONObject jsonObject) {
+        if (isPay) {
+            if (order_line_id != null && order_id != null && !order_line_id.equals("0") && !order_id.equals("0")) {
+                pay(order_line_id, order_id);
                 return;
             }
             postSendMeasureForm(jsonObject);
@@ -217,22 +224,22 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         postSendMeasureForm(jsonObject);
     }
 
-    private void pay(String order_line_id,String order_id){
+    private void pay(String order_line_id, String order_id) {
 
-        Intent intent = new Intent(this,FlowMeasureCostActivity.class);
-        intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID,designer_id);
-        intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID,decorationNeedsListBean.getNeeds_id());
+        Intent intent = new Intent(this, FlowMeasureCostActivity.class);
+        intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+        intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, decorationNeedsListBean.getNeeds_id());
 
-        intent.putExtra("order_line_id",order_line_id);
-        intent.putExtra("order_id",order_id);
+        intent.putExtra("order_line_id", order_line_id);
+        intent.putExtra("order_id", order_id);
 
         intent.putExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT, measureFee);
         intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__MEANSURE_PAY);
 
-        this.startActivityForResult(intent,105);
+        this.startActivityForResult(intent, 105);
     }
 
-    private void postSendMeasureForm(final JSONObject jsonObject){
+    private void postSendMeasureForm(final JSONObject jsonObject) {
 
         CustomProgress.showDefaultProgress(this);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
@@ -242,11 +249,11 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 SolicitationSelection solicitationSelection = GsonUtil.jsonToBean(jsonString, SolicitationSelection.class);
                 CustomProgress.cancelDialog();
-                if(isPay){
+                if (isPay) {
                     pay(solicitationSelection.getElite().getMeasurement().getOrder_line_id(),
                             solicitationSelection.getElite().getMeasurement().getOrder_id());
-                }else {
-                    setResult(10058,new Intent());
+                } else {
+                    setResult(10058, new Intent());
                     finish();
                 }
 
@@ -258,19 +265,22 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                 CustomProgress.dialog.cancel();
             }
         };
-        MPServerHttpManager.getInstance().SendMeasureForm(decorationNeedsListBean.getNeeds_id(),designer_id,jsonObject,okResponseCallback);
+        MPServerHttpManager.getInstance().SendMeasureForm(decorationNeedsListBean.getNeeds_id(), designer_id, jsonObject, okResponseCallback);
     }
-    private void showAlertView(){
-        new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null,  null,new String[]{UIUtils.getString(R.string.finish_cur_pager)}, this,
+
+    private void showAlertView() {
+        new AlertView(UIUtils.getString(R.string.illustrate), UIUtils.getString(R.string.warm_tips_content), null, null, new String[]{UIUtils.getString(R.string.finish_cur_pager)}, this,
                 AlertView.Style.Alert, null).show();
     }
+
     //获取精选装修模式传递过来的数据
-    private void getExtraData(){
+    private void getExtraData() {
         Intent intent = getIntent();
-        decorationNeedsListBean = (DecorationNeedsListBean)intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
+        decorationNeedsListBean = (DecorationNeedsListBean) intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
         designer_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID);
 
     }
+
     //设置量房时间
     private void setMeasureTime() {
         ///  The time selector  .
@@ -286,11 +296,12 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
-                currentData = DateUtil.dateFormat(currentData,"yyyy-MM-dd HH:mm:ss","yyyy年MM月dd日 HH点");
+                currentData = DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点");
                 tvc_time.setText(currentData);
             }
         });
     }
+
     /**
      * 获取省市区地址
      */
@@ -306,16 +317,17 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
                         mCurrentDistrict = district;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) ? "" : areaCode;
-                        if ("null".equals(district) || "none".equals(district) || TextUtils.isEmpty(district)) {
-                            district = "";
-                        }
+                        mCurrentDistrictCode = areaCode;
+
+                        district = UIUtils.getNoStringIfEmpty(district);
+
                         tvc_address.setText(province + city + district);
                         mChangeAddressDialog.dismiss();
                     }
 
                 });
     }
+
     /**
      * @brief 获取yyyy-MM-dd HH:mm:ss 格式的时间
      */
@@ -323,12 +335,13 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == FlowMeasureCostActivity.RESULT_CODE){
+        if (resultCode == FlowMeasureCostActivity.RESULT_CODE) {
 
-            setResult(10058,new Intent());
+            setResult(10058, new Intent());
             finish();
 //            if(data == null){
 //                return;

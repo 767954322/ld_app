@@ -73,7 +73,6 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
                 if (isLoginUserJust) {
                     Intent intent_yuyue = new Intent(activity, ReservationFormActivity.class);
                     intent_yuyue.putExtra("item_num", 0);
-                    intent_yuyue.putExtra("item_name", "");
                     activity.startActivity(intent_yuyue);
                 } else {
                     AdskApplication.getInstance().doLogin(activity);

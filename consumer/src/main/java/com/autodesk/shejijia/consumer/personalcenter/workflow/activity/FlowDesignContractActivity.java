@@ -643,11 +643,9 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
                     public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
-                        if ("null".equals(area)
-                                || "none".equals(area)
-                                || TextUtils.isEmpty(area)) {
-                            area = "";
-                        }
+
+                        area = UIUtils.getNoStringIfEmpty(area);
+
                         tvc_consumer_decorate_address.setText(province + city + area);
                         mChangeAddressDialog.dismiss();
                     }

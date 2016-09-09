@@ -36,11 +36,7 @@ import java.util.ArrayList;
  * @file MyBidActivity.java  .
  * @brief .
  */
-public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener, BidBidingFragment.FragmentCallBack {
-
-
-
-    public int is_loho;
+public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutResId() {
@@ -58,6 +54,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         mOutFlowLine = (TextView) findViewById(R.id.tv_my_bid_outflow_bid_line);
 
         resetTextTitleColor();
+        setDefaultFragment();
     }
 
     @Override
@@ -90,7 +87,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 setTextLineVisibility(new TextView[]{mMyBidDidLine, mOutFlowLine});
                 if (beBeingFragment == null) {
                     beBeingFragment = new BidBidingFragment();
-                    setArguments(beBeingFragment);
                 }
                 switchFragment(beBeingFragment);
 
@@ -103,7 +99,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 setTextLineVisibility(new TextView[]{mBeingDidLine, mOutFlowLine});
                 if (bingoFragment == null) {
                     bingoFragment = new BidSuccessFragment();
-                    setArguments(bingoFragment);
                 }
                 switchFragment(bingoFragment);
                 break;
@@ -115,7 +110,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 setTextLineVisibility(new TextView[]{mBeingDidLine, mMyBidDidLine});
                 if (outflowFragment == null) {
                     outflowFragment = new BidFailureFragment();
-                    setArguments(outflowFragment);
                 }
                 switchFragment(outflowFragment);
                 break;
@@ -128,52 +122,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        //获取设计师信息
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity) {
-            return;
-        }
-        String member_id = mMemberEntity.getAcs_member_id();
-        String hs_uid = mMemberEntity.getHs_uid();
-        getDesignerInfoData(member_id, hs_uid);
-        setDefaultFragment();
-    }
-
-    /**
-     * 设计师个人信息
-     *
-     * @param designer_id
-     * @param hs_uid
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                DesignerInfoDetails designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                is_loho = designerInfoDetails.getDesigner().getIs_loho();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError, MyBidActivity.this);
-            }
-        });
-    }
-
-    @Override
-    public void getMyBidBean(MyBidBean myBidBean) {
-        if (mList != null) {
-            mList.clear();
-            mList.addAll(myBidBean.getBidding_needs_list());
-            if (bingoFragment != null) {
-                updateFragment(bingoFragment);
-            }
-            if (outflowFragment != null) {
-                updateFragment(outflowFragment);
-            }
-        }
     }
 
     private void setColorAndBackgroundForTextView(TextView textView) {
@@ -198,16 +146,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         tv_bid_be_being_bid.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
         tv_my_bid_bingo_bid.setTextColor(UIUtils.getColor(R.color.bg_33));
         tv_my_bid_outflow_bid.setTextColor(UIUtils.getColor(R.color.bg_33));
-    }
-
-    /**
-     * @param fragment
-     * @brief 往Fragment传输数据
-     */
-    private void setArguments(Fragment fragment) {
-        Bundle data = new Bundle();
-        data.putSerializable("FragmentData", mList);
-        fragment.setArguments(data);
     }
 
     /**
@@ -251,29 +189,11 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         fromFragment = to;
     }
 
-
-    private void updateFragment(Fragment fragment) {
-        if (fragment instanceof BidSuccessFragment) {
-            BidSuccessFragment sub = (BidSuccessFragment) fragment;
-            sub.onFragmentShown(mList);
-        } else if (fragment instanceof BidFailureFragment) {
-            BidFailureFragment sub = (BidFailureFragment) fragment;
-            sub.onFragmentShown(mList);
-
-        } else {
-        }
-    }
-
-
-
-
-
     private TextView tv_bid_be_being_bid;
     private TextView tv_my_bid_bingo_bid;
     private TextView tv_my_bid_outflow_bid;
     private TextView mBeingDidLine,mMyBidDidLine,mOutFlowLine;
     private Fragment beBeingFragment, bingoFragment, outflowFragment;
     private Fragment fromFragment;
-    private ArrayList<MyBidBean.BiddingNeedsListEntity> mList = new ArrayList<>();
     private FragmentManager fragmentManager;
 }

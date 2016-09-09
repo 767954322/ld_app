@@ -19,8 +19,9 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.WkFlowStateAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
@@ -36,7 +37,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONException;
@@ -143,17 +143,18 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
         switch (v.getId()) {
             case R.id.ib_flow_chart:
+
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                Intent intentChart = new Intent(context, ChatRoomActivity.class);
-                String acs_member_id = mMemberEntity.getAcs_member_id();
-                String member_type = mMemberEntity.getMember_type();
-                intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, mBiddersEntity.getUser_name());
-                intentChart.putExtra(ChatRoomActivity.THREAD_ID, mThreead_id);
-                intentChart.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
-                intentChart.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
-                intentChart.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                intentChart.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
-                context.startActivity(intentChart);
+                if(mMemberEntity == null){
+                    return;
+                }
+                JumpBean jumpBean = new JumpBean();
+                jumpBean.setReciever_hs_uid(hs_uid);
+                jumpBean.setReciever_user_id(designer_id);
+                jumpBean.setReciever_user_name(user_name);
+                jumpBean.setAcs_member_id(mMemberEntity.getAcs_member_id());
+                jumpBean.setMember_type(mMemberEntity.getMember_type());
+                JumpToChatRoom.getChatRoom(this,jumpBean);
 
                 break;
             case R.id.btn_stop_demand:

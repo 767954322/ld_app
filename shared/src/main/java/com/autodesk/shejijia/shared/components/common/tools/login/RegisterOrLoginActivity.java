@@ -24,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -140,6 +141,8 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                 String member_type = entity.getMember_type();
                 if (!TextUtils.isEmpty(member_type) && ( member_type.equals("designer") || member_type.equals("member"))){//登陆账号为消费者或者设计师
                     AdskApplication.getInstance().saveSignInInfo(strToken);
+                    // 解决切换帐号的时候 我的项目Fragment 不刷新问题
+                    SharedPreferencesUtils.writeBoolean("islogin", true);
 //                /// 登录成功后,发送广播 .
                     Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
                     intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);

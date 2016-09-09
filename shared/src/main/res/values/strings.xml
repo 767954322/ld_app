@@ -102,9 +102,10 @@
     <string name="the_contract_sent_successfully">合同发送成功</string>
     <string name="the_contract_sent_failure">合同发送失败</string>
     <string name="sure_and_send">确定发送</string>
+    <string name="sure_modify_send">修改发送</string>
     <string name="flow_contract_num">合同编号：</string>
     <string name="flow_basic_info">基本信息</string>
-    <string name="flow_owner">甲方（消费者）：</string>
+    <string name="flow_owner">甲方(消费者)：</string>
     <string name="flow_phone">手机号码：</string>
 
     <!--string name="flow_postal_code">邮政编号：</string>-->
@@ -392,6 +393,7 @@
     <string name="consumer_mails">邮箱</string>
     <string name="not_filled">尚未填写</string>
     <string name="no_mobile">未绑定手机</string>
+    <string name="no_email">未绑定邮箱</string>
     <string name="secret">保密</string>
     <string name="boy">男</string>
     <string name="girl">女</string>

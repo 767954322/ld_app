@@ -104,15 +104,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
     }
 
-    @Override
-    protected void initListener() {
-        super.initListener();
-        mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
-        mBtnDelay.setOnClickListener(FlowUploadDeliveryActivity.this);
-        mTvInstruction.setOnClickListener(FlowUploadDeliveryActivity.this);
-        mBtnDeliverySure.setOnClickListener(FlowUploadDeliveryActivity.this);
-    }
-
     /**
      * 获取订单信息，之后执行的操作
      */
@@ -122,12 +113,13 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         CustomProgress.cancelDialog();
 
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
+        community_name = requirement.getCommunity_name();
+        mTvCommunityName.setText(community_name);
 
         /// [1]节点33，设计师尚未上传交付物，mDeliveryBean为null，提示：消费者等待，设计师上传 .
         /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物，消费者可以查看，需要隐藏延期及确认按钮.
-        if (DELIVER_MEASURE_FILE == wk_sub_node_id_int
-                || DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int
-                || 24 == wk_sub_node_id_int) {
+        boolean isMeasureDelivery = isMeasureDelivery(wk_sub_node_id_int);
+        if (isMeasureDelivery) {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
             show3DAndHideLevel();
             handleMeasureDelivery();
@@ -135,14 +127,24 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
             showAllLevel();
             handleDesignDelivery();
+            /**
+             * 延期时间判断
+             */
+            if (wk_sub_node_id_int > 51) {
+                getFlowUploadDeliveryDelayDate(needs_id, designer_id);
+            }
         }
-        community_name = requirement.getCommunity_name();
-        mTvCommunityName.setText(community_name);
-        /**
-         * 延期时间判断
-         */
-        getFlowUploadDeliveryDelayDate(needs_id, designer_id);
     }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mLl3DPlan.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mBtnDelay.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mTvInstruction.setOnClickListener(FlowUploadDeliveryActivity.this);
+        mBtnDeliverySure.setOnClickListener(FlowUploadDeliveryActivity.this);
+    }
+
 
     /**
      * 处理设计交付的逻辑
@@ -868,7 +870,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     break;
             }
         } else if (wk_sub_node_id_int >= 42
-                && wk_sub_node_id_int < NO_UPLOAD_DELIVERY) {
+                && wk_sub_node_id_int <= NO_UPLOAD_DELIVERY) {
             switch (GetRoleType()) {
                 case Constant.UerInfoKey.CONSUMER_TYPE:
                     mAlertViewDesignConsumerDelivery.show();
@@ -1326,4 +1328,17 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private String commonTip = UIUtils.getString(R.string.tip);
     private String[] sureString = new String[]{UIUtils.getString(R.string.sure)};
     private int wk_sub_node_id_int;                                   /// 当前wk_sub_node_id .
+
+    /**
+     * 是否是量房交付
+     * true 是量房交付
+     */
+    public boolean isMeasureDelivery(int wk_sub_node_id_int) {
+        if (DELIVER_MEASURE_FILE == wk_sub_node_id_int
+                || DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -69,7 +69,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     String area = et_issue_demand_area.getText().toString().trim();
-                    area = String.format("%.2f",Double.valueOf(area));
+                    area = String.format("%.2f", Double.valueOf(area));
                     et_issue_demand_area.setText(area);
                 }
             }
@@ -169,7 +169,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
 
 
                 //..................................
-                area = (area != null && area.length() > 0)?String.format("%.2f",Double.valueOf(area)):"";
+                area = (area != null && area.length() > 0) ? String.format("%.2f", Double.valueOf(area)) : "";
                 et_issue_demand_area.setText(area);
                 String subNum = "0";
                 if (area.contains(".")) {
@@ -264,9 +264,10 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
                         mCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
-                        mCurrentDistrict = TextUtils.isEmpty(area) ? "none" : area;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) || "none".equals(mCurrentDistrict) || TextUtils.isEmpty(areaCode) || "none".equals(areaCode) ? "none" :
-                                areaCode;
+                        mCurrentDistrict = area;
+                        mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
 
                         tv_issue_address.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();
@@ -282,7 +283,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
      * @param jsonObject
      */
     private void sendDesignRequirements(JSONObject jsonObject) {
-        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject,true,new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject, true, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();

@@ -23,11 +23,13 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.Master
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -276,7 +278,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                Toast.makeText(getActivity(), R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+                ToastUtil.showCustomToast(activity, UIUtils.getString(R.string.work_room_commit_successful));
             }
         });
 

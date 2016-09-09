@@ -581,7 +581,7 @@
                     android:layout_alignParentLeft="true"
                     android:radius="4dip"
                     android:background="@drawable/bg_common_btn_blue"
-                    android:text="@string/sure_and_send"
+                    android:text="@string/send"
                     android:textColor="@color/bg_ff" />
 
 

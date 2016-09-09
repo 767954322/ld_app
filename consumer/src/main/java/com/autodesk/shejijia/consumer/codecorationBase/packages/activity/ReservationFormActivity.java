@@ -74,7 +74,12 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         setTitleForNavbar("预约表单");
         Intent intent = getIntent();
         item_num = intent.getIntExtra("item_num", -1);
-        item_name = ImageUrlUtils.getPackagesListNames()[item_num];
+        if (item_num == 0) {
+            item_name = "";
+        } else {
+            item_name = ImageUrlUtils.getPackagesListNames()[item_num - 1];
+        }
+
         acs_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
 
         getConsumerInfoData(acs_member_id);
@@ -217,7 +222,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             jsonObject.put(JsonConstants.JSON_PACKAGES_ADDRESS, detail_address);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PROJECT_AREA, area_project);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_EXPENSE_BUDGET, mDecorationBudget);///mCurrentProvince
-            jsonObject.put(JsonConstants.JSON_PACKAGES_PKG, item_num + 1);///mCurrentProvince
+            jsonObject.put(JsonConstants.JSON_PACKAGES_PKG, item_num);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PKG_NAME, item_name);///mCurrentProvince
         } catch (JSONException e) {
             e.printStackTrace();
@@ -274,9 +279,10 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
                         mCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
-                        mCurrentDistrict = TextUtils.isEmpty(area) ? "none" : area;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) || "none".equals(mCurrentDistrict) || TextUtils.isEmpty(areaCode) || "none".equals(areaCode) ? "none" :
-                                areaCode;
+                        mCurrentDistrict = area;
+                        mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
 
                         tv_issue_address.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();

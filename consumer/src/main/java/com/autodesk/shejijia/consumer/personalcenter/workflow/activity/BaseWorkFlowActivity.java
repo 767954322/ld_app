@@ -126,6 +126,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
                 MPBidderBean biddersEntity = mBidders.get(0);
                 if (null != biddersEntity) {
                     hs_uid = biddersEntity.getUid();
+                    user_name = biddersEntity.getUser_name();
                     mDeliveryBean = biddersEntity.getDelivery();
                 }
             }
@@ -237,7 +238,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     protected String mThreead_id;
     protected String community_name;
     protected String contacts_name;
-
+    protected String user_name;
     protected String needs_id;
     protected String measureFee;
     protected MemberEntity memberEntity;
