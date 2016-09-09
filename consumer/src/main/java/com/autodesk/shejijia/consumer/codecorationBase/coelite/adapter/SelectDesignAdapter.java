@@ -44,7 +44,7 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
     public void convert(CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
 
         String nick_name = biddersBean.getUser_name();
-        nick_name = TextUtils.isEmpty(nick_name) ? "匿名" : nick_name;
+        nick_name = TextUtils.isEmpty(nick_name) ? UIUtils.getString(R.string.anonymity) : nick_name;
         String style_names = biddersBean.getStyle_names();
         style_names = (style_names != null)?style_names.replace(","," "):"";
         String avatar = biddersBean.getAvatar();
