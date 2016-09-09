@@ -20,6 +20,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.Master
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -189,7 +190,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
     }
 
-
+    //初始化大师案例展示
     private void initPageBottomInfo(){
 
         BaseCommonRvAdapter<DatailCase> adapter1 = new BaseCommonRvAdapter<DatailCase>(this, R.layout.item_listview_grandmaster_detail, cases_list) {
@@ -252,28 +253,9 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     }
 
 
-     //上传立即预约信息
-    public void upOrderDataForService(JSONObject jsonObject) {
 
-        MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                ApiStatusUtil.getInstance().apiStatuError(volleyError, GrandMasterDetailActivity.this);
-                CustomProgress.cancelDialog();
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                CustomProgress.cancelDialog();
-                Toast.makeText(GrandMasterDetailActivity.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
+    //上传立即预约信息
     private void onClickFromReservation(){
-
 
         OrderDialogMaster orderDialog = new OrderDialogMaster(GrandMasterDetailActivity.this, R.style.add_dialog, R.drawable.tital_yuyue);
         orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
@@ -294,14 +276,14 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
                     login_hs_uid = "";
                 }
                 try {
-                    jsonObject.put("consumer_name", name);//姓名
-                    jsonObject.put("consumer_mobile", phoneNumber);//电话
-                    jsonObject.put("type", 1);//大师类型
-                    jsonObject.put("customer_id", login_member_id);//消费者ID
-                    jsonObject.put("consumer_uid", login_hs_uid);
-                    jsonObject.put("name", nicke_name);
-                    jsonObject.put("member_id", member_id);
-                    jsonObject.put("hs_uid", hs_uid);
+                    jsonObject.put(JsonConstants.JSON_MASTER_CONSUMER_NAME, name);//姓名
+                    jsonObject.put(JsonConstants.JSON_MASTER_CONSUMER_MOBILE, phoneNumber);//电话
+                    jsonObject.put(JsonConstants.JSON_MASTER_TYPE, 1);//大师类型
+                    jsonObject.put(JsonConstants.JSON_MASTER_CUSTOMER_ID, login_member_id);//消费者ID
+                    jsonObject.put(JsonConstants.JSON_MASTER_CONSUMER_UID, login_hs_uid);
+                    jsonObject.put(JsonConstants.JSON_MASTER_NAME, nicke_name);
+                    jsonObject.put(JsonConstants.JSON_MASTER_MEMBER_ID, member_id);
+                    jsonObject.put(JsonConstants.JSON_MASTER_HS_UID, hs_uid);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -310,6 +292,24 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             }
         });
         orderDialog.show();
+
+    }
+    public void upOrderDataForService(JSONObject jsonObject) {
+
+        MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, GrandMasterDetailActivity.this);
+                CustomProgress.cancelDialog();
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                CustomProgress.cancelDialog();
+                Toast.makeText(GrandMasterDetailActivity.this, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

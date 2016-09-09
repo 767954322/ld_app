@@ -180,6 +180,7 @@
             android:layout_centerInParent="true"
             android:ellipsize="end"
             android:maxEms="6"
+            android:text="@string/grandmaster_title"
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="@dimen/font_19"

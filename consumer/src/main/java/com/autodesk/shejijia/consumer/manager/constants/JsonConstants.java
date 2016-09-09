@@ -199,4 +199,14 @@ public class JsonConstants {
     public static final String JSON_PACKAGES_EXPENSE_BUDGET = "expense_budget";
     public static final String JSON_PACKAGES_PKG = "pkg";
     public static final String JSON_PACKAGES_PKG_NAME = "pkg_name";
+
+    //大师预约表单
+    public static final String JSON_MASTER_CONSUMER_NAME = "consumer_name";
+    public static final String JSON_MASTER_CONSUMER_MOBILE = "consumer_mobile";
+    public static final String JSON_MASTER_TYPE = "type";
+    public static final String JSON_MASTER_CUSTOMER_ID = "customer_id";
+    public static final String JSON_MASTER_CONSUMER_UID = "consumer_uid";
+    public static final String JSON_MASTER_NAME = "name";
+    public static final String JSON_MASTER_MEMBER_ID = "member_id";
+    public static final String JSON_MASTER_HS_UID = "hs_uid";
 }
