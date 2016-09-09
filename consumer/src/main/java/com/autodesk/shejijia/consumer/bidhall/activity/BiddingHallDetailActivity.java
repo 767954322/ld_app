@@ -155,7 +155,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
+
                 String info = GsonUtil.jsonToString(jsonObject);
                 KLog.json(info);
                 getAlertView(UIUtils.getString(R.string.designer_bid_detail_success), null, false).show();
@@ -163,12 +163,15 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                 mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
                 mBtnSendBid.setText(UIUtils.getString(R.string.bided));
+                CustomProgress.dialog.cancel();
+                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
+                CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, BiddingHallDetailActivity.this);
             }
         };
@@ -185,6 +188,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         final OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 String info = GsonUtil.jsonToString(jsonObject);
                 mRealNameBean = GsonUtil.jsonToBean(info, RealNameBean.class);
                 KLog.json(info);
@@ -205,6 +209,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * 获取姓名信息，并更新
      */
     private void updateViewFromRealNameData() {
+
         if (mRealNameBean.getDesigner().getIs_real_name() == 2) {
             String measurement_price = mRealNameBean.getDesigner().getMeasurement_price();
 
@@ -214,6 +219,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             }
             if (bidder_count >= BIDDER_MAX) {
                 bidCountFullDialog();
+
             } else {
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 String designer_id = memberEntity.getAcs_member_id();
@@ -357,6 +363,12 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * 应标成功提示
      */
     public void bidCountFullDialog() {
+        CustomProgress.cancelDialog();
+        CustomProgress.dialog.cancel();
+        mBtnSendBid.setEnabled(false);
+        mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+        mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+        mBtnSendBid.setText(UIUtils.getString(R.string.bided));
         getAlertView(UIUtils.getString(R.string.should_number_full), null, false).show();
     }
 
