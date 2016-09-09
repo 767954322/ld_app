@@ -29,26 +29,13 @@ public class BidSuccessFragment extends BidBaseFragment {
     }
 
     @Override
-    protected boolean validateData(String status) {
-        return IS_SUCCESS.equals(status);
+    protected String getCurrentBidStatus() {
+        return BID_STATUS_SUCCESS;
     }
 
     @Override
     protected void initData() {
         super.initData();
-
-        Bundle data = getArguments();
-        ArrayList<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys = (ArrayList<MyBidBean.BiddingNeedsListEntity>) data.getSerializable("FragmentData");
-        onFragmentShown(biddingNeedsListEntitys);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!mIsFirstIn) {
-            mPullToRefreshLayout.autoRefresh();
-        }
-        mIsFirstIn = false;
     }
 
     protected CommonAdapter getCommonAdapter() {
@@ -64,20 +51,5 @@ public class BidSuccessFragment extends BidBaseFragment {
                 });
             }
         };
-    }
-
-    @Override
-    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        mBiddingNeedsListEntities.clear();
-        mBiddingNeedsListEntities.addAll(getData(0));
-        mCommonAdapter.notifyDataSetChanged();
-        mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-    }
-
-    @Override
-    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        mBiddingNeedsListEntities.addAll(getData(mBiddingNeedsListEntities.size()));
-        mCommonAdapter.notifyDataSetChanged();
-        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 }

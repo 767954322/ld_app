@@ -29,25 +29,13 @@ public class BidFailureFragment extends BidBaseFragment {
     }
 
     @Override
-    protected boolean validateData(String status) {
-        return !status.equals(IS_SUCCESS) && !status.equals(BE_BEING);
+    protected String getCurrentBidStatus() {
+        return BID_STATUS_FAIL;
     }
 
     @Override
     protected void initData() {
         super.initData();
-        Bundle data = getArguments();
-        ArrayList<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys = (ArrayList<MyBidBean.BiddingNeedsListEntity>) data.getSerializable("FragmentData");
-        onFragmentShown(biddingNeedsListEntitys);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!mIsFirstIn) {
-            mPullToRefreshLayout.autoRefresh();
-        }
-        mIsFirstIn = false;
     }
 
     ///适配器.
@@ -76,21 +64,5 @@ public class BidFailureFragment extends BidBaseFragment {
         } else if(view instanceof TextView) {
             ((TextView) view).setTextColor(color);
         }
-    }
-
-    @Override
-    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        mBiddingNeedsListEntities.clear();
-        mBiddingNeedsListEntities.addAll(getData(0));
-        mCommonAdapter.notifyDataSetChanged();
-        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-
-    }
-
-    @Override
-    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        mBiddingNeedsListEntities.addAll(getData(mBiddingNeedsListEntities.size()));
-        mCommonAdapter.notifyDataSetChanged();
-        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 }

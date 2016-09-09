@@ -692,13 +692,16 @@ public class MPServerHttpManager {
     /**
      * 个人中心 我要应标
      */
-    public void getMyBidData(final String memType, final String acsToken, int offset, int limit, int designer_id, OkJsonRequest.OKResponseCallback callback) {
+    public void getMyBidData(final String memType, final String acsToken, int offset, int limit, int designer_id, String bidStatus,
+                             OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_MY_BID + designer_id +
                 "/bidders?" +
                 "offset=" + offset +
                 "&limit=" + limit +
+                "&bid_status=" + bidStatus +
                 "&sort_by=date" +
                 "&sort_order=desc";
+        Log.i("Wenhui", "url=" + url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * @file MyBidActivity.java  .
  * @brief .
  */
-public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener, BidBidingFragment.FragmentCallBack {
+public class MyBidActivity extends NavigationBarActivity implements View.OnClickListener {
 
     @Override
     protected int getLayoutResId() {
@@ -87,7 +87,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 setTextLineVisibility(new TextView[]{mMyBidDidLine, mOutFlowLine});
                 if (beBeingFragment == null) {
                     beBeingFragment = new BidBidingFragment();
-                    setArguments(beBeingFragment);
                 }
                 switchFragment(beBeingFragment);
 
@@ -100,7 +99,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 setTextLineVisibility(new TextView[]{mBeingDidLine, mOutFlowLine});
                 if (bingoFragment == null) {
                     bingoFragment = new BidSuccessFragment();
-                    setArguments(bingoFragment);
                 }
                 switchFragment(bingoFragment);
                 break;
@@ -112,7 +110,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
                 setTextLineVisibility(new TextView[]{mBeingDidLine, mMyBidDidLine});
                 if (outflowFragment == null) {
                     outflowFragment = new BidFailureFragment();
-                    setArguments(outflowFragment);
                 }
                 switchFragment(outflowFragment);
                 break;
@@ -125,20 +122,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    @Override
-    public void getMyBidBean(MyBidBean myBidBean) {
-        if (mList != null) {
-            mList.clear();
-            mList.addAll(myBidBean.getBidding_needs_list());
-            if (bingoFragment != null) {
-                updateFragment(bingoFragment);
-            }
-            if (outflowFragment != null) {
-                updateFragment(outflowFragment);
-            }
-        }
     }
 
     private void setColorAndBackgroundForTextView(TextView textView) {
@@ -163,16 +146,6 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         tv_bid_be_being_bid.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
         tv_my_bid_bingo_bid.setTextColor(UIUtils.getColor(R.color.bg_33));
         tv_my_bid_outflow_bid.setTextColor(UIUtils.getColor(R.color.bg_33));
-    }
-
-    /**
-     * @param fragment
-     * @brief 往Fragment传输数据
-     */
-    private void setArguments(Fragment fragment) {
-        Bundle data = new Bundle();
-        data.putSerializable("FragmentData", mList);
-        fragment.setArguments(data);
     }
 
     /**
@@ -216,25 +189,11 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         fromFragment = to;
     }
 
-
-    private void updateFragment(Fragment fragment) {
-        if (fragment instanceof BidSuccessFragment) {
-            BidSuccessFragment sub = (BidSuccessFragment) fragment;
-            sub.onFragmentShown(mList);
-        } else if (fragment instanceof BidFailureFragment) {
-            BidFailureFragment sub = (BidFailureFragment) fragment;
-            sub.onFragmentShown(mList);
-
-        } else {
-        }
-    }
-
     private TextView tv_bid_be_being_bid;
     private TextView tv_my_bid_bingo_bid;
     private TextView tv_my_bid_outflow_bid;
     private TextView mBeingDidLine,mMyBidDidLine,mOutFlowLine;
     private Fragment beBeingFragment, bingoFragment, outflowFragment;
     private Fragment fromFragment;
-    private ArrayList<MyBidBean.BiddingNeedsListEntity> mList = new ArrayList<>();
     private FragmentManager fragmentManager;
 }
