@@ -1,11 +1,8 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,12 +16,10 @@ import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
@@ -43,8 +38,8 @@ import java.util.Map;
 public abstract class BidBaseFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
 
     protected abstract int getEmptyDataMessage();
-    protected abstract boolean validateData(String status);
     protected abstract CommonAdapter getCommonAdapter();
+    protected abstract String getCurrentBidStatus();
 
     @Override
     protected int getLayoutResId() {
@@ -62,7 +57,6 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
 
         mPullToRefreshLayout.setOnRefreshListener(this);
         mBiddingNeedsListEntities = new ArrayList<>();
-        mBiddingNeedsListEntityArrayList = new ArrayList<>();
         mCommonAdapter = getCommonAdapter();
         mPullListView.setAdapter(mCommonAdapter);
     }
@@ -76,31 +70,86 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         tvEmptyMessage.setText(getEmptyDataMessage());
     }
 
-    public void onFragmentShown(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mIsFirstIn || isVisible()) {
+            mPullToRefreshLayout.autoRefresh();
+        }
+        mIsFirstIn = false;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+        fetchMyBidData(0, FETCH_MYBID_DATA_LIMIT, true);
+    }
+
+    @Override
+    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+        fetchMyBidData(mBiddingNeedsListEntities.size(), FETCH_MYBID_DATA_LIMIT, false);
+    }
+
+    private boolean validateData(String status) {
+        return getCurrentBidStatus().equals(status);
+    }
+
+    public void updateView(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys, boolean isRefresh) {
         if (mPullListView.getEmptyView() == null) {
             mPullListView.setEmptyView(mEmptyView);
         }
 
-        mBiddingNeedsListEntityArrayList.clear();
-        for (MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity : biddingNeedsListEntitys) {
-            MyBidBean.BiddingNeedsListEntity.BidderEntity bidderEntity = biddingNeedsListEntity.getBidder();
-            if (bidderEntity != null && validateData(bidderEntity.getStatus())) {
-                mBiddingNeedsListEntityArrayList.add(biddingNeedsListEntity);
-            }
+        if (isRefresh) {
+            mBiddingNeedsListEntities.clear();
         }
-        mBiddingNeedsListEntities.clear();
-        mBiddingNeedsListEntities.addAll(getData(0));
+
+        if (biddingNeedsListEntitys != null && biddingNeedsListEntitys.size() > 0) {
+            mBiddingNeedsListEntities.addAll(biddingNeedsListEntitys);
+        }
+
         mCommonAdapter.notifyDataSetChanged();
     }
 
-    protected ArrayList<MyBidBean.BiddingNeedsListEntity> getData(int index) {
-        int length = index + 10;
-        ArrayList<MyBidBean.BiddingNeedsListEntity> list = new ArrayList<MyBidBean.BiddingNeedsListEntity>();
-        for (int i = index; i < length && i < mBiddingNeedsListEntityArrayList.size(); i++) {
-            MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity = mBiddingNeedsListEntityArrayList.get(i);
-            list.add(biddingNeedsListEntity);
+
+    /**
+     * @param memType
+     * @param acsToken
+     * @param designer_id
+     * @param offset
+     * @param limit
+     * @brief Get mybid data by bid status
+     */
+    public void fetchMyBidData(int offset, int limit, final boolean isRefresh) {
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (memberEntity == null) {
+            return;
         }
-        return list;
+
+        String memType = memberEntity.getMember_type();
+        String acsToken = memberEntity.getAcs_token();
+        int designerId = Integer.parseInt(memberEntity.getAcs_member_id());
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                String str = GsonUtil.jsonToString(jsonObject);
+                MyBidBean myBidBean = GsonUtil.jsonToBean(str, MyBidBean.class);
+                updateView(myBidBean.getBidding_needs_list(), isRefresh);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+            }
+        };
+        MPServerHttpManager.getInstance().getMyBidData(memType, acsToken, offset, limit, designerId, getCurrentBidStatus(),
+                callback);
     }
 
     protected void setupBidItemView(CommonViewHolder holder, MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
@@ -167,10 +216,12 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
 
     protected CommonAdapter mCommonAdapter;
     protected ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntities;
-    protected ArrayList<MyBidBean.BiddingNeedsListEntity> mBiddingNeedsListEntityArrayList;
 
-    protected static final String BE_BEING = "0";
-    protected static final String IS_SUCCESS = "1";
+    protected static final String BID_STATUS_BEING = "0";
+    protected static final String BID_STATUS_SUCCESS = "1";
+    protected static final String BID_STATUS_FAIL = "2";
+
+    private static final int FETCH_MYBID_DATA_LIMIT = 10;
 
     /// 变量.
     protected boolean mIsFirstIn = true;
