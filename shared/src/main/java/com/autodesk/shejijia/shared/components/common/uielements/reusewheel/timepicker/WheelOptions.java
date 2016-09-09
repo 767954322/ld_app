@@ -1,5 +1,9 @@
 package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.timepicker;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 
@@ -9,6 +13,8 @@ import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.libs
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnItemSelectedListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by yaoxuehua on 16-6-17.
@@ -26,6 +32,9 @@ public class WheelOptions<T> {
     private boolean linkage = false;
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
+
+    private Handler handler;//及时监听数据
+    private Timer timer;
 
     public View getView() {
         return view;
@@ -64,6 +73,12 @@ public class WheelOptions<T> {
             len = 12;
         // 选项1
         wv_option1 = (WheelView) view.findViewById(R.id.options1);
+
+        if (wv_option1 != null){
+
+            setWheelViewListenerOnTouch(wv_option1);
+        }
+
         wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items, len));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
         // 选项2
@@ -223,6 +238,73 @@ public class WheelOptions<T> {
                             opt2Select)));
             wv_option3.setCurrentItem(opt3Select);
         }
+    }
+
+    /**
+     * 设置该view的滑动按下，移动抬起监听
+     *
+     * */
+
+    public void setWheelViewListenerOnTouch(final WheelView wheelView){
+
+        wheelView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE){
+
+                    justMethod();
+                }
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    justMethod();
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_UP){
+
+                    justMethod();
+                }
+
+
+                return false;
+            }
+        });
+    }
+
+    /**
+     * 判断选中时间是否为最终时间
+     * */
+
+    public void justMethod(){
+
+        TimerTask timerTask= null;
+        if (timerTask == null){
+
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    Message message = Message.obtain();
+                    message.what = wv_option1.getCurrentItem();
+                    handler.sendMessage(message);
+                }
+            };
+        }
+
+        if (timer == null){
+
+            timer = new Timer();
+            //timer.scheduleAtFixedRate(timerTask,100,100);
+
+        }
+
+    }
+
+    /**
+     * 向控件发送消息，确认当前处于那个item
+     * */
+    public void setHandler(Handler mHandler){
+
+        this.handler = mHandler;
+
     }
 
 

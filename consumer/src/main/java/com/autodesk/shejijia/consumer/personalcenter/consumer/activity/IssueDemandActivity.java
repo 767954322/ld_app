@@ -451,7 +451,9 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             toiletsList.add(options3Items_01);
         }
 
+
         pvRoomTypeOptions.setPicker(roomsList, hallsList, toiletsList, true);
+        pvRoomTypeOptions.setList(roomsList, hallsList, toiletsList);
         pvRoomTypeOptions.setCyclic(false, false, false);
         pvRoomTypeOptions.setSelectOptions(0, 0, 0);
         pvRoomTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {

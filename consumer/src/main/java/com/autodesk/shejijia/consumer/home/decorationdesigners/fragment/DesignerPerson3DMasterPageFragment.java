@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.ImageFileRsp;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesigner3DCaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.Case3DBeen;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetail3DActivity;
@@ -77,9 +78,11 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         } else {
 
             myDatas.addAll(myData);
+            if (myDatas !=null && myDatas.size()>0){
 
-            seekDesigner3DCaseAdapter.addMoreData(myDatas);
-            seekDesigner3DCaseAdapter.notifyDataSetChanged();
+                seekDesigner3DCaseAdapter.addMoreData(myDatas);
+                seekDesigner3DCaseAdapter.notifyDataSetChanged();
+            }
 
         }
 

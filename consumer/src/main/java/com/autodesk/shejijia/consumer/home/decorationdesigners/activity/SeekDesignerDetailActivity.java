@@ -316,7 +316,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                                     SeekDesignerDetailActivity.this.startActivity(intent);
 
                                 } else {
-                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id,member_id, new OkStringRequest.OKResponseCallback() {
+                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
                                         @Override
                                         public void onErrorResponse(VolleyError volleyError) {
                                             MPNetworkUtils.logError(TAG, volleyError);
@@ -410,7 +410,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 switchFragment(shareFragment, mDesignerAppraiseFragment);
                 setTextColor(controlNumber);
 
-                myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
+                myScrollView.smoothScrollTo(0, scrollLastMoveDistance);//避免点击该按钮时，页面自动向上滑动
                 setEmptyText();//判断是评价还是其他空白页面
 
 
@@ -567,7 +567,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,SeekDesignerDetailActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, SeekDesignerDetailActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getSeekDesignerDetailHomeData(designer_id, hsUid, okResponseCallback);
@@ -597,7 +597,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                     mDesignerPersonMasterPageFragment.setHandler(handler);
 
-                    if (isRefreshOrLoad) {
+                    if (isRefreshOrLoad2D) {
                         mDesignerPersonMasterPageFragment.getMore2DCaseData(mSeekDesignerDetailBean, 0);//刷新
 
                         mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
@@ -622,7 +622,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
 
-                if (isRefreshOrLoad) {
+                if (isRefreshOrLoad2D) {
 
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.FAIL);
                 } else {
@@ -649,7 +649,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                if (isRefreshOrLoad) {
+                if (isRefreshOrLoad3D) {
 
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.FAIL);
                 } else {
@@ -678,7 +678,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         default_ll_bg.setVisibility(View.VISIBLE);
                     }
 
-                    if (isRefreshOrLoad) {
+                    if (isRefreshOrLoad3D) {
                         mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen.getCases(), 0);//刷新
                         mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
                     } else {
@@ -975,7 +975,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                if (isRefreshOrLoad) {
+                if (isRefreshOrLoadAppraise) {
 
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.FAIL);
                 } else {
@@ -1049,12 +1049,12 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         CustomProgress.show(this, "", false, null);
         if (controlNumber == 1) {
-            isRefreshOrLoad = true;
+            isRefreshOrLoad2D = true;
 
             getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, SeekDesignerDetailActivity.this.LIMIT, 0);
             OFFSETCOUNT = 10;
         } else if (controlNumber == 2) {
-            isRefreshOrLoad = true;
+            isRefreshOrLoad3D = true;
             getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, LIMIT, "data", "desc");
             OFFSETCOUNT = 10;
         } else {
@@ -1071,11 +1071,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
         CustomProgress.show(this, "", false, null);
         if (controlNumber == 1) {
-            isRefreshOrLoad = false;
+            isRefreshOrLoad2D = false;
             getSeekDesignerDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, 0);
             OFFSETCOUNT = OFFSETCOUNT + 10;
         } else if (controlNumber == 2) {
-            isRefreshOrLoad = false;
+            isRefreshOrLoad3D = false;
             getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, OFFSETCOUNT, SeekDesignerDetailActivity.this.LIMIT, "data", "desc");
             OFFSETCOUNT = OFFSETCOUNT + 10;
         } else {
@@ -1172,11 +1172,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         }
     }
 
-    public void setEmptyText(){
-        if (controlNumber == 3){
+    public void setEmptyText() {
+        if (controlNumber == 3) {
 
             empty_Text.setText("暂无评价");
-        }else {
+        } else {
 
             empty_Text.setText("暂无案例");
         }
@@ -1245,8 +1245,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
     private boolean isFirstIn3D = true;//判断3D案例背景显示与否
     private boolean isFirstIn2D = true;//判断2D案例背景显示与否
-    private boolean isRefreshOrLoad = true;
+    private boolean isRefreshOrLoad3D = true;
     private boolean isRefreshOrLoadAppraise = true;
+    private boolean isRefreshOrLoad2D = true;
     private MemberEntity memberEntity;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
     private DesignerDetailHomeBean seekDesignerDetailHomeBean;
