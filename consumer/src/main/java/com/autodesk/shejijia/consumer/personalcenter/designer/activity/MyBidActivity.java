@@ -53,6 +53,11 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
         tv_bid_be_being_bid = (TextView) findViewById(R.id.tv_bid_be_being_bid);
         tv_my_bid_bingo_bid = (TextView) findViewById(R.id.tv_my_bid_bingo_bid);
         tv_my_bid_outflow_bid = (TextView) findViewById(R.id.tv_my_bid_outflow_bid);
+        mBeingDidLine = (TextView) findViewById(R.id.tv_bid_be_being_bid_line);
+        mMyBidDidLine = (TextView) findViewById(R.id.tv_my_bid_bingo_bid_line);
+        mOutFlowLine = (TextView) findViewById(R.id.tv_my_bid_outflow_bid_line);
+
+        resetTextTitleColor();
     }
 
     @Override
@@ -76,11 +81,13 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-
+        resetTextTitleColor();
         switch (v.getId()) {
             case R.id.tv_bid_be_being_bid:
                 setColorAndBackgroundForTextView(tv_bid_be_being_bid);
                 setTextColor(new TextView[]{tv_my_bid_bingo_bid, tv_my_bid_outflow_bid});
+                mBeingDidLine.setVisibility(View.VISIBLE);
+                setTextLineVisibility(new TextView[]{mMyBidDidLine, mOutFlowLine});
                 if (beBeingFragment == null) {
                     beBeingFragment = new BidBidingFragment();
                     setArguments(beBeingFragment);
@@ -92,6 +99,8 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
             case R.id.tv_my_bid_bingo_bid:
                 setColorAndBackgroundForTextView(tv_my_bid_bingo_bid);
                 setTextColor(new TextView[]{tv_bid_be_being_bid, tv_my_bid_outflow_bid});
+                mMyBidDidLine.setVisibility(View.VISIBLE);
+                setTextLineVisibility(new TextView[]{mBeingDidLine, mOutFlowLine});
                 if (bingoFragment == null) {
                     bingoFragment = new BidSuccessFragment();
                     setArguments(bingoFragment);
@@ -102,6 +111,8 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
             case R.id.tv_my_bid_outflow_bid:
                 setColorAndBackgroundForTextView(tv_my_bid_outflow_bid);
                 setTextColor(new TextView[]{tv_bid_be_being_bid, tv_my_bid_bingo_bid});
+                mOutFlowLine.setVisibility(View.VISIBLE);
+                setTextLineVisibility(new TextView[]{mBeingDidLine, mMyBidDidLine});
                 if (outflowFragment == null) {
                     outflowFragment = new BidFailureFragment();
                     setArguments(outflowFragment);
@@ -166,15 +177,27 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     }
 
     private void setColorAndBackgroundForTextView(TextView textView) {
-        textView.setTextColor(UIUtils.getColor(R.color.white));
-        textView.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_blue_noradius));
+        textView.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
+//        textView.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_blue_noradius));
     }
 
     private void setTextColor(TextView[] textViews) {
         for (TextView textView : textViews) {
-            setTvColor(textView);
-            textView.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
+//            setTvColor(textView);
+            textView.setTextColor(UIUtils.getColor(R.color.bg_33));
         }
+    }
+
+    private void setTextLineVisibility(TextView[] textViewLines){
+        for (TextView textView : textViewLines){
+            textView.setVisibility(View.GONE);
+        }
+    }
+
+    private void resetTextTitleColor(){
+        tv_bid_be_being_bid.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
+        tv_my_bid_bingo_bid.setTextColor(UIUtils.getColor(R.color.bg_33));
+        tv_my_bid_outflow_bid.setTextColor(UIUtils.getColor(R.color.bg_33));
     }
 
     /**
@@ -248,6 +271,7 @@ public class MyBidActivity extends NavigationBarActivity implements View.OnClick
     private TextView tv_bid_be_being_bid;
     private TextView tv_my_bid_bingo_bid;
     private TextView tv_my_bid_outflow_bid;
+    private TextView mBeingDidLine,mMyBidDidLine,mOutFlowLine;
     private Fragment beBeingFragment, bingoFragment, outflowFragment;
     private Fragment fromFragment;
     private ArrayList<MyBidBean.BiddingNeedsListEntity> mList = new ArrayList<>();

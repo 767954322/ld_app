@@ -14,43 +14,101 @@
         android:layout_height="@dimen/size_40"
         android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_bid_be_being_bid"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_common_btn_blue_noradius"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="@string/my_bid_be_being_bid"
-            android:textColor="@color/white"></TextView>
+            <TextView
+                android:id="@+id/tv_bid_be_being_bid"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/my_bid_be_being_bid"
+                android:textColor="@color/bg_0084ff">
 
-        <TextView
-            android:id="@+id/tv_my_bid_bingo_bid"
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_bid_be_being_bid_line"
+                android:layout_width="@dimen/size_50"
+                android:layout_height="2dp"
+                android:background="@color/bg_0084ff"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/textview_border_beishu"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
-            android:text="@string/my_bid_bingo_bid"
-            android:textColor="@color/bg_0084ff"></TextView>
-        <TextView
-            android:id="@+id/tv_my_bid_outflow_bid"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_my_bid_bingo_bid"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/my_bid_bingo_bid"
+                android:textColor="@color/bg_0084ff">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_my_bid_bingo_bid_line"
+                android:layout_width="@dimen/size_50"
+                android:layout_height="2dp"
+                android:background="@color/bg_0084ff"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/textview_border_beishu"
             android:layout_weight="1"
-            android:clickable="true"
             android:gravity="center"
-            android:text="@string/my_bid_outflow_bid"
-            android:textColor="@color/bg_0084ff"></TextView>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_my_bid_outflow_bid"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/my_bid_outflow_bid"
+                android:textColor="@color/bg_0084ff">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_my_bid_outflow_bid_line"
+                android:layout_width="@dimen/size_50"
+                android:layout_height="2dp"
+                android:background="@color/bg_0084ff"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
     </LinearLayout>
+
+    <View
+        android:id="@+id/view_navigation_header_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/navbar_bottom_border_color" />
 
     <FrameLayout
         android:id="@+id/fl_my_bid_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </LinearLayout>

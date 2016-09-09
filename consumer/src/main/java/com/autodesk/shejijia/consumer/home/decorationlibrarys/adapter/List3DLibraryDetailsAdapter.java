@@ -64,7 +64,7 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
                 if (mType.equals("4")){
                     Toast.makeText(mContext, "漫游图", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, CaseLibraryRoamingWebView.class);
-                    String webUrl = imageLists.get(0);
+                    String webUrl = imageLists.get(position);
                     intent.putExtra("roaming",webUrl);
                     mContext.startActivity(intent);
                 }else {
