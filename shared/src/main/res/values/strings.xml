@@ -964,6 +964,7 @@
     <!--工作室列表-->
     <string name="work_room_commit_successful">提交成功</string>
     <string name="work_room_commit_fail">提交失败</string>
-
+    <!-- 大师详情 -->
+    <string name="grandmaster_title">大师详情</string>
 
 </resources>

@@ -87,9 +87,8 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent intent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
-                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, myDatas.get(position).getDesign_asset_id());
+                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, myDatas.get(position).getDesign_asset_id()+"");
                 getActivity().startActivity(intent);
 
             }

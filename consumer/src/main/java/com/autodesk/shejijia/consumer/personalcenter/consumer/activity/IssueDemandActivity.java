@@ -224,7 +224,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     area = "0";
                 }
                 area = String.format("%.2f", Double.valueOf(area));
-                if (Double.valueOf(area) < 1) {
+                if (Double.valueOf(area) < 1 || Double.valueOf(area) > 9999) {
                     showAlertView(R.string.alert_msg_area);
                     return;
                 }
@@ -340,6 +340,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                         mCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
                         mCurrentDistrict = TextUtils.isEmpty(area) || area.equals("none") ? "none" : area;
                         mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
                                 || "none".equals(mCurrentDistrict)
