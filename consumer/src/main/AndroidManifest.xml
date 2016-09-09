@@ -420,11 +420,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".codecorationBase.grandmaster.activity.GrandMasterDetailActivity2"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".codecorationBase.packages.activity.PackageDetailActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

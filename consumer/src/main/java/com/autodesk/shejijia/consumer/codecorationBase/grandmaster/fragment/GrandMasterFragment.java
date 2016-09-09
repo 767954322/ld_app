@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity.GrandMasterDetailActivity2;
+import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity.GrandMasterDetailActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.GrandMasterInfo;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.MasterInfo;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
@@ -247,7 +247,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                     //大师列表点击监听
                     iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
-                            Intent intent = new Intent(mContext, GrandMasterDetailActivity2.class);
+                            Intent intent = new Intent(mContext, GrandMasterDetailActivity.class);
                             intent.putExtra("hs_uid", masterInfo.getHs_uid());
                             mContext.startActivity(intent);
                         }

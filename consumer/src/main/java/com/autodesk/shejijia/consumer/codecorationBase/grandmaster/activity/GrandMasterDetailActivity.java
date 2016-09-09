@@ -1,16 +1,12 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,11 +18,9 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.DatailCase;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.MasterDetail;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
-import com.autodesk.shejijia.consumer.codecorationBase.packages.view.MyListView;
-import com.autodesk.shejijia.consumer.codecorationBase.packages.view.VerticalViewPager;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -34,7 +28,6 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,45 +38,90 @@ import java.util.List;
 /**
  * Created by allengu on 16-8-23.
  */
-public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener {
 
+    private ImageButton nav_left_imageButton;
+    private ImageButton bt_grand_reservation;
+    private ImageButton ib_grand_detail_ico;
+    private ImageView iv_detail_desiner;
+    private TextView tv_detail_cn_name;
+    private TextView tv_detail_en_name;
+    private TextView tv_detail_cn_position;
+    private TextView tv_detail_en_position;
+    private TextView tv_detail_content;
+    private TextView nav_title_textView;
+    private RelativeLayout rl_navr_header;
+    private boolean isLoginUserJust = false;
+
+    private String hs_uid;
+    private List<DatailCase> cases_list;
+    private ArrayList<View> viewList;
+    private MasterDetail masterDetail;
+    private Animation animationIn, animationVoice;
+
+
+    private ImageView mHeadImageView;
+
+    private RecyclerView mRecyclerView;
 
     @Override
     protected int getLayoutResId() {
-
         return R.layout.activity_grandmaster_detail;
     }
 
     @Override
     protected void initView() {
 
-        vvp_viewpager = (VerticalViewPager) findViewById(R.id.vvp_viewpager);
         nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
         bt_grand_reservation = (ImageButton) findViewById(R.id.bt_grand_reservation);
         ib_grand_detail_ico = (ImageButton) findViewById(R.id.ib_grand_detail_ico);
         rl_navr_header = (RelativeLayout) findViewById(R.id.rl_navr_header);
-
-        animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
+        tv_detail_cn_name = (TextView) findViewById(R.id.tv_detail_cn_name);
+        tv_detail_en_name = (TextView) findViewById(R.id.tv_detail_en_name);
+        tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
+        iv_detail_desiner = (ImageView) findViewById(R.id.iv_detail_desiner);
+        tv_detail_cn_position = (TextView) findViewById(R.id.tv_detail_cn_position);
+        tv_detail_en_position = (TextView) findViewById(R.id.tv_detail_en_position);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
     }
 
+
     @Override
     protected void initListener() {
+        super.initListener();
+
         nav_left_imageButton.setOnClickListener(this);
         bt_grand_reservation.setOnClickListener(this);
-        vvp_viewpager.setOnPageChangeListener(this);
+
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-        Intent intent = getIntent();
-        hs_uid = intent.getStringExtra("hs_uid");
+
+        hs_uid = getIntent().getStringExtra("hs_uid");
         isLoginUserJust = isLoginUser();
+
         getGrandMasterInfo();
-        initAnimation();
-        ib_grand_detail_ico.startAnimation(animationIn);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.nav_left_imageButton://返回键
+
+                finish();
+
+                break;
+            case R.id.bt_grand_reservation://提交大师预约
+
+                onClickFromReservation();
+
+                break;
+        }
     }
 
     //获取大师详情信息
@@ -99,53 +137,34 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                String detailInfo = GsonUtil.jsonToString(jsonObject);
+                masterDetail = GsonUtil.jsonToBean(GsonUtil.jsonToString(jsonObject), MasterDetail.class);
 
-                initDetailData(detailInfo);
+                cases_list = masterDetail.getCases_list();
+
+                initDetailData();
+
             }
         });
 
     }
 
     //初始化详情信息
-    private void initDetailData(String detailInfo) {
+    private void initDetailData() {
 
-        masterDetail = GsonUtil.jsonToBean(detailInfo, MasterDetail.class);
-        cases_list = masterDetail.getCases_list();
+        //初始化大师详情
+        initPageTopInfo();
 
-        initPageData();
+        //初始化大师案例展示
+        initPageBottomInfo();
 
-        initListData();
+        //添加图标动画
+        initAnimation();
 
     }
 
-    //初始化pager页
-    private void initPageData() {
+    //初始化第一页内容
+    private void initPageTopInfo() {
 
-        LayoutInflater lf = LayoutInflater.from(this);
-        view1 = lf.inflate(R.layout.viewpager_grandmaster_one, null);
-        view2 = lf.inflate(R.layout.viewpager_grandmaster_two, null);
-        viewList = new ArrayList<View>();
-        viewList.add(view1);
-        viewList.add(view2);
-
-        vvp_viewpager.setAdapter(pagerAdapter);
-    }
-
-    //为pager页添加数据（目前案例列表为假数据）
-    private void initListData() {
-
-        nav_title_textView.setText("大师详情");
-        tv_detail_cn_name = (TextView) view1.findViewById(R.id.tv_detail_cn_name);
-        tv_detail_en_name = (TextView) view1.findViewById(R.id.tv_detail_en_name);
-        tv_detail_content = (TextView) view1.findViewById(R.id.tv_detail_content);
-        iv_detail_desiner = (ImageView) view1.findViewById(R.id.iv_detail_desiner);
-        tv_detail_cn_position = (TextView) view1.findViewById(R.id.tv_detail_cn_position);
-        tv_detail_en_position = (TextView) view1.findViewById(R.id.tv_detail_en_position);
-        ll_grand_master_detail = (MyListView) view2.findViewById(R.id.ll_grand_master_detail);
-        //添加ＬistＶiew的Ａdapter
-        ll_grand_master_detail.setAdapter(new MasterAdapter());
-        //设置第一页的数据
         tv_detail_cn_name.setText(masterDetail.getNick_name());
         tv_detail_en_name.setText(masterDetail.getEnglish_name());
         if (TextUtils.isEmpty(masterDetail.getDesigner().getOccupational_cn())) {
@@ -163,72 +182,77 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         } else {
             tv_detail_content.setText(masterDetail.getDesigner().getIntroduction());
         }
-
         if (null != masterDetail.getDesigner() && null != masterDetail.getDesigner().getDesigner_detail_cover_app() && null != masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url()) {
-
             String img_url = masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url();
-
             ImageUtils.displayIconImage(img_url, iv_detail_desiner);
         }
 
-
     }
 
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.nav_left_imageButton://返回键
+    private void initPageBottomInfo(){
 
-                finish();
+        BaseCommonRvAdapter<DatailCase> adapter1 = new BaseCommonRvAdapter<DatailCase>(this, R.layout.item_listview_grandmaster_detail, cases_list) {
+            @Override
+            public void convert(ViewHolder holder, DatailCase item, int position) {
+                ImageView imageView = holder.getView(R.id.iv_item_listview_pic);
+                TextView textView = holder.getView(R.id.tv_item_listview_cn_tital);
+                ImageUtils.displayIconImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
+                textView.setText(cases_list.get(position).getTitle());
+            }
+        };
 
-                break;
-            case R.id.bt_grand_reservation://提交大师预约
-
-                OrderDialogMaster orderDialog = new OrderDialogMaster(GrandMasterDetailActivity.this, R.style.add_dialog, R.drawable.tital_yuyue);
-                orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
-                    @Override
-                    public void commitListener(String name, String phoneNumber) {
-
-                        JSONObject jsonObject = new JSONObject();
-                        String nicke_name = masterDetail.getNick_name();
-                        String member_id = masterDetail.getDesigner().getAcs_member_id();
-                        String hs_uid = masterDetail.getHs_uid();
-                        String login_member_id = "", login_hs_uid = "";
-
-                        if (isLoginUserJust) {
-                            login_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
-                            login_hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
-                        } else {
-                            login_member_id = "";
-                            login_hs_uid = "";
-                        }
-                        try {
-                            jsonObject.put("consumer_name", name);//姓名
-                            jsonObject.put("consumer_mobile", phoneNumber);//电话
-                            jsonObject.put("type", 1);//大师类型
-                            jsonObject.put("customer_id", login_member_id);//消费者ID
-                            jsonObject.put("consumer_uid", login_hs_uid);
-                            jsonObject.put("name", nicke_name);
-                            jsonObject.put("member_id", member_id);
-                            jsonObject.put("hs_uid", hs_uid);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        CustomProgress.show(GrandMasterDetailActivity.this, "提交中...", false, null);
-                        upOrderDataForService(jsonObject);
-                    }
-                });
-                orderDialog.show();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(adapter1);
 
 
-                break;
+    }
+
+    //添加图标动画
+    private void initAnimation() {
+        animationVoice = AnimationUtils.loadAnimation(this, R.anim.voice_button_anim);
+        animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
+        //设置动画执行的回调函数
+        animationIn.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //开始呼吸动画
+                ib_grand_detail_ico.startAnimation(animationVoice);
+                ib_grand_detail_ico.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ib_grand_detail_ico.startAnimation(animationIn);
+    }
+
+
+    //判断该用户是否登陆了
+    public boolean isLoginUser() {
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
+        if (memberEntity == null) {
+
+            return false;//未登录
+        } else {
+
+            return true;//已登录
         }
     }
 
-    /**
-     * 上传立即预约信息
-     */
+
+     //上传立即预约信息
     public void upOrderDataForService(JSONObject jsonObject) {
 
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
@@ -248,187 +272,45 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
     }
 
-    //判断该用户是否登陆了
-    public boolean isLoginUser() {
-
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-
-        if (memberEntity == null) {
-
-            return false;//未登录
-        } else {
-
-            return true;//已登录
-        }
-    }
-
-    protected PagerAdapter pagerAdapter = new PagerAdapter() {
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-
-            return arg0 == arg1;
-        }
-
-        @Override
-        public int getCount() {
-
-            return viewList.size();
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position,
-                                Object object) {
-            container.removeView(viewList.get(position));
-
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-
-            return super.getItemPosition(object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            ViewGroup view_parent = (ViewGroup) viewList.get(position).getParent();
-            if (view_parent != null) {
-                view_parent.removeView(viewList.get(position));
-            }
-            container.addView(viewList.get(position));
-
-            if (position == 0) {//Ｐager第一页设置
-                nav_title_textView.setText("套餐详情");
-                vvp_viewpager.setBackground(null);
-            } else if (position == 1) {//Ｐager第二页设置
-                nav_title_textView.setText("大师详情页");
-                vvp_viewpager.setBackground(null);
-            }
-            return viewList.get(position);
-        }
-
-    };
+    private void onClickFromReservation(){
 
 
-    //案例列表Ａdapter
-    class MasterAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return cases_list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return cases_list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            MyHolder mhHolder;
-            if (convertView == null) {
-                mhHolder = new MyHolder();
-                convertView = LayoutInflater.from(GrandMasterDetailActivity.this).inflate(R.layout.item_listview_grandmaster_detail, null);
-                mhHolder.iv_detail = (ImageView) convertView.findViewById(R.id.iv_item_listview_pic);
-                mhHolder.tv_cn_name = (TextView) convertView.findViewById(R.id.tv_item_listview_cn_tital);
-
-                convertView.setTag(mhHolder);
-            }
-
-            mhHolder = (MyHolder) convertView.getTag();
-
-            //设置案例数据（假数据）
-            if (cases_list.get(position).getImages().size() > 0) {
-                ImageUtils.displayIconImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", mhHolder.iv_detail);
-            }
-
-            mhHolder.tv_cn_name.setText(cases_list.get(position).getTitle());
-
-            return convertView;
-        }
-
-        class MyHolder {
-
-            TextView tv_cn_name;
-            ImageView iv_detail;
-
-        }
-    }
-
-
-    private void initAnimation() {
-        animationVoice = AnimationUtils.loadAnimation(this, R.anim.voice_button_anim);
-        animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
-        //设置动画执行的回调函数
-        animationIn.setAnimationListener(new Animation.AnimationListener() {
-
+        OrderDialogMaster orderDialog = new OrderDialogMaster(GrandMasterDetailActivity.this, R.style.add_dialog, R.drawable.tital_yuyue);
+        orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void commitListener(String name, String phoneNumber) {
 
-            }
+                JSONObject jsonObject = new JSONObject();
+                String nicke_name = masterDetail.getNick_name();
+                String member_id = masterDetail.getDesigner().getAcs_member_id();
+                String hs_uid = masterDetail.getHs_uid();
+                String login_member_id = "", login_hs_uid = "";
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                ib_grand_detail_ico.startAnimation(animationVoice);    //开始呼吸动画
-                ib_grand_detail_ico.setVisibility(View.VISIBLE);
+                if (isLoginUserJust) {
+                    login_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
+                    login_hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
+                } else {
+                    login_member_id = "";
+                    login_hs_uid = "";
+                }
+                try {
+                    jsonObject.put("consumer_name", name);//姓名
+                    jsonObject.put("consumer_mobile", phoneNumber);//电话
+                    jsonObject.put("type", 1);//大师类型
+                    jsonObject.put("customer_id", login_member_id);//消费者ID
+                    jsonObject.put("consumer_uid", login_hs_uid);
+                    jsonObject.put("name", nicke_name);
+                    jsonObject.put("member_id", member_id);
+                    jsonObject.put("hs_uid", hs_uid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                CustomProgress.show(GrandMasterDetailActivity.this, "提交中...", false, null);
+                upOrderDataForService(jsonObject);
             }
         });
-    }
-
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        orderDialog.show();
 
     }
-
-    @Override
-    public void onPageSelected(int position) {
-
-        if (position == 0) {
-            rl_navr_header.setVisibility(View.VISIBLE);
-        } else {
-            rl_navr_header.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    private ImageButton nav_left_imageButton;
-    private ImageButton bt_grand_reservation;
-    private ImageButton ib_grand_detail_ico;
-    private ImageView iv_detail_desiner;
-    private TextView tv_detail_cn_name;
-    private TextView tv_detail_en_name;
-    private TextView tv_detail_cn_position;
-    private TextView tv_detail_en_position;
-    private TextView tv_detail_content;
-    private TextView nav_title_textView;
-    private RelativeLayout rl_navr_header;
-    private boolean isLoginUserJust = false;
-
-    private View view1;
-    private View view2;
-    private String hs_uid;
-    private List<DatailCase> cases_list;
-    private ArrayList<View> viewList;
-    private MasterDetail masterDetail;
-    private VerticalViewPager vvp_viewpager;
-    private MyListView ll_grand_master_detail;
-    private Animation animationIn, animationVoice;
-
 
 }
