@@ -20,6 +20,10 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  */
 public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
+    private BidBidingFragment mBidBidingFragment;
+    private DesignBaseFragment designBaseFragment;
+    private DesignerConstructionFragment mDesignerConstructionFragment;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_my_decoration_project_designer;
@@ -33,37 +37,27 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     protected void initData() {
         int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
         int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
+
         setDesigneBaseFragment(high_level_audit, is_loho);
     }
 
-    public void switchContent(Fragment to) {
-        if (mContent != to) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if (mContent == null) {
-                transaction.add(R.id.ll_contain, to).commit();
-            } else {
-                if (!to.isAdded()) { // 先判断是否被add过
-                    transaction.hide(mContent).add(R.id.ll_contain, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
-                } else {
-                    transaction.hide(mContent).show(to).commit(); // 隐藏当前的fragment，显示下一个
-                }
-            }
-            mContent = to;
-        }
+    public void switchContent(Fragment fragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.ll_contain, fragment);
+        transaction.commit();
     }
 
     /**
      * 应标
      */
     public void setBidingFragment() {
-        if (mBidBidingFragment == null) {
+        if (mBidBidingFragment == null)
             mBidBidingFragment = new BidBidingFragment();
-        }
         switchContent(mBidBidingFragment);
     }
 
     public void setDesigneBaseFragment(int high_level_audit, int is_loho) {
-        if (designBaseFragment == null)
+//        if (designBaseFragment == null)
             designBaseFragment = DesignBaseFragment.newInstance(high_level_audit, is_loho);
         switchContent(designBaseFragment);
     }
@@ -72,9 +66,8 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
      * 施工
      */
     public void setConstructionFragment() {
-        if (mDesignerConstructionFragment == null) {
+        if (mDesignerConstructionFragment == null)
             mDesignerConstructionFragment = new DesignerConstructionFragment();
-        }
         switchContent(mDesignerConstructionFragment);
     }
 
@@ -86,8 +79,8 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     }
 
     private Fragment mContent;
-    private DesignBaseFragment designBaseFragment;
-    private Fragment mDesignerConstructionFragment;
-    private Fragment mBidBidingFragment;
+//    private DesignBaseFragment designBaseFragment;
+//    private Fragment mDesignerConstructionFragment;
+//    private Fragment mBidBidingFragment;
 
 }
