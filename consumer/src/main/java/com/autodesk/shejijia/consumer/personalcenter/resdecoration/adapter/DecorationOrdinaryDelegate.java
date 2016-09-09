@@ -148,18 +148,11 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                 holder.setVisible(R.id.rl_bidder_count, false);
             } else {
                 holder.setVisible(R.id.rl_bidder_count, true);
-
-                // TODO 需求： 当有设计师支付了首款，隐藏应标人数条目布局
-                /// TODO DELETE 新需求.
-//             if (isBidding) {
-//                if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
-//                    holder.setVisible(R.id.rl_bidder_count, false);
-//                 } else {
-//                    holder.setVisible(R.id.rl_bidder_count, true);
-//                 }
-//              } else {
-//                holder.setVisible(R.id.rl_bidder_count, false);
-//             }
+                if (isBidding) {
+                    holder.setVisible(R.id.rl_bidder_count, true);
+                } else {
+                    holder.setVisible(R.id.rl_bidder_count, false);
+                }
             }
         }
         /**
