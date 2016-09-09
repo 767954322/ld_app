@@ -98,7 +98,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         return getCurrentBidStatus().equals(status);
     }
 
-    public void onFragmentShown(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys, boolean isRefresh) {
+    public void updateView(List<MyBidBean.BiddingNeedsListEntity> biddingNeedsListEntitys, boolean isRefresh) {
         if (mPullListView.getEmptyView() == null) {
             mPullListView.setEmptyView(mEmptyView);
         }
@@ -121,7 +121,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
      * @param designer_id
      * @param offset
      * @param limit
-     * @brief 获取我的应标中所有得数据 .
+     * @brief Get mybid data by bid status
      */
     public void fetchMyBidData(int offset, int limit, final boolean isRefresh) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -138,7 +138,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 String str = GsonUtil.jsonToString(jsonObject);
                 MyBidBean myBidBean = GsonUtil.jsonToBean(str, MyBidBean.class);
-                onFragmentShown(myBidBean.getBidding_needs_list(), isRefresh);
+                updateView(myBidBean.getBidding_needs_list(), isRefresh);
             }
 
             @Override

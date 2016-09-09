@@ -701,7 +701,6 @@ public class MPServerHttpManager {
                 "&bid_status=" + bidStatus +
                 "&sort_by=date" +
                 "&sort_order=desc";
-        Log.i("Wenhui", "url=" + url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
