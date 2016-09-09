@@ -41,6 +41,25 @@ public class StringUtils {
                 && !"null".equalsIgnoreCase(value.trim()));
     }
 
+ 		/**
+ 		* 是否选择了特殊户型
+     */
+    public static boolean isRoomEmpty(String room) {
+//        <item>LOFT</item>
+//        <item>复式</item>
+//        <item>别墅</item>
+//        <item>其它</item>
+        if ("LOFT".equalsIgnoreCase(room)
+                || "复式".equalsIgnoreCase(room)
+                || "别墅".equalsIgnoreCase(room)
+                || "其它".equalsIgnoreCase(room)) {
+            return true;
+        } else {
+            return false;
+
+        }
+    }
+
     /**
      * 判断多个字符串是否相等，如果其中有一个为空字符串或者null，则返回false，只有全相等才返回true
      */
