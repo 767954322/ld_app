@@ -700,12 +700,19 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         mCurrentProvinceCode = proviceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
-                        mCurrentDistrict = district;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) ? "" : areaCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
+                        mCurrentDistrict = TextUtils.isEmpty(district) || district.equals("none") ? "none" : district;
+                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
+                                || "none".equals(mCurrentDistrict)
+                                || TextUtils.isEmpty(areaCode)
+                                || "0".equals(areaCode) ? "0" : areaCode;
+
                         if ("null".equals(district) || "none".equals(district) || TextUtils.isEmpty(district)) {
-                            district = "";
+                            address = province + " " + city + " ";
+                        } else {
+                            address = province + " " + city + " " + district;
                         }
-                        tvc_address.setText(province + city + district);
+                        tvc_address.setText(address);
                         mChangeAddressDialog.dismiss();
                     }
 
@@ -899,6 +906,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String memberId;
     private boolean iselite;
+    private String address;
 
     ///　集合，类.
     private ArrayList<String> decorationBudgetItems = new ArrayList<>();

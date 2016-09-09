@@ -340,6 +340,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                         mCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
                         mCurrentDistrict = TextUtils.isEmpty(area) || area.equals("none") ? "none" : area;
                         mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict)
                                 || "none".equals(mCurrentDistrict)
