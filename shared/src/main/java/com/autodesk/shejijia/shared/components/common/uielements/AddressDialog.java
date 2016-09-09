@@ -153,8 +153,8 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
             district = mDistrictModelArrayList.get(0).CODE;
             mDistrictWheelView.setCurrentItem(0);
         } else {
-            district_name = "";
-            district = "";
+            district_name = "none";
+            district = "0";
         }
     }
 
