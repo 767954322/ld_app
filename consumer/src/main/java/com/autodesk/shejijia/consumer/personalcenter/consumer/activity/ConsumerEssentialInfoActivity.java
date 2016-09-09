@@ -156,10 +156,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         showState();
 
         /**
-         * 邮箱
+         * 邮箱为空时需要单独判断
          */
-
-        setTvString(mTvEmail, email);
+        if (TextUtils.isEmpty(email)) {
+            mTvEmail.setText(getResources().getString(R.string.no_email));
+        } else {
+            mTvEmail.setText(email);
+        }
         setGender();
     }
 
@@ -284,9 +287,8 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 所在地
          */
-        if (TextUtils.isEmpty(province_name)
-                || TextUtils.isEmpty(city_name)) {
-            mTvConsumeAddress.setText(getResources().getString(R.string.has_yet_to_fill_out));
+        if (TextUtils.isEmpty(province_name) || TextUtils.isEmpty(city_name) || province_name.equals("<null>") || city_name.equals("<null>")) {
+            mTvConsumeAddress.setText(getResources().getString(R.string.temporarily_no_data));
         } else {
             if (TextUtils.isEmpty(district_name)
                     || "none".equals(district_name)

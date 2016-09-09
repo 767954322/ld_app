@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/ll_consumer_container"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#F0F0F0"
-              android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_consumer_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
@@ -35,23 +35,23 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/size_50"
                     android:background="@drawable/icon_default_avator"
-                    app:poly_vertices="0"/>
+                    app:poly_vertices="0" />
 
                 <TextView
-                    android:background="@drawable/bg_upload_protrait_tv"
                     android:id="@+id/tv_consume_essential_upload_picture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_10"
+                    android:background="@drawable/bg_upload_protrait_tv"
+                    android:paddingBottom="@dimen/size_2"
                     android:paddingLeft="@dimen/size_7"
                     android:paddingRight="@dimen/size_7"
-                    android:paddingBottom="@dimen/size_2"
                     android:paddingTop="@dimen/size_2"
-                    android:textSize="@dimen/size_14"
-                    android:text="@string/uploading_photo"/>
+                    android:text="@string/uploading_photo"
+                    android:textSize="@dimen/size_14" />
             </LinearLayout>
 
-            <include layout="@layout/view_parting_line"/>
+            <include layout="@layout/view_parting_line" />
 
             <RelativeLayout
                 android:id="@+id/rl_consume_essential_nickname"
@@ -68,7 +68,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/nick_name"
                     android:textColor="@color/bg_66"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <TextView
                     android:id="@+id/tv_consume_essential_nickname"
@@ -78,17 +78,17 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:textColor="@color/bg_c4"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
             </RelativeLayout>
 
-            <include layout="@layout/view_parting_line"/>
+            <include layout="@layout/view_parting_line" />
 
             <RelativeLayout
                 android:id="@+id/rl_consume_essential_user_name"
@@ -103,7 +103,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/consumer_user_name"
                     android:textColor="@color/bg_66"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <TextView
                     android:id="@+id/tv_consumer_name"
@@ -113,11 +113,11 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:textColor="@color/bg_c4"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
             </RelativeLayout>
 
-            <include layout="@layout/view_parting_line"/>
+            <include layout="@layout/view_parting_line" />
 
             <RelativeLayout
                 android:id="@+id/rl_consumer_qrcode"
@@ -133,7 +133,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/consumer_myQR"
                     android:textColor="@color/bg_66"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <ImageView
                     android:layout_width="@dimen/size_20"
@@ -143,17 +143,17 @@
                     android:layout_marginRight="20dp"
                     android:src="@drawable/icon_qr_code"
                     android:textColor="@color/bg_c4"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
             </RelativeLayout>
 
-            <include layout="@layout/view_parting_line"/>
+            <include layout="@layout/view_parting_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/consumer_mobile_number"
                     android:textColor="@color/bg_66"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <TextView
                     android:id="@+id/tv_consumer_phone"
@@ -178,10 +178,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/size_20"
                     android:src="@drawable/icon_unfold_normal"
-                    android:textColor="@color/bg_c4"/>
+                    android:textColor="@color/bg_c4" />
             </RelativeLayout>
 
-            <include layout="@layout/view_parting_line"/>
+            <include layout="@layout/view_parting_line" />
 
             <RelativeLayout
                 android:id="@+id/rl_consume_essential_sex"
@@ -197,7 +197,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/sex"
                     android:textColor="@color/bg_66"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <TextView
                     android:id="@+id/tv_consumer_essential_info_sex"
@@ -207,17 +207,17 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:textColor="@color/bg_c4"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
             </RelativeLayout>
 
-            <include layout="@layout/view_parting_line"/>
+            <include layout="@layout/view_parting_line" />
 
             <RelativeLayout
                 android:id="@+id/rl_consume_essential_address"
@@ -233,7 +233,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/consumer_address"
                     android:textColor="@color/bg_66"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <TextView
                     android:id="@+id/tv_consume_essential_address"
@@ -246,17 +246,17 @@
                     android:gravity="right"
                     android:singleLine="true"
                     android:textColor="@color/bg_c4"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/icon_unfold_normal"/>
+                    android:src="@drawable/icon_unfold_normal" />
             </RelativeLayout>
 
-            <include layout="@layout/view_parting_line"/>
+            <include layout="@layout/view_parting_line" />
 
             <RelativeLayout
                 android:id="@+id/rl_consume_essential_mail"
@@ -272,7 +272,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/consumer_mails"
                     android:textColor="@color/bg_66"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <TextView
                     android:id="@+id/tv_designer_essential_info_email"
@@ -283,7 +283,7 @@
                     android:layout_marginRight="20dp"
                     android:text="@string/not_filled"
                     android:textColor="@color/bg_c4"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
 
             </RelativeLayout>

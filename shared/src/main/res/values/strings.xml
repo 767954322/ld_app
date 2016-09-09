@@ -392,6 +392,7 @@
     <string name="consumer_mails">邮箱</string>
     <string name="not_filled">尚未填写</string>
     <string name="no_mobile">未绑定手机</string>
+    <string name="no_email">未绑定邮箱</string>
     <string name="secret">保密</string>
     <string name="boy">男</string>
     <string name="girl">女</string>
