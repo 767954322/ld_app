@@ -103,7 +103,23 @@
 
                 </RelativeLayout>
 
+                <ImageButton
+                    android:id="@+id/bt_grand_reservation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ib_grand_detail_ico"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/boutton" />
 
+                <ImageButton
+                    android:id="@+id/ib_grand_detail_ico"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/font_15"
+                    android:layout_marginTop="@dimen/font_15"
+                    android:background="@drawable/drop_down" />
 
             </RelativeLayout>
 
@@ -113,6 +129,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -130,23 +147,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
 
-    <ImageButton
-        android:id="@+id/bt_grand_reservation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ib_grand_detail_ico"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/boutton" />
 
-    <ImageButton
-        android:id="@+id/ib_grand_detail_ico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/font_15"
-        android:layout_marginTop="@dimen/font_15"
-        android:background="@drawable/drop_down" />
 
     <RelativeLayout
         android:id="@+id/rl_navr_header"

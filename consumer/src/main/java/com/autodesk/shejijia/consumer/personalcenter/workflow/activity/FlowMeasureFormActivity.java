@@ -287,8 +287,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                     }
                     break;
                 default:
-                    rlMeasureWarmTips.setVisibility(View.GONE);
                     ll_designer_send.setVisibility(View.GONE);
+                    rlMeasureWarmTips.setVisibility(View.GONE);
                     designer_house_charge_show.setVisibility(View.GONE);
                     // consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
                     break;

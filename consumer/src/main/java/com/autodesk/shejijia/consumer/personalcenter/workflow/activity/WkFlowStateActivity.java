@@ -541,7 +541,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && WorkFlowTemplateStep() == 4) {
             int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
 
-            if (isElite()) {
+            if (isElite(wk_cur_template_id)) {
                 if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
                     btnStopDemand.setVisibility(View.VISIBLE);
                 } else {
@@ -592,18 +592,18 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         refreshWkFlowState();
     }
 
-    /**
-     * 是否是精选
-     * 　true: 精选
-     */
-    public boolean isElite() {
-        switch (String.valueOf(wk_cur_template_id)) {
-            case WkTemplateConstants.IS_ELITE:
-                return true;
-            default:
-                return false;
-        }
-    }
+//    /**
+//     * 是否是精选
+//     * 　true: 精选
+//     */
+//    public boolean isElite() {
+//        switch (String.valueOf(wk_cur_template_id)) {
+//            case WkTemplateConstants.IS_ELITE:
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
 
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
