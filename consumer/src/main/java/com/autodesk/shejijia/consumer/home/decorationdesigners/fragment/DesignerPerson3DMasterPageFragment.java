@@ -11,14 +11,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.ImageFileRsp;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesigner3DCaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.Case3DBeen;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetail3DActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewListView;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
@@ -63,7 +66,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
 
 
     //获取更多数据
-    public void getMore3DCase(List<Case3DBeen.CasesBean> myData, int state) {
+    public void getMore3DCase(final List<Case3DBeen.CasesBean> myData, int state) {
 
         //如果是刷新数据，就将该集合清空
         if (state == 0) {
@@ -90,9 +93,38 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
-                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, myDatas.get(position).getDesign_asset_id()+"");
-                getActivity().startActivity(intent);
+                String hs_design_id = (String) myData.get(position).getHs_design_id();
+                String designer_id = myData.get(position).getDesigner_id()+"";
+                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+
+                /**
+                 *
+                 hs_desgen_id 如果是空的
+                 degen_id  是不是当前登陆用户
+                 是       方案尚未完成，请至网页端完善设计
+                 不是     方案还在设计中，请浏览其他3D方案
+                 */
+                if (hs_design_id==null){
+
+                    if (mMemberEntity!=null){
+                        String acs_member_id = mMemberEntity.getAcs_member_id();
+                        if (designer_id.equals(acs_member_id)){
+                            // 方案尚未完成，请至网页端完善设计
+                            showAlertView("方案尚未完成，请至网页端完善设计");
+                        }else {
+                            showAlertView("方案还在设计中，请浏览其他3D方案");
+                            //方案还在设计中，请浏览其他3D方案
+                        }
+                    }else {
+                        showAlertView("方案还在设计中，请浏览其他3D方案");
+                    }
+
+                }else {
+                    Intent intent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
+                    intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, myDatas.get(position).getDesign_asset_id()+"");
+                    getActivity().startActivity(intent);
+                }
+
 
             }
         });
@@ -103,6 +135,11 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
 
         updateViewFromDesignerData(state);
 
+    }
+
+    //打开AlertView对话框
+    private void showAlertView(String content) {
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, getActivity(), AlertView.Style.Alert, null).show();
     }
 
     /**
