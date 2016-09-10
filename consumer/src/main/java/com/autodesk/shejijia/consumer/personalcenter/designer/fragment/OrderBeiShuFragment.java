@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderBeiShutEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
@@ -69,7 +70,11 @@ public class OrderBeiShuFragment extends BaseFragment {
 
     @Override
     public void onFragmentShown() {
-        setSwipeRefreshInfo();
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+            setSwipeRefreshInfo();
+        }
     }
 
     @Override
