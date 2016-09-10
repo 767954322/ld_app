@@ -58,6 +58,7 @@ public class DesignGoodFragment extends BaseFragment {
         designer_id = mMemberEntity.getAcs_member_id();
         eliteAdapter = new EliteAdapter(getActivity(), orders, R.layout.item_lv_designer_slite_order, designer_id);
         mListView.setAdapter(eliteAdapter);
+        onLoad2Refresh2Api();
     }
 
 

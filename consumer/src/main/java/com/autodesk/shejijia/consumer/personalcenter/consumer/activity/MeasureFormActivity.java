@@ -103,6 +103,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         area = "0";
                     }
                     area = String.format("%.2f", Double.valueOf(area));
+                    houseArea = area;
                     tvc_area.setText(area);
                 }
             }
@@ -125,6 +126,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
             mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
             String styleAll = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
+            mThread_id = (String) extras.get(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);
             // String styleAll = getIntent().getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
             styles = new ArrayList<String>();
             if (styleAll != null && styleAll.length() > 0) {

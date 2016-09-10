@@ -282,7 +282,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
             //判断是消费者，还是设计师，，从而区分消费者和设计师
             if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
-                if (mDesignerPersonalCenterFragment == null || SharedPreferencesUtils.readBoolean("islogin")) {
+                if (mDesignerPersonalCenterFragment == null) {
                     mDesignerPersonalCenterFragment = new MyDecorationProjectDesignerFragment();
 
                     loadMainFragment(mDesignerPersonalCenterFragment, DESIGNER_PERSONAL_FRAGMENT_TAG);
@@ -299,6 +299,16 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void onUserLogout() {
         mRadioGroup.check(getDesignerMainRadioBtnId());
+
+        // Reset my project
+        if (mDesignerPersonalCenterFragment != null) {
+            setMyProjectTitleColorChange(design, bidding, construction);
+            chooseViewPointer.setCase3dBtn(btWidth);
+            if (mDesignerPersonalCenterFragment.isAdded()) {
+                getSupportFragmentManager().beginTransaction().remove(mDesignerPersonalCenterFragment).commitAllowingStateLoss();
+            }
+            mDesignerPersonalCenterFragment = null;
+        }
     }
 
 
@@ -398,7 +408,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 FLAG_CLICK = TAB_HOME_CASE;
                 setCaseLIbraryTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
-                setVisibilityForNavButton(ButtonType.middle, true);
+                setVisibilityForNavButton(ButtonType.middle, false);
                 break;
 
             case R.id.radio_btn_designer:  /// 设计师搜索 .

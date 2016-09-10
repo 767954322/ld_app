@@ -24,14 +24,11 @@ public class DesignBaseFragment extends BaseFragment {
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
     private SegmentTabLayout tab_design_layout;
-    private FrameLayout design_container;
-    private static DesignBaseFragment fragment;
     private RelativeLayout rlt_tab_view;
     private int status;
     private int loho;
 
     public static DesignBaseFragment newInstance(int status, int loho) {
-//        if (fragment ==null)
         DesignBaseFragment fragment = new DesignBaseFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("status", status);
@@ -49,7 +46,6 @@ public class DesignBaseFragment extends BaseFragment {
     @Override
     protected void initView() {
         tab_design_layout = (SegmentTabLayout) rootView.findViewById(R.id.tab_design_layout);
-        design_container = (FrameLayout) rootView.findViewById(R.id.design_container);
         rlt_tab_view = (RelativeLayout) rootView.findViewById(R.id.rlt_tab_view);
     }
 
