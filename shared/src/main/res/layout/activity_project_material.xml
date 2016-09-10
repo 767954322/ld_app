@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_5"
                 android:layout_weight="1"
-                android:text="量房资料" />
+                android:text="@string/measure_house_form" />
 
             <ImageView
                 android:layout_width="wrap_content"
