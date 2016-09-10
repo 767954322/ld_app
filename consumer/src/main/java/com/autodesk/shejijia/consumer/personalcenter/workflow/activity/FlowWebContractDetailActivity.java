@@ -1,13 +1,26 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
+import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.io.IOException;
@@ -24,19 +37,120 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_flow_contract_detail;
+        return R.layout.activity_flow_design_contract;
+    }
+
+
+
+
+
+    private AlertView UIAlert;
+
+
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
+        contract_number = intent.getStringExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO);
+        designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
+        bconsumerActionShow = bundle.getBoolean("CONSUMER_ACTION_SHOW");
     }
 
     @Override
     protected void initView() {
-        webView = (WebView) findViewById(R.id.webview_flow_contract_detail);
+        initViewVariables();
+
+        ll_designer_action_layout.setVisibility(View.GONE);
+        ll_contract_input_form_layout.setVisibility(View.GONE);
+
+        ll_consumer_action_layout.setVisibility(View.GONE);
+        ll_contract_webview_layout.setVisibility(View.VISIBLE);
+        ll_consumer_agree_content_layout.setVisibility(View.VISIBLE);
+
+        img_agree_establish_contract = (ImageView) findViewById(R.id.img_agree_establish_contract);
+
+
+
     }
 
+
+    protected void initViewVariables() {
+
+
+
+        ll_designer_action_layout = (LinearLayout) findViewById(R.id.ll_flow_designer_send_contract); //設計師發送合同的layout
+
+
+
+        ll_contract_input_form_layout = (LinearLayout) findViewById(R.id.design_contract_content_designer);//合同表單Layout
+        ll_contract_webview_layout = (LinearLayout) findViewById(R.id.design_contract_content_consumer);//web view 合同表單
+
+
+
+        /* init content for consumer form */
+        twvc_contract_content_webview = (WebView) findViewById(R.id.contract_sub_content_webview);//webview 物件
+        ll_consumer_action_layout= (LinearLayout) findViewById(R.id.ll_send_establish_contract);//消費者支付動作Layout
+        ll_consumer_agree_content_layout = (LinearLayout) findViewById(R.id.ll_agree_establish_contract);//消費者己閱讀的提示Layout
+        btn_consumer_submit_button = (Button) findViewById(R.id.btn_send_establish_contract);
+
+
+         /* init content for designer form */
+        llbtn_see_contract_detail = (LinearLayout) findViewById(R.id.ll_flow_examine_contract); //設計師合同詳情點擊條
+
+
+
+
+
+
+    }
+    private void UpdateUIActionLayout() {
+
+
+        ll_consumer_action_layout.setVisibility(View.VISIBLE);
+        ll_consumer_agree_content_layout.setVisibility(View.VISIBLE);
+
+        btn_consumer_submit_button.setText(R.string.confirmation_and_payment);
+        btn_consumer_submit_button.setEnabled(false);
+        btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+
+
+
+        img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isAgree) { // 判断是否我已阅读（我已阅读）
+                    img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+                    btn_consumer_submit_button.setEnabled(false);
+                    btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+                } else { // 判断是否我已阅读（我未阅读）
+                    img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_checked);
+                    btn_consumer_submit_button.setEnabled(true);
+                    btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_blue);
+                    btn_consumer_submit_button.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(FlowWebContractDetailActivity.this, FlowFirstDesignActivity.class);
+                            intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+                            intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                            intent.putExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO, contract_number);
+                            intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
+//                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
+                            startActivityForResult(intent, ContractForFirst);
+                        }
+                    });
+                }
+
+                isAgree = !isAgree;
+            }
+        });
+
+    }
     @Override
     protected void initData(Bundle savedInstanceState) {
         CustomProgress.show(this, "", false, null);
 
-        WebSettings webSettings = webView.getSettings();
+        WebSettings webSettings = twvc_contract_content_webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAllowContentAccess(true);
         webSettings.setAllowFileAccess(true);
@@ -44,11 +158,14 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         webSettings.setBuiltInZoomControls(false);
         webSettings.setDefaultZoom(WebSettings.ZoomDensity.MEDIUM);
 
+        if (bconsumerActionShow)
+            UpdateUIActionLayout();
+
         setContentView();
         CustomProgress.cancelDialog();
 
         //设置Web视图
-        webView.setWebViewClient(new webViewClient());
+        twvc_contract_content_webview.setWebViewClient(new webViewClient());
     }
 
     private void setContentView() {
@@ -64,21 +181,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
 
             String text = new String(buffer, Constant.NetBundleKey.UTF_8);
 
-           /* String designSketch = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.DESIGNSKETCH);
-            String effectivePicture = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.EFFECTIVEPICTURE);
-            String addCurrency = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.ADDCURRENCY);
-            String designPay = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.DESIGNPAY);
-            String designFirstFee = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.DESIGNFIRSTFEE);
-            String designBalanceFee = (String) getIntent().getExtras().get(Constant.DesignerFlowEstablishContract.DESIGNBALANCEFEE);
-
-            text = text.replace("<wf-designSketch>", designSketch); // 效果图
-            text = text.replace("<wf-effectivePicture>", effectivePicture); // 渲染图
-            text = text.replace("<wf-addCurrency>", addCurrency); // 增加的钱数
-            text = text.replace("<wf-designPay>", designPay); // 总额
-            text = text.replace("<wf-designFirstFee>", designFirstFee); // 首款
-            text = text.replace("<wf-designBalanceFee>", designBalanceFee); // 尾款*/
-
-            webView.loadDataWithBaseURL(null, text, Constant.NetBundleKey.MIME_TYPE_TEXT_HTML, Constant.NetBundleKey.UTF_8, "");
+            twvc_contract_content_webview.loadDataWithBaseURL(null, text, Constant.NetBundleKey.MIME_TYPE_TEXT_HTML, Constant.NetBundleKey.UTF_8, "");
 
         } catch (IOException e) {
             // Should never happen!
@@ -86,6 +189,16 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ContractForFirst) {
+            setResult(ContractDetail);
+            finish();
+        }
+
+
+    }
 
     //Web视图
     private class webViewClient extends WebViewClient {
@@ -95,5 +208,24 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         }
     }
 
-    private WebView webView;
+    private WebView twvc_contract_content_webview;
+
+    private LinearLayout llbtn_see_contract_detail;
+    private LinearLayout ll_consumer_action_layout;
+    private LinearLayout ll_designer_action_layout;
+    private LinearLayout ll_consumer_agree_content_layout;
+    private LinearLayout ll_contract_input_form_layout;
+    private LinearLayout ll_contract_webview_layout;
+    private int ContractForFirst = 0; //　从合同跳转到设计首款
+    private int ContractDetail = 2;
+
+    private ImageView img_agree_establish_contract;
+    private Button btn_consumer_submit_button;
+    private boolean isAgree = false;
+    private boolean bconsumerActionShow = false;
+
+    protected String designer_id;
+    protected String needs_id;
+    protected String contract_number;
+
 }

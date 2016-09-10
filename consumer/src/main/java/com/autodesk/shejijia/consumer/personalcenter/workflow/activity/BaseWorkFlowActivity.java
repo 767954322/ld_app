@@ -73,6 +73,10 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         getOrderDetailsInfo(needs_id, designer_id);
     }
 
+    public void fetchWorkFlowData( ) {
+        getOrderDetailsInfo(needs_id, designer_id);
+    }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -89,6 +93,14 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         return Integer.valueOf(wk_cur_sub_node_id);
 
     }
+
+    protected void onCheckWorkFlowStep(int template_id,int sub_node_id){
+
+    }
+    protected void onPreCheckWorkFlowStep(int template_id,int sub_node_id){
+
+    }
+
 
     public String GetRoleType() {
         if (memberEntity != null) {
@@ -141,7 +153,10 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             wk_cur_sub_node_id = mBiddersEntity.getWk_cur_sub_node_id();
             wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
 
+            onPreCheckWorkFlowStep(WorkFlowTemplateStep(),WorkFlowSubNodeStep());
             onWorkFlowData();
+            onCheckWorkFlowStep(WorkFlowTemplateStep(),WorkFlowSubNodeStep());
+
             /*if (!TextUtils.isEmpty(wk_cur_sub_node_id) && StringUtils.isNumeric(wk_cur_sub_node_id)) {
                 wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
 
