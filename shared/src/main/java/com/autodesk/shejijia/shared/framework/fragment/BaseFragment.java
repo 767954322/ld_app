@@ -46,7 +46,7 @@ public abstract class BaseFragment extends Fragment {
         initView();
         initData();
         initListener();
-        LogManager.getLogger().d("location", getClass().getSimpleName());
+        LogManager.getLogger().d("ClassName", getClass().getSimpleName());
         return rootView;
     }
 

@@ -26,7 +26,7 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
-        LogManager.getLogger().d("location",getClass().getSimpleName());
+        LogManager.getLogger().d("ClassName", getClass().getSimpleName());
         initView();
         initExtraBundle();
         initData(savedInstanceState);
@@ -35,7 +35,7 @@ public abstract class BaseActivity extends FragmentActivity {
         registerPgy();
     }
 
-    private void registerPgy(){
+    private void registerPgy() {
         //crash注册
         PgyCrashManager.register(this);
         //version update
@@ -44,6 +44,7 @@ public abstract class BaseActivity extends FragmentActivity {
         PgyerDialog.setDialogTitleBackgroundColor("#2B77C1");
         PgyerDialog.setDialogTitleTextColor("#ffffff");
     }
+
     /**
      * 获取布局的Id
      *
