@@ -54,22 +54,8 @@ public class DesignBaseFragment extends BaseFragment {
         Bundle arguments = getArguments();
         status = arguments.getInt("status");
         loho = arguments.getInt("loho");
-//        updateFragmentContent(status, loho);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         updateFragmentContent(status, loho);
-        Log.i("+++++++", "DesignBaseFragment:" + "onResume");
     }
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden)
-//            updateFragmentContent(status,loho);
-//    }
 
     private void updateFragmentContent(int status, int loho) {
         mTabNames.clear();

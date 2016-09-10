@@ -86,14 +86,6 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            mPullToRefreshLayout.autoRefresh();
-        }
-    }
-
-    @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         fetchMyBidData(0, FETCH_MYBID_DATA_LIMIT, true);
     }
