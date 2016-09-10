@@ -35,6 +35,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     private Handler handler;//用于监听数据变化；
     private Timer timer;//时间线程，用于监听数据变化
+    private boolean justOnlyOne = true;
+    private boolean isJustOnlyTwo = true;
+
     private ArrayList<String> roomsList = new ArrayList<>();//监听变化的数据
     private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<ArrayList<ArrayList<String>>>();
     private ArrayList<ArrayList<String>> hallsList = new ArrayList<ArrayList<String>>();
@@ -62,18 +65,16 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
 
-
-                if (msg.what == 8){
-                    justCurrentItemChange(msg.what);
-
-                }else {
-
+                Log.i("yaoxuehua===",""+msg.what);
+                if (msg.what >= 5){
+//                    justCurrentItemChange(msg.what);
+//
                 }
 
             }
         };
 
-        wheelOptions.setHandler(handler);
+
 
     }
 
@@ -92,6 +93,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                           boolean linkage) {
         wheelOptions.setPicker(options1Items, options2Items, options3Items,
                 linkage);
+        wheelOptions.setHandler(handler);
     }
 
     /**
@@ -135,13 +137,15 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 //        int optionsCurrentItems[] = wheelOptions.getCurrentItems();
         String firstItem = roomsList.get(optionsCurrentItems);
-        if (firstItem.equals("其它")){
+        if (firstItem.equals("其它") || firstItem.equals("别墅") || firstItem.equals("复式") || firstItem.equals("LOFT")){
 
             wheelOptions.setWvOption3Data(hallsListReplace,toiletsListReplace);
         }else {
 
-            wheelOptions.setPicker(roomsList,hallsList,toiletsList,true);
+            wheelOptions.setWvOption3Data(hallsList,toiletsList);
         }
+
+        Log.i("yaoxuehua===",""+firstItem);
 
     }
 

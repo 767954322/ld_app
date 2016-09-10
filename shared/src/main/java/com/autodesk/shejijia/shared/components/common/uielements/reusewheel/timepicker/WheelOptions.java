@@ -8,7 +8,9 @@ import android.view.View;
 
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.gestures.EclairGestureDetector;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.adapter.ArrayWheelAdapter;
+import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.adapter.WheelAdapter;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.libs.WheelView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnItemSelectedListener;
 
@@ -35,6 +37,9 @@ public class WheelOptions<T> {
 
     private Handler handler;//及时监听数据
     private Timer timer;
+    private int timerCount = 1;
+
+
 
     public View getView() {
         return view;
@@ -121,7 +126,12 @@ public class WheelOptions<T> {
                 if (mOptions3Items != null) {
                     wheelListener_option2.onItemSelected(opt2Select);
                 }
+                Message message = Message.obtain();//发送了选中的item选项
+                message.what = index;
+                handler.sendMessage(message);
             }
+
+
         };
         wheelListener_option2 = new OnItemSelectedListener() {
 
@@ -253,15 +263,17 @@ public class WheelOptions<T> {
 
                 if (event.getAction() == MotionEvent.ACTION_MOVE){
 
-                    justMethod();
+//                    Log.i("yaoxuehua===","-----move");
+//                    justMethod();
                 }
                 if (event.getAction() == MotionEvent.ACTION_DOWN){
-                    justMethod();
+//                    Log.i("yaoxuehua===","----------down");
+//                    justMethod();
                 }
 
                 if (event.getAction() == MotionEvent.ACTION_UP){
-
-                    justMethod();
+//                    Log.i("yaoxuehua===","-----ACTION_UP");
+//                    justMethod();
                 }
 
 
@@ -276,6 +288,7 @@ public class WheelOptions<T> {
 
     public void justMethod(){
 
+
         TimerTask timerTask= null;
         if (timerTask == null){
 
@@ -285,6 +298,17 @@ public class WheelOptions<T> {
                     Message message = Message.obtain();
                     message.what = wv_option1.getCurrentItem();
                     handler.sendMessage(message);
+                    Log.i("yaoxuehua===",""+message.what);
+
+                    timerCount++;
+                    if (timerCount > 30){
+
+                        if(timer != null){
+                            timer.cancel();
+                            timer = null;
+                            timerCount = 1;
+                        }
+                    }
                 }
             };
         }
@@ -292,9 +316,10 @@ public class WheelOptions<T> {
         if (timer == null){
 
             timer = new Timer();
-            timer.scheduleAtFixedRate(timerTask,100,100);
+            timer.schedule(timerTask,1,30);
 
         }
+
 
     }
 
@@ -316,12 +341,11 @@ public class WheelOptions<T> {
         // 选项2
         if (mOptions2Items != null)
             wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(0)));// 设置显示数据
-        wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
+
 
         if (mOptions3Items != null)
             wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(0)
                     .get(0)));// 设置显示数据
-        wv_option3.setCurrentItem(wv_option3.getCurrentItem());// 初始化时显示的数据
 
     }
 
