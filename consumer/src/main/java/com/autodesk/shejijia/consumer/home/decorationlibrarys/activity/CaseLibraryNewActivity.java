@@ -36,7 +36,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
@@ -48,11 +49,6 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -69,7 +65,7 @@ import java.util.Map;
  * @Author :willson
  * @创建日期 :2016.8.29
  */
-public class CaseLibraryNewActivity extends NavigationBarActivity implements AbsListView.OnItemClickListener ,AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
+public class CaseLibraryNewActivity extends NavigationBarActivity implements AbsListView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
 
     @Override
@@ -247,64 +243,17 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                     member_id = memberEntity.getAcs_member_id();
 
                     if (null != caseDetailBean) {
-                        final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
-                        final String hs_uid = caseDetailBean.getHs_designer_uid();
-                        final String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
-                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
+                        String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
+                        String hs_uid = caseDetailBean.getHs_designer_uid();
+                        String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
 
-                        MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                MPNetworkUtils.logError(TAG, volleyError);
-                                ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
-                            }
-
-                            @Override
-                            public void onResponse(String s) {
-
-                                MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                                final Intent intent = new Intent(CaseLibraryNewActivity.this, ChatRoomActivity.class);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-
-                                if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-
-                                    MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-                                    int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                    intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                    startActivity(intent);
-
-                                } else {
-                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id,member_id, new OkStringRequest.OKResponseCallback() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError volleyError) {
-                                            MPNetworkUtils.logError(TAG, volleyError);
-                                            ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
-                                        }
-
-                                        @Override
-                                        public void onResponse(String s) {
-                                            try {
-                                                JSONObject jsonObject = new JSONObject(s);
-                                                String thread_id = jsonObject.getString("thread_id");
-                                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                                intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-                                                startActivity(intent);
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    });
-                                }
-
-                            }
-                        });
+                        JumpBean jumpBean = new JumpBean();
+                        jumpBean.setAcs_member_id(member_id);
+                        jumpBean.setMember_type(mMemberType);
+                        jumpBean.setReciever_user_name(receiver_name);
+                        jumpBean.setReciever_user_id(designer_id);
+                        jumpBean.setReciever_hs_uid(hs_uid);
+                        JumpToChatRoom.getChatRoom(CaseLibraryNewActivity.this, jumpBean);
                     } else {
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
                                 AlertView.Style.Alert, null).show();
@@ -657,6 +606,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
             } else {
                 ivCustomerIm.setVisibility(View.GONE);
             }
+        } else {
+            ivCustomerIm.setVisibility(View.VISIBLE);
         }
     }
 
@@ -676,13 +627,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     @Override
     protected void onStop() {
         super.onStop();
-       // mTimer.cancel();
+        // mTimer.cancel();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-      //  mTimer.cancel();
+        //  mTimer.cancel();
     }
 
     private ListView caseLibraryNew;
