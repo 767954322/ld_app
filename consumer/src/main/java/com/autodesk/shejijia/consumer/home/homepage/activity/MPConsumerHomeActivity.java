@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -409,7 +408,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 FLAG_CLICK = TAB_HOME_CASE;
                 setCaseLIbraryTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
-                setVisibilityForNavButton(ButtonType.middle, true);
+                setVisibilityForNavButton(ButtonType.middle, false);
                 break;
 
             case R.id.radio_btn_designer:  /// 设计师搜索 .

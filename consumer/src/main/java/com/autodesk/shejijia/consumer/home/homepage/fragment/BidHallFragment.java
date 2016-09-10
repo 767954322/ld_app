@@ -89,7 +89,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         mPullToRefreshLayout.setOnRefreshListener(this);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != mMemberEntity) {
-//            mPullToRefreshLayout.autoRefresh();
             onRefresh(mPullToRefreshLayout);
         }
     }
@@ -223,19 +222,16 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     }
 
 
-    /// 刷新.
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
-    /// 加载更多.
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
         getShouldHallData(1, OFFSET, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
-    /// 接收反回来的数据.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -257,7 +253,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         activity.unregisterReceiver(myBroadCastReceivr);
     }
 
-    /// 应标改变.
     public void onFragmentShown() {
         if (!mFlag) {
             mFiltrateContentBean = null;
@@ -307,14 +302,12 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                 mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
-    /// 静态常量,网址.
     public static final int REQUEST_CODE = 0x9;
     public static final String TYPE = "TYPE";
     public static final String BLANK = "";
     public static final String CONTENT_BEAN = "contentBean";
     public static final String URL = "ezhome/fullflow/audit/success";
 
-    /// 控件.
     private RelativeLayout mRlEmpty;
     private TextView mTvEmptyMessage;
     private ImageView mIvTemp;
@@ -322,14 +315,12 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     private PullListView mPullListView;
     private PullToRefreshLayout mPullToRefreshLayout;
 
-    /// 变量.
     private String needs_id;
     private int LIMIT = 10;
     private int OFFSET = 0;
     private Boolean bid_status;
     private boolean mFlag = true;
 
-    /// 集合,类.
     private FiltrateContentBean mFiltrateContentBean;
     private BidHallAdapter mBidHallAdapter;
     private List<BidHallEntity.NeedsListBean> mNeedsListEntities = new ArrayList<>();

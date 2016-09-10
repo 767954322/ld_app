@@ -1,19 +1,20 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -33,11 +34,13 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -167,8 +170,49 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         }
         if (null != masterDetail.getDesigner() && null != masterDetail.getDesigner().getDesigner_detail_cover_app() && null != masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url()) {
             String img_url = masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url();
-            ImageUtils.displayIconImage(img_url, iv_detail_desiner);
+//            ImageUtils.displayIconImage(img_url, iv_detail_desiner);
+            ImageUtils.loadFileImageListenr(img_url, iv_detail_desiner, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    Bitmap bitmap=loadedImage;
+                    Log.d("willson",bitmap+"");
+
+                    int color = bitmap.getPixel(2, 8);
+                    // 如果你想做的更细致的话 可以把颜色值的R G B 拿到做响应的处理 笔者在这里就不做更多解释
+                    int r = Color.red(color);
+                    int g = Color.green(color);
+                    int b = Color.blue(color);
+                    int a = Color.alpha(color);
+                    Log.d("willson","    "+r+"  "+"  "+g+"  "+b);
+                    if (r>156) {//白色设置灰色
+                        nav_left_imageButton.setBackgroundResource(R.mipmap.arrow_g);
+                    }else {// 灰色 设置白色
+                        nav_left_imageButton.setBackgroundResource(R.drawable.arrow);
+                    }
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            }, new ImageLoadingProgressListener() {
+                @Override
+                public void onProgressUpdate(String imageUri, View view, int current, int total) {
+
+                }
+            });
         }
+
 
     }
 

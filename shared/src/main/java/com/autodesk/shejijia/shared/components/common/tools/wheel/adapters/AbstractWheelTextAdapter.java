@@ -89,7 +89,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
         itemResourceId = itemResource;
         itemTextResourceId = itemTextResource;
         
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     
     /**

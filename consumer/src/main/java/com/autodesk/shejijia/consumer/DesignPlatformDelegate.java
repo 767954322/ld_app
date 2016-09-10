@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
@@ -187,8 +188,11 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
 
                 String info = GsonUtil.jsonToString(jsonObject);
                 DesignerDetailHomeBean seekDesignerDetailHomeBean = GsonUtil.jsonToBean(info, DesignerDetailHomeBean.class);
-                final String measureFee = seekDesignerDetailHomeBean.getDesigner().getMeasurement_price();
+                String measureFee = seekDesignerDetailHomeBean.getDesigner().getMeasurement_price();
 
+                if(TextUtils.isEmpty(measureFee)){
+                    measureFee = "0.00";
+                }
                 Intent intent = new Intent(context, MeasureFormActivity.class);
                 intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, assetId);
                 intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);

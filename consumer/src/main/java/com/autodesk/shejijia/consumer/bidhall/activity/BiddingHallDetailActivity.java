@@ -156,6 +156,8 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
+                CustomProgress.cancelDialog();
+
                 String info = GsonUtil.jsonToString(jsonObject);
                 KLog.json(info);
                 getAlertView(UIUtils.getString(R.string.designer_bid_detail_success), null, false).show();
@@ -163,14 +165,11 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                 mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
                 mBtnSendBid.setText(UIUtils.getString(R.string.bided));
-                CustomProgress.dialog.cancel();
-                CustomProgress.cancelDialog();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.dialog.cancel();
                 CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, BiddingHallDetailActivity.this);
             }
@@ -214,12 +213,13 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
             String measurement_price = mRealNameBean.getDesigner().getMeasurement_price();
 
             if (TextUtils.isEmpty(measurement_price)) {
+                CustomProgress.cancelDialog();
                 noSetMeasureFee();
                 return;
             }
             if (bidder_count >= BIDDER_MAX) {
+                CustomProgress.cancelDialog();
                 bidCountFullDialog();
-
             } else {
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 String designer_id = memberEntity.getAcs_member_id();
@@ -227,6 +227,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 sendBidDemand("", user_name, needs_id, designer_id);
             }
         } else {
+            CustomProgress.cancelDialog();
             new AlertView(UIUtils.getString(R.string.tip), "您还未通过实名认证\n请到网页端完成认证", null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
@@ -283,7 +284,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         mTvProjectNeedsId.setText(needs_id);
         mTvHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type_convert));
         mTvHouseStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style_convert));
-        mTvHouseModel.setText(UIUtils.getNoSelectIfEmpty(living_room_cn)+UIUtils.getNoSelectIfEmpty(room_cn)+UIUtils.getNoSelectIfEmpty(toilet_cn));
+        mTvHouseModel.setText(UIUtils.getNoSelectIfEmpty(living_room_cn) + UIUtils.getNoSelectIfEmpty(room_cn) + UIUtils.getNoSelectIfEmpty(toilet_cn));
         mTvName.setText(mBidHallEntity.getContacts_name());
         mTvDecorationBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget));
         String design_budget = mBidHallEntity.getDesign_budget();

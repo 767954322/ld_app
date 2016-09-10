@@ -105,9 +105,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         this.hallsList = hallList;
         ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
         ArrayList<String> options3Items_01_01 = new ArrayList<>();
-
+        //第三列空数据
         for (int i = 0; i < toiletsList.size(); i++) {
-            options3Items_01_01.add("11");
+            options3Items_01_01.add(" ");
         }
         for (int i = 0; i < hallsList.size(); i++) {
             options3Items_01.add(options3Items_01_01);
@@ -116,10 +116,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
             toiletsListReplace.add(options3Items_01);
         }
 //        wheelOptions.setPicker(roomsList,hallsList,toiletsListReplace,true);
-
+        //第二列空数据空
         ArrayList<String> options2Items_01 = new ArrayList<>();
         for (int i =0; i < hallsList.size();i++) {
-            options2Items_01.add("1");
+            options2Items_01.add(" ");
         }
         for (int i = 0; i < roomsList.size(); i++) {
             hallsListReplace.add(options2Items_01);
@@ -137,10 +137,10 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         String firstItem = roomsList.get(optionsCurrentItems);
         if (firstItem.equals("其它")){
 
-          //  wheelOptions.setPicker(roomsList,hallsList,toiletsListReplace,true);
+            wheelOptions.setWvOption3Data(hallsListReplace,toiletsListReplace);
         }else {
 
-           // wheelOptions.setPicker(roomsList,hallsList,toiletsList,true);
+            wheelOptions.setPicker(roomsList,hallsList,toiletsList,true);
         }
 
     }

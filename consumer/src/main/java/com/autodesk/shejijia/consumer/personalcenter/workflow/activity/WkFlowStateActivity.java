@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
@@ -58,6 +59,8 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  */
 public class WkFlowStateActivity extends BaseWorkFlowActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    private boolean elite;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_common_meal_detail;
@@ -95,6 +98,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         ibFlowChart.setEnabled(false);
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             ll_piv.setVisibility(View.VISIBLE);
+        } else {
+            ll_piv.setVisibility(View.GONE);
         }
     }
 
@@ -105,7 +110,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         Bundle bundle = intent.getExtras();
         bid_status = bundle.getBoolean(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS);
         demand_type = bundle.getString(Constant.DemandDetailBundleKey.DEMAND_TYPE);
-
     }
 
     /**
@@ -145,7 +149,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             case R.id.ib_flow_chart:
 
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                if(mMemberEntity == null){
+                if (mMemberEntity == null) {
                     return;
                 }
                 JumpBean jumpBean = new JumpBean();
@@ -154,7 +158,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 jumpBean.setReciever_user_name(user_name);
                 jumpBean.setAcs_member_id(mMemberEntity.getAcs_member_id());
                 jumpBean.setMember_type(mMemberEntity.getMember_type());
-                JumpToChatRoom.getChatRoom(this,jumpBean);
+                JumpToChatRoom.getChatRoom(this, jumpBean);
 
                 break;
             case R.id.btn_stop_demand:
@@ -288,7 +292,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private void onOrdinaryItemClick(int position, int wk_cur_sub_node_idi, View view) {
         switch (position) {
             case 0://量房
-                if(Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)){
+                if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
                     showNewActivity(FlowMeasureFormActivity.class, -1);//IOS消费者不让点击的
                 }
                 break;
@@ -323,10 +327,10 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
             if (wk_cur_sub_node_idi == 21) {
                 showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-            }else if(wk_cur_sub_node_idi == 13){
+            } else if (wk_cur_sub_node_idi == 13) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.waiting_cons_uploaded_room_deliverable), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                         AlertView.Style.Alert, null).show();
-            }else{
+            } else {
                 view.setClickable(false);
             }
 //            if (WorkFlowTemplateStep() == 1) {     // 应标
@@ -347,7 +351,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (wk_cur_sub_node_idi == 13) {
             showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
 
-        }else{
+        } else {
             view.setClickable(false);
         }
 
@@ -377,9 +381,9 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void eliteEstablishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 11  ||wk_cur_sub_node_idi == 31 || wk_cur_sub_node_idi == 32) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 31 || wk_cur_sub_node_idi == 32) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
-            } else if(wk_cur_sub_node_idi == 24 ||wk_cur_sub_node_idi == 33){
+            } else if (wk_cur_sub_node_idi == 24 || wk_cur_sub_node_idi == 33) {
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
             } else {
                 view.setClickable(false);
@@ -391,7 +395,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                     AlertView.Style.Alert, null).show();
         } else if (Integer.parseInt(wk_cur_sub_node_id) == 31) {
             showNewActivity(FlowEstablishContractActivity.class, -1);
-        }else if(wk_cur_sub_node_idi == 24 || wk_cur_sub_node_idi == 33){
+        } else if (wk_cur_sub_node_idi == 24 || wk_cur_sub_node_idi == 33) {
             showNewActivity(FlowUploadDeliveryActivity.class, -1);
         } else {
             view.setClickable(false);
@@ -409,7 +413,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void establishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 31|| wk_cur_sub_node_idi == 32) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 31 || wk_cur_sub_node_idi == 32) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
             } else if (wk_cur_sub_node_idi == 33) { /// 量房交付物 .
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
@@ -490,7 +494,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             }
             return;
         }
-        if (wk_cur_sub_node_idi >= 51&& wk_cur_sub_node_idi != 63) {
+        if (wk_cur_sub_node_idi >= 51 && wk_cur_sub_node_idi != 63) {
             showNewActivity(FlowUploadDeliveryActivity.class, -1);
 
         }
@@ -532,10 +536,19 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         ibFlowChart.setEnabled(true);
         tvCreateDate.setText(UIUtils.getString(R.string.create_date) + requirement.getPublish_time());
         mPtrLayout.onRefreshComplete();
+
+
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && WorkFlowTemplateStep() == 4) {
             int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
-            if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
-                btnStopDemand.setVisibility(View.VISIBLE);
+
+            if (isElite()) {
+                if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
+                    btnStopDemand.setVisibility(View.VISIBLE);
+                } else {
+                    btnStopDemand.setVisibility(View.GONE);
+                }
+            } else {
+                btnStopDemand.setVisibility(View.GONE);
             }
         }
 
@@ -579,6 +592,19 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         refreshWkFlowState();
     }
 
+    /**
+     * 是否是精选
+     * 　true: 精选
+     */
+    public boolean isElite() {
+        switch (String.valueOf(wk_cur_template_id)) {
+            case WkTemplateConstants.IS_ELITE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
     private TipWorkFlowTemplateBean tipWorkFlowTemplateBean;
@@ -598,4 +624,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private Intent intent;
     private Context context;
     private WkFlowStateAdapter mAdapter;
+
+
 }

@@ -105,7 +105,7 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        setListViewHeightBasedOnChildren(mListView);
+//        setListViewHeightBasedOnChildren(mListView);
 
         Message message = myHandler.obtainMessage();
         message.what = 0;

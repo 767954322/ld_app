@@ -109,12 +109,19 @@ public class OrderCommonFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        setSwipeRefreshInfo();
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+            setSwipeRefreshInfo();
+        }
     }
 
+    // fixme 这个方法当check到我的项目时候进行回调．
     @Override
     public void onFragmentShown() {
-        setSwipeRefreshInfo();
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+            setSwipeRefreshInfo();
+        }
     }
 
     /**

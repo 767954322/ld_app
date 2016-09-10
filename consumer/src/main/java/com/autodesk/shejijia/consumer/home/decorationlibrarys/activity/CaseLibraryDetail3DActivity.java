@@ -26,8 +26,6 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FollowingD
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.List3DLibraryAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
@@ -38,7 +36,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
@@ -50,11 +49,6 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -160,6 +154,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         caseLibraryNew.addHeaderView(viewHead, null, false);
         caseLibraryNew.addHeaderView(viewText, null, false);
         case3DDetailList = new ArrayList<>();
+        showOrHideChatBtn();
     }
 
 
@@ -280,62 +275,16 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 if (memberEntity != null) {
                     member_id = memberEntity.getAcs_member_id();
                     mMemberType = memberEntity.getMember_type();
-                    final String designer_id = case3DDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
-                    final String hs_uid = case3DDetailBean.getHs_designer_uid();
-                    final String receiver_name = case3DDetailBean.getDesigner_info().getNick_name();
-                    final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
-
-                    MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            MPNetworkUtils.logError(TAG, volleyError);
-                        }
-
-                        @Override
-                        public void onResponse(String s) {
-
-                            MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                            final Intent intent = new Intent(CaseLibraryDetail3DActivity.this, ChatRoomActivity.class);
-                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
-                            intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                            intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                            intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
-
-                            if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-
-                                MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-                                int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                                intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                CaseLibraryDetail3DActivity.this.startActivity(intent);
-
-                            } else {
-                                MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError volleyError) {
-                                        MPNetworkUtils.logError(TAG, volleyError);
-                                    }
-
-                                    @Override
-                                    public void onResponse(String s) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(s);
-                                            String thread_id = jsonObject.getString("thread_id");
-                                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                                            intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                            intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-                                            CaseLibraryDetail3DActivity.this.startActivity(intent);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                            }
-
-                        }
-                    });
+                     String designer_id = case3DDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
+                     String hs_uid = case3DDetailBean.getHs_designer_uid();
+                    String receiver_name = case3DDetailBean.getDesigner_info().getNick_name();
+                    JumpBean jumpBean = new JumpBean();
+                    jumpBean.setAcs_member_id(member_id);
+                    jumpBean.setMember_type(mMemberType);
+                    jumpBean.setReciever_user_name(receiver_name);
+                    jumpBean.setReciever_user_id(designer_id);
+                    jumpBean.setReciever_hs_uid(hs_uid);
+                    JumpToChatRoom.getChatRoom(CaseLibraryDetail3DActivity.this,jumpBean);
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -484,6 +433,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                CustomProgress.cancelDialog();
+
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryDetail3DActivity.this);
             }
         };
@@ -712,6 +663,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     protected void onResume() {
         super.onResume();
         memberEntity = AdskApplication.getInstance().getMemberEntity();
+        showOrHideChatBtn();
     }
 
     @Override
@@ -758,6 +710,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             } else {
                 ivCustomerIm.setVisibility(View.GONE);
             }
+        }else {
+            ivCustomerIm.setVisibility(View.VISIBLE);
         }
     }
 

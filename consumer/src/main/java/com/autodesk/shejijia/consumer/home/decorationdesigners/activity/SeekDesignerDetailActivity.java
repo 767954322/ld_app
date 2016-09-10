@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -349,6 +348,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 break;
 
             case R.id.case_2d_btn:
+                controlNumber = 1;
                 chooseViewPointer.setCase2dBtn(width);
                 choose_point_replace.setCase2dBtn(width);
 
@@ -361,7 +361,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                 switchFragment(shareFragment, mDesignerPersonMasterPageFragment);
                 //设置颜色
-                controlNumber = 1;
                 setTextColor(controlNumber);
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
                 setEmptyText();//判断是评价还是其他空白页面
@@ -369,11 +368,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             case R.id.case_3d_btn:
 
+                controlNumber = 2;
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
                 chooseViewPointer.setCase3dBtn(width);
                 choose_point_replace.setCase3dBtn(width);
-                controlNumber = 2;
 
                 if (mDesignerPerson3DMasterPageFragment == null) {
                     CustomProgress.show(this, "", false, null);
@@ -391,11 +390,11 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 break;
 
             case R.id.consumer_appraise:
+                controlNumber = 3;
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
                 chooseViewPointer.setConsumerAppraise(width);
                 choose_point_replace.setConsumerAppraise(width);
-                controlNumber = 3;
                 getAppraiseCount = false;
 
                 if (mDesignerAppraiseFragment == null) {
@@ -418,9 +417,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             case R.id.case_2d_btn_replace:
 
+                controlNumber = 1;
                 chooseViewPointer.setCase2dBtn(width);
                 choose_point_replace.setCase2dBtn(width);
-                controlNumber = 1;
                 if (mDesignerPersonMasterPageFragment == null) {
                     CustomProgress.show(this, "", false, null);
                     mDesignerPersonMasterPageFragment = new DesignerPersonMasterPageFragment();
@@ -433,6 +432,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             case R.id.case_3d_btn_replace_top:
 
+                controlNumber = 2;
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
 
@@ -443,7 +443,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     getSeekDesign3DDetailData(SeekDesignerDetailActivity.this.mDesignerId, 0, 10, "data", "desc");
                     mDesignerPerson3DMasterPageFragment = new DesignerPerson3DMasterPageFragment();
                 }
-                controlNumber = 2;
                 switchFragment(shareFragment, mDesignerPerson3DMasterPageFragment);
                 //设置颜色
                 setTextColor(controlNumber);
@@ -451,12 +450,12 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                 break;
             case R.id.consumer_appraise_replace_top:
+                controlNumber = 3;
                 case_2d_btn.setClickable(true);
                 case_2d_btn_replace_top.setClickable(true);
                 chooseViewPointer.setConsumerAppraise(width);
                 choose_point_replace.setConsumerAppraise(width);
                 getAppraiseCount = false;
-                controlNumber = 3;
                 if (mDesignerAppraiseFragment == null) {
                     CustomProgress.show(this, "", false, null);
                     mDesignerAppraiseFragment = new DesignerAppraiseFragment();
@@ -583,7 +582,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             @Override
             public void onResponse(JSONObject jsonObject) {
                 getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
+                if (mDesignerPersonMasterPageFragment != null){
 
+                    mDesignerPersonMasterPageFragment.setHandler(handler);
+                }
                 String info = GsonUtil.jsonToString(jsonObject);
                 mSeekDesignerDetailBean = GsonUtil.jsonToBean(info, SeekDesignerDetailBean.class);
                 if (mSeekDesignerDetailBean.getCases().size() > 0) {
@@ -595,7 +597,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     }
 
 
-                    mDesignerPersonMasterPageFragment.setHandler(handler);
+
 
                     if (isRefreshOrLoad2D) {
                         mDesignerPersonMasterPageFragment.getMore2DCaseData(mSeekDesignerDetailBean, 0);//刷新
@@ -612,7 +614,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 } else {
                     //没有更多案例时
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
-                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                 }
                 CustomProgress.cancelDialog();
@@ -669,14 +671,19 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mDesignerPerson3DMasterPageFragment.setHandler(handler);
                 String info = GsonUtil.jsonToString(jsonObject);
                 case3DBeen = GsonUtil.jsonToBean(info, Case3DBeen.class);
-                if (case3DBeen.getCases().size() > 0) {
-                    default_ll_bg.setVisibility(View.GONE);
 
-                    if (isFirstIn3D) {
+                if (isFirstIn3D) {
+                    isFirstIn3D = false;
+
+                    if (case3DBeen.getCases().size() > 0){
+
                         default_ll_bg.setVisibility(View.GONE);
-                    } else {
+                    }else {
                         default_ll_bg.setVisibility(View.VISIBLE);
                     }
+                }
+
+                if (case3DBeen.getCases().size() > 0) {
 
                     if (isRefreshOrLoad3D) {
                         mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen.getCases(), 0);//刷新
@@ -690,7 +697,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 } else {
                     //没有更多案例时
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
-                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                 }
 
@@ -896,6 +903,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         }
 
         scrollLastMoveDistance = y;
+        Log.i("yaoxuehua---",""+scrollLastMoveDistance);
 
     }
 
@@ -1023,7 +1031,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                 } else {
 
-                    Toast.makeText(SeekDesignerDetailActivity.this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SeekDesignerDetailActivity.this, "没有更多数据了", Toast.LENGTH_SHORT).show();
                 }
 
                 if (appraiseCount == 0) {
@@ -1122,6 +1130,14 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 //        Log.i("yaoxuehua", "--------->" + scrollViewMeasuredHeight);
 
         readSubClassHeightCount(scrollViewMeasuredHeight);
+
+        //只走一次，避免默认加载数据时,出现少数据误差显示
+        if (isFrist){
+
+            justRefreshAndLoadMore();
+            isFrist = false;
+
+        }
 
     }
 
