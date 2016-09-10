@@ -612,7 +612,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 } else {
                     //没有更多案例时
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
-                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                 }
                 CustomProgress.cancelDialog();
@@ -669,14 +669,14 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mDesignerPerson3DMasterPageFragment.setHandler(handler);
                 String info = GsonUtil.jsonToString(jsonObject);
                 case3DBeen = GsonUtil.jsonToBean(info, Case3DBeen.class);
-                if (case3DBeen.getCases().size() > 0) {
-                    default_ll_bg.setVisibility(View.GONE);
 
-                    if (isFirstIn3D) {
-                        default_ll_bg.setVisibility(View.GONE);
-                    } else {
-                        default_ll_bg.setVisibility(View.VISIBLE);
-                    }
+                if (isFirstIn3D && case3DBeen.getCases().size() > 0) {
+                    default_ll_bg.setVisibility(View.GONE);
+                } else {
+                    default_ll_bg.setVisibility(View.VISIBLE);
+                }
+
+                if (case3DBeen.getCases().size() > 0) {
 
                     if (isRefreshOrLoad3D) {
                         mDesignerPerson3DMasterPageFragment.getMore3DCase(case3DBeen.getCases(), 0);//刷新
@@ -690,7 +690,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 } else {
                     //没有更多案例时
                     mMyScrollViewLayout.refreshFinish(mMyScrollViewLayout.SUCCEED);
-                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SeekDesignerDetailActivity.this, "已经没有更多案例了", Toast.LENGTH_SHORT).show();
                     mMyScrollViewLayout.loadmoreFinish(mMyScrollViewLayout.SUCCEED);
                 }
 
@@ -1023,7 +1023,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                 } else {
 
-                    Toast.makeText(SeekDesignerDetailActivity.this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SeekDesignerDetailActivity.this, "没有更多数据了", Toast.LENGTH_SHORT).show();
                 }
 
                 if (appraiseCount == 0) {

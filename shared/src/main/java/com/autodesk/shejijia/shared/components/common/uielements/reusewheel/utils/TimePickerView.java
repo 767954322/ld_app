@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.uti
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,7 +32,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     private GestureDetector gestureDetector;
 
     public enum Type {
-        ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN , YEAR_MONTH
+        ALL, YEAR_MONTH_DAY, HOURS_MINS, MONTH_DAY_HOUR_MIN, YEAR_MONTH
     }// 四种选择模式，年月日时分，年月日，时分，月日时分
 
     WheelTime wheelTime;
@@ -43,18 +44,23 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     WheelView hour;
     WheelView minute;
     private Long endTime;
-    private Long currentTime;
+    private Long currentTime = 0l;
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
     private OnTimeSelectListener timeSelectListener;
     private Handler handler;
     private Timer timer;
+    private TimerTask timerTask;
+    private Date dateCurrentTime;
+
+    private boolean justOnlyone = true;
+    private boolean justOnlyTwo = true;
 
     public TimePickerView(Context context, final Type type) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.view_pickerview_time, contentContainer);
         // -----确定和取消按钮
-        btnSubmit = (Button)findViewById(R.id.btnSubmit);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
         day = (WheelView) findViewById(R.id.day);
         year = (WheelView) findViewById(R.id.year);
         month = (WheelView) findViewById(R.id.month);
@@ -64,17 +70,17 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         /**
          * 检查flying后的选中是否为合适的
          * */
-        handler = new Handler(){
+        handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
 
-                switch(msg.what){
+                switch (msg.what) {
 
                     case 0:
 
                         isMatchCurrentTime();
-                    break;
+                        break;
                 }
 
             }
@@ -108,7 +114,6 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         wheelTime.setPicker(year, month, day, hours, minute);
-        isMatchCurrentTime();//初始化时就判断当前时间是否合适；
 
     }
 
@@ -125,11 +130,11 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
     /**
      * 判断选中时间是否为最终时间
-     * */
+     */
 
-    public void justMethod(){
+    public void justMethod() {
 
-        TimerTask timerTask = new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 Message message = Message.obtain();
@@ -138,46 +143,64 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             }
         };
 
-        timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask,100,100);
+        if (timer == null) {
+
+            timer = new Timer();
+            timer.scheduleAtFixedRate(timerTask, 100, 100);
+        }
 
     }
+
     /**
      * 设置选中时间
+     *
      * @param date
      */
     public void setTime(Date date) {
         Calendar calendar = Calendar.getInstance();
-        if (date == null)
+        if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
-        else
+        } else {
+
             calendar.setTime(date);
+        }
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        wheelTime.setPicker(year, month, day, hours, minute);
+        wheelTime.setPicker(year, month, day, hours + 2, minute);
+
+
     }
 
     /**
      * 判断选中时间，是否是当前时间的两小时之后
-     * */
+     */
 
-    private void isMatchCurrentTime(){
+    private void isMatchCurrentTime() {
 
         try {
             Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-            currentTime = System.currentTimeMillis();
-            Long a = 3600*1000*2L;
-            currentTime = currentTime + a;
+//            currentTime = System.currentTimeMillis();
+//            Long a = 3600*1000*2L;
+//            currentTime = currentTime + a;
+            if (justOnlyone) {
+                dateCurrentTime = WheelTime.dateFormat.parse(wheelTime.getTime());
+                currentTime = dateCurrentTime.getTime() + currentTime;
+                justOnlyone = false;
+
+            }
             endTime = date.getTime();
-            if (endTime >currentTime){
+
+            if (endTime >= currentTime) {
+
                 btnSubmit.setTextColor(UIUtils.getColor(R.color.pickerview_timebtn_nor));
                 btnSubmit.setClickable(true);
-            }else {
+            } else {
                 btnSubmit.setTextColor(UIUtils.getColor(R.color.pickerview_timebtn_pre));
                 btnSubmit.setClickable(false);
+
             }
 
         } catch (ParseException e) {
@@ -189,25 +212,25 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     /**
      * 设置确定按钮颜色，以及是否可点击
      * pickerview_surebutton_textcolor#dcdcdc
-     * */
-    public void setSureButtonListener(WheelView wheelView){
+     */
+    public void setSureButtonListener(WheelView wheelView) {
 
         wheelView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                if (event.getAction() == MotionEvent.ACTION_MOVE){
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
 
                     isMatchCurrentTime();
 
                 }
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
                     isMatchCurrentTime();
 
                 }
 
-                if (event.getAction() == MotionEvent.ACTION_UP){
+                if (event.getAction() == MotionEvent.ACTION_UP) {
 
                     isMatchCurrentTime();
                     justMethod();
@@ -260,7 +283,10 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
                 try {
                     Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
                     timeSelectListener.onTimeSelect(date);
-                    timer.cancel();
+                    if (timer != null) {
+                        timer.cancel();
+
+                    }
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -278,7 +304,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         this.timeSelectListener = timeSelectListener;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         tvTitle.setText(title);
     }
 }

@@ -501,7 +501,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         pvTime = new TimePickerView(this, TimePickerView.Type.ALL);
         pvTime.setRange(2016, 2018);
         ///Control the time range .
-        pvTime.setTime(new Date());
+        pvTime.setTime(null);
         pvTime.setCyclic(false);
         pvTime.setCancelable(false);
         ///  The callback after the time to choose  .
