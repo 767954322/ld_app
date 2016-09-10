@@ -6,6 +6,7 @@ import android.os.Message;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
@@ -226,6 +227,19 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
                 callBack.onError(volleyError);
             }
         });
+    }
+
+    /**
+     * 是否是精选
+     * 　true: 精选
+     */
+    protected boolean isElite(int wk_cur_template_id) {
+        switch (String.valueOf(wk_cur_template_id)) {
+            case WkTemplateConstants.IS_ELITE:
+                return true;
+            default:
+                return false;
+        }
     }
 
 
