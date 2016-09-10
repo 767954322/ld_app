@@ -57,11 +57,6 @@ public class DesignBaseFragment extends BaseFragment {
         updateFragmentContent(status, loho);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     private void updateFragmentContent(int status, int loho) {
         mTabNames.clear();
         fragments.clear();
@@ -113,7 +108,6 @@ public class DesignBaseFragment extends BaseFragment {
     @Override
     public void onFragmentShown() {
         KLog.d(TAG, "onFragmentShown: onFragmentShown");
-
         for (int i = 0; i < fragments.size(); ++i) {
             BaseFragment f1 = (BaseFragment) fragments.get(i);
             f1.onFragmentShown();

@@ -61,6 +61,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         mPullListView.setAdapter(mCommonAdapter);
     }
 
+
     @Override
     protected void initView() {
         mPullListView = (PullListView) rootView.findViewById(R.id.pullable_listview);
@@ -80,8 +81,8 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
+    public void onPause() {
+        super.onPause();
     }
 
     @Override

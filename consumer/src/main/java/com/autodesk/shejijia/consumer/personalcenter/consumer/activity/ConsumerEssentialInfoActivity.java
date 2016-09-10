@@ -387,7 +387,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      * 获取省市区
      */
     private void getPCDAddress() {
-        mChangeAddressDialog = new AddressDialog();
+        if (!TextUtils.isEmpty(province_name)
+                || !TextUtils.isEmpty(city_name)) {
+            mChangeAddressDialog = AddressDialog.getInstance(province_name+" "+city_name+" "+district_name);
+        }else {
+            mChangeAddressDialog = AddressDialog.getInstance("尚未填写");
+        }
         mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
         mChangeAddressDialog
                 .setAddressListener(new AddressDialog.OnAddressCListener() {

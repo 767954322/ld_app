@@ -267,28 +267,33 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
             }
 
+            boolean elite = isElite(wk_cur_template_id);
+
             designer_house_charge_show.setVisibility(View.VISIBLE);
             switch (wk_cur_sub_node_id_i) {
                 case 11:
-                    setViewAnimation(rlMeasureWarmTips);
-                    if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
-                        ll_designer_send.setVisibility(View.GONE);
-                        designer_house_charge_show.setVisibility(View.VISIBLE);
+                    if (!elite){
                         setViewAnimation(rlMeasureWarmTips);
-                        // rlMeasureWarmTips.setVisibility(View.GONE);
-                    } else {
-                        // rlMeasureWarmTips.setVisibility(View.VISIBLE);
-                        ll_designer_send.setVisibility(View.VISIBLE);
-                        tvWarmTips.setText(R.string.Mrasuretips);
-                        tvWarmTipsContent.setText(R.string.update_measure_house_cost);
-                        tvMeasureWarmTips.setText(R.string.warmTips);
-                        tvMeasureWarmTipsContent.setText(R.string.no_pay_rent);
+                        if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
+                            ll_designer_send.setVisibility(View.GONE);
+                            designer_house_charge_show.setVisibility(View.VISIBLE);
+                            setViewAnimation(rlMeasureWarmTips);
+                            // rlMeasureWarmTips.setVisibility(View.GONE);
+                        } else {
+                            // rlMeasureWarmTips.setVisibility(View.VISIBLE);
+                            ll_designer_send.setVisibility(View.VISIBLE);
+                            tvWarmTips.setText(R.string.Mrasuretips);
+                            tvWarmTipsContent.setText(R.string.update_measure_house_cost);
+                            tvMeasureWarmTips.setText(R.string.warmTips);
+                            tvMeasureWarmTipsContent.setText(R.string.no_pay_rent);
 
+                        }
                     }
                     break;
+
                 default:
-                    rlMeasureWarmTips.setVisibility(View.GONE);
                     ll_designer_send.setVisibility(View.GONE);
+                    rlMeasureWarmTips.setVisibility(View.GONE);
                     designer_house_charge_show.setVisibility(View.GONE);
                     // consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
                     break;

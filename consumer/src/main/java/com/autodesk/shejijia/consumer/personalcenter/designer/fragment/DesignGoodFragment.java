@@ -9,6 +9,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.designer.adapter.EliteAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -47,8 +48,12 @@ public class DesignGoodFragment extends BaseFragment {
 
     @Override
     public void onFragmentShown() {
-        onLoad2Refresh2Api();
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+            onLoad2Refresh2Api();
+        }
     }
+
     @Override
     protected void initData() {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -111,8 +116,9 @@ public class DesignGoodFragment extends BaseFragment {
 
             }
         };
-        MPServerHttpManager.getInstance().getSliteOder(designer_id,offset,limit, callback);
+        MPServerHttpManager.getInstance().getSliteOder(designer_id, offset, limit, callback);
     }
+
     private RelativeLayout mRlEmpty;
     private ListViewFinal mListView;
     private PtrClassicFrameLayout ptrLayoutElite;

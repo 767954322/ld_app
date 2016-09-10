@@ -6,6 +6,7 @@ import android.os.Message;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
@@ -72,6 +73,10 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         getOrderDetailsInfo(needs_id, designer_id);
     }
 
+    public void fetchWorkFlowData( ) {
+        getOrderDetailsInfo(needs_id, designer_id);
+    }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -88,6 +93,14 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         return Integer.valueOf(wk_cur_sub_node_id);
 
     }
+
+    protected void onCheckWorkFlowStep(int template_id,int sub_node_id){
+
+    }
+    protected void onPreCheckWorkFlowStep(int template_id,int sub_node_id){
+
+    }
+
 
     public String GetRoleType() {
         if (memberEntity != null) {
@@ -140,7 +153,10 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             wk_cur_sub_node_id = mBiddersEntity.getWk_cur_sub_node_id();
             wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
 
+            onPreCheckWorkFlowStep(WorkFlowTemplateStep(),WorkFlowSubNodeStep());
             onWorkFlowData();
+            onCheckWorkFlowStep(WorkFlowTemplateStep(),WorkFlowSubNodeStep());
+
             /*if (!TextUtils.isEmpty(wk_cur_sub_node_id) && StringUtils.isNumeric(wk_cur_sub_node_id)) {
                 wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
 
@@ -226,6 +242,19 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
                 callBack.onError(volleyError);
             }
         });
+    }
+
+    /**
+     * 是否是精选
+     * 　true: 精选
+     */
+    protected boolean isElite(int wk_cur_template_id) {
+        switch (String.valueOf(wk_cur_template_id)) {
+            case WkTemplateConstants.IS_ELITE:
+                return true;
+            default:
+                return false;
+        }
     }
 
 

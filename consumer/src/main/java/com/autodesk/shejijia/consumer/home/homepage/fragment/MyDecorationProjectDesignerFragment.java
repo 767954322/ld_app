@@ -23,6 +23,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     private BidBidingFragment mBidBidingFragment;
     private DesignBaseFragment designBaseFragment;
     private DesignerConstructionFragment mDesignerConstructionFragment;
+    private Fragment fromFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -37,28 +38,41 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     protected void initData() {
         int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
         int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
-
         setDesigneBaseFragment(high_level_audit, is_loho);
     }
 
     public void switchContent(Fragment fragment) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.ll_contain, fragment);
-        transaction.commit();
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        if (fromFragment != fragment) {
+            if (fromFragment != null) {
+                transaction.hide(fromFragment);
+            }
+
+            if (!fragment.isAdded()) {
+                transaction.add(R.id.ll_contain, fragment);
+            } else {
+                transaction.show(fragment);
+            }
+            transaction.commit();
+            fromFragment = fragment;
+        }
     }
+
 
     /**
      * 应标
      */
     public void setBidingFragment() {
-        if (mBidBidingFragment == null)
+        if (mBidBidingFragment == null) {
             mBidBidingFragment = new BidBidingFragment();
+        }
         switchContent(mBidBidingFragment);
     }
 
     public void setDesigneBaseFragment(int high_level_audit, int is_loho) {
-        if (designBaseFragment == null)
+        if (designBaseFragment == null) {
             designBaseFragment = DesignBaseFragment.newInstance(high_level_audit, is_loho);
+        }
         switchContent(designBaseFragment);
     }
 
@@ -66,8 +80,9 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
      * 施工
      */
     public void setConstructionFragment() {
-        if (mDesignerConstructionFragment == null)
+        if (mDesignerConstructionFragment == null) {
             mDesignerConstructionFragment = new DesignerConstructionFragment();
+        }
         switchContent(mDesignerConstructionFragment);
     }
 
@@ -77,10 +92,4 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
         Log.d(TAG, "onFragmentShown: onFragmentShown");
         designBaseFragment.onFragmentShown();
     }
-
-    private Fragment mContent;
-//    private DesignBaseFragment designBaseFragment;
-//    private Fragment mDesignerConstructionFragment;
-//    private Fragment mBidBidingFragment;
-
 }

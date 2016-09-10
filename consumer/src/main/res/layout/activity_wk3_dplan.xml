@@ -19,6 +19,7 @@
         android:layout_below="@id/common_navbar"
         android:horizontalSpacing="@dimen/size_3"
         android:numColumns="3"
+        android:paddingBottom="70dp"
         android:verticalSpacing="@dimen/size_2"/>
 
     <Button

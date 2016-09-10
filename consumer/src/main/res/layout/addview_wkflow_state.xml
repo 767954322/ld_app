@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/information_g"
+        android:src="@drawable/details"
         />
 
-    <!--<ImageView-->
+    <!--<ImageView -->
         <!--android:id="@+id/construction_details"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/project_information"
+        android:src="@drawable/information"
         />
 
 
