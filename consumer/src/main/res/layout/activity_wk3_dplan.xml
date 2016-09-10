@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".personalcenter.workflow.activity.Wk3DPlanActivity">
 
     <include
@@ -16,22 +15,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/common_navbar"
-        android:layout_marginLeft="@dimen/size_10"
-        android:layout_marginRight="@dimen/size_10"
         android:horizontalSpacing="@dimen/size_3"
-        android:numColumns="3"
-        android:verticalSpacing="@dimen/size_2" />
+        android:numColumns="4"
+        android:paddingBottom="70dp"
+        android:verticalSpacing="@dimen/size_2"/>
 
     <Button
+        android:layout_alignParentBottom="true"
         android:id="@+id/btn_submit_3dplan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/size_20"
         android:layout_marginLeft="@dimen/size_20"
         android:layout_marginRight="@dimen/size_20"
-        android:layout_marginTop="10dp"
         android:background="@drawable/bg_common_btn_pressed"
         android:text="@string/autonym_confirm"
         android:textColor="@color/bg_ff"
-        android:textSize="@dimen/font_20" />
-</LinearLayout>
+        android:textSize="@dimen/font_20"/>
+</RelativeLayout>
