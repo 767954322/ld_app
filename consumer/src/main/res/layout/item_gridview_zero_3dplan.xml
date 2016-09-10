@@ -10,7 +10,7 @@
         android:layout_height="@dimen/size_100"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"/>
+        android:scaleType="fitXY"/>
     <!--android:background="@drawable/common_case_icon"-->
 
 
