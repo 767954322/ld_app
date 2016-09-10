@@ -784,7 +784,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
                 nick_name = mConsumerEssentialInfoEntity.getNick_name();
+                phone_number = mConsumerEssentialInfoEntity.getMobile_number();
                 tvc_name.setText(nick_name);//设置消费者姓名
+                tvc_phone.setText(phone_number);
             }
 
             @Override
@@ -889,6 +891,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private String housingType;
     private String houseArea;
     private String livingType;
+    private String phone_number;
     private String style;
     private String communityName;
     private String nick_name;
