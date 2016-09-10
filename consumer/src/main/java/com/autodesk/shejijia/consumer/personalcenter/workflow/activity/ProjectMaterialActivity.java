@@ -29,18 +29,21 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
                 mIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(mIntent);
                 break;
+
             case R.id.ll_project_material_measure_house_delivery:
                 Intent dIntent = new Intent(ProjectMaterialActivity.this, FlowUploadDeliveryActivity.class);
                 dIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
                 dIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(dIntent);
                 break;
+
             case R.id.ll_project_material_contract:
                 Intent cIntent = new Intent(ProjectMaterialActivity.this, FlowEstablishContractActivity.class);
                 cIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
                 cIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(cIntent);
                 break;
+
             case R.id.ll_project_material_project:
                 Intent pIntent = new Intent(ProjectMaterialActivity.this, FlowUploadDeliveryActivity.class);
                 pIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);

@@ -275,7 +275,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String toilet_cn = ConvertUtils.getConvert2CN(toiletJson, toilet);
         String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
 
-//        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
+        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
 
         district_name = UIUtils.getNoStringIfEmpty(district_name);
         String projectAddress = UIUtils.getNoDataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNoDataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
@@ -284,7 +284,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         mTvProjectNeedsId.setText(needs_id);
         mTvHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type_convert));
         mTvHouseStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style_convert));
-        mTvHouseModel.setText(UIUtils.getNoSelectIfEmpty(living_room_cn) + UIUtils.getNoSelectIfEmpty(room_cn) + UIUtils.getNoSelectIfEmpty(toilet_cn));
+        mTvHouseModel.setText(livingRoom_room_toilet);
         mTvName.setText(mBidHallEntity.getContacts_name());
         mTvDecorationBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget));
         String design_budget = mBidHallEntity.getDesign_budget();
