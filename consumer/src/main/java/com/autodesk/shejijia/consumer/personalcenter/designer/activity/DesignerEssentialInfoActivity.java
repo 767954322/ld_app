@@ -585,8 +585,9 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     private void systemPhoto() {
         uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         Intent intent = new Intent();
-        intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.putExtra("return-data", true);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, SYS_INTENT_REQUEST);
     }

@@ -142,7 +142,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
             public void onErrorResponse(VolleyError volleyError) {
                 setBtnUnpress();
                 tv_my_property_account_balance.setText("¥ " + "0.00");
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,MyPropertyActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MyPropertyActivity.this);
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         });

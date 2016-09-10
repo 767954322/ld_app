@@ -6,18 +6,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.WithdrawaRecoldBean;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 
 import java.util.List;
 
 /**
- * @author DongXueQiu .
+ * @author Malidong .
  * @version 1.0 .
- * @date 16-6-7
+ * @date 16-9-10
  * @file WithdrawalRecordAdapter.java  .
- * @brief .
+ * @brief 提现记录详情适配 .
  */
 public class WithdrawalRecordAdapter extends BaseAdapter<WithdrawaRecoldBean.TranslogListEntity> {
 
@@ -45,10 +45,33 @@ public class WithdrawalRecordAdapter extends BaseAdapter<WithdrawaRecoldBean.Tra
 
     @Override
     public void initItem(View view, Holder holder, int position) {
-        ((ViewHolder) holder).tv_item_lv_withdrawal_recold_bank.setText(mDatas.get(position).getBank_name());
-        ((ViewHolder) holder).tv_withdrawal_recold_money.setText("¥" + mDatas.get(position).getAmount());
-        ((ViewHolder) holder).tv_withdrawal_recold_number.setText(mDatas.get(position).getTransLog_id() + "");
-        ((ViewHolder) holder).tv_withdrawal_recold_time.setText(mDatas.get(position).getDate());
+        WithdrawaRecoldBean.TranslogListEntity translogListEntity = mDatas.get(position);
+        double amount = translogListEntity.getAmount();
+
+        switch (translogListEntity.getStatus()) {
+            case -1:
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("" + amount); // 未处理
+                ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.untreated));
+                break;
+            case 0:
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("-" + amount); //　提现申请成功
+                ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.in_the_processing));
+                break;
+            case 1:
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("" + amount); //　提现成功
+                ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.handle_successful));
+                break;
+            case 2:
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("+" + amount); //　提现失败
+                ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.handle_failure));
+                break;
+            default:
+                break;
+        }
+
+        ((ViewHolder) holder).tv_item_lv_withdrawal_recold_bank.setText(translogListEntity.getBank_name());
+        ((ViewHolder) holder).tv_withdrawal_recold_number.setText(translogListEntity.getTransLog_id() + "");
+        ((ViewHolder) holder).tv_withdrawal_recold_time.setText(translogListEntity.getDate());
 
         ((ViewHolder) holder).tv_withdrawal_recold_remark.setText("FSFSDFDSFDS");
 
@@ -60,16 +83,6 @@ public class WithdrawalRecordAdapter extends BaseAdapter<WithdrawaRecoldBean.Tra
 
         } else {
             ((ViewHolder) holder).tv_withdrawal_recold_remark.setVisibility(View.GONE);
-        }
-        int status = mDatas.get(position).getStatus();
-        if (status == 0) {
-            ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.in_the_processing));
-        } else if (status == 1) {
-            ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.handle_successful));
-        } else if (status == 2) {
-            ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.handle_failure));
-        } else if (status == -1) {
-            ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.untreated));
         }
     }
 
