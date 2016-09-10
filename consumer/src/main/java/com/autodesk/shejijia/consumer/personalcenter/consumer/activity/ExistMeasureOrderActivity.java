@@ -42,11 +42,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * @author DongXueQiu .
+ * @author Malidong .
  * @version 1.0 .
- * @date 16-6-7 上午10:29
+ * @date 16-9-10
  * @file ExistMeasureOrderActivity.java  .
- * @brief 附用历史量房记录 .
+ * @brief 复用量房表单界面 .
  */
 public class ExistMeasureOrderActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
 

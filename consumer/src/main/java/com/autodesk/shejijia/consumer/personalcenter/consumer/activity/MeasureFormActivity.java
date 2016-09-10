@@ -258,7 +258,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
                 boolean bName = name.matches("^[^ ]+[\\s\\S]*[^ ]+$"); /// 中间可以有空格 .
                 boolean bMobile = mobileNumber.matches(RegexUtil.PHONE_REGEX);
-                boolean bArea = checkMeasureArea(houseArea);
+                checkMeasureArea(houseArea);
 
                 boolean bAddress = communityName.matches(RegexUtil.ADDRESS_REGEX);
 
@@ -280,13 +280,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-//                if (!bArea || houseArea.isEmpty() || houseArea.equals("0")) {
-//
-//                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
-//                    return;
-//                }
-
-                //.....................................
                 if (TextUtils.isEmpty(houseArea)) {
                     houseArea = "0";
                 }
@@ -447,27 +440,31 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     private boolean checkMeasureArea(String area) {
-        String[] split = area.split("\\.");
-        if (null != split) {
+        if(TextUtils.isEmpty(area)){
+            return false;
+        }else {
+            String[] split = area.split("\\.");
+            if (null != split) {
 
-            if (split.length == 1) {
-                if (split[0].length() <= 4) {
-                    if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
-                        return true;
+                if (split.length == 1) {
+                    if (split[0].length() <= 4) {
+                        if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
+                            return true;
+                        }
+                    }
+                }
+                if (split.length == 2) {
+                    if (split[0].length() <= 4 && split[1].length() <= 2) {
+
+                        if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
+
+                            return true;
+                        }
                     }
                 }
             }
-            if (split.length == 2) {
-                if (split[0].length() <= 4 && split[1].length() <= 2) {
-
-                    if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
-
-                        return true;
-                    }
-                }
-            }
+            return false;
         }
-        return false;
     }
 
 
