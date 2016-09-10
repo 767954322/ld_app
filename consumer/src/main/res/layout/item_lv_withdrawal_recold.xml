@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_10"
+            android:textColor="@color/bg_33"
             android:layout_weight="1"
             android:text="中国银行" />
 
@@ -23,6 +24,7 @@
             android:id="@+id/tv_withdrawal_recold_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/bg_33"
             android:layout_marginRight="@dimen/size_10" />
     </LinearLayout>
 
@@ -49,12 +51,14 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textColor="@color/bg_33"
                 android:layout_height="wrap_content"
                 android:text="@string/tixian_status" />
 
             <TextView
                 android:id="@+id/tv_withdrawal_recold_state"
                 android:layout_width="wrap_content"
+                android:textColor="@color/bg_99"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -69,11 +73,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/bg_33"
                 android:text="@string/tixian_number" />
 
             <TextView
                 android:id="@+id/tv_withdrawal_recold_money"
                 android:layout_width="wrap_content"
+                android:textColor="@color/bg_33"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
@@ -88,11 +94,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/bg_33"
                 android:text="@string/tixian_liushuihao" />
 
             <TextView
                 android:id="@+id/tv_withdrawal_recold_number"
                 android:layout_width="wrap_content"
+                android:textColor="@color/bg_33"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
