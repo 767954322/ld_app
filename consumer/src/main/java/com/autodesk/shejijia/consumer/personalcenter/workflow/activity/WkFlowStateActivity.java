@@ -292,7 +292,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private void onOrdinaryItemClick(int position, int wk_cur_sub_node_idi, View view) {
         switch (position) {
             case 0://量房
-                if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
+                if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType) && wk_cur_sub_node_idi == 11) {
                     showNewActivity(FlowMeasureFormActivity.class, -1);//IOS消费者不让点击的
                 }
                 break;
