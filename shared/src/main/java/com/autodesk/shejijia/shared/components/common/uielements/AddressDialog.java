@@ -178,6 +178,10 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         } else {
             mDistrictModelArrayList.clear();
         }
+
+        if (null == getActivity()) {
+            return;
+        }
         mAreaAdapter = new AreaAdapter(getActivity(), mDistrictModelArrayList);
         mAreaAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));
         mDistrictWheelView.setViewAdapter(mAreaAdapter);
@@ -204,6 +208,9 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
             mCityModelArrayList = mCityDataHelper.getCityByParentId(mDb, mProvinceModelArrayList.get(pCurrent).CODE);
         } else {
             mCityModelArrayList.clear();
+        }
+        if (null == getActivity()) {
+            return;
         }
         mCityAdapter = new CityAdapter(getActivity(), mCityModelArrayList);
         mCityAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));
