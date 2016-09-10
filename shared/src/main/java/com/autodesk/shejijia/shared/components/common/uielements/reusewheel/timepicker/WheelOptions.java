@@ -292,7 +292,7 @@ public class WheelOptions<T> {
         if (timer == null){
 
             timer = new Timer();
-            //timer.scheduleAtFixedRate(timerTask,100,100);
+            timer.scheduleAtFixedRate(timerTask,100,100);
 
         }
 
@@ -307,5 +307,22 @@ public class WheelOptions<T> {
 
     }
 
+    /**
+     * 只设置最后一列，
+     * */
+    public void setWvOption3Data(ArrayList<ArrayList<T>> mOptions2Items,ArrayList<ArrayList<ArrayList<T>>> mOptions3Items){
+
+
+        // 选项2
+        if (mOptions2Items != null)
+            wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(0)));// 设置显示数据
+        wv_option2.setCurrentItem(wv_option1.getCurrentItem());// 初始化时显示的数据
+
+        if (mOptions3Items != null)
+            wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(0)
+                    .get(0)));// 设置显示数据
+        wv_option3.setCurrentItem(wv_option3.getCurrentItem());// 初始化时显示的数据
+
+    }
 
 }
