@@ -14,7 +14,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity2;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
@@ -23,7 +23,6 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 /**
  * @author yaoxuehua .
@@ -101,7 +100,7 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
                  * @param position item的位置
                  */
                 String case_id = mCasesEntityArrayList.get(position).getId();
-                Intent intent = new Intent(getActivity(), CaseLibraryNewActivity2.class);
+                Intent intent = new Intent(getActivity(), CaseLibraryNewActivity.class);
                 intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
                 startActivity(intent);
             }
