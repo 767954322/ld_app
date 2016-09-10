@@ -26,7 +26,6 @@ public class FragmentChangeManager {
         for (Fragment fragment : mFragments) {
             mFragmentManager.beginTransaction().add(mContainerViewId, fragment).hide(fragment).commit();
         }
-
         setFragments(0);
     }
 

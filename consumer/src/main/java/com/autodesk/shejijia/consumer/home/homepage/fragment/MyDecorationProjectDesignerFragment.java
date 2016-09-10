@@ -57,7 +57,7 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     }
 
     public void setDesigneBaseFragment(int high_level_audit, int is_loho) {
-//        if (designBaseFragment == null)
+        if (designBaseFragment == null)
             designBaseFragment = DesignBaseFragment.newInstance(high_level_audit, is_loho);
         switchContent(designBaseFragment);
     }
