@@ -433,6 +433,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                CustomProgress.cancelDialog();
+
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryDetail3DActivity.this);
             }
         };
