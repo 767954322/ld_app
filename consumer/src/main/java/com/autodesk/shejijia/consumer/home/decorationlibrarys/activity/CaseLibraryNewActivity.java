@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -68,7 +69,7 @@ import java.util.Map;
  * @Author :willson
  * @创建日期 :2016.8.29
  */
-public class CaseLibraryNewActivity extends NavigationBarActivity implements AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener ,CaseLibraryAdapter.OnShareOrPraiseListener {
+public class CaseLibraryNewActivity extends NavigationBarActivity implements AbsListView.OnItemClickListener ,AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
 
     @Override
@@ -113,9 +114,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
         mCaseLibraryText = (TextView) viewText.findViewById(R.id.case_library_text);
-//        caseLibraryNew.addHeaderView(view);
-//        caseLibraryNew.addHeaderView(viewHead);
-//        caseLibraryNew.addHeaderView(viewText);
+        caseLibraryNew.addHeaderView(view);
+        caseLibraryNew.addHeaderView(viewHead);
+        caseLibraryNew.addHeaderView(viewText);
 
         showOrHideChatBtn();
     }
@@ -154,13 +155,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         caseLibraryNew.setOnScrollListener(this);
         caseLibraryNew.setOnTouchListener(this);
         llThumbUp.setOnClickListener(this);
-//        ll_fenxiang_down.setOnClickListener(this);
+        ll_fenxiang_down.setOnClickListener(this);
         ll_fenxiang_up.setOnClickListener(this);
         pivImgCustomerHomeHeader.setOnClickListener(this);
         ivCustomerIm.setOnClickListener(this);
         rlThumbUp.setOnClickListener(this);
         llThumbUp.setOnClickListener(this);
-//        caseLibraryNew.setOnItemClickListener(this);
+        caseLibraryNew.setOnItemClickListener(this);
         mIvFollowedDesigner.setOnClickListener(this);
 
     }
@@ -509,7 +510,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         }
 
         mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLibraryNewActivity.this, images);
-        mCaseLibraryAdapter.setShareOrPraiseListener(this);
+        //mCaseLibraryAdapter.setShareOrPraiseListener(this);
         caseLibraryNew.setAdapter(mCaseLibraryAdapter);
         //设置简介
         String introduction = caseDetailBean.getDescription();
@@ -660,17 +661,17 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     }
 
 
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        if (position != 2 || position != 1) {
-//            Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
-//            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position == 0 ? topPosition : position - 3);
-//            intent.putExtras(bundle);
-//            this.startActivity(intent);
-//        }
-//    }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (position != 2) {
+            Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
+            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position == 0 ? topPosition : position - 3);
+            intent.putExtras(bundle);
+            this.startActivity(intent);
+        }
+    }
 
     @Override
     protected void onStop() {
@@ -731,28 +732,28 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private DesignerInfoBean mDesignerInfo;
     private String mHs_uid;
     private String mNickName;
-
-    @Override
-    public void onShareClick() {
-        if (null != memberEntity) {
-
-            if (isWeixinAvilible(CaseLibraryNewActivity.this)) {
-                if (takePhotoPopWin == null) {
-                    takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
-                }
-                takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-            } else {
-                ToastUtil.showCustomToast(CaseLibraryNewActivity.this, getString(R.string.anzhuangweixin));
-            }
-
-        } else {
-            AdskApplication.getInstance().doLogin(this);
-        }
-    }
-
-    @Override
-    public void onPraiseClick() {
-
-    }
+//
+//    @Override
+//    public void onShareClick() {
+//        if (null != memberEntity) {
+//
+//            if (isWeixinAvilible(CaseLibraryNewActivity.this)) {
+//                if (takePhotoPopWin == null) {
+//                    takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
+//                }
+//                takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+//            } else {
+//                ToastUtil.showCustomToast(CaseLibraryNewActivity.this, getString(R.string.anzhuangweixin));
+//            }
+//
+//        } else {
+//            AdskApplication.getInstance().doLogin(this);
+//        }
+//    }
+//
+//    @Override
+//    public void onPraiseClick() {
+//
+//    }
 //    private CountDownTimer mTimer;
 }

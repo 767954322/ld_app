@@ -7,7 +7,7 @@ import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity2;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.HoverCaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
@@ -88,7 +88,7 @@ public class MassiveCasesFragment extends BaseFragment implements PullToRefreshL
     @Override
     public void OnItemHoverCaseClick(int position) {
         String case_id = mCasesEntities.get(position).getId();
-        Intent intent = new Intent(getActivity(), CaseLibraryNewActivity2.class);
+        Intent intent = new Intent(getActivity(), CaseLibraryNewActivity.class);
         intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
         startActivity(intent);
     }

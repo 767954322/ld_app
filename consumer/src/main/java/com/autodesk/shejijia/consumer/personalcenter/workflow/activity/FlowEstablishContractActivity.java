@@ -207,7 +207,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             if (WorkFlowSubNodeStep() == 31 || WorkFlowSubNodeStep() == 32) { /// 设计师发完合同后可以继续发送按钮显示.
                 UIsetDesignerSendButtonActive(true, getResources().getString(R.string.send_design_contract));
-            } else if (WorkFlowSubNodeStep() > 31 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
+            } else if (WorkFlowSubNodeStep() > 32 && WorkFlowSubNodeStep() != 33) { /// 当消费者发完设计首款按钮隐藏.
                 UIsetDesignerSendButtonActive(false, null);
             } else if (WorkFlowSubNodeStep() == 33) {
                 UIsetDesignerSendButtonActive(true, getResources().getString(R.string.uploaded_deliverable));
@@ -222,7 +222,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             if (WorkFlowSubNodeStep() == 31 || WorkFlowSubNodeStep() == 32) { /// 设计师发完合同后可以继续发送按钮显示 .
                 UIsetDesignerSendButtonActive(true, null);
-                btn_send.setText(R.string.sure_modify_send); // 再次修改合同按钮应为“修改发送”
+                btn_send_contract.setText(R.string.sure_modify_send); // 再次修改合同按钮应为“修改发送”
             } else if (WorkFlowSubNodeStep() > 32 && WorkFlowSubNodeStep() != 33) {   /// 当消费者发完设计首款按钮隐藏 .
                 UIsetDesignerSendButtonActive(false, null);
             } else if (WorkFlowSubNodeStep() == 33) {
@@ -626,8 +626,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             if (!consumerEmail.equals("")) {
                 if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
                     showAlertView(R.string.please_fill_in_the_right_phone_email);
+                    bValid = false;
                 }
-                bValid = false;
                 break;
             }
 
