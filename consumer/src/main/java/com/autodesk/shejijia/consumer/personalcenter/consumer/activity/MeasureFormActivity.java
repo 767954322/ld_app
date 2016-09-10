@@ -255,6 +255,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 name = tvc_name.getText().toString().trim();
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
+                houseArea = tvc_area.getText().toString().trim();
 
                 boolean bName = name.matches("^[^ ]+[\\s\\S]*[^ ]+$"); /// 中间可以有空格 .
                 boolean bMobile = mobileNumber.matches(RegexUtil.PHONE_REGEX);
@@ -283,8 +284,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 if (TextUtils.isEmpty(houseArea)) {
                     houseArea = "0";
                 }
-                houseArea = String.format("%.2f", Double.valueOf(houseArea));
-                if (Double.valueOf(houseArea) < 1 || Double.valueOf(houseArea) > 9999) {
+
+                String area =  String.format("%.2f", Double.valueOf(houseArea));
+                if (Double.valueOf(area) < 1 || Double.valueOf(area) > 9999) {
                     getErrorHintAlertView(UIUtils.getString(R.string.alert_msg_area));
                     return;
                 }
@@ -363,7 +365,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 //                    if (formatDate(date, currentData)) {
                 CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
 
-//                houseArea = tvc_area.getText().toString().trim();
                 JSONObject jsonObject = new JSONObject();
                 try {
 
@@ -440,9 +441,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     private boolean checkMeasureArea(String area) {
-        if(TextUtils.isEmpty(area)){
+        if (TextUtils.isEmpty(area)) {
             return false;
-        }else {
+        } else {
             String[] split = area.split("\\.");
             if (null != split) {
 
