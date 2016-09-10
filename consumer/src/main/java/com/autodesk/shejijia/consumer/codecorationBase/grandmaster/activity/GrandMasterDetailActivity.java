@@ -1,20 +1,26 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -46,8 +52,7 @@ import java.util.List;
 /**
  * Created by allengu on 16-8-23.
  */
-public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener {
-
+public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
 
 
     @Override
@@ -55,6 +60,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         return R.layout.activity_grandmaster_detail;
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void initView() {
 
@@ -70,6 +76,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         tv_detail_en_position = (TextView) findViewById(R.id.tv_detail_en_position);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         coordinator_layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        ll_scrolling_view_behavior = (LinearLayout) findViewById(R.id.ll_scrolling_view_behavior);
+        app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
     }
 
@@ -80,6 +88,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
         nav_left_imageButton.setOnClickListener(this);
         bt_grand_reservation.setOnClickListener(this);
+        app_bar_layout.addOnOffsetChangedListener(this);
 
     }
 
@@ -108,6 +117,17 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
                 break;
         }
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+        if (verticalOffset >= 0) {
+            rl_navr_header.setVisibility(View.VISIBLE);
+        } else {
+            rl_navr_header.setVisibility(View.GONE);
+        }
+
     }
 
     //获取大师详情信息
@@ -184,8 +204,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    Bitmap bitmap=loadedImage;
-                    Log.d("willson",bitmap+"");
+                    Bitmap bitmap = loadedImage;
+                    Log.d("willson", bitmap + "");
 
                     int color = bitmap.getPixel(2, 8);
                     // 如果你想做的更细致的话 可以把颜色值的R G B 拿到做响应的处理 笔者在这里就不做更多解释
@@ -193,10 +213,10 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
                     int g = Color.green(color);
                     int b = Color.blue(color);
                     int a = Color.alpha(color);
-                    Log.d("willson","    "+r+"  "+"  "+g+"  "+b);
-                    if (r>156) {//白色设置灰色
+                    Log.d("willson", "    " + r + "  " + "  " + g + "  " + b);
+                    if (r > 156) {//白色设置灰色
                         nav_left_imageButton.setBackgroundResource(R.mipmap.arrow_g);
-                    }else {// 灰色 设置白色
+                    } else {// 灰色 设置白色
                         nav_left_imageButton.setBackgroundResource(R.drawable.arrow);
                     }
                 }
@@ -217,7 +237,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     }
 
     //初始化大师案例展示
-    private void initPageBottomInfo(){
+    private void initPageBottomInfo() {
 
         BaseCommonRvAdapter<DatailCase> adapter1 = new BaseCommonRvAdapter<DatailCase>(this, R.layout.item_listview_grandmaster_detail, cases_list) {
             @Override
@@ -279,9 +299,8 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     }
 
 
-
     //上传立即预约信息
-    private void onClickFromReservation(){
+    private void onClickFromReservation() {
 
         OrderDialogMaster orderDialog = new OrderDialogMaster(GrandMasterDetailActivity.this, R.style.add_dialog, R.drawable.tital_yuyue);
         orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
@@ -320,6 +339,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         orderDialog.show();
 
     }
+
     public void upOrderDataForService(JSONObject jsonObject) {
 
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
@@ -348,7 +368,9 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private TextView tv_detail_cn_position;
     private TextView tv_detail_en_position;
     private TextView tv_detail_content;
+    private AppBarLayout app_bar_layout;
     private RelativeLayout rl_navr_header;
+    private LinearLayout ll_scrolling_view_behavior;
 
     private String hs_uid;
     private boolean isLoginUserJust = false;
@@ -357,5 +379,6 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private RecyclerView mRecyclerView;
     private CoordinatorLayout coordinator_layout;
     private Animation animationIn, animationVoice;
+
 
 }
