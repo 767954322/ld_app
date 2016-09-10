@@ -114,7 +114,6 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         if (mProvinceModelArrayList.size() > 0) {
             if (locationData != null && locationData.length > 0) {
                 mProvinceIndex = getProvinceIndex(locationData[0]);
-                Log.e("mProvinceIndex",mProvinceIndex+"");
             }
             province_name = mProvinceModelArrayList.get(mProvinceIndex).NAME;
             province = mProvinceModelArrayList.get(mProvinceIndex).CODE;
@@ -123,7 +122,6 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         if (mCityModelArrayList.size() > 0) {
             if (locationData != null && locationData.length > 0) {
                 mCityIndex = getCityIndex(locationData[1]);
-                Log.e("mCityIndex",mCityIndex+"");
             }
             mDistrictModelArrayList = mCityDataHelper.getDistrictById(mDb, mCityModelArrayList.get(mCityIndex).CODE);
         }
@@ -143,7 +141,6 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         if (mDistrictModelArrayList.size()>0) {
             if (locationData != null && locationData.length == 3){
                 mDistrictIndex = getDistrictIndex(locationData[2]);
-                Log.e("mDistrictIndex",mDistrictIndex+"");
             }
             mDistrictWheelView.setCurrentItem(mDistrictIndex);
             district_name = mDistrictModelArrayList.get(mDistrictWheelView.getCurrentItem()).NAME;
@@ -158,7 +155,6 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         if (wheel == mProvinceWheelView) {
             province_name = mProvinceModelArrayList.get(newValue).NAME;
             province = mProvinceModelArrayList.get(newValue).CODE;
-            Log.e("mProvinceIndex2",mProvinceIndex+"");
             updateCities(false);
             if (!isFirstIn) {
                 updateAreas(false);
@@ -166,12 +162,10 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         }else if (wheel == mCityWheelView) {
             city_name = mCityModelArrayList.get(newValue).NAME;
             city = mCityModelArrayList.get(newValue).CODE;
-            Log.e("mCityIndex2",mCityIndex+"");
             updateAreas(false);
         }else if (wheel == mDistrictWheelView) {
             district_name = mDistrictModelArrayList.get(newValue).NAME;
             district = mDistrictModelArrayList.get(newValue).CODE;
-            Log.e("mDistrictIndex2",mDistrictIndex+"");
         }
     }
 
@@ -233,13 +227,8 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
 
     public String[] getDefaultAddress( String location) {
         String[] locationData = location.split(" ");
-        for (int i = 0; i < locationData.length; i++) {
-            Log.e("locationData---", locationData[i]);
-        }
         if (locationData.length > 0) {
-
              return locationData;
-
         }
         return null;
     }
