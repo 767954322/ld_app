@@ -5,7 +5,7 @@
     <string name="nodata">暂无数据</string>
 
 
-    <string name="send_single_number">派单人数：</string>
+    <string name="send_single_number">派单人数： </string>
     <string name="send_design">派单设计师</string>
     <string name="accept_mearch">接受量房交付物</string>
     <string name="nodescription">暂无介绍</string>

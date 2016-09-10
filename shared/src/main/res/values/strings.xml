@@ -541,7 +541,7 @@
     <string name="consumer_decoration_state">审核中</string>
     <string name="consumer_decoration_project_id">项目编号：</string>
     <string name="consumer_decoration_address">房屋地址</string>
-    <string name="bid_num">应标人数：</string>
+    <string name="bid_num">应标人数： </string>
     <string name="bid_designer_num">%1$d位设计师</string>
     <string name="select_Ta_measure">是否确认选他量房</string>
     <string name="select_Ta_chat">开启IM聊天</string>

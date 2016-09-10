@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
         <TextView
-            style="@style/BidItem.Text.Light"
+            style="@style/BidItem.Text"
             android:id="@+id/tv_bid_num"
             android:text="@string/bid_num"/>
 
@@ -26,6 +26,10 @@
             android:id="@+id/tv_bidder_count"
             android:layout_centerVertical="true"/>
 
+        <TextView
+            style="@style/BidItem.Text"
+            android:text="人"
+            android:layout_centerVertical="true"/>
     </LinearLayout>
 
     <LinearLayout

@@ -113,8 +113,12 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_style, styleMap.get(decoration_style));
         } else {
             holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.no_select) : decoration_style);
+
         }
-        holder.setText(R.id.tv_bidder_count, bidder_count + "人");
+        holder.setTextColor(R.id.tv_bidder_count,
+                Integer.parseInt(bidder_count) >= 1 ? UIUtils.getColor(R.color.comment_blue)
+                        : UIUtils.getColor(R.color.mybid_text_color_light));
+        holder.setText(R.id.tv_bidder_count, bidder_count);
         holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day());
 
         /**
@@ -162,7 +166,11 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         ArrayList<DecorationBiddersBean> biddersShow = new ArrayList<>();
         if (wk_template_id.equals("4")) {
             biddersShow = removeUnSelectedDesigner(mBidders);
-            holder.setText(R.id.tv_send_single_number, UIUtils.getString(R.string.send_single_number) + mBidders.size() + "人");
+            holder.setTextColor(R.id.tv_send_num,
+                    mBidders.size() >= 1 ? UIUtils.getColor(R.color.comment_blue)
+                            : UIUtils.getColor(R.color.mybid_text_color_light));
+
+            holder.setText(R.id.tv_send_num, mBidders.size() + "");
         } else {
             biddersShow = removeBidingDesigner(mBidders);
         }

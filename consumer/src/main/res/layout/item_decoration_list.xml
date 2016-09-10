@@ -54,7 +54,6 @@
             android:id="@+id/rl_select_designer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_50"
-            android:layout_marginTop="@dimen/size_10"
             android:background="@color/bg_ff"
             android:visibility="gone">
 
@@ -64,7 +63,21 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
                 android:gravity="center"
+                android:textColor="@color/mybid_text_color_normal"
                 android:text="@string/send_single_number" />
+
+            <TextView
+                android:id="@+id/tv_send_num"
+                style="@style/BidItem.Text.Light"
+                android:layout_toRightOf="@id/tv_send_single_number"
+                android:text="0"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_toRightOf="@id/tv_send_num"
+                style="@style/BidItem.Text"
+                android:text="人"
+                android:layout_centerVertical="true"/>
 
             <ImageView
                 android:layout_width="wrap_content"
