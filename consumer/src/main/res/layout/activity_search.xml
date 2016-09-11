@@ -33,7 +33,7 @@
             android:background="@drawable/bg_input_search_or"
             android:drawableLeft="@drawable/icon_search_or"
             android:gravity="center_vertical"
-            android:hint="@string/search"
+            android:hint="@string/search_new"
             android:textSize="@dimen/size_12"
             android:imeOptions="actionSearch"
             android:paddingLeft="@dimen/size_15"
