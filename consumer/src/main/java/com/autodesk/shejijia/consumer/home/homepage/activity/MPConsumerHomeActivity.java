@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.Search3DActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
@@ -349,10 +350,17 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (isActiveFragment(UserHomeFragment.class)) {
             //传递标记    0 是2d案例的搜索    1 3d是的案例搜索
             int currentPosition = this.getMaterialTabs().getCurrentPosition();
+            if (currentPosition==0){
+                Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
+                //intent.putExtra("currentPosition", currentPosition);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(MPConsumerHomeActivity.this, Search3DActivity.class);
+               // intent.putExtra("currentPosition", currentPosition);
+                startActivity(intent);
+            }
             // Toast.makeText(this, "currentPosition:" + currentPosition, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
-            intent.putExtra("currentPosition", currentPosition);
-            startActivity(intent);
+
         }
 
         if (isActiveFragment(DecorationConsumerFragment.class)) {
