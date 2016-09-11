@@ -5,23 +5,16 @@ package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.uti
  */
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.libs.WheelView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.timepicker.BasePickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.timepicker.WheelOptions;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
@@ -31,15 +24,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     private OnOptionsSelectListener optionsSelectListener;
     private static final String TAG_SUBMIT = "submit";
     private static final String TAG_CANCEL = "cancel";
-
-
-    private Handler handler;//用于监听数据变化；
-    private Timer timer;//时间线程，用于监听数据变化
-    private ArrayList<String> roomsList = new ArrayList<>();//监听变化的数据
-    private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<ArrayList<ArrayList<String>>>();
-    private ArrayList<ArrayList<String>> hallsList = new ArrayList<ArrayList<String>>();
-    private ArrayList<ArrayList<String>> hallsListReplace = new ArrayList<ArrayList<String>>();
-    private ArrayList<ArrayList<ArrayList<String>>> toiletsListReplace = new ArrayList<ArrayList<ArrayList<String>>>();
 
     public OptionsPickerView(Context context) {
         super(context);
@@ -56,25 +40,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         // ----转轮
         final View optionspicker = findViewById(R.id.optionspicker);
         wheelOptions = new WheelOptions(optionspicker);
-
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-
-                if (msg.what == 8){
-                    justCurrentItemChange(msg.what);
-
-                }else {
-
-                }
-
-            }
-        };
-
-        wheelOptions.setHandler(handler);
-
     }
 
     public void setPicker(ArrayList<T> optionsItems) {
@@ -93,58 +58,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         wheelOptions.setPicker(options1Items, options2Items, options3Items,
                 linkage);
     }
-
-    /**
-     * 获取存在的数据，通过该数据获取相应数据
-     * */
-    public void setList(ArrayList<String> roomList,ArrayList<ArrayList<String>> hallList,ArrayList<ArrayList<ArrayList<String>>> toiletList ){
-
-
-        this.roomsList = roomList;
-        this.toiletsList = toiletList;
-        this.hallsList = hallList;
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
-        ArrayList<String> options3Items_01_01 = new ArrayList<>();
-        //第三列空数据
-        for (int i = 0; i < toiletsList.size(); i++) {
-            options3Items_01_01.add(" ");
-        }
-        for (int i = 0; i < hallsList.size(); i++) {
-            options3Items_01.add(options3Items_01_01);
-        }
-        for (int i = 0; i < roomsList.size(); i++) {
-            toiletsListReplace.add(options3Items_01);
-        }
-//        wheelOptions.setPicker(roomsList,hallsList,toiletsListReplace,true);
-        //第二列空数据空
-        ArrayList<String> options2Items_01 = new ArrayList<>();
-        for (int i =0; i < hallsList.size();i++) {
-            options2Items_01.add(" ");
-        }
-        for (int i = 0; i < roomsList.size(); i++) {
-            hallsListReplace.add(options2Items_01);
-        }
-
-    }
-
-
-    /**
-     * 判断当前item的数据变化，以及其他的item的变化
-     * */
-    public void justCurrentItemChange(int optionsCurrentItems){
-
-//        int optionsCurrentItems[] = wheelOptions.getCurrentItems();
-        String firstItem = roomsList.get(optionsCurrentItems);
-        if (firstItem.equals("其它")){
-
-            wheelOptions.setWvOption3Data(hallsListReplace,toiletsListReplace);
-        }else {
-
-            wheelOptions.setPicker(roomsList,hallsList,toiletsList,true);
-        }
-
-    }
-
 
     /**
      * 设置选中的item位置
