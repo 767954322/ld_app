@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/ll_default_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -22,13 +23,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/bg_shejijia_emty" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="暂无结果"/>
+                android:text="暂无结果" />
 
         </LinearLayout>
-
 
 
         <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
@@ -58,15 +59,15 @@
         android:layout_marginEnd="@dimen/size_16"
         android:layout_marginRight="@dimen/size_16"
         android:layout_marginTop="@dimen/size_16"
-        fab:menu_icon="@drawable/openfloat"
+        android:visibility="gone"
         fab:menu_colorNormal="@android:color/transparent"
         fab:menu_colorPressed="@android:color/transparent"
-        fab:menu_shadowRadius="@dimen/size_0"
-        fab:menu_labels_maxLines="2"
-        android:visibility="gone"
+        fab:menu_icon="@drawable/openfloat"
         fab:menu_labels_ellipsize="end"
-        fab:menu_labels_style="@style/MenuLabelsStyle">
+        fab:menu_labels_maxLines="2"
+        fab:menu_labels_style="@style/MenuLabelsStyle"
+        fab:menu_shadowRadius="@dimen/size_0">
 
-  </com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu>
+    </com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu>
 
 </RelativeLayout>

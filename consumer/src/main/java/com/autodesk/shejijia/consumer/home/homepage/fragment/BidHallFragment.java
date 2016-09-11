@@ -186,14 +186,14 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         } else {
             mRlEmpty.setVisibility(View.VISIBLE);
         }
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-        mIvTemp.setImageBitmap(bmp);
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+//        mIvTemp.setImageBitmap(bmp);
         WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         android.view.ViewGroup.LayoutParams pp = mRlEmpty.getLayoutParams();
         pp.height = height - 100;
         mRlEmpty.setLayoutParams(pp);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        mTvEmptyMessage.setText(UIUtils.getString(R.string.not_found));
     }
 
     private List<BidHallEntity.NeedsListBean> getNeedsListEntitys(List<BidHallEntity.NeedsListBean> list) {
