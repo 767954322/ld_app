@@ -184,7 +184,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                     rlThumbUp.setOnClickListener(null);
                     llThumbUp.setOnClickListener(null);
                     CustomProgress.show(this, "", false, null);
-                    sendThumbUp(caseDetailBean.getId());
+                    String id = caseDetailBean.getId();
+                    if (id!=null){
+                        sendThumbUp(id);
+                    }
+
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
