@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
@@ -28,7 +29,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
     private EditText phoneNumber;
     private EditText name;
     private TextView commit;
-    private ImageView close;
+    private RelativeLayout close;
     private CommitListenser commitListenser;
     private TextView write_name;
     private TextView write_phone;
@@ -73,7 +74,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
         phoneNumber = (EditText) view.findViewById(R.id.work_room_phoneNumber);
         name = (EditText) view.findViewById(R.id.work_room_name);
         commit = (TextView) view.findViewById(R.id.commit_information);
-        close = (ImageView) view.findViewById(R.id.work_room_dialog_close);
+        close = (RelativeLayout) view.findViewById(R.id.work_room_dialog_close);
         write_name = (TextView) view.findViewById(R.id.write_name);
         line_name = (TextView) view.findViewById(R.id.line_name);
         write_phone = (TextView) view.findViewById(R.id.write_phone);
