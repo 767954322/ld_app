@@ -313,9 +313,6 @@ public class SearchActivity extends NavigationBarActivity implements
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPtrLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, SearchActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, SearchActivity.this);
                 hideFooterView(mCasesEntities);
                 mUserHomeCaseAdapter.notifyDataSetChanged();
