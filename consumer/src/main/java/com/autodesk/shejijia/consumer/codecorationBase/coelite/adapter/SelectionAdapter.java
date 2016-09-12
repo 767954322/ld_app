@@ -36,7 +36,7 @@ public class SelectionAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(View container, int position, Object object) {
-        ((ViewPager)container).removeView((View)object);
+        ((ViewPager) container).removeView((View) object);
     }
 
 
@@ -45,16 +45,16 @@ public class SelectionAdapter extends PagerAdapter {
         ImageView imageView;
         if (mInnerPicListBeans == null) {
             imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            ImageUtils.displayIconImage("drawable://"+R.drawable.pic1_ico2x, imageView);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            ImageUtils.displayIconImage("drawable://" + R.drawable.pic1_ico2x, imageView);
         } else {
             imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             DesignWorksBean.InnerPicListBean innerPicListBean = mInnerPicListBeans.get(position % mInnerPicListBeans.size());
             ImageUtils.loadImageIcon(imageView, innerPicListBean.getAndroid());
         }
 
-        ((ViewPager)container).addView(imageView);
+        ((ViewPager) container).addView(imageView);
         return imageView;
     }
 }
