@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/work_room_imageView"
             android:layout_width="@dimen/size_214"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/size_95"
             android:scaleType="fitXY"
             android:src="@drawable/work_room_header_bg" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/size_28"
+            android:layout_marginLeft="@dimen/size_18"
             android:layout_toRightOf="@id/work_room_imageView"
             android:textSize="@dimen/font_17" />
 

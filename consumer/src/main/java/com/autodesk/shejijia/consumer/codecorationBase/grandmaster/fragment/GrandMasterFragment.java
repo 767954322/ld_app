@@ -219,33 +219,12 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 default:
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);
                     ImageView iv_grandmaster_pic = (ImageView) view.findViewById(R.id.iv_grandmaster_pic);
-                    TextView tv_grandmaster_cn_name = (TextView) view.findViewById(R.id.tv_grandmaster_cn_name);
-                    TextView tv_grandmaster_en_name = (TextView) view.findViewById(R.id.tv_grandmaster_en_name);
-                    TextView tv_grandmaster_detail = (TextView) view.findViewById(R.id.tv_grandmaster_detail);
-
                     final MasterInfo masterInfo = mMasterInfoList.get(position - 1);
-                    if (TextUtils.isEmpty(masterInfo.getEnglish_name())) {
-                        tv_grandmaster_en_name.setText("后台无数据");
-                    } else {
-                        tv_grandmaster_en_name.setText(masterInfo.getEnglish_name());
-                    }
-                    if (TextUtils.isEmpty(masterInfo.getNick_name())) {
-                        tv_grandmaster_cn_name.setText("后台无数据");
-                    } else {
-                        tv_grandmaster_cn_name.setText(masterInfo.getNick_name());
-                    }
-                    if (TextUtils.isEmpty(masterInfo.getDesigner().getIntroduction())) {
-                        tv_grandmaster_detail.setText("后台无数据");
-                    } else {
-                        tv_grandmaster_detail.setText(masterInfo.getDesigner().getIntroduction());
-                    }
-
                     if (null != masterInfo.getDesigner() && null != masterInfo.getDesigner().getDesigner_profile_cover_app()
                             && null != masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
                         String img_url = masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url();
                         ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
                     }
-
                     //大师列表点击监听
                     iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {

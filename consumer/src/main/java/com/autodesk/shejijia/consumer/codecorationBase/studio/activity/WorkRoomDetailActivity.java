@@ -27,6 +27,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.HeightUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -80,6 +81,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
 
         now_order_details = (TextView) findViewById(R.id.now_order_details);
+        CustomProgress.show(this, "", false, null);
     }
 
     @Override
@@ -128,7 +130,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
             scrollview_studio.smoothScrollTo(0,0);
         }
 
-
+        CustomProgress.cancelDialog();
     }
 
     //获取主案设计师

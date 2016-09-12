@@ -82,6 +82,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
 
     }
+
     @Override
     protected void initView() {
         super.initView();
@@ -106,7 +107,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
          /* init content for designer form */
         llbtn_see_contract_detail = (LinearLayout) findViewById(R.id.ll_flow_examine_contract); //設計師合同詳情點擊條
         ll_designer_action_layout = (LinearLayout) findViewById(R.id.ll_flow_designer_send_contract); //設計師發送合同的layout
-       //Variables
+        //Variables
         ll_contract_input_form_layout = (LinearLayout) findViewById(R.id.design_contract_content_designer);//合同表單Layout
         ll_contract_webview_layout = (LinearLayout) findViewById(R.id.design_contract_content_consumer);//web view 合同表單
 
@@ -129,7 +130,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         /* init content for consumer form */
         twvc_contract_content_webview = (WebView) findViewById(R.id.contract_sub_content_webview);//webview 物件
-        ll_consumer_action_layout= (LinearLayout) findViewById(R.id.ll_send_establish_contract);//消費者支付動作Layout
+        ll_consumer_action_layout = (LinearLayout) findViewById(R.id.ll_send_establish_contract);//消費者支付動作Layout
         ll_consumer_agree_content_layout = (LinearLayout) findViewById(R.id.ll_agree_establish_contract);//消費者己閱讀的提示Layout
 
 
@@ -155,7 +156,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         if (!bShowModeContentWebView) { /// 设计师　.
             UpdateUIcontractContentInputForm();
-        } else  { /// 消费者 .
+        } else { /// 消费者 .
             UpdateUIcontractContentWebView();
         }
         UpdateUIActionLayout();
@@ -172,7 +173,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         if (bShowModeContentWebView) {
             ll_contract_input_form_layout.setVisibility(View.GONE);
             ll_contract_webview_layout.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ll_contract_webview_layout.setVisibility(View.GONE);
             ll_contract_input_form_layout.setVisibility(View.VISIBLE);
         }
@@ -195,6 +196,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                     contract_no = contractNo.getContractNO(); /// 获取合同编号 .
 
                 }
+
                 @Override
                 public void onError(VolleyError volleyError) {
                     MPNetworkUtils.logError(TAG, volleyError);
@@ -232,7 +234,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             String str = contractData.toString().replace("@jr@", "\"");
             MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
 
-            contract_no=designContractEntity.getContract_no();
+            contract_no = designContractEntity.getContract_no();
             tvc_consumer_name.setText(designContractBean.getName());
             tvc_consumer_phone.setText(designContractBean.getMobile());
             tvc_total_cost.setText(designContractEntity.getContract_charge());
@@ -342,7 +344,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 String tree_d_renderimage = contract_detail.getRender_map();
                 String designer_addr = contract_detail.getAddr();
 
-                text = text.replace("#val(contract_number)", Validator.getStringWithNullDefaultString(contract_number,""));
+                text = text.replace("#val(contract_number)", Validator.getStringWithNullDefaultString(contract_number, ""));
                 text = text.replace("#val(contract_date)", Validator.getStringWithNullDefaultString(contract_date, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(design_amount)", Validator.getStringWithNullDefaultString(design_amount, UIUtils.getString(R.string.data_null)));
                 text = text.replace("#val(design_amount_first)", Validator.getStringWithNullDefaultString(design_amount_first, UIUtils.getString(R.string.data_null)));
@@ -366,17 +368,18 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     private void UpdateUIActionLayout() {
+        UIsetDesignerSendButtonActive(true, getResources().getString(R.string.flow_send));
 
-        if (bDesignerActionShow){
+//        if (bDesignerActionShow) {
+//
+//            if (bDesignerContractCreated)
+//                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.sure_modify_send));
+//            else
+//                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.flow_send));
+//        }
 
-            if (bDesignerContractCreated)
-                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.sure_modify_send));
-            else
-                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.send_design_contract));
-        }
 
-
-        if (bconsumerActionShow){
+        if (bconsumerActionShow) {
             ll_consumer_action_layout.setVisibility(View.VISIBLE);
             ll_consumer_agree_content_layout.setVisibility(View.VISIBLE);
 
@@ -415,8 +418,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         });
 
     }
-
-
 
 
     /**
@@ -489,45 +490,43 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     @Override
-    protected void onPreCheckWorkFlowStep(int template_id,int sub_node_id){
+    protected void onPreCheckWorkFlowStep(int template_id, int sub_node_id) {
 
         bDesignerActionShow = false;
         bconsumerActionShow = false;
         bAllowUserInput = true;
 
         contract_data_entity = getContractDataEntityFromFirstBidder();
-        bDesignerContractCreated =(contract_data_entity != null)? (true):(false);
+        bDesignerContractCreated = (contract_data_entity != null) ? (true) : (false);
 
         if (!bDesignerContractCreated && isRoleCustomer()) {
-            ShowAlertViewAndFinishActivity (UIUtils.getString(R.string.please_wait_designer_send_contract));
+            ShowAlertViewAndFinishActivity(UIUtils.getString(R.string.please_wait_designer_send_contract));
             return;
         }
 
-        if (state == Constant.WorkFlowStateKey.STEP_MATERIAL ||(WorkFlowSubNodeStep() >= 33)) {// 从项目资料跳转.
-            bAllowUserInput=false; /// 如果是已有的合同设置所有得按键都不可点击 .
+        if (state == Constant.WorkFlowStateKey.STEP_MATERIAL || (WorkFlowSubNodeStep() >= 33)) {// 从项目资料跳转.
+            bAllowUserInput = false; /// 如果是已有的合同设置所有得按键都不可点击 .
         }
 
 
-        bShowModeContentWebView=true;
+        bShowModeContentWebView = true;
 
-        if(isRoleCustomer() )
-        {
+        if (isRoleCustomer()) {
             if (WorkFlowSubNodeStep() == 31 || WorkFlowSubNodeStep() == 32)  /// 设计师发完合同后可以继续发送按钮显示 .
-                bconsumerActionShow=true;
+                bconsumerActionShow = true;
         }
 
-        if(isRoleDesigner() )
-        {
-            if (WorkFlowTemplateStep() == 4 && WorkFlowSubNodeStep() == 11 )  /// 设计师发完合同后可以继续发送按钮显示 .
+        if (isRoleDesigner()) {
+            if (WorkFlowTemplateStep() == 4 && WorkFlowSubNodeStep() == 11)  /// 设计师发完合同后可以继续发送按钮显示 .
             {
                 bDesignerActionShow = true;
-                bShowModeContentWebView= false;
+                bShowModeContentWebView = false;
             }
 
-            if (WorkFlowSubNodeStep() <= 31 || WorkFlowSubNodeStep() == 32 )  /// 设计师发完合同后可以继续发送按钮显示 .
+            if (WorkFlowSubNodeStep() <= 31 || WorkFlowSubNodeStep() == 32)  /// 设计师发完合同后可以继续发送按钮显示 .
             {
                 bDesignerActionShow = true;
-                bShowModeContentWebView= false;
+                bShowModeContentWebView = false;
             }
 
         }
@@ -535,8 +534,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
     }
 
-    private void ShowAlertViewAndFinishActivity(String msg){
-        UIAlert = new AlertView(UIUtils.getString(R.string.tip),msg , null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+    private void ShowAlertViewAndFinishActivity(String msg) {
+        UIAlert = new AlertView(UIUtils.getString(R.string.tip), msg, null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss(Object o) {
                 finish();
@@ -643,6 +642,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
         });
     }
+
     /**
      * 发送设计合同
      */
@@ -699,16 +699,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
             //REFACTOR
-            if (!consumerEmail.equals("")) {
+            if (!consumerEmail.equals("")) { // 验证邮箱可以为空，不为空的时候用正则验证
                 if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
                     showAlertView(R.string.please_input_consumer_email_correctly);
                     bValid = false;
                     break;
                 }
-
             }
 
-            if (!Validator.isAddressValid(location_area)) {
+            if (!Validator.isAddressValid(location_area)) { // 项目地址，服务地址长度为２－３２个字符长度
                 showAlertView(R.string.demand_please_project_address);
                 bValid = false;
                 break;
@@ -848,7 +847,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 @Override
                 public void run() {
                     doClickOpenContractDetail();
-                
+
                 }
             });
         }
@@ -1038,8 +1037,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private ImageView img_agree_establish_contract;
     private Button btn_consumer_submit_button;
     private Button btn_designer_submit_button;
-
-
 
 
     private LinearLayout llbtn_see_contract_detail;

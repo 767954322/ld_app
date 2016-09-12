@@ -87,6 +87,11 @@ public class List3DLibraryAdapter extends BaseAdapter {
                 LinearLayoutManager linearLayoutManager=new LinearLayoutManager(mContext){
                     @Override
                     public boolean canScrollHorizontally() {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean canScrollVertically() {
                         return false;
                     }
                 };

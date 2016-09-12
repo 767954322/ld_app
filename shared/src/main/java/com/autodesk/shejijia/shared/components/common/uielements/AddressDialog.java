@@ -110,7 +110,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         mDb = mCityDataHelper.openDataBase();
         mProvinceModelArrayList = mCityDataHelper.getProvince(mDb);
         if (mProvinceModelArrayList.size() > 0) {
-            if (locationData != null && locationData.length > 0) {
+            if (locationData != null && locationData.length > 1) {
                 mProvinceIndex = getProvinceIndex(locationData[0]);
             }
             province_name = mProvinceModelArrayList.get(mProvinceIndex).NAME;
@@ -118,7 +118,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
             mCityModelArrayList = mCityDataHelper.getCityByParentId(mDb, mProvinceModelArrayList.get(mProvinceIndex).CODE);
         }
         if (mCityModelArrayList.size() > 0) {
-            if (locationData != null && locationData.length > 0) {
+            if (locationData != null && locationData.length > 1) {
                 mCityIndex = getCityIndex(locationData[1]);
             }
             mDistrictModelArrayList = mCityDataHelper.getDistrictById(mDb, mCityModelArrayList.get(mCityIndex).CODE);
