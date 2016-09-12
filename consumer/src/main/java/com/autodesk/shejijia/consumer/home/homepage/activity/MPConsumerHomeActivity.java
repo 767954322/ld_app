@@ -79,6 +79,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     public MPConsumerHomeActivity() {
     }
 
+
+    public static void start(Activity context) {
+        Intent intent = new Intent(context, MPConsumerHomeActivity.class);
+        context.startActivity(intent);
+        context.finish();
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -350,13 +357,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         if (isActiveFragment(UserHomeFragment.class)) {
             //传递标记    0 是2d案例的搜索    1 3d是的案例搜索
             int currentPosition = this.getMaterialTabs().getCurrentPosition();
-            if (currentPosition==0){
+            if (currentPosition == 0) {
                 Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
                 //intent.putExtra("currentPosition", currentPosition);
                 startActivity(intent);
-            }else {
+            } else {
                 Intent intent = new Intent(MPConsumerHomeActivity.this, Search3DActivity.class);
-               // intent.putExtra("currentPosition", currentPosition);
+                // intent.putExtra("currentPosition", currentPosition);
                 startActivity(intent);
             }
             // Toast.makeText(this, "currentPosition:" + currentPosition, Toast.LENGTH_SHORT).show();
