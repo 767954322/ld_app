@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,8 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         work_room_introduce = (TextView) workRoomDetailHeader.findViewById(R.id.work_room_introduce);
         work_room_name_title = (TextView) workRoomDetailHeader.findViewById(R.id.work_room_name_title);
         work_room_detail_six_imageView = (ImageView) workRoomDetailHeader.findViewById(R.id.work_room_detail_six_imageView);
+        scrollview_studio = (ScrollView) findViewById(R.id.scrollview_studio);
+
 
         now_order_details = (TextView) findViewById(R.id.now_order_details);
     }
@@ -122,6 +125,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
             WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain, workRoomDetailsBeen.getCases_list());
             listView.setAdapter(workRoomAdapter);
             HeightUtils.setListViewHeightBasedOnChildren(listView);
+            scrollview_studio.smoothScrollTo(0,0);
         }
 
 
@@ -332,6 +336,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private LinearLayout work_room_detail_content;
     private RelativeLayout common_navbar;
     private ImageView back;
+    private ScrollView scrollview_studio;
     private View view_navigation_header_view;
     private ImageButton nav_left_imageButton;
     //    private ImageView work_room_design_imageView;

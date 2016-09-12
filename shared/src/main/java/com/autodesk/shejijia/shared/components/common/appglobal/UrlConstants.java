@@ -31,6 +31,7 @@ public final class UrlConstants {
 
     //分享界面的url
     public static final String MP_MAIN_SHARE = ApiManagerV2.SHARE_PATH;
+    public static final String MP_MAIN3_SHARE = ApiManagerV2.SHARE3_PATH;
 
     /**
      * 搜索.

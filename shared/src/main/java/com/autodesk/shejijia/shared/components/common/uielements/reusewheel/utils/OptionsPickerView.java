@@ -6,8 +6,6 @@ package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.uti
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -32,8 +30,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
     private Handler handler;//用于监听数据变化；
     private Timer timer;//时间线程，用于监听数据变化
-    private boolean justOnlyOne = true;
-    private boolean isJustOnlyTwo = true;
 
     private ArrayList<String> roomsList = new ArrayList<>();//监听变化的数据
     private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<ArrayList<ArrayList<String>>>();
@@ -57,22 +53,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
         final View optionspicker = findViewById(R.id.optionspicker);
         wheelOptions = new WheelOptions(optionspicker);
 
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-                Log.i("yaoxuehua===",""+msg.what);
-                if (msg.what >= 5){
-//                    justCurrentItemChange(msg.what);
-//
-                }
-
-            }
-        };
-
-
-
     }
 
     public void setPicker(ArrayList<T> optionsItems) {
@@ -90,11 +70,9 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
                           boolean linkage) {
         wheelOptions.setPicker(options1Items, options2Items, options3Items,
                 linkage);
-        wheelOptions.setHandler(handler);
     }
 
     /**
-<<<<<<< HEAD
      * 获取存在的数据，通过该数据获取相应数据
      * */
     public void setList(ArrayList<String> roomList,ArrayList<ArrayList<String>> hallList,ArrayList<ArrayList<ArrayList<String>>> toiletList ){
@@ -129,28 +107,6 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     /**
-     * 判断当前item的数据变化，以及其他的item的变化
-     * */
-    public void justCurrentItemChange(int optionsCurrentItems){
-
-//        int optionsCurrentItems[] = wheelOptions.getCurrentItems();
-        String firstItem = roomsList.get(optionsCurrentItems);
-        if (firstItem.equals("其它") || firstItem.equals("别墅") || firstItem.equals("复式") || firstItem.equals("LOFT")){
-
-            wheelOptions.setWvOption3Data(hallsListReplace,toiletsListReplace);
-        }else {
-
-            wheelOptions.setWvOption3Data(hallsList,toiletsList);
-        }
-
-        Log.i("yaoxuehua===",""+firstItem);
-
-    }
-
-
-    /**
-=======
->>>>>>> 5394061a47604e6567547e7bd3d98c95c856e44c
      * 设置选中的item位置
      *
      * @param option1
