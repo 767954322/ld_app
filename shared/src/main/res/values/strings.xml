@@ -746,7 +746,7 @@
     <string name="confirm_and_submit">确认并提交</string>
 
     <!-- CustomBidFragment-->
-    <string name="bidding_contact">招标人：</string>
+    <string name="bidding_contact">招标人 ：</string>
     <string name="bid_hall_decorate_budget">装修预算</string>
 
     <!-- TransactionRecordActivity -->

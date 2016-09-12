@@ -195,10 +195,10 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
                     int a = Color.alpha(color);
                     Log.d("willson", "    " + r + "  " + "  " + g + "  " + b);
                     if (r > 156) {//白色设置灰色
-                        nav_left_imageButton.setBackgroundResource(R.mipmap.arrow_g);
+                        nav_left_imageButton.setImageResource(R.drawable.arrow_g);
                         nav_title_textView.setTextColor(Color.GRAY);
                     } else {// 灰色 设置白色
-                        nav_left_imageButton.setBackgroundResource(R.drawable.arrow);
+                        nav_left_imageButton.setImageResource(R.drawable.arrow);
                         nav_title_textView.setTextColor(Color.WHITE);
                     }
                 }

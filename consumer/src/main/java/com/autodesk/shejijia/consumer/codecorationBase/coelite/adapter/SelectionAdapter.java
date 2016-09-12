@@ -51,7 +51,7 @@ public class SelectionAdapter extends PagerAdapter {
             imageView = new ImageView(mContext);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             DesignWorksBean.InnerPicListBean innerPicListBean = mInnerPicListBeans.get(position % mInnerPicListBeans.size());
-            ImageUtils.loadImageIcon(imageView, innerPicListBean.getAndroid());
+            ImageUtils.loadCircleIcon(imageView, innerPicListBean.getAndroid());
         }
 
         ((ViewPager) container).addView(imageView);

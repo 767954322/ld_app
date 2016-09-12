@@ -61,17 +61,15 @@ public class SixProductsActivity extends NavigationBarActivity {
 
 
         pagerSlidingTabStrip.setBackgroundColor(Color.WHITE);//Tab的背景色
-        pagerSlidingTabStrip.setIndicatorColor(Color.BLUE);//下滑指示器的颜色
+        pagerSlidingTabStrip.setIndicatorColor(UIUtils.getColor(R.color.tx_ef));//下滑指示器的颜色
         pagerSlidingTabStrip.setIndicatorHeight(DensityUtil.dip2px(this, 2));//下滑指示器的高度
-        pagerSlidingTabStrip.setTextColorSelected(Color.BLUE);//设置选中的tab字体颜色
-        pagerSlidingTabStrip.setTextColorUnselected(Color.BLACK);//设置未选中的tab字体颜色
+        pagerSlidingTabStrip.setTextColorSelected(UIUtils.getColor(R.color.tx_ef));
+        pagerSlidingTabStrip.setTextColorUnselected(UIUtils.getColor(R.color.my_project_title_text_color));//设置未选中的tab字体颜色
 //        pagerSlidingTabStrip.setTabPaddingLeftRight(29);//设置tab距离左右的padding值
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
-        pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 16));
-        pagerSlidingTabStrip.setTabPaddingLeftRight(5);
+        pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 15));
         pagerSlidingTabStrip.setSameWeightTabs(true);
-
 //        pagerSlidingTabStrip.setPaddingMiddle(true);//设置tab控件居中
         pagerSlidingTabStrip.setOnClickItemListener(new MaterialTabs.OnClickItemListener() {
             @Override

@@ -81,6 +81,16 @@ public class ImageUtils {
 //            .imageScaleType(ImageScaleType.NONE)
             .build();
 
+    private static final DisplayImageOptions round = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.home_page_icon)
+            .showImageOnFail(R.drawable.home_page_icon)
+            .showImageForEmptyUri(R.drawable.home_page_icon)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .displayer(new RoundedBitmapDisplayer(20))
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
+
 
     private static final DisplayImageOptions FileOptions = new DisplayImageOptions.Builder()
 //            .cacheInMemory(true)
@@ -156,6 +166,10 @@ public class ImageUtils {
      */
     public static void loadImageIcon(ImageView target, String imageUrl) {
         ImageLoader.getInstance().displayImage(imageUrl, target, optionsIcon);
+    }
+
+    public static void loadCircleIcon(ImageView target, String imageUrl) {
+        ImageLoader.getInstance().displayImage(imageUrl, target, round);
     }
 
     /**

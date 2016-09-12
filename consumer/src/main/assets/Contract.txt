@@ -34,7 +34,9 @@
                 </ul><ul class="textgroup">
                     <li class="textgroupnm">1.2</li>
                     <li class="textgroupex">施工图设计：乙方提供给甲方的施工图包括但不限于：（图纸目录、主材明 细表、设计说明、主材告知书、原始测量图、拆除图、新建图、平面布置图、强弱电插座图、开关控制灯具图、综合天花图、水路平面示意图图、地面布置周长面积图、排砖图、墙体饰面图、客厅背景墙详图、节点大样）。</li>
-                </ul><p class="title2">2.甲方权利与责任</p><ul class="textgroup">
+                </ul>
+                <div class="Cspace"></div>
+                <div class="title2">2.甲方权利与责任</div><ul class="textgroup">
                     <li class="textgroupnm">2.1</li>
                     <li class="textgroupex">甲方应按乙方要求及时、准确且完整的提供设计所需原始户型图等项目建筑基本图纸等资料；</li>
                 </ul><ul class="textgroup">
@@ -55,7 +57,7 @@
                 </ul><ul class="textgroup">
                     <li class="textgroupnm">2.7</li>
                     <li class="textgroupex">如甲方提供原始测量图（乙方未进行现场实地测量），乙方根据甲方提供的原始测量图数据，为甲方出具装饰施工图和约定效果图，相关设计图纸应标明尺寸、材质、用料、颜色 、图标以及设计说明等内容。 </li>
-                </ul><p class="title2">3.乙方权利与责任</p><ul class="textgroup">
+                </ul>    <div class="Cspace"></div><p class="title2">3.乙方权利与责任</p><ul class="textgroup">
                     <li class="textgroupnm">3.1</li>
                     <li class="textgroupex">如乙方进行现场实地测量，在收取设计费后，根据实际测量与设计方案需要，向甲方提供装饰施工图和约定效果图，相关设计图纸应标明尺寸、材质、用料、颜色 、图标以及设计说明等内容； </li>
                 </ul><ul class="textgroup">
@@ -67,7 +69,7 @@
                 </ul><ul class="textgroup">
                     <li class="textgroupnm">3.4</li>
                     <li class="textgroupex">在装修过程中，如甲方需要，乙方有责任提供在居然在线进行线上推荐选购或陪同甲方在居然之家挑选装饰材料、家具配饰的服务； </li>
-                </ul><p class="title2">4.合同顺延</p><ul class="textgroup">
+                </ul>    <div class="Cspace"></div><p class="title2">4.合同顺延</p><ul class="textgroup">
                     <li class="textgroupnm">4.1</li>
                     <li class="textgroupex">甲方发生下列情形之一的，乙方有权顺延设计期限： </li>
                 </ul><ul class="textgroup">
@@ -79,13 +81,13 @@
                 </ul><ul class="textgroup">
                     <li class="textgroupnm"></li>
                     <li class="textgroupex"> （3）逾期提出修改意见或签署确认书的；</li>
-                </ul><p class="title2">5.违约责任</p><ul class="textgroup">
+                </ul>    <div class="Cspace"></div><p class="title2">5.违约责任</p><ul class="textgroup">
                     <li class="textgroupnm">5.1</li>
                     <li class="textgroupex">  因乙方设计未按国家有关设计规定、规范要求而发生错误造成甲方工程质量事故的，乙方除负责采取补救措施外，还应根据损失程度按照国家相关规定向甲方支付赔偿金。 </li>
                 </ul><ul class="textgroup">
                     <li class="textgroupnm">5.2</li>
                     <li class="textgroupex">  乙方未能按照合同约定的期限完成设计工作内容，甲方可在平台申请退款或向平台客服发起投诉。 </li>
-                </ul><p class="title2">6.其他事项</p><ul class="textgroup">
+                </ul>    <div class="Cspace"></div><p class="title2">6.其他事项</p><ul class="textgroup">
                     <li class="textgroupnm">6.1</li>
                     <li class="textgroupex"> 乙方对其为甲方设计的成果依法享有版权，甲方支付全部费用后，设计成果的版权除署名权外均 转让给甲方；但是未经乙方书面允许，甲方不得将本项目设计成果用于其它项目；乙方享有仅在本项目推广及乙方汇编作品集、参展、参赛、出席研讨、行业内报刊投稿、乙方自身宣传中使用的权利，不得用于其它项目。 </li>
                 </ul><ul class="textgroup">
