@@ -59,7 +59,7 @@
                 android:id="@+id/tv_seek_designer_production"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/size_6"
+                android:layout_marginBottom="@dimen/size_4"
                 android:layout_marginTop="@dimen/size_4"
                 android:text="作品："
                 android:textColor="@color/bg_66"
@@ -69,9 +69,8 @@
                 android:id="@+id/tv_attention_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/size_5"
                 android:layout_marginLeft="@dimen/size_5"
-                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginTop="@dimen/size_4"
                 android:text="关注人数："
                 android:textColor="@color/bg_66"
                 android:textSize="@dimen/font_12" />
@@ -79,6 +78,7 @@
         </LinearLayout>
 
         <TextView
+            android:layout_marginTop="@dimen/size_4"
             android:id="@+id/tv_seek_designer_adept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
