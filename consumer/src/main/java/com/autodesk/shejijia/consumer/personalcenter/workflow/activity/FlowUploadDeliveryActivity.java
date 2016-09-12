@@ -125,7 +125,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             show3DAndHideLevel();
             handleMeasureDelivery();
 
-
         } else {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
             mTvDelivery.setText(UIUtils.getString(R.string.three_plan));

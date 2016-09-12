@@ -23,12 +23,12 @@ android {
 //    }
     buildTypes {
         debug {
-          //  signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
             buildConfigField "boolean", "LOG_DEBUG", "true"
             minifyEnabled false
         }
         release {
-         //   signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

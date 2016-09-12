@@ -5,11 +5,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.DesignBaseFragment;
 import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidBidingFragment;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * @author yaoxuehua .
@@ -91,5 +104,26 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
     public void onFragmentShown() {
         Log.d(TAG, "onFragmentShown: onFragmentShown");
         designBaseFragment.onFragmentShown();
+        getWkFlowStatePointInformation();
+    }
+
+    /**
+     * 获取全流程节点提示信息
+     */
+    public void getWkFlowStatePointInformation() {
+        MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                WkFlowStateInfoBean WkFlowStateInfoBean = GsonUtil.jsonToBean(jsonString, WkFlowStateInfoBean.class);
+                List<TipWorkFlowTemplateBean> tip_work_flow_template = WkFlowStateInfoBean.getTip_work_flow_template();
+                WkFlowStateMap.sWkFlowBeans = tip_work_flow_template;
+            }
+        });
     }
 }

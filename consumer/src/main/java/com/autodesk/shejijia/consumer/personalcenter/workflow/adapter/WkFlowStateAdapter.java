@@ -28,11 +28,12 @@ import java.util.List;
  * @brief 全流程状态机适配器  .
  */
 public class WkFlowStateAdapter extends BaseAdapter {
+    private MPBidderBean mpBidderBean;
 
     public WkFlowStateAdapter(Context context, String member_type, MPBidderBean biddersEntity, TipWorkFlowTemplateBean tipWorkFlowTemplateBean, int tempdate_id) {
         this.context = context;
         this.member_type = member_type;
-
+        this.mpBidderBean = biddersEntity;
         this.tempdate_id = tempdate_id;
         this.tipWorkFlowTemplateBean = tipWorkFlowTemplateBean;
         wk_cur_sub_node_id = biddersEntity.getWk_cur_sub_node_id();
@@ -354,6 +355,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
         }
         if (stateCode == 21 || stateCode == 22 || stateCode == 31) {
+            setItemAnimationForView(textColor, viewHolder);
+        }
+        if (stateCode == 33 && null == mpBidderBean.getDelivery()) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);
