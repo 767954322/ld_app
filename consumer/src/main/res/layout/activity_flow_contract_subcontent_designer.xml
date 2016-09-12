@@ -16,24 +16,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="@dimen/size_10">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/flow_contract_num" />-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/flow_establish_contract_contract_number"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-            <!--</LinearLayout>-->
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -107,34 +89,6 @@
                     android:textSize="@dimen/font_14" />
             </LinearLayout>
 
-            <!--<LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
-                android:layout_marginTop="@dimen/size_1"
-                android:background="@color/bg_ff"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
-                android:paddingRight="@dimen/size_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/demand_village_name" />
-
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
-                    android:id="@+id/flow_contract_community_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:layout_marginLeft="@dimen/size_15"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_flow_edittext"
-                    android:inputType="number"
-                    android:singleLine="true"
-                    android:textColor="@color/bg_80"
-                    android:textSize="@dimen/font_14" />
-            </LinearLayout>-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_40"
@@ -149,19 +103,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/demand_measure_house_address" />
-
-                <!--<TextView-->
-                    <!--android:id="@+id/flow_establish_contract_consumer_decorate_address"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="28dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@drawable/bg_alertbutton_none"-->
-                    <!--android:gravity="center_vertical"-->
-                    <!--android:hint="@string/flow_hint_project_address"-->
-                    <!--android:singleLine="true"-->
-                    <!--android:textColor="@color/bg_80"-->
-                    <!--android:textColorHint="@color/bg_a0"-->
-                    <!--android:textSize="@dimen/font_14" />-->
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_decorate_address"
@@ -204,34 +145,6 @@
                     android:textColorHint="@color/bg_a0"
                     android:textSize="@dimen/font_14" />
             </LinearLayout>
-
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/size_40"-->
-            <!--android:layout_marginTop="@dimen/size_1"-->
-            <!--android:background="@color/bg_ff"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingLeft="@dimen/size_10"-->
-            <!--android:paddingRight="@dimen/size_10">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/flow_detail_address" />-->
-
-            <!--<com.autodesk.shejijia.shared.components.common.uielements.TextViewContent-->
-            <!--android:id="@+id/flow_establish_contract_consumer_detail_address"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="28dp"-->
-            <!--android:layout_marginLeft="@dimen/size_15"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/bg_flow_edittext"-->
-            <!--android:singleLine="true"-->
-            <!--android:textColor="@color/bg_80"-->
-            <!--android:textSize="@dimen/font_14" />-->
-            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -352,12 +265,6 @@
                 android:orientation="vertical"
                 android:padding="@dimen/size_10">
 
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="@dimen/size_15"-->
-                <!--android:text="2.1 费用" />-->
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -382,11 +289,6 @@
                         android:textColor="@color/bg_80"
                         android:textSize="@dimen/font_14" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="@dimen/size_5"-->
-                    <!--android:text="@string/flow_monad_rmb" />-->
                 </LinearLayout>
 
                 <LinearLayout
@@ -415,12 +317,6 @@
                         android:singleLine="true"
                         android:textColor="@color/bg_80"
                         android:textSize="@dimen/font_14" />
-
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="@dimen/size_5"-->
-                    <!--android:text="@string/flow_monad_rmb" />-->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -457,11 +353,6 @@
                         android:textColor="@color/bg_80"
                         android:textSize="@dimen/font_14" />
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="@dimen/size_5"-->
-                    <!--android:text="@string/flow_monad_rmb" />-->
                 </LinearLayout>
 
             </LinearLayout>
@@ -563,8 +454,8 @@
                 android:id="@+id/ll_flow_designer_send_contract"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_60"
                 android:layout_marginBottom="@dimen/size_120"
+                android:layout_marginTop="@dimen/size_60"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10"
@@ -575,10 +466,10 @@
                     android:id="@+id/btn_send_establish_contract_designer"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_40"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentLeft="true"
-                    android:radius="4dip"
+                    android:layout_alignParentRight="true"
                     android:background="@drawable/bg_common_btn_blue"
+                    android:radius="4dip"
                     android:text="@string/flow_send"
                     android:textColor="@color/bg_ff" />
 
