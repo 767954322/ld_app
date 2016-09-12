@@ -40,6 +40,7 @@ public class ApiStatusUtil {
      * @param error
      */
     public void apiStatuError(VolleyError error, Activity context) {
+        if (context == null) return;
         this.mContext = context;
         Log.i("ApiStatusUtil", "--------------------------------------错误日志-------------------------------------");
         Log.e("Response Error", error.getMessage(), error);
