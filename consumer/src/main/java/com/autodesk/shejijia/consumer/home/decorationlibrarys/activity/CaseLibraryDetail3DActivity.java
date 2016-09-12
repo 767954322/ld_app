@@ -275,8 +275,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 if (memberEntity != null) {
                     member_id = memberEntity.getAcs_member_id();
                     mMemberType = memberEntity.getMember_type();
-                     String designer_id = case3DDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
-                     String hs_uid = case3DDetailBean.getHs_designer_uid();
+                    String designer_id = case3DDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
+                    String hs_uid = case3DDetailBean.getHs_designer_uid();
                     String receiver_name = case3DDetailBean.getDesigner_info().getNick_name();
                     JumpBean jumpBean = new JumpBean();
                     jumpBean.setAcs_member_id(member_id);
@@ -284,7 +284,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                     jumpBean.setReciever_user_name(receiver_name);
                     jumpBean.setReciever_user_id(designer_id);
                     jumpBean.setReciever_hs_uid(hs_uid);
-                    JumpToChatRoom.getChatRoom(CaseLibraryDetail3DActivity.this,jumpBean);
+                    JumpToChatRoom.getChatRoom(CaseLibraryDetail3DActivity.this, jumpBean);
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -314,7 +314,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         public void onClick(View v) {
             //TODO 后台现在只有这个环境的分享链接 别的环境还没有  暂时写死    by willson
 //            String webUrl ="http://alpha-www.gdfcx.net/share/3dcase.html?caseid="+case_id;
-            String webUrl = ApiManager.getHtml5Url(case_id);
+            String webUrl = ApiManager.getHtml53Url(case_id);
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
@@ -710,7 +710,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             } else {
                 ivCustomerIm.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             ivCustomerIm.setVisibility(View.VISIBLE);
         }
     }

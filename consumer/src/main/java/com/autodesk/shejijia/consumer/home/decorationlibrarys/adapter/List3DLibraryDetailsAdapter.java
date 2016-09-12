@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
@@ -50,7 +49,9 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
         List3dViewVH viewVH = (List3dViewVH) holder;
         if (!TextUtils.isEmpty(imageLists.get(position))){
             if (mType.equals("4")){
-                viewVH.m3DDetailsImage.setBackgroundResource(R.drawable.default_3d_details);
+                viewVH.m3DDetailsImage.setBackgroundResource(R.drawable.images);
+                viewVH.m3DetailsImage.setBackgroundResource(R.drawable.roaming_figure);
+                viewVH.m3DetailsImage.setVisibility(View.VISIBLE);
             }else {
                  ImageLoader.getInstance().displayImage(imageLists.get(position),viewVH.m3DDetailsImage);
             }
@@ -62,7 +63,7 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
             @Override
             public void onClick(View view) {
                 if (mType.equals("4")){
-                    Toast.makeText(mContext, "漫游图", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(mContext, "漫游图", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, CaseLibraryRoamingWebView.class);
                     String webUrl = imageLists.get(position);
                     intent.putExtra("roaming",webUrl);
@@ -88,10 +89,12 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
 
     private class List3dViewVH extends RecyclerView.ViewHolder{
         public ImageView m3DDetailsImage;
+        public ImageView m3DetailsImage;
 
         public List3dViewVH(View itemView) {
             super(itemView);
             m3DDetailsImage = (ImageView)itemView.findViewById(R.id.image_3d_photo);
+            m3DetailsImage = (ImageView)itemView.findViewById(R.id.image_quanjing);
         }
     }
 }

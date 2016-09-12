@@ -137,6 +137,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                 }
                 setBtnCanpress();
                 tv_my_property_account_balance.setText("¥ " + amount);
+                rlTiXian.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -169,18 +170,19 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                     JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
                     int is_loho = jsonObject1.getInt("is_loho");
                     String is_real_name = jsonObject1.getString("is_real_name");
-                    if (is_real_name.equals("null")){
+                    if (is_real_name.equals("null")) {
                         showAlertView("您还未通过实名认证,请到网页端完成认证");
 //
-                    }else {
-
-                    }
-                    if (is_loho != 0) {
-                        rlTiXian.setVisibility(View.GONE);
                     } else {
-                        rlTiXian.setVisibility(View.VISIBLE);
-                    }
 
+                    }
+                    // change button show logic
+                    btn_my_property_withdrawal.setVisibility(is_loho != 0 ? View.GONE : View.VISIBLE);
+//                    if (is_loho != 0) {
+//                        rlTiXian.setVisibility(View.GONE);
+//                    } else {
+//                        rlTiXian.setVisibility(View.VISIBLE);
+//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

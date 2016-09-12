@@ -85,10 +85,10 @@
     <string name="agree_and_send_design_first_new">立即付款</string>
     <string name="confirmation_and_payment">确认并付款</string>
     <string name="receiving_room_deliverable">接收量房交付物</string>
-    <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款少于设计总额的80%</string>
+    <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款不能低于设计总额的80%</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>
     <string name="total_quantity_room_first_is_not_greater_than_design">设计首款不能大于设计总额</string>
-    <string name="please_fill_out_the_design_first">请填写设计首款</string>
+    <string name="please_fill_out_the_design_first">请正确填写设计首款</string>
     <string name="costs_cannot_be_negative">费用不能为负数</string>
     <string name="please_fill_in_the_total_project_design">请填写项目设计总额</string>
     <string name="please_fill_out_each_increases_the_cost_of_a">请填写每增加一张的费用</string>
@@ -971,5 +971,13 @@
     <string name="work_room_commit_fail">提交失败</string>
     <!-- 大师详情 -->
     <string name="grandmaster_title">大师详情</string>
+
+    <!-- 合同提示語 -->
+    <string name="please_input_consumer_name_correctly">请正确输入甲方姓名</string>
+    <string name="please_input_consumer_phone_correctly">请正确输入甲方手机号</string>
+    <string name="please_input_consumer_email_correctly">请正确输入甲方电子邮箱</string>
+    <string name="please_input_render_count_correctly">请正确输入渲染图张数</string>
+    <string name="please_input_project_amount_correctly">请正确输入本项目设计总额</string>
+
 
 </resources>
