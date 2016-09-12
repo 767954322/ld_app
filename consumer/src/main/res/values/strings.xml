@@ -159,4 +159,12 @@
     <string name="diy_four">自由搭配真实家居产品，提前预览装修效果，</string>
     <string name="diy_five">免费获取施工图纸和参考报价。</string>
     <string name="diy_six">请在网页端开启设计之旅</string>
+
+
+    <string name="alert_three_plan">请先选择3D设计方案</string>
+    <string name="alert_delivery">您还没有上传设计图纸，</string>
+    <string name="alert_blue_print">请先在web端上传设计图纸</string>
+    <string name="alert_material">请先在web端上传材料清单</string>
+
+
 </resources>
