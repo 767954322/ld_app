@@ -58,4 +58,10 @@ public class ArrayWheelAdapter<T> implements WheelAdapter {
         return items.indexOf(o);
     }
 
+    public void setNewData(ArrayList<T> mItems){
+
+        this.items = mItems;
+
+    }
+
 }
