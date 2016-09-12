@@ -949,7 +949,7 @@
     <!-- ReservationFormActivity -->
     <string name="reservation_please_enter_your_name">请输入姓名</string>
     <string name="reservation_please_enter_your_phone">请填写手机号码</string>
-    <string name="reservation_please_enter_your_area">请选择房屋面积(可选)</string>
+    <string name="reservation_please_enter_your_area">请填写项目面积(可选)</string>
     <string name="reservation_please_enter_your_price">请选择装修预算</string>
     <string name="reservation_please_enter_your_address">请选择项目地址</string>
     <string name="reservation_please_enter_your_community_name">请填写小区名称(可选)</string>
