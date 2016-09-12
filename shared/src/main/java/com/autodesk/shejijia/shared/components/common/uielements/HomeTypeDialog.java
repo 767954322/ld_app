@@ -44,7 +44,7 @@ import java.util.Properties;
 public class HomeTypeDialog extends DialogFragment implements OnWheelChangedListener, View.OnClickListener {
 
     private static final String HOUSE_PATH = "house.json";
-    private static JsonObject mJsonObj;
+    private static JSONObject mJsonObj;
 
     public interface OnAddressCListener {
         void onClick(String province_name, String province, String city_name, String city, String district_name, String district);
@@ -59,7 +59,7 @@ public class HomeTypeDialog extends DialogFragment implements OnWheelChangedList
     private static void initJsonData(Activity activity) {
         try {
             StringBuffer sb = new StringBuffer();
-            InputStream is = activity.getAssets().open("house.json");
+            InputStream is = activity.getAssets().open(HOUSE_PATH);
             int len = -1;
             byte[] buf = new byte[1024];
             while ((len = is.read(buf)) != -1) {
