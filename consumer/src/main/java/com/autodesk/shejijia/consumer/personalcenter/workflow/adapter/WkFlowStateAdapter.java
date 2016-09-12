@@ -220,20 +220,20 @@ public class WkFlowStateAdapter extends BaseAdapter {
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
             if (stateCode >= 41) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_zhifushejiweikuan;
+                drawable = R.drawable.flow_first_pay_liang;
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.weikuan_ico;
+                drawable = R.drawable.flow_first_pay_an;
             }
 
 
         } else {
             if (stateCode == 41 || (stateCode > 41 && stateCode != 42)) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_zhifushejiweikuan;
+                drawable = R.drawable.flow_first_pay_liang;
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.weikuan_ico;
+                drawable = R.drawable.flow_first_pay_an;
             }
         }
         if (stateCode == 41) {
@@ -254,10 +254,10 @@ public class WkFlowStateAdapter extends BaseAdapter {
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
             if (stateCode >= 32 && stateCode != 33) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_zhifushejishoukuan;
+                drawable = R.drawable.flow_contract_liang;
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.shejishoukuan_ico;
+                drawable = R.drawable.flow_first_pay_an;
             }
             if (stateCode == 32) {
                 setItemAnimationForView(textColor, viewHolder);
@@ -265,10 +265,10 @@ public class WkFlowStateAdapter extends BaseAdapter {
         } else {
             if (stateCode >= 41) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_zhifushejishoukuan;
+                drawable = R.drawable.flow_contract_liang;
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.shejishoukuan_ico;
+                drawable = R.drawable.flow_first_pay_an;
             }
 //            if (stateCode == 32) {
 //                setItemAnimationForView(textColor, viewHolder);

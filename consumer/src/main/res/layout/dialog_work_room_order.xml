@@ -41,31 +41,32 @@
                 android:background="@android:color/transparent"
                 android:hint="@string/work_room_name"
                 android:maxEms="10"
-                android:maxLength="12"
-                android:textSize="@dimen/font_15"/>
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textSize="@dimen/font_15" />
+
             <TextView
                 android:id="@+id/line_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
-                android:layout_marginLeft="@dimen/size_7.5"
-                android:layout_toRightOf="@id/work_room_name_text"
-                android:layout_marginRight="@dimen/size_26"
-                android:background="@color/bg_d7"
                 android:layout_below="@id/work_room_name"
+                android:layout_marginLeft="@dimen/size_7.5"
+                android:layout_marginRight="@dimen/size_26"
                 android:layout_marginTop="@dimen/size_10"
-                />
+                android:layout_toRightOf="@id/work_room_name_text"
+                android:background="@color/bg_d7" />
+
             <TextView
                 android:id="@+id/write_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_below="@id/line_name"
                 android:layout_marginRight="@dimen/size_15"
-                android:layout_alignParentRight="true"
-                android:textColor="#ffd3d3"
                 android:text="请输入2-10个字符"
+                android:textColor="#ffd3d3"
                 android:textSize="@dimen/font_11"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
 
         </RelativeLayout>
@@ -98,33 +99,33 @@
                 android:layout_marginLeft="@dimen/size_29"
                 android:layout_toRightOf="@id/work_room_phone_text"
                 android:background="@android:color/transparent"
-                android:textSize="@dimen/font_15"
+                android:hint="@string/work_room_phone_number"
                 android:maxLength="11"
                 android:phoneNumber="true"
-                android:hint="@string/work_room_phone_number" />
+                android:textSize="@dimen/font_15" />
+
             <TextView
                 android:id="@+id/line_phone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
-                android:layout_marginLeft="@dimen/size_7.5"
-                android:layout_toRightOf="@id/work_room_phone_text"
-                android:layout_marginRight="@dimen/size_26"
-                android:background="@color/bg_d7"
                 android:layout_below="@id/work_room_phoneNumber"
+                android:layout_marginLeft="@dimen/size_7.5"
+                android:layout_marginRight="@dimen/size_26"
                 android:layout_marginTop="@dimen/size_10"
-                />
+                android:layout_toRightOf="@id/work_room_phone_text"
+                android:background="@color/bg_d7" />
+
             <TextView
                 android:id="@+id/write_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_below="@id/line_phone"
                 android:layout_marginRight="@dimen/size_15"
-                android:layout_alignParentRight="true"
+                android:text="请输入正确的手机号"
                 android:textColor="#ffd3d3"
                 android:textSize="@dimen/font_11"
-                android:text="请输入正确的手机号"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -133,14 +134,14 @@
             android:id="@+id/commit_information"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_55"
-            android:layout_marginBottom="@dimen/size_29"
-            android:textColor="@color/bg_ff"
-            android:background="@drawable/commit_bg"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/ll_work_room_phone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/size_29"
+            android:layout_marginTop="@dimen/size_55"
+            android:background="@drawable/commit_bg"
             android:gravity="center"
             android:text="提交"
+            android:textColor="@color/bg_ff"
 
             android:textSize="@dimen/font_16"
 
@@ -150,11 +151,11 @@
             android:id="@+id/work_room_dialog_close"
             android:layout_width="@dimen/size_15"
             android:layout_height="@dimen/size_15"
-            android:padding="@dimen/font_7"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
             android:background="@drawable/work_room_dialog_close"
+            android:padding="@dimen/font_7"
 
             />
 
