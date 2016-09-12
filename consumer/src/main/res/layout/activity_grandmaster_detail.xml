@@ -84,7 +84,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true" />-->
 
-                <RelativeLayout
+<!--                <RelativeLayout
                     android:id="@+id/rl_grandmaster_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                         android:maxLines="5"
                         android:textSize="@dimen/font_15" />
 
-                </RelativeLayout>
+                </RelativeLayout>-->
 
                 <ImageButton
                     android:id="@+id/bt_grand_reservation"
@@ -186,8 +186,7 @@
             android:text="@string/grandmaster_title"
             android:singleLine="true"
             android:textColor="#ffffff"
-            android:textSize="@dimen/font_19"
-            android:textStyle="bold" />
+            android:textSize="@dimen/font_19" />
 
 
     </RelativeLayout>
