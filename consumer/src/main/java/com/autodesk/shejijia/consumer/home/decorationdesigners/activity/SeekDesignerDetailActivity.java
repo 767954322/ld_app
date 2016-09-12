@@ -903,7 +903,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         }
 
         scrollLastMoveDistance = y;
-        Log.i("yaoxuehua---",""+scrollLastMoveDistance);
 
     }
 
@@ -1127,7 +1126,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             myScrollView.setIsLoad(false);
         }
-//        Log.i("yaoxuehua", "--------->" + scrollViewMeasuredHeight);
 
         readSubClassHeightCount(scrollViewMeasuredHeight);
 
@@ -1180,7 +1178,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     public void justRefreshAndLoadMore() {
 
         if (getSubClassHeightCount() < myScrollView.getHeight()) {
-//            Log.i("yaoxuehua", "获取的数据subclass" + getSubClassHeightCount());
             myScrollView.setIsLoad(true);
         } else {
 

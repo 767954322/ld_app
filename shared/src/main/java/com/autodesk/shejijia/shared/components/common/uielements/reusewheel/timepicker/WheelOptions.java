@@ -120,9 +120,6 @@ public class WheelOptions<T> {
                 if (mOptions3Items != null) {
                     wheelListener_option2.onItemSelected(opt2Select);
                 }
-                Message message = Message.obtain();//发送了选中的item选项
-                message.what = index;
-                handler.sendMessage(message);
             }
 
 
@@ -244,102 +241,6 @@ public class WheelOptions<T> {
         }
     }
 
-    /**
-     * 设置该view的滑动按下，移动抬起监听
-     *
-     * */
-
-    public void setWheelViewListenerOnTouch(final WheelView wheelView){
-
-        wheelView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_MOVE){
-
-//                    Log.i("yaoxuehua===","-----move");
-//                    justMethod();
-                }
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
-//                    Log.i("yaoxuehua===","----------down");
-//                    justMethod();
-                }
-
-                if (event.getAction() == MotionEvent.ACTION_UP){
-//                    Log.i("yaoxuehua===","-----ACTION_UP");
-//                    justMethod();
-                }
 
 
-                return false;
-            }
-        });
-    }
-
-    /**
-     * 判断选中时间是否为最终时间
-     * */
-
-    public void justMethod(){
-
-
-        TimerTask timerTask= null;
-        if (timerTask == null){
-
-            timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    Message message = Message.obtain();
-                    message.what = wv_option1.getCurrentItem();
-                    handler.sendMessage(message);
-                    Log.i("yaoxuehua===",""+message.what);
-
-                    timerCount++;
-                    if (timerCount > 30){
-
-                        if(timer != null){
-                            timer.cancel();
-                            timer = null;
-                            timerCount = 1;
-                        }
-                    }
-                }
-            };
-        }
-
-        if (timer == null){
-
-            timer = new Timer();
-            timer.schedule(timerTask,1,30);
-
-        }
-
-
-    }
-
-    /**
-     * 向控件发送消息，确认当前处于那个item
-     * */
-    public void setHandler(Handler mHandler){
-
-        this.handler = mHandler;
-
-    }
-
-    /**
-     * 只设置最后一列，
-     * */
-    public void setWvOption3Data(ArrayList<ArrayList<T>> mOptions2Items,ArrayList<ArrayList<ArrayList<T>>> mOptions3Items){
-
-
-        // 选项2
-        if (mOptions2Items != null)
-            wv_option2.setAdapter(new ArrayWheelAdapter(mOptions2Items.get(0)));// 设置显示数据
-
-
-        if (mOptions3Items != null)
-            wv_option3.setAdapter(new ArrayWheelAdapter(mOptions3Items.get(0)
-                    .get(0)));// 设置显示数据
-
-    }
 }
