@@ -121,10 +121,14 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         boolean isMeasureDelivery = isMeasureDelivery(wk_sub_node_id_int);
         if (isMeasureDelivery) {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
+            mTvDelivery.setText(UIUtils.getString(R.string.deliver_measure_consumer));
             show3DAndHideLevel();
             handleMeasureDelivery();
+
+
         } else {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
+            mTvDelivery.setText(UIUtils.getString(R.string.three_plan));
             showAllLevel();
             handleDesignDelivery();
             /**
@@ -180,6 +184,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             if (null == mFiles) {
                 return;
             }
+
             delivery.setDeliveryFiles(mFiles);
             deliveryFilesFormat(delivery);
         }
@@ -902,8 +907,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 /**
                  * 量房订单
                  */
-                setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
-                mTvDelivery.setText(UIUtils.getString(R.string.deliver_measure_consumer));
                 show3DAndHideLevel();
                 mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_select));
                 if (Constant.DeliveryTypeBundleKey.USAGE_TYPE_DESIGN_BLUEPRINT_DELIVERY.equals(usage_type)) {
@@ -913,8 +916,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 /**
                  * 设计交付
                  */
-                setTitleForNavbar(UIUtils.getString(R.string.deliver_consumer));
-                mTvDelivery.setText(UIUtils.getString(R.string.three_plan));
                 showAllLevel();
                 setSelectIcon();
                 clickLevel();
