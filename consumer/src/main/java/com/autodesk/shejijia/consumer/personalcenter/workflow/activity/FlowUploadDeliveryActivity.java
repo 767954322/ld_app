@@ -120,7 +120,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         boolean isMeasureDelivery = isMeasureDelivery(wk_sub_node_id_int);
         if (isMeasureDelivery) {
             setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
-            mTvDelivery.setText(UIUtils.getString(R.string.deliver_measure_consumer));
+            mTvDelivery.setText(UIUtils.getString(R.string.flow_design_blueprint));
             show3DAndHideLevel();
             handleMeasureDelivery();
 

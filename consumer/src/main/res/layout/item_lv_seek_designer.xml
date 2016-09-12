@@ -13,11 +13,11 @@
 
         <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
             android:id="@+id/piv_seek_designer_photo"
-            android:layout_width="@dimen/size_55"
-            android:layout_height="@dimen/size_55"
+            android:layout_width="@dimen/size_56"
+            android:layout_height="@dimen/size_56"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/size_11"
-            android:layout_marginTop="@dimen/size_11"
+            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginTop="@dimen/size_10"
             android:src="@drawable/icon_commen_head_normal"
             app:poly_corner_radius="5"
             app:poly_vertices="0" />
@@ -35,7 +35,7 @@
     <LinearLayout
         android:layout_width="@dimen/size_160"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginLeft="@dimen/size_13"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -46,9 +46,9 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="姓名"
-            android:textColor="@color/bg_51"
-            android:textSize="@dimen/font_18"
-            android:textStyle="bold" />
+            android:textColor="@color/text_item_name"
+            android:textSize="@dimen/font_16"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,10 +59,11 @@
                 android:id="@+id/tv_seek_designer_production"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/size_5"
-                android:layout_marginTop="@dimen/size_5"
-                android:text="作品"
-                android:textColor="@color/bg_85" />
+                android:layout_marginBottom="@dimen/size_6"
+                android:layout_marginTop="@dimen/size_4"
+                android:text="作品："
+                android:textColor="@color/bg_66"
+                android:textSize="@dimen/font_12" />
 
             <TextView
                 android:id="@+id/tv_attention_num"
@@ -71,8 +72,9 @@
                 android:layout_marginBottom="@dimen/size_5"
                 android:layout_marginLeft="@dimen/size_5"
                 android:layout_marginTop="@dimen/size_5"
-                android:text="关注人数"
-                android:textColor="@color/bg_85" />
+                android:text="关注人数："
+                android:textColor="@color/bg_66"
+                android:textSize="@dimen/font_12" />
 
         </LinearLayout>
 
@@ -82,15 +84,16 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="擅长风格："
-            android:textColor="@color/bg_85" />
+            android:text="擅长："
+            android:textColor="@color/bg_66"
+            android:textSize="@dimen/font_12" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/size_10"
+        android:layout_marginRight="@dimen/size_16"
         android:orientation="vertical">
 
         <TextView
@@ -99,8 +102,8 @@
 
         <ImageView
             android:id="@+id/img_seek_designer_chat"
-            android:layout_width="@dimen/size_22"
-            android:layout_height="@dimen/size_21"
+            android:layout_width="@dimen/size_21"
+            android:layout_height="@dimen/size_22"
             android:layout_gravity="center_vertical|right"
             android:background="@drawable/im_ico"
             android:visibility="gone" />
@@ -110,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
+            android:layout_marginTop="@dimen/size_12"
             android:textColor="@color/black"
             android:textSize="@dimen/font_14" />
     </LinearLayout>

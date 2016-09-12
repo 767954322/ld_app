@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingTop="30dp">
+        android:paddingTop="@dimen/size_51">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="18dp"
+            android:layout_marginBottom="@dimen/size_18"
             android:src="@drawable/btn_rule_intro" />
     </FrameLayout>
 
