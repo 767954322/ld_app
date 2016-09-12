@@ -101,7 +101,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         CustomProgress.show(this, "", false, null);
 
         initAlertView();
-
     }
 
     /**
@@ -176,8 +175,13 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     private void handleMeasureDelivery() {
         Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
+        mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_unselect));
         if (mDeliveryBean == null) {
-            get3DPlan(needs_id, designer_id);
+            if (Constant.UerInfoKey.CONSUMER_TYPE.equalsIgnoreCase(GetRoleType())) {
+                alertMeasureOrDesign();
+            } else {
+                get3DPlan(needs_id, designer_id);
+            }
         } else {
             mFiles = mDeliveryBean.getFiles();
             if (null == mFiles) {
