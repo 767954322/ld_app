@@ -1,6 +1,9 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,12 +13,17 @@ import android.view.View;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SixProductsAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager;
 import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.socks.library.KLog;
 
 /**
  * Created by luchongbin on 16-8-16.
@@ -26,6 +34,7 @@ public class SixProductsActivity extends NavigationBarActivity {
     private SixProductsAdapter sixProductsAdapter;
     private NoSlippingViewPager noSlippingViewPager;
     private MaterialTabs pagerSlidingTabStrip;
+    private SignInNotificationReceiver signInNotificationReceiver;
 
     @Override
     protected int getLayoutResId() {
@@ -40,7 +49,7 @@ public class SixProductsActivity extends NavigationBarActivity {
     protected void initData(Bundle savedInstanceState) {
         setTitleForNavbar(UIUtils.getString(R.string.tab_six_products));
         noSlippingViewPager.setPagingEnabled(false);
-
+        registerBroadCast();
         String[] tabItems =this.getResources().getStringArray(R.array.sixProducts);
 
         sixProductsAdapter = new SixProductsAdapter(getSupportFragmentManager(), tabItems);
@@ -97,5 +106,37 @@ public class SixProductsActivity extends NavigationBarActivity {
             setResult(IssueDemandActivity.RESULT_CODE, data);
             finish();
         }
+    }
+
+    private void registerBroadCast() {
+        signInNotificationReceiver = new SignInNotificationReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+        registerReceiver(signInNotificationReceiver, filter);
+    }
+
+    /**
+     * 全局的广播接收者,用于处理登录后数据的操作
+     */
+    private class SignInNotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if  (action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)) {
+                String strToken = intent.getStringExtra(BroadCastInfo.LOGIN_TOKEN);
+                MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
+                //设计师的话返回首页
+                if(entity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(entity.getMember_type())){
+                    SixProductsActivity.this.finish();
+                }
+            }
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(signInNotificationReceiver);
     }
 }

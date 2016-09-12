@@ -325,27 +325,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private void costMeasureFeeNode(int wk_cur_sub_node_idi, View view) {
 
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 21) {
-                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-            } else if (wk_cur_sub_node_idi == 13) {
+            if (wk_cur_sub_node_idi == 13) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.waiting_cons_uploaded_room_deliverable), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                         AlertView.Style.Alert, null).show();
             } else {
                 view.setClickable(false);
             }
-//            if (WorkFlowTemplateStep() == 1) {     // 应标
-//                if (wk_cur_sub_node_idi == 21) {
-//                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-//                } else if (wk_cur_sub_node_idi == 21 ) {
-//                    view.setClickable(false);
-//                }
-//            } else if (WorkFlowTemplateStep() == 2) {    /// 自选量房阶段 .
-//                if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 14) {
-//                    view.setClickable(false);
-//                } else if (wk_cur_sub_node_idi == 13 || wk_cur_sub_node_idi > 14) {
-//                    showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-//                }
-//            }
             return;
         }
         if (wk_cur_sub_node_idi == 13) {
@@ -354,23 +339,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         } else {
             view.setClickable(false);
         }
-
-//        if (WorkFlowTemplateStep() == 1) { //竞优
-//            if (wk_cur_sub_node_idi == 13) {
-//                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-//
-//            } else {
-//                view.setClickable(false);
-//            }
-//        } else if (WorkFlowTemplateStep() == 2) { // 套餐
-//            if (wk_cur_sub_node_idi >= 13 && wk_cur_sub_node_idi != 14) {
-//                showNewActivity(FlowMeasureCostActivity.class, MPStatusMachine.NODE__MEANSURE_PAY);
-//            } else {
-//                view.setClickable(false);
-//            }
-//        }
-
-
     }
 
     /**
@@ -422,7 +390,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 view.setClickable(false);
             }
             return;
+        } else {
+            if (wk_cur_sub_node_idi == 33) {
+                showNewActivity(FlowUploadDeliveryActivity.class, -1);
+            }
         }
+
         if (Integer.parseInt(wk_cur_sub_node_id) == 21 || Integer.parseInt(wk_cur_sub_node_id) == 22) {
             new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_designer_send_contract), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
                     AlertView.Style.Alert, null).show();
@@ -431,8 +404,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         } else {
             view.setClickable(false);
         }
-
-
     }
 
     /**
@@ -444,12 +415,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private void firstPay(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
             view.setClickable(false);
-//            if (wk_cur_sub_node_idi == 32) {
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer_send_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this,
-//                        AlertView.Style.Alert, null).show();
-//            } else {
-//                view.setClickable(false);
-//            }
             return;
         }
         if (wk_cur_sub_node_idi == 32) {
@@ -478,7 +443,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (wk_cur_sub_node_idi == 41) {
             showNewActivity(FlowLastDesignActivity.class, MPStatusMachine.NODE__DESIGN_BALANCE_PAY);
         }
-
     }
 
     /**
@@ -498,7 +462,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             showNewActivity(FlowUploadDeliveryActivity.class, -1);
 
         }
-
     }
 
     /**
@@ -513,21 +476,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         }
         startActivity(mIntent);
     }
-
-
-//    /**
-//     * 点击右上角资料进行的操作
-//     *
-//     * @param view 右上角的控件
-//     */
-//    @Override
-//    protected void rightNavButtonClicked(View view) {
-//        Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
-//        maIntent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_IM);
-//        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_DESIGNER_ID, designer_id);
-//        maIntent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_NEEDS_ID, needs_id);
-//        startActivity(maIntent);
-//    }
 
     @Override
     protected void onWorkFlowData() {

@@ -162,9 +162,8 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 应标设计师列表
          */
-
         ArrayList<DecorationBiddersBean> biddersShow = new ArrayList<>();
-        if (wk_template_id.equals("4")) {
+        if (WkTemplateConstants.IS_ELITE.equalsIgnoreCase(wk_template_id)) {
             biddersShow = removeUnSelectedDesigner(mBidders);
             holder.setTextColor(R.id.tv_send_num,
                     mBidders.size() >= 1 ? UIUtils.getColor(R.color.comment_blue)

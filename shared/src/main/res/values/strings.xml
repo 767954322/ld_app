@@ -503,6 +503,8 @@
     <string name="data_send">数据发送中...</string>
     <string name="demand_house_area">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
     <string name="demand_measure_house_form">量房资料</string>
+    <string name="is_average_measure_house_form">竞优量房资料</string>
+    <string name="is_elite_measure_house_form">精选量房资料</string>
     <string name="measure_house_form">量房表单</string>
     <string name="demand_elite_measure_house_form">精选量房资料</string>
     <string name="exist_measure_order_information">已有量房资料</string>
@@ -947,7 +949,7 @@
     <!-- ReservationFormActivity -->
     <string name="reservation_please_enter_your_name">请输入姓名</string>
     <string name="reservation_please_enter_your_phone">请填写手机号码</string>
-    <string name="reservation_please_enter_your_area">请选择房屋面积(可选)</string>
+    <string name="reservation_please_enter_your_area">请填写项目面积(可选)</string>
     <string name="reservation_please_enter_your_price">请选择装修预算</string>
     <string name="reservation_please_enter_your_address">请选择项目地址</string>
     <string name="reservation_please_enter_your_community_name">请填写小区名称(可选)</string>

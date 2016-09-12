@@ -100,8 +100,6 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         CustomProgress.show(this, "", false, null);
         super.initData(savedInstanceState);
 
-        setTitleForNavbar(getResources().getString(R.string.measure_house_form)); /// 设置标题 .
-
         memType = memberEntity.getMember_type();
         user_id = memberEntity.getAcs_member_id();
         initAlertView();
@@ -111,6 +109,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         CustomProgress.cancelDialog();
+        if (!isElite(wk_cur_template_id)) {
+            setTitleForNavbar(getResources().getString(R.string.is_average_measure_house_form)); /// 竞优 .
+        } else {
+            setTitleForNavbar(getResources().getString(R.string.is_elite_measure_house_form)); ///  精选.
+        }
 
         updateDisplayData();
         updateRoomData();
@@ -272,7 +275,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             designer_house_charge_show.setVisibility(View.VISIBLE);
             switch (wk_cur_sub_node_id_i) {
                 case 11:
-                    if (!elite){
+                    if (!elite) {
                         setViewAnimation(rlMeasureWarmTips);
                         if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
                             ll_designer_send.setVisibility(View.GONE);
