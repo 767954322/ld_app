@@ -176,10 +176,10 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         } else {
             mDistrictModelArrayList.clear();
         }
-//
-//        if (null == getActivity()) {
-//            return;
-//        }
+
+        if (null == getActivity()) {
+            return;
+        }
         mAreaAdapter = new AreaAdapter(getActivity(), mDistrictModelArrayList);
         mAreaAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));
         mDistrictWheelView.setViewAdapter(mAreaAdapter);
