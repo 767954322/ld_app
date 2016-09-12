@@ -92,6 +92,9 @@
     <color name="header">#58567D</color>
     <color name="grgray">#686868</color>
 
+    <color name="text_item_name">#333333</color>
+    <color name="text_item_">#333333</color>
+
     <!-- Common color management -->
     <color name="bg_00">#000000</color>
     <color name="bg_22">#1f1f1f</color>
