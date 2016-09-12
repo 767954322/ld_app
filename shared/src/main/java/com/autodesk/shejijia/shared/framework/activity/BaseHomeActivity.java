@@ -56,8 +56,10 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         // retrieve the fragment handle from fragmentmanager
         if (savedInstanceState != null) {
             mMPThreadListFragment = (MPThreadListFragment) getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
-            mFragmentArrayList.add(mMPThreadListFragment);
 
+            if (mMPThreadListFragment != null) {
+                mFragmentArrayList.add(mMPThreadListFragment);
+            }
             showFragment(getCurrentCheckedRadioButtonId());
         }
     }
@@ -89,7 +91,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     @Override
     protected void onResume() {
         super.onResume();
-
         if (isActiveFragment(MPThreadListFragment.class)) {
             getFileThreadUnreadCount();
         }
@@ -102,7 +103,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     protected void onDestroy() {
-
         if (mBroadcastReceiver != null) {
             this.unregisterReceiver(mBroadcastReceiver);
         }
@@ -256,13 +256,18 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : mFragmentArrayList) {
-            if (null != fragment && fragment.getClass().equals(clazz)) {
+            if (fragment == null) {
+                continue;
+            }
+
+            if (fragment.getClass().equals(clazz)) {
                 fragmentTransaction.show(fragment);
 
-                if (fragment.getClass().equals(MPThreadListFragment.class))
+                if (fragment.getClass().equals(MPThreadListFragment.class)) {
                     threadListFragment = (MPThreadListFragment) fragment;
-                else
+                } else {
                     f = (BaseFragment) fragment;
+                }
             } else {
                 fragmentTransaction.hide(fragment);
             }
