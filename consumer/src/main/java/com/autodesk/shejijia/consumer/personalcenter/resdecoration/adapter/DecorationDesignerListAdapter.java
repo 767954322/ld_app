@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
@@ -60,10 +61,10 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
 
         boolean falg = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63;
-        if(falg){
+        if (falg) {
             holder.setText(R.id.tv_decoration_mesure, UIUtils.getString(R.string.evaluation));
             holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
-        }else{
+        } else {
             holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
             holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_actionsheet_cancel);
         }
@@ -81,7 +82,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
             /**
              * 进入评价页面
              */
-            holder.setOnClickListener(R.id.rl_item_decoration, new View.OnClickListener() {
+            holder.setOnClickListener(R.id.tv_decoration_mesure, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mMPBidderBean.setAvatar(avatarUrl);
@@ -95,6 +96,16 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                     mActivity.startActivity(evaluateIntent);
                 }
             });
+            /**
+             * 全流程
+             */
+            holder.setOnClickListener(R.id.tv_designer_name, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int template_id = Integer.parseInt(wk_template_id);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id);
+                }
+            });
         } else {
             /**
              * 进入全流程逻辑
@@ -103,12 +114,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 @Override
                 public void onClick(View view) {
                     int template_id = Integer.parseInt(wk_template_id);
-                    Intent intent = new Intent();
-                    intent.setClass(mActivity, WkFlowStateActivity.class);
-                    intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeedsId);
-                    intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
-                    intent.putExtra(Constant.BundleKey.TEMPDATE_ID, template_id);
-                    mActivity.startActivity(intent);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id);
                 }
             });
         }
@@ -126,5 +132,14 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 mActivity.startActivity(intent);
             }
         });
+    }
+
+    private void startWkFlowStateActivity(String needsId, String designerId, int template_id) {
+        Intent intent = new Intent();
+        intent.setClass(mActivity, WkFlowStateActivity.class);
+        intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needsId);
+        intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
+        intent.putExtra(Constant.BundleKey.TEMPDATE_ID, template_id);
+        mActivity.startActivity(intent);
     }
 }
