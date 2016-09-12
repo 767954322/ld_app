@@ -12,7 +12,9 @@
  <com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs
      android:id="@+id/consumer_six_products_tabs"
      android:layout_width="match_parent"
-     android:layout_height="48dip"
+     android:layout_height="@dimen/size_46"
+     android:paddingTop="@dimen/size_3"
+     android:textStyle="bold"
      android:layout_marginLeft="@dimen/size_21"
      android:layout_marginRight="@dimen/size_21"
       />
