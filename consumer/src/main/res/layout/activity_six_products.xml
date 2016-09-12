@@ -5,22 +5,23 @@
     android:background="@drawable/white"
     android:orientation="vertical">
 
- <include
-     android:id="@+id/common_navbar"
-     layout="@layout/view_navigation_header"/>
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
 
- <com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs
-     android:id="@+id/consumer_six_products_tabs"
-     android:layout_width="match_parent"
-     android:layout_height="@dimen/size_46"
-     android:paddingTop="@dimen/size_3"
-     android:textStyle="bold"
-     android:layout_marginLeft="@dimen/size_21"
-     android:layout_marginRight="@dimen/size_21"
-      />
- <com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager
-     android:id="@+id/consumer_six_products_viewPager"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     />
+    <com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs
+        android:id="@+id/consumer_six_products_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_46"
+        android:layout_marginLeft="@dimen/size_21"
+        android:layout_marginRight="@dimen/size_21"
+        android:paddingTop="@dimen/size_3"
+        android:textStyle="bold"
+        android:background="@color/white"
+        />
+
+    <com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager
+        android:id="@+id/consumer_six_products_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
