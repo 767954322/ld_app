@@ -14,6 +14,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryRoamingWebView;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.Serializable;
@@ -49,8 +50,12 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
         List3dViewVH viewVH = (List3dViewVH) holder;
         if (!TextUtils.isEmpty(imageLists.get(position))){
             if (mType.equals("4")){
-                viewVH.m3DDetailsImage.setBackgroundResource(R.drawable.images);
-                viewVH.m3DetailsImage.setBackgroundResource(R.drawable.roaming_figure);
+//                viewVH.m3DDetailsImage.setBackgroundResource(R.drawable.images);
+//                viewVH.m3DetailsImage.setBackgroundResource(R.drawable.roaming_figure);
+                ImageUtils.loadFileImage(viewVH.m3DDetailsImage,"drawable://"+R.drawable.images_3d);
+                ImageUtils.loadFileImage(viewVH.m3DetailsImage,"drawable://"+R.drawable.roaming_figure);
+//                ImageLoader.getInstance().loadImage("drawable//"+R.drawable.images_3d,viewVH.m3DDetailsImage);
+//                ImageLoader.getInstance().loadImage("drawable//"+R.drawable.roaming_figure,viewVH.m3DetailsImage);
                 viewVH.m3DetailsImage.setVisibility(View.VISIBLE);
             }else {
                  ImageLoader.getInstance().displayImage(imageLists.get(position),viewVH.m3DDetailsImage);

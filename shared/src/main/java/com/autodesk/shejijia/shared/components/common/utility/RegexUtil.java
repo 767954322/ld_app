@@ -59,7 +59,8 @@ public class RegexUtil {
     /**
      * 验证昵称
      */
-    public static final String NICK_NAME_REGEX = "^[\\u4e00-\\u9fa5a-zA-Z0-9\\-]{2,20}$";
+    public static final String NICK_NAME_REGEX = "^^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]+\\S{2,20}$"; // 中英文数据空格适配正则
+//    public static final String NICK_NAME_REGEX = "^[\\u4e00-\\u9fa5a-zA-Z0-9\\-]{2,20}$";
 
     /**
      * 验证邮箱
