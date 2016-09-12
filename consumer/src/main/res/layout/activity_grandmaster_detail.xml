@@ -31,7 +31,7 @@
                     android:scaleType="fitXY" />
 
 
-                <TextView
+    <!--            <TextView
                     android:id="@+id/tv_detail_cn_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true" />-->
 
                 <RelativeLayout
                     android:id="@+id/rl_grandmaster_des"

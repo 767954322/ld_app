@@ -71,12 +71,12 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         ib_grand_detail_ico = (ImageButton) findViewById(R.id.ib_grand_detail_ico);
         rl_navr_header = (RelativeLayout) findViewById(R.id.rl_navr_header);
         rl_grandmaster_des = (RelativeLayout) findViewById(R.id.rl_grandmaster_des);
-        tv_detail_cn_name = (TextView) findViewById(R.id.tv_detail_cn_name);
-        tv_detail_en_name = (TextView) findViewById(R.id.tv_detail_en_name);
-        tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
+//        tv_detail_cn_name = (TextView) findViewById(R.id.tv_detail_cn_name);
+//        tv_detail_en_name = (TextView) findViewById(R.id.tv_detail_en_name);
+//        tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
         iv_detail_desiner = (ImageView) findViewById(R.id.iv_detail_desiner);
-        tv_detail_cn_position = (TextView) findViewById(R.id.tv_detail_cn_position);
-        tv_detail_en_position = (TextView) findViewById(R.id.tv_detail_en_position);
+//        tv_detail_cn_position = (TextView) findViewById(R.id.tv_detail_cn_position);
+//        tv_detail_en_position = (TextView) findViewById(R.id.tv_detail_en_position);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         coordinator_layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         ll_scrolling_view_behavior = (LinearLayout) findViewById(R.id.ll_scrolling_view_behavior);
@@ -174,25 +174,25 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     //初始化第一页内容
     private void initPageTopInfo() {
 
-        tv_detail_cn_name.setText(masterDetail.getNick_name());
-        tv_detail_en_name.setText(masterDetail.getEnglish_name());
-        if (TextUtils.isEmpty(masterDetail.getDesigner().getOccupational_cn())) {
-            tv_detail_cn_position.setText("后台数据为null");
-        } else {
-            tv_detail_cn_position.setText(masterDetail.getDesigner().getOccupational_cn());
-        }
-        if (TextUtils.isEmpty(masterDetail.getDesigner().getOccupational_en())) {
-            tv_detail_en_position.setText("后台数据为null");
-        } else {
-            tv_detail_en_position.setText(masterDetail.getDesigner().getOccupational_en());
-        }
-        if (TextUtils.isEmpty(masterDetail.getDesigner().getIntroduction())) {
-            rl_grandmaster_des.setVisibility(View.VISIBLE);
-            tv_detail_content.setText("后台数据为null");
-        } else {
-            rl_grandmaster_des.setVisibility(View.VISIBLE);
-            tv_detail_content.setText(masterDetail.getDesigner().getIntroduction());
-        }
+//        tv_detail_cn_name.setText(masterDetail.getNick_name());
+//        tv_detail_en_name.setText(masterDetail.getEnglish_name());
+//        if (TextUtils.isEmpty(masterDetail.getDesigner().getOccupational_cn())) {
+//            tv_detail_cn_position.setText("后台数据为null");
+//        } else {
+//            tv_detail_cn_position.setText(masterDetail.getDesigner().getOccupational_cn());
+//        }
+//        if (TextUtils.isEmpty(masterDetail.getDesigner().getOccupational_en())) {
+//            tv_detail_en_position.setText("后台数据为null");
+//        } else {
+//            tv_detail_en_position.setText(masterDetail.getDesigner().getOccupational_en());
+//        }
+//        if (TextUtils.isEmpty(masterDetail.getDesigner().getIntroduction())) {
+//            rl_grandmaster_des.setVisibility(View.VISIBLE);
+//            tv_detail_content.setText("后台数据为null");
+//        } else {
+//            rl_grandmaster_des.setVisibility(View.VISIBLE);
+//            tv_detail_content.setText(masterDetail.getDesigner().getIntroduction());
+//        }
         if (null != masterDetail.getDesigner() && null != masterDetail.getDesigner().getDesigner_detail_cover_app() && null != masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url()) {
             String img_url = masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url();
 //            ImageUtils.displayIconImage(img_url, iv_detail_desiner);
@@ -368,11 +368,11 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private ImageButton bt_grand_reservation;
     private ImageButton ib_grand_detail_ico;
     private ImageView iv_detail_desiner;
-    private TextView tv_detail_cn_name;
-    private TextView tv_detail_en_name;
-    private TextView tv_detail_cn_position;
-    private TextView tv_detail_en_position;
-    private TextView tv_detail_content;
+//    private TextView tv_detail_cn_name;
+//    private TextView tv_detail_en_name;
+//    private TextView tv_detail_cn_position;
+//    private TextView tv_detail_en_position;
+//    private TextView tv_detail_content;
     private AppBarLayout app_bar_layout;
     private RelativeLayout rl_navr_header;
     private RelativeLayout rl_grandmaster_des;
