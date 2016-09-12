@@ -30,22 +30,17 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
 
     private Context mContext;
     private OnItemChatClickListener mOnItemChatClickListener;
-    private MemberEntity mMemberEntity;
     private static final String IS_REAL_NAME = "2";
 
     public SeekDesignerAdapter(Context context, List<SeekDesignerBean.DesignerListEntity> datas) {
         super(context, datas, R.layout.item_lv_seek_designer);
         mContext = context;
-        mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity == null) {
-            return;
-        }
     }
 
     @Override
     public void convert(final CommonViewHolder holder, SeekDesignerBean.DesignerListEntity designerListEntity) {
-
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             holder.setVisible(R.id.img_seek_designer_chat, false);
         } else {
             holder.setVisible(R.id.img_seek_designer_chat, true);

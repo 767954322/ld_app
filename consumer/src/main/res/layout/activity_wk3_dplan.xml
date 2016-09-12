@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".personalcenter.workflow.activity.Wk3DPlanActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".personalcenter.workflow.activity.Wk3DPlanActivity">
 
     <include
         android:id="@+id/common_navbar"
@@ -11,11 +11,10 @@
 
 
     <GridView
+        android:layout_margin="2dp"
         android:id="@+id/gridView_3dplan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/size_10"
-        android:layout_marginRight="@dimen/size_10"
         android:layout_below="@id/common_navbar"
         android:horizontalSpacing="@dimen/size_3"
         android:numColumns="3"

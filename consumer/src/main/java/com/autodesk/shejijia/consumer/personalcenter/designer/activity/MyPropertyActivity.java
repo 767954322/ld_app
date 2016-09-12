@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -167,6 +168,13 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                 try {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
                     int is_loho = jsonObject1.getInt("is_loho");
+                    String is_real_name = jsonObject1.getString("is_real_name");
+                    if (is_real_name.equals("null")){
+                        showAlertView("您还未通过实名认证,请到网页端完成认证");
+//
+                    }else {
+
+                    }
                     if (is_loho != 0) {
                         rlTiXian.setVisibility(View.GONE);
                     } else {
@@ -179,6 +187,11 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
 
             }
         });
+    }
+
+    //打开AlertView对话框
+    private void showAlertView(String content) {
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, MyPropertyActivity.this, AlertView.Style.Alert, null).show();
     }
 
     /**

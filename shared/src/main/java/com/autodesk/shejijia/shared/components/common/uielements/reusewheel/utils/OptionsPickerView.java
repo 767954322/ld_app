@@ -9,19 +9,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.libs.WheelView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.timepicker.BasePickerView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.timepicker.WheelOptions;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class OptionsPickerView<T> extends BasePickerView implements View.OnClickListener {
@@ -97,6 +94,7 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
     }
 
     /**
+<<<<<<< HEAD
      * 获取存在的数据，通过该数据获取相应数据
      * */
     public void setList(ArrayList<String> roomList,ArrayList<ArrayList<String>> hallList,ArrayList<ArrayList<ArrayList<String>>> toiletList ){
@@ -151,6 +149,8 @@ public class OptionsPickerView<T> extends BasePickerView implements View.OnClick
 
 
     /**
+=======
+>>>>>>> 5394061a47604e6567547e7bd3d98c95c856e44c
      * 设置选中的item位置
      *
      * @param option1

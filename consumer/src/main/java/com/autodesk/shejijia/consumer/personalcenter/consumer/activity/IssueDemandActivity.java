@@ -199,6 +199,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                    showAlertView(R.string.please_input_correct_area);
 //                    return;
 //                }
+
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
@@ -452,7 +453,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 
 
         pvRoomTypeOptions.setPicker(roomsList, hallsList, toiletsList, true);
-        pvRoomTypeOptions.setList(roomsList, hallsList, toiletsList);
+//        pvRoomTypeOptions.setList(roomsList, hallsList, toiletsList);
         pvRoomTypeOptions.setCyclic(false, false, false);
         pvRoomTypeOptions.setSelectOptions(0, 0, 0);
         pvRoomTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {

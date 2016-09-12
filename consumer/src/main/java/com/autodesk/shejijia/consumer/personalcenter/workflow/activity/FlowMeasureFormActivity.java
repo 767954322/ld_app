@@ -100,7 +100,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         CustomProgress.show(this, "", false, null);
         super.initData(savedInstanceState);
 
-        setTitleForNavbar(getResources().getString(R.string.demand_measure_house_form)); /// 设置标题 .
+        setTitleForNavbar(getResources().getString(R.string.measure_house_form)); /// 设置标题 .
 
         memType = memberEntity.getMember_type();
         user_id = memberEntity.getAcs_member_id();

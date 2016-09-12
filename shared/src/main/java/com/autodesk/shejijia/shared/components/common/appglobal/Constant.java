@@ -148,6 +148,7 @@ public class Constant {
         public static final String DESIGNER_ID = "DESIGNER_ID";
         public static final String HS_UID = "HS_UID";
         public static final String MEASURE = "MEASURE";
+        public static final String THREAD_ID = "thread_id";
     }
 
     /**

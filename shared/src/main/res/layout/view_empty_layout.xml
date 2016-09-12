@@ -24,8 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@color/transparent"
-            android:src="@drawable/icon_order_empty"/>
+            android:background="@drawable/bg_shejijia_emty"/>
 
         <TextView
             android:id="@+id/tv_empty_message"

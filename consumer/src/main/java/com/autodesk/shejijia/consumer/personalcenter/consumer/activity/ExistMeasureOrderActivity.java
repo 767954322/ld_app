@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -50,6 +51,8 @@ import java.util.Date;
  */
 public class ExistMeasureOrderActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
 
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_exist_measure_order;
@@ -75,6 +78,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         fee = (String) getIntent().getExtras().get(Constant.ConsumerMeasureFormKey.MEASURE); // 量房费
         designer_id = (String) getIntent().getExtras().get(Constant.ConsumerMeasureFormKey.DESIGNER_ID);
         hs_uid = (String) getIntent().getExtras().get(Constant.ConsumerMeasureFormKey.HS_UID);
+        mThread_id = (String) getIntent().getExtras().get(Constant.ConsumerMeasureFormKey.THREAD_ID);
     }
 
     @Override
@@ -148,7 +152,6 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                                 jsonObject.put("user_name", dList.get(expandFlag).getContacts_name());
                                 jsonObject.put("mobile_number", dList.get(expandFlag).getContacts_mobile());
                                 jsonObject.put("order_type", 0);
-                                jsonObject.put("thread_id", "");
                                 if (TextUtils.isEmpty(fee)) {
                                     jsonObject.put("amount", 0.01);
                                 } else {
@@ -156,6 +159,11 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                                 }
                                 jsonObject.put("adjustment", 600);
                                 jsonObject.put("channel_type", "IOS");
+                                if (null == mThread_id || "".equals(mThread_id)) {
+                                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                                } else {
+                                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
+                                }
                                 CustomProgress.show(ExistMeasureOrderActivity.this, UIUtils.getString(R.string.sending_request), false, null);
                                 agreeOneselfResponseBid(jsonObject);
                             } else {
@@ -347,7 +355,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
     private AlertView mAgreeResponseBidFailAlertView;
     private PinnedHeaderExpandableListView explistview;
     private PinnedHeaderExpandableAdapter adapter;
-
+    private String mThread_id;
     /// 变量　.
     private String currentTime;
     private String fee;

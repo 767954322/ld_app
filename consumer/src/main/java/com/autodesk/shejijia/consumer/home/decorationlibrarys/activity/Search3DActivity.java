@@ -28,11 +28,11 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FuzzySearchAdapter;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.SearchHoverCaseBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHomeCaseAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHome3DCaseAdapter;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.CharacterParser;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -41,6 +41,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -71,10 +72,10 @@ import java.util.Map;
  * @file SearchActivity  .
  * @brief 搜索案例库页面 .
  */
-public class SearchActivity extends NavigationBarActivity implements
+public class Search3DActivity extends NavigationBarActivity implements
         PullToRefreshLayout.OnRefreshListener,
         View.OnClickListener,
-        UserHomeCaseAdapter.OnItemImageHeadClickListener {
+        UserHome3DCaseAdapter.OnItemImageHeadClickListener {
 
     @Override
     protected int getLayoutResId() {
@@ -111,13 +112,17 @@ public class SearchActivity extends NavigationBarActivity implements
 //        initSearchData(1, AppJsonFileReader.getStyle(this));
 //        initSearchData(2, AppJsonFileReader.getArea(this));
 
-        if (mUserHomeCaseAdapter == null) {
-            mUserHomeCaseAdapter = new UserHomeCaseAdapter(this,
-                    mCasesEntities, this,
-                    screenWidth, screenHeight);
+        if (userHome3DCaseAdapter == null) {
+            userHome3DCaseAdapter = new UserHome3DCaseAdapter(this, case3DBeanList, this, screenWidth, screenHeight);
         }
-        mPlvContentView.setAdapter(mUserHomeCaseAdapter);
-        mUserHomeCaseAdapter.setOnItemImageHeadClickListener(this, this, this);
+        mPlvContentView.setAdapter(userHome3DCaseAdapter);
+        userHome3DCaseAdapter.setOnItemImageHeadClickListener(this, this, this);
+
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (mMemberEntity == null) {
+            return;
+        }
+        member_id = mMemberEntity.getAcs_member_id();
     }
 
     @Override
@@ -144,18 +149,11 @@ public class SearchActivity extends NavigationBarActivity implements
     /// 查看设计师详情页面.
     @Override
     public void OnItemImageHeadClick(int position) {
-        String designer_id;
-        String hsUid;
+        Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
+        String acs_member_id = casesBean.getDesigner_info().getDesigner().getAcs_member_id();
+        hsUid = casesBean.getHs_designer_uid();
         Intent intent = new Intent(this, SeekDesignerDetailActivity.class);
-        CaseLibraryBean.CasesEntity.DesignerInfoEntity designerInfoEntity = mCasesEntities.get(position).getDesigner_info();
-        if (designerInfoEntity != null) {
-            CaseLibraryBean.CasesEntity.DesignerInfoEntity.DesignerEntity designerEntity = designerInfoEntity.getDesigner();
-            if (designerEntity != null) {
-                designer_id = designerEntity.getAcs_member_id();
-                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
-            }
-        }
-        hsUid = mCasesEntities.get(position).getHs_designer_uid();
+        intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, acs_member_id);
         intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hsUid);
         startActivity(intent);
     }
@@ -163,25 +161,26 @@ public class SearchActivity extends NavigationBarActivity implements
     /// 进入案例详情页面.
     @Override
     public void OnItemCaseClick(int position) {
-        String case_id = mCasesEntities.get(position).getId();
-        mIntent = new Intent(this, CaseLibraryNewActivity.class);
-        mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
-        startActivity(mIntent);
+        String design_asset_id = case3DBeanList.get(position).getDesign_asset_id();
+        mIntent = new Intent(this, CaseLibraryDetail3DActivity.class);
+        mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, design_asset_id);
+        this.startActivity(mIntent);
     }
 
     /// 聊天.
     @Override
     public void OnItemHomeChatClick(final int position) {
+        CustomProgress.show(this, "", false, null);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity == null) {
-            AdskApplication.getInstance().doLogin(this);
-            return;
-        }
-        final String member_id = mMemberEntity.getAcs_member_id();
         if (mMemberEntity != null) {
-            final String designer_id = mCasesEntities.get(position).getDesigner_id();
-            final String hs_uid = mCasesEntities.get(position).getHs_designer_uid();
-            final String receiver_name = mCasesEntities.get(position).getDesigner_info().getNick_name();
+            Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
+            final int designer_id = casesBean.getDesigner_id();
+            final String hs_uid = casesBean.getHs_designer_uid();
+            final String receiver_name = casesBean.getDesigner_info().getNick_name();
+
+//            final String designer_id = case3DLibraryListBean.getCases().get(position).getDesigner_id()+"";
+//            final String hs_uid =  case3DLibraryListBean.getCases().get(position).getHs_designer_uid();
+//            final String receiver_name = case3DLibraryListBean.getCases().get(position).getDesigner_info().getNick_name();
             final String mMemberType = mMemberEntity.getMember_type();
             final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
 
@@ -189,14 +188,15 @@ public class SearchActivity extends NavigationBarActivity implements
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     MPNetworkUtils.logError(TAG, volleyError);
+                    CustomProgress.cancelDialog();
                 }
 
                 @Override
                 public void onResponse(String s) {
-
+                    CustomProgress.cancelDialog();
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                    final Intent intent = new Intent(SearchActivity.this, ChatRoomActivity.class);
+                    final Intent intent = new Intent(Search3DActivity.this, ChatRoomActivity.class);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
@@ -209,24 +209,26 @@ public class SearchActivity extends NavigationBarActivity implements
                         intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                         intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
                         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        SearchActivity.this.startActivity(intent);
+                        Search3DActivity.this.startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id + "",member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
+                                CustomProgress.cancelDialog();
                             }
 
                             @Override
                             public void onResponse(String s) {
                                 try {
+                                    CustomProgress.cancelDialog();
                                     JSONObject jsonObject = new JSONObject(s);
                                     String thread_id = jsonObject.getString("thread_id");
                                     intent.putExtra(ChatRoomActivity.ASSET_ID, "");
                                     intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
                                     intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-                                    SearchActivity.this.startActivity(intent);
+                                    Search3DActivity.this.startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -236,8 +238,10 @@ public class SearchActivity extends NavigationBarActivity implements
                 }
             });
         } else {
-            AdskApplication.getInstance().doLogin(SearchActivity.this);
+            AdskApplication.getInstance().doLogin(this);
         }
+////
+
     }
 
     /**
@@ -311,21 +315,26 @@ public class SearchActivity extends NavigationBarActivity implements
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPtrLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError, SearchActivity.this);
-                hideFooterView(mCasesEntities);
-                mUserHomeCaseAdapter.notifyDataSetChanged();
+
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, SearchActivity.this,
+//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, Search3DActivity.this);
+                hideFooterView(case3DBeanList);
+                userHome3DCaseAdapter.notifyDataSetChanged();
             }
         };
-            MPServerHttpManager.getInstance().getCaseListData(
-                    custom_string_style,
-                    custom_string_type,
-                    custom_string_keywords,
-                    custom_string_area,
-                    custom_string_bedroom,
-                    taxonomy_id,
-                    custom_string_restroom,
-                    custom_string_form,
-                    offset, limit, callback);
+
+        MPServerHttpManager.getInstance().get3DCaseListData(  //标示 1说明是 3d搜索
+                custom_string_style,
+                custom_string_type,
+                custom_string_keywords,
+                custom_string_area,
+                custom_string_bedroom,
+                taxonomy_id,
+                custom_string_restroom,
+                custom_string_form,
+                offset, limit, callback);
+
 
     }
 
@@ -380,7 +389,7 @@ public class SearchActivity extends NavigationBarActivity implements
             mSearchHoverCaseBeanArrayList.addAll(filterData(searchTextData));
         }
         if (mFuzzySearchAdapter == null) {
-            mFuzzySearchAdapter = new FuzzySearchAdapter(SearchActivity.this, mSearchHoverCaseBeanArrayList);
+            mFuzzySearchAdapter = new FuzzySearchAdapter(Search3DActivity.this, mSearchHoverCaseBeanArrayList);
         }
         pinnedHeaderListView.setAdapter(mFuzzySearchAdapter);
         mFuzzySearchAdapter.notifyDataSetChanged();
@@ -452,7 +461,7 @@ public class SearchActivity extends NavigationBarActivity implements
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(SearchActivity.this.getCurrentFocus().getWindowToken(),
+                            .hideSoftInputFromWindow(Search3DActivity.this.getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                     mSearchKeywords = mCetSearchContent.getText().toString().trim();
                     mCetSearchClick.setText(mSearchKeywords);
@@ -529,12 +538,13 @@ public class SearchActivity extends NavigationBarActivity implements
     private void notifyConsumeHomeAdapter(JSONObject jsonObject, int state) {
         try {
             String jsonString = GsonUtil.jsonToString(jsonObject);
-            mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
+            case3DLibraryListBean = GsonUtil.jsonToBean(jsonString, Case3DLibraryListBean.class);
+
             KLog.json(TAG, jsonString);
             switch (state) {
                 case 0:
                     OFFSET = 10;
-                    mCasesEntities.clear();
+                    case3DBeanList.clear();
                     break;
                 case 1:
                     OFFSET += 10;
@@ -542,15 +552,13 @@ public class SearchActivity extends NavigationBarActivity implements
                 default:
                     break;
             }
-            List<CaseLibraryBean.CasesEntity> casesEntity =
-                    mCaseLibraryBean.getCases();
-
-            if (casesEntity != null && casesEntity.size() > 0) {
-                mCasesEntities.addAll(casesEntity);
+            List<Case3DLibraryListBean.CasesBean> cases = case3DLibraryListBean.getCases();
+            if (cases != null && cases.size() > 0) {
+                case3DBeanList.addAll(cases);
             }
         } finally {
-            hideFooterView(mCasesEntities);
-            mUserHomeCaseAdapter.notifyDataSetChanged();
+            hideFooterView(case3DBeanList);
+            userHome3DCaseAdapter.notifyDataSetChanged();
             mPtrLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
         }
     }
@@ -560,7 +568,7 @@ public class SearchActivity extends NavigationBarActivity implements
      *
      * @param list 数据集合
      */
-    private void hideFooterView(List<CaseLibraryBean.CasesEntity> list) {
+    private void hideFooterView(ArrayList<Case3DLibraryListBean.CasesBean> list) {
         if (list != null && list.size() > 0) {
             mRlEmpty.setVisibility(View.GONE);
         } else {
@@ -568,7 +576,7 @@ public class SearchActivity extends NavigationBarActivity implements
         }
 //        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
 //        mIvEmptyIcon.setImageBitmap(bmp);
-        WindowManager wm = (WindowManager) SearchActivity.this.getSystemService(SearchActivity.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) Search3DActivity.this.getSystemService(Search3DActivity.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         android.view.ViewGroup.LayoutParams mRlEmptyLayoutParams = mRlEmpty.getLayoutParams();
         mRlEmptyLayoutParams.height = height - 10;
@@ -596,9 +604,9 @@ public class SearchActivity extends NavigationBarActivity implements
         super.onDestroy();
         mSearchHoverCaseBeenList = null;
         mSearchHoverCaseBeanArrayList = null;
-        mCasesEntities = null;
+        case3DBeanList = null;
         mFuzzySearchAdapter = null;
-        mUserHomeCaseAdapter = null;
+        userHome3DCaseAdapter = null;
         mCharacterParser = null;
         mFiltrateContentBean = null;
         mSearchKeywords = null;
@@ -631,13 +639,16 @@ public class SearchActivity extends NavigationBarActivity implements
     private int screenHeight;
     private String mSearchKeywords;
     private boolean isFirstIn = false;
-
+    private String hsUid,member_id;
     private List<SearchHoverCaseBean> mSearchHoverCaseBeenList = new ArrayList<>();
     private List<SearchHoverCaseBean> mSearchHoverCaseBeanArrayList = new ArrayList<>();
-    private ArrayList<CaseLibraryBean.CasesEntity> mCasesEntities = new ArrayList<>();
-    private UserHomeCaseAdapter mUserHomeCaseAdapter;
+//    private ArrayList<CaseLibraryBean.CasesEntity> mCasesEntities = new ArrayList<>();
+//    private UserHomeCaseAdapter mUserHomeCaseAdapter;
+    private ArrayList<Case3DLibraryListBean.CasesBean> case3DBeanList = new ArrayList<>();
+    private UserHome3DCaseAdapter userHome3DCaseAdapter;
     private FiltrateContentBean mFiltrateContentBean;
-    private CaseLibraryBean mCaseLibraryBean;
+//    private CaseLibraryBean mCaseLibraryBean;
+    private Case3DLibraryListBean case3DLibraryListBean;
     private FuzzySearchAdapter mFuzzySearchAdapter;
     private CharacterParser mCharacterParser;
     private Intent mIntent;

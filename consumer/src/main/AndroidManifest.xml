@@ -87,6 +87,12 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".home.decorationlibrarys.activity.Search3DActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".codecorationBase.coelite.activity.SelectDesignerActivity"
             android:alwaysRetainTaskState="true"

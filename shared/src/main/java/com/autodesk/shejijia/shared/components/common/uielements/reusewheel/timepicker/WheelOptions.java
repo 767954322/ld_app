@@ -78,12 +78,6 @@ public class WheelOptions<T> {
             len = 12;
         // 选项1
         wv_option1 = (WheelView) view.findViewById(R.id.options1);
-
-        if (wv_option1 != null){
-
-            setWheelViewListenerOnTouch(wv_option1);
-        }
-
         wv_option1.setAdapter(new ArrayWheelAdapter(mOptions1Items, len));// 设置显示数据
         wv_option1.setCurrentItem(0);// 初始化时显示的数据
         // 选项2
@@ -348,5 +342,4 @@ public class WheelOptions<T> {
                     .get(0)));// 设置显示数据
 
     }
-
 }

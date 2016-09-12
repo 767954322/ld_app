@@ -293,10 +293,10 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
             if (stateCode >= 11) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_jieshoushejihetong;
+                drawable = R.drawable.flow_contract_liang; // icon_jieshoushejihetong  亮
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.jieshoushejihetong_ico;
+                drawable = R.drawable.flow_contract_an; // jieshoushejihetong_ico 暗
             }
         } else {
             if (stateCode == 33 || stateCode == 24) {
@@ -304,11 +304,11 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
             if (stateCode >= 11) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_jieshoushejihetong;
-                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejihetong));
+                drawable = R.drawable.flow_contract_liang;
+                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.flow_contract_liang));
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.jieshoushejihetong_ico;
+                drawable = R.drawable.flow_contract_an;
             }
             if (stateCode == 32) {
                 setItemAnimationForView(textColor, viewHolder);
@@ -334,20 +334,20 @@ public class WkFlowStateAdapter extends BaseAdapter {
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
             if (stateCode >= 21) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_jieshoushejihetong;
+                drawable = R.drawable.flow_contract_liang;
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.jieshoushejihetong_ico;
+                drawable = R.drawable.flow_contract_an;
             }
 
         } else {
             if ((stateCode == 21 || stateCode == 22) || (stateCode >= 31 && stateCode != 33) || stateCode == 33) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_jieshoushejihetong;
-                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_jieshoushejihetong));
+                drawable = R.drawable.flow_contract_liang;
+                viewHolder.piv_meal_phone.setImageDrawable(UIUtils.getDrawable(R.drawable.flow_contract_liang));
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.jieshoushejihetong_ico;
+                drawable = R.drawable.flow_contract_an;
             }
             if (stateCode == 32) {
                 setItemAnimationForView(textColor, viewHolder);

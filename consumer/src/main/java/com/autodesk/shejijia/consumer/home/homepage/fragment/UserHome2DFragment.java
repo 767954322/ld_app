@@ -73,6 +73,8 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  */
 public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdapter.OnItemImageHeadClickListener,/* AbsListView.OnScrollListener,*/ View.OnClickListener {
 
+    private LinearLayout mLlDefaultView;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_home;
@@ -86,6 +88,8 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
         mListViewRootView = (RelativeLayout) rootView.findViewById(R.id.listview_content);
         mFloatingActionsMenu = (FloatingActionMenu) rootView.findViewById(R.id.add_menu_buttons);
+        mLlDefaultView = (LinearLayout) rootView.findViewById(R.id.ll_default_view);
+
         createCustomAnimation();
         initFloatingAction();
 
@@ -214,8 +218,6 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         } else {
             AdskApplication.getInstance().doLogin(getActivity());
         }
-////
-
     }
 
     ///事件监听 .
@@ -506,6 +508,11 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     private void updateViewFromCaseLibraryData(int offset) {
         if (offset == 0) {
             casesEntities.clear();
+            if (mCaseLibraryBean.getCount() == 0) {
+                mLlDefaultView.setVisibility(View.VISIBLE);
+            } else {
+                mLlDefaultView.setVisibility(View.GONE);
+            }
         }
         mOffset = offset + 10;
         casesEntities.addAll(mCaseLibraryBean.getCases());
