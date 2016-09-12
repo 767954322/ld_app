@@ -85,11 +85,13 @@
                     android:layout_centerVertical="true" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_grandmaster_des"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tv_center_inparent"
                     android:layout_marginTop="@dimen/font_45"
+                    android:visibility="gone"
                     android:background="#4d000000">
 
                     <TextView

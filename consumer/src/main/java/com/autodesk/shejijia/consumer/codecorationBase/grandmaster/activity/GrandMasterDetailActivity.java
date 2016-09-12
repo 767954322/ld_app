@@ -55,6 +55,8 @@ import java.util.List;
 public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
 
 
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_grandmaster_detail;
@@ -68,6 +70,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         bt_grand_reservation = (ImageButton) findViewById(R.id.bt_grand_reservation);
         ib_grand_detail_ico = (ImageButton) findViewById(R.id.ib_grand_detail_ico);
         rl_navr_header = (RelativeLayout) findViewById(R.id.rl_navr_header);
+        rl_grandmaster_des = (RelativeLayout) findViewById(R.id.rl_grandmaster_des);
         tv_detail_cn_name = (TextView) findViewById(R.id.tv_detail_cn_name);
         tv_detail_en_name = (TextView) findViewById(R.id.tv_detail_en_name);
         tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
@@ -184,8 +187,10 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             tv_detail_en_position.setText(masterDetail.getDesigner().getOccupational_en());
         }
         if (TextUtils.isEmpty(masterDetail.getDesigner().getIntroduction())) {
+            rl_grandmaster_des.setVisibility(View.VISIBLE);
             tv_detail_content.setText("后台数据为null");
         } else {
+            rl_grandmaster_des.setVisibility(View.VISIBLE);
             tv_detail_content.setText(masterDetail.getDesigner().getIntroduction());
         }
         if (null != masterDetail.getDesigner() && null != masterDetail.getDesigner().getDesigner_detail_cover_app() && null != masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url()) {
@@ -370,6 +375,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private TextView tv_detail_content;
     private AppBarLayout app_bar_layout;
     private RelativeLayout rl_navr_header;
+    private RelativeLayout rl_grandmaster_des;
     private LinearLayout ll_scrolling_view_behavior;
 
     private String hs_uid;
