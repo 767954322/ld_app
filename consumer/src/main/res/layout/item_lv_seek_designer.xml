@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
             android:layout_marginTop="@dimen/size_12"
-            android:textColor="@color/black"
+            android:textColor="@color/text_item_name"
             android:textSize="@dimen/font_14" />
     </LinearLayout>
 
