@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="11"
+                android:text=""
                 android:textColor="@color/bg_33"
                 android:textSize="17dp"/>
 
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="中式/"
-                    android:textColor="@color/bg_33"
+                    android:textColor="@color/bg_ee_33"
                     android:textSize="14sp"/>
 
                 <TextView
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="一室一厅一卫"
-                    android:textColor="@color/bg_33"
+                    android:textColor="@color/bg_ee_33"
                     android:textSize="14sp"/>
 
                 <TextView
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_5"
                     android:text="面积"
-                    android:textColor="@color/bg_33"
+                    android:textColor="@color/bg_ee_33"
                     android:textSize="14sp"/>
 
             </LinearLayout>
@@ -75,14 +75,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/bidding_contact"
-                    android:textColor="@color/bg_33"/>
+                    android:textColor="@color/bg_ee_33"/>
 
                 <TextView
                     android:id="@+id/tv_bid_hall_person"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="张"
-                    android:textColor="@color/bg_33"/>
+                    android:textColor="@color/bg_ee_33"/>
 
             </LinearLayout>
 
