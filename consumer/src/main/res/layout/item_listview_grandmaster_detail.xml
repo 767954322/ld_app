@@ -11,15 +11,23 @@
         android:scaleType="fitXY"
         android:src="@drawable/common_case_icon" />
 
-    <TextView
-        android:id="@+id/tv_item_listview_cn_tital"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_item_listview_pic"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/font_10"
-        android:text="小明"
-        android:textSize="@dimen/font_19"
-        android:textStyle="bold" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_35"
+        android:background="#eff2f5"
+        android:layout_below="@+id/iv_item_listview_pic">
+        <TextView
+            android:id="@+id/tv_item_listview_cn_tital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/font_10"
+            android:text="小明"
+            android:textSize="@dimen/font_17"
+            android:textColor="#333333" />
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>
