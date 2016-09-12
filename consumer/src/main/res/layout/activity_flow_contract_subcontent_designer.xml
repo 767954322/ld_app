@@ -325,7 +325,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flow_address_email" />
+                    android:text="@string/flow_email_address" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_email"

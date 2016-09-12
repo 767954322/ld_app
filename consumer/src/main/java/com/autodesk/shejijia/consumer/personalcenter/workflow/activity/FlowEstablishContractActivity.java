@@ -309,6 +309,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             String text = new String(buffer, Constant.NetBundleKey.UTF_8);
 
             while (true) {
+
                 text = text.replace("#val(designer_name)", designer_name);
                 text = text.replace("#val(designer_mobile)", designer_mobile);
                 text = text.replace("#val(designer_mail)", designer_mail);
@@ -688,20 +689,20 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         while (true) {
             if (!Validator.isNameValid(consumerName)) {
-                showAlertView(R.string.no_input_name);
+                showAlertView(R.string.please_input_consumer_name_correctly);
                 bValid = false;
                 break;
             }
 
             if (!Validator.isMobileValid(consumerPhone)) {
-                showAlertView(R.string.please_fill_in_the_right_phone_number);
+                showAlertView(R.string.please_input_consumer_phone_correctly);
                 bValid = false;
                 break;
             }
             //REFACTOR
             if (!consumerEmail.equals("")) {
                 if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
-                    showAlertView(R.string.please_fill_in_the_right_phone_email);
+                    showAlertView(R.string.please_input_consumer_email_correctly);
                     bValid = false;
                     break;
                 }
@@ -715,13 +716,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
 
             if (!Validator.isStringPositiveNumberValid(renderCount)) {
-                showAlertView(R.string.please_fill_in_the_number_of_rendering);
+                showAlertView(R.string.please_input_render_count_correctly);
                 bValid = false;
                 break;
             }
 
             if (!Validator.isStringValid(total_cost)) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_in_the_total_project_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_input_project_amount_correctly), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
                 bValid = false;
                 break;
             }
@@ -777,7 +778,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
 
             if (firstCost > totalCost) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.total_quantity_room_first_is_not_greater_than_design), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_out_the_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
                 bValid = false;
                 break;
