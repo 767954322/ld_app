@@ -317,7 +317,6 @@ public class MaterialTabs extends HorizontalScrollView {
                     tabReselectedListener.onTabReselected(position);
                 }
 
-                Log.i("yaoxuehua",""+position);
 
                 if (onClickItemListener != null){//监听选中哪一个页面
 
