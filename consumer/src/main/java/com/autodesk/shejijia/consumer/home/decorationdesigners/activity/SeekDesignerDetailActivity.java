@@ -581,8 +581,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
-                if (mDesignerPersonMasterPageFragment != null){
+//                getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
+                if (mDesignerPersonMasterPageFragment != null) {
 
                     mDesignerPersonMasterPageFragment.setHandler(handler);
                 }
@@ -595,8 +595,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     } else {
                         default_ll_bg.setVisibility(View.VISIBLE);
                     }
-
-
 
 
                     if (isRefreshOrLoad2D) {
@@ -675,10 +673,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 if (isFirstIn3D) {
                     isFirstIn3D = false;
 
-                    if (case3DBeen.getCases().size() > 0){
+                    if (case3DBeen.getCases().size() > 0) {
 
                         default_ll_bg.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         default_ll_bg.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1130,7 +1128,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         readSubClassHeightCount(scrollViewMeasuredHeight);
 
         //只走一次，避免默认加载数据时,出现少数据误差显示
-        if (isFrist){
+        if (isFrist) {
 
             justRefreshAndLoadMore();
             isFrist = false;

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView
         android:id="@+id/scrollview_studio"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -34,7 +34,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView>
 
 
     <TextView

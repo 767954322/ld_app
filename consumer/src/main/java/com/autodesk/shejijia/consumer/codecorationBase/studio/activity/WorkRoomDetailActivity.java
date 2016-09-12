@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -24,11 +27,15 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.dialog.OrderDialog
 import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.DesignerRetrieveRsp;
 import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomDetailsBeen;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.AnimationUtil;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.HeightUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView;
+import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -49,7 +56,7 @@ import java.util.List;
  * @file WorkRoomDetailActivity  .
  * @brief 查看工作室详情页面 .
  */
-public class WorkRoomDetailActivity extends NavigationBarActivity implements View.OnClickListener {
+public class WorkRoomDetailActivity extends NavigationBarActivity implements View.OnClickListener,MyScrollViewListener {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_work_room;
@@ -70,6 +77,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         nav_left_imageButton.setImageResource(R.drawable.work_room_back);
         nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         nav_title_textView.setTextColor(Color.WHITE);
+        common_navbar.setBackgroundColor(Color.BLACK);
         common_navbar.getBackground().setAlpha(0);//让标题栏透明
         view_navigation_header_view.setVisibility(View.GONE);
         header_work_room_name = (TextView) workRoomDetailHeader.findViewById(R.id.header_work_room_name);
@@ -77,7 +85,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         work_room_introduce = (TextView) workRoomDetailHeader.findViewById(R.id.work_room_introduce);
         work_room_name_title = (TextView) workRoomDetailHeader.findViewById(R.id.work_room_name_title);
         work_room_detail_six_imageView = (ImageView) workRoomDetailHeader.findViewById(R.id.work_room_detail_six_imageView);
-        scrollview_studio = (ScrollView) findViewById(R.id.scrollview_studio);
+        scrollview_studio = (MyScrollView) findViewById(R.id.scrollview_studio);
 
 
         now_order_details = (TextView) findViewById(R.id.now_order_details);
@@ -97,13 +105,14 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         super.initListener();
         back.setOnClickListener(this);
         now_order_details.setOnClickListener(this);
+        scrollview_studio.setMyScrollViewListener(this);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         getWorkRoomDetailData(acs_member_id, 0, 10, hs_uid);
-
+//        setAnimationBackgroud(common_navbar);
         isLoginUserJust = isLoginUser();
     }
 
@@ -270,6 +279,38 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     }
 
     /**
+     * scrollview 滚动改变调用
+     * scrollview 滑动时改变标题栏的状态
+     * */
+
+    @Override
+    public void onScrollChange(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
+
+        Log.i("yaoxuehua",""+y);
+        int alphaCount = 0;
+        if (y > 0 && y < 500){
+            alphaCount = y - 250;
+            if (y < 80){
+
+                common_navbar.getBackground().mutate().setAlpha(0);//让标题栏透明
+            }else {
+
+                common_navbar.getBackground().mutate().setAlpha(alphaCount);//让标题栏透明
+            }
+        }else if (y >= 500){
+
+            alphaCount = 255;
+            common_navbar.getBackground().setAlpha(alphaCount);//让标题栏透明
+        }
+
+        if (isFirstGoIn){
+            isFirstGoIn = false;
+            common_navbar.getBackground().mutate().setAlpha(0);//让标题栏透明
+        }
+
+    }
+
+    /**
      * 获取工作室详情信息
      */
 
@@ -280,8 +321,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
             public void onErrorResponse(VolleyError volleyError) {
 
                 MPNetworkUtils.logError(TAG, volleyError);
-                new AlertView(UIUtils.getString(R.string.tip), volleyError.toString() /*UIUtils.getString(R.string.network_error)*/, null, new String[]{UIUtils.getString(R.string.sure)}, null, WorkRoomDetailActivity.this,
-                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,WorkRoomDetailActivity.this);
             }
 
             @Override
@@ -334,11 +374,24 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
     }
 
+    /**
+     * 背景动画效果
+     * */
+    public void setAnimationBackgroud(RelativeLayout view){
+
+        AnimationSet animationSet = new AnimationSet(true);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+        alphaAnimation.setDuration(2000);
+        animationSet.addAnimation(alphaAnimation);
+        view.startAnimation(animationSet);
+    }
+
+
     private View workRoomDetailHeader;
     private LinearLayout work_room_detail_content;
     private RelativeLayout common_navbar;
     private ImageView back;
-    private ScrollView scrollview_studio;
+    private MyScrollView scrollview_studio;
     private View view_navigation_header_view;
     private ImageButton nav_left_imageButton;
     //    private ImageView work_room_design_imageView;
@@ -354,10 +407,13 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private List<WorkRoomDetailsBeen.MainDesignersBean[]> listMain = new ArrayList<WorkRoomDetailsBeen.MainDesignersBean[]>();
     private DesignerRetrieveRsp designerListBean;
     private boolean isLoginUserJust = false;
+    private boolean isFirstGoIn = true;//第一次进入该页面将该title设置为透明
     private WorkRoomDetailsBeen workRoomDetailsBeen;
     private List<WorkRoomDetailsBeen.MainDesignersBean> main_designers;
 
     private ListView listView;
     private TextView now_order_details;
     private GridView gridView;
+
+
 }
