@@ -574,15 +574,15 @@ public class Search3DActivity extends NavigationBarActivity implements
         } else {
             mRlEmpty.setVisibility(View.VISIBLE);
         }
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-        mIvEmptyIcon.setImageBitmap(bmp);
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+//        mIvEmptyIcon.setImageBitmap(bmp);
         WindowManager wm = (WindowManager) Search3DActivity.this.getSystemService(Search3DActivity.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         android.view.ViewGroup.LayoutParams mRlEmptyLayoutParams = mRlEmpty.getLayoutParams();
         mRlEmptyLayoutParams.height = height - 10;
         mRlEmpty.getLayoutParams();
         mRlEmpty.setLayoutParams(mRlEmptyLayoutParams);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        mTvEmptyMessage.setText(UIUtils.getString(R.string.not_found));
     }
 
     private void setSelection(ClearEditText editText) {
