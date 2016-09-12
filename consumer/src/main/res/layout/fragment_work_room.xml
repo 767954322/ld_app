@@ -11,6 +11,7 @@
         android:layout_height="@dimen/size_117"
         android:layout_centerInParent="true"
         android:scaleType="fitXY"
+        android:background="@drawable/work_room_heard_bg"
         />
 
 </RelativeLayout>
