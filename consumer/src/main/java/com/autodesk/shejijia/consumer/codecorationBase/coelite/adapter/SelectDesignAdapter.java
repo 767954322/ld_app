@@ -47,6 +47,7 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         nick_name = TextUtils.isEmpty(nick_name) ? UIUtils.getString(R.string.anonymity) : nick_name;
         String style_names = biddersBean.getStyle_names();
         style_names = (style_names != null)?style_names.replace(","," "):"";
+        style_names = UIUtils.getNotDataIfEmpty(style_names);
         String avatar = biddersBean.getAvatar();
         avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
         PolygonImageView polygonImageView = holder.getView(R.id.piv_design_photo);
