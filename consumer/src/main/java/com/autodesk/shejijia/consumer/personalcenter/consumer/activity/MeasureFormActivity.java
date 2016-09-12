@@ -480,6 +480,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         Intent intent = new Intent(MeasureFormActivity.this, ExistMeasureOrderActivity.class);
         intent.putExtra(Constant.ConsumerMeasureFormKey.DESIGNER_ID, designer_id);
         intent.putExtra(Constant.ConsumerMeasureFormKey.HS_UID, hs_uid);
+        intent.putExtra(Constant.ConsumerMeasureFormKey.THREAD_ID, mThread_id);
         intent.putExtra(Constant.ConsumerMeasureFormKey.MEASURE, mFree);
         startActivity(intent);
         finish();
