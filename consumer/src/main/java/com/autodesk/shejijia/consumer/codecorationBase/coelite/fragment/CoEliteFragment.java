@@ -15,11 +15,12 @@ import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.IssueEli
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SelectionAdapter;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DesignWorksBean;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -34,7 +35,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     private ViewPager vpSelection;
     private ViewGroup vgSelection;
     private ImageButton imReservationButton;
-
 
     /**
      * 装点点的ImageView数组
@@ -123,11 +123,8 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             AdskApplication.getInstance().doLogin(getActivity());
             return;
         }
-        String nick_name = (mMemberEntity != null && mMemberEntity.getNick_name() != null
-                && mMemberEntity.getNick_name().length() > 0) ? mMemberEntity.getNick_name() : UIUtils.getString(R.string.anonymity);
-        Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
-        intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
-        startActivity(intent);
+        getConsumerInfoData(mMemberEntity.getAcs_member_id());
+
     }
 
     //载入设计师作品
@@ -147,6 +144,33 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         };
         MPServerHttpManager.getInstance().getDesignWorks(okResponseCallback);
 
+    }
+    /**
+     * 获取个人基本信息
+     *
+     * @param member_id
+     * @brief For details on consumers .
+     */
+    public void getConsumerInfoData(String member_id) {
+        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+                String mNick_name = mConsumerEssentialInfoEntity.getNick_name();
+//                String nick_name = (mNick_name != null && mMemberEntity.getNick_name() != null
+//                        && mMemberEntity.getNick_name().length() > 0) ? mMemberEntity.getNick_name() : UIUtils.getString(R.string.anonymity);
+                Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
+                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNick_name);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
     }
 
 
