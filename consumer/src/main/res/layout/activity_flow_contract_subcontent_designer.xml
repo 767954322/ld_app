@@ -166,11 +166,10 @@
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_decorate_address"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/bg_alertbutton_none"
                     android:hint="@string/flow_hint_project_address"
-                    android:singleLine="true"
                     android:textColor="@color/bg_80"
                     android:textColorHint="@color/bg_a0"
                     android:textSize="@dimen/font_14" />
@@ -304,10 +303,9 @@
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_decorate_address"
                     android:layout_width="wrap_content"
-                    android:layout_height="28dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/bg_alertbutton_none"
-                    android:singleLine="true"
                     android:textColor="@color/bg_80"
                     android:textSize="@dimen/font_14" />
             </LinearLayout>
