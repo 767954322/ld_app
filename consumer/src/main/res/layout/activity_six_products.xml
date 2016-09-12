@@ -13,6 +13,8 @@
      android:id="@+id/consumer_six_products_tabs"
      android:layout_width="match_parent"
      android:layout_height="48dip"
+     android:layout_marginLeft="@dimen/size_21"
+     android:layout_marginRight="@dimen/size_21"
       />
  <com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager
      android:id="@+id/consumer_six_products_viewPager"
