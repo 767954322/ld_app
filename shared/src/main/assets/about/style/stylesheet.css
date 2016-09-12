@@ -8013,16 +8013,17 @@ blockquote cite
     *display: inline;
 }
 
+
 ol, ul {list-style:none;}
 .allframe{ width:100%; padding:5%;}
 .h1title{ font-size:1.8em; text-align:center; margin:20px 0px;}
 .part1{ display:block; margin-bottom:15px}
-.title2{font-size:1.1em; font-weight:bold; clear:both; }
+.title2{ top:10px; font-size:1.1em; font-weight:bold; clear:both; margin-top:5px}
 ul.textgroup{ display:block; width:100%;}
-ul.textgroup li{float:left; display:block; margin-bottom:10px}
+ul.textgroup li{float:left; display:block; margin-bottom:0px}
 .textgroupex{ display:block; width:92%}
 .textgroupex2{ display:block; width:88%}
 .textgroupnm{display:block; margin-right:2px}
 ul.textgroup li.textgroupex3{ margin-bottom:3px}
-
+.Cspace{ display:block; width:100%; height:5px; clear:both}
 
