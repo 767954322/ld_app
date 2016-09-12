@@ -368,14 +368,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     }
 
     private void UpdateUIActionLayout() {
+        UIsetDesignerSendButtonActive(true, getResources().getString(R.string.flow_send));
 
-        if (bDesignerActionShow) {
-
-            if (bDesignerContractCreated)
-                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.sure_modify_send));
-            else
-                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.send_design_contract));
-        }
+//        if (bDesignerActionShow) {
+//
+//            if (bDesignerContractCreated)
+//                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.sure_modify_send));
+//            else
+//                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.flow_send));
+//        }
 
 
         if (bconsumerActionShow) {
