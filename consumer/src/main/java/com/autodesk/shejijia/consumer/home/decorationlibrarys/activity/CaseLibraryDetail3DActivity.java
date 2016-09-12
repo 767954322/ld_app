@@ -358,8 +358,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 ToastUtil.showCustomToast(CaseLibraryDetail3DActivity.this, getString(R.string.dianzhangchenggong));
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
-                tvThumbUp.setText((case3DDetailBean.getFavorite_count() + 1) + "");
-                tvheadThumbUp.setText((case3DDetailBean.getFavorite_count() + 1) + "");
+                tvThumbUp.setText("点赞" + (case3DDetailBean.getFavorite_count() + 1) + "");
+                tvheadThumbUp.setText("点赞" + (case3DDetailBean.getFavorite_count() + 1) + "");
             }
 
             @Override
@@ -520,8 +520,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             tvCustomerHomeStyle.setText(style.get(project_style));
         }
 
-        tvThumbUp.setText(case3DDetailBean.getFavorite_count() + "");
-        tvheadThumbUp.setText(case3DDetailBean.getFavorite_count() + "");
+        tvThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
+        tvheadThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
         ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name()
         );
 //        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
