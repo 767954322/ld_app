@@ -215,6 +215,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                     if (!isMemberLike) {
                         String design_asset_id = case3DDetailBean.getDesign_asset_id();
                         if (design_asset_id != null) {
+                            llThumbUp.setOnClickListener(null);
+                            rlThumbUp.setOnClickListener(null);
                             sendThumbUp(design_asset_id);
                         }
 
@@ -364,6 +366,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                rlThumbUp.setOnClickListener(CaseLibraryDetail3DActivity.this);
+                llThumbUp.setOnClickListener(CaseLibraryDetail3DActivity.this);
                 MPNetworkUtils.logError(TAG, volleyError);
                 new AlertView(UIUtils.getString(R.string.tip),
                         UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null,

@@ -635,7 +635,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
                 } catch (Exception e) {
 
-                    Toast.makeText(FlowUploadDeliveryActivity.this, "e:" + e, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -743,8 +742,6 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                /// TODO 九月份任务，暂时屏蔽评价入口 .
-//                mLinerDelayedShow.setVisibility(View.GONE);
                 mDeliverySureAlertView.show();
             }
 
