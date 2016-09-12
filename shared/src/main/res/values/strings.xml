@@ -310,10 +310,10 @@
     <string name="has_yet_to_fill_out">尚未填写</string>
     <string name="temporarily_no_data">暂无数据</string>
     <string name="find_designer">设计师</string>
-    <string name="designer_working_year">从业年限：</string>
-    <string name="designer_good_style">擅长：</string>
-    <string name="designer_design_fee">设计费：</string>
-    <string name="designer_measure_fee">量房费：</string>
+    <string name="designer_working_year">从业年限&#160;：</string>
+    <string name="designer_good_style">擅长风格&#160;：</string>
+    <string name="designer_design_fee">设计费&#160;：</string>
+    <string name="designer_measure_fee">量房费&#160;：</string>
     <string name="optional_measure">选TA量房</string>
     <string name="measure_invite">量房邀约</string>
 

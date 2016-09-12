@@ -92,7 +92,7 @@ public class ChooseViewPointer extends View{
 
     public void setCase2dBtn(int width){
 
-        setDecreaseWidth(width * 1 / 20f);
+        setDecreaseWidth(width * 3 / 40f);
         setWidthOrHeight(width, 0, 0f, 1 / 3f);
 
     }
@@ -100,14 +100,14 @@ public class ChooseViewPointer extends View{
     public void setCase3dBtn(int width){
 
 
-        setDecreaseWidth(width * 1 / 20f);
+        setDecreaseWidth(width * 3 / 40f);
         setWidthOrHeight(width, 0, 1 / 3f, 2 / 3f);
 
     }
 
     public void setConsumerAppraise(int width){
 
-        setDecreaseWidth(width * 1 / 20f);
+        setDecreaseWidth(width * 3 / 40f);
         setWidthOrHeight(width, 0, 2 / 3f, 1f);
 
     }

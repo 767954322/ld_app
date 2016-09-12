@@ -81,32 +81,36 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/person_color_be_good_at"
                                 android:text="@string/designer_design_fee" />
 
                             <TextView
                                 android:id="@+id/tv_seek_designer_design_fee"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/person_color_be_good_at"
                                 android:ellipsize="end"
                                 android:singleLine="true"
                                 android:text="尚未填写" />
 
-                            <TextView
+                            <View
                                 android:layout_width="@dimen/size_1"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="@dimen/size_10"
-                                android:background="@color/comment_black" />
+                                android:background="#333333" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/size_10"
+                                android:textColor="@color/person_color_be_good_at"
                                 android:text="@string/designer_measure_fee" />
 
                             <TextView
                                 android:id="@+id/tv_seek_designer_detail_measure_fee"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/person_color_be_good_at"
                                 android:text="尚未填写" />
 
                         </LinearLayout>
@@ -121,12 +125,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/be_good_at" />
+                                android:textColor="@color/person_color"
+                                android:text="@string/designer_good_style" />
 
                             <TextView
                                 android:id="@+id/tv_seek_designer_detail_style"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/person_color"
                                 android:ellipsize="end"
                                 android:singleLine="true"
                                 android:text="尚未填写" />
@@ -144,32 +150,36 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/person_color"
                                 android:text="@string/designer_working_year" />
 
                             <TextView
                                 android:id="@+id/tv_seek_designer_detail_yeas"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textColor="@color/person_color"
                                 android:text="尚未填写" />
 
-                            <TextView
+                            <View
                                 android:layout_width="@dimen/size_1"
                                 android:layout_height="match_parent"
                                 android:layout_marginLeft="@dimen/size_10"
-                                android:background="@color/comment_black" />
+                                android:background="#666666" />
 
                             <TextView
                                 android:id="@+id/textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/size_10"
+                                android:textColor="@color/person_color"
                                 android:text="@string/attention_num" />
 
 
                             <TextView
                                 android:id="@+id/tv_followed_num"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/person_color"/>
 
                         </LinearLayout>
 
@@ -207,7 +217,7 @@
                     <LinearLayout
                         android:id="@+id/ll_case_choose_contain"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_50"
+                        android:layout_height="@dimen/size_44"
                         android:background="@color/bg_ff"
                         android:orientation="vertical">
 
@@ -218,7 +228,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/size_46"
+                            android:layout_height="@dimen/size_40"
                             android:orientation="horizontal">
 
                             <TextView
@@ -228,8 +238,8 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="效果图"
-                                android:textColor="@color/bg_00"
-                                android:textSize="@dimen/font_16" />
+                                android:textColor="@color/person_color"
+                                android:textSize="@dimen/font_15" />
 
                             <TextView
                                 android:id="@+id/case_3d_btn"
@@ -238,8 +248,9 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="3D方案"
-                                android:textColor="@color/bg_00"
-                                android:textSize="@dimen/font_16" />
+                                android:textColor="@color/person_color"
+                                android:textSize="@dimen/font_15"
+                                 />
 
                             <TextView
                                 android:id="@+id/consumer_appraise"
@@ -248,8 +259,8 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="评价"
-                                android:textColor="@color/bg_00"
-                                android:textSize="@dimen/font_16"
+                                android:textColor="@color/person_color"
+                                android:textSize="@dimen/font_15"
 
                                 />
 

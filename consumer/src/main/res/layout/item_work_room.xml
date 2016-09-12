@@ -16,7 +16,7 @@
             android:layout_width="@dimen/size_214"
             android:layout_height="@dimen/size_95"
             android:scaleType="fitXY"
-            android:src="@drawable/work_room_header_bg" />
+             />
 
         <TextView
             android:id="@+id/work_room_name"

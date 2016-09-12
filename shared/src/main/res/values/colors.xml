@@ -218,5 +218,7 @@
     <!--DIY-->
     <color name="bg_color_diy">#F7F8FA</color>
     <color name="bg_color_diy_easy">#55adff</color>
+    <color name="person_color">#666666</color>
+    <color name="person_color_be_good_at">#333333</color>
 
 </resources>
