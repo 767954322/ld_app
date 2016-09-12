@@ -30,7 +30,6 @@ import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
@@ -687,7 +686,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         boolean bValid = true;
 
         while (true) {
-            if (!Validator.isNameValid(consumerName)) {
+            if (!Validator.isContractNameValid(consumerName)) {
                 showAlertView(R.string.no_input_name);
                 bValid = false;
                 break;
