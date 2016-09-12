@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/rl_consumer_qrcode"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_101"
+        android:layout_height="@dimen/size_90"
         android:background="@color/white"
         android:padding="10dp">
 
@@ -17,7 +17,7 @@
         <FrameLayout
             android:layout_width="@dimen/size_70"
             android:layout_height="@dimen/size_70"
-            android:layout_marginTop="@dimen/size_10">
+            android:layout_marginTop="@dimen/size_0">
 
             <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
                 android:id="@+id/piv_design_photo"
