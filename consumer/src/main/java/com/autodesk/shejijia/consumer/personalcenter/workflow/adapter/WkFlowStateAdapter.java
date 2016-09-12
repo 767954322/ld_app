@@ -203,7 +203,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
             }
 
         }
-        if (stateCode >= 51 && stateCode != 63) {
+        if (stateCode >= 51 && stateCode <= 64 && stateCode != 63) {
             setItemAnimationForView(textColor, viewHolder);
         }
         initViewHolder(viewHolder, drawable, textColor);

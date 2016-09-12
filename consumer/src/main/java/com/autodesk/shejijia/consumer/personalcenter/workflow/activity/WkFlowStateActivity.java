@@ -453,12 +453,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void deliver(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi >= 51 && wk_cur_sub_node_idi != 63) {
+            if (wk_cur_sub_node_idi >= 51 && wk_cur_sub_node_idi <= 64 && wk_cur_sub_node_idi != 63) {
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
             }
             return;
         }
-        if (wk_cur_sub_node_idi >= 51 && wk_cur_sub_node_idi != 63) {
+        if (wk_cur_sub_node_idi >= 51 && wk_cur_sub_node_idi <= 64 && wk_cur_sub_node_idi != 63) {
             showNewActivity(FlowUploadDeliveryActivity.class, -1);
 
         }
