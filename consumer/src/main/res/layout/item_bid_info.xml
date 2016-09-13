@@ -61,7 +61,7 @@
 
             <TextView
                 style="@style/BidItem.Text"
-                android:text="@string/common_order_project_number"/>
+                android:text="@string/consume_phone"/>
 
             <TextView
                 style="@style/BidItem.Text"

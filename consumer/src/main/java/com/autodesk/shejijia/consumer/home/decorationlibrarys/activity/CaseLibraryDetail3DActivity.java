@@ -488,16 +488,26 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             getThumbUp(case3DDetailBean.getDesign_asset_id());
         }
 
-        List<Case3DDetailBean.DesignFileBean> images = case3DDetailBean.getDesign_file();
-
-        //查找是否是封面图片  若是就添加到头部
-        for (int i = 0; i < images.size(); i++) {
-            if (images.get(i).isIs_primary()) {
-                firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
-                // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
-            }
+        if (case3DDetailBean.getDesign_file()==null){
+            return;
         }
+        List<Case3DDetailBean.DesignFileBean> images =case3DDetailBean.getDesign_file();
+
+
+        //后台逻辑修改  顶部图片改动
+        String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath();
+        if (thumbnailMainPath!=null){
+            ImageUtils.displayIconImage(thumbnailMainPath + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+        }
+//
+//        //查找是否是封面图片  若是就添加到头部
+//        for (int i = 0; i < images.size(); i++) {
+//            if (images.get(i).isIs_primary()) {
+//                firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
+//                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+//                // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
+//            }
+//        }
 
         List<Case3DDetailImageListBean> imageListBeanList = getImageLists(images);
         imageListBean = imageListBeanList;
@@ -585,7 +595,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
             case3DDetailImageListBeanManYou.setLocal(false);
         } else { //给定默认图片路径,ImageLoader加载本地图片的路径规则
-            imageListsManYou.add("drawable://" + R.drawable.default_3d_details);
+            imageListsManYou.add("drawable");
             case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
             case3DDetailImageListBeanManYou.setLocal(true);
         }
