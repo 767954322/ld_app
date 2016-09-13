@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -635,6 +636,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
                 ApiStatusUtil.getInstance().apiStatuError(volleyError,FlowEstablishContractActivity.this);
 
+                byte[] htmlBodyBytes = volleyError.networkResponse.data;  //回应的报文的包体内容
+                Log.e("VolleyError body---->", new String(htmlBodyBytes), volleyError);
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
