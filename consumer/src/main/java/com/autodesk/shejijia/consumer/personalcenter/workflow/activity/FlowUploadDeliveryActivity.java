@@ -55,6 +55,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     public static final int OPEN_3D_DESIGN = 22;
     public static final int DELIVER_MEASURE_FILE = 23; //  精选，消费者：等待提交量房交付物　设计师：提交量房交付物
     public static final int DELIVER_MEASURE_FILE_1 = 33; // 精选-竞优-套餐，消费者：订单结束, 设计师：订单结束 未上传量房交付物
+    public static final int DELIVER_MEASURE_FILE_2 = 24; // 精选-竞优-套餐，消费者：订单结束, 设计师：订单结束 未上传量房交付物
     public static final int PAY_FOR_FIRST_FEE = 41; // 消费者：未支付设计尾款　设计师：等待客户支付设计师尾款 ．
     public static final int NO_UPLOAD_DELIVERY = 51; // 消费者：等待设计师上传设计交付物　设计师：未上传设计交付物
     public static final int DOWN_DELIVERY_UPLOADED_DELIVERY = 61;// 消费者：未确认设计交付物　设计师：等待客户确认设计交付物．
@@ -119,7 +120,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物，消费者可以查看，需要隐藏延期及确认按钮.
         boolean isMeasureDelivery = isMeasureDelivery(wk_sub_node_id_int);
         if (isMeasureDelivery) {
-            setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer));
+            setTitleForNavbar(UIUtils.getString(R.string.deliver_measure_consumer_title));
             mTvDelivery.setText(UIUtils.getString(R.string.flow_design_blueprint));
             show3DAndHideLevel();
             handleMeasureDelivery();
@@ -1334,7 +1335,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     public boolean isMeasureDelivery(int wk_sub_node_id_int) {
         if (DELIVER_MEASURE_FILE == wk_sub_node_id_int
-                || DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int) {
+                || DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int||DELIVER_MEASURE_FILE_2==wk_sub_node_id_int) {
             return true;
         } else {
             return false;

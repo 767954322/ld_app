@@ -233,7 +233,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                     setTitleForNavbar(UIUtils.getString(R.string.flow_bill_of_materials));
                     break;
                 case 4:
-                    setTitleForNavbar(UIUtils.getString(R.string.my_room_deliverable));
+                    setTitleForNavbar(UIUtils.getString(R.string.delivery_quantity_room));
             }
             Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(this, mMPFileBeanArrayList);
             mGridView3DPlan.setAdapter(wk3DFinishDeliveryAdapter);
