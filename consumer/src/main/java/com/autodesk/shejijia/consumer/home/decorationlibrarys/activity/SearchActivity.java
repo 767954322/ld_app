@@ -415,6 +415,8 @@ public class SearchActivity extends NavigationBarActivity implements
             @Override
             public void onClick(View v) {
                 cancelPopupWindowAndClearSearchContent();
+                mCetSearchContent.setText("");
+                SearchActivity.this.finish();
             }
         });
     }
