@@ -747,6 +747,7 @@
 
     <!-- CustomBidFragment-->
     <string name="bidding_contact">招标人 ：</string>
+    <string name="bidding_con">应标人数 ：</string>
     <string name="bid_hall_decorate_budget">装修预算</string>
 
     <!-- TransactionRecordActivity -->
