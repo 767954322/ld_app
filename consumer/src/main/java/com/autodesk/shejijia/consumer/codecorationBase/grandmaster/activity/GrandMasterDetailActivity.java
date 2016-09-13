@@ -250,8 +250,15 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             public void convert(ViewHolder holder, DatailCase item, int position) {
                 ImageView imageView = holder.getView(R.id.iv_item_listview_pic);
                 TextView textView = holder.getView(R.id.tv_item_listview_cn_tital);
-                ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
-                textView.setText(cases_list.get(position).getTitle());
+                DatailCase datailCase = cases_list.get(position);
+
+                if (null!= datailCase&&null!=datailCase.getImages()){
+                    if(datailCase.getImages().size()>0){
+                        ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
+                    }
+//                    ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
+                    textView.setText(cases_list.get(position).getTitle());
+                }
             }
         };
 
