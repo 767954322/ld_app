@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -20,7 +21,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -110,7 +110,7 @@ public class TransactionRecordActivity extends NavigationBarActivity implements 
         int isSucceed = PullToRefreshLayout.SUCCEED;
         try {
             String jsonString = GsonUtil.jsonToString(jsonObject);
-            KLog.json(TAG, jsonString);
+            LogUtils.i(TAG, jsonString);
             transactionRecordBean = new Gson().fromJson(jsonString, TransactionRecordBean.class);
             switch (state) {
                 case 0:

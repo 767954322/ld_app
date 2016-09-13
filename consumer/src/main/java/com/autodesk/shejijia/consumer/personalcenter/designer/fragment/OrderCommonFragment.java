@@ -28,6 +28,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -35,7 +36,6 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -134,9 +134,9 @@ public class OrderCommonFragment extends BaseFragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                Log.d(TAG, "onResponse: userInfo" + userInfo);
+                LogUtils.i(TAG, "onResponse: userInfo" + userInfo);
                 mOrderCommonEntity = GsonUtil.jsonToBean(userInfo, OrderCommonBean.class);
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
                 if (offset == 0) {
                     commonOrderListEntities.clear();
                 }

@@ -30,13 +30,13 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StreamUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -171,7 +171,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                KLog.e("AmendDemandActivity", "amendJson:" + amendJson);
+                LogUtils.e("AmendDemandActivity", "amendJson:" + amendJson);
                 sendAmendDemand(needs_id, amendJson);
                 break;
 
