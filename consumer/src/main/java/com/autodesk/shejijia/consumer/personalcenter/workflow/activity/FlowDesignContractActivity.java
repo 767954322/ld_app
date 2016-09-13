@@ -355,7 +355,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
                     @Override
                     public void onClick(View v) {
                         if (isAgree) { // 判断是否我已阅读（我已阅读）
-                            img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+                            img_agree_establish_contract.setBackgroundResource(android.R.color.white);
                             btn_send.setEnabled(false);
                             btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                         } else { // 判断是否我已阅读（我未阅读）

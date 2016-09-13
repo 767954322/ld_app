@@ -391,7 +391,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 //set tital
                 String str_tital = caseDetailBean.getTitle();
                 boolean isTitalToLong = str_tital.length() > 6;
-                str_tital = isTitalToLong ? str_tital.substring(0, 6) + ".." : str_tital;
+                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
                 setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
