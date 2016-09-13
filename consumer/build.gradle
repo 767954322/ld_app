@@ -25,6 +25,7 @@ android {
         debug {
 //            signingConfig signingConfigs.release
             buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix "_debug"
             minifyEnabled false
         }
         release {
