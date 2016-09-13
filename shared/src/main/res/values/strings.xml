@@ -172,7 +172,7 @@
     <string name="demand_planning_budget">设计预算：</string>
     <string name="demand_project_budget">装修预算：</string>
     <string name="please_enter_your_name">请输入姓名</string>
-    <string name="please_enter_your_phone">请输入联系电话</string>
+    <string name="please_enter_your_phone">请输入手机号码</string>
     <string name="please_select_design_budget">请选择设计预算</string>
     <string name="please_select_decorate_budget">请选择装修预算</string>
     <string name="demand_project_area">项目面积：</string>
@@ -598,7 +598,7 @@
     <!-- BeiShuMealActivity -->
     <string name="consuer_data">客户资料</string>
     <string name="consume_phone">联系电话：</string>
-    <string name="consume_phone_hint">手机号码</string>
+    <string name="consume_phone_hint">手机号码：</string>
     <string name="consume_phone_number_hint">请输入手机号码</string>
     <string name="consume_adress">房屋地址：</string>
     <string name="consume_adress_hint">选择地址</string>
