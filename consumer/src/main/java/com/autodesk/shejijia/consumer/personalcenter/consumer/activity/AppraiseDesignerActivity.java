@@ -26,11 +26,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -136,7 +136,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    KLog.d(TAG, "jsonObject:" + jsonObject);
+                    LogUtils.i(TAG, "jsonObject:" + jsonObject);
                     submitEvaluation(jsonObject);
                 }
                 break;

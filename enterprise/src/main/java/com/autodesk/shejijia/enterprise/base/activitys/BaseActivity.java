@@ -12,7 +12,6 @@ import com.pgyersdk.crash.PgyCrashManager;
 import com.pgyersdk.feedback.PgyFeedbackShakeManager;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.views.PgyerDialog;
-import com.socks.library.KLog;
 
 /**
  * Created by t_xuz on 8/15/16.

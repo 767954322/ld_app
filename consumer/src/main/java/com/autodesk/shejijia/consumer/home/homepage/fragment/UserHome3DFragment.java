@@ -84,6 +84,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_home);
         mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
         mListViewRootView = (RelativeLayout) rootView.findViewById(R.id.listview_content);
+        ll_default_view = (LinearLayout) rootView.findViewById(R.id.ll_default_view);
         mFloatingActionsMenu = (FloatingActionMenu) rootView.findViewById(R.id.add_menu_buttons);
         createCustomAnimation();
         initFloatingAction();
@@ -475,6 +476,11 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             case3DBeanList.clear();
         }
         mOffset = offset + 10;
+        if (case3DLibraryListBean.getCases().size()>0){
+            ll_default_view.setVisibility(View.GONE);
+        }else {
+            ll_default_view.setVisibility(View.VISIBLE);
+        }
         case3DBeanList.addAll(case3DLibraryListBean.getCases());
         if (case3DLibraryListBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
@@ -574,6 +580,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     private final static String MENU_COLLAPSE_TAG = "menu_collapse";
     private FiltrateContentBean filtrateContentBean;
     private RelativeLayout mListViewRootView;
+    private LinearLayout ll_default_view;
     private FloatingActionMenu mFloatingActionsMenu;
     private PtrClassicFrameLayout mPtrLayout;
     private ListViewFinal mListView;

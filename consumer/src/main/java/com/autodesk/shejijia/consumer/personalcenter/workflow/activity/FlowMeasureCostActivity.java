@@ -22,11 +22,13 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -162,7 +164,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
 
                 MPAliPayBean MPAliPayBean = GsonUtil.jsonToBean(userInfo, MPAliPayBean.class);
 
@@ -194,25 +196,41 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
 
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
         public void onOK() {
-            Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
-            payOk = true;
-            setResult(RESULT_CODE, new Intent());
-            finish();
+//            Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+//            toast.show();
+            openAlertView(UIUtils.getString(R.string.pay_success),0);
+
         }
 
         public void onFail() {
-            Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
-            payOk = false;
-            isLock = true;
-            Intent intent = new Intent();
-            intent.putExtra(Constant.SixProductsFragmentKey.SELECTION, Constant.SixProductsFragmentKey.ISELITE);
-            setResult(RESULT_CODE, intent);
+//            Toast toast = Toast.makeText(FlowMeasureCostActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+//            toast.show();
+            openAlertView(UIUtils.getString(R.string.pay_failed),1);
+
         }
     };
+    private void openAlertView(String content,final int isSuccess) {
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position == 0 && isSuccess == 0) {
+                    payOk = true;
+                    setResult(RESULT_CODE, new Intent());
+                    finish();
+                } else if (position == 0 && isSuccess == 1) {
+                    payOk = false;
+                    isLock = true;
+                    Intent intent = new Intent();
+                    intent.putExtra(Constant.SixProductsFragmentKey.SELECTION, Constant.SixProductsFragmentKey.ISELITE);
+                    setResult(RESULT_CODE, intent);
+                } else {
+                }
+            }
+        }).show();
+    }
 
     private String order_line_id;
     private String order_id;

@@ -56,6 +56,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -63,7 +64,6 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
-import com.socks.library.KLog;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -659,7 +659,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
         ConsumerQrEntity consumerQrEntity = new ConsumerQrEntity(mobile_number, memberType, member_id, hs_uid, nick_name, avatar);
         String qrJson = new Gson().toJson(consumerQrEntity);
-        KLog.d(TAG, qrJson);
+        LogUtils.i(TAG, qrJson);
 
         /// if the information is  Incomplete ,you can't generate qr code .
         if (null != consumerQrEntity) {

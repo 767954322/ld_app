@@ -33,12 +33,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -465,7 +465,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                KLog.d(TAG, jsonObject.toString());
+                LogUtils.i(TAG, jsonObject+"");
                 ContractState = 0;
                 CustomProgress.cancelDialog();
                 mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowDesignContractActivity.this, AlertView.Style.Alert, FlowDesignContractActivity.this).setOnDismissListener(FlowDesignContractActivity.this);

@@ -27,11 +27,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -288,7 +288,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
-                KLog.d(TAG, str);
+                LogUtils.i(TAG, str);
                 IssueDemandBean issueDemandBean = GsonUtil.jsonToBean(str, IssueDemandBean.class);
                 if (issueDemandBean != null && issueDemandBean.getNeeds_id() != null && issueDemandBean.getNeeds_id().length() > 0) {
                     mSendDesignRequirementSuccessAlertView.show();
