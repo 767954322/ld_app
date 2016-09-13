@@ -543,7 +543,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         if (mCaseLibraryBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
         } else {
-            mListView.setHasLoadMore(true);
+            mListView.setHasLoadMore(false);
         }
         Message msg = Message.obtain();
         msg.obj = offset;
