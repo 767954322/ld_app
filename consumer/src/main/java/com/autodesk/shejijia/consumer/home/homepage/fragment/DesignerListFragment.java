@@ -25,6 +25,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -168,60 +170,14 @@ public class DesignerListFragment extends BaseFragment
             }
 
             final String receiver_name = designerListEntity.getNick_name();
-            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
+            JumpBean jumpBean = new JumpBean();
+            jumpBean.setReciever_user_name(receiver_name);
+            jumpBean.setReciever_user_id(designer_id);
+            jumpBean.setReciever_hs_uid(hs_uid);
+            jumpBean.setMember_type(mMemberType);
+            jumpBean.setAcs_member_id(member_id);
+            JumpToChatRoom.getChatRoom(activity,jumpBean);
 
-            MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    MPNetworkUtils.logError(TAG, volleyError);
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
-                }
-
-                @Override
-                public void onResponse(final String s) {
-
-                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                    final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
-                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-
-                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-
-                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-                        int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                        intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                        startActivity(intent);
-
-                    } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                MPNetworkUtils.logError(TAG, volleyError);
-                                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
-                            }
-
-                            @Override
-                            public void onResponse(String s) {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(s);
-                                    String thread_id = jsonObject.getString("thread_id");
-                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-                                    startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                    }
-                }
-            });
         } else {
             AdskApplication.getInstance().doLogin(getActivity());
         }
