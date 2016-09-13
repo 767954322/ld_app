@@ -91,7 +91,7 @@ public abstract class AdskApplication extends Application {
         if (entity != null) {
             onLoginSuccess(entity);
         }
-        JPushInterface.setDebugMode(true);    // Enable logging settings, turn off logging when you publish
+        JPushInterface.setDebugMode(false);    // Enable logging settings, turn off logging when you publish
         JPushInterface.init(this);            // Init JPush
     }
 
