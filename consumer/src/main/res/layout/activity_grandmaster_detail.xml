@@ -23,13 +23,20 @@
                 android:layout_width="match_parent"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
                 android:layout_height="match_parent">
-                <ImageView
+
+                <com.autodesk.shejijia.consumer.codecorationBase.packages.view.ResizableImageView
                     android:id="@+id/iv_detail_desiner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/home_page_icon"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"/>
 
+                <ImageView
+                    android:id="@+id/iv_backimg_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/home_page_icon"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible"/>
 
     <!--            <TextView
                     android:id="@+id/tv_detail_cn_name"
