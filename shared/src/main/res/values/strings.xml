@@ -220,6 +220,7 @@
     <string name="deliver_designer">我要交付</string>
     <string name="flow_3d">我的3D方案</string>
     <string name="successful_delivery">交付成功</string>
+    <string name="successful_design_delivery">发送设计交付成功</string>
     <string name="volume_housing_delivery">量房交付中，请稍后0</string>
     <string name="volume_room_deliver">量房交付中</string>
     <string name="please_submit_deliverable_into_web_pages">请先进入网页提交交付物</string>

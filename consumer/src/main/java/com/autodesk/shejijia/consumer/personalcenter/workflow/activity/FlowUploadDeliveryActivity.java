@@ -354,6 +354,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 || object == mAlertViewMeasureDelivery
                 || object == mAlertViewMeasureConsumerDelivery
                 || object == mAlertViewDesignDelivery
+                || object == mDeliveryAlertViewExt
                 && position != AlertView.CANCELPOSITION) {
             FlowUploadDeliveryActivity.this.finish();
         }
@@ -653,13 +654,17 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      * @param needs_id        　项目订单编号
      * @param design_asset_id 　3d方案的assets_id
      */
-    private void postDelivery(String design_asset_id, String needs_id, String designer_id, String file_ids, String type) {
+    private void postDelivery(String design_asset_id, String needs_id, String designer_id, String file_ids, final String type) {
         CustomProgress.show(FlowUploadDeliveryActivity.this, UIUtils.getString(R.string.in_design_deliverable_zero), false, null);
         MPServerHttpManager.getInstance().postDelivery(needs_id, designer_id, file_ids, design_asset_id, type, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                mAlertViewExt.show();
+                if ("1".equalsIgnoreCase(type)) {
+                    mDeliveryAlertViewExt.show();
+                } else {
+                    mAlertViewExt.show();
+                }
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 LogUtils.i(TAG, userInfo);
             }
@@ -1073,6 +1078,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     private void initAlertView() {
         mAlertViewExt = showAlertView(commonTip, UIUtils.getString(R.string.successful_delivery));
+        mDeliveryAlertViewExt = showAlertView(commonTip, UIUtils.getString(R.string.successful_design_delivery));
         mAlertViewDesignDelivery = showAlertView(commonTip, UIUtils.getString(R.string.please_enter_web_page_submitted_design_deliverable));
         mAlertViewDesignConsumerDelivery = showAlertView(commonTip, UIUtils.getString(R.string.waiting_designer_upload_design_deliverable));
         mAlertViewMeasureDelivery = showAlertView(commonTip, UIUtils.getString(R.string.please_enter_web_page_submitted_room_deliverable));
@@ -1290,6 +1296,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private LinearLayout mLlMaterialList;
 
     private AlertView mAlertViewExt;
+    private AlertView mDeliveryAlertViewExt;
     private AlertView mAlertViewDesignDelivery;
     private AlertView mAlertViewMeasureDelivery;
     private AlertView mAlertViewDesignConsumerDelivery;
@@ -1333,7 +1340,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     public boolean isMeasureDelivery(int wk_sub_node_id_int) {
         if (DELIVER_MEASURE_FILE == wk_sub_node_id_int
-                || DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int||DELIVER_MEASURE_FILE_2==wk_sub_node_id_int) {
+                || DELIVER_MEASURE_FILE_1 == wk_sub_node_id_int || DELIVER_MEASURE_FILE_2 == wk_sub_node_id_int) {
             return true;
         } else {
             return false;
