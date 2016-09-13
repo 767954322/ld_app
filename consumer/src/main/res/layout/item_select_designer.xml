@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/rl_consumer_qrcode"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_90"
+        android:layout_height="@dimen/size_95"
         android:background="@color/white"
         android:padding="10dp">
 
@@ -43,12 +43,13 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_80"
+            android:layout_marginRight="@dimen/size_50"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_designer_name"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_30"
+                android:layout_height="@dimen/size_25"
                 android:textSize="@dimen/size_18" />
             <!--<LinearLayout-->
             <!--android:id="@+id/ll_designer_works"-->
@@ -82,7 +83,7 @@
             <TextView
                 android:id="@+id/tv_profession"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_25"
+                android:layout_height="@dimen/size_70"
                 android:layout_below="@+id/tv_designer_name"
                 android:text="@string/profession" />
         </RelativeLayout>

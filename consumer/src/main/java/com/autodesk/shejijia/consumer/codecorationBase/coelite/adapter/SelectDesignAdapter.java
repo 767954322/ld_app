@@ -54,7 +54,6 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         ImageUtils.displayAvatarImage(avatar, polygonImageView);
         holder.setText(R.id.tv_designer_name, nick_name);
         holder.setText(R.id.tv_profession, UIUtils.getString(R.string.profession)+style_names);
-
         Button button = holder.getView(R.id.bt_select_ta_measure_form);
 
         TextView textView = holder.getView(R.id.tv_measure_invite);

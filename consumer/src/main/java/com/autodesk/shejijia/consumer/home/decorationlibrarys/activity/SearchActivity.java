@@ -412,6 +412,7 @@ public class SearchActivity extends NavigationBarActivity implements
             @Override
             public void onClick(View v) {
                 cancelPopupWindowAndClearSearchContent();
+                mCetSearchContent.setText("");
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
