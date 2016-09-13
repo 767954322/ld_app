@@ -152,7 +152,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                showFragment(f.getClass());
+                if (!isDestroyed() && !isFinishing()) {
+                    showFragment(f.getClass());
+                }
             }
         }, 200);
 

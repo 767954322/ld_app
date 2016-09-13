@@ -42,8 +42,8 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
     public DecorationDesignerListAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id, String wk_template_id) {
         super(activity, datas, R.layout.item_decoration_designer_list);
         this.biddersEntities = (ArrayList<DecorationBiddersBean>) datas;
-        mActivity = activity;
-        mNeedsId = needs_id;
+        this.mActivity = activity;
+        this.mNeedsId = needs_id;
         this.wk_template_id = wk_template_id;
     }
 
@@ -54,6 +54,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         final String bidderUid = bidder.getUid();
         final String user_name = bidder.getUser_name();
         final String avatarUrl = bidder.getAvatar();
+        final String mThread_id = bidder.getDesign_thread_id();
 
         String wk_cur_sub_node_id = bidder.getWk_cur_sub_node_id();
 
@@ -103,7 +104,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 @Override
                 public void onClick(View v) {
                     int template_id = Integer.parseInt(wk_template_id);
-                    startWkFlowStateActivity(mNeedsId, designerId, template_id);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id,mThread_id);
                 }
             });
         } else {
@@ -114,7 +115,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 @Override
                 public void onClick(View view) {
                     int template_id = Integer.parseInt(wk_template_id);
-                    startWkFlowStateActivity(mNeedsId, designerId, template_id);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id,mThread_id);
                 }
             });
         }
@@ -134,12 +135,13 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         });
     }
 
-    private void startWkFlowStateActivity(String needsId, String designerId, int template_id) {
+    private void startWkFlowStateActivity(String needsId, String designerId, int template_id,String thread_id) {
         Intent intent = new Intent();
         intent.setClass(mActivity, WkFlowStateActivity.class);
         intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needsId);
         intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
         intent.putExtra(Constant.BundleKey.TEMPDATE_ID, template_id);
+        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, thread_id);
         mActivity.startActivity(intent);
     }
 }

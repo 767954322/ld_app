@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.tools.chatroom;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
@@ -27,23 +28,28 @@ public class JumpToChatRoom {
 
     public static void getChatRoom(final Context context, final JumpBean jumpBean) {
         CustomProgress.show(context, "", false, null);
+        if (!TextUtils.isEmpty(jumpBean.getThread_id())) {
+            Map<String, String> map = new HashMap<>();
+            map.put(ChatRoomActivity.THREAD_ID, jumpBean.getThread_id());
+            map.put(ChatRoomActivity.ASSET_ID, jumpBean.getAsset_id() + "");
+            openChatRoom(context, jumpBean, map);
+            return;
+        }
         String recipient_ids = jumpBean.getReciever_user_id() + "," + jumpBean.getAcs_member_id() + "," + ApiManager.getAdmin_User_Id();
-
         MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 CustomProgress.cancelDialog();
-//                MPNetworkUtils.logError(TAG, volleyError);
             }
 
             @Override
             public void onResponse(String json) {
-                ss(json, context, jumpBean);
+                ifHasThreadId(json, context, jumpBean);
             }
         });
     }
 
-    private static void ss(String json, final Context context, final JumpBean jumpBean) {
+    private static void ifHasThreadId(String json, final Context context, final JumpBean jumpBean) {
         Map<String, String> map = new HashMap<>();
         MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(json);
         if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
@@ -58,24 +64,14 @@ public class JumpToChatRoom {
     }
 
     private static void getThreadIdIfNotChatBefore(final Context context, final JumpBean jumpBean) {
-        String desiner_id = "";
-        String cusomer_id = "";
-        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(jumpBean.getMember_type())) {
 
-            desiner_id = jumpBean.getReciever_user_id();
-            cusomer_id = jumpBean.getAcs_member_id();
-
-        } else {
-
-            desiner_id = jumpBean.getAcs_member_id();
-            cusomer_id = jumpBean.getReciever_user_id();
-
-        }
+        Boolean ifIsConsumer = Constant.UerInfoKey.CONSUMER_TYPE.equals(jumpBean.getMember_type());
+        String desiner_id = ifIsConsumer ? jumpBean.getReciever_user_id() : jumpBean.getAcs_member_id();
+        String cusomer_id = ifIsConsumer ? jumpBean.getAcs_member_id() : jumpBean.getReciever_user_id();
 
         MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(desiner_id, cusomer_id, new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                            MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
             }
 
@@ -100,7 +96,7 @@ public class JumpToChatRoom {
 
     private static void openChatRoom(final Context context, final JumpBean jumpBean, Map<String, String> map) {
         CustomProgress.cancelDialog();
-        final Intent intent = new Intent(context, ChatRoomActivity.class);
+        Intent intent = new Intent(context, ChatRoomActivity.class);
         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, jumpBean.getReciever_user_id());
         intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, jumpBean.getReciever_user_name());
         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, jumpBean.getMember_type());
@@ -110,8 +106,5 @@ public class JumpToChatRoom {
         intent.putExtra(ChatRoomActivity.ASSET_ID, map.get(ChatRoomActivity.ASSET_ID));
         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, jumpBean.getReciever_hs_uid());
         context.startActivity(intent);
-
     }
-
-
 }

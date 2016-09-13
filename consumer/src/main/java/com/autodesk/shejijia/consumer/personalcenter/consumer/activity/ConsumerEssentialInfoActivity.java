@@ -192,13 +192,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mConsumerEssentialInfoEntity != null) {
-            getConsumerInfoData(member_id);
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (mConsumerEssentialInfoEntity != null) {
+//            getConsumerInfoData(member_id);
+//        }
+//    }
 
 //    /**
 //     * 获取个人基本信息
@@ -447,6 +447,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      * Open the system photo album .
      */
     private void systemPhoto() {
+        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
@@ -792,7 +793,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         handler.post(new Runnable() {
             public void run() {
                 MyToast.show(activity, string);
-                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
+//                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
 
             }
         });
