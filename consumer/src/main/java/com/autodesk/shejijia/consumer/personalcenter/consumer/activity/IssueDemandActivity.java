@@ -26,6 +26,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.HomeTypeDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
@@ -63,6 +64,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             et_issue_demand_name.setText(nick_name);
         }
     };
+    private HomeTypeDialog homeTypeDialog;
 
 
     @Override
@@ -157,7 +159,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 break;
 
             case R.id.tv_issue_room: /// 请选择户型：室 厅 卫 .
-                pvRoomTypeOptions.show();
+                homeTypeDialog.show(getFragmentManager(), null);
                 et_issue_demand_area.clearFocus();
                 et_issue_demand_mobile.clearFocus();
                 break;
@@ -418,52 +420,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
      * @brief 设置室 厅 卫
      */
     private void setRoomType() {
-        final ArrayList<ArrayList<String>> hallsList = new ArrayList<ArrayList<String>>();
-        final ArrayList<String> roomsList = new ArrayList<>();
-        final ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<ArrayList<ArrayList<String>>>();
-        List<String> rooms = filledData(UIUtils.getStringArray(R.array.mlivingroom));
-        List<String> halls = filledData(UIUtils.getStringArray(R.array.hall));
-        List<String> toilets = filledData(UIUtils.getStringArray(R.array.toilet));
-        pvRoomTypeOptions = new OptionsPickerView(this);
-        //room
-        for (String op : rooms) {
-            roomsList.add(op);
-        }
-
-        //hall
-        ArrayList<String> options2Items_01 = new ArrayList<>();
-        for (String op2 : halls) {
-            options2Items_01.add(op2);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            hallsList.add(options2Items_01);
-        }
-        //toilet
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
-        ArrayList<String> options3Items_01_01 = new ArrayList<>();
-        for (String op3 : toilets) {
-            options3Items_01_01.add(op3);
-        }
-        for (int i = 0; i < halls.size(); i++) {
-            options3Items_01.add(options3Items_01_01);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            toiletsList.add(options3Items_01);
-        }
-
-
-        pvRoomTypeOptions.setPicker(roomsList, hallsList, toiletsList, true);
-//        pvRoomTypeOptions.setList(roomsList, hallsList, toiletsList);
-        pvRoomTypeOptions.setCyclic(false, false, false);
-        pvRoomTypeOptions.setSelectOptions(0, 0, 0);
-        pvRoomTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
+        homeTypeDialog = HomeTypeDialog.getInstance(this);
+        homeTypeDialog.setOnAddressCListener(new HomeTypeDialog.OnAddressCListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                room = roomsList.get(options1);
-                living_room = hallsList.get(options1).get(option2);
-                toilet = toiletsList.get(options1).get(option2).get(options3);
-                String roomType = room + living_room + toilet;
+            public void onClick(String roomName, String livingRoom, String toilet) {
+                String roomType = roomName + livingRoom + toilet;
                 tv_issue_room.setText(roomType);
 
                 /// convet .

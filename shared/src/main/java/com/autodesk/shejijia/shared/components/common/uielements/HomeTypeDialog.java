@@ -3,11 +3,9 @@ package com.autodesk.shejijia.shared.components.common.uielements;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,44 +14,211 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.OnWheelChangedListener;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.WheelView;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.adapters.AreaAdapter;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.adapters.CityAdapter;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.adapters.ProvinceAdapter;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.model.CityModel;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.model.DistrictModel;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.model.ProvinceModel;
-import com.autodesk.shejijia.shared.components.common.utility.PropUtil;
+import com.autodesk.shejijia.shared.components.common.tools.wheel.adapters.HomeWheelAdapter;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 户型选择
  */
-public class HomeTypeDialog extends DialogFragment implements OnWheelChangedListener, View.OnClickListener {
+public class HomeTypeDialog extends DialogFragment implements
+        OnWheelChangedListener,
+        View.OnClickListener {
 
     private static final String HOUSE_PATH = "house.json";
+    private static final String JSON_ROOT_NAME = "housetypelist";
+    private static final int ITEM_NUM = 5;    // 设置可见条目数量
+    private static final int TEXT_SIZE = 7;//选择器的字体大小
+
+    /**
+     * 所有室
+     */
+    private String[] mRoomDatas;
+    /**
+     * key - 室 value - 卫s
+     */
+    private Map<String, String[]> mLivingRoomDatasMap = new HashMap<String, String[]>();
+
+    /**
+     * key - 卫 values - 厅s
+     */
+    private Map<String, String[]> mToiletDatasMap = new HashMap<String, String[]>();
+    /**
+     * 当前室的名称
+     */
+    private String mCurrentRoomName = "";
+    /**
+     * 当前卫的名称
+     */
+    private String mCurrentLivingRoomName = "";
+    /**
+     * 当前厅的名称
+     */
+    private String mCurrentToiletName = "";
+
+    private WheelView mWlRoom;
+    private WheelView mWlLivingRoom;
+    private WheelView mWlToilet;
+    private TextView mTvSure;//确定按钮
+    private TextView mTvCancel;//取消按钮
+
     private static JSONObject mJsonObj;
 
+    //回调方法
+    private OnAddressCListener onAddressCListener;
+
     public interface OnAddressCListener {
-        void onClick(String province_name, String province, String city_name, String city, String district_name, String district);
+        void onClick(String roomName, String livingRoom, String toilet);
+    }
+
+    public void setOnAddressCListener(OnAddressCListener onAddressCListener) {
+        this.onAddressCListener = onAddressCListener;
     }
 
     public static HomeTypeDialog getInstance(Activity activity) {
         HomeTypeDialog dialog = new HomeTypeDialog();
-        initJsonData(activity);
         return dialog;
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.view_dialog_hometype, null);
+
+        initView(view);
+        initJsonData(getActivity());
+
+        initDatas();
+        setClickListener();
+        addChangeListener();
+        setVisibleItems(ITEM_NUM);
+
+        HomeWheelAdapter<String> homeWheelAdapter = new HomeWheelAdapter<>(getActivity(), mRoomDatas);
+        homeWheelAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));//设置字体大小
+        homeWheelAdapter.setTextColor(UIUtils.getColor(R.color.black));
+        mWlRoom.setViewAdapter(homeWheelAdapter);
+
+        updateLivingRoom();
+
+        return view;
+    }
+
+    /// 设置dialog的样式，位于屏幕最下边并宽度与屏幕对齐 .
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity(), R.style.ShareDialog);
+        Window window = dialog.getWindow();
+        window.setWindowAnimations(R.style.mystyle);  //添加动画
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+        // 以下这两句是为了保证按钮可以水平满屏
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        return dialog;
+    }
+
+    private void initView(View view) {
+        mTvSure = (TextView) view.findViewById(R.id.btn_select_sure);
+        mTvCancel = (TextView) view.findViewById(R.id.btn_select_cancel);
+        mWlRoom = (WheelView) view.findViewById(R.id.wl_room);
+        mWlLivingRoom = (WheelView) view.findViewById(R.id.wl_living_room);
+        mWlToilet = (WheelView) view.findViewById(R.id.wl_toilet);
+    }
+
+    /**
+     * 解析整个Json对象，完成后释放Json对象的内存
+     */
+    private void initDatas() {
+        try {
+            JSONArray jsonArray = mJsonObj.getJSONArray(JSON_ROOT_NAME);
+            mRoomDatas = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonP = jsonArray.getJSONObject(i);// 每个室的json对象
+                String province = jsonP.getString("p");// 室名字
+
+                mRoomDatas[i] = province;
+
+                JSONArray jsonCs = null;
+                try {
+                    /**
+                     * Throws JSONException if the mapping doesn't exist or is
+                     * not a JSONArray.
+                     */
+                    jsonCs = jsonP.getJSONArray("c");
+                } catch (Exception e1) {
+                    continue;
+                }
+                String[] mLivingRoomDatas = new String[jsonCs.length()];
+                for (int j = 0; j < jsonCs.length(); j++) {
+                    JSONObject jsonLivingRoom = jsonCs.getJSONObject(j);
+                    String livingRoom = jsonLivingRoom.getString("n");// 卫名字
+                    mLivingRoomDatas[j] = livingRoom;
+                    JSONArray jsonToilet = null;
+                    try {
+                        /**
+                         * Throws JSONException if the mapping doesn't exist or
+                         * is not a JSONArray.
+                         */
+                        jsonToilet = jsonLivingRoom.getJSONArray("a");
+                    } catch (Exception e) {
+                        continue;
+                    }
+
+                    String[] toilets = new String[jsonToilet.length()];// 当前卫的所有区
+                    for (int k = 0; k < jsonToilet.length(); k++) {
+                        String area = jsonToilet.getJSONObject(k).getString("s");// 厅的名称
+                        toilets[k] = area;
+                    }
+                    mToiletDatasMap.put(livingRoom, toilets);
+                }
+
+                mLivingRoomDatasMap.put(province, mLivingRoomDatas);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mJsonObj = null;
+    }
+
+    /**
+     * change事件的处理
+     */
+    @Override
+    public void onChanged(WheelView wheel, int oldValue, int newValue) {
+        if (wheel == mWlRoom) {
+            updateLivingRoom();
+        } else if (wheel == mWlLivingRoom) {
+            updateToilet();
+        } else if (wheel == mWlToilet) {
+            mCurrentToiletName = mToiletDatasMap.get(mCurrentLivingRoomName)[newValue];
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v == mTvSure) {
+            if (onAddressCListener != null) {
+                onAddressCListener.onClick(mCurrentRoomName, mCurrentLivingRoomName, mCurrentToiletName);
+            }
+        }
+        if (v == mTvCancel) {
+            dismiss();
+        }
     }
 
     private static void initJsonData(Activity activity) {
@@ -74,273 +239,53 @@ public class HomeTypeDialog extends DialogFragment implements OnWheelChangedList
         }
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_dialog_myinfo_changeaddress, null);
-        mTvSure = (TextView) view.findViewById(R.id.btn_select_sure);
-        mTvCancel = (TextView) view.findViewById(R.id.btn_select_cancel);
+    private void updateLivingRoom() {
+        int pCurrent = mWlRoom.getCurrentItem();
+        mCurrentRoomName = mRoomDatas[pCurrent];
+        String[] livingRooms = mLivingRoomDatasMap.get(mCurrentRoomName);
+        if (livingRooms == null) {
+            livingRooms = new String[]{""};
+        }
+        mWlLivingRoom.setViewAdapter(new HomeWheelAdapter<>(getActivity(), livingRooms));
+        mWlLivingRoom.setCurrentItem(0);
+        updateToilet();
+    }
 
+    private void updateToilet() {
+        int pCurrent = mWlLivingRoom.getCurrentItem();
+        mCurrentLivingRoomName = mLivingRoomDatasMap.get(mCurrentRoomName)[pCurrent];
+        String[] toilets = mToiletDatasMap.get(mCurrentLivingRoomName);
+
+        if (toilets == null) {
+            toilets = new String[]{""};
+        }
+
+        int currentItem = mWlToilet.getCurrentItem();
+        mCurrentToiletName = mToiletDatasMap.get(mCurrentLivingRoomName)[currentItem];
+        mWlToilet.setViewAdapter(new HomeWheelAdapter<>(getActivity(), toilets));
+        mWlToilet.setCurrentItem(0);
+
+    }
+
+    private void setClickListener() {
         mTvSure.setOnClickListener(this);
         mTvCancel.setOnClickListener(this);
+    }
 
-        mProvinceWheelView = (WheelView) view.findViewById(R.id.provinceView);
-        mCityWheelView = (WheelView) view.findViewById(R.id.cityView);
-        mDistrictWheelView = (WheelView) view.findViewById(R.id.districtView);
-
+    private void setVisibleItems(int i) {
         // 设置可见条目数量
-        mProvinceWheelView.setVisibleItems(7);
-        mCityWheelView.setVisibleItems(7);
-        mDistrictWheelView.setVisibleItems(7);
+        mWlRoom.setVisibleItems(i);
+        mWlLivingRoom.setVisibleItems(i);
+        mWlToilet.setVisibleItems(i);
+    }
 
+    private void addChangeListener() {
         // 添加change事件
-        mProvinceWheelView.addChangingListener(this);
+        mWlRoom.addChangingListener(this);
         // 添加change事件
-        mCityWheelView.addChangingListener(this);
+        mWlLivingRoom.addChangingListener(this);
         // 添加change事件
-        mDistrictWheelView.addChangingListener(this);
+        mWlToilet.addChangingListener(this);
 
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString("location"))) {
-            initData(getDefaultAddress(getArguments().getString("location")));
-        } else {
-            initData(null);
-        }
-        return view;
     }
-
-    /// 设置dialog的样式，位于屏幕最下边并宽度与屏幕对齐 .
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        Dialog dialog = new Dialog(getActivity(), R.style.ShareDialogV2);
-        Dialog dialog = new Dialog(getActivity(), R.style.ShareDialog);
-        Window window = dialog.getWindow();
-        window.setWindowAnimations(R.style.mystyle);  //添加动画
-        WindowManager.LayoutParams wl = window.getAttributes();
-        wl.x = 0;
-        wl.y = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-        // 以下这两句是为了保证按钮可以水平满屏
-        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        return dialog;
-    }
-
-    //初始化数据
-    private void initData(@Nullable String[] locationData) {
-        isFirstIn = true;
-        mCityDataHelper = CityDataHelper.getInstance(getActivity());
-        mDb = mCityDataHelper.openDataBase();
-        mProvinceModelArrayList = mCityDataHelper.getProvince(mDb);
-        if (mProvinceModelArrayList.size() > 0) {
-            if (locationData != null && locationData.length > 0) {
-                mProvinceIndex = getProvinceIndex(locationData[0]);
-            }
-            province_name = mProvinceModelArrayList.get(mProvinceIndex).NAME;
-            province = mProvinceModelArrayList.get(mProvinceIndex).CODE;
-            mCityModelArrayList = mCityDataHelper.getCityByParentId(mDb, mProvinceModelArrayList.get(mProvinceIndex).CODE);
-        }
-        if (mCityModelArrayList.size() > 0) {
-            if (locationData != null && locationData.length > 0) {
-                mCityIndex = getCityIndex(locationData[1]);
-            }
-            mDistrictModelArrayList = mCityDataHelper.getDistrictById(mDb, mCityModelArrayList.get(mCityIndex).CODE);
-        }
-        mProvinceAdapter = new ProvinceAdapter(getActivity(), mProvinceModelArrayList);
-        mProvinceAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));//设置字体大小
-        mProvinceAdapter.setTextColor(UIUtils.getColor(R.color.black));
-
-        mProvinceWheelView.setViewAdapter(mProvinceAdapter);
-        mProvinceWheelView.setCurrentItem(mProvinceIndex);
-        province_name = mProvinceModelArrayList.get(mProvinceWheelView.getCurrentItem()).NAME;
-        province = mProvinceModelArrayList.get(mProvinceWheelView.getCurrentItem()).CODE;
-
-        mCityWheelView.setCurrentItem(mCityIndex);
-        city_name = mCityModelArrayList.get(mCityWheelView.getCurrentItem()).NAME;
-        city = mCityModelArrayList.get(mCityWheelView.getCurrentItem()).CODE;
-
-        if (mDistrictModelArrayList.size() > 0) {
-            if (locationData != null && locationData.length == 3) {
-                mDistrictIndex = getDistrictIndex(locationData[2]);
-            }
-            mDistrictWheelView.setCurrentItem(mDistrictIndex);
-            district_name = mDistrictModelArrayList.get(mDistrictWheelView.getCurrentItem()).NAME;
-            district = mDistrictModelArrayList.get(mDistrictWheelView.getCurrentItem()).CODE;
-        }
-        updateCities(true);
-        updateAreas(true);
-    }
-
-    @Override
-    public void onChanged(WheelView wheel, int oldValue, int newValue) {
-        if (wheel == mProvinceWheelView) {
-            province_name = mProvinceModelArrayList.get(newValue).NAME;
-            province = mProvinceModelArrayList.get(newValue).CODE;
-            updateCities(false);
-            if (!isFirstIn) {
-                updateAreas(false);
-            }
-        } else if (wheel == mCityWheelView) {
-            city_name = mCityModelArrayList.get(newValue).NAME;
-            city = mCityModelArrayList.get(newValue).CODE;
-            updateAreas(false);
-        } else if (wheel == mDistrictWheelView) {
-            district_name = mDistrictModelArrayList.get(newValue).NAME;
-            district = mDistrictModelArrayList.get(newValue).CODE;
-        }
-    }
-
-    private void updateAreas(boolean isDefault) {
-
-        int cCurrent = mCityWheelView.getCurrentItem();
-
-        if (mCityModelArrayList.size() > 0) {
-            mDistrictModelArrayList = mCityDataHelper.getDistrictById(mDb, mCityModelArrayList.get(cCurrent).CODE);
-        } else {
-            mDistrictModelArrayList.clear();
-        }
-
-        if (null == getActivity()) {
-            return;
-        }
-        mAreaAdapter = new AreaAdapter(getActivity(), mDistrictModelArrayList);
-        mAreaAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));
-        mDistrictWheelView.setViewAdapter(mAreaAdapter);
-        if (mDistrictModelArrayList.size() > 0) {
-            if (isDefault) {
-                district_name = mDistrictModelArrayList.get(mDistrictIndex).NAME;
-                district = mDistrictModelArrayList.get(mDistrictIndex).CODE;
-                mDistrictWheelView.setCurrentItem(mDistrictIndex);
-            } else {
-                district_name = mDistrictModelArrayList.get(0).NAME;
-                district = mDistrictModelArrayList.get(0).CODE;
-                mDistrictWheelView.setCurrentItem(0);
-            }
-        } else {
-            district_name = DEFAULT_DISTRICT_NAME;
-            district = DEFAULT_DISTRICT_CDOE;
-        }
-    }
-
-    private void updateCities(boolean isDefault) {
-
-        int pCurrent = mProvinceWheelView.getCurrentItem();
-        if (mProvinceModelArrayList.size() > 0) {
-            mCityModelArrayList = mCityDataHelper.getCityByParentId(mDb, mProvinceModelArrayList.get(pCurrent).CODE);
-        } else {
-            mCityModelArrayList.clear();
-        }
-        if (null == getActivity()) {
-            return;
-        }
-        mCityAdapter = new CityAdapter(getActivity(), mCityModelArrayList);
-        mCityAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));
-        mCityWheelView.setViewAdapter(mCityAdapter);
-        if (mCityModelArrayList.size() > 0) {
-            if (isDefault) {
-                mCityWheelView.setCurrentItem(mCityIndex);
-                city_name = mCityModelArrayList.get(mCityIndex).NAME;
-                city = mCityModelArrayList.get(mCityIndex).CODE;
-            } else {
-                city_name = mCityModelArrayList.get(0).NAME;
-                city = mCityModelArrayList.get(0).CODE;
-                mCityWheelView.setCurrentItem(0);
-            }
-        } else {
-            city_name = "";
-            city = "";
-        }
-        //updateAreas(isDefault);
-    }
-
-    public String[] getDefaultAddress(String location) {
-        String[] locationData = location.split(" ");
-        if (locationData.length > 0) {
-            return locationData;
-        }
-        return null;
-    }
-
-    /*
-    * 确定 province 对应的index
-    * */
-    private int getProvinceIndex(@NonNull String province_name) {
-        int mProvinceIndex = 0;
-        for (int i = 0; i < mProvinceModelArrayList.size(); i++) {
-            if (mProvinceModelArrayList.get(i).NAME.equalsIgnoreCase(province_name)) {
-                mProvinceIndex = i;
-            }
-        }
-        return mProvinceIndex;
-    }
-
-    /*
-    * 确定 city 对应的index
-    * */
-    private int getCityIndex(@NonNull String city_name) {
-        int mCityIndex = 0;
-        for (int i = 0; i < mCityModelArrayList.size(); i++) {
-            if (mCityModelArrayList.get(i).NAME.equalsIgnoreCase(city_name)) {
-                mCityIndex = i;
-            }
-        }
-        return mCityIndex;
-    }
-
-    /*
-    * 确定 区 对应的index
-    * */
-    private int getDistrictIndex(@NonNull String district_name) {
-        int mDistrictIndex = 0;
-        for (int i = 0; i < mDistrictModelArrayList.size(); i++) {
-            if (mDistrictModelArrayList.get(i).NAME.equalsIgnoreCase(district_name)) {
-                mDistrictIndex = i;
-            }
-        }
-        return mDistrictIndex;
-    }
-
-    public void setAddressListener(OnAddressCListener onAddressCListener) {
-        this.onAddressCListener = onAddressCListener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == mTvSure) {
-            if (onAddressCListener != null) {
-                onAddressCListener.onClick(province_name, province, city_name, city, district_name, district);
-            }
-        }
-        if (v == mTvCancel) {
-            dismiss();
-        }
-    }
-
-    private static final String DEFAULT_DISTRICT_CDOE = "0";/*区的默认code值*/
-    private static final String DEFAULT_DISTRICT_NAME = "none";/*区的名字默认值*/
-
-    private static final int TEXT_SIZE = 7;//选择器的字体大小
-    private WheelView mProvinceWheelView;
-    private WheelView mCityWheelView;
-    private WheelView mDistrictWheelView;
-    private TextView mTvSure;//确定按钮
-    private TextView mTvCancel;//取消按钮
-
-    private String province, province_name;
-    private String city, city_name;
-    private String district, district_name;
-    private int mProvinceIndex, mCityIndex, mDistrictIndex;
-    private boolean isFirstIn = false;
-
-
-    private List<ProvinceModel> mProvinceModelArrayList = new ArrayList<>();
-    private List<CityModel> mCityModelArrayList = new ArrayList<>();
-    private List<DistrictModel> mDistrictModelArrayList = new ArrayList<>();
-
-    private ProvinceAdapter mProvinceAdapter;
-    private CityAdapter mCityAdapter;
-    private AreaAdapter mAreaAdapter;
-    private SQLiteDatabase mDb;
-    private CityDataHelper mCityDataHelper;
-    //回调方法
-    private OnAddressCListener onAddressCListener;
 }
