@@ -211,7 +211,7 @@
     <string name="flow_design_blueprint">设计图纸</string>
     <string name="flow_bill_of_materials">材料清单</string>
     <string name="deliver_measure_consumer">量房交付</string>
-    <string name="deliver_measure_consumer_title">我量房交付</string>
+    <string name="deliver_measure_consumer_title">我的量房交付</string>
     <string name="three_plan">3D设计方案</string>
     <string name="three_plan_no_name">未命名</string>
     <string name="measure_home_order">材料清单</string>
