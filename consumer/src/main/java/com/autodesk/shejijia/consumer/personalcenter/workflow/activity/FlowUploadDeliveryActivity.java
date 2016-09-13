@@ -660,11 +660,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                if ("1".equalsIgnoreCase(type)) {
-                    mDeliveryAlertViewExt.show();
-                } else {
-                    mAlertViewExt.show();
-                }
+                mDeliveryAlertViewExt.show();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
                 LogUtils.i(TAG, userInfo);
             }
