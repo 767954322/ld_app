@@ -60,7 +60,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rl_six_shape"
             android:layout_centerHorizontal="true"
-            android:text="伟大的工作室名字"
             android:textColor="@color/bg_00"
             android:textSize="@dimen/font_17"
 

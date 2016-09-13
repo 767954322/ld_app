@@ -287,17 +287,14 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     public void onScrollChange(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
 
         int alphaCount = 0;
-        if (y > 200 && y < 600){
-            alphaCount = y - 200;
+        if (y > 300 && y < 555){
+            alphaCount = y - 300;
 
                 common_navbar.getBackground().mutate().setAlpha(alphaCount);//让标题栏透明
-        }else if (y >= 600){
+        }else if (y >= 555){
 
             alphaCount = 255;
             common_navbar.getBackground().setAlpha(alphaCount);//让标题栏透明
-        }else if (y < 200){
-
-            common_navbar.getBackground().mutate().setAlpha(0);//让标题栏透明
         }
 
         if (y == 0){
