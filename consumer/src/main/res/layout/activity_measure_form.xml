@@ -38,7 +38,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -81,13 +81,13 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/consume_phone" />
+                    android:text="@string/consume_phone_hint" />
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/tvc_measure_form_phone"
@@ -112,7 +112,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -146,7 +146,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -156,7 +156,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -171,7 +171,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:ems="10"
-                    android:hint="请输入面积（平米）"
+                    android:hint="@string/demand_room_area"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12" />
 
@@ -193,7 +193,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -204,7 +204,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -238,7 +238,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -248,7 +248,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -282,7 +282,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -292,7 +292,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -308,7 +308,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
-                    android:hint="请选择户型：室 厅 卫"
+                    android:hint="@string/issue_room"
                     android:textSize="@dimen/font_12" />
 
                 <ImageView
@@ -326,7 +326,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -337,7 +337,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -383,7 +383,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -417,7 +417,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -427,7 +427,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -456,7 +456,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
+                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -467,7 +467,7 @@
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -496,7 +496,7 @@
                 android:layout_height="@dimen/size_40"
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/size_10"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_18"
                 android:paddingRight="@dimen/size_10">
 
                 <LinearLayout

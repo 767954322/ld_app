@@ -162,29 +162,36 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/flow_should_first" />
+            android:text="@string/flow_should_first"
+            android:textSize="@dimen/size_13" />
 
         <TextView
             android:id="@+id/tv_flow_first_design_should_first"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/bg_0084ff"
+            android:textSize="@dimen/size_13" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/size_10">
+        android:paddingBottom="@dimen/size_10"
+        android:paddingLeft="@dimen/size_10"
+        android:paddingRight="@dimen/size_10">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/flow_deduct_measure_cost" />
+            android:text="@string/flow_deduct_measure_cost"
+            android:textSize="@dimen/size_13" />
 
         <TextView
             android:id="@+id/tv_flow_first_design_deduct_measure_cost"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_13" />
     </LinearLayout>
 
     <LinearLayout

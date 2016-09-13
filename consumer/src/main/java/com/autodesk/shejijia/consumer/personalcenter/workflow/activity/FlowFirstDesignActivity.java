@@ -2,13 +2,11 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -197,7 +195,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 measurement_price = "0.00";
             }
             measurement_price = SplitStringUtils.splitStringDot(measurement_price);
-            tv_flow_first_design_deduct_measure_cost.setText(measurement_price); // 已扣除量房费
+            tv_flow_first_design_deduct_measure_cost.setText(measurement_price + getResources().getString(R.string.flow_monad_rmb)); // 已扣除量房费
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) {
                 return;
@@ -206,7 +204,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
             Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             Double measureCost = Double.parseDouble(mBidders.get(0).getMeasurement_fee());
             DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
-            tv_flow_first_design_should_first.setText(df.format(firstCost - measureCost)); // 本次应付设计首款
+            tv_flow_first_design_should_first.setText(df.format(firstCost - measureCost) + getResources().getString(R.string.flow_monad_rmb)); // 本次应付设计首款
         }
     }
 
