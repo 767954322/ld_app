@@ -27,8 +27,10 @@
             android:layout_centerVertical="true"/>
 
         <TextView
+            android:id="@+id/tv_show_persion_tip"
             style="@style/BidItem.Text"
             android:text="人"
+            android:visibility="gone"
             android:layout_centerVertical="true"/>
     </LinearLayout>
 
