@@ -87,6 +87,8 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                     mWebView.goBack();// 返回前一个页面
                     mTvFinishWebView.setVisibility(View.VISIBLE);
                 }
+            }else {
+                finish();
             }
         }
     }
