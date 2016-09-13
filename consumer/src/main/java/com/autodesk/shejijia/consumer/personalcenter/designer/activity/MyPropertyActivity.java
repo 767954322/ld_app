@@ -178,11 +178,11 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                     }
                     // change button show logic
                     btn_my_property_withdrawal.setVisibility(is_loho != 0 ? View.GONE : View.VISIBLE);
-//                    if (is_loho != 0) {
-//                        rlTiXian.setVisibility(View.GONE);
-//                    } else {
-//                        rlTiXian.setVisibility(View.VISIBLE);
-//                    }
+                    if (is_loho != 0) {
+                        rlTiXian.setVisibility(View.GONE);
+                    } else {
+                        rlTiXian.setVisibility(View.VISIBLE);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
