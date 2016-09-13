@@ -59,6 +59,16 @@ public class Case3DDetailBean implements Serializable {
     private String custom_string_type;
     private String design_name;
     private String hs_designer_uid;
+
+    public String getThumbnailMainPath() {
+        return thumbnailMainPath;
+    }
+
+    public void setThumbnailMainPath(String thumbnailMainPath) {
+        this.thumbnailMainPath = thumbnailMainPath;
+    }
+
+    private String thumbnailMainPath;
     /**
      * designer : {"studio":null,"styles":null,"introduction":null,"experience":null,"acs_member_id":20736524,"style_names":null,"style_long_names":null,"measurement_price":null,"design_price_min":null,"design_price_max":null,"graduate_from":null,"personal_honour":null,"diy_count":null,"case_count":null,"is_loho":0,"is_real_name":2,"theme_pic":"4"}
      * email : ld_sjs_01@sina.com

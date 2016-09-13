@@ -1,12 +1,9 @@
 package com.autodesk.shejijia.consumer.manager;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
-import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
@@ -617,6 +614,8 @@ public class MPServerHttpManager {
      */
     public void getCaseList3DDetail(String case_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_CASE_LIST_D3_DETAIL + case_id;
+//        String url ="http://192.168.120.90:8099/design-app/v1/api/d3/cases/1608253";
+
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -720,28 +719,28 @@ public class MPServerHttpManager {
      * 套餐
      */
     public void getDesignerBeiShuOrder(String designer_id, int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
-//        String url = UrlConstants.URL_GET_BEI_SHU_ORDER + designer_id +
-//                "/needs?" +
-//                "sort_order=desc" +
-//                "&limit=" + limit +
-//                "&offset=" + offset +
-//                "&media_type_id=53" +
-//                "&software=96" +
-//                "&asset_taxonomy=ezhome/beishu" +
-//                "&sort_by=date" +
-//                "&version=4.15";
-
-        String urlV2 = UrlConstants.URL_GET_ORDER + designer_id + "/orders" +
-                "?offset=" + offset +
-                "&limit=" + limit + "" +
-                "&sort_order=desc" +
+        String url = UrlConstants.URL_GET_BEI_SHU_ORDER + designer_id +
+                "/needs?" +
+                "sort_order=desc" +
+                "&limit=" + limit +
+                "&offset=" + offset +
+                "&media_type_id=53" +
+                "&software=96" +
+                "&asset_taxonomy=ezhome/beishu" +
                 "&sort_by=date" +
-                "&version=2" +
-                "&service_modlue=4" +
-                "&node_ids=" +
-                "&sub_node_ids=" +
-                "&commend=";
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, urlV2, null, callback) {
+                "&version=4.15";
+
+//        String urlV2 = UrlConstants.URL_GET_ORDER + designer_id + "/orders" +
+//                "?offset=" + offset +
+//                "&limit=" + limit + "" +
+//                "&sort_order=desc" +
+//                "&sort_by=date" +
+//                "&version=2" +
+//                "&service_modlue=4" +
+//                "&node_ids=" +
+//                "&sub_node_ids=" +
+//                "&commend=";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();

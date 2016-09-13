@@ -96,8 +96,8 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         Map<String, String> spaceMap = AppJsonFileReader.getSpace(this);
         Map<String, String> styleMap = AppJsonFileReader.getStyle(this);
 
-        Map<String, String> roomHallMap = AppJsonFileReader.getRoomHall(this);
-        Map<String, String> roomMap = AppJsonFileReader.getLivingRoom(this);
+        Map<String, String> roomHallMap = AppJsonFileReader.getLivingRoom(this);
+        Map<String, String> roomMap = AppJsonFileReader.getRoomHall(this);
         Map<String, String> toiletMap = AppJsonFileReader.getToilet(this);
 
         tvc_area.setText(decorationNeedsListBean.getHouse_area());
@@ -117,7 +117,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         if(TextUtils.isEmpty(room)){
             tvHouseType = UIUtils.getString(R.string.no_select);
         }else {
-            tvHouseType = livingRoom+room+toilet;
+            tvHouseType = room+livingRoom+toilet;
         }
         
         tvc_house_type.setText(tvHouseType);//设置室 厅 卫
