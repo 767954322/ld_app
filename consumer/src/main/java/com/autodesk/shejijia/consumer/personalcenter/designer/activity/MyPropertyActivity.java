@@ -179,7 +179,8 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                     // change button show logic
                     btn_my_property_withdrawal.setVisibility(is_loho != 0 ? View.GONE : View.VISIBLE);
                     if (is_loho != 0) {
-                        rlTiXian.setVisibility(View.GONE);
+                        rlTiXian.setVisibility(View.VISIBLE);  // 此处改动是内部设计师可以看到费用没提现按钮
+                        btn_my_property_withdrawal.setVisibility(View.GONE);
                     } else {
                         rlTiXian.setVisibility(View.VISIBLE);
                     }

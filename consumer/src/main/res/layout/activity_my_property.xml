@@ -42,10 +42,10 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/size_10"
-            android:visibility="invisible"
             android:background="@drawable/bg_common_btn_gap_blue"
             android:text="@string/my_property_withdrawal"
-            android:textColor="@color/bg_0084ff" />
+            android:textColor="@color/bg_0084ff"
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <LinearLayout
