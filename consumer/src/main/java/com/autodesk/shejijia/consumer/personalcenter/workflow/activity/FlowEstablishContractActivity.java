@@ -766,8 +766,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
+//            if (firstCost <= Double.valueOf(meansurePrice)) {
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+//                        AlertView.Style.Alert, null).show();
+//                bValid = false;
+//                break;
+//            }
+//            break;
             if (firstCost <= Double.valueOf(meansurePrice)) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_measure_fee) + meansurePrice + "元", null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
                 bValid = false;
                 break;
