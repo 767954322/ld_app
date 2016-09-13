@@ -219,7 +219,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                             rlThumbUp.setOnClickListener(null);
                             sendThumbUp(design_asset_id);
                         }
-
                     } else {
                         //已经点过赞
                     }
@@ -670,10 +669,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private void setFollowedTitle(boolean is_following) {
 
         if (is_following) {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
 
         } else {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_sure));
         }
     }
 
