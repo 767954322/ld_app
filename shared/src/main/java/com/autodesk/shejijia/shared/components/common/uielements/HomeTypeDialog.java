@@ -37,7 +37,7 @@ public class HomeTypeDialog extends DialogFragment implements
 
     private static final String HOUSE_PATH = "house.json";
     private static final String JSON_ROOT_NAME = "housetypelist";
-    private static final int ITEM_NUM = 7;    // 设置可见条目数量
+    private static final int ITEM_NUM = 5;    // 设置可见条目数量
     private static final int TEXT_SIZE = 7;//选择器的字体大小
 
     /**
@@ -87,7 +87,6 @@ public class HomeTypeDialog extends DialogFragment implements
 
     public static HomeTypeDialog getInstance(Activity activity) {
         HomeTypeDialog dialog = new HomeTypeDialog();
-        dialog.setCancelable(false);
         return dialog;
     }
 
@@ -105,10 +104,10 @@ public class HomeTypeDialog extends DialogFragment implements
         addChangeListener();
         setVisibleItems(ITEM_NUM);
 
-        HomeWheelAdapter mHomeWheelAdapter = new HomeWheelAdapter<>(getActivity(), mRoomDatas);
-        mHomeWheelAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));//设置字体大小
-        mHomeWheelAdapter.setTextColor(UIUtils.getColor(R.color.black));
-        mWlRoom.setViewAdapter(mHomeWheelAdapter);
+        HomeWheelAdapter<String> homeWheelAdapter = new HomeWheelAdapter<>(getActivity(), mRoomDatas);
+        homeWheelAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));//设置字体大小
+        homeWheelAdapter.setTextColor(UIUtils.getColor(R.color.black));
+        mWlRoom.setViewAdapter(homeWheelAdapter);
 
         updateLivingRoom();
 
@@ -247,10 +246,7 @@ public class HomeTypeDialog extends DialogFragment implements
         if (livingRooms == null) {
             livingRooms = new String[]{""};
         }
-        HomeWheelAdapter<String> livingRoomAdapter = new HomeWheelAdapter<>(getActivity(), livingRooms);
-        livingRoomAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));//设置字体大小
-        livingRoomAdapter.setTextColor(UIUtils.getColor(R.color.black));
-        mWlLivingRoom.setViewAdapter(livingRoomAdapter);
+        mWlLivingRoom.setViewAdapter(new HomeWheelAdapter<>(getActivity(), livingRooms));
         mWlLivingRoom.setCurrentItem(0);
         updateToilet();
     }
@@ -266,11 +262,7 @@ public class HomeTypeDialog extends DialogFragment implements
 
         int currentItem = mWlToilet.getCurrentItem();
         mCurrentToiletName = mToiletDatasMap.get(mCurrentLivingRoomName)[currentItem];
-
-        HomeWheelAdapter<String> toiletAdapter = new HomeWheelAdapter<>(getActivity(), toilets);
-        toiletAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));//设置字体大小
-        toiletAdapter.setTextColor(UIUtils.getColor(R.color.black));
-        mWlToilet.setViewAdapter(toiletAdapter);
+        mWlToilet.setViewAdapter(new HomeWheelAdapter<>(getActivity(), toilets));
         mWlToilet.setCurrentItem(0);
 
     }

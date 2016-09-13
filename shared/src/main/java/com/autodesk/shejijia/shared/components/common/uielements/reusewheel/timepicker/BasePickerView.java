@@ -1,5 +1,9 @@
 package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.timepicker;
 
+/**
+ * Created by yaoxuehua on 16-6-17.
+ */
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
@@ -15,8 +19,10 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.PickerViewAnimateUtil;
 
+
 /**
- * Created by yaoxuehua on 16-6-17.
+ * Created by Sai on 15/11/22.
+ * 精仿iOSPickerViewController控件
  */
 public class BasePickerView {
     private final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
