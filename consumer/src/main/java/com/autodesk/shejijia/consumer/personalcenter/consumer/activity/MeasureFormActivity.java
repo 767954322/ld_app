@@ -869,9 +869,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     ///　集合，类.
     private ArrayList<String> decorationBudgetItems = new ArrayList<>();
     private ArrayList<String> houseTypeItems = new ArrayList<>();
-    private ArrayList<String> roomsList = new ArrayList<>();
-    private ArrayList<ArrayList<String>> hallsList = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
     private List<String> styles;
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
