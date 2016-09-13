@@ -123,6 +123,7 @@
             android:padding="@dimen/navbar_icon_padding"
             android:scaleType="centerInside"
             android:src="@drawable/msg_file"
+            android:visibility="gone"
              />
 
         <TextView

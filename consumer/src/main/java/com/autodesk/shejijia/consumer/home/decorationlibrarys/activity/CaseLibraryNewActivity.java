@@ -481,8 +481,15 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
         tvThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
         tvheadThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
-        ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name()
-        );
+
+
+        if (caseDetailBean.getDesigner_info().getNick_name()!=null){
+            ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getNick_name());
+        }else {
+            ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
+        }
+
+        //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
 //        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, caseDetailBean.getDesigner_info().getAvatar());
     }
@@ -548,10 +555,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private void setFollowedTitle(boolean is_following) {
 
         if (is_following) {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
 
         } else {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_sure));
         }
     }
 
@@ -577,13 +584,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
                 if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
                 } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
                 }
+                break;
+            case MotionEvent.ACTION_UP:
                 break;
         }
         return false;

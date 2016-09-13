@@ -506,13 +506,32 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
      * @param offset
      */
     private void updateViewFromCaseLibraryData(int offset) {
+//        if (offset == 0) {
+//            casesEntities.clear();
+//            if (mCaseLibraryBean.getCount() == 0) {
+//                mLlDefaultView.setVisibility(View.VISIBLE);
+//            } else {
+//                mLlDefaultView.setVisibility(View.GONE);
+//            }
+//        }
+//        mOffset = offset + 10;
+//        if (mCaseLibraryBean.getCases().size()>0){
+//            ll_default_view.setVisibility(View.GONE);
+//        }else {
+//            ll_default_view.setVisibility(View.VISIBLE);
+//        }
+//        casesEntities.addAll(mCaseLibraryBean.getCases());
+//        if (mCaseLibraryBean.getCases().size() < LIMIT) {
+//            mListView.setHasLoadMore(false);
+//        } else {
+//            mListView.setHasLoadMore(false);
+//        }
+//        Message msg = Message.obtain();
+//        msg.obj = offset;
+//        handler.sendMessage(msg);
+
         if (offset == 0) {
             casesEntities.clear();
-            if (mCaseLibraryBean.getCount() == 0) {
-                mLlDefaultView.setVisibility(View.VISIBLE);
-            } else {
-                mLlDefaultView.setVisibility(View.GONE);
-            }
         }
         mOffset = offset + 10;
         if (mCaseLibraryBean.getCases().size()>0){
@@ -524,7 +543,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         if (mCaseLibraryBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
         } else {
-            mListView.setHasLoadMore(false);
+            mListView.setHasLoadMore(true);
         }
         Message msg = Message.obtain();
         msg.obj = offset;
@@ -633,7 +652,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     private LinearLayout.LayoutParams mShadeViewLayoutParams;
     private UserHomeCaseAdapter mAdapter;
     private int mOffset = 0;
-    private int LIMIT = 50;
+    private int LIMIT = 10;
     private int screenWidth, screenHeight;
     private LinearLayout ll_default_view;
     private String mNickNameConsumer;

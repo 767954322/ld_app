@@ -213,17 +213,28 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 需求详情页面
          */
+        holder.setOnClickListener(R.id.decoration_phone_container, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDecorationDetailActivity(wk_template_id,mNeeds_id);
+            }
+        });
         holder.setOnClickListener(R.id.tv_decoration_detail, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIntent = new Intent(mActivity, DecorationDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
-                bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, mNeeds_id);
-                mIntent.putExtras(bundle);
-                mActivity.startActivityForResult(mIntent, 0);
+                startDecorationDetailActivity(wk_template_id,mNeeds_id);
             }
         });
+
+    }
+
+    private void startDecorationDetailActivity(String wk_template_id, String mNeeds_id) {
+        Intent mIntent = new Intent(mActivity, DecorationDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
+        bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, mNeeds_id);
+        mIntent.putExtras(bundle);
+        mActivity.startActivityForResult(mIntent, 0);
     }
 
     /**

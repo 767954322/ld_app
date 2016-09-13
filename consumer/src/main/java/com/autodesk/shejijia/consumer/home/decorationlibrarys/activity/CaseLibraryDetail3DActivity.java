@@ -488,16 +488,26 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             getThumbUp(case3DDetailBean.getDesign_asset_id());
         }
 
-        List<Case3DDetailBean.DesignFileBean> images = case3DDetailBean.getDesign_file();
-
-        //查找是否是封面图片  若是就添加到头部
-        for (int i = 0; i < images.size(); i++) {
-            if (images.get(i).isIs_primary()) {
-                firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
-                // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
-            }
+        if (case3DDetailBean.getDesign_file()==null){
+            return;
         }
+        List<Case3DDetailBean.DesignFileBean> images =case3DDetailBean.getDesign_file();
+
+
+        //后台逻辑修改  顶部图片改动
+        String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath();
+        if (thumbnailMainPath!=null){
+            ImageUtils.displayIconImage(thumbnailMainPath + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+        }
+//
+//        //查找是否是封面图片  若是就添加到头部
+//        for (int i = 0; i < images.size(); i++) {
+//            if (images.get(i).isIs_primary()) {
+//                firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
+//                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+//                // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
+//            }
+//        }
 
         List<Case3DDetailImageListBean> imageListBeanList = getImageLists(images);
         imageListBean = imageListBeanList;
@@ -526,8 +536,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
         tvThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
         tvheadThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
-        ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name()
-        );
+        //ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
+
+        if (case3DDetailBean.getDesigner_info().getNick_name()!=null){
+            ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getNick_name());
+        }else {
+            ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
+        }
 //        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, case3DDetailBean.getDesigner_info().getAvatar());
     }
@@ -585,7 +600,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
             case3DDetailImageListBeanManYou.setLocal(false);
         } else { //给定默认图片路径,ImageLoader加载本地图片的路径规则
-            imageListsManYou.add("drawable://" + R.drawable.default_3d_details);
+            imageListsManYou.add("drawable");
             case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
             case3DDetailImageListBeanManYou.setLocal(true);
         }
@@ -689,13 +704,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
                 if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
                 } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
                 }
+                break;
+            case MotionEvent.ACTION_UP:
                 break;
         }
         return false;
