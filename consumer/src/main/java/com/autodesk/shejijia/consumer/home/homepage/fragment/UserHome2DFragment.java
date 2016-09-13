@@ -89,7 +89,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         mListViewRootView = (RelativeLayout) rootView.findViewById(R.id.listview_content);
         mFloatingActionsMenu = (FloatingActionMenu) rootView.findViewById(R.id.add_menu_buttons);
         mLlDefaultView = (LinearLayout) rootView.findViewById(R.id.ll_default_view);
-
+        ll_default_view = (LinearLayout) rootView.findViewById(R.id.ll_default_view);
         createCustomAnimation();
         initFloatingAction();
 
@@ -515,6 +515,11 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
             }
         }
         mOffset = offset + 10;
+        if (mCaseLibraryBean.getCases().size()>0){
+            ll_default_view.setVisibility(View.GONE);
+        }else {
+            ll_default_view.setVisibility(View.VISIBLE);
+        }
         casesEntities.addAll(mCaseLibraryBean.getCases());
         if (mCaseLibraryBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
@@ -630,7 +635,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     private int mOffset = 0;
     private int LIMIT = 50;
     private int screenWidth, screenHeight;
-
+    private LinearLayout ll_default_view;
     private String mNickNameConsumer;
     private String hsUid, member_id;
     private Intent mIntent;
