@@ -25,6 +25,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppDataFormatValidator.MPDesignFormatValidator;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -631,6 +632,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,FlowEstablishContractActivity.this);
+
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
