@@ -153,9 +153,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private void UpdateUIlayoutContract() {
         UpdateUIlayoutContractContent();
 
-        if (!bShowModeContentWebView) { /// 设计师　.
+        if (!bShowModeContentWebView) {
             UpdateUIcontractContentInputForm();
-        } else { /// 消费者 .
+        } else {
             UpdateUIcontractContentWebView();
         }
         UpdateUIActionLayout();
@@ -274,7 +274,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             return;
         }
 
-        img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+        //img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+        img_agree_establish_contract.setBackgroundResource(android.R.color.white);
         btn_consumer_submit_button.setEnabled(false);
         btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
 
@@ -375,7 +376,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             @Override
             public void onClick(View v) {
                 if (isAgree) { // 判断是否我已阅读（我已阅读）
-                    img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+                    img_agree_establish_contract.setBackgroundResource(android.R.color.white);
                     btn_consumer_submit_button.setEnabled(false);
                     btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                 } else { // 判断是否我已阅读（我未阅读）
