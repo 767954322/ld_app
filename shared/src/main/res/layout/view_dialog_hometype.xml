@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical">
-    <!--android:layout_height="@dimen/size_250"-->
+
     <LinearLayout
         android:id="@+id/ll_address_info_child"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_44"
             android:background="@color/bg_f9"
             android:padding="10dp">
 
@@ -26,7 +26,7 @@
                 android:layout_alignParentLeft="true"
                 android:gravity="center"
                 android:text="取消"
-                android:textColor="@color/bg_0084ff"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_18" />
 
             <TextView
@@ -44,6 +44,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/white"
             android:gravity="center"
             android:orientation="horizontal">
 
