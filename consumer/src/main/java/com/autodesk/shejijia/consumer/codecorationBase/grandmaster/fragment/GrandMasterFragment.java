@@ -214,7 +214,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 case 0:
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_first, null);
                     ImageView iv_grandmaster_pic_first = (ImageView) view.findViewById(R.id.iv_grandmaster_pic_first);
-                    ImageUtils.displayIconImage("drawable://" + R.drawable.shouye, iv_grandmaster_pic_first);
+                    ImageUtils.displaySixImage("drawable://" + R.drawable.shouye, iv_grandmaster_pic_first);
                     break;
                 default:
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);
@@ -223,7 +223,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                     if (null != masterInfo.getDesigner() && null != masterInfo.getDesigner().getDesigner_profile_cover_app()
                             && null != masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url()) {
                         String img_url = masterInfo.getDesigner().getDesigner_profile_cover_app().getPublic_url();
-                        ImageUtils.displayIconImage(img_url, iv_grandmaster_pic);
+                        ImageUtils.displaySixImage(img_url, iv_grandmaster_pic);
                     }
                     //大师列表点击监听
                     iv_grandmaster_pic.setOnClickListener(new View.OnClickListener() {

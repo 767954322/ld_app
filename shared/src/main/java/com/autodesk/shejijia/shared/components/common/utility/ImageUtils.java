@@ -186,6 +186,19 @@ public class ImageUtils {
             .bitmapConfig(Bitmap.Config.RGB_565)
             .build();
     /**
+     * 缩略图的设置
+     */
+    private static DisplayImageOptions iconOptions_six = new DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.home_page_icon)
+            .showImageOnFail(R.drawable.home_page_icon)
+            .showImageForEmptyUri(R.drawable.home_page_icon)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
+    /**
      * 头像的设置
      */
     private static DisplayImageOptions avatarOptions = new DisplayImageOptions.Builder()
@@ -219,6 +232,17 @@ public class ImageUtils {
     public static void displayIconImage(String imageUrl, ImageView imageView) {
         if (imageView != null)
             ImageLoader.getInstance().displayImage(imageUrl, imageView, iconOptions);
+    }
+
+    /**
+     * 显示六大模块缩略图
+     *
+     * @param imageUrl
+     * @param imageView
+     */
+    public static void displaySixImage(String imageUrl, ImageView imageView) {
+        if (imageView != null)
+            ImageLoader.getInstance().displayImage(imageUrl, imageView, iconOptions_six);
     }
 
     public static void loadImageRound(ImageView target, String imageUrl) {
