@@ -188,7 +188,11 @@
 
         </LinearLayout>
 
-        <include layout="@layout/view_parting_line"></include>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/bg_impression" />
 
         <RelativeLayout
             android:id="@+id/rl_select_designer"

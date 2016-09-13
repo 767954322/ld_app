@@ -27,7 +27,7 @@
                     android:id="@+id/iv_detail_desiner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/common_case_icon"
+                    android:background="@drawable/home_page_icon"
                     android:scaleType="fitXY" />
 
 

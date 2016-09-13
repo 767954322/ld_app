@@ -485,7 +485,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         if (case3DLibraryListBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
         } else {
-            mListView.setHasLoadMore(true);
+            mListView.setHasLoadMore(false);
         }
         Message msg = Message.obtain();
         msg.obj = offset;

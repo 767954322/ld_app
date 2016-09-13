@@ -101,7 +101,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:layout_marginRight="@dimen/size_15"
-        android:background="@drawable/icon_chat_common_normal"
+        android:background="@drawable/im_ico"
         android:visibility="gone"/>
 
     <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView

@@ -81,9 +81,7 @@ public class DesignBaseFragment extends BaseFragment {
         }
 
         String[] mTitles = mTabNames.toArray(new String[mTabNames.size()]);
-        if (mTitles.length == 1) {
-            rlt_tab_view.setVisibility(View.GONE);
-        }
+        rlt_tab_view.setVisibility(mTitles.length == 1 ? View.GONE : View.VISIBLE);
         if (mTitles != null && mTitles.length > 0)
             tab_design_layout.setTabData(mTitles, this.getActivity(), R.id.design_container, fragments);
     }

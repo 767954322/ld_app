@@ -52,7 +52,7 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
         nav_title_textView.setText("套餐详情");
         isLoginUserJust = isLoginUser();
 
-        ImageUtils.displayIconImage(ImageUrlUtils.getPackagesDetailImage()[item_num], iv_package_detail);
+        ImageUtils.displaySixImage(ImageUrlUtils.getPackagesDetailImage()[item_num], iv_package_detail);
     }
 
     @Override
