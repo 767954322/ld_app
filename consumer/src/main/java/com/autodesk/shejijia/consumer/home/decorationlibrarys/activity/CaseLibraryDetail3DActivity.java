@@ -704,13 +704,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
                 if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
                 } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
                 }
+                break;
+            case MotionEvent.ACTION_UP:
                 break;
         }
         return false;
