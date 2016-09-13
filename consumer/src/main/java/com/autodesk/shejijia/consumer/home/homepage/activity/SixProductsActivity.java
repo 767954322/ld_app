@@ -23,7 +23,6 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 /**
  * Created by luchongbin on 16-8-16.
@@ -70,6 +69,7 @@ public class SixProductsActivity extends NavigationBarActivity {
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
         pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 15));
         pagerSlidingTabStrip.setSameWeightTabs(true);
+
 //        pagerSlidingTabStrip.setPaddingMiddle(true);//设置tab控件居中
         pagerSlidingTabStrip.setOnClickItemListener(new MaterialTabs.OnClickItemListener() {
             @Override

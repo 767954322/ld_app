@@ -19,12 +19,12 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -167,7 +167,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
     protected void showDetail(String needsId) {
         Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
         Bundle bundle = new Bundle();
-        KLog.d(TAG, needsId);
+        LogUtils.i(TAG, needsId);
         intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needsId);
         intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT);
         intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);

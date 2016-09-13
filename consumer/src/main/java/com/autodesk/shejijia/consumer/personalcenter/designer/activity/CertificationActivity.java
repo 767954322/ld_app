@@ -34,13 +34,13 @@ import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDial
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -481,7 +481,7 @@ public class CertificationActivity extends NavigationBarActivity implements View
             String file_id = bundle.getString("file_id");
             String file_name = bundle.getString("file_name");
             String file_url = bundle.getString("file_url");
-            KLog.d(TAG, "file_url     " + file_url);
+            LogUtils.i(TAG, "file_url     " + file_url);
             handlerState = bundle.getInt("handlerState");
 
             if (handlerState == 0) {

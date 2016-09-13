@@ -18,11 +18,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DataCleanManager;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import java.io.File;
 
@@ -124,9 +124,9 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
         } catch (Exception e) {
             e.printStackTrace();
         }
-        KLog.d(TAG, "cacheDir:" + cacheDir + "==>cacheSize:" + cacheSize);
-        KLog.d(TAG, "filesDir:" + filesDir + "==>filesSize:" + filesSize);
-        KLog.d(TAG, "externalCacheDir:" + externalCacheDir + "==>externalSize:" + externalSize);
+        LogUtils.i(TAG, "cacheDir:" + cacheDir + "==>cacheSize:" + cacheSize);
+        LogUtils.i(TAG, "filesDir:" + filesDir + "==>filesSize:" + filesSize);
+        LogUtils.i(TAG, "externalCacheDir:" + externalCacheDir + "==>externalSize:" + externalSize);
 
         tv_cache_size.setText(cacheSize);
     }

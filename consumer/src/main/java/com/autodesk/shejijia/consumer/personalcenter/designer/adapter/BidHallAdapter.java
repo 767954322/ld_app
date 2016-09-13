@@ -38,6 +38,7 @@ public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListBean> {
         viewHolder.tv_bid_hall_area = (TextView) container.findViewById(R.id.tv_bid_hall_area);
         viewHolder.tvCustomBidPerson = (TextView) container.findViewById(R.id.tv_bid_hall_person);
         viewHolder.tvCustomBidBidBudget = (TextView) container.findViewById(R.id.tv_bid_hall_budget);
+        viewHolder.tv_bid_hall_per = (TextView) container.findViewById(R.id.tv_bid_hall_per);
         return viewHolder;
     }
 
@@ -52,6 +53,7 @@ public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListBean> {
 
         ((ViewHolder) holder).tvCustomBidPerson.setText(customBid.getContacts_name());
         ((ViewHolder) holder).tvCustomBidBidBudget.setText(customBid.getDecoration_budget());
+        ((ViewHolder) holder).tv_bid_hall_per.setText(customBid.getBidder_count()+mContext.getString(R.string.bind_per));
     }
 
 
@@ -59,6 +61,7 @@ public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListBean> {
         public TextView tvCustomBidHouseAddress;
         public TextView tvCustomBidPerson;
         public TextView tvCustomBidBidBudget;
+        public TextView tv_bid_hall_per;
 
         public TextView tv_bid_hall_style;
         public TextView tv_bid_livingroom_roomhall_t_toilet;

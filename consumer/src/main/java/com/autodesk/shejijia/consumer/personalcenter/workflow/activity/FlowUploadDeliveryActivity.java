@@ -31,10 +31,10 @@ import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -530,7 +530,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 type = "1";
 
                 String design_file_ids = builder.toString();
-                KLog.d(TAG, design_file_ids);
+                LogUtils.i(TAG, design_file_ids);
                 postDelivery(design_asset_id, needs_id, designer_id, design_file_ids, type);
                 break;
         }
@@ -557,7 +557,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 for (String s : design_file_id_measure_arrayList) {
                     stringBuilder.append(s + ',');
                 }
-                KLog.d(TAG, "design_file_id_measure_arrayList:" + design_file_id_measure_arrayList);
+                LogUtils.i(TAG, "design_file_id_measure_arrayList:" + design_file_id_measure_arrayList);
                 type = "0";
                 if (TextUtils.isEmpty(design_asset_id_measure)) {
                     return;
@@ -620,7 +620,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 try {
                     if (jsonObject != null) {
                         String userInfo = GsonUtil.jsonToString(jsonObject);
-                        KLog.json(TAG, userInfo);
+                        LogUtils.i(TAG, userInfo);
                         mWk3DPlanListBean = GsonUtil.jsonToBean(userInfo, Wk3DPlanListBean.class);
                         updateViewFrom3DPlanList(design_asset_id);
                     } else {
@@ -663,7 +663,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 CustomProgress.cancelDialog();
                 mAlertViewExt.show();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
             }
 
             @Override
@@ -1225,7 +1225,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 /**
                  * 量房交付
                  */
-                KLog.d(TAG, "design_file_id_arrayList:" + DeliverySelector.select_design_file_id_map.get(4));
+                LogUtils.i(TAG, "design_file_id_arrayList:" + DeliverySelector.select_design_file_id_map.get(4));
                 ArrayList<String> strings = DeliverySelector.select_design_file_id_map.get(4);
                 if (strings != null && strings.size() > 0) {
                     sureSubmit();

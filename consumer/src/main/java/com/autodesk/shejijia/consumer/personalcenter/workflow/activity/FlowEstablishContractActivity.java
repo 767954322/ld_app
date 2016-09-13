@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -25,6 +26,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppDataFormatValidator.MPDesignFormatValidator;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -35,12 +37,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,8 +81,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     @Override
     protected void onResume() {
         super.onResume();
-
-
     }
 
     @Override
@@ -126,7 +126,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         img_agree_establish_contract = (ImageView) findViewById(R.id.img_agree_establish_contract);
         tvc_treeD_render_count = (TextViewContent) findViewById(R.id.tvc_flow_establish_contract_designer_render_map);
         tvc_consumer_local_area = (TextView) findViewById(R.id.flow_establish_contract_consumer_decorate_address);
-
 
         /* init content for consumer form */
         twvc_contract_content_webview = (WebView) findViewById(R.id.contract_sub_content_webview);//webview 物件
@@ -177,14 +176,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             ll_contract_webview_layout.setVisibility(View.GONE);
             ll_contract_input_form_layout.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     private void UpdateUIcontractContentInputForm() {
         ll_consumer_agree_content_layout.setVisibility(View.GONE);
         ll_consumer_action_layout.setVisibility(View.GONE);
-
 
         tvc_last_cost.setEnabled(false);
 
@@ -194,7 +190,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 public void onJsonResponse(String jsonResponse) {
                     contractNo = new Gson().fromJson(jsonResponse.toString(), MPContractNoBean.class);
                     contract_no = contractNo.getContractNO(); /// 获取合同编号 .
-
                 }
 
                 @Override
@@ -219,8 +214,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
             tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
-
-
         } else {
 
             if (!bAllowUserInput) {
@@ -253,11 +246,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             DecimalFormat df = new DecimalFormat("#.##"); /// 保留小数点后两位 .
             tvc_last_cost.setText(df.format(totalCost - firstCost));
-
-
         }
-
-
     }
 
     private void UIsetDesignerSendButtonActive(boolean bVivible, String buttonText) {
@@ -270,8 +259,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         } else {
             ll_designer_action_layout.setVisibility(View.GONE);
         }
-
-
     }
 
     private void UpdateUIcontractContentWebView() {
@@ -292,7 +279,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
 
         UpdateUIsetContentViewConsumer();
-
     }
 
     private void UpdateUIsetContentViewConsumer() {
@@ -329,7 +315,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
                 contract_date = Validator.getStrDateToString(contract_date);
 
-
                 Double totalCost = Double.parseDouble(design_amount);
                 Double firstCost = Double.parseDouble(design_amount_first);
 
@@ -357,7 +342,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 text = text.replace("#val(designer_addr)", Validator.getStringWithNullDefaultString(designer_addr, UIUtils.getString(R.string.data_null)));
                 break;
             }
-            ;
 
             twvc_contract_content_webview.loadDataWithBaseURL(null, text, Constant.NetBundleKey.MIME_TYPE_TEXT_HTML, Constant.NetBundleKey.UTF_8, "");
 
@@ -370,14 +354,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private void UpdateUIActionLayout() {
         UIsetDesignerSendButtonActive(true, getResources().getString(R.string.flow_send));
 
-//        if (bDesignerActionShow) {
+//        if (bDesignerActionShow) { // 这个是改变发送按钮上的文字的方法，现统一改成“发送”
 //
 //            if (bDesignerContractCreated)
 //                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.sure_modify_send));
 //            else
 //                UIsetDesignerSendButtonActive(true, getResources().getString(R.string.flow_send));
 //        }
-
 
         if (bconsumerActionShow) {
             ll_consumer_action_layout.setVisibility(View.VISIBLE);
@@ -386,7 +369,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             btn_consumer_submit_button.setText(R.string.confirmation_and_payment);
             btn_consumer_submit_button.setEnabled(false);
             btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-
         }
 
         img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
@@ -416,7 +398,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 isAgree = !isAgree;
             }
         });
-
     }
 
 
@@ -508,7 +489,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             bAllowUserInput = false; /// 如果是已有的合同设置所有得按键都不可点击 .
         }
 
-
         bShowModeContentWebView = true;
 
         if (isRoleCustomer()) {
@@ -528,10 +508,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 bDesignerActionShow = true;
                 bShowModeContentWebView = false;
             }
-
         }
-
-
     }
 
     private void ShowAlertViewAndFinishActivity(String msg) {
@@ -543,7 +520,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         });
         UIAlert.show();
     }
-
 
     /**
      * @brief 监听方法 .
@@ -603,10 +579,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         intent.putExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO, contract_number);
         intent.putExtra("CONSUMER_ACTION_SHOW", bconsumerActionShow);
         startActivityForResult(intent, ContractDetail);
-
-
     }
-
 
     //contract data method
     private MPDesignContractBean getContractDataEntityFromFirstBidder() {
@@ -651,7 +624,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                KLog.d(TAG, jsonObject.toString());
+                LogUtils.i(TAG, jsonObject+"");
                 ContractState = 0;
                 CustomProgress.cancelDialog();
                 UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
@@ -660,6 +633,11 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,FlowEstablishContractActivity.this);
+
+                byte[] htmlBodyBytes = volleyError.networkResponse.data;  //回应的报文的包体内容
+                Log.e("VolleyError body---->", new String(htmlBodyBytes), volleyError);
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
@@ -688,7 +666,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
         while (true) {
             if (!Validator.isContractNameValid(consumerName)) {
-                showAlertView(R.string.no_input_name);
+                showAlertView(R.string.please_input_consumer_name_correctly);
                 bValid = false;
                 break;
             }
@@ -713,12 +691,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
-            if (!Validator.isStringPositiveNumberValid(renderCount)) {
-                showAlertView(R.string.please_input_render_count_correctly);
-                bValid = false;
-                break;
-            }
-
             if (!Validator.isStringValid(total_cost)) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_input_project_amount_correctly), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
                 bValid = false;
@@ -727,6 +699,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             if (!Validator.isStringValid(first_cost)) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_fill_out_the_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this, AlertView.Style.Alert, null).show();
+                bValid = false;
+                break;
+            }
+
+            if (!Validator.isStringPositiveNumberValid(renderCount)) {
+                showAlertView(R.string.please_input_render_count_correctly);
                 bValid = false;
                 break;
             }
@@ -1075,5 +1053,4 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private boolean bDesignerContractCreated = false;
     private boolean bAllowUserInput = false;
     private boolean bShowModeContentWebView = false;
-
 }

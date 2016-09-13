@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.appglobal;
 
-import com.socks.library.KLog;
+
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 /**
  * @author yangxuewu .
@@ -34,7 +35,7 @@ public class UrlMessagesContants {
             mediaIdCase = "58";
             mediaIdConstruction = "62";
         }
-        KLog.d("yxw", initializeMarketplaceWithAFC + "   appID  ");
+        LogUtils.i("yxw", initializeMarketplaceWithAFC + "   appID  ");
     }
 
     /**

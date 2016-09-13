@@ -23,11 +23,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -122,7 +122,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     }
                 }
 
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
             }
 
             @Override

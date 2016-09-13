@@ -24,12 +24,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-import com.socks.library.KLog;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -186,7 +186,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            KLog.d(TAG, url);
+//            LogUtils.i(TAG, url);
             super.onPageStarted(view, url, favicon);
             if (isFirst) {
                 isFirst = false;
@@ -196,7 +196,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            KLog.d(TAG, url);
+//            LogUtils.i(TAG, url);
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -205,7 +205,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             super.onPageFinished(view, url);
             mWebSettings.setBlockNetworkImage(false);
             pagerFinishedUrl = url;
-            KLog.d(TAG, url);
+            LogUtils.i(TAG, url);
             CustomProgress.cancelDialog();
             isFirst = true;
         }
@@ -221,7 +221,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         public void onReceivedError(WebView view, int errorCode, String description, String
                 failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            KLog.e(TAG, errorCode + ":" + description);
+            LogUtils.e(TAG, errorCode + ":" + description);
         }
     }
 

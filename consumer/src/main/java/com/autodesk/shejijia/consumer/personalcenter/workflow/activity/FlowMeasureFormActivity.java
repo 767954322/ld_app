@@ -29,9 +29,9 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -530,7 +530,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         List<MPMeasureFormBean.BiddersBean> bidders = mMPMeasureFormBean.getBidders();
         if (bidders != null && bidders.size() > 0) {
             wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
-            KLog.d("FlowMeasureFormActivity", wk_cur_sub_node_id);
+            LogUtils.i("FlowMeasureFormActivity", wk_cur_sub_node_id+"");
         }
         mAgreeResponseBidSuccessAlertView.show();
     }

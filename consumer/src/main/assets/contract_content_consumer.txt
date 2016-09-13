@@ -37,11 +37,11 @@
                     </div>
                 </div>
                 <div class="container-fluid" style="">
-                    <div class="about-description" style="float:left;height:100%;" ata-pg-collapsed>
-                        <img class="img-responsive" src="file:///android_asset/about/img/logo.png" style="width:60%;height:40%;
+                    <div class="about-description" style="float:left;" ata-pg-collapsed>
+                       <cetner> <img class="img-responsive" src="file:///android_asset/about/img/logo.png" style="width:70%;
       margin-left: auto ;
       margin-right: auto ;
-                                                          " lt="">
+                                                          " lt=""></center>
                     </div>
                 </div>
                 <div class="container-fluid" style="height:17px; margin: 0px 0%">
