@@ -424,6 +424,8 @@ public class Search3DActivity extends NavigationBarActivity implements
             @Override
             public void onClick(View v) {
                 cancelPopupWindowAndClearSearchContent();
+                mCetSearchContent.setText("");
+                Search3DActivity.this.finish();
             }
         });
     }
