@@ -467,15 +467,16 @@ public class Search3DActivity extends NavigationBarActivity implements
                     if (mSearchKeywords != null && mSearchKeywords.length() > 0) {
                         try {
                             mSearchKeywords = URLEncoder.encode(mSearchKeywords, Constant.NetBundleKey.UTF_8);
+                            setSelection(mCetSearchClick);
+                            mFiltrateContentBean = null;
+                            isFirstIn = true;
+                            cancelPopupWindowAndClearSearchContent();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
                     }
 
-                    setSelection(mCetSearchClick);
-                    mFiltrateContentBean = null;
-                    isFirstIn = true;
-                    cancelPopupWindowAndClearSearchContent();
+
                 }
                 return false;
             }
