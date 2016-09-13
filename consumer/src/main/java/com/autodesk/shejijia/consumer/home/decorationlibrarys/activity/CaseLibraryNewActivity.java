@@ -128,15 +128,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-//        mTimer = new CountDownTimer(800, 800) {//点赞的点击事件，800ms内拦截
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//            }
-//            @Override
-//            public void onFinish() {
-//                rlThumbUp.setClickable(true);
-//            }
-//        };
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
         CustomProgress.show(this, "", false, null);
@@ -397,7 +388,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
             public void onResponse(JSONObject jsonObject) {
                 String info = GsonUtil.jsonToString(jsonObject);
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
-                setTitleForNavbar(caseDetailBean.getTitle());
+                //set tital
+                String str_tital = caseDetailBean.getTitle();
+                boolean isTitalToLong = str_tital.length() > 6;
+                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
 
