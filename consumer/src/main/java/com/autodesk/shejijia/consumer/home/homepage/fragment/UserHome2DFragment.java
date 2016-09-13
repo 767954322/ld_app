@@ -506,13 +506,36 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
      * @param offset
      */
     private void updateViewFromCaseLibraryData(int offset) {
+        if (offset == 0) {
+            casesEntities.clear();
+            if (mCaseLibraryBean.getCount() == 0) {
+                mLlDefaultView.setVisibility(View.VISIBLE);
+            } else {
+                mLlDefaultView.setVisibility(View.GONE);
+            }
+        }
+        mOffset = offset + 10;
+        //设置数据小于等于2的是不显示没有更多数据了
+        if (mCaseLibraryBean.getCases().size()<=2){
+            mListView.setNoLoadMoreHideView(true);
+        }
+        if (mCaseLibraryBean.getCases().size()>0){
+            ll_default_view.setVisibility(View.GONE);
+        }else {
+            ll_default_view.setVisibility(View.VISIBLE);
+        }
+        casesEntities.addAll(mCaseLibraryBean.getCases());
+        if (mCaseLibraryBean.getCases().size() < LIMIT) {
+            mListView.setHasLoadMore(false);
+        } else {
+            mListView.setHasLoadMore(true);
+        }
+        Message msg = Message.obtain();
+        msg.obj = offset;
+        handler.sendMessage(msg);
+//
 //        if (offset == 0) {
 //            casesEntities.clear();
-//            if (mCaseLibraryBean.getCount() == 0) {
-//                mLlDefaultView.setVisibility(View.VISIBLE);
-//            } else {
-//                mLlDefaultView.setVisibility(View.GONE);
-//            }
 //        }
 //        mOffset = offset + 10;
 //        if (mCaseLibraryBean.getCases().size()>0){
@@ -529,25 +552,6 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
 //        Message msg = Message.obtain();
 //        msg.obj = offset;
 //        handler.sendMessage(msg);
-
-        if (offset == 0) {
-            casesEntities.clear();
-        }
-        mOffset = offset + 10;
-        if (mCaseLibraryBean.getCases().size()>0){
-            ll_default_view.setVisibility(View.GONE);
-        }else {
-            ll_default_view.setVisibility(View.VISIBLE);
-        }
-        casesEntities.addAll(mCaseLibraryBean.getCases());
-        if (mCaseLibraryBean.getCases().size() < LIMIT) {
-            mListView.setHasLoadMore(false);
-        } else {
-            mListView.setHasLoadMore(false);
-        }
-        Message msg = Message.obtain();
-        msg.obj = offset;
-        handler.sendMessage(msg);
     }
 
 
