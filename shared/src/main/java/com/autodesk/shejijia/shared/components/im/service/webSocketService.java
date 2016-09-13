@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
-import com.socks.library.KLog;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -42,7 +42,7 @@ public class webSocketService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        KLog.d("webSocket", "Service onBind--->");
+        LogUtils.i("webSocket", "Service onBind--->");
         return null;
     }
 
@@ -50,16 +50,16 @@ public class webSocketService extends Service {
         if (intent != null) {
             acs_member_id = intent.getStringExtra("acs_member_id");
             acs_x_session = intent.getStringExtra("acs_x_session");
-            KLog.d("webSocket", "Service onStart--->" + acs_member_id + "   " + acs_x_session);
+            LogUtils.i("webSocket", "Service onStart--->" + acs_member_id + "   " + acs_x_session);
             connectWebSocketUrl = MPChatHttpManager.getInstance().getConnectWebSocketUrl(AdskApplication.getInstance());
             URI uri = null;
             isStopService = false;
             try {
                 uri = new URI(connectWebSocketUrl);
                 connectWebSocket(uri);
-                KLog.d("webSocket", "connectWebSocketUrl  " + connectWebSocketUrl);
+                LogUtils.i("webSocket", "connectWebSocketUrl  " + connectWebSocketUrl);
             } catch (URISyntaxException e) {
-                KLog.d("webSocket", "URISyntaxException  " + e.toString());
+                LogUtils.i("webSocket", "URISyntaxException  " + e.toString());
                 e.printStackTrace();
             }
         }
@@ -70,11 +70,11 @@ public class webSocketService extends Service {
         if (mWebSocketClient != null) {
             mWebSocketClient.close();
         }
-        KLog.d("webSocket", "Service onDestroy--->");
+        LogUtils.i("webSocket", "Service onDestroy--->");
     }
 
     public boolean onUnbind(Intent intent) {
-        KLog.d("webSocket", "Service onUnbind--->");
+        LogUtils.i("webSocket", "Service onUnbind--->");
         return super.onUnbind(intent);
     }
 
@@ -85,8 +85,8 @@ public class webSocketService extends Service {
         mWebSocketClient = new WebSocketClient(uri) {
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
-                KLog.d("Websocket Opened");
-                KLog.d(TAG, "Posting socket notification" + BroadCastInfo.MPCHAT_CONNECT_NOTIFICATION);
+                LogUtils.i("Websocket Opened");
+                LogUtils.i(TAG, "Posting socket notification" + BroadCastInfo.MPCHAT_CONNECT_NOTIFICATION);
                 Intent intent = new Intent();
                 intent.setAction(BroadCastInfo.MPCHAT_CONNECT_NOTIFICATION);
                 sendBroadcast(intent);
@@ -99,12 +99,12 @@ public class webSocketService extends Service {
                     AdskApplication.getInstance().setWebSocketStatus(true);
                     setIsTryingToReconnectValue(false);
                     handler.removeCallbacks(reconnectWebSocket);
-                    KLog.d("webSocket", "Connect SUCCESS!!");
+                    LogUtils.i("webSocket", "Connect SUCCESS!!");
                 } else if (msg.equals("SESSION_INVALID")) {
-                    KLog.i("SESSION_INVALID");
+                    LogUtils.i("SESSION_INVALID");
                 } else {
-                    KLog.d(TAG, msg);
-                    KLog.d(TAG, "Posting socket notification" + BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
+                    LogUtils.i(TAG, msg);
+                    LogUtils.i(TAG, "Posting socket notification" + BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
 
                     Intent intent = new Intent();
                     intent.setAction(BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
@@ -118,8 +118,8 @@ public class webSocketService extends Service {
                 mDelayInSeconds = 1;
                 Toast.makeText(webSocketService.this, R.string.connection_close, Toast.LENGTH_SHORT).show();
                 //mWebSocketClient.connect();
-                KLog.d(TAG, "Websocket  Closed " + s);
-                KLog.d(TAG, "Posting socket notification" + BroadCastInfo.MPCHAT_CLOSE_CONNECTION_NOTIFICATION);
+                LogUtils.i(TAG, "Websocket  Closed " + s);
+                LogUtils.i(TAG, "Posting socket notification" + BroadCastInfo.MPCHAT_CLOSE_CONNECTION_NOTIFICATION);
                 Intent intent = new Intent();
                 intent.setAction(BroadCastInfo.MPCHAT_CLOSE_CONNECTION_NOTIFICATION);
                 sendBroadcast(intent);
@@ -127,8 +127,8 @@ public class webSocketService extends Service {
 
             @Override
             public void onError(Exception e) {
-                KLog.d(TAG, "Failed with error" + e.getMessage());
-                KLog.d(TAG, "Posting socket notification" + BroadCastInfo.MPCHAT_DISCONNECT_NOTIFICATION);
+                LogUtils.i(TAG, "Failed with error" + e.getMessage());
+                LogUtils.i(TAG, "Posting socket notification" + BroadCastInfo.MPCHAT_DISCONNECT_NOTIFICATION);
                 Intent intent = new Intent();
                 intent.setAction(BroadCastInfo.MPCHAT_DISCONNECT_NOTIFICATION);
                 intent.putExtra(BroadCastInfo.MPCHAT_ERROR, e.getLocalizedMessage());
@@ -146,7 +146,7 @@ public class webSocketService extends Service {
                     if (mDelayInSeconds > 40)
                         mDelayInSeconds = 1;
 
-                    KLog.d(TAG, "socket reconnection will be attempted after " + mDelayInSeconds + " seconds");
+                    LogUtils.i(TAG, "socket reconnection will be attempted after " + mDelayInSeconds + " seconds");
                     handler.postDelayed(reconnectWebSocket, mDelayInSeconds * 1000);
 
                 }
@@ -170,7 +170,7 @@ public class webSocketService extends Service {
 //                mWebSocketClient.close();
 
             } catch (URISyntaxException e) {
-                KLog.d("webSocket", "URISyntaxException  " + e.toString());
+                LogUtils.i("webSocket", "URISyntaxException  " + e.toString());
                 e.printStackTrace();
             }
         }

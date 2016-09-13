@@ -477,14 +477,14 @@
     <string name="refuse_measure_house_alertview">是否拒绝量房？</string>
     <string name="requirements">发布设计需求</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
-    <string name="please_input_correct_area">请填写正确的面积（整数部分不超过四位，小数部分不超过两位）</string>
+    <string name="please_input_correct_area">房屋面积必须是1到9999之间的值</string>
     <string name="alert_msg_area">请输入1-9999之间的数字</string>
     <string name="please_input_correct_area_point">整数部分不允许全部为0</string>
 
     <string name="please_select_form">请选择户型</string>
     <string name="please_select_addresses">请选择地址</string>
     <string name="please_choose_addresses">请选择项目地址</string>
-    <string name="please_enter_correct_address">请输入正确的小区地址（长度为二到三十二位且不包含特殊字符）</string>
+    <string name="please_enter_correct_address">小区名称的字符长度在2到32之间</string>
     <string name="data_submission">数据提交中...</string>
 
     <!--  LookMoreCaseDetailActivity -->
@@ -747,6 +747,7 @@
 
     <!-- CustomBidFragment-->
     <string name="bidding_contact">招标人 ：</string>
+    <string name="bidding_con">应标人数 ：</string>
     <string name="bid_hall_decorate_budget">装修预算</string>
 
     <!-- TransactionRecordActivity -->

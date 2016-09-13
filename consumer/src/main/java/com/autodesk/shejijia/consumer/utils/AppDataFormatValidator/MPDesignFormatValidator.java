@@ -27,7 +27,7 @@ public class MPDesignFormatValidator extends MPFormatValidator {
         if (isStringSemanticsNull(name))
             return false;
 
-        if (!name.matches(RegexUtil.NAME_REGEX))
+        if (!name.matches(RegexUtil.NICK_NAME_REGEX))
             return false;
 
         return true;

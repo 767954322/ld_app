@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -34,27 +35,44 @@ public class JumpToChatRoom {
                 CustomProgress.cancelDialog();
 //                MPNetworkUtils.logError(TAG, volleyError);
             }
+
             @Override
             public void onResponse(String json) {
-                ss(json,context,jumpBean);
+                ss(json, context, jumpBean);
             }
         });
     }
-    private static void ss(String json,final Context context,final JumpBean jumpBean){
-        Map<String,String> map = new HashMap<>();
+
+    private static void ss(String json, final Context context, final JumpBean jumpBean) {
+        Map<String, String> map = new HashMap<>();
         MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(json);
         if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
             MPChatThread mpChatThread = mpChatThreads.threads.get(0);
             int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
             map.put(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
             map.put(ChatRoomActivity.ASSET_ID, assetId + "");
-            openChatRoom(context,jumpBean,map);
+            openChatRoom(context, jumpBean, map);
             return;
         }
-        getThreadIdIfNotChatBefore(context,jumpBean);
+        getThreadIdIfNotChatBefore(context, jumpBean);
     }
-    private  static void getThreadIdIfNotChatBefore(final Context context,final JumpBean jumpBean){
-        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(jumpBean.getAcs_member_id(), jumpBean.getReciever_user_id(), new OkStringRequest.OKResponseCallback() {
+
+    private static void getThreadIdIfNotChatBefore(final Context context, final JumpBean jumpBean) {
+        String desiner_id = "";
+        String cusomer_id = "";
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(jumpBean.getMember_type())) {
+
+            desiner_id = jumpBean.getReciever_user_id();
+            cusomer_id = jumpBean.getAcs_member_id();
+
+        } else {
+
+            desiner_id = jumpBean.getAcs_member_id();
+            cusomer_id = jumpBean.getReciever_user_id();
+
+        }
+
+        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(desiner_id, cusomer_id, new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 //                            MPNetworkUtils.logError(TAG, volleyError);
@@ -67,10 +85,10 @@ public class JumpToChatRoom {
                     CustomProgress.cancelDialog();
                     JSONObject jsonObject = new JSONObject(json);
                     String thread_id = jsonObject.getString("thread_id");
-                    Map<String,String> map = new HashMap<>();
+                    Map<String, String> map = new HashMap<>();
                     map.put(ChatRoomActivity.THREAD_ID, thread_id);
                     map.put(ChatRoomActivity.ASSET_ID, "");
-                    openChatRoom(context,jumpBean,map);
+                    openChatRoom(context, jumpBean, map);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -80,7 +98,7 @@ public class JumpToChatRoom {
 
     }
 
-    private static void openChatRoom(final Context context,final JumpBean jumpBean, Map<String,String> map ){
+    private static void openChatRoom(final Context context, final JumpBean jumpBean, Map<String, String> map) {
         CustomProgress.cancelDialog();
         final Intent intent = new Intent(context, ChatRoomActivity.class);
         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, jumpBean.getReciever_user_id());

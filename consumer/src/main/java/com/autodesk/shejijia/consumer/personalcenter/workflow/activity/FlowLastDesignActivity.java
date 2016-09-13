@@ -22,12 +22,14 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -164,7 +166,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
 
                 MPAliPayBean MPAliPayBean = GsonUtil.jsonToBean(userInfo, MPAliPayBean.class);
 
@@ -196,22 +198,39 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
         public void onOK() {
 //            MyToast.show(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_success));
-            Toast toast = Toast.makeText(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
-            finish();
+//            Toast toast = Toast.makeText(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
+////            toast.setGravity(Gravity.CENTER,0,0);
+//            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+//            toast.show();
+            openAlertView(UIUtils.getString(R.string.pay_success),0);
+//            finish();
         }
 
         public void onFail() {
-            Toast toast = Toast.makeText(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
+//            Toast toast = Toast.makeText(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
+////            toast.setGravity(Gravity.CENTER,0,0);
+//            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+//            toast.show();
+            openAlertView(UIUtils.getString(R.string.pay_failed),1);
 //            MyToast.show(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_failed));
-            isLock = true;
+//            isLock = true;
         }
     };
+    private void openAlertView(String content,final int isSuccess) {
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position == 0 && isSuccess == 0) {
+                    finish();
+                } else if (position == 0 && isSuccess == 1) {
+                    isLock = true;
+                } else {
+                }
+            }
+        }).show();
+    }
+
 
     private LinearLayout ll_flow_last_design_send;
     private TextView tv_flow_last_design_contract_no;

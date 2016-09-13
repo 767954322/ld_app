@@ -19,11 +19,11 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -127,7 +127,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 myPropertyBean = GsonUtil.jsonToBean(jsonString, MyPropertyBean.class);
-                KLog.json(TAG, jsonString);
+                LogUtils.i(TAG, jsonString);
                 amount = myPropertyBean.getAmount();
                 if (null == myPropertyBean || TextUtils.isEmpty(amount) || "0".equals(amount)) {
                     amount = "0.00";
@@ -178,11 +178,11 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                     }
                     // change button show logic
                     btn_my_property_withdrawal.setVisibility(is_loho != 0 ? View.GONE : View.VISIBLE);
-//                    if (is_loho != 0) {
-//                        rlTiXian.setVisibility(View.GONE);
-//                    } else {
-//                        rlTiXian.setVisibility(View.VISIBLE);
-//                    }
+                    if (is_loho != 0) {
+                        rlTiXian.setVisibility(View.GONE);
+                    } else {
+                        rlTiXian.setVisibility(View.VISIBLE);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

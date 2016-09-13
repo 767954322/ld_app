@@ -115,6 +115,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.no_select) : decoration_style);
 
         }
+        holder.setVisible(R.id.tv_show_persion_tip, true);
         holder.setTextColor(R.id.tv_bidder_count,
                 Integer.parseInt(bidder_count) >= 1 ? UIUtils.getColor(R.color.comment_blue)
                         : UIUtils.getColor(R.color.mybid_text_color_light));

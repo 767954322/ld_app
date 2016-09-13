@@ -6,14 +6,14 @@
 
     <LinearLayout
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_80"
+        android:layout_height="@dimen/size_120"
         android:orientation="horizontal">
 
         <LinearLayout
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/size_5"
             android:layout_marginLeft="@dimen/size_15"
@@ -83,6 +83,28 @@
                     android:layout_height="wrap_content"
                     android:text="张"
                     android:textColor="@color/bg_ee_33"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_3"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bidding_con"
+                    android:textColor="@color/bg_99"/>
+
+                <TextView
+                    android:id="@+id/tv_bid_hall_per"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="张"
+                    android:textColor="@color/bg_99"/>
 
             </LinearLayout>
 
