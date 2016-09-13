@@ -53,7 +53,10 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         PolygonImageView polygonImageView = holder.getView(R.id.piv_design_photo);
         ImageUtils.displayAvatarImage(avatar, polygonImageView);
         holder.setText(R.id.tv_designer_name, nick_name);
-        holder.setText(R.id.tv_profession, UIUtils.getString(R.string.profession)+style_names);
+
+        String ss = "的撒 大空 间啊 是卡 号卡 好撒就 的话 啊哈 等接 口和撒 娇回";
+        holder.setText(R.id.tv_profession, UIUtils.getString(R.string.profession)+ss);
+//        holder.setText(R.id.tv_profession, UIUtils.getString(R.string.profession)+style_names);
 
         Button button = holder.getView(R.id.bt_select_ta_measure_form);
 
