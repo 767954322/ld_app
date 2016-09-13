@@ -536,8 +536,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
         tvThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
         tvheadThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
-        ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name()
-        );
+        //ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
+
+        if (case3DDetailBean.getDesigner_info().getNick_name()!=null){
+            ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getNick_name());
+        }else {
+            ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
+        }
 //        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, case3DDetailBean.getDesigner_info().getAvatar());
     }

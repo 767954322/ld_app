@@ -481,8 +481,15 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
         tvThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
         tvheadThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
-        ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name()
-        );
+
+
+        if (caseDetailBean.getDesigner_info().getNick_name()!=null){
+            ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getNick_name());
+        }else {
+            ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
+        }
+
+        //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
 //        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, caseDetailBean.getDesigner_info().getAvatar());
     }
