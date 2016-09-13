@@ -29,6 +29,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -36,7 +37,6 @@ import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -179,7 +179,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 mAlertViewExt.show();
                 jsonString = GsonUtil.jsonToString(jsonObject);
                 mBeiShuMealEntity = GsonUtil.jsonToBean(jsonString, BeiShuMealEntity.class);
-                KLog.d(TAG, jsonString);
+                LogUtils.i(TAG, jsonString);
                 isSendState = true;
             }
 

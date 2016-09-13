@@ -25,11 +25,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -166,7 +166,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
 
                 MPAliPayBean MPAliPayBean = GsonUtil.jsonToBean(userInfo, MPAliPayBean.class);
 

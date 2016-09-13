@@ -11,8 +11,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -666,7 +666,7 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_XTOKEN, xToken);
-                Log.d("yxw", Constant.NetBundleKey.X_XTOKEN + "   " + xToken);
+                LogUtils.i("yxw", Constant.NetBundleKey.X_XTOKEN + "   " + xToken);
                 return header;
             }
         };
@@ -820,7 +820,7 @@ public class MPServerHttpManager {
      */
     public void sendBeiShuMealInfoData(String member_id, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_POST_BEI_SHU_MEAL + member_id;
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
 
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, jsonObject, callback) {
             @Override
@@ -843,7 +843,7 @@ public class MPServerHttpManager {
     public void getOrderDetailsInfoData(String needs_id, String member_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_ORDER_DETAILS + needs_id +
                 "/designers/" + member_id;
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -864,7 +864,7 @@ public class MPServerHttpManager {
                 "/designers/" + member_id
                 + "/cloud_files";
 
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -885,7 +885,7 @@ public class MPServerHttpManager {
                 "/designers/" + designer_id +
                 "?bidding_status=03";
 
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -925,7 +925,7 @@ public class MPServerHttpManager {
         String url = UrlConstants.URL_POST_MODIFY_MEAL + needs_id +
                 "/cancel" +
                 "?is_deleted=" + is_deleted;
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
 
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
@@ -1066,7 +1066,7 @@ public class MPServerHttpManager {
     public void agreeOneselfResponseBid(JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_ONESELF_AGREE_RESPONSE_BID;
 //        String url ="192.168.120.113:8080/design-app/v1/api/orders?is_need=false"; // 要和明旭联调得接口
-        KLog.d(TAG, "url" + url);
+        LogUtils.i(TAG, "url" + url);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1150,14 +1150,14 @@ public class MPServerHttpManager {
                 "?limit=10" +
                 "&offset=0" +
                 "&designer_id=" + designer_id;
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                KLog.d(TAG, Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
+                LogUtils.i(TAG, Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
                 return header;
             }
         };
@@ -1172,7 +1172,7 @@ public class MPServerHttpManager {
                 "?limit=10" +
                 "&offset=0" +
                 "&needs_id=" + needs_id;
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1194,7 +1194,7 @@ public class MPServerHttpManager {
                 "&file_ids=" + file_ids + design_assets_id +
                 "&type=" + type;
 
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1231,7 +1231,7 @@ public class MPServerHttpManager {
      */
     public void getMyPropertyData(String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_MY_PROPERTY + designer_id;
-        KLog.d(TAG, "url:" + url + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
+        LogUtils.i(TAG, "url:" + url + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1258,7 +1258,7 @@ public class MPServerHttpManager {
                 "?limit=" + limit +
                 "&offset=" + offset;
 
-        KLog.d(TAG, "url=" + url + "\ndesigner_id=" + designer_id + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
+        LogUtils.i(TAG, "url=" + url + "\ndesigner_id=" + designer_id + "\n" + Constant.NetBundleKey.X_TOKEN + ":" + addX_Token(xToken));
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1298,7 +1298,7 @@ public class MPServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
-                KLog.d("test", addX_Token(xToken));
+                LogUtils.i("test", addX_Token(xToken));
                 return header;
             }
         };
@@ -1354,7 +1354,7 @@ public class MPServerHttpManager {
                 "/demands/" + demands_id +
                 "/designers/" + designer_id +
                 "/deliveries/options/confirm";
-        KLog.d(TAG, makeSureUrl);
+        LogUtils.i(TAG, makeSureUrl);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, makeSureUrl, null, okResponseCallback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1381,7 +1381,7 @@ public class MPServerHttpManager {
                 "/designers/" + designer_id +
                 "/score";
 
-        KLog.d(TAG, makeSureUrl);
+        LogUtils.i(TAG, makeSureUrl);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.POST, makeSureUrl, jsonObject, okResponseCallback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1421,7 +1421,7 @@ public class MPServerHttpManager {
         String url = UrlConstants.URL_DELIVERY_DELAY + demands_id +
                 "/designers/" + designer_id +
                 "/deliveries/options/delay";
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
 
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, null, callback) {
             @Override
@@ -1445,7 +1445,7 @@ public class MPServerHttpManager {
         String url = UrlConstants.URL_DELIVERY_DELAY_DATA + demands_id +
                 "/designers/" + designer_id +
                 "/deliveries/options/confirm/remaindays";
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
 
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
@@ -1476,7 +1476,7 @@ public class MPServerHttpManager {
                 "/follows/" + followed_member_id +
                 "?followed_member_uid=" + followed_member_uid +
                 "&follows_type=" + followsType;
-        KLog.d(TAG, attentionOrUnFollowDesignerUrl);
+        LogUtils.i(TAG, attentionOrUnFollowDesignerUrl);
 
         OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.POST, attentionOrUnFollowDesignerUrl, null, callback) {
             @Override
@@ -1495,7 +1495,7 @@ public class MPServerHttpManager {
      */
     public void attentionListData(String member_id, int limit, int offset, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_DELETE_ATTENTION + member_id + "/follows?" + "limit=" + limit + "&offset=" + offset;
-        KLog.d(TAG, url);
+        LogUtils.i(TAG, url);
 
         OkJsonRequest okJsonRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override

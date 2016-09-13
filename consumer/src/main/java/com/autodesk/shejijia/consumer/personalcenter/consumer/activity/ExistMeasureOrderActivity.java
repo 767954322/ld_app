@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -31,7 +32,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -232,7 +232,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
                 CustomProgress.cancelDialog();
                 mAgreeResponseBidSuccessAlertView.show();
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                KLog.d(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
             }
 
             @Override

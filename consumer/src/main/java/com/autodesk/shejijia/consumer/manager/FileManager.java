@@ -8,9 +8,9 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.socks.library.KLog;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Headers;
@@ -114,9 +114,9 @@ public class FileManager {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    KLog.d("uploadFile " + results);
+                    LogUtils.i("uploadFile " + results);
                 } else {
-                    KLog.d("uploadFile   fail ");
+                    LogUtils.i("uploadFile   fail ");
                 }
             }
         };

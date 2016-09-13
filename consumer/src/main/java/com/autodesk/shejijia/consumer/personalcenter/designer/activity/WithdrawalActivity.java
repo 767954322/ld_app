@@ -31,12 +31,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -264,7 +264,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
      * @brief 验证银行卡号 .
      */
     private String isValidateNumber(String isNumber) {
-        KLog.d(TAG, isNumber);
+        LogUtils.i(TAG, isNumber);
         return isNumber;
     }
 

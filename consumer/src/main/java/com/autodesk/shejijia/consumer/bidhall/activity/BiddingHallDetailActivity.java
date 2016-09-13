@@ -23,11 +23,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -159,7 +159,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 CustomProgress.cancelDialog();
 
                 String info = GsonUtil.jsonToString(jsonObject);
-                KLog.json(info);
+                LogUtils.i(info);
                 getAlertView(UIUtils.getString(R.string.designer_bid_detail_success), null, false).show();
                 mBtnSendBid.setEnabled(false);
                 mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
@@ -190,7 +190,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
                 String info = GsonUtil.jsonToString(jsonObject);
                 mRealNameBean = GsonUtil.jsonToBean(info, RealNameBean.class);
-                KLog.json(info);
+                LogUtils.i(info);
                 updateViewFromRealNameData();
             }
 

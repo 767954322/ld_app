@@ -44,6 +44,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -53,7 +54,6 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -530,7 +530,7 @@ public class SearchActivity extends NavigationBarActivity implements
         try {
             String jsonString = GsonUtil.jsonToString(jsonObject);
             mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
-            KLog.json(TAG, jsonString);
+            LogUtils.i(TAG, jsonString);
             switch (state) {
                 case 0:
                     OFFSET = 10;

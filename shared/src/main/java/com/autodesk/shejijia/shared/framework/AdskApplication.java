@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.common.network.PushNotificationHt
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
@@ -40,7 +41,6 @@ import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.service.webSocketService;
 import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
-import com.socks.library.KLog;
 
 import java.io.InputStream;
 
@@ -54,7 +54,7 @@ import cn.jpush.android.api.JPushInterface;
  * @file AdskApplication.java .
  * @brief 设置全局数据 .
  */
-public class AdskApplication extends Application {
+public abstract class AdskApplication extends Application {
 
     @Override
     public void onCreate() {
@@ -81,7 +81,6 @@ public class AdskApplication extends Application {
      * 初始化操作
      */
     private void initData() {
-        KLog.init(isDebug());/// 初始化Log工具类 .
         queue = Volley.newRequestQueue(this);
         ImageUtils.initImageLoader(this);
         dataHelper = CityDataHelper.getInstance(this);
@@ -158,13 +157,7 @@ public class AdskApplication extends Application {
         return mMainThreadId;
     }
 
-    public boolean isDebug() {
-        /*
-         * To fix android studio bug: the debug config can't be activated in lib module.
-         * Needs to be overided by child class in other modules who depend on shared module.
-         */
-        return BuildConfig.DEBUG;
-    }
+    public abstract boolean isDebug();
 
     public void setWebSocketStatus(boolean result) {
         IsWebSocketConnecting = result;
@@ -325,7 +318,7 @@ public class AdskApplication extends Application {
             acs_member_id += ZERO;
             entity.setAcs_member_id(acs_member_id);
         }
-        KLog.d("APPLICATION", "memberEntity:" + entity);
+        LogUtils.i("APPLICATION", "memberEntity:" + entity);
 
         onLoginSuccess(entity);
     }
@@ -355,7 +348,7 @@ public class AdskApplication extends Application {
                     acs_member_id += ZERO;
                     entity.setAcs_member_id(acs_member_id);
                 }
-                KLog.d("APPLICATION", "memberEntity:" + entity);
+                LogUtils.i("APPLICATION", "memberEntity:" + entity);
 
                 onLoginSuccess(entity);
             }
