@@ -492,7 +492,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
         //查找是否是封面图片  若是就添加到头部
         for (int i = 0; i < images.size(); i++) {
-            if (images.get(i).isIs_primary() == true) {
+            if (images.get(i).isIs_primary()) {
                 firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
                 ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
                 // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);

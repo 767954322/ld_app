@@ -27,9 +27,6 @@ public class List3DLibraryAdapter extends BaseAdapter {
         mContext = context;
         this.mImageLists = mImageLists;
         inflater = LayoutInflater.from(mContext);
-        for (Case3DDetailImageListBean imageListBean : mImageLists) {
-            Log.e("imagelistbean", imageListBean.toString());
-        }
     }
 
     public int getCount() {
