@@ -592,7 +592,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     private LinearLayout.LayoutParams mShadeViewLayoutParams;
     private UserHome3DCaseAdapter mAdapter;
     private int mOffset = 0;
-    private int LIMIT = 50;
+    private int LIMIT = 10;
     private int screenWidth, screenHeight;
 
     private String mNickNameConsumer;
