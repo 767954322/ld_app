@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_15"
-            android:text="风格"
+            android:text="@string/content_others"
             android:textSize="@dimen/font_17" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/style"
             android:layout_marginLeft="@dimen/size_15"
-            android:text="户型"
+            android:text="@string/content_others"
             android:textSize="@dimen/font_17" />
 
         <TextView
@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/size_15"
-            android:text="11"
+            android:text="0"
             android:textSize="@dimen/font_17" />
         <ImageView
             android:id="@+id/favorite_count_img"
