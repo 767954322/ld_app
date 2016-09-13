@@ -555,10 +555,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private void setFollowedTitle(boolean is_following) {
 
         if (is_following) {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
 
         } else {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_sure));
         }
     }
 
