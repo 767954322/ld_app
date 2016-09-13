@@ -156,6 +156,10 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 jumpBean.setReciever_hs_uid(hs_uid);
                 jumpBean.setReciever_user_id(designer_id);
                 jumpBean.setReciever_user_name(user_name);
+
+                jumpBean.setThread_id(mThreead_id);
+                jumpBean.setAsset_id(needs_id);
+
                 jumpBean.setAcs_member_id(mMemberEntity.getAcs_member_id());
                 jumpBean.setMember_type(mMemberEntity.getMember_type());
                 JumpToChatRoom.getChatRoom(this, jumpBean);

@@ -81,6 +81,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String bidder_count = decorationNeedsListBean.getBidder_count();
         String is_public = decorationNeedsListBean.getIs_public();
         final String wk_template_id = decorationNeedsListBean.getWk_template_id();
+//        final String thread_id = decorationNeedsListBean.getBeishu_thread_id();
         String custom_string_status = decorationNeedsListBean.getCustom_string_status();
 
         holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name) + "/" + community_name);

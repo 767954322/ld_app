@@ -73,7 +73,7 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         getOrderDetailsInfo(needs_id, designer_id);
     }
 
-    public void fetchWorkFlowData( ) {
+    public void fetchWorkFlowData() {
         getOrderDetailsInfo(needs_id, designer_id);
     }
 
@@ -94,10 +94,11 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
 
     }
 
-    protected void onCheckWorkFlowStep(int template_id,int sub_node_id){
+    protected void onCheckWorkFlowStep(int template_id, int sub_node_id) {
 
     }
-    protected void onPreCheckWorkFlowStep(int template_id,int sub_node_id){
+
+    protected void onPreCheckWorkFlowStep(int template_id, int sub_node_id) {
 
     }
 
@@ -117,7 +118,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         return (Constant.UerInfoKey.CONSUMER_TYPE.equals(GetRoleType()));
     }
 
-
     private final android.os.Handler handler = new android.os.Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -129,7 +129,6 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             if (requirement == null) {
                 return;
             }
-
             mBidders = requirement.getBidders();
 
             if (null == mBidders) {
@@ -153,9 +152,9 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
             wk_cur_sub_node_id = mBiddersEntity.getWk_cur_sub_node_id();
             wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
 
-            onPreCheckWorkFlowStep(WorkFlowTemplateStep(),WorkFlowSubNodeStep());
+            onPreCheckWorkFlowStep(WorkFlowTemplateStep(), WorkFlowSubNodeStep());
             onWorkFlowData();
-            onCheckWorkFlowStep(WorkFlowTemplateStep(),WorkFlowSubNodeStep());
+            onCheckWorkFlowStep(WorkFlowTemplateStep(), WorkFlowSubNodeStep());
 
             /*if (!TextUtils.isEmpty(wk_cur_sub_node_id) && StringUtils.isNumeric(wk_cur_sub_node_id)) {
                 wk_cur_template_id = Integer.parseInt(requirement.getWk_template_id());
@@ -174,7 +173,8 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
     public void getOrderDetailsInfo(String needs_id, String designer_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
-            public void onResponse(final JSONObject jsonObject) {String userInfo = GsonUtil.jsonToString(jsonObject);
+            public void onResponse(final JSONObject jsonObject) {
+                String userInfo = GsonUtil.jsonToString(jsonObject);
                 mCurrentWorkFlowDetail = GsonUtil.jsonToBean(userInfo, WkFlowDetailsBean.class);
                 if (null != mCurrentWorkFlowDetail) {
                     Message msg = Message.obtain();

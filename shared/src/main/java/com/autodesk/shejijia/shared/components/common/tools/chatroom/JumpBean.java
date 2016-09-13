@@ -13,8 +13,26 @@ public class JumpBean implements Serializable {
 
     private String member_type;          //当前用户的type
     private String acs_member_id;        //当前用户的acs_member_id
+    private String thread_id;        //当前用户的acs_member_id
+    private String asset_id;        //当前用户的acs_member_id
 
     public JumpBean() {
+    }
+
+    public String getThread_id() {
+        return thread_id;
+    }
+
+    public void setThread_id(String thread_id) {
+        this.thread_id = thread_id;
+    }
+
+    public String getAsset_id() {
+        return asset_id;
+    }
+
+    public void setAsset_id(String asset_id) {
+        this.asset_id = asset_id;
     }
 
     public String getReciever_user_id() {
@@ -62,9 +80,11 @@ public class JumpBean implements Serializable {
         return "JumpBean{" +
                 "reciever_user_id='" + reciever_user_id + '\'' +
                 ", reciever_user_name='" + reciever_user_name + '\'' +
+                ", reciever_hs_uid='" + reciever_hs_uid + '\'' +
                 ", member_type='" + member_type + '\'' +
                 ", acs_member_id='" + acs_member_id + '\'' +
-                ", reciever_hs_uid='" + reciever_hs_uid + '\'' +
+                ", thread_id='" + thread_id + '\'' +
+                ", asset_id='" + asset_id + '\'' +
                 '}';
     }
 }
