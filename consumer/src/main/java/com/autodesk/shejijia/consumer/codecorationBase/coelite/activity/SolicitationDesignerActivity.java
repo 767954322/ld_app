@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
+import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -95,8 +96,8 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         Map<String, String> spaceMap = AppJsonFileReader.getSpace(this);
         Map<String, String> styleMap = AppJsonFileReader.getStyle(this);
 
-        Map<String, String> roomHallMap = AppJsonFileReader.getRoomHall(this);
-        Map<String, String> roomMap = AppJsonFileReader.getLivingRoom(this);
+        Map<String, String> roomHallMap = AppJsonFileReader.getLivingRoom(this);
+        Map<String, String> roomMap = AppJsonFileReader.getRoomHall(this);
         Map<String, String> toiletMap = AppJsonFileReader.getToilet(this);
 
         tvc_area.setText(decorationNeedsListBean.getHouse_area());
@@ -108,12 +109,17 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvc_phone.setText(decorationNeedsListBean.getContacts_mobile());
         tvc_measure_form_type.setText(UIUtils.getNoSelectIfEmpty(spaceMap.get(house_type)));
 
-        String tvHouseType = roomHallMap.get(decorationNeedsListBean.getLiving_room())
-                + roomMap.get(decorationNeedsListBean.getRoom())
-                + toiletMap.get(decorationNeedsListBean.getToilet());
-        tvHouseType = tvHouseType.equals("nullnullnull") ? UIUtils.getString(R.string.no_select) : tvHouseType;
+        String room = ConvertUtils.getConvert2CN(roomMap, decorationNeedsListBean.getRoom());
+        String livingRoom = ConvertUtils.getConvert2CN(roomHallMap, decorationNeedsListBean.getLiving_room());
+        String toilet = ConvertUtils.getConvert2CN(toiletMap, decorationNeedsListBean.getToilet());
 
-
+        String tvHouseType = "";
+        if(TextUtils.isEmpty(room)){
+            tvHouseType = UIUtils.getString(R.string.no_select);
+        }else {
+            tvHouseType = room+livingRoom+toilet;
+        }
+        
         tvc_house_type.setText(tvHouseType);//设置室 厅 卫
         String style = styleMap.get(decorationNeedsListBean.getDecoration_style());
         tvc_measure_form_style.setText(UIUtils.getNoSelectIfEmpty(style));//风格

@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.HomeTypeDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -61,6 +62,8 @@ import java.util.Map;
  */
 
 public class MeasureFormActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
+
+    private HomeTypeDialog mHomeTypeDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -285,7 +288,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     houseArea = "0";
                 }
 
-                String area =  String.format("%.2f", Double.valueOf(houseArea));
+                String area = String.format("%.2f", Double.valueOf(houseArea));
                 if (Double.valueOf(area) < 1 || Double.valueOf(area) > 9999) {
                     getErrorHintAlertView(UIUtils.getString(R.string.alert_msg_area));
                     return;
@@ -322,7 +325,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                if (mRoom == null || mHall == null || mToilet == null) {
+                if (room == null || hall == null || toilet == null) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
                     return;
                 }
@@ -419,7 +422,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 pvHouseTypeOptions.show();
                 break;
             case R.id.tvc_measure_form_house_type:
-                pvRoomTypeOptions.show();
+                mHomeTypeDialog.show(getFragmentManager(), null);
                 break;
             case R.id.tvc_measure_form_style:
                 pvStyleOptions.show();
@@ -598,58 +601,23 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @brief 设置室 厅 卫
      */
     private void setRoomType() {
-        List<String> rooms = filledData(getResources().getStringArray(R.array.mlivingroom));
-        final List<String> halls = filledData(getResources().getStringArray(R.array.hall));
-        List<String> toilets = filledData(getResources().getStringArray(R.array.toilet));
-        pvRoomTypeOptions = new OptionsPickerView(this);
-        //room
-        for (String op : rooms) {
-            roomsList.add(op);
-        }
-
-        //hall
-        ArrayList<String> options2Items_01 = new ArrayList<>();
-        for (String op2 : halls) {
-            options2Items_01.add(op2);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            hallsList.add(options2Items_01);
-        }
-        //toilet
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
-        ArrayList<String> options3Items_01_01 = new ArrayList<>();
-        for (String op3 : toilets) {
-            options3Items_01_01.add(op3);
-        }
-        for (int i = 0; i < halls.size(); i++) {
-            options3Items_01.add(options3Items_01_01);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            toiletsList.add(options3Items_01);
-        }
-
-        pvRoomTypeOptions.setPicker(roomsList, hallsList, toiletsList, true);
-        pvRoomTypeOptions.setCyclic(false, false, false);
-        pvRoomTypeOptions.setSelectOptions(0, 0, 0);
-        pvRoomTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
+        mHomeTypeDialog = HomeTypeDialog.getInstance(this);
+        mHomeTypeDialog.setOnAddressCListener(new HomeTypeDialog.OnAddressCListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                livingType = roomsList.get(options1)
-                        + hallsList.get(options1).get(option2)
-                        + toiletsList.get(options1).get(option2).get(options3);
-                mRoom = roomsList.get(options1);
-                mHall = hallsList.get(options1).get(option2);
-                mToilet = toiletsList.get(options1).get(option2).get(options3);
+            public void onClick(String roomName, String livingRoom, String toilet1) {
+                String roomType = roomName + livingRoom + toilet1;
+                tvc_house_type.setText(roomType);
 
+                /// convet .
                 Map<String, String> roomHall = AppJsonFileReader.getRoomHall(MeasureFormActivity.this); // 转换成英文
-                Map<String, String> livingRoom = AppJsonFileReader.getLivingRoom(MeasureFormActivity.this); // 转换成英文
+                Map<String, String> livingRoomMap = AppJsonFileReader.getLivingRoom(MeasureFormActivity.this); // 转换成英文
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(MeasureFormActivity.this); // 转换成英文
-                room = ConvertUtils.getKeyByValue(roomHall, mRoom);
-                hall = ConvertUtils.getKeyByValue(livingRoom, mHall);
-                toilet = ConvertUtils.getKeyByValue(toiletMap, mToilet);
 
-                tvc_house_type.setText(livingType);
+                room = ConvertUtils.getKeyByValue(roomHall, roomName);
+                hall = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                toilet = ConvertUtils.getKeyByValue(toiletMap, toilet1);
+
+                mHomeTypeDialog.dismiss();
             }
         });
     }
@@ -659,15 +627,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      */
     private void setStyleType() {
         final ArrayList<String> styleItems = new ArrayList<>();
-//
-//        if (styles != null) {
-//
-//
-//        } else {
-
         styles = filledData(getResources().getStringArray(R.array.style));
-
-//        }
         pvStyleOptions = new OptionsPickerView(this);
         for (String item : styles) {
             styleItems.add(item);
@@ -806,7 +766,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                LogUtils.i(TAG, jsonObject+"");
+                LogUtils.i(TAG, jsonObject + "");
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString((R.string.consume_send_success)), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
                         AlertView.Style.Alert, MeasureFormActivity.this).show();
                 CustomProgress.cancelDialog();
@@ -874,7 +834,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private OptionsPickerView pvDecorationBudgetOptions;
     private OptionsPickerView pvStyleOptions;
     private OptionsPickerView pvHouseTypeOptions;
-    private OptionsPickerView pvRoomTypeOptions;
     private TimePickerView pvTime;
     private AddressDialog mChangeAddressDialog;
 
@@ -900,7 +859,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private String user_id;
     private String currentData;
     private String housType;
-    private String mRoom, mHall, mToilet;
     private String room, hall, toilet;
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
@@ -911,9 +869,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     ///　集合，类.
     private ArrayList<String> decorationBudgetItems = new ArrayList<>();
     private ArrayList<String> houseTypeItems = new ArrayList<>();
-    private ArrayList<String> roomsList = new ArrayList<>();
-    private ArrayList<ArrayList<String>> hallsList = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
     private List<String> styles;
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;

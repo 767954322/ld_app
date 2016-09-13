@@ -87,6 +87,7 @@
     <string name="receiving_room_deliverable">接收量房交付物</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款不能低于设计总额的80%</string>
     <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>
+    <string name="room_first_less_than_eighty_percent_of_the_total_measure_fee">首款金额应大于量房费用</string>
     <string name="total_quantity_room_first_is_not_greater_than_design">设计首款不能大于设计总额</string>
     <string name="please_fill_out_the_design_first">请正确填写设计首款</string>
     <string name="costs_cannot_be_negative">费用不能为负数</string>
@@ -153,7 +154,7 @@
     <string name="flow_aggregate_amount">总&#160;&#160;金&#160;&#160;额：</string>
     <string name="flow_pay_way">支付方式：</string>
     <string name="flow_should_first">本次应付设计首款：</string>
-    <string name="flow_deduct_measure_cost">已扣除</string>
+    <string name="flow_deduct_measure_cost">已扣除量房费</string>
     <string name="deduct_measure_cost">&#160;&#160;量房费</string>
     <string name="flow_agree_pay">同意合同并支付首款</string>
     <string name="flow_should_last">本次应付设计尾款：</string>
@@ -171,7 +172,7 @@
     <string name="demand_planning_budget">设计预算：</string>
     <string name="demand_project_budget">装修预算：</string>
     <string name="please_enter_your_name">请输入姓名</string>
-    <string name="please_enter_your_phone">请输入联系电话</string>
+    <string name="please_enter_your_phone">请输入手机号码</string>
     <string name="please_select_design_budget">请选择设计预算</string>
     <string name="please_select_decorate_budget">请选择装修预算</string>
     <string name="demand_project_area">项目面积：</string>
@@ -359,13 +360,15 @@
     <string name="demand_please_project_types_select">请选择房屋类型(选填)</string>
     <string name="demand_import_area">请输入面积</string>
     <string name="demand_import_limit">请输入1-9999数值</string>
-    <string name="issue_room">请选择户型：室 厅 卫</string>
+    <string name="demand_room_area">请输入房屋面积</string>
+    <string name="issue_room">请选择户型</string>
 
     <string name="issue_room_select">请选择户型：室 厅 卫(选填)</string>
     <string name="demand_please_style">请选择风格</string>
     <string name="demand_please_style_select">请选择风格(选填)</string>
     <string name="demand_please_address">请选择地址：省 市 区</string>
     <string name="demand_please_project_address">请正确输入项目地址</string>
+    <string name="demand_please_input_project_address">请输入项目地址</string>
     <string name="demand_please_specific_address">请输入小区名称</string>
     <string name="termination_demand">终止需求</string>
     <string name="amend_demand">修改需求</string>
@@ -595,7 +598,7 @@
     <!-- BeiShuMealActivity -->
     <string name="consuer_data">客户资料</string>
     <string name="consume_phone">联系电话：</string>
-    <string name="consume_phone_hint">手机号码</string>
+    <string name="consume_phone_hint">手机号码：</string>
     <string name="consume_phone_number_hint">请输入手机号码</string>
     <string name="consume_adress">房屋地址：</string>
     <string name="consume_adress_hint">选择地址</string>

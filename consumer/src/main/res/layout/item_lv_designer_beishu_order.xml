@@ -16,7 +16,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/size_4"
             android:drawableLeft="@drawable/icon_taocan"
             android:drawablePadding="@dimen/size_10"
             android:ellipsize="end"
@@ -32,9 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
         android:layout_marginLeft="@dimen/size_10"
-        android:layout_marginRight="@dimen/size_10"
         android:background="@color/bg_e4" />
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,9 +54,9 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/consumer_decoration_project_id"
                     android:textColor="@color/bg_9E"
                     android:textSize="@dimen/font_15" />
@@ -85,9 +82,9 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/my_bid_name"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15" />
@@ -114,9 +111,9 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/consume_phone"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15" />
@@ -143,9 +140,9 @@
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_3"
                     android:text="@string/project_address"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15" />
@@ -167,11 +164,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_5"
                 android:layout_marginTop="@dimen/size_5"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="@dimen/size_5"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -198,8 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
                 android:layout_marginLeft="@dimen/size_10"
-                android:layout_marginRight="@dimen/size_10"
-                android:background="@color/bg_e4" />
+                android:background="@color/demand_color" />
 
 
             <include layout="@layout/item_lv_decoration_beishu"></include>
@@ -207,8 +203,13 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/line_color" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_10"
-        android:background="@color/bg_eef1f4" />
+        android:background="@color/light_blue_2" />
 </LinearLayout>

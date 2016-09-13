@@ -112,7 +112,8 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent" />
+            android:theme="@android:style/Theme.Translucent"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".personalcenter.consumer.activity.IssueDemandActivity"
             android:alwaysRetainTaskState="true"
@@ -262,7 +263,8 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".personalcenter.workflow.activity.WkFlowStateActivity" />
+        <activity android:name=".personalcenter.workflow.activity.WkFlowStateActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.decorationlibrarys.activity.CaseDescriptionActivity"
             android:launchMode="singleTask"
@@ -412,7 +414,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity android:name="com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity" />
-        android:screenOrientation="portrait"/>
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -580,7 +581,6 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"></activity>
-        >>>>>>> 7b263171ceb33662f8592f351697a344c2e41907
     </application>
 
 </manifest>

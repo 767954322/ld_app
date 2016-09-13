@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -134,6 +132,7 @@ public class SearchActivity extends NavigationBarActivity implements
                 openPopupWindow(mCetSearchClick.getText().toString());
                 break;
             case R.id.searchc_back:/// 返回.
+                mCetSearchContent.setText("");
                 finish();
                 break;
             default:
@@ -459,15 +458,16 @@ public class SearchActivity extends NavigationBarActivity implements
                     if (mSearchKeywords != null && mSearchKeywords.length() > 0) {
                         try {
                             mSearchKeywords = URLEncoder.encode(mSearchKeywords, Constant.NetBundleKey.UTF_8);
+                            setSelection(mCetSearchClick);
+                            mFiltrateContentBean = null;
+                            isFirstIn = true;
+                            cancelPopupWindowAndClearSearchContent();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
                     }
 
-                    setSelection(mCetSearchClick);
-                    mFiltrateContentBean = null;
-                    isFirstIn = true;
-                    cancelPopupWindowAndClearSearchContent();
+
                 }
                 return false;
             }

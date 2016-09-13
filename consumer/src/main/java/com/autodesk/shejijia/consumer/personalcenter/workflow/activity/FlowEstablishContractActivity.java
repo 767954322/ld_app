@@ -153,9 +153,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private void UpdateUIlayoutContract() {
         UpdateUIlayoutContractContent();
 
-        if (!bShowModeContentWebView) { /// 设计师　.
+        if (!bShowModeContentWebView) {
             UpdateUIcontractContentInputForm();
-        } else { /// 消费者 .
+        } else {
             UpdateUIcontractContentWebView();
         }
         UpdateUIActionLayout();
@@ -274,7 +274,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             return;
         }
 
-        img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+        //img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+        img_agree_establish_contract.setBackgroundResource(android.R.color.white);
         btn_consumer_submit_button.setEnabled(false);
         btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
 
@@ -375,7 +376,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             @Override
             public void onClick(View v) {
                 if (isAgree) { // 判断是否我已阅读（我已阅读）
-                    img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+                    img_agree_establish_contract.setBackgroundResource(android.R.color.white);
                     btn_consumer_submit_button.setEnabled(false);
                     btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                 } else { // 判断是否我已阅读（我未阅读）
@@ -624,7 +625,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                LogUtils.i(TAG, jsonObject+"");
+                LogUtils.i(TAG, jsonObject + "");
                 ContractState = 0;
                 CustomProgress.cancelDialog();
                 UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
@@ -634,7 +635,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,FlowEstablishContractActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowEstablishContractActivity.this);
 
                 byte[] htmlBodyBytes = volleyError.networkResponse.data;  //回应的报文的包体内容
                 Log.e("VolleyError body---->", new String(htmlBodyBytes), volleyError);
@@ -703,7 +704,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
-            if (!Validator.isStringPositiveNumberValid(renderCount)) {
+//            if (!Validator.isStringPositiveNumberValid(renderCount)) {
+//                showAlertView(R.string.please_input_render_count_correctly);
+//                bValid = false;
+//                break;
+//            }
+            inputNum = Integer.parseInt(renderCount);
+            if (inputNum < 0 || inputNum > 99) {
                 showAlertView(R.string.please_input_render_count_correctly);
                 bValid = false;
                 break;
@@ -760,8 +767,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
+//            if (firstCost <= Double.valueOf(meansurePrice)) {
+//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+//                        AlertView.Style.Alert, null).show();
+//                bValid = false;
+//                break;
+//            }
+//            break;
             if (firstCost <= Double.valueOf(meansurePrice)) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_measure_fee) + meansurePrice + UIUtils.getString(R.string.flow_monad_rmb), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
                 bValid = false;
                 break;
@@ -783,7 +797,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         String consumerName = tvc_consumer_name.getText().toString();
         String consumerPhone = tvc_consumer_phone.getText().toString();
         String consumerEmail = tvc_consumer_email.getText().toString();
-        String renderCount = tvc_treeD_render_count.getText().toString();
+//        String renderCount = tvc_treeD_render_count.getText().toString();
         String location_area = tvc_consumer_local_area.getText().toString();
 
         try {
@@ -792,7 +806,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             jsonObj.put(Constant.EstablishContractKey.ADDR, location_area);
             jsonObj.put(Constant.EstablishContractKey.MOBILE, consumerPhone);
             jsonObj.put(Constant.EstablishContractKey.EMAIL, consumerEmail);
-            jsonObj.put(Constant.EstablishContractKey.RENDER_MAP, renderCount);
+            jsonObj.put(Constant.EstablishContractKey.RENDER_MAP, inputNum);
             jsonO.put(Constant.EstablishContractKey.CONTRACT_NO, contract_no); // 合同编号
             jsonO.put(Constant.EstablishContractKey.CONTRACT_CHARGE, total_cost); // 设计总额
             jsonO.put(Constant.EstablishContractKey.CONTRACT_FIRST_CHARGE, first_cost); // 设计首款
@@ -1035,6 +1049,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private int ContractForFirst = 0; //　从合同跳转到设计首款
     private int FirstForContract = 1; // 首款调到设计合同
     private int ContractDetail = 2;
+    private int inputNum;
     private boolean isAgree = false;
 
     private String contract_no; // 设计合同编号
