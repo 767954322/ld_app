@@ -260,7 +260,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(R.string.please_select_decorate_budget);
                     return;
                 }
-                if (TextUtils.isEmpty(room)) {
+                if (TextUtils.isEmpty(mRoom)) {
                     showAlertView(R.string.please_select_form);
                     return;
                 }
@@ -296,11 +296,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DISTRICT_NAME, mCurrentDistrict);/// "district_name_name" = "\U4e1c\U57ce\U533a"; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_AREA, area);/// "house_area" = 36; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_TYPE, house_type);/// "house_type" = house; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, living_room);/// "living_room" = one; .
+                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, mLivingRoom);/// "living_room" = one; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE, mCurrentProvinceCode);/// province = 110000; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE_NAME, mCurrentProvince);/// "province_name" = "\U5317\U4eac"; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, room);///  room = one; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_TOILET, toilet);///  toilet = one; .
+                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, mRoom);///  room = one; .
+                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_TOILET, mToilet);///  toilet = one; .
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -428,13 +428,15 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 tv_issue_room.setText(roomType);
 
                 /// convet .
-                Map<String, String> livingRoom = AppJsonFileReader.getLivingRoom(IssueDemandActivity.this);
+                Map<String, String> livingRoomMap = AppJsonFileReader.getLivingRoom(IssueDemandActivity.this);
                 Map<String, String> roomHall = AppJsonFileReader.getRoomHall(IssueDemandActivity.this);
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(IssueDemandActivity.this);
 
-                living_room = ConvertUtils.getKeyByValue(livingRoom, living_room);
-                room = ConvertUtils.getKeyByValue(roomHall, room);
-                toilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
+                mLivingRoom = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                mRoom = ConvertUtils.getKeyByValue(roomHall, roomName);
+                mToilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
+
+                homeTypeDialog.dismiss();
             }
         });
     }
@@ -603,7 +605,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;
     private OptionsPickerView pvDesignBudgetOptions;
-    private OptionsPickerView pvDecorationBudgetOptions, pvStyleOptions, pvRoomTypeOptions, pvHouseTypeOptions;
+    private OptionsPickerView pvDecorationBudgetOptions, pvStyleOptions,  pvHouseTypeOptions;
 
     /// 变量.
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
@@ -613,8 +615,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String mDesignBudget;
     private String mDecorationBudget;
     private String nick_name;
-    //    private boolean isSelection = false;
-    private String room, living_room, toilet;
+    private String mRoom, mLivingRoom, mToilet;
     private boolean isSendState = true;
     private String success = "";
     public static final int RESULT_CODE = 101;

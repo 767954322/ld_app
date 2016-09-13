@@ -6,6 +6,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.uti
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
