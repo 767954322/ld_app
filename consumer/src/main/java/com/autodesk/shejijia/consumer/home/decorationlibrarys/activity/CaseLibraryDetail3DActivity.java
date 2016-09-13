@@ -595,7 +595,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
             case3DDetailImageListBeanManYou.setLocal(false);
         } else { //给定默认图片路径,ImageLoader加载本地图片的路径规则
-            imageListsManYou.add("drawable://" + R.drawable.default_3d_details);
+            imageListsManYou.add("drawable");
             case3DDetailImageListBeanManYou.setImageList(imageListsManYou);
             case3DDetailImageListBeanManYou.setLocal(true);
         }
