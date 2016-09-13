@@ -84,6 +84,7 @@
                 android:layout_width="@dimen/size_1"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@color/no_color"
                 android:ems="10"
                 android:hint="@string/work_room_phone_number"
