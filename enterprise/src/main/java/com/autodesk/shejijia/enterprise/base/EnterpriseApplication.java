@@ -18,7 +18,7 @@ import com.squareup.leakcanary.LeakCanary;
  * Created by t_xuz on 8/15/16.
  * 服务端主线application对象,不要放太多耗时操作在里面,否则启动app时间会很慢
  */
-public class EnterpriseApplication extends Application{
+public class EnterpriseApplication extends Application{ //TODO why not extends shared application
 
     public RequestQueue queue;
     public static EnterpriseApplication application ;
@@ -49,7 +49,6 @@ public class EnterpriseApplication extends Application{
         //注册蒲公英
         PgyCrashManager.register(this);
     }
-
 
     public static synchronized EnterpriseApplication getInstance(){
         return application;

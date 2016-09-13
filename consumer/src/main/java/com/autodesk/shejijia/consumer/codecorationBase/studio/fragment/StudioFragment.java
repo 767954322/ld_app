@@ -23,6 +23,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -65,10 +66,9 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initData() {
-
-
         isLoginUserJust = isLoginUser();
         getWorkRoomData("91", 0, 10);
+        ImageUtils.displayIconImage("drawable://" + R.drawable.work_room_heard_bg, img_header);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position >0){
+                if (position > 0) {
 
                     Intent intent = new Intent(activity, WorkRoomDetailActivity.class);
 
@@ -208,12 +208,11 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     public void upOrderDataForService(JSONObject jsonObject) {
 
 
-
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
                 Toast.makeText(activity, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 

@@ -81,7 +81,7 @@ public class AdskApplication extends Application {
      * 初始化操作
      */
     private void initData() {
-        KLog.init(BuildConfig.LOG_DEBUG);/// 初始化Log工具类 .
+        KLog.init(isDebug());/// 初始化Log工具类 .
         queue = Volley.newRequestQueue(this);
         ImageUtils.initImageLoader(this);
         dataHelper = CityDataHelper.getInstance(this);
@@ -156,6 +156,14 @@ public class AdskApplication extends Application {
     /// MainThread Id .
     public static int getMainThreadId() {
         return mMainThreadId;
+    }
+
+    public boolean isDebug() {
+        /*
+         * To fix android studio bug: the debug config can't be activated in lib module.
+         * Needs to be overided by child class in other modules who depend on shared module.
+         */
+        return BuildConfig.DEBUG;
     }
 
     public void setWebSocketStatus(boolean result) {
