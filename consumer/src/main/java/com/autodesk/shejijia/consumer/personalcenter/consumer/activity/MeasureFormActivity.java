@@ -325,7 +325,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                if (mRoom == null || mHall == null || mToilet == null) {
+                if (room == null || hall == null || toilet == null) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
                     return;
                 }
@@ -612,8 +612,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 Map<String, String> roomHall = AppJsonFileReader.getRoomHall(MeasureFormActivity.this); // 转换成英文
                 Map<String, String> livingRoomMap = AppJsonFileReader.getLivingRoom(MeasureFormActivity.this); // 转换成英文
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(MeasureFormActivity.this); // 转换成英文
-                room = ConvertUtils.getKeyByValue(roomHall, mRoom);
-                hall = ConvertUtils.getKeyByValue(livingRoomMap, mHall);
+
+                room = ConvertUtils.getKeyByValue(roomHall, roomName);
+                hall = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
                 toilet = ConvertUtils.getKeyByValue(toiletMap, toilet1);
 
                 mHomeTypeDialog.dismiss();
@@ -765,7 +766,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                LogUtils.i(TAG, jsonObject+"");
+                LogUtils.i(TAG, jsonObject + "");
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString((R.string.consume_send_success)), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
                         AlertView.Style.Alert, MeasureFormActivity.this).show();
                 CustomProgress.cancelDialog();
@@ -858,7 +859,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private String user_id;
     private String currentData;
     private String housType;
-    private String mRoom, mHall, mToilet;
     private String room, hall, toilet;
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
@@ -869,9 +869,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     ///　集合，类.
     private ArrayList<String> decorationBudgetItems = new ArrayList<>();
     private ArrayList<String> houseTypeItems = new ArrayList<>();
-    private ArrayList<String> roomsList = new ArrayList<>();
-    private ArrayList<ArrayList<String>> hallsList = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
     private List<String> styles;
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;

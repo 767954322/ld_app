@@ -154,7 +154,7 @@
     <string name="flow_aggregate_amount">总&#160;&#160;金&#160;&#160;额：</string>
     <string name="flow_pay_way">支付方式：</string>
     <string name="flow_should_first">本次应付设计首款：</string>
-    <string name="flow_deduct_measure_cost">已扣除</string>
+    <string name="flow_deduct_measure_cost">已扣除量房费</string>
     <string name="deduct_measure_cost">&#160;&#160;量房费</string>
     <string name="flow_agree_pay">同意合同并支付首款</string>
     <string name="flow_should_last">本次应付设计尾款：</string>
