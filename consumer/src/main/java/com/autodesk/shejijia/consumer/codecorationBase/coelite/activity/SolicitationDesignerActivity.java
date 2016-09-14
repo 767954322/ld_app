@@ -38,11 +38,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 /**
- * 量房邀约
- * Created by luchongbin on 16-8-19.
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file SolicitationDesignerActivity.java  .
+ * @brief 精选量房邀约 .
  */
+
 public class SolicitationDesignerActivity extends NavigationBarActivity implements View.OnClickListener {
     @Override
     protected int getLayoutResId() {

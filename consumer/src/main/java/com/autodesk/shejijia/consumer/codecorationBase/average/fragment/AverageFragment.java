@@ -26,10 +26,14 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
-
 /**
- * 竞优
+ * @author luchongbin .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file AverageFragment.java  .
+ * @brief 六大产品-竞优 .
  */
+
 public class AverageFragment extends BaseFragment implements View.OnClickListener {
 
     private FrameLayout mRlAverage;

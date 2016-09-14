@@ -142,7 +142,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
 
                 String member_type = entity.getMember_type();
                 if (!TextUtils.isEmpty(member_type) && ( member_type.equals("designer") || member_type.equals("member"))){//登陆账号为消费者或者设计师
-                    AdskApplication.getInstance().saveSignInInfo(strToken);
+                    AdskApplication.getInstance().saveSignInInfo(entity);
                     // 解决切换帐号的时候 我的项目Fragment 不刷新问题
                     SharedPreferencesUtils.writeBoolean("islogin", true);
 //                /// 登录成功后,发送广播 .

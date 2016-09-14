@@ -4,10 +4,14 @@ import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-
 /**
- * DIY
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file DIYFragment.java  .
+ * @brief 六大产品-DIY .
  */
+
 public class DIYFragment extends BaseFragment {
     private ImageView mIvDIY;
 

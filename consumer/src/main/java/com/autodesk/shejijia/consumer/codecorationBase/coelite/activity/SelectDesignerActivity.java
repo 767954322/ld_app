@@ -14,6 +14,13 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.util.List;
+/**
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file SelectDesignerActivity.java  .
+ * @brief 精选派单设计师 -选TA量房.
+ */
 
 public class SelectDesignerActivity extends NavigationBarActivity implements SelectDesignAdapter.MeasureFormCallBack{
     private ListViewForScrollView lv_selection_design;

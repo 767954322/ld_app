@@ -23,10 +23,14 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-
 /**
- * Created by luchongbin on 16-8-16.
+ * @author luchongbin .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file SixProductsActivity.java  .
+ * @brief 六大产品框架类 .
  */
+
 public class SixProductsActivity extends NavigationBarActivity {
 
 

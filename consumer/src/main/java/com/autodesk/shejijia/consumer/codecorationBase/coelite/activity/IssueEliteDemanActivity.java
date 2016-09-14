@@ -40,8 +40,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+/**
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file IssueEliteDemanActivity.java  .
+ * @brief 精选发布需求 .
+ */
 
-public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
+public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener,View.OnFocusChangeListener {
     private HomeTypeDialog homeTypeDialog;
 
     @Override
@@ -67,18 +74,19 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         tv_issue_demand_detail_address = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
 
 
-        et_issue_demand_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    String area = et_issue_demand_area.getText().toString().trim();
-                    area = String.format("%.2f", Double.valueOf(area));
-                    et_issue_demand_area.setText(area);
-                }
-            }
-        });
+//        et_issue_demand_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (!hasFocus) {
+//                    String area = et_issue_demand_area.getText().toString().trim();
+//                    area = String.format("%.2f", Double.valueOf(area));
+//                    et_issue_demand_area.setText(area);
+//                }
+//            }
+//        });
 
     }
+
 
     @Override
     protected void initExtraBundle() {
@@ -90,19 +98,12 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
         setTitleForNavbar(UIUtils.getString(R.string.reservation));
-        /// 房屋类型.
         setHouseType();
-        /// 房屋风格.
         setStyleType();
-        /// 室、厅、卫.
         setRoomType();
-        /// 设计预算.
         setDesignBudget();
-        /// 装修预算 .
         setDecorationBudget();
-        ///提示框
         initAlertView();
     }
 
@@ -116,6 +117,28 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         tv_issue_demand_budget.setOnClickListener(this);
         tv_issue_demand_design_budget.setOnClickListener(this);
         tv_issue_address.setOnClickListener(this);
+        et_issue_demand_area.setOnFocusChangeListener(this);
+    }
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()){
+            case R.id.et_issue_demand_area:
+                onFocusChangeForArea(hasFocus);
+                break;
+            default:
+                break;
+        }
+
+    }
+    /**
+     *设置房屋面积
+     */
+    private void onFocusChangeForArea(boolean hasFocus){
+        if (!hasFocus) {
+            String area = et_issue_demand_area.getText().toString().trim();
+            area = String.format("%.2f", Double.valueOf(area));
+            et_issue_demand_area.setText(area);
+        }
     }
 
 
@@ -153,86 +176,101 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
                 break;
 
             case R.id.btn_send_demand: /// 提交 .
-                if (!isSendState) {
-                    return;
-                }
-                et_issue_demand_area.clearFocus();
-                String area = et_issue_demand_area.getText().toString();
-
-                String mobile = et_issue_demand_mobile.getText().toString();
-                String detail_address = tv_issue_demand_detail_address.getText().toString();
-                boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
-                boolean phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
-                boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
-
-                if (TextUtils.isEmpty(mobile) || !phoneRight) {
-                    showAlertView(R.string.please_enter_correct_phone_number);
-                    return;
-                }
-
-
-                //..................................
-                area = (area != null && area.length() > 0) ? String.format("%.2f", Double.valueOf(area)) : "";
-                et_issue_demand_area.setText(area);
-                String subNum = "0";
-                if (area.contains(".")) {
-                    subNum = area.substring(0, area.indexOf("."));
-                }
-                if (TextUtils.isEmpty(area) || Float.valueOf(area) == 0) {
-                    showAlertView(R.string.please_input_correct_area);
-                    return;
-                } else {
-                    if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
-                        showAlertView(R.string.please_input_correct_area);
-                        return;
-                    } else {
-                        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
-                            showAlertView(R.string.please_input_correct_area);
-                            return;
-                        }
-                    }
-                }
-
-                if (TextUtils.isEmpty(mCurrentDistrictCode)) {
-                    showAlertView(R.string.please_select_addresses);
-                    return;
-                }
-                if (TextUtils.isEmpty(detail_address) || !regex_address_right) {
-                    showAlertView(R.string.please_enter_correct_address);
-                    return;
-                }
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    String click_number = "0";
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY, mCurrentCityCode);/// city = 110100; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY_NAME, mCurrentCity);/// "city_name" = "\U5317\U4eac\U5e02"; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CLICK_NUMBER, click_number);/// "click_number" = 0; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_COMMUNITY_NAME, detail_address);/// "community_name" = "\U9ece\U6d1b\U7fbd";.
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_MOBILE, mobile);/// "consumer_mobile" = 11012011900; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, nick_name);/// "consumer_name" = "APP\U7aef\U53d1\U5e03\U9700\U6c42-\U6b64\U5b57\U6bb5\U4e0d\U7528"; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_MOBILE, mobile);/// "contacts_mobile" = 15234948734; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, nick_name);/// "contacts_name" = "\U63a5\U4f60"; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, mDecorationBudget);/// "decoration_budget" = "5\U4e07\U4ee5\U4e0b"; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_STYLE, style);/// "decoration_style" = Japan; .
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, mDesignBudget);/// "design_budget" = "3000\U4ee5\U4e0b"; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DETAIL_DESC, "desc");/// "detail_desc" = desc; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DISTRICT, mCurrentDistrictCode);/// district_name = 110101; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DISTRICT_NAME, mCurrentDistrict);/// "district_name_name" = "\U4e1c\U57ce\U533a"; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_AREA, area);/// "house_area" = 36; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_TYPE, house_type);/// "house_type" = house; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, living_room);/// "living_room" = one; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE, mCurrentProvinceCode);/// province = 110000; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE_NAME, mCurrentProvince);/// "province_name" = "\U5317\U4eac"; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, room);///  room = one; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_TOILET, mToilet);///  toilet = one; .
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                isSendState = false;
-                CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
-                sendDesignRequirements(jsonObject);
+                commit();
                 break;
         }
+    }
+
+    /**
+     * 点击提交按钮 发布精选需求
+     */
+    private  void commit(){
+        if (!isSendState) {
+            return;
+        }
+        et_issue_demand_area.clearFocus();
+        String area = et_issue_demand_area.getText().toString();
+
+        String mobile = et_issue_demand_mobile.getText().toString();
+        String detail_address = tv_issue_demand_detail_address.getText().toString();
+        if(!VerificationRequired(area,mobile,detail_address)){
+            return;
+        }
+        JSONObject jsonObject = getJSONObject(area,mobile,detail_address);
+        isSendState = false;
+        CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
+        sendDesignRequirements(jsonObject);
+
+    }
+    private boolean VerificationRequired(String area,String mobile,String detail_address){
+        boolean phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
+        boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
+        if (TextUtils.isEmpty(mobile) || !phoneRight) {
+            showAlertView(R.string.please_enter_correct_phone_number);
+            return false;
+        }
+
+        area = (area != null && area.length() > 0) ? String.format("%.2f", Double.valueOf(area)) : "";
+        et_issue_demand_area.setText(area);
+        String subNum = "0";
+        if (area.contains(".")) {
+            subNum = area.substring(0, area.indexOf("."));
+        }
+        if (TextUtils.isEmpty(area) || Float.valueOf(area) == 0) {
+            showAlertView(R.string.please_input_correct_area);
+            return false;
+        }
+
+        if ((subNum.length() > 1 && subNum.startsWith("0")) || subNum.length() > 4) {
+            showAlertView(R.string.please_input_correct_area);
+            return false;
+        }
+        if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
+            showAlertView(R.string.please_input_correct_area);
+            return false;
+        }
+
+        if (TextUtils.isEmpty(mCurrentDistrictCode)) {
+            showAlertView(R.string.please_select_addresses);
+            return false;
+        }
+        if (TextUtils.isEmpty(detail_address) || !regex_address_right) {
+            showAlertView(R.string.please_enter_correct_address);
+            return false;
+        }
+        return true;
+
+    }
+    private JSONObject getJSONObject(String area,String mobile,String detail_address){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            String click_number = "0";
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY, mCurrentCityCode);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY_NAME, mCurrentCity);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CLICK_NUMBER, click_number);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_COMMUNITY_NAME, detail_address);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_MOBILE, mobile);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, nick_name);
+            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_MOBILE, mobile);
+            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, nick_name);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, mDecorationBudget);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_STYLE, style);
+            jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, mDesignBudget);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DETAIL_DESC, "desc");
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DISTRICT, mCurrentDistrictCode);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DISTRICT_NAME, mCurrentDistrict);
+            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_AREA, area);
+            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_TYPE, house_type);
+            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, living_room);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE, mCurrentProvinceCode);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE_NAME, mCurrentProvince);
+            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, room);
+            jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_TOILET, mToilet);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 
     /**
@@ -514,6 +552,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     private String room, living_room, mToilet;
     private boolean isSendState = true;
     public static final int RESULT_CODE = 101;
+
 
 
 }

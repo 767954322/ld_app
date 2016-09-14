@@ -19,10 +19,15 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
 /**
- * 套餐
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file PackagesFragment.java  .
+ * @brief 六大产品-套餐 .
  */
+
+
 public class PackagesFragment extends BaseFragment implements View.OnClickListener, GridView.OnItemClickListener {
 
 

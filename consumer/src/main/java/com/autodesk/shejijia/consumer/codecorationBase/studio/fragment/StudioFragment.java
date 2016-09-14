@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.dialog.OrderDialog
 import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomListBeen;
 import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -32,10 +30,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * 工作室
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file StudioFragment.java  .
+ * @brief 六大产品-工作室 .
  */
+
 public class StudioFragment extends BaseFragment implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener {
 
 
