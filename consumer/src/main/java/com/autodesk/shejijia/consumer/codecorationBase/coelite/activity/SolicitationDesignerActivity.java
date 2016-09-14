@@ -309,8 +309,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
-                currentData = DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点");
-                tvcTime.setText(currentData);
+                tvcTime.setText(DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
             }
         });
     }

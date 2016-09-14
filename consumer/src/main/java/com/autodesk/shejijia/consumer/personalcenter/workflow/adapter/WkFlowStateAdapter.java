@@ -255,7 +255,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
             if (stateCode >= 32 && stateCode != 33) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.flow_contract_liang;
+                drawable = R.drawable.flow_first_pay_liang;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.flow_first_pay_an;
@@ -266,7 +266,7 @@ public class WkFlowStateAdapter extends BaseAdapter {
         } else {
             if (stateCode >= 41) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.flow_contract_liang;
+                drawable = R.drawable.flow_first_pay_liang;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.flow_first_pay_an;
@@ -372,27 +372,27 @@ public class WkFlowStateAdapter extends BaseAdapter {
      */
     private void costMeasureFeeNode(ViewHolder viewHolder, int stateCode) {
         int textColor;
-        int drawable = R.drawable.icon_liangfang;
+        int drawable = R.drawable.flow_first_pay_liang;
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(member_type)) {
             if (stateCode == 13) {
                 textColor = StepEnableColor;
                 setItemAnimationForView(textColor, viewHolder);
             } else if (stateCode > 14) {
                 textColor = StepEnableColor;
-                drawable = R.drawable.icon_liangfang;
+                drawable = R.drawable.flow_first_pay_liang;
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.liangfangfei_ico;
+                drawable = R.drawable.flow_first_pay_an;
             }
 
         } else {
             if (stateCode == 13 || stateCode >= 21) {
-                drawable = R.drawable.icon_liangfang;
+                drawable = R.drawable.flow_first_pay_liang;
                 textColor = StepEnableColor;
 
             } else {
                 textColor = StepDisEnableColor;
-                drawable = R.drawable.liangfangfei_ico;
+                drawable = R.drawable.flow_first_pay_an;
             }
             if (stateCode == 13) {
                 setItemAnimationForView(textColor, viewHolder);
