@@ -113,13 +113,8 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         String livingRoom = ConvertUtils.getConvert2CN(roomHallMap, decorationNeedsListBean.getLiving_room());
         String toilet = ConvertUtils.getConvert2CN(toiletMap, decorationNeedsListBean.getToilet());
 
-        String tvHouseType = "";
-        if(TextUtils.isEmpty(room)){
-            tvHouseType = UIUtils.getString(R.string.no_select);
-        }else {
-            tvHouseType = room+livingRoom+toilet;
-        }
-        
+        String tvHouseType = TextUtils.isEmpty(room)?UIUtils.getString(R.string.no_select):room+livingRoom+toilet;
+
         tvc_house_type.setText(tvHouseType);//设置室 厅 卫
         String style = styleMap.get(decorationNeedsListBean.getDecoration_style());
         tvc_measure_form_style.setText(UIUtils.getNoSelectIfEmpty(style));//风格
@@ -144,12 +139,10 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         for (DecorationBiddersBean decorationBiddersBean : list) {
             if (decorationBiddersBean.getDesigner_id().equals(designer_id)) {
                 tvc_name.setText(decorationBiddersBean.getUser_name());
-
                 orders = decorationBiddersBean.getOrders();
                 hs_uid = decorationBiddersBean.getUid();
             }
         }
-
         setMeasureTime();
 
     }
