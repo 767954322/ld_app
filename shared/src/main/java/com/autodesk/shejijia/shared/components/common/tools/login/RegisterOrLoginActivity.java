@@ -192,7 +192,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
             super.onPageStarted(view, url, favicon);
             if (isFirst) {
                 isFirst = false;
-                CustomProgress.show(RegisterOrLoginActivity.this, "", false, null);
+                if (!isFinishing()){
+                    CustomProgress.show(RegisterOrLoginActivity.this, "", false, null);
+                }
             }
         }
 
