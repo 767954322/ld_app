@@ -29,8 +29,8 @@
         <RelativeLayout
             android:id="@+id/rl_item_decoration"
             android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
             android:layout_height="@dimen/size_50"
+            android:layout_gravity="center_vertical"
             android:layout_toRightOf="@id/piv_consumer_order_photo_01"
             android:background="@color/white"
             android:padding="@dimen/size_5">
@@ -53,13 +53,13 @@
                 android:id="@+id/ib_flow_chart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/size_5"
                 android:background="@color/white"
                 android:drawablePadding="@dimen/size_8"
+                android:enabled="false"
                 android:src="@drawable/im_ico" />
 
         </RelativeLayout>
@@ -84,8 +84,6 @@
             app:loadMoreMode="scroll" />
 
     </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
-
-    <include layout="@layout/view_parting_line"></include>
 
     <RelativeLayout
         android:id="@+id/rl_stop_contract"
