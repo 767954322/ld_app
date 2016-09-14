@@ -23,11 +23,6 @@ import java.util.List;
  */
 
 public class SelectDesignerActivity extends NavigationBarActivity implements SelectDesignAdapter.MeasureFormCallBack{
-    private ListViewForScrollView lv_selection_design;
-    private List<DecorationBiddersBean> decorationBiddersBeans;
-    private SelectDesignAdapter selectDesignAdapter;
-    private DecorationNeedsListBean decorationNeedsListBean;
-    private boolean falg;
 
     @Override
     protected int getLayoutResId() {
@@ -36,7 +31,7 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
 
     @Override
     protected void initView() {
-        lv_selection_design = (ListViewForScrollView)findViewById(R.id.lv_selection_design);
+        lvselectionDesign = (ListViewForScrollView)findViewById(R.id.lv_selection_design);
     }
     @Override
     protected void initExtraBundle() {
@@ -50,9 +45,9 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
         falg = false;
         isSelected();
         if(selectDesignAdapter == null){
-            selectDesignAdapter = new SelectDesignAdapter(this,decorationBiddersBeans,R.layout.item_select_designer,falg,decorationNeedsListBean.getNeeds_id());
+            selectDesignAdapter = new SelectDesignAdapter(this,decorationBiddersBeans,R.layout.item_select_designer,falg);
         }
-        lv_selection_design.setAdapter(selectDesignAdapter);
+        lvselectionDesign.setAdapter(selectDesignAdapter);
 
     }
     private void isSelected(){
@@ -82,4 +77,9 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
         super.onActivityResult(requestCode, resultCode, data);
             finish();
     }
+    private ListViewForScrollView lvselectionDesign;
+    private List<DecorationBiddersBean> decorationBiddersBeans;
+    private SelectDesignAdapter selectDesignAdapter;
+    private DecorationNeedsListBean decorationNeedsListBean;
+    private boolean falg;
 }

@@ -37,9 +37,6 @@ import java.util.List;
  */
 
 public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
-    private ViewPager vpSelection;
-    private ViewGroup vgSelection;
-    private ImageButton imReservationButton;
 
     /**
      * 装点点的ImageView数组
@@ -184,5 +181,9 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             }
         }
     }
+    private ViewPager vpSelection;
+    private ViewGroup vgSelection;
+    private ImageButton imReservationButton;
+
 
 }
