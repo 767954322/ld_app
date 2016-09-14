@@ -709,12 +709,15 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 //                bValid = false;
 //                break;
 //            }
-            inputNum = Integer.parseInt(renderCount);
-            if (inputNum < 0 || inputNum > 99) {
-                showAlertView(R.string.please_input_render_count_correctly);
-                bValid = false;
-                break;
+            if (null!=renderCount){
+                inputNum = Integer.parseInt(renderCount);
+                if (inputNum < 0 || inputNum > 99) {
+                    showAlertView(R.string.please_input_render_count_correctly);
+                    bValid = false;
+                    break;
+                }
             }
+
 
             if (!checkAmontContractValidwithResult(mBiddersEntity.getMeasurement_fee(), total_cost, first_cost)) {
                 bValid = false;
