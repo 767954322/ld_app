@@ -425,7 +425,12 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 String info = GsonUtil.jsonToString(jsonObject);
                 case3DDetailBean = GsonUtil.jsonToBean(info, Case3DDetailBean.class);
                 case3DDetailList.add(case3DDetailBean);
-                setTitleForNavbar(case3DDetailBean.getDesign_name());
+
+                //set tital
+                String str_tital = case3DDetailBean.getDesign_name();
+                boolean isTitalToLong = str_tital.length() > 6;
+                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
 
