@@ -213,6 +213,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                 }
             });
         } else {
+            CustomProgress.cancelDialog();
             AdskApplication.getInstance().doLogin(getActivity());
         }
 ////

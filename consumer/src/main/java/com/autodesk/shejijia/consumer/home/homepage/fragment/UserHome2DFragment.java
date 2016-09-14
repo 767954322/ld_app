@@ -216,6 +216,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 }
             });
         } else {
+            CustomProgress.cancelDialog();
             AdskApplication.getInstance().doLogin(getActivity());
         }
     }
