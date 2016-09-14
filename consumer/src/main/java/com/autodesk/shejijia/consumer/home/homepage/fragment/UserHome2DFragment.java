@@ -619,7 +619,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     @Override
     public void onResume() {
         super.onResume();
-
+        setSwipeRefreshInfo();
         if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()) {
             CustomProgress.cancelDialog();
         }
