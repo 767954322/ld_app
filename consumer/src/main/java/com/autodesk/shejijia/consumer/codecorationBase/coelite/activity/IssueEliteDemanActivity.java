@@ -59,31 +59,19 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     @Override
     protected void initView() {
         super.initView();
-        ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
-        ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
-        et_issue_demand_name = (TextView) findViewById(R.id.et_issue_demand_name);
-        et_issue_demand_mobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
-        et_issue_demand_area = (EditText) findViewById(R.id.et_issue_demand_area);
-        btn_send_demand = (Button) findViewById(R.id.btn_send_demand);
-        tv_issue_house_type = (TextView) findViewById(R.id.tv_issue_house_type);
-        tv_issue_demand_design_budget = (TextView) findViewById(R.id.tv_issue_demand_design_budget);
-        tv_issue_demand_budget = (TextView) findViewById(R.id.tv_issue_demand_budget);
-        tv_issue_room = (TextView) findViewById(R.id.tv_issue_room);
-        tv_issue_style = (TextView) findViewById(R.id.tv_issue_style);
-        tv_issue_address = (TextView) findViewById(R.id.tv_issue_address);
-        tv_issue_demand_detail_address = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
-
-
-//        et_issue_demand_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (!hasFocus) {
-//                    String area = et_issue_demand_area.getText().toString().trim();
-//                    area = String.format("%.2f", Double.valueOf(area));
-//                    et_issue_demand_area.setText(area);
-//                }
-//            }
-//        });
+        llIssueHouseType = (LinearLayout) findViewById(R.id.ll_issue_house_type);
+        llIssueStyle = (LinearLayout) findViewById(R.id.ll_issue_style);
+        etIssueDemandName = (TextView) findViewById(R.id.et_issue_demand_name);
+        etIssueDemandMobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
+        etIssueDemandArea = (EditText) findViewById(R.id.et_issue_demand_area);
+        btnSendDemand = (Button) findViewById(R.id.btn_send_demand);
+        tvIssueHouseType = (TextView) findViewById(R.id.tv_issue_house_type);
+        tvIssueDemandDesignBudget = (TextView) findViewById(R.id.tv_issue_demand_design_budget);
+        tvIssueDemandBudget = (TextView) findViewById(R.id.tv_issue_demand_budget);
+        tvIssueRoom = (TextView) findViewById(R.id.tv_issue_room);
+        tvIssueStyle = (TextView) findViewById(R.id.tv_issue_style);
+        tvIssueAddress = (TextView) findViewById(R.id.tv_issue_address);
+        tvIssueDemandDetailAddress = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
 
     }
 
@@ -92,7 +80,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     protected void initExtraBundle() {
         super.initExtraBundle();
         nick_name = getIntent().getStringExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME);
-        et_issue_demand_name.setText(nick_name);
+        etIssueDemandName.setText(nick_name);
     }
 
     @Override
@@ -110,14 +98,14 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     @Override
     protected void initListener() {
         super.initListener();
-        btn_send_demand.setOnClickListener(this);
-        ll_issue_house_type.setOnClickListener(this);
-        tv_issue_room.setOnClickListener(this);
-        ll_issue_style.setOnClickListener(this);
-        tv_issue_demand_budget.setOnClickListener(this);
-        tv_issue_demand_design_budget.setOnClickListener(this);
-        tv_issue_address.setOnClickListener(this);
-        et_issue_demand_area.setOnFocusChangeListener(this);
+        btnSendDemand.setOnClickListener(this);
+        llIssueHouseType.setOnClickListener(this);
+        tvIssueRoom.setOnClickListener(this);
+        llIssueStyle.setOnClickListener(this);
+        tvIssueDemandBudget.setOnClickListener(this);
+        tvIssueDemandDesignBudget.setOnClickListener(this);
+        tvIssueAddress.setOnClickListener(this);
+        etIssueDemandArea.setOnFocusChangeListener(this);
     }
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
@@ -135,9 +123,9 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
      */
     private void onFocusChangeForArea(boolean hasFocus){
         if (!hasFocus) {
-            String area = et_issue_demand_area.getText().toString().trim();
+            String area = etIssueDemandArea.getText().toString().trim();
             area = String.format("%.2f", Double.valueOf(area));
-            et_issue_demand_area.setText(area);
+            etIssueDemandArea.setText(area);
         }
     }
 
@@ -147,32 +135,32 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         switch (v.getId()) {
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
-                et_issue_demand_area.clearFocus();
+                etIssueDemandArea.clearFocus();
                 break;
 
             case R.id.tv_issue_room: /// 请选择户型：室 厅 卫 .
                 homeTypeDialog.show(getFragmentManager(), null);
-                et_issue_demand_area.clearFocus();
+                etIssueDemandArea.clearFocus();
                 break;
 
             case R.id.ll_issue_style: /// 风格 .
                 pvStyleOptions.show();
-                et_issue_demand_area.clearFocus();
+                etIssueDemandArea.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_budget: /// 请选择装修预算 .
                 pvDecorationBudgetOptions.show();
-                et_issue_demand_area.clearFocus();
+                etIssueDemandArea.clearFocus();
                 break;
 
             case R.id.tv_issue_demand_design_budget: /// 请选择设计预算 .
                 pvDesignBudgetOptions.show();
-                et_issue_demand_area.clearFocus();
+                etIssueDemandArea.clearFocus();
                 break;
 
             case R.id.tv_issue_address: /// 请选择地址：省 市 区 .
                 getPCDAddress();
-                et_issue_demand_area.clearFocus();
+                etIssueDemandArea.clearFocus();
                 break;
 
             case R.id.btn_send_demand: /// 提交 .
@@ -188,15 +176,15 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         if (!isSendState) {
             return;
         }
-        et_issue_demand_area.clearFocus();
-        String area = et_issue_demand_area.getText().toString();
+        etIssueDemandArea.clearFocus();
+        String area = etIssueDemandArea.getText().toString();
 
-        String mobile = et_issue_demand_mobile.getText().toString();
-        String detail_address = tv_issue_demand_detail_address.getText().toString();
-        if(!VerificationRequired(area,mobile,detail_address)){
+        String mobile = etIssueDemandMobile.getText().toString();
+        String detailAddress = tvIssueDemandDetailAddress.getText().toString();
+        if(!VerificationRequired(area,mobile,detailAddress)){
             return;
         }
-        JSONObject jsonObject = getJSONObject(area,mobile,detail_address);
+        JSONObject jsonObject = getJSONObject(area,mobile,detailAddress);
         isSendState = false;
         CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
         sendDesignRequirements(jsonObject);
@@ -211,7 +199,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         }
 
         area = (area != null && area.length() > 0) ? String.format("%.2f", Double.valueOf(area)) : "";
-        et_issue_demand_area.setText(area);
+        etIssueDemandArea.setText(area);
         String subNum = "0";
         if (area.contains(".")) {
             subNum = area.substring(0, area.indexOf("."));
@@ -261,7 +249,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DISTRICT_NAME, mCurrentDistrict);
             jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_AREA, area);
             jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_TYPE, house_type);
-            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, living_room);
+            jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, livingRoom);
             jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE, mCurrentProvinceCode);
             jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE_NAME, mCurrentProvince);
             jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, room);
@@ -310,7 +298,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
 
                         area = UIUtils.getNoStringIfEmpty(area);
 
-                        tv_issue_address.setText(province + " " + city + " " + area);
+                        tvIssueAddress.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();
                     }
 
@@ -359,14 +347,14 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             @Override
             public void onClick(String roomName, String livingRoom, String toilet) {
                 String roomType = roomName + livingRoom + toilet;
-                tv_issue_room.setText(roomType);
+                tvIssueRoom.setText(roomType);
 
                 /// convet .
                 Map<String, String> livingRoomMap = AppJsonFileReader.getLivingRoom(IssueEliteDemanActivity.this);
                 Map<String, String> roomHallMap = AppJsonFileReader.getRoomHall(IssueEliteDemanActivity.this);
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(IssueEliteDemanActivity.this);
 
-                living_room = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                livingRoom = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
                 room = ConvertUtils.getKeyByValue(roomHallMap, roomName);
                 mToilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
 
@@ -393,7 +381,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 style = styleItems.get(options1);
-                tv_issue_style.setText(style);
+                tvIssueStyle.setText(style);
                 Map<String, String> space = AppJsonFileReader.getStyle(IssueEliteDemanActivity.this);
                 style = ConvertUtils.getKeyByValue(space, style);
             }
@@ -418,7 +406,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 house_type = houseTypeItems.get(options1);
-                tv_issue_house_type.setText(house_type);
+                tvIssueHouseType.setText(house_type);
                 Map<String, String> space = AppJsonFileReader.getSpace(IssueEliteDemanActivity.this);
                 house_type = ConvertUtils.getKeyByValue(space, house_type);
             }
@@ -443,7 +431,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mDesignBudget = designBudgetItems.get(options1);
-                tv_issue_demand_design_budget.setText(mDesignBudget);
+                tvIssueDemandDesignBudget.setText(mDesignBudget);
             }
         });
     }
@@ -465,7 +453,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 mDecorationBudget = decorationBudgetItems.get(options1);
-                tv_issue_demand_budget.setText(mDecorationBudget);
+                tvIssueDemandBudget.setText(mDecorationBudget);
             }
         });
     }
@@ -523,19 +511,19 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     }
 
     /// 控件.
-    private LinearLayout ll_issue_house_type;
-    private LinearLayout ll_issue_style;
-    private TextView et_issue_demand_name;
-    private TextView tv_issue_demand_budget;
-    private TextView tv_issue_demand_design_budget;
-    private TextView tv_issue_house_type;
-    private TextView tv_issue_room;
-    private TextView tv_issue_style;
-    private TextView tv_issue_address;
-    private EditText tv_issue_demand_detail_address;
-    private EditText et_issue_demand_mobile;
-    private EditText et_issue_demand_area;
-    private Button btn_send_demand;
+    private LinearLayout llIssueHouseType;
+    private LinearLayout llIssueStyle;
+    private TextView etIssueDemandName;
+    private TextView tvIssueDemandBudget;
+    private TextView tvIssueDemandDesignBudget;
+    private TextView tvIssueHouseType;
+    private TextView tvIssueRoom;
+    private TextView tvIssueStyle;
+    private TextView tvIssueAddress;
+    private EditText tvIssueDemandDetailAddress;
+    private EditText etIssueDemandMobile;
+    private EditText etIssueDemandArea;
+    private Button btnSendDemand;
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;
     private OptionsPickerView pvDesignBudgetOptions;
@@ -549,7 +537,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     private String mDesignBudget;
     private String mDecorationBudget;
     private String nick_name;
-    private String room, living_room, mToilet;
+    private String room, livingRoom, mToilet;
     private boolean isSendState = true;
     public static final int RESULT_CODE = 101;
 
