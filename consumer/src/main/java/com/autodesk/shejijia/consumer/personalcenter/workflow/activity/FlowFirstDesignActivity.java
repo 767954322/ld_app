@@ -251,27 +251,11 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
 
         public void onOK() {
-////            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success));
-//            Toast toast = Toast.makeText(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
-////            toast.setGravity(Gravity.CENTER,0,0);
-//            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-//            toast.show();
             openAlertView(UIUtils.getString(R.string.pay_success),0);
-            setResult(FirstForContract);
-            finish();
         }
 
         public void onFail() {
-//            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed));
-//            Toast toast = Toast.makeText(FlowFirstDesignActivity.this,UIUtils.getString(R.string.pay_failed),Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
-//            toast.show();
-//            Toast toast = Toast.makeText(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
-////            toast.setGravity(Gravity.CENTER,0,0);
-//            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-//            toast.show();
             openAlertView(UIUtils.getString(R.string.pay_failed),1);
-//            isLock = true;
         }
     };
     private void openAlertView(String content,final int isSuccess){
