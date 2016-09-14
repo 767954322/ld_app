@@ -369,7 +369,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         mBtnSendBid.setEnabled(false);
         mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
         mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
-        mBtnSendBid.setText(UIUtils.getString(R.string.bided));
+//        mBtnSendBid.setText(UIUtils.getString(R.string.bided));
         getAlertView(UIUtils.getString(R.string.should_number_full), null, false).show();
     }
 
