@@ -571,7 +571,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             if (type.equalsIgnoreCase("0")) {
                 imageListsXuanRan.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             } else if (type.equalsIgnoreCase("4")) {
-                imageListsManYou.add(imageBeanLists.get(i).getLink() + "HD.jpg");
+                imageListsManYou.add(imageBeanLists.get(i).getLink());
             } else if (type.equalsIgnoreCase("9")) {
                 imageListsHuXing.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             }
