@@ -26,13 +26,13 @@
 <style type='text/css'>@import url('ie-9.css');</style>
 
 </head>
- <body>
+<body>
         <!-- THE LOADER -->
         <!-- MAIN CONTENT -->
         <div id="content-block">
             <div class="container">
                 <div class="about-description">
-                    <img class="img-responsive" src="logo.png" alt="" style="width:70%;height:70%;margin-left:16%">
+                    <img class="file:///android_asset/about/img-responsive" src="file:///android_asset/about/logo.png" alt="" style="width:70%;height:70%;margin-left:16%">
                 </div>
             </div>
             <div class="container-fluid">
