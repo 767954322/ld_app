@@ -58,7 +58,7 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
-        String msg = tvc_content.getText().toString();
+        String msg = tvc_content.getText().toString().trim();
         boolean matches = msg.matches(RegexUtil.NICK_NAME_REGEX);
         boolean num = msg.matches(RegexUtil.MEASURE_FEE_REGEX);
         if (pTag.equals(Constant.PersonCenterTagKey.DESIGNER_INFO)) {
