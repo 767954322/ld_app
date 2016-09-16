@@ -10,7 +10,6 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.pgyersdk.crash.PgyCrashManager;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -23,8 +22,6 @@ public class ConsumerApplication extends AdskApplication {
 
         reqisterWXAppId();
 
-        //注册蒲公英
-        PgyCrashManager.register(this);
     }
 
     private void reqisterWXAppId() {

@@ -492,15 +492,15 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             getThumbUp(case3DDetailBean.getDesign_asset_id());
         }
 
-        if (case3DDetailBean.getDesign_file()==null){
+        if (case3DDetailBean.getDesign_file() == null) {
             return;
         }
-        List<Case3DDetailBean.DesignFileBean> images =case3DDetailBean.getDesign_file();
+        List<Case3DDetailBean.DesignFileBean> images = case3DDetailBean.getDesign_file();
 
 
         //后台逻辑修改  顶部图片改动
         String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath();
-        if (thumbnailMainPath!=null){
+        if (thumbnailMainPath != null) {
             ImageUtils.displayIconImage(thumbnailMainPath + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
         }
 //
@@ -542,13 +542,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         tvheadThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
         //ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
 
-        if (case3DDetailBean.getDesigner_info().getNick_name()!=null){
+        if (case3DDetailBean.getDesigner_info().getNick_name() != null) {
             ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getNick_name());
-        }else {
+        } else {
             ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
         }
 //        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
-        ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, case3DDetailBean.getDesigner_info().getAvatar());
+        ImageUtils.displayAvatarImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+
     }
 
 
