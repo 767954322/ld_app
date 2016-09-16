@@ -1,11 +1,18 @@
 package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +26,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.AnimationUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -30,6 +38,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * @author  .
  * @version 1.0 .
@@ -69,6 +80,27 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     @Override
     protected void initData() {
         isLoginUserJust = isLoginUser();
+
+        handler = new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+
+                    case 0:
+                        if (now_order != null){
+
+                            AnimationUtils.getInstance().clearAnimationControl(now_order);
+                            AnimationUtils.getInstance().setAnimationShow(now_order);
+                        }
+                        break;
+                }
+            }
+        };
+
+
+        AnimationUtils.getInstance().setHandler(handler);
         getWorkRoomData("91", 0, 10);
         ImageUtils.displayIconImage("drawable://" + R.drawable.work_room_heard_bg, img_header);
     }
@@ -126,8 +158,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         MPServerHttpManager.getInstance().getWorkRoomList(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
                 work_room_refresh_view.loadmoreFinish(PullToRefreshLayout.FAIL);
             }
 
@@ -185,6 +216,69 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
+        work_room_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                switch(scrollState){
+
+
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE://当屏幕停止滚动时
+
+
+//                        AnimationUtils.getInstance().controlAnimation(now_order);
+
+                        controlAnimation();
+
+
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING://惯性滑动时
+
+
+                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://手指触摸滑动时
+
+                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+
+                        break;
+
+                }
+
+                }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+//                //滑动到底部的时候
+//                if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1 ){
+//
+//
+//                    AnimationUtils.getInstance().controlAnimation(now_order);
+//                    AnimationUtils.getInstance().setAnimationShow(now_order);
+//                }
+//                //滑动到顶部了
+//                if (work_room_listView.getFirstVisiblePosition() == 0){
+//
+//
+//                    AnimationUtils.getInstance().controlAnimation(now_order);
+//                    AnimationUtils.getInstance().setAnimationShow(now_order);
+//
+//                }
+
+            }
+
+        }
+
+        );
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     private int LIMIT = 10;
@@ -199,6 +293,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
         isLoadMore = true;
         OFFSET = OFFSET + 10;
+        AnimationUtils.getInstance().setAnimationDismiss(now_order);
         getWorkRoomData("91", OFFSET, LIMIT);
 
     }
@@ -243,11 +338,62 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
     }
 
+    //判断页面滚动监听，
+
+    /**
+     * 背景动画效果
+     * */
+    public void setAnimationDismiss(View view){
+
+        AnimationSet animationSet = new AnimationSet(true);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
+        alphaAnimation.setDuration(2000);
+        alphaAnimation.setFillAfter(true);
+        animationSet.addAnimation(alphaAnimation);
+        view.startAnimation(animationSet);
+    }
+
+    public void setAnimationShow(View view){
+
+        AnimationSet animationSet = new AnimationSet(true);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+        alphaAnimation.setDuration(2000);
+        alphaAnimation.setFillAfter(true);
+        animationSet.addAnimation(alphaAnimation);
+        view.startAnimation(animationSet);
+    }
+
+    public void controlAnimation(){
+
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                Message message = handler.obtainMessage();
+                message.what = 0;
+                handler.sendMessage(message);
+                if (timer != null){
+
+                    timer.cancel();
+                    timer = null;
+                }
+            }
+        };
+        if (timer == null){
+
+            timer = new Timer();
+            timer.schedule(timerTask,1500,5000);
+        }
+
+    }
+
 
     private ListView work_room_listView;
     private View viewHead;
     private TextView now_order;
     private ImageView img_header;
+    private Handler handler;
+    private Timer timer;
 
     private PullToRefreshLayout work_room_refresh_view;
     private WorkRoomListBeen workRoomListBeen;

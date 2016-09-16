@@ -211,6 +211,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         });
     }
 
+
+
+
     @Override
     public void onClick(View view) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -865,6 +868,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     protected void onRestart() {
         super.onRestart();
         showOrHideChatMeasure();
+        getSeekDesignerDetailHomeData(mDesignerId, mHsUid);
     }
 
     @Override

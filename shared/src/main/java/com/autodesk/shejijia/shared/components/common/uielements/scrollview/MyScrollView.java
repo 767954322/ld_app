@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.uielements.scrollview;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ public class MyScrollView extends ScrollView implements Pullable {
     private MyScrollViewListener myScrollViewListener;
     private boolean isRefresh = true;
     private boolean isLoad = false;
+    private Handler handler;
 
     public MyScrollView(Context context) {
         super(context);
@@ -42,12 +44,6 @@ public class MyScrollView extends ScrollView implements Pullable {
 
     }
 
-    @Override
-    protected boolean dispatchHoverEvent(MotionEvent event) {
-        return super.dispatchHoverEvent(event);
-
-
-    }
 
     @Override
     protected void onScrollChanged(int x, int y, int oldx, int oldy) {
@@ -102,4 +98,5 @@ public class MyScrollView extends ScrollView implements Pullable {
 //        }
         return isLoad;
     }
+
 }

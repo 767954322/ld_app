@@ -374,7 +374,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvc_measure_fitment_budget.setText(TextUtils.isEmpty(requirement.getDecoration_budget()) ?
                 UIUtils.getString(R.string.no_select) : requirement.getDecoration_budget());
 
-        tvc_measure_form_area.setText(requirement.getHouse_area() + "m²");
+        tvc_measure_form_area.setText(requirement.getHouse_area() /*+ "m²"*/);
 
         district_name = UIUtils.getNoStringIfEmpty(district_name);
 
