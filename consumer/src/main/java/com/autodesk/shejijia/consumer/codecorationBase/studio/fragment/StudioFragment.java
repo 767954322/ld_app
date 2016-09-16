@@ -340,28 +340,28 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
     //判断页面滚动监听，
 
-    /**
-     * 背景动画效果
-     * */
-    public void setAnimationDismiss(View view){
-
-        AnimationSet animationSet = new AnimationSet(true);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
-        alphaAnimation.setDuration(2000);
-        alphaAnimation.setFillAfter(true);
-        animationSet.addAnimation(alphaAnimation);
-        view.startAnimation(animationSet);
-    }
-
-    public void setAnimationShow(View view){
-
-        AnimationSet animationSet = new AnimationSet(true);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
-        alphaAnimation.setDuration(2000);
-        alphaAnimation.setFillAfter(true);
-        animationSet.addAnimation(alphaAnimation);
-        view.startAnimation(animationSet);
-    }
+//    /**
+//     * 背景动画效果
+//     * */
+//    public void setAnimationDismiss(View view){
+//
+//        AnimationSet animationSet = new AnimationSet(true);
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
+//        alphaAnimation.setDuration(2000);
+//        alphaAnimation.setFillAfter(true);
+//        animationSet.addAnimation(alphaAnimation);
+//        view.startAnimation(animationSet);
+//    }
+//
+//    public void setAnimationShow(View view){
+//
+//        AnimationSet animationSet = new AnimationSet(true);
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+//        alphaAnimation.setDuration(2000);
+//        alphaAnimation.setFillAfter(true);
+//        animationSet.addAnimation(alphaAnimation);
+//        view.startAnimation(animationSet);
+//    }
 
     public void controlAnimation(){
 
