@@ -488,7 +488,7 @@
     <string name="please_select_form">请选择户型</string>
     <string name="please_select_addresses">请选择地址</string>
     <string name="please_choose_addresses">请选择项目地址</string>
-    <string name="please_enter_correct_address">小区名称的字符长度在2到32之间</string>
+    <string name="please_enter_correct_address">请输入正确的小区名称(字符长度为2-32之间且不包含特殊字符)</string>
     <string name="data_submission">数据提交中...</string>
 
     <!--  LookMoreCaseDetailActivity -->
