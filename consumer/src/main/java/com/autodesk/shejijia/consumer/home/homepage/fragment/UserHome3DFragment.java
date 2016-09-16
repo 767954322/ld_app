@@ -560,8 +560,9 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
 
     @Override
     public void onResume() {
-        setSwipeRefreshInfo();
         super.onResume();
+//        setSwipeRefreshInfo();
+        mAdapter.notifyDataSetChanged();
         if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()) {
             CustomProgress.cancelDialog();
         }
