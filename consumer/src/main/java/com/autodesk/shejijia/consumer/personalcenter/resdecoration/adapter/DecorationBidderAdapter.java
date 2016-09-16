@@ -106,11 +106,13 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
         holder.setText(R.id.tv_workflow_state, MPWkFlowManager.getWkSubNodeName(mActivity, mWkTempleId, wk_cur_sub_node_id));
 
+        final String designer_thread_id = biddersBean.getDesign_thread_id();
+        final String userName = biddersBean.getUser_name();
         /// 聊天 .
         holder.setOnClickListener(R.id.img_designer_chat, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openChatRoom();
+                openChatRoom(designer_thread_id,userName,designer_id);
             }
         });
 
@@ -160,14 +162,15 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
     /**
      * 打开聊天室
+     * @param designer_thread_id
+     * @param userName
+     * @param designer_id
      */
-    private void openChatRoom() {
+    private void openChatRoom(String designer_thread_id, String userName, String designer_id) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         String member_id = memberEntity.getAcs_member_id();
         String memType = memberEntity.getMember_type();
-        String designer_thread_id = biddersBean.getDesign_thread_id();
-        String userName = biddersBean.getUser_name();
-        String designer_id = biddersBean.getDesigner_id();
+
 
         if (TextUtils.isEmpty(designer_thread_id)) {
             designer_thread_id = "";
