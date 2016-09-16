@@ -124,45 +124,45 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         getWorkRoomDetailData(acs_member_id, 0, 10, hs_uid);
 //        setAnimationBackgroud(common_navbar);
         isLoginUserJust = isLoginUser();
-        handler = new Handler() {
-
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what) {
-
-                    case 0:
-                        if (now_order != null) {
-
-                            AnimationUtils.getInstance().clearAnimationControl(now_order);
-                            AnimationUtils.getInstance().setAnimationShow(now_order);
-                        }
-                        break;
-                }
-            }
-        };
-
-
-        AnimationUtils.getInstance().setHandler(handler);
-        mGestureDetector = new GestureDetectorCompat(this, new MyGestureDetectorImp());
-        scrollview_studio.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-
-                    case MotionEvent.ACTION_UP:
-
-                        AnimationUtils.getInstance().clearAnimationControl(now_order_details);
-                        AnimationUtils.getInstance().setAnimationShow(now_order_details);
-                        break;
-
-                }
+//        handler = new Handler() {
+//
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                switch (msg.what) {
+//
+//                    case 0:
+//                        if (now_order != null) {
+//
+//                            AnimationUtils.getInstance().clearAnimationControl(now_order);
+//                            AnimationUtils.getInstance().setAnimationShow(now_order);
+//                        }
+//                        break;
+//                }
+//            }
+//        };
 
 
-                return mGestureDetector.onTouchEvent(event);
-            }
-        });
+//        AnimationUtils.getInstance().setHandler(handler);
+//        mGestureDetector = new GestureDetectorCompat(this, new MyGestureDetectorImp());
+//        scrollview_studio.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//                switch (event.getAction()) {
+//
+//                    case MotionEvent.ACTION_UP:
+//
+//                        AnimationUtils.getInstance().clearAnimationControl(now_order_details);
+//                        AnimationUtils.getInstance().setAnimationShow(now_order_details);
+//                        break;
+//
+//                }
+//
+//
+//                return mGestureDetector.onTouchEvent(event);
+//            }
+//        });
     }
 
     public void upDataForView(WorkRoomDetailsBeen workRoomDetailsBeen) {
@@ -476,60 +476,60 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private GridView gridView;
 
 
-    private class MyGestureDetectorImp extends GestureDetector.SimpleOnGestureListener {
-
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-//            controlAnimation();
-            LogUtils.e("111", "onSingleTapUP");
-
-
-            return super.onSingleTapUp(e);
-        }
-
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//            AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-
-            switch (e2.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    LogUtils.e("111", "onSingleTapUP");
-
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    LogUtils.e("222", "onSingleTapUP");
-                    AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
-                    break;
-                case MotionEvent.ACTION_UP:
-                    LogUtils.e("333", "onSingleTapUP");
-
-                    break;
-            }
-
-
-//            switch (e1.getAction()){
+//    private class MyGestureDetectorImp extends GestureDetector.SimpleOnGestureListener {
+//
+//
+//        @Override
+//        public boolean onSingleTapUp(MotionEvent e) {
+////            controlAnimation();
+//            LogUtils.e("111", "onSingleTapUP");
+//
+//
+//            return super.onSingleTapUp(e);
+//        }
+//
+//
+//        @Override
+//        public boolean onDown(MotionEvent e) {
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+////            AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
+//            return super.onFling(e1, e2, velocityX, velocityY);
+//        }
+//
+//
+//        @Override
+//        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+//
+//            switch (e2.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    LogUtils.e("111", "onSingleTapUP");
+//
+//                    break;
+//                case MotionEvent.ACTION_MOVE:
+//                    LogUtils.e("222", "onSingleTapUP");
+//                    AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
+//                    break;
 //                case MotionEvent.ACTION_UP:
-//                    LogUtils.e("444","onSingleTapUP");
-//                    AnimationUtils.getInstance().clearAnimationControl(now_order_details);
-//                    AnimationUtils.getInstance().setAnimationShow(now_order_details);
+//                    LogUtils.e("333", "onSingleTapUP");
+//
 //                    break;
 //            }
-            return super.onScroll(e1, e2, distanceX, distanceY);
-        }
-    }
+//
+//
+////            switch (e1.getAction()){
+////                case MotionEvent.ACTION_UP:
+////                    LogUtils.e("444","onSingleTapUP");
+////                    AnimationUtils.getInstance().clearAnimationControl(now_order_details);
+////                    AnimationUtils.getInstance().setAnimationShow(now_order_details);
+////                    break;
+////            }
+//            return super.onScroll(e1, e2, distanceX, distanceY);
+//        }
+//    }
 
     public void controlAnimation() {
 

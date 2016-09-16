@@ -81,26 +81,26 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     protected void initData() {
         isLoginUserJust = isLoginUser();
 
-        handler = new Handler(){
+//        handler = new Handler(){
+//
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                switch (msg.what){
+//
+//                    case 0:
+//                        if (now_order != null){
+//
+//                            AnimationUtils.getInstance().clearAnimationControl(now_order);
+//                            AnimationUtils.getInstance().setAnimationShow(now_order);
+//                        }
+//                        break;
+//                }
+//            }
+//        };
 
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                switch (msg.what){
 
-                    case 0:
-                        if (now_order != null){
-
-                            AnimationUtils.getInstance().clearAnimationControl(now_order);
-                            AnimationUtils.getInstance().setAnimationShow(now_order);
-                        }
-                        break;
-                }
-            }
-        };
-
-
-        AnimationUtils.getInstance().setHandler(handler);
+//        AnimationUtils.getInstance().setHandler(handler);
         getWorkRoomData("91", 0, 10);
         ImageUtils.displayIconImage("drawable://" + R.drawable.work_room_heard_bg, img_header);
     }
@@ -216,62 +216,62 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
             }
         });
 
-        work_room_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-                switch(scrollState){
-
-
-                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE://当屏幕停止滚动时
-
-
-//                        AnimationUtils.getInstance().controlAnimation(now_order);
-
-                        controlAnimation();
-
-
-                        break;
-                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING://惯性滑动时
-
-
-                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
-
-                        break;
-                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://手指触摸滑动时
-
-                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
-
-                        break;
-
-                }
-
-                }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-//                //滑动到底部的时候
-//                if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1 ){
+//        work_room_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//
+//                switch(scrollState){
 //
 //
-//                    AnimationUtils.getInstance().controlAnimation(now_order);
-//                    AnimationUtils.getInstance().setAnimationShow(now_order);
-//                }
-//                //滑动到顶部了
-//                if (work_room_listView.getFirstVisiblePosition() == 0){
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE://当屏幕停止滚动时
 //
 //
-//                    AnimationUtils.getInstance().controlAnimation(now_order);
-//                    AnimationUtils.getInstance().setAnimationShow(now_order);
+////                        AnimationUtils.getInstance().controlAnimation(now_order);
+//
+//                        controlAnimation();
+//
+//
+//                        break;
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING://惯性滑动时
+//
+//
+//                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+//
+//                        break;
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://手指触摸滑动时
+//
+//                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+//
+//                        break;
 //
 //                }
+//
+//                }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//
+////                //滑动到底部的时候
+////                if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1 ){
+////
+////
+////                    AnimationUtils.getInstance().controlAnimation(now_order);
+////                    AnimationUtils.getInstance().setAnimationShow(now_order);
+////                }
+////                //滑动到顶部了
+////                if (work_room_listView.getFirstVisiblePosition() == 0){
+////
+////
+////                    AnimationUtils.getInstance().controlAnimation(now_order);
+////                    AnimationUtils.getInstance().setAnimationShow(now_order);
+////
+////                }
+//
+//            }
+//
+//        }
 
-            }
-
-        }
-
-        );
+//        );
 
 
     }
