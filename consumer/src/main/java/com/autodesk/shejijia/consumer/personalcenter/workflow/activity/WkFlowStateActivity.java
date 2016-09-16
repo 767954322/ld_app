@@ -59,7 +59,6 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  */
 public class WkFlowStateActivity extends BaseWorkFlowActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
-    private boolean elite;
 
     @Override
     protected int getLayoutResId() {
@@ -543,20 +542,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.onBackPressed();
         refreshWkFlowState();
     }
-
-//    /**
-//     * 是否是精选
-//     * 　true: 精选
-//     */
-//    public boolean isElite() {
-//        switch (String.valueOf(wk_cur_template_id)) {
-//            case WkTemplateConstants.IS_ELITE:
-//                return true;
-//            default:
-//                return false;
-//        }
-//    }
-
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
     private TipWorkFlowTemplateBean tipWorkFlowTemplateBean;

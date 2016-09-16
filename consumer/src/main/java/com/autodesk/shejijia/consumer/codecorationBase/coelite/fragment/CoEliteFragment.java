@@ -21,20 +21,22 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
 
 import java.util.List;
-
 /**
- * 精选
+ * @author luchongbin .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file CoEliteFragment.java  .
+ * @brief 六大产品-精选 .
  */
+
 public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
-    private ViewPager vpSelection;
-    private ViewGroup vgSelection;
-    private ImageButton imReservationButton;
 
     /**
      * 装点点的ImageView数组
@@ -116,6 +118,10 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         }
     }
 
+    /**
+     * 点击立即预约按钮跳转到发布精选需求界面
+     */
+
     private void showIssueDemandActivity() {
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -123,7 +129,12 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             AdskApplication.getInstance().doLogin(getActivity());
             return;
         }
-        getConsumerInfoData(mMemberEntity.getAcs_member_id());
+
+        String nick_name = (mMemberEntity.getNick_name() != null
+                        && mMemberEntity.getNick_name().length() > 0) ? mMemberEntity.getNick_name() : UIUtils.getString(R.string.anonymity);
+        Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
+        intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
+        startActivity(intent);
 
     }
 
@@ -145,34 +156,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         MPServerHttpManager.getInstance().getDesignWorks(okResponseCallback);
 
     }
-    /**
-     * 获取个人基本信息
-     *
-     * @param member_id
-     * @brief For details on consumers .
-     */
-    public void getConsumerInfoData(String member_id) {
-        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                String mNick_name = mConsumerEssentialInfoEntity.getNick_name();
-//                String nick_name = (mNick_name != null && mMemberEntity.getNick_name() != null
-//                        && mMemberEntity.getNick_name().length() > 0) ? mMemberEntity.getNick_name() : UIUtils.getString(R.string.anonymity);
-                Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
-                intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNick_name);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-            }
-        });
-    }
-
 
     @Override
     public void onPageScrollStateChanged(int arg0) {
@@ -198,5 +181,9 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             }
         }
     }
+    private ViewPager vpSelection;
+    private ViewGroup vgSelection;
+    private ImageButton imReservationButton;
+
 
 }

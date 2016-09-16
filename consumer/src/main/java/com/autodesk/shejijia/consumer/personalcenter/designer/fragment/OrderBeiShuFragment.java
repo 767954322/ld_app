@@ -212,7 +212,6 @@ public class OrderBeiShuFragment extends BaseFragment {
                 Message msg = Message.obtain();
                 msg.obj = offset;
                 handler.sendMessage(msg);
-                mMyBeiShuMealAdapter.notifyDataSetChanged();
             }
 
             @Override

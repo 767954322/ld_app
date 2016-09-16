@@ -300,17 +300,16 @@ public abstract class AdskApplication extends Application {
     }
 
 
-    private static void setMemberEntity(MemberEntity memberEntity) {
+    public static void setMemberEntity(MemberEntity memberEntity) {
         AdskApplication.memberEntity = memberEntity;
     }
 
     /**
      * 用于处理登录后数据的操作
-     * @param strToken
+     * @param entity
      */
 
-    public  void saveSignInInfo(String strToken){
-        MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
+    public  void saveSignInInfo(MemberEntity entity){
         String ZERO = "0";
         /// 为不符合规则的acs_member_id 补足位数 .
         String acs_member_id = entity.getAcs_member_id();

@@ -690,6 +690,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 } else {
                     intSex = 0;
                 }
+                nick_name = event.getmMsg();
                 jsonObject.put(Constant.PersonCenterKey.NICK_NAME, event.getmMsg());
                 jsonObject.put(Constant.PersonCenterKey.GENDER, intSex);
                 jsonObject.put(Constant.PersonCenterKey.HOME_PHONE, mConsumerEssentialInfoEntity.getHome_phone());
@@ -813,6 +814,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             @Override
             public void onResponse(JSONObject jsonObject) {
                 jsonString = GsonUtil.jsonToString(jsonObject);
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                memberEntity.setNick_name(nick_name);
+                AdskApplication.getInstance().saveSignInInfo(memberEntity);
+                AdskApplication.getInstance().setMemberEntity(memberEntity);
                 CustomProgress.cancelDialog();
             }
 

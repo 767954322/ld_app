@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity;
 
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,10 +10,9 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -76,6 +75,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
         coordinator_layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
         ll_scrolling_view_behavior = (LinearLayout) findViewById(R.id.ll_scrolling_view_behavior);
         app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        iv_backimg_detail = (ImageView) findViewById(R.id.iv_backimg_detail);
 
     }
 
@@ -86,6 +86,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
         nav_left_imageButton.setOnClickListener(this);
         bt_grand_reservation.setOnClickListener(this);
+        ib_grand_detail_ico.setOnClickListener(this);
         app_bar_layout.addOnOffsetChangedListener(this);
 
     }
@@ -113,6 +114,28 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
 
                 onClickFromReservation();
 
+                break;
+            case R.id.ib_grand_detail_ico:
+                WindowManager wm = this.getWindowManager();
+                final int height = wm.getDefaultDisplay().getHeight();
+
+                final CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams)app_bar_layout.getLayoutParams()).getBehavior();
+                behavior.onNestedPreScroll(coordinator_layout,app_bar_layout,ll_scrolling_view_behavior,0,height/27,new int[]{0,0});
+                ValueAnimator animator = ValueAnimator.ofInt(0,-height);
+                animator.setTarget(coordinator_layout);
+                animator.setDuration(400);
+                animator.start();
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+                {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation)
+                    {
+//                        coordinator_layout.setTranslationY((Integer) animation.getAnimatedValue());
+                        behavior.onNestedPreScroll(coordinator_layout,app_bar_layout,ll_scrolling_view_behavior,0,height/27,new int[]{0,0});
+                    }
+                });
+                break;
+            default:
                 break;
         }
     }
@@ -194,6 +217,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
                     int b = Color.blue(color);
                     int a = Color.alpha(color);
                     Log.d("willson", "    " + r + "  " + "  " + g + "  " + b);
+                    iv_backimg_detail.setVisibility(View.GONE);
                     if (r > 156) {//白色设置灰色
                         nav_left_imageButton.setImageResource(R.drawable.arrow_g);
                         nav_title_textView.setTextColor(Color.GRAY);
@@ -226,8 +250,15 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
             public void convert(ViewHolder holder, DatailCase item, int position) {
                 ImageView imageView = holder.getView(R.id.iv_item_listview_pic);
                 TextView textView = holder.getView(R.id.tv_item_listview_cn_tital);
-                ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
-                textView.setText(cases_list.get(position).getTitle());
+                DatailCase datailCase = cases_list.get(position);
+
+                if (null!= datailCase&&null!=datailCase.getImages()){
+                    if(datailCase.getImages().size()>0){
+                        ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
+                    }
+//                    ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
+                    textView.setText(cases_list.get(position).getTitle());
+                }
             }
         };
 
@@ -345,6 +376,7 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     private ImageButton bt_grand_reservation;
     private ImageButton ib_grand_detail_ico;
     private ImageView iv_detail_desiner;
+    private ImageView iv_backimg_detail;
     private AppBarLayout app_bar_layout;
     private RelativeLayout rl_navr_header;
     private LinearLayout ll_scrolling_view_behavior;

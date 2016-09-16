@@ -137,7 +137,10 @@ public class Search3DActivity extends NavigationBarActivity implements
                 openPopupWindow(mCetSearchClick.getText().toString());
                 break;
             case R.id.searchc_back:/// 返回.
-                mCetSearchContent.setText("");
+                if (mCetSearchContent != null) {
+                    mCetSearchContent.setText("");
+                }
+
                 finish();
                 break;
             default:
@@ -211,7 +214,7 @@ public class Search3DActivity extends NavigationBarActivity implements
                         Search3DActivity.this.startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id + "",member_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id + "", member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
@@ -418,6 +421,7 @@ public class Search3DActivity extends NavigationBarActivity implements
             @Override
             public void onClick(View v) {
                 cancelPopupWindowAndClearSearchContent();
+                mCetSearchContent.setText("");
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -641,15 +645,15 @@ public class Search3DActivity extends NavigationBarActivity implements
     private int screenHeight;
     private String mSearchKeywords;
     private boolean isFirstIn = false;
-    private String hsUid,member_id;
+    private String hsUid, member_id;
     private List<SearchHoverCaseBean> mSearchHoverCaseBeenList = new ArrayList<>();
     private List<SearchHoverCaseBean> mSearchHoverCaseBeanArrayList = new ArrayList<>();
-//    private ArrayList<CaseLibraryBean.CasesEntity> mCasesEntities = new ArrayList<>();
+    //    private ArrayList<CaseLibraryBean.CasesEntity> mCasesEntities = new ArrayList<>();
 //    private UserHomeCaseAdapter mUserHomeCaseAdapter;
     private ArrayList<Case3DLibraryListBean.CasesBean> case3DBeanList = new ArrayList<>();
     private UserHome3DCaseAdapter userHome3DCaseAdapter;
     private FiltrateContentBean mFiltrateContentBean;
-//    private CaseLibraryBean mCaseLibraryBean;
+    //    private CaseLibraryBean mCaseLibraryBean;
     private Case3DLibraryListBean case3DLibraryListBean;
     private FuzzySearchAdapter mFuzzySearchAdapter;
     private CharacterParser mCharacterParser;

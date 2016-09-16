@@ -31,14 +31,12 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
     private  MeasureFormCallBack measureFormCallBack;
     private boolean falg;
     private Context context;
-    private String needs_id;
     public SelectDesignAdapter(Context context, List<DecorationBiddersBean> biddersEntities,
-                               int layoutId,boolean falg,String needs_id ) {
+                               int layoutId,boolean falg) {
         super(context, biddersEntities, layoutId);
         this.measureFormCallBack = (MeasureFormCallBack)context;
         this.falg = falg;
         this.context = context;
-        this.needs_id = needs_id;
     }
     @Override
     public void convert(CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
@@ -54,7 +52,6 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         ImageUtils.displayAvatarImage(avatar, polygonImageView);
         holder.setText(R.id.tv_designer_name, nick_name);
         holder.setText(R.id.tv_profession, UIUtils.getString(R.string.profession)+style_names);
-
         Button button = holder.getView(R.id.bt_select_ta_measure_form);
 
         TextView textView = holder.getView(R.id.tv_measure_invite);

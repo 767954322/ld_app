@@ -213,6 +213,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                 }
             });
         } else {
+            CustomProgress.cancelDialog();
             AdskApplication.getInstance().doLogin(getActivity());
         }
 ////
@@ -476,6 +477,11 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             case3DBeanList.clear();
         }
         mOffset = offset + 10;
+
+        //设置数据小于等于2的是不显示没有更多数据了
+        if (case3DLibraryListBean.getCases().size()<=2){
+            mListView.setNoLoadMoreHideView(true);
+        }
         if (case3DLibraryListBean.getCases().size()>0){
             ll_default_view.setVisibility(View.GONE);
         }else {
@@ -485,7 +491,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         if (case3DLibraryListBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
         } else {
-            mListView.setHasLoadMore(false);
+            mListView.setHasLoadMore(true);
         }
         Message msg = Message.obtain();
         msg.obj = offset;
@@ -554,6 +560,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
 
     @Override
     public void onResume() {
+        setSwipeRefreshInfo();
         super.onResume();
         if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()) {
             CustomProgress.cancelDialog();

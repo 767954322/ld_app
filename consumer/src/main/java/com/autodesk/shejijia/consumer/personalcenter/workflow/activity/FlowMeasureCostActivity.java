@@ -67,9 +67,8 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
         switch (v.getId()) {
             case R.id.btn_pay_measure: /// 支付量房费 .
                 Intent intent = getIntent();
-                String order_line_id = intent.getStringExtra("order_line_id");
-                String order_id = intent.getStringExtra("order_id");
-
+                String order_line_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.ORDER_LINE_ID);
+                String order_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.ORDER_ID);
                 MPOrderBean order = getOrderEntityByStep(this.nodeState);
                 if (order == null) {
                     return;

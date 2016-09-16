@@ -132,7 +132,10 @@ public class SearchActivity extends NavigationBarActivity implements
                 openPopupWindow(mCetSearchClick.getText().toString());
                 break;
             case R.id.searchc_back:/// 返回.
-                mCetSearchContent.setText("");
+                if (mCetSearchContent != null) {
+                    mCetSearchContent.setText("");
+                }
+
                 finish();
                 break;
             default:
@@ -409,6 +412,7 @@ public class SearchActivity extends NavigationBarActivity implements
             @Override
             public void onClick(View v) {
                 cancelPopupWindowAndClearSearchContent();
+                mCetSearchContent.setText("");
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {

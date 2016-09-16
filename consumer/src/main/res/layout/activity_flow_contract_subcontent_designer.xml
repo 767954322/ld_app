@@ -385,6 +385,7 @@
                     android:background="@drawable/bg_flow_edittext"
                     android:inputType="number"
                     android:paddingLeft="@dimen/size_5"
+                    android:maxLength="2"
                     android:paddingRight="@dimen/size_10"
                     android:singleLine="true"
                     android:textColor="@color/bg_80"

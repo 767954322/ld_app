@@ -27,46 +27,39 @@
 
 </head>
 <body>
-
-<!-- THE LOADER -->
-
-<!-- MAIN CONTENT -->
-<div id="content-block">
-
-<div class="container">
-<div class="about-description">
-<img class="file:///android_asset/about/img-responsive" src="file:///android_asset/about/logo.png" alt="" style="width:70%;height:70%;margin-left:16%">
-</div>
-</div>
-
-<div class="container-fluid">
-<div class="info-blocks" style="file:///android_asset/about/background-color:#eef1f4;">
-<div class="info-entry left table-block">
-<div class="row table-row">
-<div class="table-cell col-xs-12 col-sm-6">
-<div class="info-text">
-<div class="row">
-<div class="col-xs-12 col-sm-6">
-<div class="block" style=" margin-bottom: 10px !important;"></div>
-
-<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设计家（www.shejijia.com）,是北京居然之家投资控股集团有限公司（以下简称“居然之家”）投资创立的，采用线上线下融为一体的 “全渠道”商业模式，构建互利共赢的全价值链大家居服务平台。
-设计家平台针对全社会所有设计师和装修业主免费开放，为他们提供设计、施工、材料选购服务的互动平台。</h4>
-<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设计家平台依托居然之家的品牌影响力和资源优势，构建以用户为中心，商品和设计资源为重要基础，集设计、装修、材料采购、物流配送为一体的大家居服务平台。其中设计服务平台从技术上实现了效果图、施工图和预算报价的合一，业主不但可以通过设计家APP随时随地找到自己心仪的设计师，而且还可以自己动手DIY。</h4>
-<h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;材料采购平台以居然之家线下实体店为依托，通过与设计师建立合理公平的利益分享机制，让装修变得透明。此外，居然之家将承担起施工“大包”服务的责任并提供统一材料配送服务，从而提升行业运营效率，改善消费者服务体验，让整个家装过程变得可视化、透明化、信息化、自动化。居然之家将通过设计家平台在全国范围内为广大装修业主提供设计、施工、材料采购、物流配送等一站式综合服务，最终引领用户的家居消费潮流，创造新的用户消费行为模式与服务模式，让您的装修变得更简单、更透明、更快乐。</h4>
-
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- THE FOOTER -->
-<!-- SCRIPTS	 -->
-<script src="file:///android_asset/about/script/jquery.min.js"></script>
-<script src="file:///android_asset/about/script/bootstrap.min.js"></script>
-
-</body>
+        <!-- THE LOADER -->
+        <!-- MAIN CONTENT -->
+        <div id="content-block">
+            <div class="container">
+                <div class="about-description">
+                    <img class="file:///android_asset/about/img-responsive" src="file:///android_asset/about/logo.png" alt="" style="width:70%;height:70%;margin-left:16%">
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="info-blocks" style="background-color:#eef1f4;">
+                    <div class="info-entry left table-block">
+                        <div class="row table-row">
+                            <div class="table-cell col-xs-12 col-sm-6">
+                                <div class="info-text">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="block" style=" margin-bottom: 10px !important;"></div>
+                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设计家（www.shejijia.com），是北京设计家云地有限公司投资创立的采用线上线下融为一体的“O2O”+“全渠道” 商业模式，构建同担共赢生态圈式的全价值链大家居服务平台。设计家平台针对全社会所有设计师和装修业主免费开放，为他们提供设计、施工、材料选购服务的互动平台。</h4>
+                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+设计家依托居然之家的品牌影响力和资源优势，构建以用户为中心，商品和设计资源为大数据的重要基础，集设计、装修、材料采购为一体，平台从技术上实现效果图设计、施工图设计、预算合一，是一个囊括居然之家所有材料品牌的平台，设计师和消费者通过使用3D设计工具，精确选择需要协商讨论的点，随时随地进行讨论，有助于设计师完全把握消费者的需求，使得设计方案能够完全贴合消费者理想的家，让整个家装过程变得可视化、透明化、信息化、自动化。</h4>
+                                            <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设计家在全国范围内提供设计、施工、材料采购服务，最终引领用户的家居消费潮流，创造新的用户消费行为模式与用户服务模式。让您的装修变得更简单、快捷、透明。</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- THE FOOTER -->
+        <!-- SCRIPTS     -->
+        <script src="script/jquery.min.js"></script>
+        <script src="script/bootstrap.min.js"></script>
+    </body>
 </html>

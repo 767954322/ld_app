@@ -38,10 +38,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
- * 大师
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file GrandMasterFragment.java  .
+ * @brief 六大产品-大师 .
  */
+
 public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
 
 

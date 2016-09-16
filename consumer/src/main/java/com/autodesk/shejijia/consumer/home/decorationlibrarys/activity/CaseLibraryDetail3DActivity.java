@@ -219,7 +219,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                             rlThumbUp.setOnClickListener(null);
                             sendThumbUp(design_asset_id);
                         }
-
                     } else {
                         //已经点过赞
                     }
@@ -426,7 +425,12 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 String info = GsonUtil.jsonToString(jsonObject);
                 case3DDetailBean = GsonUtil.jsonToBean(info, Case3DDetailBean.class);
                 case3DDetailList.add(case3DDetailBean);
-                setTitleForNavbar(case3DDetailBean.getDesign_name());
+
+                //set tital
+                String str_tital = case3DDetailBean.getDesign_name();
+                boolean isTitalToLong = str_tital.length() > 6;
+                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
 
@@ -567,7 +571,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             if (type.equalsIgnoreCase("0")) {
                 imageListsXuanRan.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             } else if (type.equalsIgnoreCase("4")) {
-                imageListsManYou.add(imageBeanLists.get(i).getLink() + "HD.jpg");
+                imageListsManYou.add(imageBeanLists.get(i).getLink());
             } else if (type.equalsIgnoreCase("9")) {
                 imageListsHuXing.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             }
@@ -670,10 +674,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private void setFollowedTitle(boolean is_following) {
 
         if (is_following) {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
 
         } else {
-            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_sure));
         }
     }
 
