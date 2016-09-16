@@ -36,6 +36,7 @@
             android:imeOptions="actionSearch"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_20"
+            android:textSize="@dimen/font_14"
             android:singleLine="true"
             android:textColor="@android:color/black" />
 
