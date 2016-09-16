@@ -318,7 +318,18 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 //设置颜色
                 setTextColor(controlNumber);
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
+
+                if (default_2d_picture_count == 1){
+
+                    default_ll_bg.setVisibility(View.GONE);
+                }else {
+                    default_ll_bg.setVisibility(View.VISIBLE);
+                }
+
                 setEmptyText();//判断是评价还是其他空白页面
+
+
+
                 break;
 
             case R.id.case_3d_btn:
@@ -341,6 +352,14 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 //设置颜色
                 setTextColor(controlNumber);
                 myScrollView.smoothScrollTo(0, scrollLastMoveDistance);
+
+                if (default_3d_picture_count == 1){
+
+                    default_ll_bg.setVisibility(View.GONE);
+                }else {
+                    default_ll_bg.setVisibility(View.VISIBLE);
+                }
+
                 setEmptyText();//判断是评价还是其他空白页面
                 break;
 
@@ -547,9 +566,12 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
                     if (isFirstIn2D) {
                         default_ll_bg.setVisibility(View.GONE);
+                        default_2d_picture_count = 1;
                     } else {
                         default_ll_bg.setVisibility(View.VISIBLE);
                     }
+
+
 
 
                     if (isRefreshOrLoad2D) {
@@ -631,6 +653,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                     if (case3DBeen.getCases().size() > 0) {
 
                         default_ll_bg.setVisibility(View.GONE);
+                        default_3d_picture_count = 1;
                     } else {
                         default_ll_bg.setVisibility(View.VISIBLE);
                     }
@@ -1197,6 +1220,8 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private int TWO_D_CASE_COUNT = 0;
     private int THREE_D_CASE_COUNT = 0;
     private int APPRAISE_COUNT = 0;
+    private int default_2d_picture_count = 0;
+    private int default_3d_picture_count = 0;
     private Handler handler;
     private boolean isTitleTwoShow = true;
     private boolean isScrollToTop = true;//判断第一次是否滑动置顶
