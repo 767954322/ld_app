@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
-                android:background="@drawable/icon_chat_common_normal" />
+                android:background="@drawable/im_ico" />
 
             <TextView
                 android:id="@+id/tv_designer_cost"
