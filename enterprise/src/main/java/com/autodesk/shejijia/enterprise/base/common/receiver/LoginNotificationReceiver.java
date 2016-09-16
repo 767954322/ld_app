@@ -11,7 +11,6 @@ import com.autodesk.shejijia.enterprise.base.common.utils.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
-import com.socks.library.KLog;
 
 /**
  * Created by t_xuz on 8/15/16.
@@ -38,7 +37,7 @@ public class LoginNotificationReceiver extends BroadcastReceiver{
                 acs_member_id += ZERO;
                 entity.setAcs_member_id(acs_member_id);
             }
-            KLog.d("APPLICATION", "memberEntity:" + entity);
+            LogUtils.d("APPLICATION", "memberEntity:" + entity);
             LogUtils.e("login-success",entity.toString());
 
             LoginUtils.onLoginSuccess(entity,context);

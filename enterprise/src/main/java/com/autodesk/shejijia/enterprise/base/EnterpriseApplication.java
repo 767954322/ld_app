@@ -11,7 +11,6 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.pgyersdk.crash.PgyCrashManager;
-import com.socks.library.KLog;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
