@@ -60,6 +60,8 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 public class WkFlowStateActivity extends BaseWorkFlowActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
 
+
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_common_meal_detail;
@@ -72,6 +74,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mListView = (ListViewFinal) findViewById(R.id.lv_designer_meal_detail);
         tvDesignerName = (TextView) findViewById(R.id.tv_designer_name);
         tvCreateDate = (TextView) findViewById(R.id.tv_create_date);
+        navTitleTextView = (TextView) findViewById(R.id.nav_title_textView);
 
         mPtrLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
         polygonImageView = (PolygonImageView) findViewById(R.id.piv_consumer_order_photo_01);
@@ -483,7 +486,15 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
-        setTitleForNavbar(contacts_name + "/" + community_name); /// 设置标题 .
+
+        String contacts_name_new = (null != contacts_name && contacts_name.length() > 3) ?
+                contacts_name.substring(0, 3) + "..." : contacts_name;
+        String community_name_new = (null != community_name && community_name.length() > 4) ?
+                community_name.substring(0, 4) + "..." : community_name;
+
+
+        navTitleTextView.setMaxEms(20);
+        setTitleForNavbar(contacts_name_new + "/" + community_name_new); /// 设置标题 .
         ibFlowChart.setEnabled(true);
         tvCreateDate.setText(UIUtils.getString(R.string.create_date) + requirement.getPublish_time());
         mPtrLayout.onRefreshComplete();
@@ -542,6 +553,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.onBackPressed();
         refreshWkFlowState();
     }
+
+    private TextView navTitleTextView;
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
     private TipWorkFlowTemplateBean tipWorkFlowTemplateBean;

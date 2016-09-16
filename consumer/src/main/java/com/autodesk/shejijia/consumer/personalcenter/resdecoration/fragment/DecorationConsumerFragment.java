@@ -85,7 +85,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
         mPlvConsumerDecoration.setAdapter(mDecorationConsumerAdapter);
         mTvEmptyShow.setText(UIUtils.getString(R.string.empty_order_fitment));
-        mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_order_empty));
+        mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.bg_shejijia_emty));
     }
 
     @Override

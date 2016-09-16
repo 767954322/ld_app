@@ -488,7 +488,7 @@
     <string name="please_select_form">请选择户型</string>
     <string name="please_select_addresses">请选择地址</string>
     <string name="please_choose_addresses">请选择项目地址</string>
-    <string name="please_enter_correct_address">小区名称的字符长度在2到32之间</string>
+    <string name="please_enter_correct_address">请输入正确的小区名称(字符长度为2-32之间且不包含特殊字符)</string>
     <string name="data_submission">数据提交中...</string>
 
     <!--  LookMoreCaseDetailActivity -->
@@ -607,7 +607,7 @@
     <string name="consume_detail_address_hint">请输入小区名称</string>
     <string name="complete">完成</string>
     <string name="designer_beishu_meal_form">套餐项目表单</string>
-    <string name="save_decoration_success">请在我的订单中查看详情</string>
+    <string name="save_decoration_success">请在我的项目中查看详情</string>
     <string name="please_input_correct_address">请输入正确的地址</string>
     <string name="data_save">数据保存中</string>
 
