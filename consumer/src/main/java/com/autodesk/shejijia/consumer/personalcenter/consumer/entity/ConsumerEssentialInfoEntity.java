@@ -61,8 +61,8 @@ public class ConsumerEssentialInfoEntity implements Serializable {
     private String zip_code;
     private String audit_status;
     private String high_level_status;
-
     private String mobile_binding_status;
+
     private String register_time;
 
     public String getRegister_date() {
