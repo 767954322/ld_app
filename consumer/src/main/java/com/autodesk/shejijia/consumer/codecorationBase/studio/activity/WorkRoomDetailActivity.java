@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
@@ -32,12 +37,15 @@ import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.HeightUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.AnimationUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView;
 import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewListener;
+import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewScrollListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -48,6 +56,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author yaoxuehua .
@@ -56,7 +66,7 @@ import java.util.List;
  * @file WorkRoomDetailActivity  .
  * @brief 查看工作室详情页面 .
  */
-public class WorkRoomDetailActivity extends NavigationBarActivity implements View.OnClickListener,MyScrollViewListener {
+public class WorkRoomDetailActivity extends NavigationBarActivity implements View.OnClickListener, MyScrollViewListener {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_work_room;
@@ -114,6 +124,45 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
         getWorkRoomDetailData(acs_member_id, 0, 10, hs_uid);
 //        setAnimationBackgroud(common_navbar);
         isLoginUserJust = isLoginUser();
+        handler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+
+                    case 0:
+                        if (now_order != null) {
+
+                            AnimationUtils.getInstance().clearAnimationControl(now_order);
+                            AnimationUtils.getInstance().setAnimationShow(now_order);
+                        }
+                        break;
+                }
+            }
+        };
+
+
+        AnimationUtils.getInstance().setHandler(handler);
+        mGestureDetector = new GestureDetectorCompat(this, new MyGestureDetectorImp());
+        scrollview_studio.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_UP:
+
+                        AnimationUtils.getInstance().clearAnimationControl(now_order_details);
+                        AnimationUtils.getInstance().setAnimationShow(now_order_details);
+                        break;
+
+                }
+
+
+                return mGestureDetector.onTouchEvent(event);
+            }
+        });
     }
 
     public void upDataForView(WorkRoomDetailsBeen workRoomDetailsBeen) {
@@ -136,7 +185,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
             WorkRoomDesignerAdapter workRoomAdapter = new WorkRoomDesignerAdapter(this, listMain, workRoomDetailsBeen.getCases_list());
             listView.setAdapter(workRoomAdapter);
             HeightUtils.setListViewHeightBasedOnChildren(listView);
-            scrollview_studio.smoothScrollTo(0,0);
+            scrollview_studio.smoothScrollTo(0, 0);
         }
 
         CustomProgress.cancelDialog();
@@ -281,33 +330,41 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     /**
      * scrollview 滚动改变调用
      * scrollview 滑动时改变标题栏的状态
-     * */
+     */
 
     @Override
     public void onScrollChange(MyScrollView scrollView, int x, int y, int oldx, int oldy) {
 
         int alphaCount = 0;
-        if (y > 300 && y < 555){
-            alphaCount = y - 300;
+        if (y > 200 && y < 600) {
+            alphaCount = y - 200;
 
-                common_navbar.getBackground().mutate().setAlpha(alphaCount);//让标题栏透明
-        }else if (y >= 555){
+            common_navbar.getBackground().mutate().setAlpha(alphaCount);//让标题栏透明
+        } else if (y >= 600) {
 
             alphaCount = 255;
             common_navbar.getBackground().setAlpha(alphaCount);//让标题栏透明
-        }
-
-        if (y == 0){
+        } else if (y < 200) {
 
             common_navbar.getBackground().mutate().setAlpha(0);//让标题栏透明
         }
 
-        if (isFirstGoIn){
+        if (y == 0) {
+
+            common_navbar.getBackground().mutate().setAlpha(0);//让标题栏透明
+        }
+
+        if (isFirstGoIn) {
             isFirstGoIn = false;
             common_navbar.getBackground().mutate().setAlpha(0);//让标题栏透明
         }
 
+        int myScrollViewChildHeight = scrollview_studio.getChildAt(0).getMeasuredHeight();//myScrollView中子类的高度
+        int myScrollViewHeight = scrollview_studio.getHeight();//myScrollView的高度
+
+
     }
+
 
     /**
      * 获取工作室详情信息
@@ -320,7 +377,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
             public void onErrorResponse(VolleyError volleyError) {
 
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,WorkRoomDetailActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, WorkRoomDetailActivity.this);
             }
 
             @Override
@@ -375,11 +432,11 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
 
     /**
      * 背景动画效果
-     * */
-    public void setAnimationBackgroud(RelativeLayout view){
+     */
+    public void setAnimationBackgroud(RelativeLayout view) {
 
         AnimationSet animationSet = new AnimationSet(true);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
         alphaAnimation.setDuration(2000);
         animationSet.addAnimation(alphaAnimation);
         view.startAnimation(animationSet);
@@ -390,6 +447,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private LinearLayout work_room_detail_content;
     private RelativeLayout common_navbar;
     private ImageView back;
+    private Handler handler;
     private MyScrollView scrollview_studio;
     private View view_navigation_header_view;
     private ImageButton nav_left_imageButton;
@@ -398,6 +456,8 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private TextView now_order;
     private TextView nav_title_textView;
     private int acs_member_id;
+    private int distance_offset = 0;
+    private Timer timer;
     private String hs_uid;
     private TextView header_work_room_name;
     private TextView header_work_room_design_year;
@@ -409,10 +469,89 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private boolean isFirstGoIn = true;//第一次进入该页面将该title设置为透明
     private WorkRoomDetailsBeen workRoomDetailsBeen;
     private List<WorkRoomDetailsBeen.MainDesignersBean> main_designers;
+    private GestureDetectorCompat mGestureDetector;
 
     private ListView listView;
     private TextView now_order_details;
     private GridView gridView;
 
 
+    private class MyGestureDetectorImp extends GestureDetector.SimpleOnGestureListener {
+
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+//            controlAnimation();
+            LogUtils.e("111", "onSingleTapUP");
+
+
+            return super.onSingleTapUp(e);
+        }
+
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//            AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+            switch (e2.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    LogUtils.e("111", "onSingleTapUP");
+
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    LogUtils.e("222", "onSingleTapUP");
+                    AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    LogUtils.e("333", "onSingleTapUP");
+
+                    break;
+            }
+
+
+//            switch (e1.getAction()){
+//                case MotionEvent.ACTION_UP:
+//                    LogUtils.e("444","onSingleTapUP");
+//                    AnimationUtils.getInstance().clearAnimationControl(now_order_details);
+//                    AnimationUtils.getInstance().setAnimationShow(now_order_details);
+//                    break;
+//            }
+            return super.onScroll(e1, e2, distanceX, distanceY);
+        }
+    }
+
+    public void controlAnimation() {
+
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                Message message = handler.obtainMessage();
+                message.what = 0;
+                handler.sendMessage(message);
+                if (timer != null) {
+
+                    timer.cancel();
+                    timer = null;
+                }
+            }
+        };
+        if (timer == null) {
+
+            timer = new Timer();
+            timer.schedule(timerTask, 1500, 5000);
+        }
+
+    }
 }

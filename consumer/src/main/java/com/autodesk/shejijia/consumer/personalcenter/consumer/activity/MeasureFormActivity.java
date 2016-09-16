@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -364,8 +365,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点", Locale.getDefault());
                 String date = /*currentTime += */sdf.format(new Date());
 
-//                try {
-//                    if (formatDate(date, currentData)) {
                 CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
 
                 JSONObject jsonObject = new JSONObject();
