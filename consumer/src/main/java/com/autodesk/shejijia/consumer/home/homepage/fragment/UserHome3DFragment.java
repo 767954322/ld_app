@@ -145,9 +145,10 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
-        CustomProgress.show(activity, "", false, null);
+
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
+            CustomProgress.show(activity, "", false, null);
             Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
             final int designer_id = casesBean.getDesigner_id();
             final String hs_uid = casesBean.getHs_designer_uid();

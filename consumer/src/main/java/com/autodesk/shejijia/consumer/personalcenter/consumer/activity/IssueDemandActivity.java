@@ -403,6 +403,9 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
 
+                // 使用手机注册的手机号码
+                String mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
+
                 Message msg = new Message();
                 msg.obj = mConsumerEssentialInfoEntity.getNick_name();
                 handler.sendMessage(msg);
