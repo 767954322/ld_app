@@ -116,11 +116,11 @@ public class Search3DActivity extends NavigationBarActivity implements
         mPlvContentView.setAdapter(userHome3DCaseAdapter);
         userHome3DCaseAdapter.setOnItemImageHeadClickListener(this, this, this);
 
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity == null) {
-            return;
-        }
-        member_id = mMemberEntity.getAcs_member_id();
+//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+//        if (mMemberEntity == null) {
+//            return;
+//        }
+
     }
 
     @Override
@@ -172,9 +172,11 @@ public class Search3DActivity extends NavigationBarActivity implements
     /// 聊天.
     @Override
     public void OnItemHomeChatClick(final int position) {
-        CustomProgress.show(this, "", false, null);
+
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
+            member_id = mMemberEntity.getAcs_member_id();
+            CustomProgress.show(this, "", false, null);
             Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
             final int designer_id = casesBean.getDesigner_id();
             final String hs_uid = casesBean.getHs_designer_uid();
