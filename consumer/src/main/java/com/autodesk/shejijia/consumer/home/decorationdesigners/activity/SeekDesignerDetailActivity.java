@@ -50,6 +50,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MySc
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -1112,10 +1113,10 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         readSubClassHeightCount(scrollViewMeasuredHeight);
 
         //只走一次，避免默认加载数据时,出现少数据误差显示
-        if (isFrist) {
+        if (is2DFrist) {
 
             justRefreshAndLoadMore();
-            isFrist = false;
+            is2DFrist = false;
 
         }
 
@@ -1135,6 +1136,36 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
 
             APPRAISE_COUNT = heightSubClass;
         }
+
+
+        if (controlNumber == 1){//2Dcase
+            if (is2DFrist) {
+
+                justRefreshAndLoadMore();
+                is2DFrist = false;
+
+            }
+
+        }else if (controlNumber == 2){
+
+
+            if (is3DFrist) {
+
+                justRefreshAndLoadMore();
+                is3DFrist = false;
+
+            }
+        }else {
+
+            if (isAppraiseFirst) {
+
+                justRefreshAndLoadMore();
+                isAppraiseFirst = false;
+
+            }
+
+        }
+
 
     }
 
@@ -1225,7 +1256,9 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     private Handler handler;
     private boolean isTitleTwoShow = true;
     private boolean isScrollToTop = true;//判断第一次是否滑动置顶
-    private boolean isFrist = true;//只走一次
+    private boolean is2DFrist = true;//2d只走一次
+    private boolean is3DFrist = true;//3d只走一次
+    private boolean isAppraiseFirst = true;//只走一次
     private boolean getAppraiseCount = true;//获取评价数量
     private int scrollLastMoveDistance = 0;//ScrollView的最后一次纵坐标记录
     private FragmentManager fragmentManager;
