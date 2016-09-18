@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
         >
 
         <LinearLayout
@@ -19,7 +18,7 @@
             android:layout_marginBottom="@dimen/size_10"
             android:layout_marginTop="@dimen/size_10"
             android:gravity="center_vertical"
-
+            android:visibility="gone"
             >
 
             <TextView

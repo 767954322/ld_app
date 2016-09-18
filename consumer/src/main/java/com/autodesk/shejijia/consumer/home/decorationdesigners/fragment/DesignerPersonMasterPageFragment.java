@@ -83,7 +83,7 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
 //        hideFooterView(mCasesEntityArrayList);
         if (mSeekDesignerDetailAdapter == null) {
 
-            mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(getActivity(), mCasesEntityArrayList, getActivity());
+            mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(getActivity(), mCasesEntityArrayList);
             mListView.setAdapter(mSeekDesignerDetailAdapter);
 
         } else {
