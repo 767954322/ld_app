@@ -532,11 +532,15 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         String room_type = case3DDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
+        }else {
+            tvCustomerHomeRoom.setText(R.string.other_qita);
         }
 
         String project_style = case3DDetailBean.getProject_style();
         if (style.containsKey(project_style)) {
             tvCustomerHomeStyle.setText(style.get(project_style));
+        }else {
+            tvCustomerHomeStyle.setText(R.string.other_qita);
         }
 
         tvThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");

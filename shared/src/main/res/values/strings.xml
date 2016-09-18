@@ -932,7 +932,7 @@
     <string name="chatroom_audio_recording_erroralert_cancel">取消</string>
 
     <string name="audio_record_slide_cancel">松开结束</string>
-    <string name="str_others">其他</string>
+    <string name="str_others">其它</string>
 
     <!--自定义滚轮-->
     <string name="pickerview_cancel">取消</string>
