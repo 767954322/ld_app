@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
+import com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -29,6 +30,7 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
     private ClearEditText mCetSearchContent;
     private ImageView mIvSearchCBack;
     private TextView mTvSearchCancel;
+    private DesignerListFragment mDesignerListFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -41,6 +43,7 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
         mCetSearchContent = (ClearEditText) findViewById(R.id.ect_et_search_pop);
         mIvSearchCBack = (ImageView) findViewById(R.id.ect_searchc_back_pop);
         mTvSearchCancel = (TextView) findViewById(R.id.tv_ect_search_cancel_pop);
+        mDesignerListFragment = (DesignerListFragment) (getSupportFragmentManager().findFragmentById(R.id.fragment_designer_list));
     }
 
     @Override
@@ -60,8 +63,11 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ect_searchc_back_pop:
-            case R.id.tv_ect_search_cancel_pop:
                 finish();
+                break;
+
+            case R.id.tv_ect_search_cancel_pop:
+                cancelPopupWindowAndClearSearchContent();
                 break;
 
             default:
@@ -88,8 +94,10 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
             findDesignerBean.setStart_experience("");
             findDesignerBean.setEnd_experience("");
             findDesignerBean.setDesign_price_code("");
-            finishSelf(findDesignerBean);
-            cancelPopupWindowAndClearSearchContent();
+
+            mDesignerListFragment.updateNotify(findDesignerBean);
+//                    finishSelf(findDesignerBean);
+//            cancelPopupWindowAndClearSearchContent();
             return true;
         }
         return false;
