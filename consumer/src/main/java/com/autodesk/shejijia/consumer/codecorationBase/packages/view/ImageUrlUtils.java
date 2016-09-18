@@ -48,14 +48,14 @@ public class ImageUrlUtils {
 
         String url_header = getEvUrl();
         String[] packagesDetail = {
-                url_header + "detail/dongjie.jpg",
-                url_header + "detail/xingfujia.jpg",
-                url_header + "detail/beishu.jpg",
-                url_header + "detail/yishujia.jpg",
-                url_header + "detail/nanyun.jpg",
-                url_header + "detail/pinzhijia.jpg",
-                url_header + "detail/xijing.jpg",
-                url_header + "detail/zunxiang.jpg"
+                url_header + "detail/dongjie@3x.jpg",
+                url_header + "detail/xingfujia@3x.jpg",
+                url_header + "detail/beishu@3x.jpg",
+                url_header + "detail/yishujia@3x.jpg",
+                url_header + "detail/nanyun@3x.jpg",
+                url_header + "detail/pinzhijia@3x.jpg",
+                url_header + "detail/xijing@3x.jpg",
+                url_header + "detail/zunxiang@3x.jpg"
         };
         return packagesDetail;
     }
