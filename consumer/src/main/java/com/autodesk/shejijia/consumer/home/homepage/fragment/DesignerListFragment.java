@@ -88,6 +88,8 @@ public class DesignerListFragment extends BaseFragment
         mSeekDesignerAdapter = new SeekDesignerAdapter(getActivity(), mDesignerListEntities);
         mListView.setAdapter(mSeekDesignerAdapter);
         setDefaultFindDesignerBean();
+        CustomProgress.show(getActivity(), "", false, null);
+        updateNotify(mFindDesignerBean);
     }
 
 
@@ -242,8 +244,7 @@ public class DesignerListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        CustomProgress.show(getActivity(), "", false, null);
-        onRefresh(mPullToRefreshLayout);
+        mSeekDesignerAdapter.notifyDataSetChanged();
     }
 
     @Override
