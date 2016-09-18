@@ -279,7 +279,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 break;
 
             case R.id.btn_delivery_consumer_sure:       /// 确认交付 .　// TODO 执行确认交付的操作.
-                makeSureDelivery();
+                mFirstDeliverySureAlertView.show();
+
                 break;
 
             default:
@@ -371,6 +372,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             mBtnDelay.setEnabled(false);
             mBtnDelay.setBackgroundResource(R.drawable.bg_common_btn_pressed);
             mBtnDelay.setTextColor(UIUtils.getColor(R.color.white));
+        }
+        if (object == mFirstDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
+            makeSureDelivery();
         }
 
         if (object == mDeliverySureAlertView && position != AlertView.CANCELPOSITION) {
@@ -1084,8 +1088,13 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 UIUtils.getString(R.string.cancel), null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
         mDelaySuccessAlertView = new AlertView(UIUtils.getString(R.string.flow_upload_delivery_delay_success), UIUtils.getString(R.string.flow_upload_delivery_delay_contact_designer),
                 null, null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
+
+
         mDeliverySureAlertView = new AlertView(UIUtils.getString(R.string.delivery_sure_success), UIUtils.getString(R.string.delivery_sure_success_content),
                 UIUtils.getString(R.string.delivery_later_evaluation), null, new String[]{UIUtils.getString(R.string.delivery_immediate_evaluation)}, this, AlertView.Style.Alert, this);
+
+        mFirstDeliverySureAlertView = new AlertView("提示", "是否确认交付物",
+                UIUtils.getString(R.string.cancel), null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
     }
 
     /**
@@ -1284,6 +1293,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private Button mBtnDelay;
     private AlertView mDelayAlertView;
     private AlertView mDeliverySureAlertView;
+    private AlertView mFirstDeliverySureAlertView;
     private AlertView mDelaySuccessAlertView;
 
     private LinearLayout mLl3DPlan;
