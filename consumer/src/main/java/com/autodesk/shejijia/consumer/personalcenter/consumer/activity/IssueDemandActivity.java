@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -78,6 +79,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
         et_issue_demand_name = (TextView) findViewById(R.id.et_issue_demand_name);
+        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         et_issue_demand_mobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
         et_issue_demand_area = (EditText) findViewById(R.id.et_issue_demand_area);
         btn_send_demand = (Button) findViewById(R.id.btn_send_demand);
@@ -115,6 +117,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        nav_title_textView.setTextColor(UIUtils.getColor(R.color.comment_gray));
         setTitleForNavbar(UIUtils.getString(R.string.requirements));
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         member_id = mMemberEntity.getAcs_member_id();
@@ -601,6 +604,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private TextView tv_issue_room;
     private TextView tv_issue_style;
     private TextView tv_issue_address;
+    private TextView nav_title_textView;
     private EditText tv_issue_demand_detail_address;
     private EditText et_issue_demand_mobile;
     private EditText et_issue_demand_area;
