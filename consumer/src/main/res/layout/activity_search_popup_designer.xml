@@ -52,10 +52,16 @@
             android:textSize="@dimen/font_18"/>
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/fragment_designer_list"
-        android:name="com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:visibility="gone"
+        android:layout_height="match_parent">
+        <fragment
+            android:id="@+id/fragment_designer_list"
+            android:name="com.autodesk.shejijia.consumer.home.homepage.fragment.DesignerListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
+    </FrameLayout>
 </LinearLayout>
