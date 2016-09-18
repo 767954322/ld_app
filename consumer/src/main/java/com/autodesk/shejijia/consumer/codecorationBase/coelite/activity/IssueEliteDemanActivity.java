@@ -50,6 +50,7 @@ import java.util.Map;
 
 public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener,View.OnFocusChangeListener {
     private HomeTypeDialog homeTypeDialog;
+    private String phone_num;
 
     @Override
     protected int getLayoutResId() {
@@ -61,7 +62,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         super.initView();
         llIssueHouseType = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         llIssueStyle = (LinearLayout) findViewById(R.id.ll_issue_style);
-        etIssueDemandName = (TextView) findViewById(R.id.et_issue_demand_name);
+        etIssueDemandName = (EditText) findViewById(R.id.et_issue_demand_name);
         etIssueDemandMobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
         etIssueDemandArea = (EditText) findViewById(R.id.et_issue_demand_area);
         btnSendDemand = (Button) findViewById(R.id.btn_send_demand);
@@ -80,7 +81,10 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     protected void initExtraBundle() {
         super.initExtraBundle();
         nick_name = getIntent().getStringExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME);
+        phone_num = getIntent().getStringExtra(Constant.ConsumerPersonCenterFragmentKey.PHONE_NUMBER);
+
         etIssueDemandName.setText(nick_name);
+        etIssueDemandMobile.setText(phone_num);
     }
 
     @Override
@@ -513,7 +517,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     /// 控件.
     private LinearLayout llIssueHouseType;
     private LinearLayout llIssueStyle;
-    private TextView etIssueDemandName;
+    private EditText etIssueDemandName;
     private TextView tvIssueDemandBudget;
     private TextView tvIssueDemandDesignBudget;
     private TextView tvIssueHouseType;

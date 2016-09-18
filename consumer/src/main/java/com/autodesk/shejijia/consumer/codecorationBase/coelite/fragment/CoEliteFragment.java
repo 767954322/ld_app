@@ -130,10 +130,11 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             return;
         }
 
-        String nick_name = (mMemberEntity.getNick_name() != null
-                        && mMemberEntity.getNick_name().length() > 0) ? mMemberEntity.getNick_name() : UIUtils.getString(R.string.anonymity);
+        String nick_name = mMemberEntity.getNick_name() ;
+        String phone_num = mMemberEntity.getMobile_number() ;
         Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
         intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
+        intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.PHONE_NUMBER, phone_num);
         startActivity(intent);
 
     }
