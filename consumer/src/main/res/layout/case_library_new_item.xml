@@ -6,7 +6,6 @@
     <ImageView
         android:id="@+id/case_library_item_iv"
         android:layout_width="match_parent"
-        android:background="@drawable/home_page_icon"
         android:layout_height="@dimen/size_221"
         android:layout_marginTop="@dimen/size_2"
         android:scaleType="fitXY" />

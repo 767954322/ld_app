@@ -2,7 +2,9 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -48,7 +50,7 @@ import java.util.Map;
  * @file FlowMeasureFormActivity.java  .
  * @brief 全流程量房表单类 .
  */
-public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnItemClickListener, View.OnClickListener {
+public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnItemClickListener, View.OnClickListener, TextWatcher {
 
     @Override
     protected int getLayoutResId() {
@@ -154,6 +156,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvc_measure_form_time.setOnClickListener(this);
         tvIllustrate.setOnClickListener(this);
 
+        tv_measure_form_designer_liangfangfeit.addTextChangedListener(this);
     }
 
     @Override
@@ -530,7 +533,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         List<MPMeasureFormBean.BiddersBean> bidders = mMPMeasureFormBean.getBidders();
         if (bidders != null && bidders.size() > 0) {
             wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
-            LogUtils.i("FlowMeasureFormActivity", wk_cur_sub_node_id+"");
+            LogUtils.i("FlowMeasureFormActivity", wk_cur_sub_node_id + "");
         }
         mAgreeResponseBidSuccessAlertView.show();
     }
@@ -650,4 +653,44 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private String user_name;
     private String commonTip = UIUtils.getString(R.string.tip);
     private String[] sureString = new String[]{UIUtils.getString(R.string.sure)};
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+        if (s.toString().contains(".")) {
+            if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                tv_measure_form_designer_liangfangfeit.setText(s);
+                tv_measure_form_designer_liangfangfeit.setSelection(s.length());
+            }
+        }
+
+        if (s.toString().trim().substring(0).equals(".")) {
+            s = "0" + s;
+            tv_measure_form_designer_liangfangfeit.setText(s);
+            tv_measure_form_designer_liangfangfeit.setSelection(2);
+        }
+
+        if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+            if (!s.toString().substring(1, 2).equals(".")) {
+                tv_measure_form_designer_liangfangfeit.setText(s.subSequence(0, 1));
+                tv_measure_form_designer_liangfangfeit.setSelection(1);
+                return;
+            }
+
+        }
+
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

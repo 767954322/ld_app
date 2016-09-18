@@ -30,7 +30,6 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="设计师"
                 android:textColor="@color/bg_40"
                 android:textSize="@dimen/font_16"
                 android:visibility="visible"/>
@@ -61,7 +60,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="一室"
                 android:textColor="@color/bg_66"
                 android:textSize="@dimen/font_13"/>
 
@@ -72,7 +70,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/size_4"
-                android:text="欧式"
                 android:textColor="@color/bg_66"
                 android:textSize="@dimen/font_13"/>
 
@@ -83,7 +80,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/size_4"
-                android:text="120"
                 android:textColor="@color/bg_66"
                 android:textSize="@dimen/font_13"/>
 

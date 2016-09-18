@@ -367,7 +367,14 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
                 String mNick_name = mConsumerEssentialInfoEntity.getNick_name();
-                et_issue_demand_name.setText(mNick_name);
+                String mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
+                if(!TextUtils.isEmpty(mNick_name)){
+                    et_issue_demand_name.setText(mNick_name);
+                }
+                if(!TextUtils.isEmpty(mobile_number)){
+                    et_issue_demand_mobile.setText(mobile_number);
+                }
+
             }
 
             @Override

@@ -499,9 +499,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
 
         //后台逻辑修改  顶部图片改动
-        String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath();
+        String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath()+ Constant.CaseLibraryDetail.JPG;
+        firstCaseLibraryImageUrl=thumbnailMainPath;
         if (thumbnailMainPath != null) {
-            ImageUtils.displayIconImage(thumbnailMainPath + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+            ImageUtils.displayIconImage(thumbnailMainPath , mdesignerAvater);
         }
 //
 //        //查找是否是封面图片  若是就添加到头部
@@ -531,11 +532,15 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         String room_type = case3DDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
+        }else {
+            tvCustomerHomeRoom.setText(R.string.other_qita);
         }
 
         String project_style = case3DDetailBean.getProject_style();
         if (style.containsKey(project_style)) {
             tvCustomerHomeStyle.setText(style.get(project_style));
+        }else {
+            tvCustomerHomeStyle.setText(R.string.other_qita);
         }
 
         tvThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
@@ -742,14 +747,16 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        List<String> imageList = new ArrayList<>();
-        imageList.add(firstCaseLibraryImageUrl);
-        Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, (Serializable) imageList);
-        bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
-        bundle.putInt("moveState", 1); // 代表从3D传过去的
-        intent.putExtras(bundle);
-        this.startActivity(intent);
+        if (position==0){
+            List<String> imageList = new ArrayList<>();
+            imageList.add(firstCaseLibraryImageUrl);
+            Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, (Serializable) imageList);
+            bundle.putInt(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, position);
+            bundle.putInt("moveState", 1); // 代表从3D传过去的
+            intent.putExtras(bundle);
+            this.startActivity(intent);
+        }
     }
 }

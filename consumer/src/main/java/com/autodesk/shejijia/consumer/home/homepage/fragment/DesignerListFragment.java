@@ -20,26 +20,18 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesign
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -96,6 +88,8 @@ public class DesignerListFragment extends BaseFragment
         mSeekDesignerAdapter = new SeekDesignerAdapter(getActivity(), mDesignerListEntities);
         mListView.setAdapter(mSeekDesignerAdapter);
         setDefaultFindDesignerBean();
+        CustomProgress.show(getActivity(), "", false, null);
+        updateNotify(mFindDesignerBean);
     }
 
 
@@ -176,7 +170,7 @@ public class DesignerListFragment extends BaseFragment
             jumpBean.setReciever_hs_uid(hs_uid);
             jumpBean.setMember_type(mMemberType);
             jumpBean.setAcs_member_id(member_id);
-            JumpToChatRoom.getChatRoom(activity,jumpBean);
+            JumpToChatRoom.getChatRoom(activity, jumpBean);
 
         } else {
             AdskApplication.getInstance().doLogin(getActivity());
@@ -250,8 +244,7 @@ public class DesignerListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        CustomProgress.show(getActivity(), "", false, null);
-        onRefresh(mPullToRefreshLayout);
+        mSeekDesignerAdapter.notifyDataSetChanged();
     }
 
     @Override
