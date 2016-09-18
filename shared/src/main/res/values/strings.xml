@@ -480,6 +480,7 @@
     <string name="send_design_requirement_success_alert_view_1">提交成功，我们将会尽快为您审核！</string>
     <string name="refuse_measure_house_alertview">是否拒绝量房？</string>
     <string name="requirements">发布设计需求</string>
+    <string name="requirements_optimal">发布竟优需求</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
     <string name="please_input_correct_area">房屋面积必须是1到9999之间的值</string>
     <string name="alert_msg_area">请输入1-9999之间的数字</string>
