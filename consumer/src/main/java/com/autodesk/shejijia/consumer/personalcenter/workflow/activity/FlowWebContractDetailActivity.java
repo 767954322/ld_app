@@ -40,12 +40,14 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         return R.layout.activity_flow_design_contract;
     }
 
-
-
-
-
     private AlertView UIAlert;
 
+
+    protected void leftNavButtonClicked(View view) {
+
+        SetReturnSesult();
+        super.leftNavButtonClicked(view);
+    }
 
     @Override
     protected void initExtraBundle() {
@@ -56,6 +58,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         contract_number = intent.getStringExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO);
         designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
         bconsumerActionShow = bundle.getBoolean("CONSUMER_ACTION_SHOW");
+        isAgree = bundle.getBoolean("CONSUMER_ACTION_AGREE");
     }
 
     @Override
@@ -115,37 +118,45 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         btn_consumer_submit_button.setEnabled(false);
         btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
 
+        UpdateUIConsumerAgreeCheckBox();
+        btn_consumer_submit_button.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FlowWebContractDetailActivity.this, FlowFirstDesignActivity.class);
+                intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+                intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                intent.putExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO, contract_number);
+                intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
+//                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
+                startActivityForResult(intent, ContractForFirst);
+            }
+        });
+
 
 
         img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isAgree) { // 判断是否我已阅读（我已阅读）
-                    img_agree_establish_contract.setBackgroundResource(android.R.color.white);
-                    btn_consumer_submit_button.setEnabled(false);
-                    btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-                } else { // 判断是否我已阅读（我未阅读）
-                    img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_checked);
-                    btn_consumer_submit_button.setEnabled(true);
-                    btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_blue);
-                    btn_consumer_submit_button.setOnClickListener(new View.OnClickListener() { // 跳转到支付首款页面                              @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(FlowWebContractDetailActivity.this, FlowFirstDesignActivity.class);
-                            intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-                            intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                            intent.putExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO, contract_number);
-                            intent.putExtra(Constant.BundleKey.TEMPDATE_ID, MPStatusMachine.NODE__DESIGN_FIRST_PAY);
-//                                    intent.putExtra(Constant.WorkFlowStateKey.JUMP_FROM_STATE, Constant.WorkFlowStateKey.STEP_FLOW);
-                            startActivityForResult(intent, ContractForFirst);
-                        }
-                    });
-                }
 
                 isAgree = !isAgree;
+                UpdateUIConsumerAgreeCheckBox();
             }
         });
 
     }
+    private void UpdateUIConsumerAgreeCheckBox() {
+
+        if (!isAgree) { // 判断是否我已阅读（我已阅读）
+            img_agree_establish_contract.setBackgroundResource(android.R.color.white);
+            btn_consumer_submit_button.setEnabled(false);
+            btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_pressed);
+        } else { // 判断是否我已阅读（我未阅读）
+            img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_checked);
+            btn_consumer_submit_button.setEnabled(true);
+            btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_blue);
+        }
+
+    }
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         CustomProgress.show(this, "", false, null);
@@ -193,13 +204,19 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == ContractForFirst) {
-            setResult(ContractDetail);
+
+            SetReturnSesult();
             finish();
         }
 
 
     }
 
+    private void SetReturnSesult (){
+        Intent reData=new Intent();
+        reData.putExtra("CONSUMER_ACTION_AGREE", isAgree);
+        setResult(ContractDetail,reData);
+    }
     //Web视图
     private class webViewClient extends WebViewClient {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
