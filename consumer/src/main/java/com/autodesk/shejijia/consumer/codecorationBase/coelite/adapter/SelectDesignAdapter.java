@@ -8,8 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
@@ -73,6 +76,20 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
                  * 在线聊天 .
                  */
                 openChatRoom(biddersBean);
+            }
+        });
+
+        holder.getView(R.id.piv_design_photo).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 进入设计师主页 .
+                 */
+                Intent intent = new Intent(context, SeekDesignerDetailActivity.class);
+                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, biddersBean.getDesigner_id());
+                intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, biddersBean.getUid());
+                context.startActivity(intent);
+
             }
         });
 
