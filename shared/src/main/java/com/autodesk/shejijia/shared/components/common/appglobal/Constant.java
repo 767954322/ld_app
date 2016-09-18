@@ -126,6 +126,7 @@ public class Constant {
      */
     public static class ConsumerPersonCenterFragmentKey {
         public static final String NICK_NAME = "NICK_NAME";
+        public static final String PHONE_NUMBER = "PHONE_NUMBER";
         public static final String CONSUMER_PERSON = "CONSUMER_PERSON";
 
 

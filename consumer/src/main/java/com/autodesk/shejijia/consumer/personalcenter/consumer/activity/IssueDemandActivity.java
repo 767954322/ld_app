@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -77,7 +78,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         super.initView();
         ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
-        et_issue_demand_name = (TextView) findViewById(R.id.et_issue_demand_name);
+        et_issue_demand_name = (EditText) findViewById(R.id.et_issue_demand_name);
+        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         et_issue_demand_mobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
         et_issue_demand_area = (EditText) findViewById(R.id.et_issue_demand_area);
         btn_send_demand = (Button) findViewById(R.id.btn_send_demand);
@@ -115,6 +117,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        nav_title_textView.setTextColor(UIUtils.getColor(R.color.comment_gray));
         setTitleForNavbar(UIUtils.getString(R.string.requirements));
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         member_id = mMemberEntity.getAcs_member_id();
@@ -152,6 +155,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
                 et_issue_demand_area.clearFocus();
@@ -204,6 +208,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
+                String consumer_name = et_issue_demand_name.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
                 boolean phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
                 boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
@@ -287,7 +292,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_MOBILE, mobile);/// "consumer_mobile" = 11012011900; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, nick_name);/// "consumer_name" = "APP\U7aef\U53d1\U5e03\U9700\U6c42-\U6b64\U5b57\U6bb5\U4e0d\U7528"; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_MOBILE, mobile);/// "contacts_mobile" = 15234948734; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, nick_name);/// "contacts_name" = "\U63a5\U4f60"; .
+                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, consumer_name);/// "contacts_name" = "\U63a5\U4f60"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, mDecorationBudget);/// "decoration_budget" = "5\U4e07\U4ee5\U4e0b"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_STYLE, style);/// "decoration_style" = Japan; .
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, mDesignBudget);/// "design_budget" = "3000\U4ee5\U4e0b"; .
@@ -405,6 +410,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 
                 // 使用手机注册的手机号码
                 String mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
+                if (!TextUtils.isEmpty(mobile_number)){
+
+                    et_issue_demand_mobile.setText(mobile_number);
+                }
 
                 Message msg = new Message();
                 msg.obj = mConsumerEssentialInfoEntity.getNick_name();
@@ -594,13 +603,14 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     /// 控件.
     private LinearLayout ll_issue_house_type;
     private LinearLayout ll_issue_style;
-    private TextView et_issue_demand_name;
+    private EditText et_issue_demand_name;
     private TextView tv_issue_demand_budget;
     private TextView tv_issue_demand_design_budget;
     private TextView tv_issue_house_type;
     private TextView tv_issue_room;
     private TextView tv_issue_style;
     private TextView tv_issue_address;
+    private TextView nav_title_textView;
     private EditText tv_issue_demand_detail_address;
     private EditText et_issue_demand_mobile;
     private EditText et_issue_demand_area;

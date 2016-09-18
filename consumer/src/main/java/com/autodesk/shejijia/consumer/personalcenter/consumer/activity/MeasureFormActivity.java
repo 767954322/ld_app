@@ -79,7 +79,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         text_notuse = (TextView) findViewById(R.id.text_notuse);
         text_notuse.requestFocus();
 
-        tvc_name = (TextView) findViewById(R.id.tvc_measure_form_name);
+        tvc_name = (EditText) findViewById(R.id.tvc_measure_form_name);
         tvc_phone = (TextViewContent) findViewById(R.id.tvc_measure_form_phone);
         tvc_project_budget = (TextView) findViewById(R.id.tvc_measure_form_project_budget);
         tvc_fitment_budget = (TextView) findViewById(R.id.tvc_measure_fitment_budget);
@@ -747,7 +747,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 nick_name = mConsumerEssentialInfoEntity.getNick_name();
                 phone_number = mConsumerEssentialInfoEntity.getMobile_number();
                 tvc_name.setText(nick_name);//设置消费者姓名
-                tvc_phone.setText(phone_number);
+                if (!TextUtils.isEmpty(phone_number)){
+
+                    tvc_phone.setText(phone_number);
+                }
             }
 
             @Override
@@ -815,7 +818,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private LinearLayout ll_type;
     private LinearLayout ll_style;
     private TextView text_notuse;
-    private TextView tvc_name;
+    private EditText tvc_name;
     private TextViewContent tvc_phone;
     private TextView tvc_project_budget;
     private TextView tvc_fitment_budget;

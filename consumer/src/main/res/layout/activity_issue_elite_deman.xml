@@ -39,15 +39,18 @@
                 android:text="@string/name_space"
                 android:textSize="@dimen/font_14" />
 
-            <TextView
+            <EditText
                 android:id="@+id/et_issue_demand_name"
                 android:layout_width="@dimen/size_1"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/no_color"
-                android:gravity="center_vertical"
-                android:textColorHint="#999"
+                android:hint="@string/reservation_please_enter_your_name"
+                android:singleLine="true"
+                android:lines="1"
+                android:textColor="@color/black"
                 android:textSize="@dimen/font_14" />
+
         </LinearLayout>
 
         <LinearLayout

@@ -18,6 +18,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -80,9 +81,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             item_name = ImageUrlUtils.getPackagesListNames()[item_num - 1];
         }
 
-        acs_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
-
-        getConsumerInfoData(acs_member_id);
+        getConsumerInfoData();
         setDecorationBudget();
         initAlertView();
     }
@@ -359,22 +358,22 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
 
 
     //获取个人基本信息
-    public void getConsumerInfoData(String member_id) {
-        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
+    public void getConsumerInfoData() {
 
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                String mNick_name = mConsumerEssentialInfoEntity.getNick_name();
-                et_issue_demand_name.setText(mNick_name);
-            }
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null == mMemberEntity) {
+            AdskApplication.getInstance().doLogin(this);
+            return;
+        }
 
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-            }
-        });
+        String mNick_name = mMemberEntity.getNick_name();
+        String mobile_number = mMemberEntity.getMobile_number();
+        if (!TextUtils.isEmpty(mNick_name)) {
+            et_issue_demand_name.setText(mNick_name);
+        }
+        if (!TextUtils.isEmpty(mobile_number)) {
+            et_issue_demand_mobile.setText(mobile_number);
+        }
     }
 
     @Override

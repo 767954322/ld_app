@@ -42,7 +42,6 @@
                 android:ellipsize="end"
                 android:maxEms="5"
                 android:singleLine="true"
-                android:text="赵大宝"
                 android:textSize="@dimen/font_15"
                 android:textStyle="bold" />
 
@@ -58,11 +57,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
                     android:layout_toLeftOf="@+id/rating_star"
+                    android:layout_marginRight="@dimen/size_5"
                     android:layout_centerVertical="true"
                     android:ellipsize="end"
                     android:maxEms="7"
                     android:singleLine="true"
-                    android:text="2小时前说："
                     android:textSize="@dimen/font_10" />
 
                 <RatingBar
@@ -96,9 +95,9 @@
                 android:layout_below="@id/ll_name_time"
                 android:layout_marginLeft="@dimen/size_12"
                 android:layout_marginRight="@dimen/size_15"
-                android:text="很高兴你的服务"
+                android:layout_marginBottom="@dimen/size_10"
+                android:textColor="@color/person_color"
                 android:textSize="@dimen/font_15"
-                android:textStyle="bold"
 
 
                 />
