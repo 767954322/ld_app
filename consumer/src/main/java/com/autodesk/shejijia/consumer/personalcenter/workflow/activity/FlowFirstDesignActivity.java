@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -176,6 +177,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                         return;
                     String order_line_no = order.getOrder_line_no();
                     String order_no = order.getOrder_no();
+                    Log.d("MLD", "order_line_no ---"+ order_line_no+ "order_no +++" + order_no);
                     if (isLock) {
                         getAliPayDetailInfo(order_no, order_line_no);
                         isLock = false;
