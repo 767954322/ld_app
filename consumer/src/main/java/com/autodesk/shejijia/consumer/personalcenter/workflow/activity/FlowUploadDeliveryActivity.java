@@ -1093,7 +1093,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         mDeliverySureAlertView = new AlertView(UIUtils.getString(R.string.delivery_sure_success), UIUtils.getString(R.string.delivery_sure_success_content),
                 UIUtils.getString(R.string.delivery_later_evaluation), null, new String[]{UIUtils.getString(R.string.delivery_immediate_evaluation)}, this, AlertView.Style.Alert, this);
 
-        mFirstDeliverySureAlertView = new AlertView("提示", "是否确认交付物",
+        mFirstDeliverySureAlertView = new AlertView("提示", "点击确认后，设计师将获得本次设计的服务费用，您可对设计师进行评价",
                 UIUtils.getString(R.string.cancel), null, new String[]{UIUtils.getString(R.string.sure)}, this, AlertView.Style.Alert, this);
     }
 
