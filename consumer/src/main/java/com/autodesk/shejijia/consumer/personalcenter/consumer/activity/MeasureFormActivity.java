@@ -157,7 +157,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        setTitleForNavbar(UIUtils.getString(R.string.demand_measure_house_form));
+        setTitleForNavbar(UIUtils.getString(R.string.requirements_optimal));
         if (iselite) {
             return;
         }
