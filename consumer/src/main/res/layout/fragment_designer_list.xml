@@ -31,8 +31,7 @@
             android:id="@+id/iv_default_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/bg_shejijia_emty" />
+            android:layout_centerInParent="true"/>
 
         <TextView
             android:id="@+id/tv_empty_message"
