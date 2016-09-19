@@ -125,6 +125,8 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                 }
                 if (null != casesEntity.getDesigner_info() && !TextUtils.isEmpty(casesEntity.getDesigner_info().getAvatar())) {
                     ImageUtils.displayAvatarImage(casesEntity.getDesigner_info().getAvatar(), ((ViewHolder) holder).ivHeadIcon);
+                }else {
+                    ImageUtils.displayAvatarImage("", ((ViewHolder) holder).ivHeadIcon);
                 }
             }
         } else {
