@@ -148,7 +148,8 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"
+                android:minHeight="@dimen/font_400"></android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 
