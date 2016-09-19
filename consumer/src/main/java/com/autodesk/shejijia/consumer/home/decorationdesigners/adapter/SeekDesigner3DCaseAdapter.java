@@ -97,7 +97,7 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
             }
         }else {
 
-            viewHolder.style.setText("其它");
+            viewHolder.style.setText("其他");
         }
         if (datas.get(position).getCustom_string_type() != null){
 
@@ -110,7 +110,7 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
             }
         }else {
 
-            viewHolder.hall.setText("其它");
+            viewHolder.hall.setText("其他");
         }
         if (datas.get(position).getCustom_string_area() != null){
 
