@@ -86,7 +86,7 @@
                     android:layout_toRightOf="@+id/edit_icon"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:text="@string/my_fitment"
+                    android:text="@string/requirements"
                     android:textColor="@color/bg_33"/>
 
                 <ImageView
