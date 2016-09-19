@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+              android:background="@color/comment_write"
     android:orientation="vertical">
 
     <include
@@ -124,15 +125,14 @@
 
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/bt_consumer_exit"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_40"
         android:layout_marginTop="@dimen/size_40"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/btn_exit_selector"
+        android:background="@color/white"
         android:text="@string/exit"
-        android:textColor="@color/bg_ff"
+        android:gravity="center"
+        android:textColor="@color/black"
         android:textSize="@dimen/font_13" />
 </LinearLayout>

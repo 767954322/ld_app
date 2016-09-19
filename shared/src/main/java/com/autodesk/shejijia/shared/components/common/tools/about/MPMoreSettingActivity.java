@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,7 +44,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
         super.initView();
         rl_personal_clear_cache = (RelativeLayout) findViewById(R.id.rl_personal_clear_cache);
         rl_personal_b_about = (RelativeLayout) findViewById(R.id.rl_personal_b_about_designer);
-        bt_consumer_exit = (Button) findViewById(R.id.bt_consumer_exit);
+        bt_consumer_exit = (TextView) findViewById(R.id.bt_consumer_exit);
         tv_cache_size = (TextView) findViewById(R.id.tv_cache_size);
     }
 
@@ -188,7 +187,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
 
     /// 控件.
     private RelativeLayout rl_personal_clear_cache, rl_personal_b_about;
-    private Button bt_consumer_exit;
+    private TextView bt_consumer_exit;
     private TextView tv_cache_size;
     private AlertView mAlertView;
 
