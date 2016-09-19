@@ -1,16 +1,13 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPAliPayBean;
@@ -21,7 +18,6 @@ import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -82,12 +78,11 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
-        CustomProgress.cancelDialog();
 
         restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
             public void onJsonResponse(String jsonResponse) {
-
+                CustomProgress.cancelDialog();
                 designerInfoList = new Gson().fromJson(jsonResponse, DesignerInfoDetails.class);
                 updateViewFromInfoData();
 
@@ -202,7 +197,7 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 ////            toast.setGravity(Gravity.CENTER,0,0);
 //            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
 //            toast.show();
-            openAlertView(UIUtils.getString(R.string.pay_success),0);
+            openAlertView(UIUtils.getString(R.string.pay_success), 0);
 //            finish();
         }
 
@@ -211,12 +206,13 @@ public class FlowLastDesignActivity extends BaseWorkFlowActivity {
 ////            toast.setGravity(Gravity.CENTER,0,0);
 //            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
 //            toast.show();
-            openAlertView(UIUtils.getString(R.string.pay_failed),1);
+            openAlertView(UIUtils.getString(R.string.pay_failed), 1);
 //            MyToast.show(FlowLastDesignActivity.this, UIUtils.getString(R.string.pay_failed));
 //            isLock = true;
         }
     };
-    private void openAlertView(String content,final int isSuccess) {
+
+    private void openAlertView(String content, final int isSuccess) {
         new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, this,
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
