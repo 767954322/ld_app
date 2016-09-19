@@ -389,8 +389,8 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private void getPCDAddress() {
         if (!TextUtils.isEmpty(province_name)
                 || !TextUtils.isEmpty(city_name)) {
-            mChangeAddressDialog = AddressDialog.getInstance(province_name+" "+city_name+" "+district_name);
-        }else {
+            mChangeAddressDialog = AddressDialog.getInstance(province_name + " " + city_name + " " + district_name);
+        } else {
             mChangeAddressDialog = AddressDialog.getInstance("尚未填写");
         }
         mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
@@ -624,8 +624,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         ibnQrCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPopupWindow.dismiss();
-                mPopupWindow = null;
+                if (mPopupWindow != null) {
+                    mPopupWindow.dismiss();
+                    mPopupWindow = null;
+                }
             }
         });
         rl_consumer_zxing.setOnClickListener(new View.OnClickListener() {
@@ -633,7 +635,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             @Override
             public void onClick(View v) {
                 mPopupWindow.dismiss();
-                mPopupWindow = null;
+                if (mPopupWindow != null) {
+                    mPopupWindow.dismiss();
+                    mPopupWindow = null;
+                }
+
+
             }
         });
         /// mPopupWindow ScaleAnimation .
