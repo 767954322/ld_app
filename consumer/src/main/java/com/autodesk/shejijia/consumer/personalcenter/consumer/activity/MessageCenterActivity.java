@@ -192,6 +192,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
         layoutParams.height = height - 10;
         mRlEmpty.setLayoutParams(layoutParams);
         mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        mIvEmpty.setBackground(null);
     }
 
     private Context mContext;

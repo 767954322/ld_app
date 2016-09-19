@@ -494,7 +494,7 @@
 
     <!--  LookMoreCaseDetailActivity -->
     <string name="char_msg__file">解析数据失败</string>
-    <string name="no_designer_case">抱歉，暂无结果！</string>
+    <string name="no_designer_case">抱歉，暂无消息！</string>
     <string name="no_designer_case_2">暂无结果</string>
 
     <!-- MeasureFormActivity -->
