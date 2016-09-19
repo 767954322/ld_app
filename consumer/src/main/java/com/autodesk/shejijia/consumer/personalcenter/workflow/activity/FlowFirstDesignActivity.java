@@ -109,13 +109,12 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
-        CustomProgress.cancelDialog();
 
         updateViewFromData();
         restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
             public void onJsonResponse(String jsonResponse) {
-
+                CustomProgress.cancelDialog();
                 designerInfoList = new Gson().fromJson(jsonResponse, DesignerInfoDetails.class);
                 updateViewFromInfoData();
             }

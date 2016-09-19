@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -342,7 +341,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 }
 
                 if (!bAddress || communityName.isEmpty()) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_detailed_address));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_enter_correct_address));
                     return;
                 }
 

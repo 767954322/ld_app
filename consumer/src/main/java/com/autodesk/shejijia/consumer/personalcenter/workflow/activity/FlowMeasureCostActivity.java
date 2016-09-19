@@ -3,15 +3,12 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.DesignerFiltrateActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPAliPayBean;
@@ -21,7 +18,6 @@ import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -97,7 +93,6 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
-        CustomProgress.cancelDialog();
 
         restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
@@ -106,6 +101,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
                 designerInfoList = new Gson().fromJson(jsonResponse, DesignerInfoDetails.class);
                 if (null != designerInfoList) {
                     DesignerInfoDetails.RealNameBean real_name = designerInfoList.getReal_name();
+                    CustomProgress.cancelDialog();
                     tv_name.setText(real_name.getReal_name());
                     tv_phone.setText(real_name.getMobile_number().toString());
                 }
