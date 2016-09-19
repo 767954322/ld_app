@@ -7,8 +7,8 @@ android {
         applicationId 'com.autodesk.shejijia.consumer'
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
-        versionCode 51
-        versionName "4.1.0.30"
+        versionCode 55
+        versionName "4.1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
