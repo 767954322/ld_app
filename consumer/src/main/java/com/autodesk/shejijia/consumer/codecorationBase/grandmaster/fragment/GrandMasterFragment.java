@@ -5,15 +5,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -218,7 +215,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
                 case 0:
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_first, null);
                     ImageView iv_grandmaster_pic_first = (ImageView) view.findViewById(R.id.iv_grandmaster_pic_first);
-                    ImageUtils.displaySixImage("drawable://" + R.drawable.shouye, iv_grandmaster_pic_first);
+                    ImageUtils.displaySixImage("drawable://" + R.drawable.shouye1, iv_grandmaster_pic_first);
                     break;
                 default:
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);

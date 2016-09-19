@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/rl_grand_dot"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/size_12"
+        android:layout_marginBottom="@dimen/size_6"
         android:textSize="@dimen/font_25"
         android:background="@drawable/boutton"
         />
