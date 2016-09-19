@@ -975,7 +975,7 @@
     <string name="work_room_name_text">姓名</string>
     <string name="work_room_name">请填写您的姓名</string>
     <string name="work_room_phone_text">电话</string>
-    <string name="work_room_phone_number">请填写您的手机号码</string>
+    <string name="work_room_phone_number">请输入您的手机号码</string>
     <!--工作室列表-->
     <string name="work_room_commit_successful">提交成功</string>
     <string name="work_room_commit_fail">提交失败</string>
