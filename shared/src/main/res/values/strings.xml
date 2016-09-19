@@ -369,7 +369,7 @@
     <string name="demand_please_style_select">请选择风格(选填)</string>
     <string name="demand_please_address">请选择地址：省 市 区</string>
     <string name="demand_please_project_address">请正确输入项目地址</string>
-    <string name="demand_please_input_project_address">请输入项目地址</string>
+    <string name="demand_please_input_project_address">请选择项目地址</string>
     <string name="demand_please_specific_address">请输入小区名称</string>
     <string name="termination_demand">终止需求</string>
     <string name="amend_demand">修改需求</string>
