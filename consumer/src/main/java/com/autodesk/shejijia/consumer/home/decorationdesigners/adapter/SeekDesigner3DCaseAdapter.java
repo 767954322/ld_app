@@ -69,12 +69,18 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (datas.get(position).getDesign_file() != null && datas.get(position).getDesign_file().size() != 0) {
+        List<Case3DBeen.CasesBean.DesignerFileBeen> design_file = datas.get(position).getDesign_file();
 
-            if (datas.get(position).getDesign_file().get(0).getLink() != null) {
 
-                ImageUtils.loadImageIcon(viewHolder.item_3D_case_img,datas.get(position).getDesign_file().get(0).getLink()+"HD.jpg");
+        if (design_file != null && design_file.size() != 0) {
+
+            if (design_file.get(0).getLink() != null) {
+
+                String urll = design_file.get(0).getLink()+"HD.jpg";
+                ImageUtils.loadImageIcon(viewHolder.item_3D_case_img,urll);
             }
+        }else {
+            ImageUtils.loadImageIcon(viewHolder.item_3D_case_img,"");
         }
 
         styleJson = AppJsonFileReader.getStyle((Activity) context);
@@ -89,6 +95,9 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
                 viewHolder.style.setText(styleJson.get(datas.get(position).getCustom_string_style()));
 
             }
+        }else {
+
+            viewHolder.style.setText("其它");
         }
         if (datas.get(position).getCustom_string_type() != null){
 
@@ -99,10 +108,16 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
                 viewHolder.hall.setText(RoomHall.get(datas.get(position).getCustom_string_type()));
 
             }
+        }else {
+
+            viewHolder.hall.setText("其它");
         }
         if (datas.get(position).getCustom_string_area() != null){
 
             viewHolder.room_area.setText(datas.get(position).getRoom_area()+"m²");
+        }else {
+            viewHolder.room_area.setText("0m²");
+
         }
 
         viewHolder.favorite_count.setText(datas.get(position).getFavorite_count()+"");
