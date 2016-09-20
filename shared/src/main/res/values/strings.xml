@@ -24,7 +24,7 @@
     <string name="tip_stop">你确定要终止与设计师的合作吗？</string>
     <string name="serviced">设计师已做过量房服务</string>
     <string name="serviceding">设计师还未提供量房服务</string>
-    <string name="tip_success">创建成功</string>
+    <string name="tip_success">保存成功</string>
     <string name="network_error">网络连接失败!</string>
     <string name="cancel">取消</string>
     <string name="call_phone">拨打</string>
@@ -509,10 +509,10 @@
     <string name="data_send">数据发送中...</string>
     <string name="demand_house_area">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
     <string name="demand_measure_house_form">量房资料</string>
-    <string name="is_average_measure_house_form">竞优量房资料</string>
-    <string name="is_elite_measure_house_form">精选量房资料</string>
+    <string name="is_average_measure_house_form">竞优量房表单</string>
+    <string name="is_elite_measure_house_form">精选量房表单</string>
     <string name="measure_house_form">量房表单</string>
-    <string name="demand_elite_measure_house_form">精选量房资料</string>
+    <string name="demand_elite_measure_house_form">精选量房表单</string>
     <string name="exist_measure_order_information">已有量房资料</string>
 
 
@@ -628,7 +628,7 @@
     <string name="bidding_detail">应标案件详情</string>
     <string name="shall_visible_bid_after">设计师中标后可见</string>
     <string name="my_bid_demand_particulars">需求详情</string>
-    <string name="bided">我已应标 </string>
+    <string name="bided">已应标 </string>
     <string name="designer_bid_detail_realy_no_finish">你还尚未完成实名认证!</string>
     <string name="msg_no_certification">未实名认证，不能应标，请先认证</string>
     <string name="msg_no_certification_web">您还未通过实名认证请到网页端完成认证</string>

@@ -162,8 +162,8 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 LogUtils.i(info);
                 getAlertView(UIUtils.getString(R.string.designer_bid_detail_success), null, false).show();
                 mBtnSendBid.setEnabled(false);
-                mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-                mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+                mBtnSendBid.setBackgroundResource(R.drawable.abc_gray_button_style);
+                mBtnSendBid.setTextColor(UIUtils.getColor(R.color.bg_80));
                 mBtnSendBid.setText(UIUtils.getString(R.string.bided));
             }
 
@@ -331,8 +331,8 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
         if (bid_status) {
             mBtnSendBid.setEnabled(false);
-            mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-            mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+            mBtnSendBid.setBackgroundResource(R.drawable.abc_gray_button_style);
+            mBtnSendBid.setTextColor(UIUtils.getColor(R.color.bg_80));
             mBtnSendBid.setText(UIUtils.getString(R.string.bided));
             mTvPhone.setText(phone);
         } else {
@@ -367,8 +367,8 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         CustomProgress.cancelDialog();
         CustomProgress.dialog.cancel();
         mBtnSendBid.setEnabled(false);
-        mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-        mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+        mBtnSendBid.setBackgroundResource(R.drawable.abc_gray_button_style);
+        mBtnSendBid.setTextColor(UIUtils.getColor(R.color.bg_80));
 //        mBtnSendBid.setText(UIUtils.getString(R.string.bided));
         getAlertView(UIUtils.getString(R.string.should_number_full), null, false).show();
     }
