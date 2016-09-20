@@ -1566,6 +1566,18 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+
+    /**
+     * 六大模块图片接口
+     */
+    public void getSixProPictures( OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_DESIGN+"/selection/pictures?version=2";
+//        String url = UrlConstants.MAIN_MEMBER + "/designers/search/studio?limit=" + limit + "&offset=" + offset + "&type_code=" + type;//61
+//        String url = "http://192.168.120.217:8083/member-app/v1/api/designers/search/studio?limit=20&offset=0&type_code=61";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback);
+        queue.add(okRequest);
+    }
+
     /**
      * 大师接口
      */

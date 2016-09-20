@@ -21,6 +21,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDia
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -57,9 +58,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
         vp_grand_selection = (ViewPager) rootView.findViewById(R.id.vp_grand_selection);
         bt_grand_reservation = (ImageButton) rootView.findViewById(R.id.bt_grand_reservation);
         ll_grand_selection = (ViewGroup) rootView.findViewById(R.id.ll_grand_selection);
-
     }
-
     @Override
     protected void initListener() {
         bt_grand_reservation.setOnClickListener(this);
@@ -67,25 +66,26 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
     @Override
     protected void initData() {
-
-
+        initGrandListData();
+    }
+    /**
+     * 获取大师列表数据
+     *
+     */
+    private void initGrandListData(){
         MPServerHttpManager.getInstance().getGrandMasterInfo(0, 10, "61", new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, activity);
                 initPageData("error");
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-
                 String masterInfo = GsonUtil.jsonToString(jsonObject);
-
                 initPageData(masterInfo);
             }
         });
-
     }
 
     @Override
@@ -213,9 +213,15 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             LayoutInflater layoutInflater =LayoutInflater.from(mContext);
             switch(position) {
                 case 0:
+                    String default_Master = "";
+                    if(null != WkFlowStateMap.sixProductsPicturesBean && WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().size()>0){
+                        default_Master = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getMaster().get(0).getPoster();
+                    }
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_first, null);
                     ImageView iv_grandmaster_pic_first = (ImageView) view.findViewById(R.id.iv_grandmaster_pic_first);
-                    ImageUtils.displaySixImage("drawable://" + R.drawable.shouye1, iv_grandmaster_pic_first);
+//                    ImageUtils.displaySixImage("drawable://" + R.drawable.shouye1, iv_grandmaster_pic_first);
+                    ImageUtils.displaySixImage(default_Master, iv_grandmaster_pic_first);
+
                     break;
                 default:
                     view = layoutInflater.inflate(R.layout.viewpager_item_grandmaster_content, null);

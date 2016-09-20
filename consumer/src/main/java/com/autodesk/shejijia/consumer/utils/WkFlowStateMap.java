@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.utils;
 
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateBean;
 
@@ -25,5 +26,7 @@ public class WkFlowStateMap {
      * 4: 精选全流程
      */
     public static List<TipWorkFlowTemplateBean> sWkFlowBeans = new ArrayList<>();
+
+    public static SixProductsPicturesBean sixProductsPicturesBean = new SixProductsPicturesBean();
 
 }
