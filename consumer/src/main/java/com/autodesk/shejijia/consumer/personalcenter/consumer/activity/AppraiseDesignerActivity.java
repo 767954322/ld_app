@@ -166,9 +166,15 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
             return false;
         }
 
-        if (!TextUtils.isEmpty(appeasementsContent) && !regex_address_right) {
-            showAlertView(R.string.please_enter_words);
-            return false;
+        if (appeasementsContent.length() != 0){
+
+            if (appeasementsContent.length()>200 || appeasementsContent.length()< 15){
+
+                showAlertView(R.string.please_enter_words);
+                return false;
+
+            }
+
         }
 
         if (TextUtils.isEmpty(appeasementsContent)) {
