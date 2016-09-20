@@ -81,6 +81,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             item_name = ImageUrlUtils.getPackagesListNames()[item_num - 1];
         }
 
+        acs_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
         getConsumerInfoData();
         setDecorationBudget();
         initAlertView();

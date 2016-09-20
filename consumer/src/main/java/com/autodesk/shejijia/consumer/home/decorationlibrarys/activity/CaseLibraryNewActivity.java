@@ -27,6 +27,7 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseLibrar
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -68,6 +69,8 @@ import java.util.Map;
 public class CaseLibraryNewActivity extends NavigationBarActivity implements AbsListView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
 
+    private ImageView mIvCertification;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_case_linrary_new;
@@ -84,6 +87,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
 
         ivThumbUp = (ImageView) findViewById(R.id.iv_thumb_up);
+        mIvCertification = (ImageView) findViewById(R.id.iv_designer_certification);
+
 
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
@@ -492,6 +497,16 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
 //        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, caseDetailBean.getDesigner_info().getAvatar());
+        com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean designer = mDesignerInfo.getDesigner();
+
+        if (null != designer) {
+            int is_real_name = designer.getIs_real_name();
+            if (WkTemplateConstants.CERHIGH_TYPE_AUTH_PASSED.equalsIgnoreCase(String.valueOf(is_real_name))) {
+                mIvCertification.setVisibility(View.VISIBLE);
+            }
+        } else {
+            mIvCertification.setVisibility(View.GONE);
+        }
     }
 
     /**

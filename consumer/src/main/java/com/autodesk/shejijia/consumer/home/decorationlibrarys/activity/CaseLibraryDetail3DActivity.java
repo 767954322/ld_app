@@ -27,6 +27,7 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.List3DLibr
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -110,6 +111,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private Case3DDetailBean.DesignerInfoBean mDesignerInfo;
     private String mHs_uid;
     private String mNickName;
+    private ImageView mIvCertification;
 
 
     @Override
@@ -136,6 +138,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
+        mIvCertification = (ImageView) findViewById(R.id.iv_designer_certification);
+
 
         View view = LayoutInflater.from(this).inflate(R.layout.case_library_new_item, null);
         mdesignerAvater = (ImageView) view.findViewById(R.id.case_library_item_iv);
@@ -466,6 +470,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         designer_id = mDesignerInfo.getDesigner().getAcs_member_id();
         mHs_uid = mDesignerInfo.getHs_uid();
         mNickName = mDesignerInfo.getNick_name();
+
         boolean is_following = mDesignerInfo.getIs_following();
         /**
          * 如果当前没有acs_member_id,就是没有登录，点击跳转到登录页面
@@ -499,10 +504,10 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
 
         //后台逻辑修改  顶部图片改动
-        String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath()+ Constant.CaseLibraryDetail.JPG;
-        firstCaseLibraryImageUrl=thumbnailMainPath;
+        String thumbnailMainPath = case3DDetailBean.getThumbnailMainPath() + Constant.CaseLibraryDetail.JPG;
+        firstCaseLibraryImageUrl = thumbnailMainPath;
         if (thumbnailMainPath != null) {
-            ImageUtils.displayIconImage(thumbnailMainPath , mdesignerAvater);
+            ImageUtils.displayIconImage(thumbnailMainPath, mdesignerAvater);
         }
 //
 //        //查找是否是封面图片  若是就添加到头部
@@ -532,14 +537,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         String room_type = case3DDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
-        }else {
+        } else {
             tvCustomerHomeRoom.setText(R.string.other_qita);
         }
 
         String project_style = case3DDetailBean.getProject_style();
         if (style.containsKey(project_style)) {
             tvCustomerHomeStyle.setText(style.get(project_style));
-        }else {
+        } else {
             tvCustomerHomeStyle.setText(R.string.other_qita);
         }
 
@@ -555,6 +560,15 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 //        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.displayAvatarImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
 
+        Case3DDetailBean.DesignerInfoBean.DesignerBean designer = mDesignerInfo.getDesigner();
+        if (null != designer) {
+            int is_real_name = designer.getIs_real_name();
+            if (WkTemplateConstants.CERHIGH_TYPE_AUTH_PASSED.equalsIgnoreCase(String.valueOf(is_real_name))) {
+                mIvCertification.setVisibility(View.VISIBLE);
+            }
+        } else {
+            mIvCertification.setVisibility(View.GONE);
+        }
     }
 
 
@@ -747,7 +761,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position==0){
+        if (position == 0) {
             List<String> imageList = new ArrayList<>();
             imageList.add(firstCaseLibraryImageUrl);
             Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
