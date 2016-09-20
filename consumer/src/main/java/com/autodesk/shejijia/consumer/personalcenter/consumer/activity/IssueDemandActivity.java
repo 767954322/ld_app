@@ -78,7 +78,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         super.initView();
         ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
-        et_issue_demand_name = (EditText) findViewById(R.id.et_issue_demand_name);
+        et_issue_demand_name = (TextView) findViewById(R.id.et_issue_demand_name);
         nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         et_issue_demand_mobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
         et_issue_demand_area = (EditText) findViewById(R.id.et_issue_demand_area);
@@ -603,7 +603,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     /// 控件.
     private LinearLayout ll_issue_house_type;
     private LinearLayout ll_issue_style;
-    private EditText et_issue_demand_name;
+    private TextView et_issue_demand_name;
     private TextView tv_issue_demand_budget;
     private TextView tv_issue_demand_design_budget;
     private TextView tv_issue_house_type;
