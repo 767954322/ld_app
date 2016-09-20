@@ -24,6 +24,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomLis
 import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AnimationUtils;
@@ -102,7 +103,11 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
 //        AnimationUtils.getInstance().setHandler(handler);
         getWorkRoomData("91", 0, 10);
-        ImageUtils.displayIconImage("drawable://" + R.drawable.work_room_heard_bg, img_header);
+        if (WkFlowStateMap.sixProductsPicturesBean !=null){
+
+            String pictrueName = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getStudio().get(0).getBanner();
+            ImageUtils.loadImageIcon(img_header,pictrueName);
+        }
     }
 
     @Override
