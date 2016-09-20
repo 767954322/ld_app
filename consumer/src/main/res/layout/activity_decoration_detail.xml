@@ -20,10 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_eef1f4"
+            android:baselineAligned="false"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:orientation="vertical"
-            android:baselineAligned="false">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,6 +37,7 @@
                     android:id="@+id/iv_consumer_decoration_ref"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:src="@drawable/icon_position_normal"/>
 
                 <TextView
@@ -58,15 +59,16 @@
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
-            <include layout="@layout/view_parting_line"></include>
+            <include
+                layout="@layout/view_parting_line"></include>
             <!--项目编号-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
@@ -91,11 +93,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
 
@@ -103,7 +105,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/name_space"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/et_amend_amend_name"
@@ -112,26 +115,27 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/consume_phone"
-                    android:textSize="@dimen/font_16"/>
+                    android:text="@string/consume_mobile"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/et_issue_amend_mobile"
@@ -140,24 +144,25 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/demand_village_name"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/et_issue_demand_detail_address"
@@ -166,38 +171,36 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_issue_address"
                 android:layout_width="match_parent"
-                android:minHeight="@dimen/size_40"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10"
                     android:text="@string/demand_project_address"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_issue_address"
                     android:layout_width="@dimen/size_1"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_10"
-                    android:layout_marginBottom="@dimen/size_10"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -209,12 +212,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:layout_marginTop="@dimen/size_10"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
 
@@ -222,7 +225,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/demand_planning_budget"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_amend_design_budget"
@@ -235,27 +239,28 @@
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_15"/>
 
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/demand_project_budget"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_aemand_budget"
@@ -268,20 +273,20 @@
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_15"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_amend_house_type"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
 
@@ -289,7 +294,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/demand_project_types"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_amend_house_type"
@@ -298,18 +304,18 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:gravity="center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
 
@@ -317,7 +323,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/demand_house_model"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <LinearLayout
                     android:layout_width="@dimen/size_1"
@@ -335,8 +342,8 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_14"/>
+                        android:textColor="@color/bg_33"
+                        android:textSize="@dimen/font_15"/>
 
 
                 </LinearLayout>
@@ -344,18 +351,19 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/common_order_project_area"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/et_ademand_area"
@@ -365,27 +373,28 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/black"
+                    android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_15"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_amend_style"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40"
+                android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/demand_style"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_amend_style"
@@ -393,8 +402,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
 
@@ -402,48 +411,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
                 android:background="@color/bg_ff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_1"
-                android:background="@color/bg_ff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_1"
-                android:background="@color/bg_ff"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_1"
-                android:background="@color/bg_ff"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView
@@ -460,15 +428,15 @@
                 android:layout_marginTop="@dimen/size_5"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
+                android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/consumer_decoration_buildtime"
-                    android:textColor="#666"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_14"/>
 
                 <TextView
                     android:id="@+id/tv_public_time"
@@ -476,8 +444,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_16"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_14"/>
             </LinearLayout>
 
             <LinearLayout
@@ -494,12 +462,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_border_cancel"
                     android:text="@string/button_decoration_stop"
-                    android:visibility="gone"
                     android:textColor="@color/bg_0084ff"
+                    android:visibility="gone"
                     />
 
                 <Button
-                    android:visibility="gone"
                     android:id="@+id/btn_fitment_amend_demand"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -508,6 +475,7 @@
                     android:background="@drawable/bg_common_btn_blue"
                     android:text="@string/button_decoration_amend"
                     android:textColor="@color/white"
+                    android:visibility="gone"
                     />
             </LinearLayout>
         </LinearLayout>

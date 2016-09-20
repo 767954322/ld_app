@@ -57,7 +57,7 @@ public class BidBidingFragment extends BidBaseFragment {
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showDetail(biddingNeedsListEntity.getNeeds_id());
+                        showDetail(biddingNeedsListEntity.getNeeds_id(), "2");
                     }
                 });
             }

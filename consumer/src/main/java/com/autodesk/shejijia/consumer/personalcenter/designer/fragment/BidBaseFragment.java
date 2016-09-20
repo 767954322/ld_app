@@ -11,6 +11,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -38,7 +39,9 @@ import java.util.Map;
 public abstract class BidBaseFragment extends BaseFragment implements PullToRefreshLayout.OnRefreshListener {
 
     protected abstract int getEmptyDataMessage();
+
     protected abstract CommonAdapter getCommonAdapter();
+
     protected abstract String getCurrentBidStatus();
 
     @Override
@@ -146,7 +149,7 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
             }
         };
         MPServerHttpManager.getInstance().getMyBidData(memType, acsToken, offset, limit, designerId, getCurrentBidStatus(),
@@ -164,15 +167,22 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         holder.setText(R.id.tv_decoration_style, getProjectDecorationStyle(biddingNeedsListEntity));
     }
 
-    protected void showDetail(String needsId) {
-        Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
+    protected void showDetail(String needsId,String wk_template_id) {
+//        Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
+//        Bundle bundle = new Bundle();
+//        LogUtils.i(TAG, needsId);
+//        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needsId);
+//        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT);
+//        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+
+        // fix ui不符合  by zhoujinlong
         Bundle bundle = new Bundle();
-        LogUtils.i(TAG, needsId);
-        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needsId);
-        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_BEING_FRAGMENT);
-        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
+        bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, needsId);
+        DecorationDetailActivity.jumpTo(getActivity(), bundle);
+
     }
 
     protected String getProjectAddress(MyBidBean.BiddingNeedsListEntity biddingNeedsListEntity) {
