@@ -24,7 +24,7 @@
     <string name="tip_stop">你确定要终止与设计师的合作吗？</string>
     <string name="serviced">设计师已做过量房服务</string>
     <string name="serviceding">设计师还未提供量房服务</string>
-    <string name="tip_success">创建成功</string>
+    <string name="tip_success">保存成功</string>
     <string name="network_error">网络连接失败!</string>
     <string name="cancel">取消</string>
     <string name="call_phone">拨打</string>
