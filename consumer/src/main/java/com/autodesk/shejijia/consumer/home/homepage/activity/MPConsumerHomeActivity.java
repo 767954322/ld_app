@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.Search3DActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
@@ -124,6 +125,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         addRadioButtons(mDesignerPersonCenterRadioBtn);
         //获取节点信息
         getWkFlowStatePointInformation();
+        initStaticPic();
 
     }
 
@@ -644,6 +646,23 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 WkFlowStateInfoBean WkFlowStateInfoBean = GsonUtil.jsonToBean(jsonString, WkFlowStateInfoBean.class);
                 List<TipWorkFlowTemplateBean> tip_work_flow_template = WkFlowStateInfoBean.getTip_work_flow_template();
                 WkFlowStateMap.sWkFlowBeans = tip_work_flow_template;
+            }
+        });
+    }
+    /**
+     * 获取六大模块静态图片url，并添加到sixProductsPicturesBean
+     */
+    private void initStaticPic() {
+        MPServerHttpManager.getInstance().getSixProPictures(new OkJsonRequest.OKResponseCallback(){
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String str = GsonUtil.jsonToString(jsonObject);
+                SixProductsPicturesBean sixProductsPicturesBean =GsonUtil.jsonToBean(str, SixProductsPicturesBean.class);
+                WkFlowStateMap.sixProductsPicturesBean = sixProductsPicturesBean;
+            }
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
             }
         });
     }
