@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.designer.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -61,6 +62,13 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
         String msg = tvc_content.getText().toString().trim();
         boolean matches = msg.matches(RegexUtil.NICK_NAME_REGEX);
         boolean num = msg.matches(RegexUtil.MEASURE_FEE_REGEX);
+        if (TextUtils.isEmpty(msg)) {
+            new AlertView(UIUtils.getString(R.string.tip),
+                    UIUtils.getString(R.string.measure_format_tip), null, null,
+                    new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+            return;
+        }
+
         if (pTag.equals(Constant.PersonCenterTagKey.DESIGNER_INFO)) {
             if (msg.isEmpty()) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
@@ -73,8 +81,8 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
             }
         } else if (pTag.equals(Constant.PersonCenterTagKey.MEASURE_HOUSE)) {
 
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(tvc_content.getWindowToken(),0);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(tvc_content.getWindowToken(), 0);
             if (!num) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.no_measure_fee), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 return;
