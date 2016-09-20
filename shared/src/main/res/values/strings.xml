@@ -434,7 +434,7 @@
 
     <!--DecorationActivity -->
     <string name="empty_order_fitment">您还没有装修项目</string>
-    <string name="consumer_decoration">我的装修项目</string>
+    <string name="consumer_decoration">我的项目</string>
     <string name="loding_more">点击加载更多</string>
     <string name="anonymity">匿名</string>
     <string name="end_day">已结束</string>
@@ -676,7 +676,7 @@
     <string name="content_cannot_empty">内容不能为空</string>
     <string name="project_cost">设计费</string>
     <string name="dialog_hint">支持2-10个中、英文、数字</string>
-    <string name="nick_name_format">昵称应为2-20个字符</string>
+    <string name="nick_name_format">昵称应为2-10个字符</string>
 
     <!--DesignerOrderBeiShuActivity -->
     <string name="my_project_bei_shu">套餐项目</string>

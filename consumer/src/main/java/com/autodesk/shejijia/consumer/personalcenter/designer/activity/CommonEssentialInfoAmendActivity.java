@@ -63,7 +63,7 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
         boolean num = msg.matches(RegexUtil.MEASURE_FEE_REGEX);
         if (pTag.equals(Constant.PersonCenterTagKey.DESIGNER_INFO)) {
             if (msg.isEmpty()) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_Empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 return;
             } else if (!matches) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
@@ -81,7 +81,7 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
             }
         } else if (pTag.equals(Constant.PersonCenterTagKey.CONSUMER_INFO)) {
             if (msg.isEmpty()) {
-                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format_Empty), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
                 return;
             } else if (!matches) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.nick_name_format), null, null, new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();

@@ -2,11 +2,12 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -54,7 +55,7 @@ import java.util.Map;
  * @file IssueDemandActivity.java .
  * @brief 消费者发布需求.
  */
-public class IssueDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
+public class IssueDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener,TextWatcher {
 
 
     Handler handler = new Handler() {
@@ -78,7 +79,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         super.initView();
         ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
-        et_issue_demand_name = (EditText) findViewById(R.id.et_issue_demand_name);
+        et_issue_demand_name = (TextView) findViewById(R.id.et_issue_demand_name);
         nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         et_issue_demand_mobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
         et_issue_demand_area = (EditText) findViewById(R.id.et_issue_demand_area);
@@ -149,6 +150,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         tv_issue_demand_budget.setOnClickListener(this);
         tv_issue_demand_design_budget.setOnClickListener(this);
         tv_issue_address.setOnClickListener(this);
+
+        et_issue_demand_area.addTextChangedListener(this);
     }
 
 
@@ -603,7 +606,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     /// 控件.
     private LinearLayout ll_issue_house_type;
     private LinearLayout ll_issue_style;
-    private EditText et_issue_demand_name;
+    private TextView et_issue_demand_name;
     private TextView tv_issue_demand_budget;
     private TextView tv_issue_demand_design_budget;
     private TextView tv_issue_house_type;
@@ -633,4 +636,39 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String success = "";
     public static final int RESULT_CODE = 101;
     private String member_id;
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().contains(".")) {
+                if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                    s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                    et_issue_demand_area.setText(s);
+                    et_issue_demand_area.setSelection(s.length());
+                }
+            }
+
+            if (s.toString().trim().substring(0).equals(".")) {
+                s = "0" + s;
+                et_issue_demand_area.setText(s);
+                et_issue_demand_area.setSelection(2);
+            }
+
+            if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                if (!s.toString().substring(1, 2).equals(".")) {
+                    et_issue_demand_area.setText(s.subSequence(0, 1));
+                    et_issue_demand_area.setSelection(1);
+                    return;
+                }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }
