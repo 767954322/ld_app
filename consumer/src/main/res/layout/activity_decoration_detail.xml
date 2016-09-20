@@ -22,7 +22,8 @@
             android:background="@color/bg_eef1f4"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
