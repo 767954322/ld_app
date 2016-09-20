@@ -33,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name_space"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <EditText
@@ -74,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/consume_phone_number"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <EditText
@@ -119,6 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_project_types"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <TextView
@@ -165,6 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fitment_area"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <EditText
@@ -213,6 +217,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_planning_budget"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <TextView
@@ -269,6 +274,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_project_budget"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <TextView
@@ -325,6 +331,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_house_model"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <LinearLayout
@@ -381,6 +388,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_style"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <TextView
@@ -416,6 +424,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_project_address"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <TextView
@@ -463,6 +472,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_village_name"
+                android:textColor="@color/mybid_text_color_normal"
                 android:textSize="@dimen/font_14" />
 
             <EditText
