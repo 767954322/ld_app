@@ -114,7 +114,7 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
         }
         if (datas.get(position).getCustom_string_area() != null){
 
-            viewHolder.room_area.setText(datas.get(position).getRoom_area()+"m²");
+            viewHolder.room_area.setText(datas.get(position).getRoom_area()+"㎡");
         }else {
             viewHolder.room_area.setText("0m²");
 

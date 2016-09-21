@@ -125,9 +125,9 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
             if (null != mDatas.get(position).getRoom_area()) {
                 String room_area = mDatas.get(position).getRoom_area();
                 if (mArea.containsKey(room_area)) {
-                    holder.mSeekArea.setText(mArea.get(room_area) + "m²");
+                    holder.mSeekArea.setText(mArea.get(room_area) + "㎡");
                 } else {
-                    holder.mSeekArea.setText(room_area + "m²");
+                    holder.mSeekArea.setText(room_area + "㎡");
                 }
             } else {
                 holder.mSeekArea.setText(R.string.str_others);

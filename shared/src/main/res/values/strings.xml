@@ -162,7 +162,7 @@
     <!-- FlowMeasureCostActivity -->
     <string name="flow_measure_house_cost">量&#160;&#160;房&#160;&#160;费：</string>
     <string name="pay">立即支付</string>
-    <string name="evaluation">立即评价</string>
+    <string name="evaluation">&#160;&#160;立即评价&#160;&#160;</string>
     <string name="i_want_to_pay">我要支付</string>
     <string name="loding">加载中...</string>
     <string name="loding_end">已为最后一条需求。</string>

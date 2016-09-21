@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -294,7 +295,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 case R.id.tv_wx_shared_tofriends:
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        if (null == caseDetailBean) {
+                            Toast.makeText(CaseLibraryNewActivity.this, "正在获取数据，请稍后分享", Toast.LENGTH_LONG).show();
+                        } else {
+                            SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -302,7 +307,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        if (null == caseDetailBean) {
+                            Toast.makeText(CaseLibraryNewActivity.this, "正在获取数据，请稍后分享", Toast.LENGTH_LONG).show();
+                        } else {
+                            SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -473,7 +482,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
             mCaseLibraryText.setText("          " + introduction);
         }
 
-        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
+        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "㎡");
         String room_type = caseDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
@@ -488,9 +497,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         tvheadThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
 
 
-        if (caseDetailBean.getDesigner_info().getNick_name()!=null){
+        if (caseDetailBean.getDesigner_info().getNick_name() != null) {
             ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getNick_name());
-        }else {
+        } else {
             ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
         }
 

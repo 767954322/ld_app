@@ -53,7 +53,7 @@ public class BidBidingFragment extends BidBaseFragment {
                 holder.setText(R.id.tv_bidder_count, String.format(getString(R.string.bid_designer_num),
                         biddingNeedsListEntity.getBidder_count()));
                 holder.setText(R.id.tv_decoration_end_day, biddingNeedsListEntity.getEnd_day());
-
+                holder.setVisible(R.id.iv_icon_time, true);
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

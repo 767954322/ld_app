@@ -62,6 +62,10 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         mBiddingNeedsListEntities = new ArrayList<>();
         mCommonAdapter = getCommonAdapter();
         mPullListView.setAdapter(mCommonAdapter);
+        if (mIsFirstIn || isVisible()) {
+            mPullToRefreshLayout.autoRefresh();
+        }
+        mIsFirstIn = false;
     }
 
 
@@ -72,15 +76,17 @@ public abstract class BidBaseFragment extends BaseFragment implements PullToRefr
         mEmptyView = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
         TextView tvEmptyMessage = (TextView) mEmptyView.findViewById(R.id.tv_empty_message);
         tvEmptyMessage.setText(getEmptyDataMessage());
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (mIsFirstIn || isVisible()) {
-            mPullToRefreshLayout.autoRefresh();
-        }
-        mIsFirstIn = false;
+      // FIXME: 16-9-21 remove into refresh by zjl 9-12 email
+//        if (mIsFirstIn || isVisible()) {
+//            mPullToRefreshLayout.autoRefresh();
+//        }
+//        mIsFirstIn = false;
     }
 
     @Override

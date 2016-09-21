@@ -96,7 +96,7 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
             holder.setText(R.id.tv_seek_designer_cost, UIUtils.getString(R.string.has_yet_to_fill_out));
         } else {
 
-            holder.setText(R.id.tv_seek_designer_cost, design_price_min + "-" + design_price_max + "元/m²");
+            holder.setText(R.id.tv_seek_designer_cost, design_price_min + "-" + design_price_max + "元/㎡");
         }
         audit_status = TextUtils.isEmpty(audit_status) ? "" : audit_status;
 

@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -326,7 +327,11 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(CaseLibraryDetail3DActivity.this, webUrl, case3DDetailBean.getDesign_name(), case3DDetailBean.getConception() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        if (null == case3DDetailBean) {
+                            Toast.makeText(CaseLibraryDetail3DActivity.this, "正在获取数据，请稍后分享", Toast.LENGTH_LONG).show();
+                        } else {
+                            SendWXShared.sendProjectToWX(CaseLibraryDetail3DActivity.this, webUrl, case3DDetailBean.getDesign_name(), case3DDetailBean.getConception() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -334,7 +339,11 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(CaseLibraryDetail3DActivity.this, webUrl, case3DDetailBean.getDesign_name(), case3DDetailBean.getConception() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        if (null == case3DDetailBean) {
+                            Toast.makeText(CaseLibraryDetail3DActivity.this, "正在获取数据，请稍后分享", Toast.LENGTH_LONG).show();
+                        } else {
+                            SendWXShared.sendProjectToWX(CaseLibraryDetail3DActivity.this, webUrl, case3DDetailBean.getDesign_name(), case3DDetailBean.getConception() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -533,7 +542,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             mCaseLibraryText.setText(R.string.nodata);
         }
 
-        tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + "m²");
+        tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + "㎡");
         String room_type = case3DDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
