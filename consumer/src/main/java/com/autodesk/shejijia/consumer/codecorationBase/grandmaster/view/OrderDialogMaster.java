@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.utility.PhoneNumberUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 
 import java.util.regex.Matcher;
@@ -136,7 +137,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
                 } else {
 
                     String mobile = phoneNumber.getText().toString();
-                    phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
+                    phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
                     if (phoneRight) {
 
                         line_phone.setBackgroundColor(Color.BLACK);
@@ -158,15 +159,6 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
 
             }
         });
-    }
-
-    //判断是不是手机号
-    public static boolean checkPhoneNumber(String phone) {
-        String str = "^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$";
-        Pattern p = Pattern.compile(str, Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(phone);
-        boolean isMatches = m.matches();
-        return isMatches;
     }
 
     @Override
@@ -195,7 +187,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
                 }
                 //phone
                 String mobile = phoneNumber.getText().toString();
-                phoneRight = checkPhoneNumber(mobile);
+                phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
                 if (phoneRight) {
 
                     line_phone.setBackgroundColor(Color.BLACK);
