@@ -62,12 +62,6 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
         String msg = tvc_content.getText().toString().trim();
         boolean matches = msg.matches(RegexUtil.NICK_NAME_REGEX);
         boolean num = msg.matches(RegexUtil.MEASURE_FEE_REGEX);
-        if (TextUtils.isEmpty(msg)) {
-            new AlertView(UIUtils.getString(R.string.tip),
-                    UIUtils.getString(R.string.measure_format_tip), null, null,
-                    new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
-            return;
-        }
 
         if (pTag.equals(Constant.PersonCenterTagKey.DESIGNER_INFO)) {
             if (msg.isEmpty()) {
@@ -80,6 +74,13 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
                 return;
             }
         } else if (pTag.equals(Constant.PersonCenterTagKey.MEASURE_HOUSE)) {
+
+            if (TextUtils.isEmpty(msg)) {
+                new AlertView(UIUtils.getString(R.string.tip),
+                        UIUtils.getString(R.string.measure_format_tip), null, null,
+                        new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                return;
+            }
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(tvc_content.getWindowToken(), 0);
