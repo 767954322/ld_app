@@ -287,7 +287,15 @@
 
                 <TextView
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_1"
+                    android:background="@color/bg_ef" />
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/size_10"
+                    android:background="@color/grey_white_9" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_1"
                     android:background="@color/bg_ef" />
 
                 <!--替换的container-->

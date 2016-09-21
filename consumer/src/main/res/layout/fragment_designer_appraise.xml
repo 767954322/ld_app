@@ -8,24 +8,22 @@
     <LinearLayout
         android:id="@+id/appraise_ll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_39"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_10"
             android:layout_marginTop="@dimen/size_10"
-            android:gravity="center_vertical"
-            >
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_appraise_designer_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_16"
                 android:text="@string/appraise_designer" />
             <!--style="@android:style/Widget.RatingBar.Small"-->
 
@@ -42,19 +40,22 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_1"
-            android:background="@color/bg_ef" />
 
     </LinearLayout>
 
 
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ef"
+        android:visibility="gone" />
 
     <com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewListView
         android:id="@+id/lv_seek_appraise_detail_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="@color/no_color"
         android:scrollbars="none" />
 
 

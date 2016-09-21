@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAppraiseAdapter;
@@ -43,6 +44,8 @@ public class DesignerAppraiseFragment extends BaseFragment {
         mListView = (ScrollViewListView) rootView.findViewById(R.id.lv_seek_appraise_detail_listview);
         rating_star = (RatingBar) rootView.findViewById(R.id.rating_star);
         appraise_ll = (LinearLayout) rootView.findViewById(R.id.appraise_ll);
+        line = (TextView) rootView.findViewById(R.id.line);
+
         mListView.getLastVisiblePosition();
     }
 
@@ -74,6 +77,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
         if (estimates.size() > 0) {
 
             appraise_ll.setVisibility(View.VISIBLE);
+            line.setVisibility(View.VISIBLE);
         }
 
         Message message = myHandler.obtainMessage();
@@ -108,6 +112,7 @@ public class DesignerAppraiseFragment extends BaseFragment {
 
     private ListView mListView;
     private AppraiseDesignBeen mAppraiseDesignBeen;
+    private TextView line;
     private RatingBar rating_star;
     private LinearLayout appraise_ll;
     private List<AppraiseDesignBeen.EstimatesBean> estimates;
