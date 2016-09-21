@@ -14,12 +14,14 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -39,6 +41,8 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
     private FrameLayout mRlAverage;
     private ImageView mIvAverageTip;
     private ImageView mIvSendDemand;
+    private ImageView average_img;
+    private ImageView rl_container_img;
     private String mNick_name;
 
     public AverageFragment() {
@@ -54,6 +58,9 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
         mRlAverage = (FrameLayout) rootView.findViewById(R.id.rl_average);
         mIvAverageTip = (ImageView) rootView.findViewById(R.id.iv_average_tip);
         mIvSendDemand = (ImageView) rootView.findViewById(R.id.iv_send_demand);
+
+        rl_container_img = (ImageView) rootView.findViewById(R.id.rl_container_img);
+        average_img = (ImageView) rootView.findViewById(R.id.average_img);
     }
 
     @Override
@@ -62,6 +69,15 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             getConsumerInfoData(mMemberEntity.getAcs_member_id());
             return;
+        }
+
+        if (WkFlowStateMap.sixProductsPicturesBean !=null){
+
+            String pictureUrl = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getBidding().get(0).getBack();
+            String backPicture[] = pictureUrl.split(",");
+
+            ImageUtils.loadImageIcon(average_img,backPicture[1]);
+            ImageUtils.loadImageIcon(rl_container_img,backPicture[0]);
         }
 
     }

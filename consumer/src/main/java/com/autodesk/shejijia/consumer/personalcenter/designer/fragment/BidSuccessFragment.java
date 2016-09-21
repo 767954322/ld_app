@@ -46,7 +46,8 @@ public class BidSuccessFragment extends BidBaseFragment {
                 holder.getConvertView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showDetail(biddingNeedsListEntity.getNeeds_id());
+                        //查看详情， 不传1 就行 by zjl
+                        showDetail(biddingNeedsListEntity.getNeeds_id(),"2");
                     }
                 });
             }

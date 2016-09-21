@@ -28,12 +28,12 @@ import java.util.Map;
  */
 public class SeekDesignerDetailAdapter extends BaseAdapter {
 
-    public SeekDesignerDetailAdapter(Context context, List<SeekDesignerDetailBean.CasesEntity> datas, Activity activity) {
+    public SeekDesignerDetailAdapter(Context context, List<SeekDesignerDetailBean.CasesEntity> datas) {
         this.mDatas = datas;
         this.context = context;
-        mRoom = AppJsonFileReader.getRoomHall(activity);
-        mStyle = AppJsonFileReader.getStyle(activity);
-        mArea = AppJsonFileReader.getArea(activity);
+        mRoom = AppJsonFileReader.getRoomHall((Activity) context);
+        mStyle = AppJsonFileReader.getStyle((Activity) context);
+        mArea = AppJsonFileReader.getArea((Activity) context);
     }
 
     @Override
@@ -137,18 +137,10 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
             }
         } else {
             holder.mSeekCase.setImageResource(R.drawable.common_case_icon);
-//<<<<<<< HEAD
-//            holder.mSeekAddress.setText(R.string.temporarily_no_data);
             holder.mSeekLivingRoom.setText(R.string.temporarily_no_data);
             holder.mSeekStyle.setText(R.string.temporarily_no_data);
             holder.mSeekArea.setText(R.string.temporarily_no_data);
             //TODO MERGE 825
-//=======
-//            holder.mSeekAddress.setText(R.string.str_others);
-//            holder.mSeekLivingRoom.setText(R.string.str_others);
-//            holder.mSeekStyle.setText(R.string.str_others);
-//            holder.mSeekArea.setText(R.string.str_others);
-//>>>>>>> release/July/Android-UAT
         }
         holder.mSeekCase.setOnClickListener(new MyOnClickListener(position, (ViewHolder) holder));
 

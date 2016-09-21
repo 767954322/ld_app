@@ -30,6 +30,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
+                android:maxLines="1"
                 android:textColor="@color/bg_40"
                 android:textSize="@dimen/font_16"
                 android:visibility="visible"/>
@@ -100,16 +101,35 @@
         android:background="@drawable/im_ico"
         android:visibility="gone"/>
 
-    <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
-        android:id="@+id/piv_img_customer_home_header"
-        android:layout_width="@dimen/size_45"
-        android:layout_height="@dimen/size_45"
-        android:layout_gravity="top"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="@dimen/size_10"
-        app:poly_border="true"
-        app:poly_border_color="@color/bg_ff"
-        app:poly_border_width="@dimen/size_5"
-        app:poly_corner_radius="5"
-        app:poly_vertices="0"/>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+            android:id="@+id/piv_img_customer_home_header"
+            android:layout_width="@dimen/size_45"
+            android:layout_height="@dimen/size_45"
+            android:layout_gravity="top"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="@dimen/size_10"
+            app:poly_border="true"
+            app:poly_border_color="@color/bg_ff"
+            app:poly_border_width="@dimen/size_5"
+            app:poly_corner_radius="5"
+            android:src="@drawable/icon_default_avator"
+            app:poly_vertices="0"/>
+
+        <ImageView
+            android:id="@+id/iv_designer_certification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="@dimen/size_19"
+            android:layout_marginLeft="@dimen/size_43"
+            android:src="@drawable/icon_real_name_small"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            />
+    </FrameLayout>
 </RelativeLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/loAlertHeader"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:id="@+id/loAlertHeader"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvAlertTitle"
@@ -11,7 +11,7 @@
         android:layout_height="@dimen/height_alert_title"
         android:gravity="center"
         android:textColor="@color/textColor_alert_title"
-        android:textSize="@dimen/textSize_alert_title" />
+        android:textSize="@dimen/textSize_alert_title"/>
 
     <TextView
         android:id="@+id/tvAlertMsg"
@@ -19,6 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/marginBottom_alert_msg"
         android:gravity="center"
+        android:paddingLeft="10dp"
+        android:lineSpacingMultiplier="1.2"
+        android:paddingRight="10dp"
         android:textColor="@color/textColor_alert_msg"
-        android:textSize="@dimen/textSize_alert_msg" />
+        android:textSize="@dimen/textSize_alert_msg"/>
 </LinearLayout>

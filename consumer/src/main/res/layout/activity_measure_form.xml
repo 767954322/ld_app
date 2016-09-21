@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/name_space" />
 
-                <TextView
+                <EditText
                     android:id="@+id/tvc_measure_form_name"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -515,7 +515,8 @@
                     <TextView
                         android:id="@+id/tv_measure_form_liangfangfei"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"/>
 
                     <TextView
                         android:layout_width="wrap_content"

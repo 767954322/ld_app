@@ -8,26 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.IssueEliteDemanActivity;
-import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SelectionAdapter;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DesignWorksBean;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
-import org.json.JSONObject;
-
-import java.util.List;
 /**
  * @author luchongbin .
  * @version 1.0 .
@@ -42,6 +32,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
      * 装点点的ImageView数组
      */
     private ImageView[] tips;
+    private String [] pictures;
 
     @Override
     protected int getLayoutResId() {
@@ -57,24 +48,27 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
     @Override
     protected void initData() {
-
-        //载入图片资源
-        getDesignWorks();
+        SixProductsPicturesBean sixProductsPicturesBean = WkFlowStateMap.sixProductsPicturesBean;
+        if(sixProductsPicturesBean != null ){
+            SixProductsPicturesBean.AndroidBean.SelectionBean selectionBean = sixProductsPicturesBean.getAndroid().getSelection().get(0);
+            String png = selectionBean.getPng();
+            pictures = png.split(",");
+        }
+        updataView(pictures);
     }
 
     /**
      * 更新UI
      *
-     * @param myBidBean
+     * @param pictures
      */
-    private void updataView(DesignWorksBean myBidBean) {
+    private void updataView(String [] pictures) {
         int size = 1;
-        if (myBidBean != null) {
-            List<DesignWorksBean.InnerPicListBean> innerPicListBeans = myBidBean.getInnerPicList();
-            size = innerPicListBeans.size();
+        if (pictures != null && pictures.length > 0) {
+            size = pictures.length;
         }
         addImageViewtips(size);
-        vpSelection.setAdapter(new SelectionAdapter(getActivity(), myBidBean == null ? null : myBidBean.getInnerPicList()));
+        vpSelection.setAdapter(new SelectionAdapter(getActivity(), pictures));
         vpSelection.setOnPageChangeListener(this);
     }
 
@@ -111,7 +105,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         switch (v.getId()) {
             case R.id.imReservationButton:
                 showIssueDemandActivity();
-
                 break;
             default:
                 break;
@@ -130,30 +123,12 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
             return;
         }
 
-        String nick_name = (mMemberEntity.getNick_name() != null
-                        && mMemberEntity.getNick_name().length() > 0) ? mMemberEntity.getNick_name() : UIUtils.getString(R.string.anonymity);
+        String nick_name = mMemberEntity.getNick_name() ;
+        String phone_num = mMemberEntity.getMobile_number() ;
         Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
         intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
+        intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.PHONE_NUMBER, phone_num);
         startActivity(intent);
-
-    }
-
-    //载入设计师作品
-    private void getDesignWorks() {
-        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String str = GsonUtil.jsonToString(jsonObject);
-                DesignWorksBean myBidBean = GsonUtil.jsonToBean(str, DesignWorksBean.class);
-                updataView(myBidBean);
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                updataView(null);
-            }
-        };
-        MPServerHttpManager.getInstance().getDesignWorks(okResponseCallback);
 
     }
 

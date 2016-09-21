@@ -24,7 +24,7 @@
     <string name="tip_stop">你确定要终止与设计师的合作吗？</string>
     <string name="serviced">设计师已做过量房服务</string>
     <string name="serviceding">设计师还未提供量房服务</string>
-    <string name="tip_success">创建成功</string>
+    <string name="tip_success">保存成功</string>
     <string name="network_error">网络连接失败!</string>
     <string name="cancel">取消</string>
     <string name="call_phone">拨打</string>
@@ -148,7 +148,7 @@
     <string name="flow_cost_detail">支付详情</string>
     <string name="pay_success">支付成功</string>
     <string name="pay_failed">支付失败</string>
-    <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
     <string name="telephone_space">电&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;话：</string>
     <string name="flow_particular_cost">支付明细</string>
     <string name="flow_aggregate_amount">总&#160;&#160;金&#160;&#160;额：</string>
@@ -177,9 +177,9 @@
     <string name="please_select_decorate_budget">请选择装修预算</string>
     <string name="demand_project_area">项目面积：</string>
     <string name="please_enter_area">请输入面积(平米)</string>
-    <string name="demand_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="demand_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
     <string name="please_select_family">请选择户型：室 厅 卫</string>
-    <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
+    <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
     <string name="please_select_style">请选择风格</string>
     <string name="demand_measure_house_time">量房时间：</string>
     <string name="please_select_quantity_room_time">请选择量房时间</string>
@@ -369,7 +369,7 @@
     <string name="demand_please_style_select">请选择风格(选填)</string>
     <string name="demand_please_address">请选择地址：省 市 区</string>
     <string name="demand_please_project_address">请正确输入项目地址</string>
-    <string name="demand_please_input_project_address">请输入项目地址</string>
+    <string name="demand_please_input_project_address">请选择项目地址</string>
     <string name="demand_please_specific_address">请输入小区名称</string>
     <string name="termination_demand">终止需求</string>
     <string name="amend_demand">修改需求</string>
@@ -434,7 +434,7 @@
 
     <!--DecorationActivity -->
     <string name="empty_order_fitment">您还没有装修项目</string>
-    <string name="consumer_decoration">我的装修项目</string>
+    <string name="consumer_decoration">我的项目</string>
     <string name="loding_more">点击加载更多</string>
     <string name="anonymity">匿名</string>
     <string name="end_day">已结束</string>
@@ -479,7 +479,8 @@
     <string name="send_design_requirement_success_alert_view">恭喜您已发布成功，请到个人中心的我的装修中查看</string>
     <string name="send_design_requirement_success_alert_view_1">提交成功，我们将会尽快为您审核！</string>
     <string name="refuse_measure_house_alertview">是否拒绝量房？</string>
-    <string name="requirements">发布设计需求</string>
+    <string name="requirements">发布需求</string>
+    <string name="requirements_optimal">竞优量房表单</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
     <string name="please_input_correct_area">房屋面积必须是1到9999之间的值</string>
     <string name="alert_msg_area">请输入1-9999之间的数字</string>
@@ -493,7 +494,7 @@
 
     <!--  LookMoreCaseDetailActivity -->
     <string name="char_msg__file">解析数据失败</string>
-    <string name="no_designer_case">抱歉，暂无结果！</string>
+    <string name="no_designer_case">抱歉，暂无消息！</string>
     <string name="no_designer_case_2">暂无结果</string>
 
     <!-- MeasureFormActivity -->
@@ -508,10 +509,10 @@
     <string name="data_send">数据发送中...</string>
     <string name="demand_house_area">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
     <string name="demand_measure_house_form">量房资料</string>
-    <string name="is_average_measure_house_form">竞优量房资料</string>
-    <string name="is_elite_measure_house_form">精选量房资料</string>
+    <string name="is_average_measure_house_form">竞优量房表单</string>
+    <string name="is_elite_measure_house_form">精选量房表单</string>
     <string name="measure_house_form">量房表单</string>
-    <string name="demand_elite_measure_house_form">精选量房资料</string>
+    <string name="demand_elite_measure_house_form">精选量房表单</string>
     <string name="exist_measure_order_information">已有量房资料</string>
 
 
@@ -530,6 +531,7 @@
     <string name="login">登录/注册</string>
     <string name="functional_development">功能开发中</string>
     <string name="my_fitment">发布装修需求</string>
+    <string name="title_fitment">发布装修需求</string>
     <string name="my_family_order">我的装修项目</string>
     <string name="message_center">消息中心</string>
     <string name="consumer_more">更多</string>
@@ -599,6 +601,7 @@
     <!-- BeiShuMealActivity -->
     <string name="consuer_data">客户资料</string>
     <string name="consume_phone">联系电话：</string>
+    <string name="consume_mobile">手机号码：</string>
     <string name="consume_phone_hint">手机号码：</string>
     <string name="consume_phone_number_hint">请输入手机号码</string>
     <string name="consume_adress">房屋地址：</string>
@@ -626,7 +629,7 @@
     <string name="bidding_detail">应标案件详情</string>
     <string name="shall_visible_bid_after">设计师中标后可见</string>
     <string name="my_bid_demand_particulars">需求详情</string>
-    <string name="bided">我已应标 </string>
+    <string name="bided">已应标 </string>
     <string name="designer_bid_detail_realy_no_finish">你还尚未完成实名认证!</string>
     <string name="msg_no_certification">未实名认证，不能应标，请先认证</string>
     <string name="msg_no_certification_web">您还未通过实名认证请到网页端完成认证</string>
@@ -659,7 +662,7 @@
     <string name="measure_house_cost">量房费</string>
     <string name="design_fees_on_cross">设计费用上传中...</string>
     <string name="autonym_camera">拍照</string>
-    <string name="autonym_album">从相册中选择照片</string>
+    <string name="autonym_album">从手机相册获取</string>
     <string name="gender_changes">性别修改中...</string>
     <string name="area_changes">地区修改中...</string>
     <string name="amend_nick">修改昵称</string>
@@ -674,7 +677,8 @@
     <string name="content_cannot_empty">内容不能为空</string>
     <string name="project_cost">设计费</string>
     <string name="dialog_hint">支持2-10个中、英文、数字</string>
-    <string name="nick_name_format">昵称应为2-20个字符</string>
+    <string name="nick_name_format">昵称应为2-10个字符</string>
+    <string name="measure_format_tip">量房费格式不正确(证书部分不超过四位小数部分不超过两位)</string>
 
     <!--DesignerOrderBeiShuActivity -->
     <string name="my_project_bei_shu">套餐项目</string>
@@ -973,7 +977,7 @@
     <string name="work_room_name_text">姓名</string>
     <string name="work_room_name">请填写您的姓名</string>
     <string name="work_room_phone_text">电话</string>
-    <string name="work_room_phone_number">请填写您的手机号码</string>
+    <string name="work_room_phone_number">请输入您的手机号码</string>
     <!--工作室列表-->
     <string name="work_room_commit_successful">提交成功</string>
     <string name="work_room_commit_fail">提交失败</string>

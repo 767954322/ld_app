@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -223,7 +224,13 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         String district_name = demandDetailBean.getDistrict_name();
         String publish_time = demandDetailBean.getPublish_time();
         String community_name = demandDetailBean.getCommunity_name();
-        String house_area = demandDetailBean.getHouse_area() + "㎡";
+        String house_area = "";
+        if (TextUtils.isEmpty(demandDetailBean.getHouse_area())) {
+            house_area = "未填写";
+        } else {
+            house_area = demandDetailBean.getHouse_area() + "㎡";
+        }
+
         String contacts_mobile = demandDetailBean.getContacts_mobile();
         String custom_string_status = demandDetailBean.getCustom_string_status();
         String decoration_budget = demandDetailBean.getDecoration_budget();
@@ -234,11 +241,11 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
 
         String house_type = demandDetailBean.getHouse_type();
         String room = demandDetailBean.getRoom();
-        room = (room!=null&&room.length() > 0)?room.replace(" ",""):room;
+        room = (room != null && room.length() > 0) ? room.replace(" ", "") : room;
         String toilet = demandDetailBean.getToilet();
-        toilet = (toilet !=null && toilet.length() > 0)?toilet.replace(" ",""):toilet;
+        toilet = (toilet != null && toilet.length() > 0) ? toilet.replace(" ", "") : toilet;
         String living_room = demandDetailBean.getLiving_room();
-        living_room = (living_room != null && living_room.length() > 0)?living_room.replace(" ",""):living_room;
+        living_room = (living_room != null && living_room.length() > 0) ? living_room.replace(" ", "") : living_room;
 
         district_name = UIUtils.getNoStringIfEmpty(district_name);
         String address = province_name + city_name + district_name;

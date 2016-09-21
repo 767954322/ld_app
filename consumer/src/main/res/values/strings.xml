@@ -80,6 +80,7 @@
     <!--评价-->
     <string name="please_enter_words">请输入15~200字</string>
     <string name="you_have_not_score">您还没有评分哦</string>
+    <string name="input_content_cannot_have_char">输入的内容不能包含特殊字符</string>
 
     <string name="save_success">已保存到本地相册</string>
     <string name="save_failure">保存失败</string>
@@ -133,7 +134,7 @@
     <string name="project_biding">应标中</string>
     <string name="project_designing">设计中</string>
     <string name="project_finish">项目完成</string>
-    <string name="project_stop">订单结束</string>
+    <string name="project_stop">项目结束</string>
     <string name="error_state">未知状态</string>
 
 

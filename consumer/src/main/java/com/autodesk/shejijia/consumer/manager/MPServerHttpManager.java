@@ -1566,6 +1566,18 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+
+    /**
+     * 六大模块图片接口
+     */
+    public void getSixProPictures( OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_DESIGN+"/selection/pictures?version=2";
+//        String url = UrlConstants.MAIN_MEMBER + "/designers/search/studio?limit=" + limit + "&offset=" + offset + "&type_code=" + type;//61
+//        String url = "http://192.168.120.217:8083/member-app/v1/api/designers/search/studio?limit=20&offset=0&type_code=61";
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback);
+        queue.add(okRequest);
+    }
+
     /**
      * 大师接口
      */
@@ -1642,14 +1654,15 @@ public class MPServerHttpManager {
 
     public void get3DCaseData(int designer_id, int limit, int offset, String date, String desc, OkJsonRequest.OKResponseCallback callback) {
 
-        String url = UrlConstants.MAIN_MEMBER + "/designers/studio?limit=" + limit + "&offset=" + offset;
-//        http://192.168.88.175:8080/design-app/v1/api
-        String url1 = UrlConstants.MAIN_DESIGN + "/hs/prints/anonymity/" +
+        String url = UrlConstants.MAIN_DESIGN + "/hs/prints/anonymity/" +
                 "designers/" + designer_id + "/d3/d3dimensionals?limit=" + limit + "&&offset=" + offset;
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url1, null, callback) {
+
+//        String urll = "http://uat-api.gdfcx.net:8080/design-app/v1/api/hs/prints/anonymity/designers/"+designer_id+"/d3/d3dimensionals?offset="+offset+"&sort_order=desc&sort_by=date&limit="+limit;
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
                 return header;
             }
         };

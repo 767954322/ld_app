@@ -2,11 +2,12 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -54,7 +55,7 @@ import java.util.Map;
  * @file IssueDemandActivity.java .
  * @brief 消费者发布需求.
  */
-public class IssueDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
+public class IssueDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener,TextWatcher {
 
 
     Handler handler = new Handler() {
@@ -149,12 +150,15 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         tv_issue_demand_budget.setOnClickListener(this);
         tv_issue_demand_design_budget.setOnClickListener(this);
         tv_issue_address.setOnClickListener(this);
+
+        et_issue_demand_area.addTextChangedListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
                 et_issue_demand_area.clearFocus();
@@ -207,6 +211,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
+                String consumer_name = et_issue_demand_name.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
                 boolean phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
                 boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
@@ -290,7 +295,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_MOBILE, mobile);/// "consumer_mobile" = 11012011900; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, nick_name);/// "consumer_name" = "APP\U7aef\U53d1\U5e03\U9700\U6c42-\U6b64\U5b57\U6bb5\U4e0d\U7528"; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_MOBILE, mobile);/// "contacts_mobile" = 15234948734; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, nick_name);/// "contacts_name" = "\U63a5\U4f60"; .
+                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, consumer_name);/// "contacts_name" = "\U63a5\U4f60"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, mDecorationBudget);/// "decoration_budget" = "5\U4e07\U4ee5\U4e0b"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_STYLE, style);/// "decoration_style" = Japan; .
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, mDesignBudget);/// "design_budget" = "3000\U4ee5\U4e0b"; .
@@ -408,6 +413,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 
                 // 使用手机注册的手机号码
                 String mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
+                if (!TextUtils.isEmpty(mobile_number)){
+
+                    et_issue_demand_mobile.setText(mobile_number);
+                }
 
                 Message msg = new Message();
                 msg.obj = mConsumerEssentialInfoEntity.getNick_name();
@@ -627,4 +636,39 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String success = "";
     public static final int RESULT_CODE = 101;
     private String member_id;
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().contains(".")) {
+                if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                    s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                    et_issue_demand_area.setText(s);
+                    et_issue_demand_area.setSelection(s.length());
+                }
+            }
+
+            if (s.toString().trim().substring(0).equals(".")) {
+                s = "0" + s;
+                et_issue_demand_area.setText(s);
+                et_issue_demand_area.setSelection(2);
+            }
+
+            if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                if (!s.toString().substring(1, 2).equals(".")) {
+                    et_issue_demand_area.setText(s.subSequence(0, 1));
+                    et_issue_demand_area.setSelection(1);
+                    return;
+                }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

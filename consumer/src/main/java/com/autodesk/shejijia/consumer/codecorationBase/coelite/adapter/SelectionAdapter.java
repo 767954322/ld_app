@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DesignWorksBean;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;
@@ -16,12 +16,12 @@ import java.util.List;
  * Created by luchongbin on 16-8-17.
  */
 public class SelectionAdapter extends PagerAdapter {
-    private List<DesignWorksBean.InnerPicListBean> mInnerPicListBeans;
+    private String [] pictures;
     private Activity mContext;
 
-    public SelectionAdapter(Activity context, List<DesignWorksBean.InnerPicListBean> innerPicListBeans) {
+    public SelectionAdapter(Activity context, String [] pictures) {
         this.mContext = context;
-        this.mInnerPicListBeans = innerPicListBeans;
+        this.pictures = pictures;
     }
 
     @Override
@@ -42,18 +42,22 @@ public class SelectionAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(View container, int position) {
-        ImageView imageView;
-        if (mInnerPicListBeans == null) {
-            imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            ImageUtils.displayIconImage("drawable://" + R.drawable.pic1_ico2x, imageView);
-        } else {
-            imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            DesignWorksBean.InnerPicListBean innerPicListBean = mInnerPicListBeans.get(position % mInnerPicListBeans.size());
-            ImageUtils.loadCircleIcon(imageView, innerPicListBean.getAndroid());
+        ImageView imageView = new ImageView(mContext);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        String url = "";
+        if (pictures != null&&pictures.length > 0) {
+            url = pictures[position % pictures.length];
+//            imageView = new ImageView(mContext);
+//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//            ImageUtils.displayIconImage("drawable://" + R.drawable.pic1_ico2x, imageView);
         }
-
+//        else {
+////            imageView = new ImageView(mContext);
+////            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+////            SixProductsPicturesBean.InnerPicListBean innerPicListBean = mInnerPicListBeans.get(position % mInnerPicListBeans.size());
+//            ImageUtils.loadCircleIcon(imageView, pictures[position]);
+//        }
+        ImageUtils.loadCircleIcon(imageView, url);
         ((ViewPager) container).addView(imageView);
         return imageView;
     }

@@ -3,6 +3,8 @@ package com.autodesk.shejijia.consumer.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 
@@ -219,7 +221,11 @@ public class AppJsonFileReader {
         String jsonString = loadJSONFromAsset(context, filename);
         JSONObject jsonObject = null;
         try {
-            jsonObject = new JSONObject(jsonString);
+
+            if (!TextUtils.isEmpty(jsonString)) {
+                jsonObject = new JSONObject(jsonString);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

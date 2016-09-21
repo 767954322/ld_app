@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
@@ -55,11 +56,14 @@ public abstract class BaseWorkFlowActivity extends NavigationBarActivity {
         needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         contract_no = intent.getStringExtra(Constant.SeekDesignerDetailKey.CONTRACT_NO);
         designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
+
+        Log.d("MLD", "needs_id ---"+ needs_id+ "designer_id +++" + designer_id);
         measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
 
-        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
-        contract_no = bundle.getString(Constant.SeekDesignerDetailKey.CONTRACT_NO);
+//        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
+//
+//        measureFee = intent.getStringExtra(JsonConstants.JSON_MEASURE_FORM_AMOUNT);
+//        contract_no = bundle.getString(Constant.SeekDesignerDetailKey.CONTRACT_NO);
         mThreead_id = bundle.getString(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);//thread_id
         nodeState = bundle.getInt(Constant.BundleKey.TEMPDATE_ID);
     }

@@ -120,7 +120,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         switch (v.getId()) {
             case R.id.btn_submit_appraisement:
                 String appeasementsContent = mEditEvaluationContent.getText().toString();
-                boolean regex_address_right = appeasementsContent.matches("^.{15,200}$");
+                boolean regex_address_right = appeasementsContent.matches("^[\\u4e00-\\u9fa5_a-zA-Z0-9_]{15,200}$");
 
                 boolean isValidateSubmitContent = validateSubmitContent(appeasementsContent, regex_address_right);
                 if (isValidateSubmitContent) {
@@ -166,9 +166,15 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
             return false;
         }
 
-        if (!TextUtils.isEmpty(appeasementsContent) && !regex_address_right) {
-            showAlertView(R.string.please_enter_words);
-            return false;
+        if (appeasementsContent.length() != 0){
+
+            if (appeasementsContent.length()>200 || appeasementsContent.length()< 15){
+
+                showAlertView(R.string.please_enter_words);
+                return false;
+
+            }
+
         }
 
         if (TextUtils.isEmpty(appeasementsContent)) {

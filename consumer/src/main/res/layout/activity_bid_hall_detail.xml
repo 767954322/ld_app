@@ -392,6 +392,7 @@
                     android:id="@+id/btn_bid_hall_detail_bid"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_40"
+                    android:textSize="16sp"
                     android:background="@drawable/bg_common_btn_blue"
                     android:text="@string/bidding_should_standard"
                     android:textColor="@color/bg_ff"/>
