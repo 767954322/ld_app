@@ -5,6 +5,8 @@
         android:width="@dimen/size_1"
         android:color="@color/bg_0084ff"/>
     <padding android:top="@dimen/size_5"
+             android:left="@dimen/size_5"
+             android:right="@dimen/size_5"
              android:bottom="@dimen/size_5"/>
     <corners android:radius="@dimen/size_5"/>
 </shape>
