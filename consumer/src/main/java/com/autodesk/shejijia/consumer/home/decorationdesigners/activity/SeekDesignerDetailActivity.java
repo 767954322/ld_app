@@ -745,7 +745,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                 mTvStyle.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
             }
             if (null != designer && null != designer.getDesign_price_min() && null != designer.getDesign_price_max()) {
-                mTvDesignFee.setText(designer.getDesign_price_min() + "-" + designer.getDesign_price_max() + "元/m²");
+                mTvDesignFee.setText(designer.getDesign_price_min() + "-" + designer.getDesign_price_max() + "元/㎡");
             } else {
                 mTvDesignFee.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
             }

@@ -473,7 +473,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
             mCaseLibraryText.setText("          " + introduction);
         }
 
-        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
+        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "㎡");
         String room_type = caseDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
