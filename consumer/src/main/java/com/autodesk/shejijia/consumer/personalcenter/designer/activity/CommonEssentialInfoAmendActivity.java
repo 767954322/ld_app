@@ -62,12 +62,6 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
         String msg = tvc_content.getText().toString().trim();
         boolean matches = msg.matches(RegexUtil.NICK_NAME_REGEX);
         boolean num = msg.matches(RegexUtil.MEASURE_FEE_REGEX);
-        if (TextUtils.isEmpty(msg)) {
-            new AlertView(UIUtils.getString(R.string.tip),
-                    UIUtils.getString(R.string.measure_format_tip), null, null,
-                    new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
-            return;
-        }
 
         if (pTag.equals(Constant.PersonCenterTagKey.DESIGNER_INFO)) {
             if (msg.isEmpty()) {
@@ -80,6 +74,13 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
                 return;
             }
         } else if (pTag.equals(Constant.PersonCenterTagKey.MEASURE_HOUSE)) {
+
+            if (TextUtils.isEmpty(msg)) {
+                new AlertView(UIUtils.getString(R.string.tip),
+                        UIUtils.getString(R.string.measure_format_tip), null, null,
+                        new String[]{UIUtils.getString(R.string.sure)}, CommonEssentialInfoAmendActivity.this, AlertView.Style.Alert, null).show();
+                return;
+            }
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(tvc_content.getWindowToken(), 0);
@@ -117,13 +118,13 @@ public class CommonEssentialInfoAmendActivity extends NavigationBarActivity impl
 
         if (pTag.equals(Constant.PersonCenterTagKey.DESIGNER_INFO)) {
             mContent = (String) getIntent().getExtras().get(Constant.PersonCenterTagKey.DESIGNER_CONTENT);
-            setTitleForNavbar(UIUtils.getString(R.string.amend_nick));
+            setTitleForNavbar(UIUtils.getString(R.string.nick_name));
         } else if (pTag.equals(Constant.PersonCenterTagKey.CONSUMER_INFO)) {
             mContent = (String) getIntent().getExtras().get(Constant.PersonCenterTagKey.CONSUMER_CONTENT);
-            setTitleForNavbar(UIUtils.getString(R.string.amend_nick));
+            setTitleForNavbar(UIUtils.getString(R.string.nick_name));
         } else if (pTag.equals(Constant.PersonCenterTagKey.MEASURE_HOUSE)) {
             mContent = (String) getIntent().getExtras().get(Constant.PersonCenterTagKey.MEASURE_CONTENT);
-            setTitleForNavbar(UIUtils.getString(R.string.amend_measure_house));
+            setTitleForNavbar(UIUtils.getString(R.string.measure_house_cost));
         }
         tvc_content.setText(mContent);
         tvc_content.setSelection(tvc_content.getText().length());

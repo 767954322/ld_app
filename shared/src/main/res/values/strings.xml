@@ -479,7 +479,7 @@
     <string name="send_design_requirement_success_alert_view">恭喜您已发布成功，请到个人中心的我的装修中查看</string>
     <string name="send_design_requirement_success_alert_view_1">提交成功，我们将会尽快为您审核！</string>
     <string name="refuse_measure_house_alertview">是否拒绝量房？</string>
-    <string name="requirements">发布设计需求</string>
+    <string name="requirements">发布需求</string>
     <string name="requirements_optimal">竞优量房表单</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
     <string name="please_input_correct_area">房屋面积必须是1到9999之间的值</string>
@@ -662,7 +662,7 @@
     <string name="measure_house_cost">量房费</string>
     <string name="design_fees_on_cross">设计费用上传中...</string>
     <string name="autonym_camera">拍照</string>
-    <string name="autonym_album">从相册中选择照片</string>
+    <string name="autonym_album">从手机相册获取</string>
     <string name="gender_changes">性别修改中...</string>
     <string name="area_changes">地区修改中...</string>
     <string name="amend_nick">修改昵称</string>

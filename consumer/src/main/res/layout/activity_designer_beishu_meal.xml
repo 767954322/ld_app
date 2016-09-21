@@ -49,7 +49,7 @@
                     android:layout_marginLeft="@dimen/size_10"
                     android:text="@string/name_space"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_consumer_name"
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
                     android:background="@null"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <include layout="@layout/view_common_line"/>
@@ -75,7 +75,7 @@
                     android:layout_marginLeft="@dimen/size_10"
                     android:text="@string/consume_phone"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
 
                 <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
                     android:id="@+id/et_consumer_phone"
@@ -87,7 +87,7 @@
                     android:inputType="phone"
                     android:maxLength="11"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <include layout="@layout/view_common_line"/>
@@ -106,7 +106,7 @@
                     android:layout_marginLeft="@dimen/size_10"
                     android:text="@string/consume_adress"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_consumer_address"
@@ -117,7 +117,7 @@
                     android:ellipsize="end"
                     android:hint="@string/consume_adress_hint"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <include layout="@layout/view_common_line"/>
@@ -135,7 +135,7 @@
                     android:layout_marginLeft="@dimen/size_10"
                     android:text="@string/consume_detail_address"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
 
                 <EditText
                     android:id="@+id/et_consumer_detail_address"
@@ -144,9 +144,9 @@
                     android:layout_marginLeft="@dimen/size_10"
                     android:background="@null"
                     android:ellipsize="end"
-                    android:hint="@string/consume_detail_address_hint"
+                    android:hint="@string/please_enter_correct_address"
                     android:singleLine="true"
-                    android:textSize="@dimen/font_18"/>
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <include layout="@layout/view_common_line"/>
