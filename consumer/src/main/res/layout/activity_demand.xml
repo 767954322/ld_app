@@ -84,7 +84,7 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:ems="10"
-                android:hint="@string/work_room_phone_number"
+                android:hint="@string/please_enter_your_phone"
                 android:maxLength="11"
                 android:phoneNumber="true"
                 android:textColor="@color/black"
@@ -177,7 +177,7 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:ems="10"
-                android:hint="@string/demand_import_limit"
+                android:hint="@string/demand_room_area"
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_14"/>

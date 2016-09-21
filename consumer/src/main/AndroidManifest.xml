@@ -394,6 +394,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
@@ -554,6 +555,7 @@
             android:name=".home.decorationlibrarys.activity.CaseLibraryDetail3DActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"
