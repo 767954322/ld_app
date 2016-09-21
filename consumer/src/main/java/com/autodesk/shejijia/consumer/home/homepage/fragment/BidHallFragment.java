@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -257,8 +255,8 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         if (!mFlag) {
             mFiltrateContentBean = null;
             mNeedsListEntities.clear();
-            mNeedsListEntities.addAll(mNeedsListEntityArrayList);
-            mBidHallAdapter.notifyDataSetChanged();
+//            mNeedsListEntities.addAll(mNeedsListEntityArrayList);
+//            mBidHallAdapter.notifyDataSetChanged();
         }
     }
 
