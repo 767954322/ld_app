@@ -100,34 +100,6 @@
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15" />
             </LinearLayout>
-            <!--联系电话-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_5"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/size_10"
-                android:paddingRight="@dimen/size_10">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_3"
-                    android:text="@string/consume_phone"
-                    android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
-
-                <TextView
-                    android:id="@+id/tv_desinger_beishuorder_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/no_color"
-                    android:text="15245689225"
-                    android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
-
-            </LinearLayout>
 
             <!--项目地址-->
             <LinearLayout
@@ -159,6 +131,37 @@
                     android:textSize="@dimen/font_15" />
 
             </LinearLayout>
+
+            <!--联系电话-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_5"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_3"
+                    android:text="@string/consume_phone"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15" />
+
+                <TextView
+                    android:id="@+id/tv_desinger_beishuorder_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/no_color"
+                    android:text="15245689225"
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15" />
+
+            </LinearLayout>
+
+
 
             <!--小区名称-->
             <LinearLayout
