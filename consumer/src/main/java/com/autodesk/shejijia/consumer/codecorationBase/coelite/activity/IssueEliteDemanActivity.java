@@ -40,15 +40,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 /**
- * @author  .
+ * @author .
  * @version 1.0 .
  * @date 16-8-16
  * @file IssueEliteDemanActivity.java  .
  * @brief 精选发布需求 .
  */
 
-public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener,View.OnFocusChangeListener {
+public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener, View.OnFocusChangeListener {
     private HomeTypeDialog homeTypeDialog;
     private String phone_num;
 
@@ -111,9 +112,10 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         tvIssueAddress.setOnClickListener(this);
         etIssueDemandArea.setOnFocusChangeListener(this);
     }
+
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.et_issue_demand_area:
                 onFocusChangeForArea(hasFocus);
                 break;
@@ -122,10 +124,11 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         }
 
     }
+
     /**
-     *设置房屋面积
+     * 设置房屋面积
      */
-    private void onFocusChangeForArea(boolean hasFocus){
+    private void onFocusChangeForArea(boolean hasFocus) {
         if (!hasFocus) {
             String area = etIssueDemandArea.getText().toString().trim();
             area = String.format("%.2f", Double.valueOf(area));
@@ -176,7 +179,17 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     /**
      * 点击提交按钮 发布精选需求
      */
-    private  void commit(){
+    private void commit() {
+        // 增加姓名校验
+        nick_name = etIssueDemandName.getText().toString().trim();
+        boolean matches = nick_name.matches(RegexUtil.NICK_NAME_REGEX);
+        if (!matches || TextUtils.isEmpty(nick_name)) {
+            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.check_name_tip),
+                    null, null, new String[]{UIUtils.getString(R.string.sure)}, IssueEliteDemanActivity.this, AlertView.Style.Alert, null).show();
+            return;
+        }
+        // ----------------以上code by zjl------------------
+
         if (!isSendState) {
             return;
         }
@@ -185,16 +198,17 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
 
         String mobile = etIssueDemandMobile.getText().toString();
         String detailAddress = tvIssueDemandDetailAddress.getText().toString();
-        if(!VerificationRequired(area,mobile,detailAddress)){
+        if (!VerificationRequired(area, mobile, detailAddress)) {
             return;
         }
-        JSONObject jsonObject = getJSONObject(area,mobile,detailAddress);
+        JSONObject jsonObject = getJSONObject(area, mobile, detailAddress);
         isSendState = false;
         CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
         sendDesignRequirements(jsonObject);
 
     }
-    private boolean VerificationRequired(String area,String mobile,String detail_address){
+
+    private boolean VerificationRequired(String area, String mobile, String detail_address) {
         boolean phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
         boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
         if (TextUtils.isEmpty(mobile) || !phoneRight) {
@@ -233,7 +247,8 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         return true;
 
     }
-    private JSONObject getJSONObject(String area,String mobile,String detail_address){
+
+    private JSONObject getJSONObject(String area, String mobile, String detail_address) {
         JSONObject jsonObject = new JSONObject();
         try {
             String click_number = "0";
@@ -544,7 +559,6 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     private String room, livingRoom, mToilet;
     private boolean isSendState = true;
     public static final int RESULT_CODE = 101;
-
 
 
 }

@@ -79,7 +79,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         super.initView();
         ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
-        et_issue_demand_name = (TextView) findViewById(R.id.et_issue_demand_name);
+        et_issue_demand_name = (EditText) findViewById(R.id.et_issue_demand_name);
         nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         et_issue_demand_mobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
         et_issue_demand_area = (EditText) findViewById(R.id.et_issue_demand_area);
@@ -212,6 +212,17 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
                 String consumer_name = et_issue_demand_name.getText().toString();
+
+                // ----------------以下code by zjl------------------
+                // 增加姓名校验
+                boolean matches = consumer_name.matches(RegexUtil.NICK_NAME_REGEX);
+                if (!matches || TextUtils.isEmpty(consumer_name)) {
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.check_name_tip),
+                            null, null, new String[]{UIUtils.getString(R.string.sure)}, IssueDemandActivity.this, AlertView.Style.Alert, null).show();
+                    return;
+                }
+                // ----------------以上code by zjl------------------
+
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
                 boolean phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
                 boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
@@ -293,7 +304,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CLICK_NUMBER, click_number);/// "click_number" = 0; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_COMMUNITY_NAME, detail_address);/// "community_name" = "\U9ece\U6d1b\U7fbd";.
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_MOBILE, mobile);/// "consumer_mobile" = 11012011900; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, nick_name);/// "consumer_name" = "APP\U7aef\U53d1\U5e03\U9700\U6c42-\U6b64\U5b57\U6bb5\U4e0d\U7528"; .
+                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, consumer_name);/// "consumer_name" = "APP\U7aef\U53d1\U5e03\U9700\U6c42-\U6b64\U5b57\U6bb5\U4e0d\U7528"; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_MOBILE, mobile);/// "contacts_mobile" = 15234948734; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, consumer_name);/// "contacts_name" = "\U63a5\U4f60"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, mDecorationBudget);/// "decoration_budget" = "5\U4e07\U4ee5\U4e0b"; .
@@ -606,7 +617,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     /// 控件.
     private LinearLayout ll_issue_house_type;
     private LinearLayout ll_issue_style;
-    private TextView et_issue_demand_name;
+    private EditText et_issue_demand_name;
     private TextView tv_issue_demand_budget;
     private TextView tv_issue_demand_design_budget;
     private TextView tv_issue_house_type;

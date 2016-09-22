@@ -145,12 +145,16 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         //姓名未作校验
         String demand_name = et_issue_demand_name.getText().toString().trim();
 
-        boolean ifNameMatch = demand_name.matches("^\\\\s{1,}$");
-        if (demand_name.length() < 2 || demand_name.length() > 10 || ifNameMatch) {
-
-            showAlertView(R.string.jy_packages_name_error);
+        // ----------------以下code by zjl------------------
+        // 增加姓名校验
+        boolean matches = demand_name.matches(RegexUtil.NICK_NAME_REGEX);
+        if (!matches || TextUtils.isEmpty(demand_name)) {
+            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.check_name_tip),
+                    null, null, new String[]{UIUtils.getString(R.string.sure)}, ReservationFormActivity.this, AlertView.Style.Alert, null).show();
             return;
         }
+        // ----------------以上code by zjl------------------
+
 
         //手机号码校验
         String phone_num = et_issue_demand_mobile.getText().toString();

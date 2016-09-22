@@ -19,6 +19,7 @@
             layout="@layout/view_navigation_header" />
 
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
             android:background="@color/bg_d5" />
