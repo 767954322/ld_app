@@ -28,6 +28,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
+
 /**
  * @author luchongbin .
  * @version 1.0 .
@@ -65,20 +66,21 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initData() {
+
+        if (WkFlowStateMap.sixProductsPicturesBean != null) {
+
+            String pictureUrl = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getBidding().get(0).getBack();
+            String backPicture[] = pictureUrl.split(",");
+
+            ImageUtils.loadImageIcon(average_img, backPicture[1]);
+            ImageUtils.loadImageIcon(rl_container_img, backPicture[0]);
+        }
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             getConsumerInfoData(mMemberEntity.getAcs_member_id());
             return;
         }
 
-        if (WkFlowStateMap.sixProductsPicturesBean !=null){
-
-            String pictureUrl = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getBidding().get(0).getBack();
-            String backPicture[] = pictureUrl.split(",");
-
-            ImageUtils.loadImageIcon(average_img,backPicture[1]);
-            ImageUtils.loadImageIcon(rl_container_img,backPicture[0]);
-        }
 
     }
 
