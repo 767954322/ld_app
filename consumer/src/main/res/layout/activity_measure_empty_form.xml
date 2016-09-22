@@ -486,6 +486,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:gravity="center_vertical"
+                    android:hint="@string/please_select_measure_time"
                     android:textSize="@dimen/font_15" />
             </LinearLayout>
 
