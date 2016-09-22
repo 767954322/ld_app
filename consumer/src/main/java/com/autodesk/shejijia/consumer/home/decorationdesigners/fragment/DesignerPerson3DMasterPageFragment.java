@@ -93,6 +93,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //获取数据集合应该为myDatas;
                 String hs_design_id = (String) myDatas.get(position).getHs_design_id();
                 String designer_id = myDatas.get(position).getDesigner_id()+"";
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
