@@ -5,7 +5,7 @@ package com.autodesk.shejijia.shared.components.common.utility;
  * 手机号的判断
  *
  * 由于最近几个月,国内三大通信运行商，都有新手机号推出，所以要用最近的手机号判断，
- * 最好也判断三大运营商不同的手机号类型
+ * 最好也判断三大运营商不同的手机号类型;
  */
 
 public class PhoneNumberUtils {
@@ -28,7 +28,7 @@ public class PhoneNumberUtils {
     private static final String CHINA_MOBILE_PATTERN = "(^1(3[4-9]|4[7]|5[0-27-9]|7[8]|8[2-478])\\d{8}$)|(^1705\\d{7}$)";
 
     public static boolean justPhoneNumber(String phoneNumber){
-
+        //有任何一个进入,随即认为该手机号码正确
         boolean isPhoneNumberMove = false;
         if (phoneNumber.matches(CHINA_MOBILE_PATTERN) || phoneNumber.matches(CHINA_UNICOM_PATTERN) || phoneNumber.matches(CHINA_TELECOM_PATTERN)){
 
