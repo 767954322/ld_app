@@ -38,7 +38,7 @@ public class OkJsonRequest extends JsonObjectRequest {
      */
     public OkJsonRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, successListener, errorListener);
-        this.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 0, 1.0f));
+        this.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 1, 1.0f));
     }
 
     /**
