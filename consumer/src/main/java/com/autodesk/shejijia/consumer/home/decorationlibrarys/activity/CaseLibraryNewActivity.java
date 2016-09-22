@@ -497,10 +497,23 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         tvheadThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
 
 
-        if (caseDetailBean.getDesigner_info().getNick_name() != null) {
-            ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getNick_name());
+        DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
+        if (designer_info.getNick_name() != null) {
+            if (designer_info.getNick_name().length() > 8) {
+                String nickName = designer_info.getNick_name().substring(0, 8);
+                String nickNameNow = nickName + "…";
+                ivConsumeHomeDesigner.setText(nickNameNow);
+            } else {
+                ivConsumeHomeDesigner.setText(designer_info.getNick_name());
+            }
         } else {
-            ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
+            if (designer_info.getFirst_name().length() >8){
+                String firstName = designer_info.getFirst_name().substring(0, 8);
+                String firstNameNow = firstName + "…";
+                ivConsumeHomeDesigner.setText(firstNameNow);
+            }else {
+            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
+            }
         }
 
         //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
