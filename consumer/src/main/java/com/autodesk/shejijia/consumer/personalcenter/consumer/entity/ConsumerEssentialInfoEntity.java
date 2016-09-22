@@ -1,12 +1,13 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.entity;
 
 import java.io.Serializable;
+
 /**
- * @author  Malidong .
+ * @author Malidong .
  * @version 1.0 .
- * @date    16-6-7 上午11:19
- * @file    ConsumerEssentialInfoEntity.java  .
- * @brief   消费者个人信息的实体类.
+ * @date 16-6-7 上午11:19
+ * @file ConsumerEssentialInfoEntity.java  .
+ * @brief 消费者个人信息的实体类.
  */
 public class ConsumerEssentialInfoEntity implements Serializable {
     /**
@@ -39,8 +40,11 @@ public class ConsumerEssentialInfoEntity implements Serializable {
     private String city;
     private String district;
     private String email;
-    private String first_name;
     private int gender;
+    private String province;
+    private String city_name;
+    private String district_name;
+    private String first_name;
     private int has_secreted;
     private String hitachi_account;
     private String home_phone;
@@ -48,16 +52,50 @@ public class ConsumerEssentialInfoEntity implements Serializable {
     private int is_order_sms;
     private int is_validated_by_mobile;
     private String last_name;
-    private int member_id;
+    private String member_id;
     private String mobile_number;
     private String nick_name;
-    private String province;
-    private String register_time;
+    private String province_name;
+    private String register_date;
     private String user_name;
     private String zip_code;
-    private String province_name;
-    private String city_name;
-    private String district_name;
+    private String audit_status;
+    private String high_level_status;
+    private String mobile_binding_status;
+
+    private String register_time;
+
+    public String getRegister_date() {
+        return register_date;
+    }
+
+    public void setRegister_date(String register_date) {
+        this.register_date = register_date;
+    }
+
+    public String getAudit_status() {
+        return audit_status;
+    }
+
+    public void setAudit_status(String audit_status) {
+        this.audit_status = audit_status;
+    }
+
+    public String getHigh_level_status() {
+        return high_level_status;
+    }
+
+    public void setHigh_level_status(String high_level_status) {
+        this.high_level_status = high_level_status;
+    }
+
+    public String getMobile_binding_status() {
+        return mobile_binding_status;
+    }
+
+    public void setMobile_binding_status(String mobile_binding_status) {
+        this.mobile_binding_status = mobile_binding_status;
+    }
 
     public String getProvince_name() {
         return province_name;
@@ -143,7 +181,7 @@ public class ConsumerEssentialInfoEntity implements Serializable {
         this.last_name = last_name;
     }
 
-    public void setMember_id(int member_id) {
+    public void setMember_id(String member_id) {
         this.member_id = member_id;
     }
 
@@ -231,7 +269,7 @@ public class ConsumerEssentialInfoEntity implements Serializable {
         return last_name;
     }
 
-    public int getMember_id() {
+    public String getMember_id() {
         return member_id;
     }
 

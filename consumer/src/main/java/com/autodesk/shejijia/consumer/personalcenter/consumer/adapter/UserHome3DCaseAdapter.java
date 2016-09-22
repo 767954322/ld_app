@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.consumer.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -67,6 +64,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
         viewHolder.tvThumbUp = (TextView) container.findViewById(R.id.tv_thumb_up);
         viewHolder.imgConsumeChat = (ImageView) container.findViewById(R.id.img_consume_home_chat);
         viewHolder.mLine = (TextView) container.findViewById(R.id.view_consume_home_line);
+        viewHolder.llContent = (LinearLayout) container.findViewById(R.id.ll_item_content);
         return viewHolder;
     }
 
@@ -74,35 +72,27 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
     public void initItem(View view, Holder holder, int position) {
         if (null != mDatas && mDatas.size() > 0) {
             Case3DLibraryListBean.CasesBean casesEntity = mDatas.get(position);
-            ((ViewHolder) holder).tvThumbUp.setText("点赞数 "+ casesEntity.getFavorite_count());
+            ((ViewHolder) holder).tvThumbUp.setText(casesEntity.getFavorite_count());
             List<Case3DLibraryListBean.CasesBean.DesignFileBean> images = casesEntity.getDesign_file();
             if (images != null && images.size() > 0) {
-                for (int i = 0; i < casesEntity.getDesign_file().size(); i++) {
-                    Case3DLibraryListBean.CasesBean.DesignFileBean imagesEntity = casesEntity.getDesign_file().get(i);
-                    if (imagesEntity.isIs_primary()) {
-                        imageOneUrl = imagesEntity.getLink();
-                    }
-                }
-                if (TextUtils.isEmpty(imageOneUrl)) {
-                    imageOneUrl = casesEntity.getDesign_file().get(position).getLink();
-                }
-                ImageUtils.loadImage(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
+                String imageOneUrl = images.get(0).getLink();
+                ImageUtils.loadImageIcon(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
             }
 
-
             if (null != casesEntity) {
+                ImageUtils.displayAvatarImage(casesEntity.getOriginal_avatar(), ((ViewHolder) holder).ivHeadIcon);
                 if (casesEntity.getConception() == null) {
-                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     ((ViewHolder) holder).tvAddress.setText(casesEntity.getConception());
                 }
                 if (casesEntity.getRoom_area() == null) {
-                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
-                    ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + "m²");
+                    ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + "㎡");
                 }
                 if (casesEntity.getRoom_type() == null) {
-                    ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.data_null));
+                    ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     String room_type = casesEntity.getRoom_type();
                     if (roomMap.containsKey(room_type)) {
@@ -111,8 +101,8 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                         ((ViewHolder) holder).tvRoom.setText(casesEntity.getRoom_type());
                     }
                 }
-                if (casesEntity.getProject_style() == null) {
-                    ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.data_null));
+                if (casesEntity.getProject_style() == null || casesEntity.getProject_style().equals("med")) { // 数据中如果又med字段也改为其他
+                    ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
                 } else {
                     String project_style = casesEntity.getProject_style();
                     if (style.containsKey(project_style)) {
@@ -121,29 +111,26 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                         ((ViewHolder) holder).tvStyle.setText(casesEntity.getProject_style());
                     }
                 }
-                if (null != casesEntity.getDesigner_info() && !TextUtils.isEmpty(casesEntity.getDesigner_info().getAvatar())) {
-                    ImageUtils.displayAvatarImage(casesEntity.getDesigner_info().getAvatar(), ((ViewHolder) holder).ivHeadIcon);
-                }
             }
         } else {
             ((ViewHolder) holder).ivCase.setImageResource(R.drawable.common_case_icon);
-            ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.data_null));
-            ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.data_null));
+            ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvStyle.setText(UIUtils.getString(R.string.str_others));
+            ((ViewHolder) holder).tvArea.setText(UIUtils.getString(R.string.str_others));
         }
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
+            ((ViewHolder) holder).imgConsumeChat.setVisibility(View.INVISIBLE);
+            // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
 
         } else {
             ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
-           // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
+            // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
         }
 
         ((ViewHolder) holder).ivHeadIcon.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
-        ((ViewHolder) holder).ivCase.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
+        ((ViewHolder) holder).llContent.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         ((ViewHolder) holder).imgConsumeChat.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((ViewHolder) holder).ivCase.getLayoutParams();
         lp.width = screenWidth;
@@ -154,6 +141,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
 
     public class ViewHolder extends Holder {
         public ImageView ivCase;
+        public LinearLayout llContent;
         public PolygonImageView ivHeadIcon;
         public TextView tvRoom;
         public TextView tvStyle;
@@ -180,7 +168,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                         mOnItemImageHeadClickListener.OnItemImageHeadClick(position);
                     }
                     break;
-                case R.id.img_customer_home_case:
+                case R.id.ll_item_content:
                     if (mOnItemCaseClickListener != null) {
                         mOnItemCaseClickListener.OnItemCaseClick(position);
                     }

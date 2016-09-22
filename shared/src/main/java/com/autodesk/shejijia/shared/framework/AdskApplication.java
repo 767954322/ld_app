@@ -14,7 +14,6 @@ import android.support.multidex.MultiDex;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -25,22 +24,15 @@ import com.autodesk.shejijia.shared.components.common.network.PushNotificationHt
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
-import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
-import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
-import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
-import com.autodesk.shejijia.shared.components.im.service.webSocketService;
-import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.utility.ConfigProperties;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.service.webSocketService;
 import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
-import com.socks.library.KLog;
 
 import java.io.InputStream;
 
@@ -54,7 +46,7 @@ import cn.jpush.android.api.JPushInterface;
  * @file AdskApplication.java .
  * @brief 设置全局数据 .
  */
-public class AdskApplication extends Application {
+public abstract class AdskApplication extends Application {
 
     @Override
     public void onCreate() {
@@ -81,7 +73,6 @@ public class AdskApplication extends Application {
      * 初始化操作
      */
     private void initData() {
-        KLog.init(BuildConfig.LOG_DEBUG);/// 初始化Log工具类 .
         queue = Volley.newRequestQueue(this);
         ImageUtils.initImageLoader(this);
         dataHelper = CityDataHelper.getInstance(this);
@@ -92,7 +83,7 @@ public class AdskApplication extends Application {
         if (entity != null) {
             onLoginSuccess(entity);
         }
-        JPushInterface.setDebugMode(true);    // Enable logging settings, turn off logging when you publish
+        JPushInterface.setDebugMode(false);    // Enable logging settings, turn off logging when you publish
         JPushInterface.init(this);            // Init JPush
     }
 
@@ -157,6 +148,8 @@ public class AdskApplication extends Application {
     public static int getMainThreadId() {
         return mMainThreadId;
     }
+
+    public abstract boolean isDebug();
 
     public void setWebSocketStatus(boolean result) {
         IsWebSocketConnecting = result;
@@ -299,17 +292,16 @@ public class AdskApplication extends Application {
     }
 
 
-    private static void setMemberEntity(MemberEntity memberEntity) {
+    public static void setMemberEntity(MemberEntity memberEntity) {
         AdskApplication.memberEntity = memberEntity;
     }
 
     /**
      * 用于处理登录后数据的操作
-     * @param strToken
+     * @param entity
      */
 
-    public  void saveSignInInfo(String strToken){
-        MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
+    public  void saveSignInInfo(MemberEntity entity){
         String ZERO = "0";
         /// 为不符合规则的acs_member_id 补足位数 .
         String acs_member_id = entity.getAcs_member_id();
@@ -317,7 +309,7 @@ public class AdskApplication extends Application {
             acs_member_id += ZERO;
             entity.setAcs_member_id(acs_member_id);
         }
-        KLog.d("APPLICATION", "memberEntity:" + entity);
+        LogUtils.i("APPLICATION", "memberEntity:" + entity);
 
         onLoginSuccess(entity);
     }
@@ -347,7 +339,7 @@ public class AdskApplication extends Application {
                     acs_member_id += ZERO;
                     entity.setAcs_member_id(acs_member_id);
                 }
-                KLog.d("APPLICATION", "memberEntity:" + entity);
+                LogUtils.i("APPLICATION", "memberEntity:" + entity);
 
                 onLoginSuccess(entity);
             }

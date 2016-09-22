@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
+
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -44,6 +46,7 @@ public abstract class BaseFragment extends Fragment {
         initView();
         initData();
         initListener();
+        LogManager.getLogger().d("ClassName", getClass().getSimpleName());
         return rootView;
     }
 

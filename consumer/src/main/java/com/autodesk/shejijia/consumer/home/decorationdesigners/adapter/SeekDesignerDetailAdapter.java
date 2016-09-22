@@ -28,12 +28,12 @@ import java.util.Map;
  */
 public class SeekDesignerDetailAdapter extends BaseAdapter {
 
-    public SeekDesignerDetailAdapter(Context context, List<SeekDesignerDetailBean.CasesEntity> datas, Activity activity) {
+    public SeekDesignerDetailAdapter(Context context, List<SeekDesignerDetailBean.CasesEntity> datas) {
         this.mDatas = datas;
         this.context = context;
-        mRoom = AppJsonFileReader.getRoomHall(activity);
-        mStyle = AppJsonFileReader.getStyle(activity);
-        mArea = AppJsonFileReader.getArea(activity);
+        mRoom = AppJsonFileReader.getRoomHall((Activity) context);
+        mStyle = AppJsonFileReader.getStyle((Activity) context);
+        mArea = AppJsonFileReader.getArea((Activity) context);
     }
 
     @Override
@@ -63,6 +63,7 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
             holder.mSeekLivingRoom = (TextView) container.findViewById(R.id.img_seek_designer_detail_living_room);
             holder.mSeekStyle = (TextView) container.findViewById(R.id.img_seek_designer_detail_style);
             holder.mSeekArea = (TextView) container.findViewById(R.id.img_seek_designer_detail_area);
+            holder.tv_thumb_up = (TextView) container.findViewById(R.id.tv_thumb_up);
 
             container.setTag(holder);
         }else {
@@ -124,30 +125,22 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
             if (null != mDatas.get(position).getRoom_area()) {
                 String room_area = mDatas.get(position).getRoom_area();
                 if (mArea.containsKey(room_area)) {
-                    holder.mSeekArea.setText(mArea.get(room_area) + "m²");
+                    holder.mSeekArea.setText(mArea.get(room_area) + "㎡");
                 } else {
-                    holder.mSeekArea.setText(room_area + "m²");
+                    holder.mSeekArea.setText(room_area + "㎡");
                 }
             } else {
                 holder.mSeekArea.setText(R.string.str_others);
             }
             if (null!=mDatas.get(position).getFavorite_count()){
-                  //      holder.tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
+                        holder.tv_thumb_up.setText(mDatas.get(position).getFavorite_count()+"");
             }
         } else {
             holder.mSeekCase.setImageResource(R.drawable.common_case_icon);
-//<<<<<<< HEAD
-//            holder.mSeekAddress.setText(R.string.temporarily_no_data);
             holder.mSeekLivingRoom.setText(R.string.temporarily_no_data);
             holder.mSeekStyle.setText(R.string.temporarily_no_data);
             holder.mSeekArea.setText(R.string.temporarily_no_data);
             //TODO MERGE 825
-//=======
-//            holder.mSeekAddress.setText(R.string.str_others);
-//            holder.mSeekLivingRoom.setText(R.string.str_others);
-//            holder.mSeekStyle.setText(R.string.str_others);
-//            holder.mSeekArea.setText(R.string.str_others);
-//>>>>>>> release/July/Android-UAT
         }
         holder.mSeekCase.setOnClickListener(new MyOnClickListener(position, (ViewHolder) holder));
 

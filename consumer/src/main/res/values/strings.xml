@@ -5,7 +5,7 @@
     <string name="nodata">暂无数据</string>
 
 
-    <string name="send_single_number">派单人数：</string>
+    <string name="send_single_number">派单人数： </string>
     <string name="send_design">派单设计师</string>
     <string name="accept_mearch">接受量房交付物</string>
     <string name="nodescription">暂无介绍</string>
@@ -43,7 +43,7 @@
     <string name="evaluation_success_title">评论成功</string>
     <string name="evaluation_success_msg">您的评价将在设计师个人主页中展示</string>
 
-
+    <string name="m2">㎡</string>
     <string name="warmTips">温馨提示：</string>
     <string name="Mrasuretips">提示：</string>
     <string name="illustrate">  量房费说明</string>
@@ -57,7 +57,7 @@
     <string name="profession">擅长：</string>
 
     <string name="warm_tips_content">签订设计合同后，您所支付的量房费将会抵消等额的设计费。</string>
-    <string name="appraise_designer">评分</string>
+    <string name="appraise_designer">评分 :</string>
     <string name="appraise_designer_title">评价</string>
     <string name="appraise_designer_hint">写下这次设计服务的体会，分享给其他小伙伴～</string>
     <string name="appraise_designer_submit">提交</string>
@@ -65,7 +65,7 @@
 
     <!--关注相关内容-->
     <string name="my_attention">我的关注</string>
-    <string name="attention_num">关注人数</string>
+    <string name="attention_num">关注人数&#160;：</string>
     <string name="attention_success">关注成功</string>
     <string name="attention_sure">关注</string>
     <string name="attention_sure_add">+关注</string>
@@ -75,10 +75,12 @@
     <string name="following_sure">确定</string>
     <string name="following_cancel">取消</string>
     <string name="following_no_data">您还没有关注的设计师</string>
+    <string name="not_found">暂无结果</string>
 
     <!--评价-->
     <string name="please_enter_words">请输入15~200字</string>
     <string name="you_have_not_score">您还没有评分哦</string>
+    <string name="input_content_cannot_have_char">输入的内容不能包含特殊字符</string>
 
     <string name="save_success">已保存到本地相册</string>
     <string name="save_failure">保存失败</string>
@@ -93,6 +95,7 @@
     <string name="user_phone">联系电话：</string>
     <string name="decoration_style">风格：</string>
     <string name="end_day_prefix">距离结束还有</string>
+    <string name="end_day_postfix">天</string>
     <string name="title_designer_count">应标人数</string>
     <string name="title_bidder_introduce">应标说明</string>
     <string name="alert_bidder_introduce">为了保障您的权益，我们允许3位设计师前来应标。如果您不满意应标的设计师，您可以拒绝TA，以允许其他设计师可以来应标。</string>
@@ -102,7 +105,7 @@
     <string name="alert_decoration_message">终止需求后项目就会结束</string>
     <string name="button_decoration_amend">修改需求</string>
     <string name="content_designer_good_at">擅长：</string>
-    <string name="content_others">其它</string>
+    <string name="content_others">其他</string>
     <string name="loginguoqi">登陆过期</string>
     <string name="canshuyichang">参数错误</string>
     <string name="caozuoerror">当前操作不合法</string>
@@ -133,6 +136,35 @@
 
 
     <string name="no_set_measure_fee">未设置量房费 不能应标</string>
+    <!-- 大师 -->
+    <string name="succes_grandmaster">大师预约成功</string>
+    <string name="succes_package">预约成功</string>
+    <string name="fail_grandmaster">大师预约失败</string>
+    <string name="fail_package">预约失败</string>
+
+
+    <string name="key_words">请输入关键字搜索</string>
+
+
+    <!--DIY -->
+    <string name="diy_one">为有设计创意的客户提供</string>
+    <string name="diy_easy">简单</string>
+    <string name="diy_user">易用</string>
+    <string name="diy_free">免费</string>
+    <string name="diy_tool">DIY设计工具</string>
+    <string name="diy_two">可以生成施工图和参考报价</string>
+    <string name="diy_three">免费使用3D工具，设计自己的家</string>
+    <string name="diy_four">自由搭配真实家居产品，提前预览装修效果，</string>
+    <string name="diy_five">免费获取施工图纸和参考报价。</string>
+    <string name="diy_six">请在网页端开启设计之旅</string>
+
+
+    <string name="alert_three_plan">请先选择3D设计方案</string>
+    <string name="alert_delivery">您还没有上传设计图纸，</string>
+    <string name="alert_blue_print">请先在web端上传设计图纸</string>
+    <string name="alert_material">请先在web端上传材料清单</string>
+    <string name="bind_per">位设计师</string>
+    <string name="other_qita">其他</string>
 
 
 </resources>

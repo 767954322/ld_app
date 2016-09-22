@@ -43,7 +43,7 @@ public class NavigationBarActivity extends BaseActivity {
 
     }
 
-   public ImageView getUserAvatar(){
+    public ImageView getUserAvatar() {
         return (ImageView) findViewById(R.id.user_avatar);
     }
 
@@ -174,8 +174,8 @@ public class NavigationBarActivity extends BaseActivity {
         MaterialTabs materialTabs = (MaterialTabs) findViewById(R.id.case_library_head);
         titleTextView.setVisibility(View.GONE);
         materialTabs.setVisibility(View.VISIBLE);
-        setImageForNavButton(ButtonType.RIGHT,R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY,R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.SECONDARY, R.drawable.common_screen_icon);
+        setImageForNavButton(ButtonType.RIGHT, R.drawable.icon_search);
         setVisibilityForNavButton(ButtonType.RIGHT, true);
         setVisibilityForNavButton(ButtonType.SECONDARY, true);
 
@@ -418,11 +418,12 @@ public class NavigationBarActivity extends BaseActivity {
 
         ViewGroup viewGroup = null;
         if (type == ButtonType.middlecontain)
-            viewGroup = (ViewGroup) findViewById(R.id.ll_contain);
+            viewGroup = (ViewGroup) findViewById(R.id.navbar_tab_container);
 
         return viewGroup;
     }
-    private  ImageView userAvatar;
+
+    private ImageView userAvatar;
 
 
     public MaterialTabs getMaterialTabs() {

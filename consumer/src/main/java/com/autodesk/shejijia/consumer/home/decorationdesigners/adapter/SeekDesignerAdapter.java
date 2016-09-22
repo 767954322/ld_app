@@ -12,7 +12,6 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
@@ -31,22 +30,17 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
 
     private Context mContext;
     private OnItemChatClickListener mOnItemChatClickListener;
-    private MemberEntity mMemberEntity;
     private static final String IS_REAL_NAME = "2";
 
     public SeekDesignerAdapter(Context context, List<SeekDesignerBean.DesignerListEntity> datas) {
         super(context, datas, R.layout.item_lv_seek_designer);
         mContext = context;
-        mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity == null) {
-            return;
-        }
     }
 
     @Override
     public void convert(final CommonViewHolder holder, SeekDesignerBean.DesignerListEntity designerListEntity) {
-
-        if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (memberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             holder.setVisible(R.id.img_seek_designer_chat, false);
         } else {
             holder.setVisible(R.id.img_seek_designer_chat, true);
@@ -58,11 +52,11 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
         DesignerInfoBean designerInfoBean = designerListEntity.getDesigner();
         RealNameBean real_name = designerListEntity.getReal_name();
 
-        nick_name = TextUtils.isEmpty(nick_name) ? "暂无数据" : nick_name;
-        avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
+        nick_name = UIUtils.getNoDataIfEmpty(nick_name);
+        avatar = UIUtils.getNoStringIfEmpty(avatar);
         following_count = TextUtils.isEmpty(following_count) ? "0" : following_count;
         holder.setText(R.id.tv_seek_designer_name, nick_name);
-        holder.setText(R.id.tv_attention_num, UIUtils.getString(R.string.attention_num) + " : " + following_count);
+        holder.setText(R.id.tv_attention_num, UIUtils.getString(R.string.attention_num) + following_count);
 
         PolygonImageView polygonImageView = holder.getView(R.id.piv_seek_designer_photo);
         ImageUtils.displayAvatarImage(avatar, polygonImageView);
@@ -102,7 +96,7 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
             holder.setText(R.id.tv_seek_designer_cost, UIUtils.getString(R.string.has_yet_to_fill_out));
         } else {
 
-            holder.setText(R.id.tv_seek_designer_cost, design_price_min + "-" + design_price_max + "元/m²");
+            holder.setText(R.id.tv_seek_designer_cost, design_price_min + "-" + design_price_max + "元/㎡");
         }
         audit_status = TextUtils.isEmpty(audit_status) ? "" : audit_status;
 

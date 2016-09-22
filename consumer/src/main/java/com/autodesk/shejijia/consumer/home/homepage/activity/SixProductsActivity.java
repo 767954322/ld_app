@@ -1,39 +1,43 @@
 package com.autodesk.shejijia.consumer.home.homepage.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SixProductsAdapter;
-import com.autodesk.shejijia.consumer.codecorationBase.average.fragment.AverageFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.codiy.fragments.DIYFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.fragment.GrandMasterFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.packages.fragment.PackagesFragment;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment.CoEliteFragment;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager;
 import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-
-import java.util.ArrayList;
+/**
+ * @author luchongbin .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file SixProductsActivity.java  .
+ * @brief 六大产品框架类 .
+ */
 
 public class SixProductsActivity extends NavigationBarActivity {
 
 
     private SixProductsAdapter sixProductsAdapter;
     private NoSlippingViewPager noSlippingViewPager;
-    private ArrayList<Fragment> fragments;
     private MaterialTabs pagerSlidingTabStrip;
+    private SignInNotificationReceiver signInNotificationReceiver;
 
     @Override
     protected int getLayoutResId() {
@@ -48,17 +52,10 @@ public class SixProductsActivity extends NavigationBarActivity {
     protected void initData(Bundle savedInstanceState) {
         setTitleForNavbar(UIUtils.getString(R.string.tab_six_products));
         noSlippingViewPager.setPagingEnabled(false);
-        fragments = new ArrayList<>();
-        fragments.add(new GrandMasterFragment());
-        fragments.add(new StudioFragment());
-        fragments.add(new CoEliteFragment());
-        fragments.add(new AverageFragment());
-        fragments.add(new PackagesFragment());
-        fragments.add(new DIYFragment());
-
+        registerBroadCast();
         String[] tabItems =this.getResources().getStringArray(R.array.sixProducts);
 
-        sixProductsAdapter = new SixProductsAdapter(getSupportFragmentManager(),fragments,tabItems);
+        sixProductsAdapter = new SixProductsAdapter(getSupportFragmentManager(), tabItems);
         noSlippingViewPager.setAdapter(sixProductsAdapter);
 
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
@@ -67,18 +64,20 @@ public class SixProductsActivity extends NavigationBarActivity {
 
 
         pagerSlidingTabStrip.setBackgroundColor(Color.WHITE);//Tab的背景色
-        pagerSlidingTabStrip.setIndicatorColor(Color.BLUE);//下滑指示器的颜色
+        pagerSlidingTabStrip.setIndicatorColor(UIUtils.getColor(R.color.tx_ef));//下滑指示器的颜色
         pagerSlidingTabStrip.setIndicatorHeight(DensityUtil.dip2px(this, 2));//下滑指示器的高度
-        pagerSlidingTabStrip.setTextColorSelected(Color.BLUE);//设置选中的tab字体颜色
-        pagerSlidingTabStrip.setTextColorUnselected(Color.BLACK);//设置未选中的tab字体颜色
-        pagerSlidingTabStrip.setTabPaddingLeftRight(60);//设置tab距离左右的padding值
+        pagerSlidingTabStrip.setTextColorSelected(UIUtils.getColor(R.color.tx_ef));
+        pagerSlidingTabStrip.setTextColorUnselected(UIUtils.getColor(R.color.my_project_title_text_color));//设置未选中的tab字体颜色
+//        pagerSlidingTabStrip.setTabPaddingLeftRight(29);//设置tab距离左右的padding值
         pagerSlidingTabStrip.setTabTypefaceSelectedStyle(Typeface.NORMAL);//选中时候字体
         pagerSlidingTabStrip.setTabTypefaceUnselectedStyle(Typeface.NORMAL);//未选中时候字体
-        pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 16));
+        pagerSlidingTabStrip.setTextSize(DensityUtil.dip2px(this, 15));
+//        pagerSlidingTabStrip.setSameWeightTabs(true);
+
+//        pagerSlidingTabStrip.setPaddingMiddle(true);//设置tab控件居中
         pagerSlidingTabStrip.setOnClickItemListener(new MaterialTabs.OnClickItemListener() {
             @Override
             public void onClickItemListener(int position) {
-                Log.i("yaoxuehuadashen",""+position);
                 setImageForNavButton(ButtonType.RIGHT, R.drawable.work_room_explain);
                 if (position == 1){
 
@@ -90,7 +89,7 @@ public class SixProductsActivity extends NavigationBarActivity {
         });
 
         pagerSlidingTabStrip.setViewPager(noSlippingViewPager);
-        noSlippingViewPager.setCurrentItem(2);
+        noSlippingViewPager.setCurrentItem(0);
 
     }
 
@@ -109,5 +108,37 @@ public class SixProductsActivity extends NavigationBarActivity {
             setResult(IssueDemandActivity.RESULT_CODE, data);
             finish();
         }
+    }
+
+    private void registerBroadCast() {
+        signInNotificationReceiver = new SignInNotificationReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+        registerReceiver(signInNotificationReceiver, filter);
+    }
+
+    /**
+     * 全局的广播接收者,用于处理登录后数据的操作
+     */
+    private class SignInNotificationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if  (action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)) {
+                String strToken = intent.getStringExtra(BroadCastInfo.LOGIN_TOKEN);
+                MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
+                //设计师的话返回首页
+                if(entity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(entity.getMember_type())){
+                    SixProductsActivity.this.finish();
+                }
+            }
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(signInNotificationReceiver);
     }
 }

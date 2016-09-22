@@ -1,14 +1,22 @@
 package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.timepicker;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.gestures.EclairGestureDetector;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.adapter.ArrayWheelAdapter;
+import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.adapter.WheelAdapter;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.libs.WheelView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.listener.OnItemSelectedListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by yaoxuehua on 16-6-17.
@@ -26,6 +34,12 @@ public class WheelOptions<T> {
     private boolean linkage = false;
     private OnItemSelectedListener wheelListener_option1;
     private OnItemSelectedListener wheelListener_option2;
+
+    private Handler handler;//及时监听数据
+    private Timer timer;
+    private int timerCount = 1;
+
+
 
     public View getView() {
         return view;
@@ -107,6 +121,8 @@ public class WheelOptions<T> {
                     wheelListener_option2.onItemSelected(opt2Select);
                 }
             }
+
+
         };
         wheelListener_option2 = new OnItemSelectedListener() {
 
@@ -224,6 +240,7 @@ public class WheelOptions<T> {
             wv_option3.setCurrentItem(opt3Select);
         }
     }
+
 
 
 }

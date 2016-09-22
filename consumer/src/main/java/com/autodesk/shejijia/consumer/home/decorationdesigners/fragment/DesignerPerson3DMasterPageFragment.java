@@ -1,28 +1,31 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerDetailAdapter;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesigner3DCaseAdapter;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.Case3DBeen;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetail3DActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewListView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author yaoxuehua .
@@ -44,8 +47,7 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         mFooterView = View.inflate(getActivity(), R.layout.view_empty_layout, null);
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
-        //   mPullToRefreshLayout = ((PullToRefreshLayout)rootView.findViewById(R.id.refresh_view));
-        mListView = (ListView) rootView.findViewById(R.id.lv_seek_detail_listview);
+        mListView = (ScrollViewListView) rootView.findViewById(R.id.lv_seek_detail_listview);
 
 
     }
@@ -55,138 +57,96 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
 
     }
 
-    public void getMore2DCaseData(SeekDesignerDetailBean mSeekDesignerDetailBean, int state) {
+    //设置handler
+    public void setHandler(Handler hanler){
 
-        this.mSeekDesignerDetailBean = mSeekDesignerDetailBean;
-        updateViewFromDesignerData(state);
+        this.myHanler = hanler;
+
     }
 
 
-    /**
-     * 设计师的信息更新
-     *
-     * @param state 　更新状态
-     */
-    private void updateViewFromDesignerData(int state) {
+    //获取更多数据
+    public void getMore3DCase(final List<Case3DBeen.CasesBean> myData, int state) {
+
         //如果是刷新数据，就将该集合清空
         if (state == 0) {
+            if (seekDesigner3DCaseAdapter == null){
 
-            mCasesEntityArrayList.clear();
+                seekDesigner3DCaseAdapter = new SeekDesigner3DCaseAdapter(getActivity(), myData);
+            }
+            myDatas.clear();
+            myDatas.addAll(myData);
 
-        }
-
-        mCasesEntityArrayList.addAll(mSeekDesignerDetailBean.getCases());
-        if (mCasesEntityArrayList.size() < 1) {
-            getEmptyAlertView(UIUtils.getString(R.string.case_is_empty)).show();
-        }
-        hideFooterView(mCasesEntityArrayList);
-        if (mSeekDesignerDetailAdapter == null) {
-
-            mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(getActivity(), mCasesEntityArrayList, getActivity());
-            mListView.setAdapter(mSeekDesignerDetailAdapter);
-
+            mListView.setAdapter(seekDesigner3DCaseAdapter);
         } else {
-            mSeekDesignerDetailAdapter.addMoreData(mCasesEntityArrayList);
-            mSeekDesignerDetailAdapter.notifyDataSetChanged();
+
+            myDatas.addAll(myData);
+            if (myDatas !=null && myDatas.size()>0){
+
+                seekDesigner3DCaseAdapter.addMoreData(myDatas);
+                seekDesigner3DCaseAdapter.notifyDataSetChanged();
+            }
 
         }
-        mSeekDesignerDetailAdapter.setOnItemCaseLibraryClickListener(new SeekDesignerDetailAdapter.OnItemCaseLibraryClickListener() {
+
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void OnItemCaseLibraryClick(int position) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String hs_design_id = (String) myDatas.get(position).getHs_design_id();
+                String designer_id = myDatas.get(position).getDesigner_id()+"";
+                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+
                 /**
-                 * 单击某个item进入查看详情
                  *
-                 * @param position item的位置
+                 hs_desgen_id 如果是空的
+                 degen_id  是不是当前登陆用户
+                 是       方案尚未完成，请至网页端完善设计
+                 不是     方案还在设计中，请浏览其他3D方案
                  */
-                String case_id = mCasesEntityArrayList.get(position).getId();
-                Intent intent = new Intent(getActivity(), CaseLibraryNewActivity.class);
-                intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
-                startActivity(intent);
+                if (hs_design_id==null){
+
+                    if (mMemberEntity!=null){
+                        String acs_member_id = mMemberEntity.getAcs_member_id();
+                        if (designer_id.equals(acs_member_id)){
+                            // 方案尚未完成，请至网页端完善设计
+                            showAlertView("方案尚未完成，请至网页端完善设计");
+                        }else {
+                            showAlertView("方案还在设计中，请浏览其他3D方案");
+                            //方案还在设计中，请浏览其他3D方案
+                        }
+                    }else {
+                        showAlertView("方案还在设计中，请浏览其他3D方案");
+                    }
+
+                }else {
+                    Intent intent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
+                    intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, myDatas.get(position).getDesign_asset_id()+"");
+                    getActivity().startActivity(intent);
+                }
+
+
             }
         });
-        setListViewHeightBasedOnChildren(mListView);
+
+        Message message = myHanler.obtainMessage();
+        message.what = 0;
+        myHanler.sendMessage(message);
+
+        updateViewFromDesignerData(state);
 
     }
 
-    /**
-     * 隐藏底部布局
-     * param 传入的信息集合
-     */
-    private void hideFooterView(ArrayList<SeekDesignerDetailBean.CasesEntity> list) {
-        if (list != null && list.size() > 0) {
-            mRlEmpty.setVisibility(View.GONE);
-        } else {
-            mRlEmpty.setVisibility(View.VISIBLE);
-        }
-        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
-        mRlEmpty.getLayoutParams();
-        layoutParams.height = height / 2;
-        mRlEmpty.setLayoutParams(layoutParams);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
-    }
-
-//    /**
-//     * 单击某个item进入查看详情
-//     *
-//     * @param position item的位置
-//     */
-//    @Override
-//    public void OnItemCaseLibraryClick(int position) {
-//        String case_id = mCasesEntityArrayList.get(position).getId();
-//        Intent intent = new Intent(getActivity(), CaseLibraryDetailActivity.class);
-//        intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
-//        startActivity(intent);
-//    }
-
-    /**
-     * 案例库为空时候显示的提示框
-     */
-    private AlertView getEmptyAlertView(String content) {
-        return new AlertView(UIUtils.getString(R.string.tip), content, null, null, null, getActivity(),
-                AlertView.Style.Alert, null).setCancelable(true);
+    //打开AlertView对话框
+    private void showAlertView(String content) {
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, getActivity(), AlertView.Style.Alert, null).show();
     }
 
     /**
-     * 计算listView的高
+     * @param state
      */
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        if (listView == null) {
-            return;
-        }
+    public void updateViewFromDesignerData(int state) {
 
-
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-        int totalHeight = 0;
-
-
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-
-
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-
-
-            if (listItem != null) {
-                // 计算子项View 的宽高
-                listItem.measure(0, 0);
-                // 统计所有子项的总高度
-                totalHeight += listItem.getMeasuredHeight();
-            }
-        }
-
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight
-                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        listView.setLayoutParams(params);
 
     }
 
@@ -196,18 +156,15 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
     private PullListView lv_seek_detail_listview;
     private RelativeLayout view_load_more;
     private View mFooterView;
+    private Case3DBeen case3DBeen;
     private RelativeLayout mRlEmpty;
     private TextView mTvEmptyMessage;
     private int LIMIT = 10;
     private int OFFSET = 0;
-    private int width;
-    private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
-    private SeekDesignerDetailAdapter mSeekDesignerDetailAdapter;
     private ListView mListView;
-    private SeekDesignerDetailBean mSeekDesignerDetailBean;
-    private DesignerDetailHomeBean seekDesignerDetailHomeBean;
-    private PullToRefreshLayout mPullToRefreshLayout;
-    private String mMemberType, mDesignerId, mHsUid;
+    private Handler myHanler;
+    private List<Case3DBeen.CasesBean> myDatas = new ArrayList<Case3DBeen.CasesBean>();
+    private SeekDesigner3DCaseAdapter seekDesigner3DCaseAdapter;
 
 
 }

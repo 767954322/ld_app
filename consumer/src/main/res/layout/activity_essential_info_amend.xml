@@ -24,6 +24,7 @@
             android:layout_weight="1"
             android:background="@color/bg_ff"
             android:ellipsize="end"
+            android:maxLength="20"
             android:padding="@dimen/size_10"
             android:singleLine="true" />
 

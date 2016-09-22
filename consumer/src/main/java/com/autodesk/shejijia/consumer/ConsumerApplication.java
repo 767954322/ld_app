@@ -5,11 +5,11 @@ import com.autodesk.shejijia.consumer.home.homepage.activity.MPSplashActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.socks.library.KLog;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -21,6 +21,7 @@ public class ConsumerApplication extends AdskApplication {
         super.onCreate();
 
         reqisterWXAppId();
+
     }
 
     private void reqisterWXAppId() {
@@ -49,12 +50,17 @@ public class ConsumerApplication extends AdskApplication {
         return MPSplashActivity.class;
     }
 
+    @Override
+    public boolean isDebug() {
+        return BuildConfig.DEBUG;
+    }
+
     private void getLoginThreadId(String designer_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try {
-                    KLog.json("ConsumerApplication", jsonObject.toString());
+                    LogUtils.i("ConsumerApplication", jsonObject.toString());
                     String im_msg_thread_id = jsonObject.getString(IM_MSG_THREAD_ID);
                     String inner_sit_msg_thread_id = jsonObject.getString(INNER_SIT_MSG_THREAD_ID);
 

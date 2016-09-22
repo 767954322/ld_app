@@ -81,6 +81,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String bidder_count = decorationNeedsListBean.getBidder_count();
         String is_public = decorationNeedsListBean.getIs_public();
         final String wk_template_id = decorationNeedsListBean.getWk_template_id();
+//        final String thread_id = decorationNeedsListBean.getBeishu_thread_id();
         String custom_string_status = decorationNeedsListBean.getCustom_string_status();
 
         holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name) + "/" + community_name);
@@ -91,7 +92,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (spaceMap.containsKey(house_type)) {
             holder.setText(R.id.tv_decoration_house_type, spaceMap.get(house_type));
         } else {
-            holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? "其它" : house_type);
+            holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? UIUtils.getString(R.string.no_select) : house_type);
         }
 
         district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
@@ -99,7 +100,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 
         /// 项目地址
         if (TextUtils.isEmpty(city_name)) {
-            holder.setText(R.id.tv_decoration_address, UIUtils.getString(R.string.nodata));
+            holder.setText(R.id.tv_decoration_address, UIUtils.getString(R.string.no_select));
         } else {
             holder.setText(R.id.tv_decoration_address, address);
         }
@@ -112,10 +113,15 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         if (styleMap.containsKey(decoration_style)) {
             holder.setText(R.id.tv_decoration_style, styleMap.get(decoration_style));
         } else {
-            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.str_others) : decoration_style);
+            holder.setText(R.id.tv_decoration_style, TextUtils.isEmpty(decoration_style) ? UIUtils.getString(R.string.no_select) : decoration_style);
+
         }
-        holder.setText(R.id.tv_bidder_count, bidder_count + "人");
-        holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day() + " 天");
+        holder.setVisible(R.id.tv_show_persion_tip, true);
+        holder.setTextColor(R.id.tv_bidder_count,
+                Integer.parseInt(bidder_count) >= 1 ? UIUtils.getColor(R.color.comment_blue)
+                        : UIUtils.getColor(R.color.mybid_text_color_light));
+        holder.setText(R.id.tv_bidder_count, bidder_count);
+        holder.setText(R.id.tv_decoration_end_day, " " + decorationNeedsListBean.getEnd_day());
 
         /**
          * 当前家装订单状态
@@ -148,28 +154,24 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
                 holder.setVisible(R.id.rl_bidder_count, false);
             } else {
                 holder.setVisible(R.id.rl_bidder_count, true);
-
-                // TODO 需求： 当有设计师支付了首款，隐藏应标人数条目布局
-                /// TODO DELETE 新需求.
-//             if (isBidding) {
-//                if (wk_cur_node_id_max >= PAYED_FIRST_COST) {
-//                    holder.setVisible(R.id.rl_bidder_count, false);
-//                 } else {
-//                    holder.setVisible(R.id.rl_bidder_count, true);
-//                 }
-//              } else {
-//                holder.setVisible(R.id.rl_bidder_count, false);
-//             }
+                if (isBidding) {
+                    holder.setVisible(R.id.rl_bidder_count, true);
+                } else {
+                    holder.setVisible(R.id.rl_bidder_count, false);
+                }
             }
         }
         /**
          * 应标设计师列表
          */
-
         ArrayList<DecorationBiddersBean> biddersShow = new ArrayList<>();
-        if (wk_template_id.equals("4")) {
+        if (WkTemplateConstants.IS_ELITE.equalsIgnoreCase(wk_template_id)) {
             biddersShow = removeUnSelectedDesigner(mBidders);
-            holder.setText(R.id.tv_send_single_number, UIUtils.getString(R.string.send_single_number) + mBidders.size() + "人");
+            holder.setTextColor(R.id.tv_send_num,
+                    mBidders.size() >= 1 ? UIUtils.getColor(R.color.comment_blue)
+                            : UIUtils.getColor(R.color.mybid_text_color_light));
+
+            holder.setText(R.id.tv_send_num, mBidders.size() + "");
         } else {
             biddersShow = removeBidingDesigner(mBidders);
         }
@@ -211,17 +213,28 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         /**
          * 需求详情页面
          */
+        holder.setOnClickListener(R.id.decoration_phone_container, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDecorationDetailActivity(wk_template_id,mNeeds_id);
+            }
+        });
         holder.setOnClickListener(R.id.tv_decoration_detail, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIntent = new Intent(mActivity, DecorationDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
-                bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, mNeeds_id);
-                mIntent.putExtras(bundle);
-                mActivity.startActivityForResult(mIntent, 0);
+                startDecorationDetailActivity(wk_template_id,mNeeds_id);
             }
         });
+
+    }
+
+    private void startDecorationDetailActivity(String wk_template_id, String mNeeds_id) {
+        Intent mIntent = new Intent(mActivity, DecorationDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
+        bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, mNeeds_id);
+        mIntent.putExtras(bundle);
+        mActivity.startActivityForResult(mIntent, 0);
     }
 
     /**
@@ -284,7 +297,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         String needsState = UIUtils.getString(R.string.error_state);
         switch (wk_template_id) {
             case WkTemplateConstants.IS_ELITE:
-                needsState = getEliteNeedsState(needsState, custom_string_status, needs_id);
+                needsState = getEliteNeedsState(wk_cur_sub_node_id_int, needsState, custom_string_status);
                 return needsState;
 
             default:
@@ -354,10 +367,15 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
      *
      * @param needsState
      * @param custom_string_status
-     * @param needs_id
      * @return
      */
-    private String getEliteNeedsState(String needsState, String custom_string_status, String needs_id) {
+    private String getEliteNeedsState(int wk_cur_sub_node_id_int, String needsState, String custom_string_status) {
+        needsState = UIUtils.getString(R.string.checking);
+        if (wk_cur_sub_node_id_int >= WkTemplateConstants.CONFIRM_DESIGN_RESULTS
+                && wk_cur_sub_node_id_int != WkTemplateConstants.DELAY_CONFIRM_DESIGN_RESULTS) {
+            needsState = UIUtils.getString(R.string.project_finish);
+            return needsState;
+        }
         switch (custom_string_status) {
             case Constant.NumKey.TWENTY_ONE://21:审核中
                 needsState = UIUtils.getString(R.string.checking);

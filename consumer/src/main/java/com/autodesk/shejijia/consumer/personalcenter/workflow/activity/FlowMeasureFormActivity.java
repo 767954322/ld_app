@@ -2,7 +2,9 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -29,9 +31,9 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +50,7 @@ import java.util.Map;
  * @file FlowMeasureFormActivity.java  .
  * @brief 全流程量房表单类 .
  */
-public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnItemClickListener, View.OnClickListener {
+public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnItemClickListener, View.OnClickListener, TextWatcher {
 
     @Override
     protected int getLayoutResId() {
@@ -96,12 +98,30 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+
+        CustomProgress.show(this, "", false, null);
         super.initData(savedInstanceState);
-        setTitleForNavbar(getResources().getString(R.string.demand_measure_house_form)); /// 设置标题 .
 
         memType = memberEntity.getMember_type();
         user_id = memberEntity.getAcs_member_id();
         initAlertView();
+    }
+
+    @Override
+    protected void onWorkFlowData() {
+        super.onWorkFlowData();
+        CustomProgress.cancelDialog();
+        if (!isElite(wk_cur_template_id)) {
+            setTitleForNavbar(getResources().getString(R.string.is_average_measure_house_form)); /// 竞优 .
+        } else {
+            setTitleForNavbar(getResources().getString(R.string.is_elite_measure_house_form)); ///  精选.
+        }
+
+        updateDisplayData();
+        updateRoomData();
+        updateCityData();
+        /// time .
+        setMeasureTime();
     }
 
 
@@ -136,6 +156,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvc_measure_form_time.setOnClickListener(this);
         tvIllustrate.setOnClickListener(this);
 
+        tv_measure_form_designer_liangfangfeit.addTextChangedListener(this);
     }
 
     @Override
@@ -199,21 +220,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 break;
 
             case R.id.tvc_measure_form_time: /// 设置量房时间 .
-                if (pvTime!=null){
+                if (pvTime != null) {
                     pvTime.show();
                 }
                 break;
         }
-    }
-
-    @Override
-    protected void onWorkFlowData() {
-        super.onWorkFlowData();
-        updateDisplayData();
-        updateRoomData();
-        updateCityData();
-        /// time .
-        setMeasureTime();
     }
 
     /// 更新显示状态钮得消失显示 .
@@ -262,28 +273,33 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
             }
 
+            boolean elite = isElite(wk_cur_template_id);
+
             designer_house_charge_show.setVisibility(View.VISIBLE);
             switch (wk_cur_sub_node_id_i) {
                 case 11:
-                    setViewAnimation(rlMeasureWarmTips);
-                    if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
-                        ll_designer_send.setVisibility(View.GONE);
-                        designer_house_charge_show.setVisibility(View.VISIBLE);
+                    if (!elite) {
                         setViewAnimation(rlMeasureWarmTips);
-                        // rlMeasureWarmTips.setVisibility(View.GONE);
-                    } else {
-                        // rlMeasureWarmTips.setVisibility(View.VISIBLE);
-                        ll_designer_send.setVisibility(View.VISIBLE);
-                        tvWarmTips.setText(R.string.Mrasuretips);
-                        tvWarmTipsContent.setText(R.string.update_measure_house_cost);
-                        tvMeasureWarmTips.setText(R.string.warmTips);
-                        tvMeasureWarmTipsContent.setText(R.string.no_pay_rent);
+                        if (state == Constant.WorkFlowStateKey.STEP_MATERIAL) {
+                            ll_designer_send.setVisibility(View.GONE);
+                            designer_house_charge_show.setVisibility(View.VISIBLE);
+                            setViewAnimation(rlMeasureWarmTips);
+                            // rlMeasureWarmTips.setVisibility(View.GONE);
+                        } else {
+                            // rlMeasureWarmTips.setVisibility(View.VISIBLE);
+                            ll_designer_send.setVisibility(View.VISIBLE);
+                            tvWarmTips.setText(R.string.Mrasuretips);
+                            tvWarmTipsContent.setText(R.string.update_measure_house_cost);
+                            tvMeasureWarmTips.setText(R.string.warmTips);
+                            tvMeasureWarmTipsContent.setText(R.string.no_pay_rent);
 
+                        }
                     }
                     break;
+
                 default:
-                    rlMeasureWarmTips.setVisibility(View.GONE);
                     ll_designer_send.setVisibility(View.GONE);
+                    rlMeasureWarmTips.setVisibility(View.GONE);
                     designer_house_charge_show.setVisibility(View.GONE);
                     // consumer_designer_house_charge_show.setVisibility(View.VISIBLE);
                     break;
@@ -355,19 +371,16 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         amount = mBidders.get(0).getMeasurement_fee();
         tvName.setText(user_name);
         tvPhone.setText(mobile_number);
-        tvProjectBudget.setText(TextUtils.isEmpty(requirement.getDesign_budget())?UIUtils.getString(R.string.no_select):requirement.getDesign_budget() + "");
+        tvProjectBudget.setText(TextUtils.isEmpty(requirement.getDesign_budget()) ? UIUtils.getString(R.string.no_select) : requirement.getDesign_budget() + "");
 
 
-        tvc_measure_fitment_budget.setText(TextUtils.isEmpty(requirement.getDecoration_budget())?
-                UIUtils.getString(R.string.no_select):requirement.getDecoration_budget());
+        tvc_measure_fitment_budget.setText(TextUtils.isEmpty(requirement.getDecoration_budget()) ?
+                UIUtils.getString(R.string.no_select) : requirement.getDecoration_budget());
 
-        tvc_measure_form_area.setText(requirement.getHouse_area() + "m²");
-        if ("none".equals(requirement.getDistrict())
-                || "null".equals(district_name)
-                || "none".equals(district_name)
-                || TextUtils.isEmpty(district_name)) {
-            district_name = "";
-        }
+        tvc_measure_form_area.setText(requirement.getHouse_area() /*+ "m²"*/);
+
+        district_name = UIUtils.getNoStringIfEmpty(district_name);
+
         tvc_measure_form_address.setText(province_name + " " + city_name + " " + district_name);
         tvc_measure_form_estate.setText(requirement.getCommunity_name());
         if (TextUtils.isEmpty(amount)
@@ -431,12 +444,12 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             house_type_content = requirement.getHouse_type();
         }
         String rlt = room_convert + " " + living_room_convert + " " + toilet_convert;
-        rlt = (rlt.equals("null"+" "+"null"+" "+"null"))?UIUtils.getString(R.string.no_select):rlt;
+        rlt = (rlt.equals("null" + " " + "null" + " " + "null")) ? UIUtils.getString(R.string.no_select) : rlt;
         tvc_measure_form_house_type_model.setText(rlt);
 
-        tvc_measure_form_type.setText(house_type_content != null?house_type_content:UIUtils.getString(R.string.no_select));
+        tvc_measure_form_type.setText(house_type_content != null ? house_type_content : UIUtils.getString(R.string.no_select));
 
-        tvc_measure_form_style.setText(TextUtils.isEmpty(house_style)?UIUtils.getString(R.string.no_select):house_style);
+        tvc_measure_form_style.setText(TextUtils.isEmpty(house_style) ? UIUtils.getString(R.string.no_select) : house_style);
     }
 
 
@@ -520,7 +533,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         List<MPMeasureFormBean.BiddersBean> bidders = mMPMeasureFormBean.getBidders();
         if (bidders != null && bidders.size() > 0) {
             wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
-            KLog.d("FlowMeasureFormActivity", wk_cur_sub_node_id);
+            LogUtils.i("FlowMeasureFormActivity", wk_cur_sub_node_id + "");
         }
         mAgreeResponseBidSuccessAlertView.show();
     }
@@ -640,4 +653,44 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     private String user_name;
     private String commonTip = UIUtils.getString(R.string.tip);
     private String[] sureString = new String[]{UIUtils.getString(R.string.sure)};
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+        if (s.toString().contains(".")) {
+            if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                tv_measure_form_designer_liangfangfeit.setText(s);
+                tv_measure_form_designer_liangfangfeit.setSelection(s.length());
+            }
+        }
+
+        if (s.toString().trim().substring(0).equals(".")) {
+            s = "0" + s;
+            tv_measure_form_designer_liangfangfeit.setText(s);
+            tv_measure_form_designer_liangfangfeit.setSelection(2);
+        }
+
+        if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+            if (!s.toString().substring(1, 2).equals(".")) {
+                tv_measure_form_designer_liangfangfeit.setText(s.subSequence(0, 1));
+                tv_measure_form_designer_liangfangfeit.setSelection(1);
+                return;
+            }
+
+        }
+
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

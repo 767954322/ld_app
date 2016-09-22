@@ -56,8 +56,10 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         // retrieve the fragment handle from fragmentmanager
         if (savedInstanceState != null) {
             mMPThreadListFragment = (MPThreadListFragment) getSupportFragmentManager().findFragmentByTag(THREAD_FRAGMENT_TAG);
-            mFragmentArrayList.add(mMPThreadListFragment);
 
+            if (mMPThreadListFragment != null) {
+                mFragmentArrayList.add(mMPThreadListFragment);
+            }
             showFragment(getCurrentCheckedRadioButtonId());
         }
     }
@@ -89,7 +91,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     @Override
     protected void onResume() {
         super.onResume();
-
         if (isActiveFragment(MPThreadListFragment.class)) {
             getFileThreadUnreadCount();
         }
@@ -102,7 +103,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     @Override
     protected void onDestroy() {
-
         if (mBroadcastReceiver != null) {
             this.unregisterReceiver(mBroadcastReceiver);
         }
@@ -130,7 +130,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     }
 
     protected boolean needLoginOnRadioButtonTap(int id) {
-        return id == getIMButtonId() || id == getDesignerButtonId();
+        return id == getIMButtonId();
     }
 
 
@@ -152,7 +152,9 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                showFragment(f.getClass());
+                if (!isDestroyed() && !isFinishing()) {
+                    showFragment(f.getClass());
+                }
             }
         }, 200);
 
@@ -207,7 +209,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     @Override
     protected void rightNavButtonClicked(View view) {
 
-
         if (isActiveFragment(MPThreadListFragment.class))
             openFileThreadActivity();
     }
@@ -218,10 +219,6 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
         return -1;
     }
 
-    protected int getDesignerButtonId() {
-        assert (false);
-        return -1;
-    }
 
     protected int getRadioGroupId() {
         assert (false);
@@ -261,13 +258,18 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : mFragmentArrayList) {
-            if (null != fragment && fragment.getClass().equals(clazz)) {
+            if (fragment == null) {
+                continue;
+            }
+
+            if (fragment.getClass().equals(clazz)) {
                 fragmentTransaction.show(fragment);
 
-                if (fragment.getClass().equals(MPThreadListFragment.class))
+                if (fragment.getClass().equals(MPThreadListFragment.class)) {
                     threadListFragment = (MPThreadListFragment) fragment;
-                else
+                } else {
                     f = (BaseFragment) fragment;
+                }
             } else {
                 fragmentTransaction.hide(fragment);
             }
@@ -286,6 +288,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
     private void registerBroadcastReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BroadCastInfo.RECEVIER_RECEIVERMESSAGE);
+        intentFilter.addAction(BroadCastInfo.USER_DID_LOGOUT);
         this.registerReceiver(mBroadcastReceiver, intentFilter);
     }
 
@@ -297,19 +300,21 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             if (action.equalsIgnoreCase(BroadCastInfo.RECEVIER_RECEIVERMESSAGE)) {
                 if (isActiveFragment(MPThreadListFragment.class))
                     getFileThreadUnreadCount();
+            } else if (action.equalsIgnoreCase(BroadCastInfo.USER_DID_LOGOUT)){
+                onUserLogout();
             }
+
         }
     };
 
+    protected void onUserLogout() {
+    }
 
     protected Fragment getFragmentByButtonId(int id) {
         Fragment f = null;
         if (id == getIMButtonId()) {
             f = mMPThreadListFragment;
-        } else if (id == getDesignerButtonId()) {
-            f = getDesignerFragment();
         }
-
         return f;
     }
 
@@ -338,7 +343,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
 
     private void startRegisterOrLoginActivity(int radioBtnId) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (memberEntity != null || radioBtnId == getDesignerButtonId()) {
+        if (memberEntity != null) {
             showFragment(radioBtnId);
         } else {
             mRadioGroup.check(R.id.consumer_main_radio_btn);

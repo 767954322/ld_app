@@ -66,11 +66,11 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
         final String designer_id = biddersBean.getDesigner_id();
         final String uid = biddersBean.getUid();
         String style_names = biddersBean.getStyle_names();
-
+//        String following_count = biddersBean.getFollowing_count();
         String avatar = biddersBean.getAvatar();
         String nick_name = biddersBean.getUser_name();
-        nick_name = TextUtils.isEmpty(nick_name) ? "暂无数据" : nick_name;
-        avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
+        nick_name = UIUtils.getNoDataIfEmpty(nick_name);
+        avatar = UIUtils.getNoStringIfEmpty(avatar);
 
         PolygonImageView polygonImageView = holder.getView(R.id.piv_designer_photo);
         ImageUtils.displayAvatarImage(avatar, polygonImageView);
@@ -85,11 +85,11 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             holder.setText(R.id.tv_designer_cost, design_price_min + "-" + design_price_max + "元/m²");
         }
         holder.setText(R.id.tv_designer_name, nick_name);
-        holder.setText(R.id.tv_designer_production, "作品：0");
+//        holder.setText(R.id.tv_designer_production, String.format(("作品：%s"), "0"));
 
 
         holder.setText(R.id.tv_designer_good, be_good_at_prefix + (TextUtils.isEmpty(style_names) ? "尚未填写" : style_names));
-        holder.setText(R.id.tv_attention_num, "关注人数：" + "0");
+//        holder.setText(R.id.tv_attention_num, String.format(("关注人数：%s"), "0"));
 
         /**
          *控制显示拒绝、选TA量房，还是显示全流程状态
@@ -106,11 +106,13 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
         holder.setText(R.id.tv_workflow_state, MPWkFlowManager.getWkSubNodeName(mActivity, mWkTempleId, wk_cur_sub_node_id));
 
+        final String designer_thread_id = biddersBean.getDesign_thread_id();
+        final String userName = biddersBean.getUser_name();
         /// 聊天 .
         holder.setOnClickListener(R.id.img_designer_chat, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openChatRoom();
+                openChatRoom(designer_thread_id,userName,designer_id);
             }
         });
 
@@ -153,16 +155,6 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
                 if (null != mOnItemViewClickCallback) {
                     mOnItemViewClickCallback.setOnItemViewClickCallback(designer_id);
                 }
-
-                // FIXME 此段代码导致竞优设计师列表无法更新
-//                Intent intent;
-//                if (!TextUtils.isEmpty(mNeeds_id) && !TextUtils.isEmpty(designer_id)) {
-//                    intent = new Intent(mActivity, FlowMeasureFormActivity.class);
-//                    intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeeds_id);
-//                    intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-//                    /// 从这个页面进入，量房时间为空，必须重新选择量房时间 .
-//                    mActivity.startActivity(intent);
-//                }
             }
         });
     }
@@ -170,14 +162,15 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
 
     /**
      * 打开聊天室
+     * @param designer_thread_id
+     * @param userName
+     * @param designer_id
      */
-    private void openChatRoom() {
+    private void openChatRoom(String designer_thread_id, String userName, String designer_id) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         String member_id = memberEntity.getAcs_member_id();
         String memType = memberEntity.getMember_type();
-        String designer_thread_id = biddersBean.getDesign_thread_id();
-        String userName = biddersBean.getUser_name();
-        String designer_id = biddersBean.getDesigner_id();
+
 
         if (TextUtils.isEmpty(designer_thread_id)) {
             designer_thread_id = "";

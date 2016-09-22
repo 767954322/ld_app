@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rlt_tab_view"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="52dp">
+
+        <com.autodesk.shejijia.consumer.home.widget.SegmentTabLayout
+            android:id="@+id/tab_design_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            app:tl_indicator_anim_enable="true"
+            app:tl_indicator_bounce_enable="false"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            app:tl_bar_color="#ffffff"
+            app:tl_indicator_color="@color/bg_5f6062"
+            app:tl_indicator_corner_radius="6dp"
+            app:tl_tab_padding="10dp"/>
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/design_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

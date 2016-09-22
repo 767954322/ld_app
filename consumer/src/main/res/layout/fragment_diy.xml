@@ -1,14 +1,164 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".codecorationBase.codiy.fragments.DIYFragment">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
-    <ImageView
-        android:id="@+id/iv_diy"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:src="@drawable/bg_diy"/>
+        android:background="@color/bg_color_diy"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/size_25"
+            android:text="@string/diy_one"
+            android:textColor="@color/my_project_title_text_color"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_28" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_13"
+                android:text="@string/diy_easy"
+                android:textColor="@color/bg_color_diy_easy"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_13"
+                android:text="/"
+                android:textStyle="bold"
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_13"
+                android:text="@string/diy_user"
+                android:textStyle="bold"
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_13"
+                android:textStyle="bold"
+                android:text="/"
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_13"
+                android:text="@string/diy_free"
+                android:textStyle="bold"
+                android:textColor="@color/bg_color_diy_easy"
+                android:textSize="@dimen/font_28" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/diy_tool"
+            android:textColor="@color/my_project_title_text_color"
+            android:textStyle="bold"
+            android:textSize="@dimen/font_28" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_bg_diy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/size_9"
+            android:text="@string/diy_two"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/size_9"
+            android:text="@string/diy_three"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/size_9"
+            android:text="@string/diy_four"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/size_23"
+            android:text="@string/diy_five"
+            android:textColor="@color/my_project_title_text_color"
+            android:textSize="@dimen/font_13" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_30"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/size_10"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_1"
+                android:layout_weight="1"
+                android:background="@color/bg_color_diy_easy">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diy_six"
+                android:gravity="center"
+                android:textColor="@color/bg_color_diy_easy"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginRight="@dimen/size_10"
+                android:textSize="@dimen/font_17" />
+
+            <View
+                android:layout_width="@dimen/size_0"
+                android:layout_height="@dimen/size_1"
+                android:layout_weight="1"
+                android:background="@color/bg_color_diy_easy">
+
+            </View>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

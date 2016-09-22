@@ -17,4 +17,6 @@
     <item name="search_book_contents_failed" type="id" />
     <item name="search_book_contents_succeeded" type="id" />
 
+    <item name="pullable_listview" type="id" />
+
 </resources>

@@ -1,16 +1,28 @@
 package com.autodesk.shejijia.consumer.home.homepage.fragment;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.util.Log;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.DesignBaseFragment;
+import com.autodesk.shejijia.consumer.personalcenter.designer.fragment.BidBidingFragment;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * @author yaoxuehua .
@@ -20,6 +32,11 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  * @brief 我的装修项目--设计师.
  */
 public class MyDecorationProjectDesignerFragment extends BaseFragment {
+
+    private BidBidingFragment mBidBidingFragment;
+    private DesignBaseFragment designBaseFragment;
+    private DesignerConstructionFragment mDesignerConstructionFragment;
+    private Fragment fromFragment;
 
     @Override
     protected int getLayoutResId() {
@@ -32,105 +49,81 @@ public class MyDecorationProjectDesignerFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
-        /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//        int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
+        int high_level_audit = ((MPConsumerHomeActivity) getActivity()).high_level_audit;
         int is_loho = ((MPConsumerHomeActivity) getActivity()).is_loho;
-        setDefaultFragment(is_loho);
+        setDesigneBaseFragment(high_level_audit, is_loho);
     }
 
+    public void switchContent(Fragment fragment) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        if (fromFragment != fragment) {
+            if (fromFragment != null) {
+                transaction.hide(fromFragment);
+            }
+
+            if (!fragment.isAdded()) {
+                transaction.add(R.id.ll_contain, fragment);
+            } else {
+                transaction.show(fragment);
+            }
+            transaction.commit();
+            fromFragment = fragment;
+        }
+    }
+
+
     /**
-     * 设置应标的fragment
+     * 应标
      */
     public void setBidingFragment() {
-
         if (mBidBidingFragment == null) {
-
-            mBidBidingFragment = new BidingFragment();
+            mBidBidingFragment = new BidBidingFragment();
         }
+        switchContent(mBidBidingFragment);
+    }
 
-        switchFragment(mBidBidingFragment);
+    public void setDesigneBaseFragment(int high_level_audit, int is_loho) {
+        if (designBaseFragment == null) {
+            designBaseFragment = DesignBaseFragment.newInstance(high_level_audit, is_loho);
+        }
+        switchContent(designBaseFragment);
     }
 
     /**
-     * 设置设计的fragment
+     * 施工
      */
-    public void setDesignBeiShuFragment() {
-
-        if (mBeishuMealFragment == null) {
-
-            mBeishuMealFragment = new DesignerOrderBeiShuFragment();
-
-        }
-
-        switchFragment(mBeishuMealFragment);
-    }
-
-    /**
-     * 设置设计的fragment
-     */
-    public void setDesignFragment() {
-
-        if (mCommonOrderFragment == null) {
-            mCommonOrderFragment = new DesignerOrderFragment();
-        }
-        switchFragment(mCommonOrderFragment);
-    }
-
-    public void setConstructionFragment(){
-
-
+    public void setConstructionFragment() {
         if (mDesignerConstructionFragment == null) {
             mDesignerConstructionFragment = new DesignerConstructionFragment();
         }
-        switchFragment(mDesignerConstructionFragment);
-
-
+        switchContent(mDesignerConstructionFragment);
     }
 
 
-
-    /**
-     * 切换fragment
-     */
-    private void switchFragment(Fragment to) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        if (!to.isAdded()) {
-            transaction.hide(fromFragment).add(R.id.ll_contain, to).commit();
-        } else {
-            transaction.hide(fromFragment).show(to).commit();
-        }
-        fromFragment = to;
+    @Override
+    public void onFragmentShown() {
+        Log.d(TAG, "onFragmentShown: onFragmentShown");
+        designBaseFragment.onFragmentShown();
+        getWkFlowStatePointInformation();
     }
 
     /**
-     * 默认北舒套餐页面 .
+     * 获取全流程节点提示信息
      */
-    public void setDefaultFragment(int isLoho) {
-        if (isLoho == IS_BEI_SHU) {
+    public void getWkFlowStatePointInformation() {
+        MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
+            }
 
-            /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//             if (high_level_audit == 2){
-            mCommonFragment = new DesignerOrderBeiShuFragment();
-        } else {
-            mCommonFragment = new DesignerOrderFragment();
-        }
-        fragmentManager = getChildFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.ll_contain, mCommonFragment)
-                .commit();
-        fromFragment = mCommonFragment;
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                WkFlowStateInfoBean WkFlowStateInfoBean = GsonUtil.jsonToBean(jsonString, WkFlowStateInfoBean.class);
+                List<TipWorkFlowTemplateBean> tip_work_flow_template = WkFlowStateInfoBean.getTip_work_flow_template();
+                WkFlowStateMap.sWkFlowBeans = tip_work_flow_template;
+            }
+        });
     }
-
-    private LinearLayout llFragmentContain;
-    private TextView mBeishuOrder, mOrder;
-    private Context context = getActivity();
-    private FrameLayout mOrderContainer;
-    private int mIsLoho;
-    private static final int IS_BEI_SHU = 1;
-    private Fragment mBeishuMealFragment, mCommonOrderFragment, mCommonFragment;
-    private FragmentManager fragmentManager;
-    private Fragment fromFragment;
-    private Fragment mDesignerConstructionFragment;
-    private Fragment mBidBidingFragment;
-
 }

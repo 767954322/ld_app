@@ -33,12 +33,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.google.gson.Gson;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -105,7 +105,10 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
      */
     @Override
     protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
+
         super.initData(savedInstanceState);
+
         setTitleForNavbar(getResources().getString(R.string.design_contract)); /// 设置标题 .
     }
 
@@ -163,6 +166,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+
         /**
          * 如果超过了33节点，就隐藏上传量房按钮
          */
@@ -171,7 +175,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
             ll_agree_establish_contract.setVisibility(View.GONE);
         }
 
-        restgetDesignerInfoData(designer_id, hs_uid,new commonJsonResponseCallback(){
+        restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
             public void onJsonResponse(String jsonResponse) {
                 list = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
@@ -185,6 +189,8 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
 
             }
         });
+        CustomProgress.cancelDialog();
+
         int wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
         if (memberEntity != null) {
             memberType = memberEntity.getMember_type();
@@ -349,7 +355,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
                     @Override
                     public void onClick(View v) {
                         if (isAgree) { // 判断是否我已阅读（我已阅读）
-                            img_agree_establish_contract.setBackgroundResource(R.drawable.icon_selected_unchecked);
+                            img_agree_establish_contract.setBackgroundResource(android.R.color.white);
                             btn_send.setEnabled(false);
                             btn_send.setBackgroundResource(R.drawable.bg_common_btn_pressed);
                         } else { // 判断是否我已阅读（我未阅读）
@@ -459,7 +465,7 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                KLog.d(TAG, jsonObject.toString());
+                LogUtils.i(TAG, jsonObject+"");
                 ContractState = 0;
                 CustomProgress.cancelDialog();
                 mDesignContract = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_successfully), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowDesignContractActivity.this, AlertView.Style.Alert, FlowDesignContractActivity.this).setOnDismissListener(FlowDesignContractActivity.this);
@@ -637,11 +643,9 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
                     public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
-                        if ("null".equals(area)
-                                || "none".equals(area)
-                                || TextUtils.isEmpty(area)) {
-                            area = "";
-                        }
+
+                        area = UIUtils.getNoStringIfEmpty(area);
+
                         tvc_consumer_decorate_address.setText(province + city + area);
                         mChangeAddressDialog.dismiss();
                     }
@@ -694,6 +698,8 @@ public class FlowDesignContractActivity extends BaseWorkFlowActivity implements 
                     }
                 }
             }
+
+
             if (view == tvc_first_cost) { /// 监听首款 .
                 if (s.toString().contains(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > 2) {

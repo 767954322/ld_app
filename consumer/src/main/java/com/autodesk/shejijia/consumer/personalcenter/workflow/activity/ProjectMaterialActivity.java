@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 
 /**
  * @author Malidong .
@@ -28,18 +29,21 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
                 mIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(mIntent);
                 break;
+
             case R.id.ll_project_material_measure_house_delivery:
                 Intent dIntent = new Intent(ProjectMaterialActivity.this, FlowUploadDeliveryActivity.class);
                 dIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
                 dIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(dIntent);
                 break;
+
             case R.id.ll_project_material_contract:
                 Intent cIntent = new Intent(ProjectMaterialActivity.this, FlowEstablishContractActivity.class);
                 cIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
                 cIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 startActivity(cIntent);
                 break;
+
             case R.id.ll_project_material_project:
                 Intent pIntent = new Intent(ProjectMaterialActivity.this, FlowUploadDeliveryActivity.class);
                 pIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
@@ -70,13 +74,17 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+        CustomProgress.show(this, "", false, null);
         super.initData(savedInstanceState);
+
         setTitleForNavbar(getResources().getString(R.string.flow_project_data));
     }
 
     @Override
-    protected void onWorkFlowData() {
+    protected void onWorkFlowData() { // 判断项目资料显示节点
         super.onWorkFlowData();
+        CustomProgress.cancelDialog();
+
         wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
         if (wk_cur_sub_node_idi >= 11) {
             ll_project_material_measure_house.setVisibility(View.VISIBLE);
@@ -84,7 +92,7 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
         if (wk_cur_sub_node_idi == 33) {
             ll_project_material_measure_house_delivery.setVisibility(View.VISIBLE);
         }
-        if (wk_cur_sub_node_idi >= 41) {
+        if (wk_cur_sub_node_idi >= 31) {
             ll_project_material_contract.setVisibility(View.VISIBLE);
         }
         if (wk_cur_sub_node_idi >= 51) {

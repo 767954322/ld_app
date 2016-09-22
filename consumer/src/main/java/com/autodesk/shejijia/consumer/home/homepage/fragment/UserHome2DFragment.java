@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -34,6 +35,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -62,40 +64,6 @@ import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
 import cn.finalteam.loadingviewfinal.PtrClassicFrameLayout;
 import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 
-
-// getCaseLibraryData(mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, BLANK,
-// mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), BLANK, "01", 0, LIMIT, BLANK,
-// mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), 0);
-
-
-//public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
-//final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
-//final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
-//        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-//@Override
-//public void onResponse(JSONObject jsonObject) {
-//        String jsonString = GsonUtil.jsonToString(jsonObject);
-//        CaseLibraryBean mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
-//
-//        updateViewFromData(mCaseLibraryBean, state);
-//        }
-//
-//@Override
-//public void onErrorResponse(VolleyError volleyError) {
-//        MPNetworkUtils.logError(TAG, volleyError);
-//        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-//        ApiStatusUtil.getInstance().apiStatuError(volleyError,CaseLibraryActivity.this);
-////                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, mContext,
-////                        AlertView.Style.Alert, null).show();
-//        hideFooterView(mCasesEntities);
-//        }
-//        };
-//        MPServerHttpManager.getInstance().getCaseListData(custom_string_style, custom_string_type, custom_string_keywords,
-//        custom_string_area, custom_string_bedroom, taxonomy_id,
-//        custom_string_restroom, custom_string_form, offset, limit,  callback);
-//        }
-
-
 /**
  * @author DongXueQiu .
  * @version 1.0 .
@@ -104,6 +72,8 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  * @brief 首页案例fragment, 展示案例 .
  */
 public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdapter.OnItemImageHeadClickListener,/* AbsListView.OnScrollListener,*/ View.OnClickListener {
+
+    private LinearLayout mLlDefaultView;
 
     @Override
     protected int getLayoutResId() {
@@ -118,6 +88,8 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
         mListViewRootView = (RelativeLayout) rootView.findViewById(R.id.listview_content);
         mFloatingActionsMenu = (FloatingActionMenu) rootView.findViewById(R.id.add_menu_buttons);
+        mLlDefaultView = (LinearLayout) rootView.findViewById(R.id.ll_default_view);
+        ll_default_view = (LinearLayout) rootView.findViewById(R.id.ll_default_view);
         createCustomAnimation();
         initFloatingAction();
 
@@ -181,6 +153,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
+        CustomProgress.show(activity, "", false, null);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null) {
             final String designer_id = casesEntities.get(position).getDesigner_id();
@@ -193,11 +166,12 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     MPNetworkUtils.logError(TAG, volleyError);
+                    CustomProgress.cancelDialog();
                 }
 
                 @Override
                 public void onResponse(String s) {
-
+                    CustomProgress.cancelDialog();
                     MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
                     final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
@@ -216,14 +190,16 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                         getActivity().startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
+                                CustomProgress.cancelDialog();
                             }
 
                             @Override
                             public void onResponse(String s) {
+                                CustomProgress.cancelDialog();
                                 try {
                                     JSONObject jsonObject = new JSONObject(s);
                                     String thread_id = jsonObject.getString("thread_id");
@@ -240,10 +216,9 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 }
             });
         } else {
+            CustomProgress.cancelDialog();
             AdskApplication.getInstance().doLogin(getActivity());
         }
-////
-
     }
 
     ///事件监听 .
@@ -337,10 +312,12 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
 //        MPServerHttpManager.getInstance().getCaseListData("", "", "", "", "", "01", "", "", offset, limit, callback);
 //    }
 
+    private long starttime = 0;
+
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
                                    final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
-
+        starttime = System.currentTimeMillis();
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -348,6 +325,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
                 updateViewFromCaseLibraryData(offset);
+                Log.i("UserHome2D", "2d案例响应时间：" + (System.currentTimeMillis() - starttime));
             }
 
             @Override
@@ -531,8 +509,22 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     private void updateViewFromCaseLibraryData(int offset) {
         if (offset == 0) {
             casesEntities.clear();
+            if (mCaseLibraryBean.getCount() == 0) {
+                mLlDefaultView.setVisibility(View.VISIBLE);
+            } else {
+                mLlDefaultView.setVisibility(View.GONE);
+            }
         }
         mOffset = offset + 10;
+        //设置数据小于等于2的是不显示没有更多数据了
+        if (mCaseLibraryBean.getCases().size()<=2){
+            mListView.setNoLoadMoreHideView(true);
+        }
+        if (mCaseLibraryBean.getCases().size()>0){
+            ll_default_view.setVisibility(View.GONE);
+        }else {
+            ll_default_view.setVisibility(View.VISIBLE);
+        }
         casesEntities.addAll(mCaseLibraryBean.getCases());
         if (mCaseLibraryBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
@@ -542,6 +534,25 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         Message msg = Message.obtain();
         msg.obj = offset;
         handler.sendMessage(msg);
+//
+//        if (offset == 0) {
+//            casesEntities.clear();
+//        }
+//        mOffset = offset + 10;
+//        if (mCaseLibraryBean.getCases().size()>0){
+//            ll_default_view.setVisibility(View.GONE);
+//        }else {
+//            ll_default_view.setVisibility(View.VISIBLE);
+//        }
+//        casesEntities.addAll(mCaseLibraryBean.getCases());
+//        if (mCaseLibraryBean.getCases().size() < LIMIT) {
+//            mListView.setHasLoadMore(false);
+//        } else {
+//            mListView.setHasLoadMore(false);
+//        }
+//        Message msg = Message.obtain();
+//        msg.obj = offset;
+//        handler.sendMessage(msg);
     }
 
 
@@ -608,6 +619,11 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     @Override
     public void onResume() {
         super.onResume();
+//        setSwipeRefreshInfo();
+        mAdapter.notifyDataSetChanged();
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()) {
+            CustomProgress.cancelDialog();
+        }
         if (null != mFloatingActionsMenu) {
             mFloatingActionsMenu.close(true);
         }
@@ -644,7 +660,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
     private int mOffset = 0;
     private int LIMIT = 10;
     private int screenWidth, screenHeight;
-
+    private LinearLayout ll_default_view;
     private String mNickNameConsumer;
     private String hsUid, member_id;
     private Intent mIntent;

@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
+        layout="@layout/view_navigation_header"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
 
-    <include layout="@layout/activity_designer_main_content_view"></include>
+    <include layout="@layout/activity_designer_main_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/home_bottombar_radiogroup_height"
+        android:layout_below="@id/common_navbar" />
 
-    <include layout="@layout/activity_designer_main_bottom_radiobtn_view"></include>
+    <include layout="@layout/activity_designer_main_bottom_radiobtn_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_bottombar_height"
+        android:layout_alignParentBottom="true" />
 
-</LinearLayout>
+</RelativeLayout>

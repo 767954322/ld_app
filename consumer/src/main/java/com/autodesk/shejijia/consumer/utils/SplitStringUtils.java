@@ -4,8 +4,6 @@ import android.text.TextUtils;
 
 /**
  * <p>Description:截取字符串的工具类</p>
- * <p>Copyright: Copyright (c) 2016</p>
- * <p>Company: http://www.leediancn.com</p>
  *
  * @author he.liu .
  * @date 2016-07-20.

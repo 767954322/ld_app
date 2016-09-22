@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -135,10 +136,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
                 } else {
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 }
-
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, mContext,
-//                        AlertView.Style.Alert, null).show();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,MessageCenterActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MessageCenterActivity.this);
                 hideFooterView(mCasesEntities);
             }
 
@@ -194,6 +192,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
         layoutParams.height = height - 10;
         mRlEmpty.setLayoutParams(layoutParams);
         mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        mIvEmpty.setBackground(null);
     }
 
     private Context mContext;

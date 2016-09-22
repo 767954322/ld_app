@@ -13,31 +13,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
-import com.autodesk.shejijia.shared.components.im.activity.MPFileHotspotActivity;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerQrEntity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.BeiShuMealEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.socks.library.KLog;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.activity.BaseChatRoomActivity;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +95,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 }
                 /**
                  * 在我的北舒套餐中显示.提示保存成功，进入聊天页面.
+                 * fixme refactor
                  */
                 name = tv_consumer_name.getText().toString();
                 String phone = et_consumer_phone.getText().toString();
@@ -159,7 +159,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
                 intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
                 intent.putExtra(BaseChatRoomActivity.RECIEVER_USER_NAME, name);
-                intent.putExtra("project_title",community_name);
+                intent.putExtra("project_title", community_name);
                 startActivity(intent);
                 finish();
             }
@@ -179,7 +179,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                 mAlertViewExt.show();
                 jsonString = GsonUtil.jsonToString(jsonObject);
                 mBeiShuMealEntity = GsonUtil.jsonToBean(jsonString, BeiShuMealEntity.class);
-                KLog.d(TAG, jsonString);
+                LogUtils.i(TAG, jsonString);
                 isSendState = true;
             }
 
@@ -230,10 +230,14 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
                     public void onClick(String province, String proviceCode, String city, String cityCode, String area, String areaCode) {
                         mCurrentProvince = province;
                         mCurrentProvinceCode = proviceCode;
+
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
+
                         mCurrentDistrict = area;
                         mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
                         tv_consumer_address.setText(province + city + area);
                         mChangeAddressDialog.dismiss();
                     }
@@ -330,7 +334,7 @@ public class BeiShuMealActivity extends NavigationBarActivity implements View.On
     }
 
     private TextView tv_consumer_name;
-    private String  community_name;
+    private String community_name;
     private TextView tv_consumer_address;
     private EditText et_consumer_phone, et_consumer_detail_address;
     private Button btn_consumer_finish;

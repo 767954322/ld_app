@@ -1,297 +1,393 @@
 package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.activity;
 
-import android.content.Intent;
+import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.DatailCase;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.entity.MasterDetail;
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view.OrderDialogMaster;
-import com.autodesk.shejijia.consumer.codecorationBase.packages.view.MyListView;
-import com.autodesk.shejijia.consumer.codecorationBase.packages.view.VerticalViewPager;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by allengu on 16-8-23.
  */
-public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener {
+public class GrandMasterDetailActivity extends BaseActivity implements View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
 
 
-    private ImageButton bt_grand_reservation;
-    private TextView tv_detail_cn_name;
-    private TextView tv_detail_en_name;
-    private TextView tv_detail_cn_position;
-    private TextView tv_detail_en_position;
-    private TextView tv_detail_content;
-    private ImageView iv_detail_desiner;
-    private String hs_uid;
-    private MasterDetail masterDetail;
+
 
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_grandmaster_detail;
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void initView() {
 
-        vvp_viewpager = (VerticalViewPager) findViewById(R.id.vvp_viewpager);
-        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
         bt_grand_reservation = (ImageButton) findViewById(R.id.bt_grand_reservation);
         ib_grand_detail_ico = (ImageButton) findViewById(R.id.ib_grand_detail_ico);
+        rl_navr_header = (RelativeLayout) findViewById(R.id.rl_navr_header);
+        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
+        iv_detail_desiner = (ImageView) findViewById(R.id.iv_detail_desiner);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        coordinator_layout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
+        ll_scrolling_view_behavior = (LinearLayout) findViewById(R.id.ll_scrolling_view_behavior);
+        app_bar_layout = (AppBarLayout) findViewById(R.id.app_bar_layout);
+        iv_backimg_detail = (ImageView) findViewById(R.id.iv_backimg_detail);
 
     }
 
+
     @Override
     protected void initListener() {
+        super.initListener();
+
         nav_left_imageButton.setOnClickListener(this);
         bt_grand_reservation.setOnClickListener(this);
+        ib_grand_detail_ico.setOnClickListener(this);
+        app_bar_layout.addOnOffsetChangedListener(this);
+
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
 
-        initUpPageData();
-//        initPageData();
-//        initListData();
 
-    }
-
-    private void initUpPageData() {
-        Intent intent = getIntent();
-        hs_uid = intent.getStringExtra("hs_uid");
+        hs_uid = getIntent().getStringExtra("hs_uid");
+        isLoginUserJust = isLoginUser();
 
         getGrandMasterInfo();
-    }
-
-    private void getGrandMasterInfo() {
-
-        MPServerHttpManager.getInstance().getGrandMasterDetailInfo(0, 10, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-                ToastUtil.showCustomToast(GrandMasterDetailActivity.this, "获取大师详情信息失败");
-
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                String detailInfo = GsonUtil.jsonToString(jsonObject);
-
-                initDetailData(detailInfo);
-            }
-        });
-
-    }
-
-    private void initDetailData(String detailInfo) {
-
-        masterDetail = GsonUtil.jsonToBean(detailInfo, MasterDetail.class);
-
-        initPageData();
-
-        initListData();
-    }
-
-    private void initListData() {
-        nav_title_textView.setText("套餐详情");
-
-        tv_detail_cn_name = (TextView) view1.findViewById(R.id.tv_detail_cn_name);
-        tv_detail_en_name = (TextView) view1.findViewById(R.id.tv_detail_en_name);
-        tv_detail_cn_position = (TextView) view1.findViewById(R.id.tv_detail_cn_position);
-        tv_detail_en_position = (TextView) view1.findViewById(R.id.tv_detail_en_position);
-        tv_detail_content = (TextView) view1.findViewById(R.id.tv_detail_content);
-        iv_detail_desiner = (ImageView) view1.findViewById(R.id.iv_detail_desiner);
-        tv_detail_cn_name.setText(masterDetail.getNick_name());
-        tv_detail_en_name.setText(masterDetail.getEnglish_name());
-
-        if (TextUtils.isEmpty(masterDetail.getDesigner().getOccupational_cn())) {
-            tv_detail_cn_position.setText("后台数据为null");
-        } else {
-            tv_detail_cn_position.setText(masterDetail.getDesigner().getOccupational_cn());
-        }
-        if (TextUtils.isEmpty(masterDetail.getDesigner().getOccupational_en())) {
-            tv_detail_en_position.setText("后台数据为null");
-        } else {
-            tv_detail_en_position.setText(masterDetail.getDesigner().getOccupational_en());
-        }
-        if (TextUtils.isEmpty(masterDetail.getDesigner().getIntroduction())) {
-            tv_detail_content.setText("后台数据为null");
-        } else {
-            tv_detail_content.setText(masterDetail.getDesigner().getIntroduction());
-        }
-
-        if (null != masterDetail.getDesigner() && null != masterDetail.getDesigner().getDesigner_detail_cover() && null != masterDetail.getDesigner().getDesigner_detail_cover().getPublic_url()) {
-
-            String img_url = masterDetail.getDesigner().getDesigner_detail_cover().getPublic_url();
-
-            ImageUtils.displayIconImage(img_url, iv_detail_desiner);
-        }
-
-
-        ll_grand_master_detail = (MyListView) view2.findViewById(R.id.ll_grand_master_detail);
-        ll_grand_master_detail.setAdapter(new MasterAdapter());
-
-    }
-
-    private void initPageData() {
-
-        LayoutInflater lf = LayoutInflater.from(this);
-        view1 = lf.inflate(R.layout.viewpager_grandmaster_one, null);
-        view2 = lf.inflate(R.layout.viewpager_grandmaster_two, null);
-        viewList = new ArrayList<View>();
-        viewList.add(view1);
-        viewList.add(view2);
-
-        vvp_viewpager.setAdapter(pagerAdapter);
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.nav_left_imageButton:
-                finish();
-                break;
-            case R.id.bt_grand_reservation:
-                OrderDialogMaster orderDialog = new OrderDialogMaster(GrandMasterDetailActivity.this, R.style.add_dialog, R.drawable.tital_yuyue);
-                orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
-                    @Override
-                    public void commitListener(String name, String phoneNumber) {
+            case R.id.nav_left_imageButton://返回键
 
+                finish();
+
+                break;
+            case R.id.bt_grand_reservation://提交大师预约
+
+                onClickFromReservation();
+
+                break;
+            case R.id.ib_grand_detail_ico:
+                WindowManager wm = this.getWindowManager();
+                final int height = wm.getDefaultDisplay().getHeight();
+
+                final CoordinatorLayout.Behavior behavior = ((CoordinatorLayout.LayoutParams)app_bar_layout.getLayoutParams()).getBehavior();
+                behavior.onNestedPreScroll(coordinator_layout,app_bar_layout,ll_scrolling_view_behavior,0,height/27,new int[]{0,0});
+                ValueAnimator animator = ValueAnimator.ofInt(0,-height);
+                animator.setTarget(coordinator_layout);
+                animator.setDuration(400);
+                animator.start();
+                animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+                {
+                    @Override
+                    public void onAnimationUpdate(ValueAnimator animation)
+                    {
+//                        coordinator_layout.setTranslationY((Integer) animation.getAnimatedValue());
+                        behavior.onNestedPreScroll(coordinator_layout,app_bar_layout,ll_scrolling_view_behavior,0,height/27,new int[]{0,0});
                     }
                 });
-                orderDialog.show();
+                break;
+            default:
                 break;
         }
     }
 
-    protected PagerAdapter pagerAdapter = new PagerAdapter() {
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-
-            return arg0 == arg1;
+        if (verticalOffset >= 0) {
+            rl_navr_header.setVisibility(View.VISIBLE);
+        } else {
+            rl_navr_header.setVisibility(View.GONE);
         }
 
-        @Override
-        public int getCount() {
+    }
 
-            return viewList.size();
-        }
+    //获取大师详情信息
+    private void getGrandMasterInfo() {
 
-        @Override
-        public void destroyItem(ViewGroup container, int position,
-                                Object object) {
-            container.removeView(viewList.get(position));
+        MPServerHttpManager.getInstance().getGrandMasterDetailInfo(0, 10, hs_uid, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, GrandMasterDetailActivity.this);
 
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-
-            return super.getItemPosition(object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            ViewGroup view_parent = (ViewGroup) viewList.get(position).getParent();
-            if (view_parent != null) {
-                view_parent.removeView(viewList.get(position));
-            }
-            container.addView(viewList.get(position));
-
-            if (position == 0) {
-                nav_title_textView.setText("套餐详情");
-                vvp_viewpager.setBackground(null);
-            } else if (position == 1) {
-                nav_title_textView.setText("大师详情页");
-                vvp_viewpager.setBackgroundResource(R.drawable.master_bgone);
-                vvp_viewpager.setBackground(null);
-            }
-            return viewList.get(position);
-        }
-
-    };
-
-
-    class MasterAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return list_Detail.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return list_Detail[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            MyHolder mhHolder;
-            if (convertView == null) {
-                mhHolder = new MyHolder();
-                convertView = LayoutInflater.from(GrandMasterDetailActivity.this).inflate(R.layout.item_listview_grandmaster_detail, null);
-                mhHolder.iv_detail = (ImageView) convertView.findViewById(R.id.iv_item_listview_pic);
-                mhHolder.tv_cn_name = (TextView) convertView.findViewById(R.id.tv_item_listview_cn_tital);
-                mhHolder.tv_en_name = (TextView) convertView.findViewById(R.id.tv_item_listview_en_tital);
-
-                convertView.setTag(mhHolder);
             }
 
-            mhHolder = (MyHolder) convertView.getTag();
+            @Override
+            public void onResponse(JSONObject jsonObject) {
 
-            mhHolder.iv_detail.setImageResource(list_Detail[position]);
-            mhHolder.tv_cn_name.setText("小明" + position);
-            mhHolder.tv_en_name.setText("xiaoming" + position);
+                masterDetail = GsonUtil.jsonToBean(GsonUtil.jsonToString(jsonObject), MasterDetail.class);
 
-            return convertView;
+                cases_list = masterDetail.getCases_list();
+
+                initDetailData();
+
+            }
+        });
+
+    }
+
+    //初始化详情信息
+    private void initDetailData() {
+
+        //初始化大师详情
+        initPageTopInfo();
+
+        //初始化大师案例展示
+        initPageBottomInfo();
+
+        //添加图标动画
+        initAnimation();
+
+    }
+
+    //初始化第一页内容
+    private void initPageTopInfo() {
+
+        if (null != masterDetail.getDesigner() && null != masterDetail.getDesigner().getDesigner_detail_cover_app() && null != masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url()) {
+            String img_url = masterDetail.getDesigner().getDesigner_detail_cover_app().getPublic_url();
+            ImageUtils.loadFileImageListenr(img_url, iv_detail_desiner, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    Bitmap bitmap = loadedImage;
+                    Log.d("willson", bitmap + "");
+
+                    int color = bitmap.getPixel(2, 8);
+                    // 如果你想做的更细致的话 可以把颜色值的R G B 拿到做响应的处理 笔者在这里就不做更多解释
+                    int r = Color.red(color);
+                    int g = Color.green(color);
+                    int b = Color.blue(color);
+                    int a = Color.alpha(color);
+                    Log.d("willson", "    " + r + "  " + "  " + g + "  " + b);
+                    iv_backimg_detail.setVisibility(View.GONE);
+                    if (r > 156) {//白色设置灰色
+                        nav_left_imageButton.setImageResource(R.drawable.arrow_g);
+                        nav_title_textView.setTextColor(Color.GRAY);
+                    } else {// 灰色 设置白色
+                        nav_left_imageButton.setImageResource(R.drawable.arrow);
+                        nav_title_textView.setTextColor(Color.WHITE);
+                    }
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            }, new ImageLoadingProgressListener() {
+                @Override
+                public void onProgressUpdate(String imageUri, View view, int current, int total) {
+
+                }
+            });
         }
 
-        class MyHolder {
 
-            TextView tv_cn_name;
-            TextView tv_en_name;
-            ImageView iv_detail;
+    }
 
+    //初始化大师案例展示
+    private void initPageBottomInfo() {
+
+        BaseCommonRvAdapter<DatailCase> adapter1 = new BaseCommonRvAdapter<DatailCase>(this, R.layout.item_listview_grandmaster_detail, cases_list) {
+            @Override
+            public void convert(ViewHolder holder, DatailCase item, int position) {
+                ImageView imageView = holder.getView(R.id.iv_item_listview_pic);
+                TextView textView = holder.getView(R.id.tv_item_listview_cn_tital);
+                DatailCase datailCase = cases_list.get(position);
+
+                if (null!= datailCase&&null!=datailCase.getImages()){
+                    if(datailCase.getImages().size()>0){
+                        ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
+                    }
+//                    ImageUtils.displaySixImage(cases_list.get(position).getImages().get(0).getFile_url() + "HD.png", imageView);
+                    textView.setText(cases_list.get(position).getTitle());
+                }
+            }
+        };
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(adapter1);
+
+
+    }
+
+    //添加图标动画
+    private void initAnimation() {
+        animationVoice = AnimationUtils.loadAnimation(this, R.anim.voice_button_anim);
+        animationIn = AnimationUtils.loadAnimation(this, R.anim.voice_button_in_anim);
+        //设置动画执行的回调函数
+        animationIn.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                //开始呼吸动画
+                ib_grand_detail_ico.startAnimation(animationVoice);
+                ib_grand_detail_ico.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ib_grand_detail_ico.startAnimation(animationIn);
+    }
+
+
+    //判断该用户是否登陆了
+    public boolean isLoginUser() {
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
+        if (memberEntity == null) {
+
+            return false;//未登录
+        } else {
+
+            return true;//已登录
         }
     }
 
-    Integer[] list_Detail = {R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon,
-            R.drawable.common_case_icon, R.drawable.common_case_icon, R.drawable.common_case_icon};
-    private VerticalViewPager vvp_viewpager;
-    private ArrayList<View> viewList;
-    private View view1;
-    private View view2;
-    private MyListView ll_grand_master_detail;
-    private ImageButton ib_grand_detail_ico;
-    private TextView nav_title_textView;
+
+    //上传立即预约信息
+    private void onClickFromReservation() {
+
+        OrderDialogMaster orderDialog = new OrderDialogMaster(GrandMasterDetailActivity.this, R.style.add_dialog, R.drawable.tital_yuyue);
+        orderDialog.setListenser(new OrderDialogMaster.CommitListenser() {
+            @Override
+            public void commitListener(String name, String phoneNumber) {
+
+                JSONObject jsonObject = new JSONObject();
+                String nicke_name = masterDetail.getNick_name();
+                String member_id = masterDetail.getDesigner().getAcs_member_id();
+                String hs_uid = masterDetail.getHs_uid();
+                String login_member_id = "", login_hs_uid = "";
+
+                if (isLoginUserJust) {
+                    login_member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
+                    login_hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
+                } else {
+                    login_member_id = "";
+                    login_hs_uid = "";
+                }
+                try {
+                    jsonObject.put(JsonConstants.JSON_MASTER_CONSUMER_NAME, name);//姓名
+                    jsonObject.put(JsonConstants.JSON_MASTER_CONSUMER_MOBILE, phoneNumber);//电话
+                    jsonObject.put(JsonConstants.JSON_MASTER_TYPE, 1);//大师类型
+                    jsonObject.put(JsonConstants.JSON_MASTER_CUSTOMER_ID, login_member_id);//消费者ID
+                    jsonObject.put(JsonConstants.JSON_MASTER_CONSUMER_UID, login_hs_uid);
+                    jsonObject.put(JsonConstants.JSON_MASTER_NAME, nicke_name);
+                    jsonObject.put(JsonConstants.JSON_MASTER_MEMBER_ID, member_id);
+                    jsonObject.put(JsonConstants.JSON_MASTER_HS_UID, hs_uid);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                CustomProgress.show(GrandMasterDetailActivity.this, "提交中...", false, null);
+                upOrderDataForService(jsonObject);
+            }
+        });
+        orderDialog.show();
+
+    }
+
+    public void upOrderDataForService(JSONObject jsonObject) {
+
+        MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, GrandMasterDetailActivity.this);
+                CustomProgress.cancelDialog();
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+
+                CustomProgress.cancelDialog();
+                ToastUtil.showCustomToast(GrandMasterDetailActivity.this, UIUtils.getString(R.string.work_room_commit_successful));
+            }
+        });
+
+    }
+
     private ImageButton nav_left_imageButton;
+    private ImageButton bt_grand_reservation;
+    private ImageButton ib_grand_detail_ico;
+    private ImageView iv_detail_desiner;
+    private ImageView iv_backimg_detail;
+    private AppBarLayout app_bar_layout;
+    private RelativeLayout rl_navr_header;
+    private LinearLayout ll_scrolling_view_behavior;
+    private TextView nav_title_textView;
+    private String hs_uid;
+    private boolean isLoginUserJust = false;
+    private List<DatailCase> cases_list;
+    private MasterDetail masterDetail;
+    private RecyclerView mRecyclerView;
+    private CoordinatorLayout coordinator_layout;
+    private Animation animationIn, animationVoice;
+
+
 }

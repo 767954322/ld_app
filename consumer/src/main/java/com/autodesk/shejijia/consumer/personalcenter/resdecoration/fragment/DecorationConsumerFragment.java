@@ -12,16 +12,22 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.DecorationConsumerAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.WkFlowStateInfoBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -79,7 +85,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
 
         mPlvConsumerDecoration.setAdapter(mDecorationConsumerAdapter);
         mTvEmptyShow.setText(UIUtils.getString(R.string.empty_order_fitment));
-        mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_order_empty));
+        mIvEmptyShow.setImageDrawable(UIUtils.getDrawable(R.drawable.bg_shejijia_emty));
     }
 
     @Override
@@ -116,7 +122,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                     }
                 }
 
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
             }
 
             @Override
@@ -163,14 +169,35 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     @Override
     public void onResume() {
         super.onResume();
-//        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (null !=memberEntity&& !Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
-        getMyDecorationData(OFFSET, LIMIT, 1);
-//        }
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+            getMyDecorationData(OFFSET, LIMIT, 1);
+            getWkFlowStatePointInformation();
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 获取全流程节点提示信息
+     */
+    public void getWkFlowStatePointInformation() {
+        MPServerHttpManager.getInstance().getAll_WkFlowStatePointInformation(new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
+            }
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonString = GsonUtil.jsonToString(jsonObject);
+                WkFlowStateInfoBean WkFlowStateInfoBean = GsonUtil.jsonToBean(jsonString, WkFlowStateInfoBean.class);
+                List<TipWorkFlowTemplateBean> tip_work_flow_template = WkFlowStateInfoBean.getTip_work_flow_template();
+                WkFlowStateMap.sWkFlowBeans = tip_work_flow_template;
+            }
+        });
     }
 }

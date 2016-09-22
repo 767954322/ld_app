@@ -24,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.HomeTypeDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -34,7 +35,6 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,6 +54,7 @@ import de.greenrobot.event.EventBus;
 public class AmendDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
 
     private static final String IS_PUBLIC = "is_public";
+    private HomeTypeDialog mHomeTypeDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -155,21 +156,17 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                     amendJson.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, district_name);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_HOUSE_AREA, area);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_HOUSE_TYPE, house_type);
-                    amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, living_room);
+                    amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, mLivingRoom);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE, province);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE_NAME, province_name);
-                    amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, room);
-                    amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_TOILET, toilet);
+                    amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, mRoom);
+                    amendJson.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_TOILET, mToilet);
 
-
-                    /// TODO 九月份迭代 .
                     mDecorationDetailBean = GsonUtil.jsonToBean(amendJson.toString(), DecorationDetailBean.class);
-
                     amendDemandBean = GsonUtil.jsonToBean(amendJson.toString(), AmendDemandBean.class);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                KLog.e("AmendDemandActivity", "amendJson:" + amendJson);
                 sendAmendDemand(needs_id, amendJson);
                 break;
 
@@ -179,7 +176,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 break;
 
             case R.id.tv_amend_room_type: /// 修改户型.
-                pvRoomTypeOptions.show();
+                mHomeTypeDialog.show(getFragmentManager(), null);
                 break;
 
             case R.id.tv_amend_style: /// 修改风格 .
@@ -216,11 +213,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             if (!TextUtils.isEmpty(is_public_amend)) {
 
                 Intent intent = new Intent();
-                intent.putExtra("is_public_amend",is_public_amend);
-                intent.putExtra("custom_string_status",custom_string_status_amend);
-                intent.putExtra("wk_template_id",wk_template_id_amend);
+                intent.putExtra("is_public_amend", is_public_amend);
+                intent.putExtra("custom_string_status", custom_string_status_amend);
+                intent.putExtra("wk_template_id", wk_template_id_amend);
                 intent.putExtra(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, needs_id);
-                setResult(AmendDemandActivity.REFUSEResultCode,intent);
+                setResult(AmendDemandActivity.REFUSEResultCode, intent);
 
             }
             finish();
@@ -242,7 +239,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 bundle.putSerializable(JsonConstants.AMENDEMANDBEAN, amendDemandBean);
 
                 intent.putExtras(bundle);
-                setResult(ResultCode,intent);
+                setResult(ResultCode, intent);
             }
 
             if (null != mDecorationDetailBean) {
@@ -277,7 +274,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, AmendDemandActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getAmendDemand(need_id, okResponseCallback);
@@ -306,7 +303,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.dialog.cancel();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, AmendDemandActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getStopDesignerRequirement(needs_id,
@@ -333,13 +330,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
                 if (!CustomProgress.dialog.isShowing()) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{"确定"}, null, AmendDemandActivity.this,
-//                            AlertView.Style.Alert, null).show();
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,AmendDemandActivity.this);
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, AmendDemandActivity.this);
                 }
             }
         };
-        MPServerHttpManager.getInstance().getModifyDesignerRequirement(needs_id,wk_template_id, amendJson, okResponseCallback);
+        MPServerHttpManager.getInstance().getModifyDesignerRequirement(needs_id, wk_template_id, amendJson, okResponseCallback);
     }
 
     /**
@@ -347,9 +342,9 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
      */
     private void updateViewFromData(DemandDetailBean demandDetailBean) {
         house_type = demandDetailBean.getHouse_type();
-        room = demandDetailBean.getRoom();
-        toilet = demandDetailBean.getToilet();
-        living_room = demandDetailBean.getLiving_room();
+        mRoom = demandDetailBean.getRoom();
+        mToilet = demandDetailBean.getToilet();
+        mLivingRoom = demandDetailBean.getLiving_room();
         house_area = demandDetailBean.getHouse_area();
         click_number = demandDetailBean.getClick_number();
         consumer_mobile = demandDetailBean.getConsumer_mobile();
@@ -375,7 +370,8 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             btnFitmentAmendDemand.setBackgroundColor(UIUtils.getColor(R.color.font_gray));
         }
 
-        district_name = TextUtils.isEmpty(district) || "none".equals(district) || TextUtils.isEmpty(district_name) || district_name.equals("none") ? "" : district_name;
+        district_name = UIUtils.getNoStringIfEmpty(district_name);
+
         String address = province_name + city_name + district_name;
 
         convertEn2Cn();
@@ -425,17 +421,15 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
 
                                             province_name = province_name_1;
                                             city_name = city_name_1;
-                                            if (!TextUtils.isEmpty(district_name) || !TextUtils.isEmpty(district)) {
-                                                district_name = "";
-                                                district = "";
-                                            }
                                             district_name = district_name_1;
-                                            district_name = TextUtils.isEmpty(district_name) || "none".equals(district_name) ? "" : district_name;
 
                                             province = province_1;
                                             city = city_1;
-                                            district = TextUtils.isEmpty(district_name) || "none".equals(district_name) || TextUtils.isEmpty(district_1) ? "none" : district_1;
-                                            String address = province_name + city_name + district_name;
+                                            district = district_1;
+
+                                            district_name_1 = UIUtils.getNoStringIfEmpty(district_name);
+
+                                            String address = province_name + city_name + district_name_1;
                                             tvIssueAddress.setText(address);
                                             mChangeAddressDialog.dismiss();
                                         }
@@ -447,62 +441,24 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
      * 选择 :室 厅 卫
      */
     private void setRoomType() {
-        final ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
-        final ArrayList<ArrayList<String>> hallsList = new ArrayList<>();
-        final ArrayList<String> roomsList = new ArrayList<>();
-        String[] rooms = UIUtils.getResources().getStringArray(R.array.mlivingroom);
-        String[] halls = UIUtils.getResources().getStringArray(R.array.hall);
-        String[] toilets = UIUtils.getResources().getStringArray(R.array.toilet);
-        pvRoomTypeOptions = new OptionsPickerView(this);
-        //room
-        for (String op : rooms) {
-            roomsList.add(op);
-        }
-        //hall
-        ArrayList<String> options2Items_01 = new ArrayList<>();
-        for (String op2 : halls) {
-            options2Items_01.add(op2);
-        }
-        int length = rooms.length;
-        for (int i = 0; i < length; i++) {
-            hallsList.add(options2Items_01);
-        }
-        //toilet
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
-        ArrayList<String> options3Items_01_01 = new ArrayList<>();
-        for (String op3 : toilets) {
-            options3Items_01_01.add(op3);
-        }
-        int length1 = halls.length;
-        for (int i = 0; i < length1; i++) {
-            options3Items_01.add(options3Items_01_01);
-        }
-        int length2 = rooms.length;
-        for (int i = 0; i < length2; i++) {
-            toiletsList.add(options3Items_01);
-        }
-        pvRoomTypeOptions.setPicker(roomsList, hallsList, toiletsList, true);
-        pvRoomTypeOptions.setCyclic(false, false, false);
-        pvRoomTypeOptions.setSelectOptions(0, 0, 0);
-        pvRoomTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
+        mHomeTypeDialog = HomeTypeDialog.getInstance(this);
+        mHomeTypeDialog.setOnAddressCListener(new HomeTypeDialog.OnAddressCListener() {
             @Override
-            public void onOptionsSelect(int op_room, int op_living_room, int op_toilet) {
-
-                room_convert = roomsList.get(op_room);
-                living_room_convert = hallsList.get(op_room).get(op_living_room);
-                toilet_convert = toiletsList.get(op_room).get(op_living_room).get(op_toilet);
-                String roomType = room_convert + living_room_convert + toilet_convert;
-
+            public void onClick(String roomName, String livingRoom, String toilet) {
+                String roomType = roomName + livingRoom + toilet;
                 tvAmendRoomType.setText(roomType);
+
+                /// convet .
                 Map<String, String> roomHall = AppJsonFileReader.getRoomHall(AmendDemandActivity.this);
-                Map<String, String> livingRoom = AppJsonFileReader.getLivingRoom(AmendDemandActivity.this);
+                Map<String, String> livingRoomMap = AppJsonFileReader.getLivingRoom(AmendDemandActivity.this);
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(AmendDemandActivity.this);
 
                 /// convet .
-                living_room = ConvertUtils.getKeyByValue(livingRoom, living_room_convert);
-                room = ConvertUtils.getKeyByValue(roomHall, room_convert);
-                toilet = ConvertUtils.getKeyByValue(toiletMap, toilet_convert);
+                mRoom = ConvertUtils.getKeyByValue(roomHall, roomName);
+                mLivingRoom = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                mToilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
+
+                mHomeTypeDialog.dismiss();
             }
         });
     }
@@ -617,9 +573,9 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     private void convertEn2Cn() {
         decoration_style_convert = ConvertUtils.getConvert2CN(styleJson, demandDetailBean.getDecoration_style());
         house_type_convert = ConvertUtils.getConvert2CN(spaceJson, house_type);
-        living_room_convert = ConvertUtils.getConvert2CN(livingRoomJson, living_room);
-        room_convert = ConvertUtils.getConvert2CN(roomJson, room);
-        toilet_convert = ConvertUtils.getConvert2CN(toiletJson, toilet);
+        living_room_convert = ConvertUtils.getConvert2CN(livingRoomJson, mLivingRoom);
+        room_convert = ConvertUtils.getConvert2CN(roomJson, mRoom);
+        toilet_convert = ConvertUtils.getConvert2CN(toiletJson, mToilet);
     }
 
     /**
@@ -692,7 +648,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     private OptionsPickerView pvDesignBudgetOptions;
     private OptionsPickerView pvDecorationBudgetOptions;
     private OptionsPickerView pvStyleOptions;
-    private OptionsPickerView pvRoomTypeOptions; /// 选择器 .
     private OptionsPickerView pvHouseTypeOptions;
     private AlertView mStopDemandAlertView;
     private AlertView mStopDemandSuccessAlertView;
@@ -704,8 +659,8 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
     private String detail_address;
     private String province, city, district;
     private String province_name, city_name, district_name;
-    private String living_room, room, toilet;
-    private String house_type, house_area, needs_id,wk_template_id;
+    private String mLivingRoom, mRoom, mToilet;
+    private String house_type, house_area, needs_id, wk_template_id;
     private int click_number;
     private String consumer_mobile, consumer_name, contacts_mobile, contacts_name;
     private String detail_desc, decoration_budget, design_budget, custom_string_status;

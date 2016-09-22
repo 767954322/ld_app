@@ -126,6 +126,7 @@ public class Constant {
      */
     public static class ConsumerPersonCenterFragmentKey {
         public static final String NICK_NAME = "NICK_NAME";
+        public static final String PHONE_NUMBER = "PHONE_NUMBER";
         public static final String CONSUMER_PERSON = "CONSUMER_PERSON";
 
 
@@ -148,6 +149,7 @@ public class Constant {
         public static final String DESIGNER_ID = "DESIGNER_ID";
         public static final String HS_UID = "HS_UID";
         public static final String MEASURE = "MEASURE";
+        public static final String THREAD_ID = "thread_id";
     }
 
     /**
@@ -169,11 +171,15 @@ public class Constant {
         public static String MEASURE_FREE = "MEASURE_FREE";
         public static String DESIGNER_ID = "DESIGNER_ID";
         public static String NEEDS_ID = "NEEDS_ID";
+        public static String CONTRACT_NO = "CONTRACT_NO";
         public static String SEEK_TYPE = "TYPE";
         public static String SEEK_DESIGNER_DETAIL = "SEEK_DESIGNER_DETAIL";
         public static String HS_UID = "HS_UID";
         public static String FLOW_STATE = "FLOW_STATE";
         public static String DESIGNER_STYLE_ALL = "DESIGNERSTYLEALL";
+
+        public static String ORDER_ID = "order_id";
+        public static String ORDER_LINE_ID = "order_line_id";
     }
 
     /**

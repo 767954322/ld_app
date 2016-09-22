@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
 
     <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/view_refresh_head"/>
+        <include layout="@layout/view_refresh_head" />
 
         <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
             android:id="@+id/xlv_seek_designer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"/>
+            android:scrollbars="none" />
 
-        <include layout="@layout/view_load_more"/>
+        <include layout="@layout/view_load_more" />
     </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
 
-    <include layout="@layout/view_empty_layout"></include>
+    <RelativeLayout
+        android:id="@+id/rl_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_default_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tv_empty_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_default_empty"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/size_10"
+            android:textColor="@color/gray" />
+    </RelativeLayout>
+
+</RelativeLayout>

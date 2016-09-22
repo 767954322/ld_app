@@ -42,22 +42,13 @@ import java.util.List;
 
 /**
  * Numeric wheel view.
- *
- * @author he.liu
  */
 public class WheelView extends View {
 
     /**
      * Top and bottom shadows colors
      */
-    /*
-    private int[] SHADOWS_COLORS = new int[] { 0xFF111111,
-			0x00AAAAAA, 0x00AAAAAA };
-*/
     private int[] SHADOWS_COLORS = new int[]{0xeeffffff, 0xeaffffff, 0x33ffffff};
-
-//    private int[] SHADOWS_COLORS = new int[]{0xefE9E9E9,
-//            0xcfE9E9E9, 0x3fE9E9E9};
 
     /**
      * Top and bottom items offset (to hide that)
@@ -374,8 +365,11 @@ public class WheelView extends View {
      * @param animated the animation flag
      */
     public void setCurrentItem(int index, boolean animated) {
-        if (viewAdapter == null || viewAdapter.getItemsCount() == 0) {
+        if (viewAdapter == null) {
             return; // throw?
+        }
+        if (viewAdapter.getItemsCount() == 0) {
+            return;
         }
 
         int itemCount = viewAdapter.getItemsCount();

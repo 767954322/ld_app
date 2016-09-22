@@ -178,10 +178,8 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         String province_name = mConsumerEssentialInfoEntity.getProvince_name();
         String city_name = mConsumerEssentialInfoEntity.getCity_name();
         String district_name = mConsumerEssentialInfoEntity.getDistrict_name();
-        if (TextUtils.isEmpty(province_name)
-                || TextUtils.isEmpty(city_name)
-                ) {
-            tvLocation.setText(getResources().getString(R.string.has_yet_to_fill_out));
+        if (TextUtils.isEmpty(province_name) || TextUtils.isEmpty(city_name) || "<null>".equals(province_name)) {
+            tvLocation.setText(getResources().getString(R.string.temporarily_no_data));
         } else {
             if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
                 district_name = "";
@@ -527,7 +525,12 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
      * 获取省市区地址
      */
     private void getPCDAddress() {
-        mChangeAddressDialog = new AddressDialog();
+        if (!TextUtils.isEmpty(strCurrentProvince)
+                || !TextUtils.isEmpty(mCurrentCity)) {
+            mChangeAddressDialog = AddressDialog.getInstance(strCurrentProvince + " " + mCurrentCity + " " + mCurrentDistrict);
+        } else {
+            mChangeAddressDialog = AddressDialog.getInstance("尚未填写");
+        }
         mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
         mChangeAddressDialog
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
@@ -537,8 +540,10 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                         strCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
                         mCurrentDistrict = area;
                         mCurrentDistrictCode = areaCode;
+
                         JSONObject jsonObject = new JSONObject();
                         int intSex;
                         try {
@@ -566,17 +571,10 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
                         }
                         CustomProgress.show(DesignerEssentialInfoActivity.this, UIUtils.getString(R.string.area_changes), false, null);
 
-                        String xToken = null;
-                        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-
-                        if (memberEntity != null)
-                            xToken = memberEntity.getHs_accesstoken();
-
                         putAmendDesignerInfoData(strDesignerId, jsonObject);
-                        String address = strCurrentProvince + " " + mCurrentCity + " " + mCurrentDistrict;
-                        if (TextUtils.isEmpty(mCurrentCity)) {
-                            address = UIUtils.getString(R.string.no_data);
-                        }
+
+                        area = UIUtils.getNoStringIfEmpty(area);
+                        address = strCurrentProvince + " " + mCurrentCity + " " + area;
                         tvLocation.setText(address);
                         mChangeAddressDialog.dismiss();
                     }
@@ -590,8 +588,9 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     private void systemPhoto() {
         uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         Intent intent = new Intent();
-        intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.putExtra("return-data", true);
         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, SYS_INTENT_REQUEST);
     }
@@ -905,7 +904,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
 
     //获取量房费用设计区间，
-    public void getDesignerDesignCostRange(){
+    public void getDesignerDesignCostRange() {
 
         MPServerHttpManager.getInstance().getDesignerDesignCost(new OkJsonRequest.OKResponseCallback() {
             @Override
@@ -917,11 +916,11 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             public void onResponse(JSONObject jsonObject) {
 
                 String designerDesignCostData = GsonUtil.jsonToString(jsonObject);
-                DesignerDesignCostBean mDecorationListBean =GsonUtil.jsonToBean(designerDesignCostData, DesignerDesignCostBean.class);
+                DesignerDesignCostBean mDecorationListBean = GsonUtil.jsonToBean(designerDesignCostData, DesignerDesignCostBean.class);
                 relate_information_list = mDecorationListBean.getRelate_information_list();
                 //projectCosts
                 projectCosts = new String[relate_information_list.size()];
-                for (int i = 0; i <relate_information_list.size(); i++){
+                for (int i = 0; i < relate_information_list.size(); i++) {
                     String costStringName = relate_information_list.get(i).getName();
 //                    String costStringUnit = relate_information_list.get(i).getDescription();
 //                    String costString = costStringName + costStringUnit;
@@ -1037,6 +1036,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
     private List<DesignerDesignCostBean.RelateInformationListBean> relate_information_list;
 
+    private String address;
     private PictureProcessingUtil mPictureProcessingUtil;
     private ImageProcessingUtil mImageProcessingUtil;
 }

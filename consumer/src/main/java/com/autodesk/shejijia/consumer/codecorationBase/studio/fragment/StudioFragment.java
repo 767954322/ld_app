@@ -1,11 +1,18 @@
 package com.autodesk.shejijia.consumer.codecorationBase.studio.fragment;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,11 +23,14 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.dialog.OrderDialog
 import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomListBeen;
 import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.AnimationUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -29,10 +39,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * 工作室
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file StudioFragment.java  .
+ * @brief 六大产品-工作室 .
  */
+
 public class StudioFragment extends BaseFragment implements View.OnClickListener, PullToRefreshLayout.OnRefreshListener {
 
 
@@ -47,13 +64,10 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         work_room_refresh_view = (PullToRefreshLayout) rootView.findViewById(R.id.work_room_refresh_view);
         work_room_listView = (ListView) rootView.findViewById(R.id.work_room_listView);
         now_order = (TextView) rootView.findViewById(R.id.now_order);
-        viewHead = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_work_room, null);
+        viewHead = LayoutInflater.from(activity).inflate(R.layout.fragment_work_room, null);
         img_header = (ImageView) viewHead.findViewById(R.id.img_header);
 
-
         work_room_listView.addHeaderView(viewHead);
-
-
     }
 
     @Override
@@ -66,11 +80,34 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initData() {
-
-
         isLoginUserJust = isLoginUser();
-        getWorkRoomData("91", 0, 10);
 
+//        handler = new Handler(){
+//
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                switch (msg.what){
+//
+//                    case 0:
+//                        if (now_order != null){
+//
+//                            AnimationUtils.getInstance().clearAnimationControl(now_order);
+//                            AnimationUtils.getInstance().setAnimationShow(now_order);
+//                        }
+//                        break;
+//                }
+//            }
+//        };
+
+
+//        AnimationUtils.getInstance().setHandler(handler);
+        getWorkRoomData("91", 0, 10);
+        if (WkFlowStateMap.sixProductsPicturesBean !=null){
+
+            String pictrueName = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getStudio().get(0).getBanner();
+            ImageUtils.loadImageIcon(img_header,pictrueName);
+        }
     }
 
     @Override
@@ -80,7 +117,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
             case R.id.now_order:
                 //工作室用户信息弹框
-                OrderDialog orderDialog = new OrderDialog(getActivity(), R.style.add_dialog);
+                OrderDialog orderDialog = new OrderDialog(activity, R.style.add_dialog);
                 orderDialog.setListenser(new OrderDialog.CommitListenser() {
                     @Override
                     public void commitListener(String name, String phoneNumber) {
@@ -126,8 +163,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         MPServerHttpManager.getInstance().getWorkRoomList(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-//                        AlertView.Style.Alert, null).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
                 work_room_refresh_view.loadmoreFinish(PullToRefreshLayout.FAIL);
             }
 
@@ -156,7 +192,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                             designerRetrieveRspAll.add(designerListBeen.get(i));
 
                         }
-                        upDataForView(designerListBeen);
+                        upDataForView(designerRetrieveRspAll);
 
                     }
                 }
@@ -168,23 +204,86 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     //给控件赋值
     public void upDataForView(final List<WorkRoomListBeen.DesignerListBean> designerListBeenList) {
 
-        workRoomAdapter = new WorkRoomAdapter(getActivity(), designerListBeenList);
+        workRoomAdapter = new WorkRoomAdapter(activity, designerListBeenList);
         work_room_listView.setAdapter(workRoomAdapter);
         work_room_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position >0){
+                if (position > 0) {
 
-                    Intent intent = new Intent(getActivity(), WorkRoomDetailActivity.class);
+                    Intent intent = new Intent(activity, WorkRoomDetailActivity.class);
 
-                    intent.putExtra("hs_uid", designerListBeenList.get(position - 1).getHs_uid());
-                    getActivity().startActivity(intent);
+                    intent.putExtra("hs_uid", designerRetrieveRspAll.get(position - 1).getHs_uid());
+                    activity.startActivity(intent);
 
                 }
             }
         });
 
+//        work_room_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//
+//                switch(scrollState){
+//
+//
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE://当屏幕停止滚动时
+//
+//
+////                        AnimationUtils.getInstance().controlAnimation(now_order);
+//
+//                        controlAnimation();
+//
+//
+//                        break;
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING://惯性滑动时
+//
+//
+//                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+//
+//                        break;
+//                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://手指触摸滑动时
+//
+//                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+//
+//                        break;
+//
+//                }
+//
+//                }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//
+////                //滑动到底部的时候
+////                if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1 ){
+////
+////
+////                    AnimationUtils.getInstance().controlAnimation(now_order);
+////                    AnimationUtils.getInstance().setAnimationShow(now_order);
+////                }
+////                //滑动到顶部了
+////                if (work_room_listView.getFirstVisiblePosition() == 0){
+////
+////
+////                    AnimationUtils.getInstance().controlAnimation(now_order);
+////                    AnimationUtils.getInstance().setAnimationShow(now_order);
+////
+////                }
+//
+//            }
+//
+//        }
+
+//        );
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     private int LIMIT = 10;
@@ -199,7 +298,8 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
         isLoadMore = true;
         OFFSET = OFFSET + 10;
-        getWorkRoomData(str, OFFSET, LIMIT);
+        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+        getWorkRoomData("91", OFFSET, LIMIT);
 
     }
 
@@ -209,17 +309,19 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
      */
     public void upOrderDataForService(JSONObject jsonObject) {
 
+
         MPServerHttpManager.getInstance().upWorkRoomOrderData(jsonObject, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-                Toast.makeText(getActivity(), R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
+                Toast.makeText(activity, R.string.work_room_commit_fail, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                Toast.makeText(getActivity(), R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.work_room_commit_successful, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -241,11 +343,62 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
     }
 
+    //判断页面滚动监听，
+
+//    /**
+//     * 背景动画效果
+//     * */
+//    public void setAnimationDismiss(View view){
+//
+//        AnimationSet animationSet = new AnimationSet(true);
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
+//        alphaAnimation.setDuration(2000);
+//        alphaAnimation.setFillAfter(true);
+//        animationSet.addAnimation(alphaAnimation);
+//        view.startAnimation(animationSet);
+//    }
+//
+//    public void setAnimationShow(View view){
+//
+//        AnimationSet animationSet = new AnimationSet(true);
+//        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
+//        alphaAnimation.setDuration(2000);
+//        alphaAnimation.setFillAfter(true);
+//        animationSet.addAnimation(alphaAnimation);
+//        view.startAnimation(animationSet);
+//    }
+
+    public void controlAnimation(){
+
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                Message message = handler.obtainMessage();
+                message.what = 0;
+                handler.sendMessage(message);
+                if (timer != null){
+
+                    timer.cancel();
+                    timer = null;
+                }
+            }
+        };
+        if (timer == null){
+
+            timer = new Timer();
+            timer.schedule(timerTask,1500,5000);
+        }
+
+    }
+
 
     private ListView work_room_listView;
     private View viewHead;
     private TextView now_order;
     private ImageView img_header;
+    private Handler handler;
+    private Timer timer;
 
     private PullToRefreshLayout work_room_refresh_view;
     private WorkRoomListBeen workRoomListBeen;

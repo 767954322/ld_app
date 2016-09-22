@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,7 +25,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.HomeTypeDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -36,12 +35,12 @@ import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.util
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,6 +63,8 @@ import java.util.Map;
 
 public class MeasureFormActivity extends NavigationBarActivity implements View.OnClickListener, OnDismissListener, OnItemClickListener {
 
+    private HomeTypeDialog mHomeTypeDialog;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_measure_form;
@@ -77,7 +78,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         text_notuse = (TextView) findViewById(R.id.text_notuse);
         text_notuse.requestFocus();
 
-        tvc_name = (TextView) findViewById(R.id.tvc_measure_form_name);
+        tvc_name = (EditText) findViewById(R.id.tvc_measure_form_name);
         tvc_phone = (TextViewContent) findViewById(R.id.tvc_measure_form_phone);
         tvc_project_budget = (TextView) findViewById(R.id.tvc_measure_form_project_budget);
         tvc_fitment_budget = (TextView) findViewById(R.id.tvc_measure_fitment_budget);
@@ -105,6 +106,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         area = "0";
                     }
                     area = String.format("%.2f", Double.valueOf(area));
+                    houseArea = area;
                     tvc_area.setText(area);
                 }
             }
@@ -114,11 +116,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
-        if(iselite){
+        if (iselite) {
             getExtraData();
             return;
         }
-        if (first){
+        if (first) {
             first = false;
             Bundle extras = getIntent().getExtras();
             flow_state = (int) extras.get(Constant.SeekDesignerDetailKey.FLOW_STATE);
@@ -127,11 +129,12 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             hs_uid = (String) extras.get(Constant.SeekDesignerDetailKey.HS_UID);
             mFree = (String) extras.get(Constant.SeekDesignerDetailKey.MEASURE_FREE);
             String styleAll = (String) extras.get(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
+            mThread_id = (String) extras.get(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID);
             // String styleAll = getIntent().getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_STYLE_ALL);
             styles = new ArrayList<String>();
-            if (styleAll != null && styleAll.length() > 0){
+            if (styleAll != null && styleAll.length() > 0) {
                 String Style[] = styleAll.split("，");
-                for (int i = 0; i < Style.length; i++){
+                for (int i = 0; i < Style.length; i++) {
                     String styleItem = Style[i];
                     styles.add(styleItem);
                 }
@@ -139,12 +142,13 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
 
         }
     }
-     //获取精选装修模式传递过来的数据
-    private void getExtraData(){
+
+    //获取精选装修模式传递过来的数据
+    private void getExtraData() {
         Intent intent = getIntent();
-        decorationNeedsListBean = (DecorationNeedsListBean)intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
+        decorationNeedsListBean = (DecorationNeedsListBean) intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
         designer_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        iselite = intent.getBooleanExtra(Constant.SixProductsFragmentKey.ISELITE,false);
+        iselite = intent.getBooleanExtra(Constant.SixProductsFragmentKey.ISELITE, false);
 
     }
 
@@ -152,8 +156,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        setTitleForNavbar(UIUtils.getString(R.string.demand_measure_house_form));
-        if(iselite){
+        setTitleForNavbar(UIUtils.getString(R.string.is_average_measure_house_form));
+        if (iselite) {
             return;
         }
         if (flow_state == 1) {
@@ -255,45 +259,10 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 mobileNumber = tvc_phone.getText().toString().trim();
                 communityName = tvc_estate.getText().toString().trim();
                 houseArea = tvc_area.getText().toString().trim();
-                JSONObject jsonObject = new JSONObject();
-                try {
-
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_AMOUNT, mFree);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CHANNEL_TYPE, "IOS");
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY, mCurrentCityCode);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY__NAME, mCurrentCity);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_COMMUNITY_NAME, communityName);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_MOBILE, mobileNumber);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_NAME, name);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_BUDGET, decorateBudget);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_STYLE, style);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, designBudget);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT, mCurrentDistrictCode);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housingType);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, mHall);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, mRoom);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, mToilet);
-                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
-                    if (null == mThread_id || "".equals(mThread_id)) {
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
-                    } else {
-                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
                 boolean bName = name.matches("^[^ ]+[\\s\\S]*[^ ]+$"); /// 中间可以有空格 .
                 boolean bMobile = mobileNumber.matches(RegexUtil.PHONE_REGEX);
-                boolean bArea = checkMeasureArea(houseArea);
+                checkMeasureArea(houseArea);
 
                 boolean bAddress = communityName.matches(RegexUtil.ADDRESS_REGEX);
 
@@ -315,17 +284,16 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-//                if (!bArea || houseArea.isEmpty() || houseArea.equals("0")) {
-//
-//                    getErrorHintAlertView(UIUtils.getString(R.string.please_input_correct_area));
-//                    return;
-//                }
-
-                //.....................................
                 if (TextUtils.isEmpty(houseArea)) {
                     houseArea = "0";
                 }
-                houseArea = String.format("%.2f", Double.valueOf(houseArea));
+
+                String area = String.format("%.2f", Double.valueOf(houseArea));
+                if (Double.valueOf(area) < 1 || Double.valueOf(area) > 9999) {
+                    getErrorHintAlertView(UIUtils.getString(R.string.alert_msg_area));
+                    return;
+                }
+
                 tvc_area.setText(houseArea);
                 String subNum = "0";
                 if (houseArea.contains(".")) {
@@ -357,7 +325,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                if (mRoom == null || mHall == null || mToilet == null) {
+                if (room == null || hall == null || toilet == null) {
                     getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
                     return;
                 }
@@ -373,7 +341,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 }
 
                 if (!bAddress || communityName.isEmpty()) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.please_fill_detailed_address));
+                    getErrorHintAlertView(UIUtils.getString(R.string.please_enter_correct_address));
                     return;
                 }
 
@@ -396,9 +364,44 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy年 MM月 dd日 HH点", Locale.getDefault());
                 String date = /*currentTime += */sdf.format(new Date());
 
-//                try {
-//                    if (formatDate(date, currentData)) {
                 CustomProgress.show(MeasureFormActivity.this, UIUtils.getString(R.string.data_send), false, null);
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_AMOUNT, mFree);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CHANNEL_TYPE, "IOS");
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY, mCurrentCityCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CITY__NAME, mCurrentCity);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_COMMUNITY_NAME, communityName);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_MOBILE, mobileNumber);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_CONTACTS_NAME, name);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_BUDGET, decorateBudget);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DECORATION_STYLE, style);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, designBudget);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, designer_id);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT, mCurrentDistrictCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DISTRICT_NAME, mCurrentDistrict);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_AREA, houseArea);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HOUSE_TYPE, housType);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_LIVING_ROOM, hall);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_HS_UID, hs_uid);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ORDER_TYPE, 0);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE, mCurrentProvinceCode);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_PROVINCE_NAME, mCurrentProvince);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_ROOM, room);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_SERVICE_DATE, currentData);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_TOILET, toilet);
+                    jsonObject.put(JsonConstants.JSON_MEASURE_FORM_USER_ID, user_id);
+                    if (null == mThread_id || "".equals(mThread_id)) {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, ""); /// 聊天室ID，目前还没有做，先填写的是null
+                    } else {
+                        jsonObject.put(JsonConstants.JSON_MEASURE_FORM_THREAD_ID, mThread_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 postSendMeasureForm(jsonObject);
 //                    } else {
 //                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
@@ -417,7 +420,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 pvHouseTypeOptions.show();
                 break;
             case R.id.tvc_measure_form_house_type:
-                pvRoomTypeOptions.show();
+                mHomeTypeDialog.show(getFragmentManager(), null);
                 break;
             case R.id.tvc_measure_form_style:
                 pvStyleOptions.show();
@@ -439,27 +442,31 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     }
 
     private boolean checkMeasureArea(String area) {
-        String[] split = area.split("\\.");
-        if (null != split) {
+        if (TextUtils.isEmpty(area)) {
+            return false;
+        } else {
+            String[] split = area.split("\\.");
+            if (null != split) {
 
-            if (split.length == 1) {
-                if (split[0].length() <= 4) {
-                    if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
-                        return true;
+                if (split.length == 1) {
+                    if (split[0].length() <= 4) {
+                        if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
+                            return true;
+                        }
+                    }
+                }
+                if (split.length == 2) {
+                    if (split[0].length() <= 4 && split[1].length() <= 2) {
+
+                        if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
+
+                            return true;
+                        }
                     }
                 }
             }
-            if (split.length == 2) {
-                if (split[0].length() <= 4 && split[1].length() <= 2) {
-
-                    if (area.matches(RegexUtil.AREA_REGEX_ZERO)) {
-
-                        return true;
-                    }
-                }
-            }
+            return false;
         }
-        return false;
     }
 
 
@@ -474,6 +481,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         Intent intent = new Intent(MeasureFormActivity.this, ExistMeasureOrderActivity.class);
         intent.putExtra(Constant.ConsumerMeasureFormKey.DESIGNER_ID, designer_id);
         intent.putExtra(Constant.ConsumerMeasureFormKey.HS_UID, hs_uid);
+        intent.putExtra(Constant.ConsumerMeasureFormKey.THREAD_ID, mThread_id);
         intent.putExtra(Constant.ConsumerMeasureFormKey.MEASURE, mFree);
         startActivity(intent);
         finish();
@@ -495,7 +503,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         pvTime = new TimePickerView(this, TimePickerView.Type.ALL);
         pvTime.setRange(2016, 2018);
         ///Control the time range .
-        pvTime.setTime(new Date());
+        pvTime.setTime(null);
         pvTime.setCyclic(false);
         pvTime.setCancelable(false);
         ///  The callback after the time to choose  .
@@ -504,8 +512,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             @Override
             public void onTimeSelect(Date date) {
                 currentData = getTime(date);
-                currentData = DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点");
-                tvc_time.setText(currentData);
+//                currentData = DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点");
+                tvc_time.setText(DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
             }
         });
     }
@@ -580,6 +588,9 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onOptionsSelect(int options1, int option2, int options3) {
                 housingType = houseTypeItems.get(options1);
                 tvc_measure_form_type.setText(housingType);
+
+                Map<String, String> space = AppJsonFileReader.getSpace(MeasureFormActivity.this); // 转换成英文
+                housType = ConvertUtils.getKeyByValue(space, housingType);
             }
         });
     }
@@ -588,51 +599,23 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @brief 设置室 厅 卫
      */
     private void setRoomType() {
-        List<String> rooms = filledData(getResources().getStringArray(R.array.mlivingroom));
-        List<String> halls = filledData(getResources().getStringArray(R.array.hall));
-        List<String> toilets = filledData(getResources().getStringArray(R.array.toilet));
-        pvRoomTypeOptions = new OptionsPickerView(this);
-        //room
-        for (String op : rooms) {
-            roomsList.add(op);
-        }
-
-        //hall
-        ArrayList<String> options2Items_01 = new ArrayList<>();
-        for (String op2 : halls) {
-            options2Items_01.add(op2);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            hallsList.add(options2Items_01);
-        }
-        //toilet
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
-        ArrayList<String> options3Items_01_01 = new ArrayList<>();
-        for (String op3 : toilets) {
-            options3Items_01_01.add(op3);
-        }
-        for (int i = 0; i < halls.size(); i++) {
-            options3Items_01.add(options3Items_01_01);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            toiletsList.add(options3Items_01);
-        }
-
-        pvRoomTypeOptions.setPicker(roomsList, hallsList, toiletsList, true);
-        pvRoomTypeOptions.setCyclic(false, false, false);
-        pvRoomTypeOptions.setSelectOptions(0, 0, 0);
-        pvRoomTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
+        mHomeTypeDialog = HomeTypeDialog.getInstance(this);
+        mHomeTypeDialog.setOnAddressCListener(new HomeTypeDialog.OnAddressCListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                livingType = roomsList.get(options1)
-                        + hallsList.get(options1).get(option2)
-                        + toiletsList.get(options1).get(option2).get(options3);
-                mRoom = roomsList.get(options1);
-                mHall = hallsList.get(options1).get(option2);
-                mToilet = toiletsList.get(options1).get(option2).get(options3);
+            public void onClick(String roomName, String livingRoom, String toilet1) {
+                String roomType = roomName + livingRoom + toilet1;
+                tvc_house_type.setText(roomType);
 
-                tvc_house_type.setText(livingType);
+                /// convet .
+                Map<String, String> roomHall = AppJsonFileReader.getRoomHall(MeasureFormActivity.this); // 转换成英文
+                Map<String, String> livingRoomMap = AppJsonFileReader.getLivingRoom(MeasureFormActivity.this); // 转换成英文
+                Map<String, String> toiletMap = AppJsonFileReader.getToilet(MeasureFormActivity.this); // 转换成英文
+
+                room = ConvertUtils.getKeyByValue(roomHall, roomName);
+                hall = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                toilet = ConvertUtils.getKeyByValue(toiletMap, toilet1);
+
+                mHomeTypeDialog.dismiss();
             }
         });
     }
@@ -642,15 +625,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      */
     private void setStyleType() {
         final ArrayList<String> styleItems = new ArrayList<>();
-//
-//        if (styles != null) {
-//
-//
-//        } else {
-
-            styles = filledData(getResources().getStringArray(R.array.style));
-
-//        }
+        styles = filledData(getResources().getStringArray(R.array.style));
         pvStyleOptions = new OptionsPickerView(this);
         for (String item : styles) {
             styleItems.add(item);
@@ -684,12 +659,15 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         mCurrentProvinceCode = proviceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
+
                         mCurrentDistrict = district;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) ? "" : areaCode;
-                        if ("null".equals(district) || "none".equals(district) || TextUtils.isEmpty(district)) {
-                            district = "";
-                        }
-                        tvc_address.setText(province + city + district);
+                        mCurrentDistrictCode = areaCode;
+
+                        district = UIUtils.getNoStringIfEmpty(mCurrentDistrict);
+
+                        address = province + " " + city + " " + district;
+                        tvc_address.setText(address);
                         mChangeAddressDialog.dismiss();
                     }
 
@@ -766,7 +744,12 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
                 nick_name = mConsumerEssentialInfoEntity.getNick_name();
+                phone_number = mConsumerEssentialInfoEntity.getMobile_number();
                 tvc_name.setText(nick_name);//设置消费者姓名
+                if (!TextUtils.isEmpty(phone_number)){
+
+                    tvc_phone.setText(phone_number);
+                }
             }
 
             @Override
@@ -784,7 +767,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                KLog.d(TAG, jsonObject);
+                LogUtils.i(TAG, jsonObject + "");
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString((R.string.consume_send_success)), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this,
                         AlertView.Style.Alert, MeasureFormActivity.this).show();
                 CustomProgress.cancelDialog();
@@ -834,7 +817,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private LinearLayout ll_type;
     private LinearLayout ll_style;
     private TextView text_notuse;
-    private TextView tvc_name;
+    private EditText tvc_name;
     private TextViewContent tvc_phone;
     private TextView tvc_project_budget;
     private TextView tvc_fitment_budget;
@@ -852,7 +835,6 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private OptionsPickerView pvDecorationBudgetOptions;
     private OptionsPickerView pvStyleOptions;
     private OptionsPickerView pvHouseTypeOptions;
-    private OptionsPickerView pvRoomTypeOptions;
     private TimePickerView pvTime;
     private AddressDialog mChangeAddressDialog;
 
@@ -871,23 +853,23 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private String housingType;
     private String houseArea;
     private String livingType;
+    private String phone_number;
     private String style;
     private String communityName;
     private String nick_name;
     private String user_id;
     private String currentData;
-    private String mRoom, mHall, mToilet;
+    private String housType;
+    private String room, hall, toilet;
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String memberId;
     private boolean iselite;
+    private String address;
 
     ///　集合，类.
     private ArrayList<String> decorationBudgetItems = new ArrayList<>();
     private ArrayList<String> houseTypeItems = new ArrayList<>();
-    private ArrayList<String> roomsList = new ArrayList<>();
-    private ArrayList<ArrayList<String>> hallsList = new ArrayList<>();
-    private ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<>();
     private List<String> styles;
     private WkFlowDetailsBean wkFlowDetailsBean;
     private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;

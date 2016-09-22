@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="240dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/image_3d_photo"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:background="#ffffff"
-        android:gravity="center_vertical">
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/size_5"
+        android:gravity="center"
+        android:scaleType="fitXY"/>
 
-        <ImageView
-            android:id="@+id/image_3d_photo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_5"
-            android:gravity="center"
-            android:scaleType="fitXY" />
-    </LinearLayout>
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/image_quanjing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/roaming_figure"/>
+</RelativeLayout>
 
-</LinearLayout>

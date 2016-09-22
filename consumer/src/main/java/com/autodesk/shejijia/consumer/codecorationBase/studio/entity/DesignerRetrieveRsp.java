@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class DesignerRetrieveRsp implements Serializable {
+public class  DesignerRetrieveRsp implements Serializable {
 
 
     /**

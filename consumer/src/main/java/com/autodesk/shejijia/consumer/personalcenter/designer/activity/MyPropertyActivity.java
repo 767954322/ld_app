@@ -17,12 +17,13 @@ import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,7 +127,7 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 myPropertyBean = GsonUtil.jsonToBean(jsonString, MyPropertyBean.class);
-                KLog.json(TAG, jsonString);
+                LogUtils.i(TAG, jsonString);
                 amount = myPropertyBean.getAmount();
                 if (null == myPropertyBean || TextUtils.isEmpty(amount) || "0".equals(amount)) {
                     amount = "0.00";
@@ -136,13 +137,14 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                 }
                 setBtnCanpress();
                 tv_my_property_account_balance.setText("¥ " + amount);
+                rlTiXian.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 setBtnUnpress();
                 tv_my_property_account_balance.setText("¥ " + "0.00");
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,MyPropertyActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MyPropertyActivity.this);
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         });
@@ -167,18 +169,32 @@ public class MyPropertyActivity extends NavigationBarActivity implements View.On
                 try {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
                     int is_loho = jsonObject1.getInt("is_loho");
+                    String is_real_name = jsonObject1.getString("is_real_name");
+                    if (is_real_name.equals("null")) {
+                        showAlertView("您还未通过实名认证,请到网页端完成认证");
+//
+                    } else {
+
+                    }
+                    // change button show logic
+                    btn_my_property_withdrawal.setVisibility(is_loho != 0 ? View.GONE : View.VISIBLE);
                     if (is_loho != 0) {
-                        rlTiXian.setVisibility(View.GONE);
+                        rlTiXian.setVisibility(View.VISIBLE);  // 此处改动是内部设计师可以看到费用没提现按钮
+                        btn_my_property_withdrawal.setVisibility(View.GONE);
                     } else {
                         rlTiXian.setVisibility(View.VISIBLE);
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
         });
+    }
+
+    //打开AlertView对话框
+    private void showAlertView(String content) {
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, MyPropertyActivity.this, AlertView.Style.Alert, null).show();
     }
 
     /**

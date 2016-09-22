@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,6 +25,7 @@ import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
@@ -88,7 +87,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         mPullToRefreshLayout.setOnRefreshListener(this);
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != mMemberEntity) {
-//            mPullToRefreshLayout.autoRefresh();
             onRefresh(mPullToRefreshLayout);
         }
     }
@@ -120,10 +118,12 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     private void getShouldHallData(final int state, int offset, int limit,
                                    String custom_string_area, String custom_string_form, String custom_string_type, String custom_string_bedroom,
                                    String custom_string_style, String custom_string_restroom, String asset_taxonomy) {
+        CustomProgress.show(getActivity(),"",false,null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 if (jsonObject == null) {
                     return;
                 }
@@ -159,11 +159,10 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 if (null != getActivity()) {
-//                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, getActivity(),
-//                            AlertView.Style.Alert, null).show();
                     ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
                 }
                 hideFooterView(mNeedsListEntities);
@@ -185,15 +184,14 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         } else {
             mRlEmpty.setVisibility(View.VISIBLE);
         }
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-        mIvTemp.setImageBitmap(bmp);
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+//        mIvTemp.setImageBitmap(bmp);
         WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         android.view.ViewGroup.LayoutParams pp = mRlEmpty.getLayoutParams();
-        mRlEmpty.getLayoutParams();
-        pp.height = height - 50;
+        pp.height = height - 100;
         mRlEmpty.setLayoutParams(pp);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        mTvEmptyMessage.setText(UIUtils.getString(R.string.not_found));
     }
 
     private List<BidHallEntity.NeedsListBean> getNeedsListEntitys(List<BidHallEntity.NeedsListBean> list) {
@@ -222,19 +220,16 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     }
 
 
-    /// 刷新.
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
         getShouldHallData(0, 0, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
-    /// 加载更多.
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
         getShouldHallData(1, OFFSET, LIMIT, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getArea(), mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getHousingType(), BLANK, BLANK, mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
-    /// 接收反回来的数据.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -253,15 +248,15 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     @Override
     public void onDestroy() {
         super.onDestroy();
+        activity.unregisterReceiver(myBroadCastReceivr);
     }
 
-    /// 应标改变.
     public void onFragmentShown() {
         if (!mFlag) {
             mFiltrateContentBean = null;
             mNeedsListEntities.clear();
-            mNeedsListEntities.addAll(mNeedsListEntityArrayList);
-            mBidHallAdapter.notifyDataSetChanged();
+//            mNeedsListEntities.addAll(mNeedsListEntityArrayList);
+//            mBidHallAdapter.notifyDataSetChanged();
         }
     }
 
@@ -305,14 +300,12 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                 mFiltrateContentBean == null ? BLANK : mFiltrateContentBean.getStyle(), BLANK, URL);
     }
 
-    /// 静态常量,网址.
     public static final int REQUEST_CODE = 0x9;
     public static final String TYPE = "TYPE";
     public static final String BLANK = "";
     public static final String CONTENT_BEAN = "contentBean";
     public static final String URL = "ezhome/fullflow/audit/success";
 
-    /// 控件.
     private RelativeLayout mRlEmpty;
     private TextView mTvEmptyMessage;
     private ImageView mIvTemp;
@@ -320,14 +313,12 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     private PullListView mPullListView;
     private PullToRefreshLayout mPullToRefreshLayout;
 
-    /// 变量.
     private String needs_id;
     private int LIMIT = 10;
     private int OFFSET = 0;
     private Boolean bid_status;
     private boolean mFlag = true;
 
-    /// 集合,类.
     private FiltrateContentBean mFiltrateContentBean;
     private BidHallAdapter mBidHallAdapter;
     private List<BidHallEntity.NeedsListBean> mNeedsListEntities = new ArrayList<>();

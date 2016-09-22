@@ -2,32 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:background="@color/studio_list_item_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_95"
         android:layout_marginTop="@dimen/size_12"
-        >
-
+        android:background="@color/white">
 
 
         <ImageView
             android:id="@+id/work_room_imageView"
             android:layout_width="@dimen/size_214"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_95"
             android:scaleType="fitXY"
-            android:src="@drawable/work_room_header_bg"
-            />
+             />
+
         <TextView
             android:id="@+id/work_room_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/font_17"
-            android:layout_marginLeft="@dimen/size_28"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_18"
             android:layout_toRightOf="@id/work_room_imageView"
-            android:text="律典工作室"/>
+            android:textSize="@dimen/font_17" />
 
     </RelativeLayout>
 

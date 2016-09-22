@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesignerDetailBean;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -32,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -53,12 +53,14 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
         mViewPager = (HackyViewPager) findViewById(R.id.case_librafy_detail_activity_vp);
     }
 
+   // List<Case3DDetailImageListBean> imageListBean;
+    private List<String> imageLists;
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
         a = getIntent().getIntExtra("moveState", -1);
         if (a == 1) {
-            case3DDetailBean = (Case3DDetailBean) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
+            imageLists = (List<String>) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
             intExtra = getIntent().getIntExtra(Constant.CaseLibraryDetail.CASE_DETAIL_POSTION, 0);//获得点击的位置
         } else {
             caseDetailBean = (CaseDetailBean) getIntent().getSerializableExtra(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN);
@@ -83,13 +85,18 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
      */
     private void updateViewFromData() {
         if (a == 1) {
-            if (case3DDetailBean.getDesign_file() != null) {
-                for (int i = 0; i < case3DDetailBean.getDesign_file().size(); i++) {
-                    if (null != case3DDetailBean && case3DDetailBean.getDesign_file().size() != 0) {
-                        imageUrl = case3DDetailBean.getDesign_file().get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-                        mImageUrl.add(imageUrl);
-                    }
-                }
+            if (imageLists!= null) {
+//                for (int i = 0; i < imageListBean.size(); i++) {
+//                    List<String> imageList = imageListBean.get(i).getImageList();
+//                    int imageItemSize = imageList.size();
+//                    for (int j=0;j<imageItemSize;j++){
+//                        imageUrl =imageList.get(j);
+//
+//
+//                    }
+//
+//                }
+                mImageUrl.addAll(imageLists);
             }
         } else if (caseDetailBean.getImages() != null) {
             for (int i = 0; i < caseDetailBean.getImages().size(); i++) {
@@ -262,6 +269,6 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
     private SeekDesignerDetailBean mSeekDesignerDetailBean;
     private CaseDetailBean caseDetailBean;
     private int a;
-    private Case3DDetailBean case3DDetailBean;
+    //private Case3DDetailBean case3DDetailBean;
     private ArrayList<String> mImageUrl = new ArrayList<>();
 }

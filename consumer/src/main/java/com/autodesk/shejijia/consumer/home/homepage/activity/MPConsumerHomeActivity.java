@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.Search3DActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.home.homepage.fragment.BidHallFragment;
@@ -34,13 +37,13 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
+import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
@@ -76,6 +79,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     public MPConsumerHomeActivity() {
     }
 
+
+    public static void start(Activity context) {
+        Intent intent = new Intent(context, MPConsumerHomeActivity.class);
+        context.startActivity(intent);
+        context.finish();
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_main;
@@ -98,9 +108,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         mDesignerIndentListBtn = (RadioButton) findViewById(R.id.designer_indent_list_btn);
         mDesignerPersonCenterRadioBtn = (RadioButton) findViewById(R.id.designer_person_center_radio_btn);
 
-        contain = (LinearLayout) findViewById(R.id.ll_contain);
-        tvGronMmsgNumber = (TextView) findViewById(R.id.tv_gron_msg_number);
-
+        contain = (LinearLayout) findViewById(R.id.navbar_tab_container);
 
         contain_layout = LayoutInflater.from(this).inflate(R.layout.contain_choose_layout, null);
         chooseViewPointer = (ChooseViewPointer) contain_layout.findViewById(R.id.choose_point);
@@ -109,6 +117,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         construction = (TextView) contain_layout.findViewById(R.id.construction);
 
         setMyProjectTitleColorChange(design, bidding, construction);
+        mConsumerEliteCircularBtn = (ImageButton) findViewById(R.id.consumer_elite_circularbtn);
 
         addRadioButtons(radioBtnDesigner);
         addRadioButtons(mDesignerMainRadioBtn);
@@ -116,6 +125,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         addRadioButtons(mDesignerPersonCenterRadioBtn);
         //获取节点信息
         getWkFlowStatePointInformation();
+        initStaticPic();
+
     }
 
     @Override
@@ -149,7 +160,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         super.initData(savedInstanceState);
         if (savedInstanceState == null) {
             showFragment(getDesignerMainRadioBtnId());
+
+            // make sure we create the activity with main radio button
+            mRadioGroup.check(R.id.designer_main_radio_btn);
         }
+
         isShowBidHallFragment();
     }
 
@@ -160,6 +175,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         design.setOnClickListener(this);
         rbCustomerElite.setOnClickListener(this);
         construction.setOnClickListener(this);
+        mConsumerEliteCircularBtn.setOnClickListener(this);
     }
 
     @Override
@@ -179,6 +195,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         }
         super.onResume();
+        isShowBidHallFragment();
 
         //获取设计师信息
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -194,7 +211,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     protected void onRestart() {
         super.onRestart();
-        isShowBidHallFragment();
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         //登陆设计师时，会进入；
@@ -206,10 +222,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             designer_main_radio_group.check(index);
         }
 
-        //未登录状态，会自动进入案例fragment
-        if (mMemberEntity == null) {
-            designer_main_radio_btn.setChecked(true);
-        }
+
     }
 
 
@@ -291,6 +304,22 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     }
 
     @Override
+    protected void onUserLogout() {
+        mRadioGroup.check(getDesignerMainRadioBtnId());
+
+        // Reset my project
+        if (mDesignerPersonalCenterFragment != null) {
+            setMyProjectTitleColorChange(design, bidding, construction);
+            chooseViewPointer.setCase3dBtn(btWidth);
+            if (mDesignerPersonalCenterFragment.isAdded()) {
+                getSupportFragmentManager().beginTransaction().remove(mDesignerPersonalCenterFragment).commitAllowingStateLoss();
+            }
+            mDesignerPersonalCenterFragment = null;
+        }
+    }
+
+
+    @Override
     protected Fragment getFragmentByButtonId(int id) {
         Fragment fragmentByButtonId = super.getFragmentByButtonId(id);
         if (id == R.id.designer_indent_list_btn) {
@@ -303,7 +332,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 fragmentByButtonId = mConsumerPersonalCenterFragment;
         } else if (id == getDesignerMainRadioBtnId()) {
             fragmentByButtonId = mUserHomeFragment;
-        }
+        } else if (id == R.id.radio_btn_designer)
+            fragmentByButtonId = designerListFragment;
         return fragmentByButtonId;
     }
 
@@ -324,8 +354,19 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
 
         if (isActiveFragment(UserHomeFragment.class)) {
-            Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
-            startActivity(intent);
+            //传递标记    0 是2d案例的搜索    1 3d是的案例搜索
+            int currentPosition = this.getMaterialTabs().getCurrentPosition();
+            if (currentPosition == 0) {
+                Intent intent = new Intent(MPConsumerHomeActivity.this, SearchActivity.class);
+                //intent.putExtra("currentPosition", currentPosition);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(MPConsumerHomeActivity.this, Search3DActivity.class);
+                // intent.putExtra("currentPosition", currentPosition);
+                startActivity(intent);
+            }
+            // Toast.makeText(this, "currentPosition:" + currentPosition, Toast.LENGTH_SHORT).show();
+
         }
 
         if (isActiveFragment(DecorationConsumerFragment.class)) {
@@ -381,7 +422,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 FLAG_CLICK = TAB_HOME_CASE;
                 setCaseLIbraryTitle();
                 setVisibilityForNavButton(ButtonType.middlecontain, false);
-                setVisibilityForNavButton(ButtonType.middle, true);
+                setVisibilityForNavButton(ButtonType.middle, false);
                 break;
 
             case R.id.radio_btn_designer:  /// 设计师搜索 .
@@ -436,7 +477,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                     String acs_Member_Id = AdskApplication.getInstance().getMemberEntity().getMember_id();
-                    changLohoDesigner(acs_Member_Id, hs_uid);
+//                    changLohoDesigner(acs_Member_Id, hs_uid);
+                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
                 } else {
                     setVisibilityForNavButton(ButtonType.SECONDARY, false);
                 }
@@ -447,9 +490,12 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
+    /**
+     * 设置共用title部分图标
+     */
     private void setDesignerListTitle() {
         setImageForNavButton(ButtonType.RIGHT, com.autodesk.shejijia.shared.R.drawable.icon_search);
-        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.icon_filtrate_normal);
+        setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.common_screen_icon);
         setVisibilityForNavButton(ButtonType.RIGHT, true);
         setVisibilityForNavButton(ButtonType.SECONDARY, true);
     }
@@ -460,9 +506,13 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
         switch (v.getId()) {
             case R.id.rb_customer_elite:
-                startActivity(new Intent(this, SixProductsActivity.class));
-                mRadioGroup.check(R.id.consumer_main_radio_btn);
+                openCreateRequirementPage();
                 break;
+
+            case R.id.consumer_elite_circularbtn:
+                openCreateRequirementPage();
+                break;
+
 
             case R.id.bidding:
                 //指针
@@ -475,27 +525,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             case R.id.design:
                 setMyProjectTitleColorChange(design, bidding, construction);
                 chooseViewPointer.setCase3dBtn(btWidth);
-                //判断进入北舒套餐，，还是进入普通订单页面
-                if (null != designerInfoDetails) {
-                    if (designerInfoDetails.getDesigner().getIs_loho() == IS_BEI_SHU) {
-                        /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-                        //if (designerInfoDetails.getReal_name().getHigh_level_audit().getStatus() == 2) {
-                        /// 北舒 .
-                        mDesignerPersonalCenterFragment.setDesignBeiShuFragment();
-                    } else {
-                        mDesignerPersonalCenterFragment.setDesignFragment();
-                    }
-                } else {
-                    mDesignerPersonalCenterFragment.setDesignFragment();
-                }
-
+                // 这里面跳转design base fragment
+                mDesignerPersonalCenterFragment.setDesigneBaseFragment(high_level_audit, is_loho);
                 break;
 
             case R.id.construction:
                 chooseViewPointer.setConsumerAppraise(btWidth);
-                setMyProjectTitleColorChange(construction,design, bidding);
+                setMyProjectTitleColorChange(construction, design, bidding);
                 mDesignerPersonalCenterFragment.setConstructionFragment();
-
                 break;
         }
     }
@@ -506,28 +543,28 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         titleUncheck.setTextColor(getResources().getColor(R.color.my_project_title_text_color));
     }
 
-    private void changLohoDesigner(String desiner_id, String hs_uid) {
-
-        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                try {
-                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
-                    int is_loho = jsonObject1.getInt("is_loho");
-                    //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
-                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
-                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-    }
+//    private void changLohoDesigner(String desiner_id, String hs_uid) {
+//
+//        MPServerHttpManager.getInstance().ifIsLohoDesiner(desiner_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
+//            @Override
+//            public void onErrorResponse(VolleyError volleyError) {
+//            }
+//
+//            @Override
+//            public void onResponse(JSONObject jsonObject) {
+//                try {
+//                    JSONObject jsonObject1 = jsonObject.getJSONObject("designer");
+//                    int is_loho = jsonObject1.getInt("is_loho");
+//                    //2：乐屋设计师添加扫描二维码功能（其他几种未判断）
+//                    setImageForNavButton(ButtonType.SECONDARY, com.autodesk.shejijia.shared.R.drawable.scan);
+//                    setVisibilityForNavButton(ButtonType.SECONDARY, true);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        });
+//    }
 
     @Override
     protected void secondaryNavButtonClicked(View view) {
@@ -563,8 +600,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-        if (checkedId == getDesignerMainRadioBtnId())
-            showFragment(getDesignerMainRadioBtnId());
+        if (checkedId == getDesignerMainRadioBtnId() || checkedId == getDesignerButtonId())
+            showFragment(checkedId);
 
         super.onCheckedChanged(group, checkedId);
     }
@@ -612,6 +649,23 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         });
     }
+    /**
+     * 获取六大模块静态图片url，并添加到sixProductsPicturesBean
+     */
+    private void initStaticPic() {
+        MPServerHttpManager.getInstance().getSixProPictures(new OkJsonRequest.OKResponseCallback(){
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String str = GsonUtil.jsonToString(jsonObject);
+                SixProductsPicturesBean sixProductsPicturesBean =GsonUtil.jsonToBean(str, SixProductsPicturesBean.class);
+                WkFlowStateMap.sixProductsPicturesBean = sixProductsPicturesBean;
+            }
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
+            }
+        });
+    }
 
     /**
      * 设计师个人信息
@@ -625,13 +679,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                /// fixme 以下代码导致竞逻辑缺失，需要和崇斌一块讨论 .
-//                if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
-//                    high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
-//                }
-//                if (mDesignerPersonalCenterFragment != null) {
-//                    mDesignerPersonalCenterFragment.setEliteFragment(high_level_audit);
-//                }
+                if (designerInfoDetails.getReal_name().getHigh_level_audit() != null) {
+                    high_level_audit = designerInfoDetails.getReal_name().getHigh_level_audit().getStatus();
+                }
+                is_loho = designerInfoDetails.getDesigner().getIs_loho();
+                LogManager.getLogger().d("url", "high_level_audit:" + high_level_audit + "is_loho:" + is_loho);
             }
 
             @Override
@@ -645,14 +697,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private void isShowBidHallFragment() {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
+            mConsumerEliteCircularBtn.setVisibility(View.GONE);
             rbCustomerElite.setVisibility(View.GONE);
             mDesignerIndentListBtn.setVisibility(View.VISIBLE);
-            tvGronMmsgNumber.setVisibility(View.VISIBLE);
             return;
         }
+        mConsumerEliteCircularBtn.setVisibility(View.VISIBLE);
         rbCustomerElite.setVisibility(View.VISIBLE);
         mDesignerIndentListBtn.setVisibility(View.GONE);
-        tvGronMmsgNumber.setVisibility(View.GONE);
     }
 
     //判断是否聊过天，跳转到之前聊天室或新聊天室
@@ -681,23 +733,43 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                     public void onResponse(String s) {
                         MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
 
-                        Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
+                        final Intent intent = new Intent(MPConsumerHomeActivity.this, ChatRoomActivity.class);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, member_id);
                         intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
                         intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                        intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, designer_id);
 
                         if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
                             MPChatThread mpChatThread = mpChatThreads.threads.get(0);
                             int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
                             intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
                             intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                            intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
-                        } else {
                             intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                            intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                            MPConsumerHomeActivity.this.startActivity(intent);
+
+                        } else {
+                            MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    MPNetworkUtils.logError(TAG, volleyError);
+                                }
+
+                                @Override
+                                public void onResponse(String s) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(s);
+                                        String thread_id = jsonObject.getString("thread_id");
+                                        intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                        intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                        MPConsumerHomeActivity.this.startActivity(intent);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
-                        startActivity(intent);
                     }
                 });
 
@@ -739,6 +811,11 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         }
     }
 
+    private void openCreateRequirementPage() {
+        startActivity(new Intent(this, SixProductsActivity.class));
+        mRadioGroup.check(R.id.consumer_main_radio_btn);
+    }
+
     private final int CHAT_CODE = 0;
     private static final int IS_BEI_SHU = 1;
     private RadioButton mDesignerMainRadioBtn;
@@ -749,6 +826,8 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private RadioButton radioBtnDesigner;
     private RadioGroup designer_main_radio_group;
 
+    private ImageButton mConsumerEliteCircularBtn;
+
     private DecorationConsumerFragment mConsumerPersonalCenterFragment;
 
     private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT_TAG";
@@ -758,8 +837,9 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
 
     private TextView bidding;
     private TextView design;
+
     private TextView construction;
-    private TextView tvGronMmsgNumber;
+
     private LinearLayout contain;
     private View contain_layout;
     private ChooseViewPointer chooseViewPointer;

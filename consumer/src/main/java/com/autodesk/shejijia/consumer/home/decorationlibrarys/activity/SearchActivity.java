@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,7 +32,6 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.SearchHover
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHomeCaseAdapter;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.CharacterParser;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -45,6 +42,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -54,7 +52,6 @@ import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,15 +94,20 @@ public class SearchActivity extends NavigationBarActivity implements
     }
 
     @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+    }
+
+    @Override
     protected void initData(Bundle savedInstanceState) {
         screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         mCharacterParser = CharacterParser.getInstance();
 
         mSearchKeywords = "";
-        initSearchData(0, AppJsonFileReader.getRoomHall(this));
-        initSearchData(1, AppJsonFileReader.getStyle(this));
-        initSearchData(2, AppJsonFileReader.getArea(this));
+//        initSearchData(0, AppJsonFileReader.getRoomHall(this));
+//        initSearchData(1, AppJsonFileReader.getStyle(this));
+//        initSearchData(2, AppJsonFileReader.getArea(this));
 
         if (mUserHomeCaseAdapter == null) {
             mUserHomeCaseAdapter = new UserHomeCaseAdapter(this,
@@ -130,6 +132,10 @@ public class SearchActivity extends NavigationBarActivity implements
                 openPopupWindow(mCetSearchClick.getText().toString());
                 break;
             case R.id.searchc_back:/// 返回.
+                if (mCetSearchContent != null) {
+                    mCetSearchContent.setText("");
+                }
+
                 finish();
                 break;
             default:
@@ -208,7 +214,7 @@ public class SearchActivity extends NavigationBarActivity implements
                         SearchActivity.this.startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id, member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
@@ -307,24 +313,22 @@ public class SearchActivity extends NavigationBarActivity implements
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPtrLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
-
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, null, SearchActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, SearchActivity.this);
                 hideFooterView(mCasesEntities);
                 mUserHomeCaseAdapter.notifyDataSetChanged();
             }
         };
-        MPServerHttpManager.getInstance().getCaseListData(
-                custom_string_style,
-                custom_string_type,
-                custom_string_keywords,
-                custom_string_area,
-                custom_string_bedroom,
-                taxonomy_id,
-                custom_string_restroom,
-                custom_string_form,
-                offset, limit, callback);
+            MPServerHttpManager.getInstance().getCaseListData(
+                    custom_string_style,
+                    custom_string_type,
+                    custom_string_keywords,
+                    custom_string_area,
+                    custom_string_bedroom,
+                    taxonomy_id,
+                    custom_string_restroom,
+                    custom_string_form,
+                    offset, limit, callback);
+
     }
 
     /**
@@ -408,12 +412,15 @@ public class SearchActivity extends NavigationBarActivity implements
             @Override
             public void onClick(View v) {
                 cancelPopupWindowAndClearSearchContent();
+                mCetSearchContent.setText("");
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cancelPopupWindowAndClearSearchContent();
+                mCetSearchContent.setText("");
+                SearchActivity.this.finish();
             }
         });
     }
@@ -457,15 +464,16 @@ public class SearchActivity extends NavigationBarActivity implements
                     if (mSearchKeywords != null && mSearchKeywords.length() > 0) {
                         try {
                             mSearchKeywords = URLEncoder.encode(mSearchKeywords, Constant.NetBundleKey.UTF_8);
+                            setSelection(mCetSearchClick);
+                            mFiltrateContentBean = null;
+                            isFirstIn = true;
+                            cancelPopupWindowAndClearSearchContent();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
                     }
 
-                    setSelection(mCetSearchClick);
-                    mFiltrateContentBean = null;
-                    isFirstIn = true;
-                    cancelPopupWindowAndClearSearchContent();
+
                 }
                 return false;
             }
@@ -528,7 +536,7 @@ public class SearchActivity extends NavigationBarActivity implements
         try {
             String jsonString = GsonUtil.jsonToString(jsonObject);
             mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
-            KLog.json(TAG, jsonString);
+            LogUtils.i(TAG, jsonString);
             switch (state) {
                 case 0:
                     OFFSET = 10;
@@ -564,15 +572,15 @@ public class SearchActivity extends NavigationBarActivity implements
         } else {
             mRlEmpty.setVisibility(View.VISIBLE);
         }
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
-        mIvEmptyIcon.setImageBitmap(bmp);
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.photopicker_thumbnail_placeholder);
+//        mIvEmptyIcon.setImageBitmap(bmp);
         WindowManager wm = (WindowManager) SearchActivity.this.getSystemService(SearchActivity.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         android.view.ViewGroup.LayoutParams mRlEmptyLayoutParams = mRlEmpty.getLayoutParams();
         mRlEmptyLayoutParams.height = height - 10;
         mRlEmpty.getLayoutParams();
         mRlEmpty.setLayoutParams(mRlEmptyLayoutParams);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        mTvEmptyMessage.setText(UIUtils.getString(R.string.not_found));
     }
 
     private void setSelection(ClearEditText editText) {
@@ -623,7 +631,6 @@ public class SearchActivity extends NavigationBarActivity implements
     private PopupWindow mSearchPopupWindow;
     private View mSearchLayout;
     private View mFooterView;
-
     private int LIMIT = 10;
     private int OFFSET = 0;
     private int screenWidth;

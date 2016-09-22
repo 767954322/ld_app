@@ -9,8 +9,8 @@
         android:id="@+id/ll_search1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:background="@drawable/public_search_view_bg_or"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
@@ -20,9 +20,9 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="10dp"
             android:background="@drawable/transparent"
-            android:src="@drawable/icon_back_normal_z"
             android:padding="@dimen/navbar_icon_padding"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_back_normal_z"/>
 
         <com.autodesk.shejijia.shared.components.common.uielements.ClearEditText
             android:id="@+id/et_search"
@@ -33,12 +33,14 @@
             android:background="@drawable/bg_input_search_or"
             android:drawableLeft="@drawable/icon_search_or"
             android:gravity="center_vertical"
-            android:hint="@string/search"
+            android:hint="@string/search_new"
             android:imeOptions="actionSearch"
             android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10"
             android:singleLine="true"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_14"
+            />
 
     </LinearLayout>
 

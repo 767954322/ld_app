@@ -44,9 +44,10 @@
             android:layout_width="@dimen/chat_room_audiocell_content_inner_width"
             android:layout_height="@dimen/chat_room_audiocell_content_inner_height"
             android:layout_marginTop="@dimen/chat_room_audiocell_content_inner_margintop"
+            android:layout_marginLeft="@dimen/chat_room_cell_message_sidemargin"
             android:layout_toRightOf="@id/user_avatar"
             android:padding="@dimen/chat_room_audiocell_content_inner_padding"
-            android:background="@drawable/chat_audio_left"
+            android:background="@drawable/chat_text_left"
             android:orientation="horizontal">
 
             <ImageView

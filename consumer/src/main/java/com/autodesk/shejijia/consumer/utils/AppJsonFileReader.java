@@ -3,10 +3,10 @@ package com.autodesk.shejijia.consumer.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
+import android.util.Log;
 
-import com.autodesk.shejijia.consumer.base.bean.AreaBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,12 +52,15 @@ public class AppJsonFileReader {
     public static String loadJSONFromAsset(Context context, String fileName) {
         String json = null;
         try {
-            InputStream is = context.getAssets().open(fileName);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
+            if (null != context) {
+
+                InputStream is = context.getAssets().open(fileName);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                json = new String(buffer, "UTF-8");
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
@@ -80,7 +83,7 @@ public class AppJsonFileReader {
      * @return
      */
     public static Map<String, String> getRoomHall(Activity activity) {
-        String fileName = Constant.JsonLocationKey.LIVING_ROOM_JSON;
+        String fileName = Constant.JsonLocationKey.ROOM_JSON;
         JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
         return jsonObj2Map(xmlJsonObject);
     }
@@ -93,7 +96,7 @@ public class AppJsonFileReader {
      * five : 五厅
      */
     public static Map<String, String> getLivingRoom(Activity activity) {
-        String fileName = Constant.JsonLocationKey.ROOM_JSON;
+        String fileName = Constant.JsonLocationKey.LIVING_ROOM_JSON;
         JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
         return jsonObj2Map(xmlJsonObject);
     }
@@ -163,14 +166,8 @@ public class AppJsonFileReader {
      */
     public static Map<String, String> getArea(Activity activity) {
         String fileName = Constant.JsonLocationKey.AREA_JSON;
-        String areaJSON = loadJSONFromAsset(activity, fileName);
-        AreaBean areaBean = new Gson().fromJson(areaJSON, AreaBean.class);
-        Map<String, String> areaMap = new HashMap<>();
-        areaMap.put("one", areaBean.getOne());
-        areaMap.put("two", areaBean.getTwo());
-        areaMap.put("three", areaBean.getThree());
-        areaMap.put("five", areaBean.getFive());
-        return areaMap;
+        JSONObject xmlJsonObject = getXmlJsonObject(activity, fileName);
+        return jsonObj2Map(xmlJsonObject);
     }
 
     /**
@@ -224,7 +221,11 @@ public class AppJsonFileReader {
         String jsonString = loadJSONFromAsset(context, filename);
         JSONObject jsonObject = null;
         try {
-            jsonObject = new JSONObject(jsonString);
+
+            if (!TextUtils.isEmpty(jsonString)) {
+                jsonObject = new JSONObject(jsonString);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

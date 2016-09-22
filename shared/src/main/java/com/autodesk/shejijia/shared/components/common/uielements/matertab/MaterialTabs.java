@@ -92,6 +92,14 @@ public class MaterialTabs extends HorizontalScrollView {
 
     private int tabCount;
 
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
     private int currentPosition = 0;
     private float currentPositionOffset = 0f;
 
@@ -104,7 +112,7 @@ public class MaterialTabs extends HorizontalScrollView {
     private int underlineColor;
 
     private int tabPadding = 12;
-    private int tabTextSize = 14;
+    private int tabTextSize = 18;
 
     private int tabTextColorUnselected;
     private int tabTextColorSelected;
@@ -309,7 +317,6 @@ public class MaterialTabs extends HorizontalScrollView {
                     tabReselectedListener.onTabReselected(position);
                 }
 
-                Log.i("yaoxuehua",""+position);
 
                 if (onClickItemListener != null){//监听选中哪一个页面
 

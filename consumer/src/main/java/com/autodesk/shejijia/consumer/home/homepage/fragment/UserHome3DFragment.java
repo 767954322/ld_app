@@ -25,14 +25,16 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibra
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryDetail3DActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DLibraryListBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
-import com.autodesk.shejijia.consumer.home.homepage.activity.SixProductsActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHome3DCaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionButton;
 import com.autodesk.shejijia.shared.components.common.uielements.FloatingActionMenu;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -41,10 +43,16 @@ import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -76,6 +84,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_home);
         mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
         mListViewRootView = (RelativeLayout) rootView.findViewById(R.id.listview_content);
+        ll_default_view = (LinearLayout) rootView.findViewById(R.id.ll_default_view);
         mFloatingActionsMenu = (FloatingActionMenu) rootView.findViewById(R.id.add_menu_buttons);
         createCustomAnimation();
         initFloatingAction();
@@ -114,17 +123,12 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// HeadIcon OnClickListener查看设计师详情页面 .
     @Override
     public void OnItemImageHeadClick(int position) {
+
+        Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
+        String acs_member_id = casesBean.getDesigner_info().getDesigner().getAcs_member_id();
+        hsUid = casesBean.getHs_designer_uid();
         Intent intent = new Intent(activity, SeekDesignerDetailActivity.class);
-        Case3DLibraryListBean.CasesBean.DesignerInfoBean designerInfoEntity = case3DLibraryListBean.getCases().get(position).getDesigner_info();
-        String designer_id = null;
-        if (designerInfoEntity != null) {
-            Case3DLibraryListBean.CasesBean.DesignerInfoBean.DesignerBean designer = designerInfoEntity.getDesigner();
-            if (designer != null) {
-                designer_id = designer.getAcs_member_id();
-            }
-        }
-        hsUid = case3DLibraryListBean.getCases().get(position).getHs_designer_uid();
-        intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
+        intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, acs_member_id);
         intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hsUid);
         startActivity(intent);
     }
@@ -132,77 +136,87 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     /// Case OnClickListener查看案例库详情页面 .
     @Override
     public void OnItemCaseClick(int position) {
-        String case_id = case3DLibraryListBean.getCases().get(position).getDesign_asset_id();
+        String design_asset_id = case3DBeanList.get(position).getDesign_asset_id();
         mIntent = new Intent(getActivity(), CaseLibraryDetail3DActivity.class);
-        mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
+        mIntent.putExtra(Constant.CaseLibraryDetail.CASE_ID, design_asset_id);
         activity.startActivity(mIntent);
     }
 
     /// Chat OnClickListener 聊天监听.
     @Override
     public void OnItemHomeChatClick(final int position) {
-        startActivity(new Intent(getActivity(), SixProductsActivity.class));
-//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (mMemberEntity != null) {
-//            final String designer_id = case3DDetailBeen.get(position).getDesigner_id();
-//            final String hs_uid = case3DDetailBeen.get(position).getHs_designer_uid();
-//            final String receiver_name = case3DDetailBeen.get(position).getDesigner_info().getNick_name();
-//            final String mMemberType = mMemberEntity.getMember_type();
-//            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id(ApiManager.RUNNING_DEVELOPMENT);
-//
-//            MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-//                @Override
-//                public void onErrorResponse(VolleyError volleyError) {
-//                    MPNetworkUtils.logError(TAG, volleyError);
-//                }
-//
-//                @Override
-//                public void onResponse(String s) {
-//
-//                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-//
-//                    final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
-//                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-//                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-//                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-//                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-//
-//                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-//
-//                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-//                        int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-//                        intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-//                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-//                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-//                        getActivity().startActivity(intent);
-//
-//                    } else {
-//                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError volleyError) {
-//                                MPNetworkUtils.logError(TAG, volleyError);
-//                            }
-//
-//                            @Override
-//                            public void onResponse(String s) {
-//                                try {
-//                                    JSONObject jsonObject = new JSONObject(s);
-//                                    String thread_id = jsonObject.getString("thread_id");
-//                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-//                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-//                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-//                                    getActivity().startActivity(intent);
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
-//            });
-//        } else {
-//            AdskApplication.getInstance().doLogin(getActivity());
-//        }
+
+        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (mMemberEntity != null) {
+            CustomProgress.show(activity, "", false, null);
+            Case3DLibraryListBean.CasesBean casesBean = case3DBeanList.get(position);
+            final int designer_id = casesBean.getDesigner_id();
+            final String hs_uid = casesBean.getHs_designer_uid();
+            final String receiver_name = casesBean.getDesigner_info().getNick_name();
+
+//            final String designer_id = case3DLibraryListBean.getCases().get(position).getDesigner_id()+"";
+//            final String hs_uid =  case3DLibraryListBean.getCases().get(position).getHs_designer_uid();
+//            final String receiver_name = case3DLibraryListBean.getCases().get(position).getDesigner_info().getNick_name();
+            final String mMemberType = mMemberEntity.getMember_type();
+            final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
+
+            MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    MPNetworkUtils.logError(TAG, volleyError);
+                    CustomProgress.cancelDialog();
+                }
+
+                @Override
+                public void onResponse(String s) {
+                    CustomProgress.cancelDialog();
+                    MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
+
+                    final Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
+                    intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
+                    intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
+
+                    if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
+
+                        MPChatThread mpChatThread = mpChatThreads.threads.get(0);
+                        int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
+                        intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
+                        intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
+                        intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                        getActivity().startActivity(intent);
+
+                    } else {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id + "",member_id, new OkStringRequest.OKResponseCallback() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                MPNetworkUtils.logError(TAG, volleyError);
+                                CustomProgress.cancelDialog();
+                            }
+
+                            @Override
+                            public void onResponse(String s) {
+                                try {
+                                    CustomProgress.cancelDialog();
+                                    JSONObject jsonObject = new JSONObject(s);
+                                    String thread_id = jsonObject.getString("thread_id");
+                                    intent.putExtra(ChatRoomActivity.ASSET_ID, "");
+                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
+                                    intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
+                                    getActivity().startActivity(intent);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            CustomProgress.cancelDialog();
+            AdskApplication.getInstance().doLogin(getActivity());
+        }
 ////
 
     }
@@ -269,34 +283,6 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             }
         });
     }
-
-//    /**
-//     * Network request 获取案例信息.
-//     *
-//     * @param offset 页面
-//     * @param limit  　每页条数
-//     */
-//    public void getCaseLibraryData(final int offset, final int limit) {
-//        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-//
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                String jsonString = GsonUtil.jsonToString(jsonObject);
-//                case3DLibraryListBean = GsonUtil.jsonToBean(jsonString, Case3DLibraryListBean.class);
-//                updateViewFromCaseLibraryData(offset);
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                MPNetworkUtils.logError(TAG, volleyError);
-//                if (getActivity() != null) {
-//                    mPtrLayout.onRefreshComplete();
-//                    mListView.onLoadMoreComplete();
-//                }
-//            }
-//        };
-//        MPServerHttpManager.getInstance().get3DCaseListData("", "", "", "", "", "", "", "", offset, limit, callback);
-//    }
 
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
@@ -492,6 +478,16 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             case3DBeanList.clear();
         }
         mOffset = offset + 10;
+
+        //设置数据小于等于2的是不显示没有更多数据了
+        if (case3DLibraryListBean.getCases().size()<=2){
+            mListView.setNoLoadMoreHideView(true);
+        }
+        if (case3DLibraryListBean.getCases().size()>0){
+            ll_default_view.setVisibility(View.GONE);
+        }else {
+            ll_default_view.setVisibility(View.VISIBLE);
+        }
         case3DBeanList.addAll(case3DLibraryListBean.getCases());
         if (case3DLibraryListBean.getCases().size() < LIMIT) {
             mListView.setHasLoadMore(false);
@@ -566,6 +562,11 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     @Override
     public void onResume() {
         super.onResume();
+//        setSwipeRefreshInfo();
+        mAdapter.notifyDataSetChanged();
+        if (CustomProgress.dialog != null && CustomProgress.dialog.isShowing()) {
+            CustomProgress.cancelDialog();
+        }
         if (null != mFloatingActionsMenu) {
             mFloatingActionsMenu.close(true);
         }
@@ -588,6 +589,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     private final static String MENU_COLLAPSE_TAG = "menu_collapse";
     private FiltrateContentBean filtrateContentBean;
     private RelativeLayout mListViewRootView;
+    private LinearLayout ll_default_view;
     private FloatingActionMenu mFloatingActionsMenu;
     private PtrClassicFrameLayout mPtrLayout;
     private ListViewFinal mListView;
@@ -599,7 +601,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     private LinearLayout.LayoutParams mShadeViewLayoutParams;
     private UserHome3DCaseAdapter mAdapter;
     private int mOffset = 0;
-    private int LIMIT = 50;
+    private int LIMIT = 10;
     private int screenWidth, screenHeight;
 
     private String mNickNameConsumer;

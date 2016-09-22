@@ -2,12 +2,12 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -20,10 +20,14 @@ import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.SplitStringUtils;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.socks.library.KLog;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -56,45 +60,91 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         tv_flow_first_design_should_first = (TextView) findViewById(R.id.tv_flow_first_design_should_first);
         ll_flow_first_design_send = (LinearLayout) findViewById(R.id.ll_flow_first_design_send);
         btn_flow_first_design_send = (Button) findViewById(R.id.btn_flow_first_design_send);
-//        tv_flow_first_design_deduct_measure_cost = (TextView) findViewById(R.id.tv_flow_first_design_deduct_measure_cost);
+        tv_flow_first_design_deduct_measure_cost = (TextView) findViewById(R.id.tv_flow_first_design_deduct_measure_cost);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        CustomProgress.show(this, "", false, null);
+
         setTitleForNavbar(getResources().getString(R.string.flow_cost_detail)); /// 设置标题 .
+    }
+
+    /**
+     * 当点击返回按键后调用节点优化接口，使原31节点变成32节点
+     *
+     * @param view
+     */
+    @Override
+    protected void leftNavButtonClicked(View view) {
+        promptDialog();
+    }
+
+    // 捕获返回键的方法
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            promptDialog();
+        }
+        return false;
+    }
+
+    private void promptDialog() {
+        new AlertView(UIUtils.getString(R.string.tip), "确定放弃本次支付吗？", null, new String[]{UIUtils.getString(R.string.sure), UIUtils.getString(R.string.pickerview_cancel)}, null, this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                switch (position) {
+                    case 0:
+                        getNodeLock(needs_id, designer_id, contract_no);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }).show();
     }
 
     @Override
     protected void onWorkFlowData() {
         super.onWorkFlowData();
+
         updateViewFromData();
-        getDesignerInfoData(designer_id, hs_uid);
-    }
-
-    /**
-     * @param designer_id
-     * @param hs_uid
-     * @brief 获取设计师基础信息 .
-     */
-    public void getDesignerInfoData(String designer_id, String hs_uid) {
-        MPServerHttpManager.getInstance().getDesignerInfoData(designer_id, hs_uid, new OkJsonRequest.OKResponseCallback() {
-            String jsonString;
-
+        restgetDesignerInfoData(designer_id, hs_uid, new commonJsonResponseCallback() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                jsonString = GsonUtil.jsonToString(jsonObject);
-                designerInfoList = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
-                KLog.json("FlowFirstDesignActivity", jsonString);
+            public void onJsonResponse(String jsonResponse) {
+                CustomProgress.cancelDialog();
+                designerInfoList = new Gson().fromJson(jsonResponse, DesignerInfoDetails.class);
                 updateViewFromInfoData();
             }
 
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onError(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowFirstDesignActivity.this,
-//                        AlertView.Style.Alert, null).show();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, FlowFirstDesignActivity.this);
+
+            }
+        });
+    }
+
+    /**
+     * @param needs_id
+     * @param designer_id
+     * @param contract_no
+     * @brief 节点变动接口31变动成32 .
+     */
+    public void getNodeLock(String needs_id, String designer_id, String contract_no) {
+        MPServerHttpManager.getInstance().getNodeLock(needs_id, designer_id, contract_no, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                finish();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                finish();
             }
         });
     }
@@ -115,7 +165,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
         DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
         tv_flow_first_design_last.setText(df.format(totalCost - firstCost)); // 设计尾款
 
-        if (Integer.valueOf(wk_cur_sub_node_id) == 31) {
+        if (Integer.valueOf(wk_cur_sub_node_id) == 31 || Integer.valueOf(wk_cur_sub_node_id) == 32) {
             ll_flow_first_design_send.setVisibility(View.VISIBLE);
             btn_flow_first_design_send.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,6 +176,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                         return;
                     String order_line_no = order.getOrder_line_no();
                     String order_no = order.getOrder_no();
+                    Log.d("MLD", "order_line_no ---"+ order_line_no+ "order_no +++" + order_no);
                     if (isLock) {
                         getAliPayDetailInfo(order_no, order_line_no);
                         isLock = false;
@@ -145,17 +196,16 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                 measurement_price = "0.00";
             }
             measurement_price = SplitStringUtils.splitStringDot(measurement_price);
-//            tv_flow_first_design_deduct_measure_cost.setText(measurement_price); // 已扣除量房费
+            tv_flow_first_design_deduct_measure_cost.setText(measurement_price + getResources().getString(R.string.flow_monad_rmb)); // 已扣除量房费
             MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) {
                 return;
             }
-            String  amout = UIUtils.getString(R.string.flow_deduct_measure_cost)+measurement_price+UIUtils.getString(R.string.deduct_measure_cost);
-            tv_flow_first_design_aggregate_amount.setText(designContractEntity.getContract_charge()+"("+amout+")");
+            tv_flow_first_design_aggregate_amount.setText(designContractEntity.getContract_charge());
             Double firstCost = Double.parseDouble(designContractEntity.getContract_first_charge());
             Double measureCost = Double.parseDouble(mBidders.get(0).getMeasurement_fee());
             DecimalFormat df = new DecimalFormat("#.##"); // 保留小数点后两位
-            tv_flow_first_design_should_first.setText(df.format(firstCost - measureCost)); // 本次应付设计首款
+            tv_flow_first_design_should_first.setText(df.format(firstCost - measureCost) + getResources().getString(R.string.flow_monad_rmb)); // 本次应付设计首款
         }
     }
 
@@ -170,8 +220,8 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                KLog.d("FlowFirstDesignActivity", userInfo);
-                KLog.json(TAG, userInfo);
+                LogUtils.i("FlowFirstDesignActivity", userInfo);
+                LogUtils.i(TAG, userInfo);
 
                 MPAliPayBean MPAliPayBean = GsonUtil.jsonToBean(userInfo, MPAliPayBean.class);
                 String amount;
@@ -202,27 +252,27 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
 
         public void onOK() {
-//            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success));
-            Toast toast = Toast.makeText(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_success), Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
-            setResult(FirstForContract);
-            finish();
+            openAlertView(UIUtils.getString(R.string.pay_success),0);
         }
 
         public void onFail() {
-//            MyToast.show(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed));
-//            Toast toast = Toast.makeText(FlowFirstDesignActivity.this,UIUtils.getString(R.string.pay_failed),Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
-//            toast.show();
-            Toast toast = Toast.makeText(FlowFirstDesignActivity.this, UIUtils.getString(R.string.pay_failed), Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER,0,0);
-            toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
-            isLock = true;
+            openAlertView(UIUtils.getString(R.string.pay_failed),1);
         }
     };
+    private void openAlertView(String content,final int isSuccess){
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, this,
+                AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if(position == 0 && isSuccess == 0){
+                    setResult(FirstForContract);
+                    finish();
+                }else if(position == 0 && isSuccess == 1){
+                    isLock = true;
+                }else{}
+            }
+        }).show();
+    }
 
     private LinearLayout ll_flow_first_design_send;
     private TextView tv_flow_first_design_name;
@@ -232,7 +282,7 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     private TextView tv_flow_first_design_contract_no;
     private TextView tv_flow_first_design_should_first;
     private TextView tv_flow_first_design_aggregate_amount;
-//    private TextView tv_flow_first_design_deduct_measure_cost;
+    private TextView tv_flow_first_design_deduct_measure_cost;
     private Button btn_flow_first_design_send;
     private int FirstForContract = 1; // 首款调到设计合同
 

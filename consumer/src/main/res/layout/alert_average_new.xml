@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="15dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/popup_main_background"
+            android:textSize="@dimen/textSize_actionsheet_msg"
+            android:text="1." />
+
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/popup_main_background"
+            android:textSize="@dimen/textSize_actionsheet_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.2"
+            android:text="在线发布需求，3位设计师可同时竞标，对不满意的设计师可进行更换" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/popup_main_background"
+            android:textSize="@dimen/textSize_actionsheet_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2." />
+
+        <TextView
+            android:textColor="@color/popup_main_background"
+            android:textSize="@dimen/textSize_actionsheet_msg"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="预约设计师量房，量房费可议价" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/popup_main_background"
+            android:textSize="@dimen/textSize_actionsheet_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3." />
+
+        <TextView
+            android:textColor="@color/popup_main_background"
+            android:textSize="@dimen/textSize_actionsheet_msg"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="签定设计合同量房费自动转入设计费" />
+    </LinearLayout>
+</LinearLayout>

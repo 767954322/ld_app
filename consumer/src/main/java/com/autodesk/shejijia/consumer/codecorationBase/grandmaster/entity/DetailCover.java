@@ -41,7 +41,7 @@ public class DetailCover {
 
     @Override
     public String toString() {
-        return "ProfileCover{" +
+        return "DetailCover{" +
                 "name='" + name + '\'' +
                 ", file_id='" + file_id + '\'' +
                 ", public_url='" + public_url + '\'' +

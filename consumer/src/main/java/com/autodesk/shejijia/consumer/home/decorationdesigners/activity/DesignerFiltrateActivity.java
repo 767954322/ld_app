@@ -56,6 +56,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.bid_filter));
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.bg_0084ff));
 
         allListBean = new RelateInformationListBean();
         allListBean.setName("全部");
@@ -100,7 +101,8 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
 
         mYear = mWorkTimeList.get(mYearIndex).getCode();
 
-        mStyle = mStyleList.get(mStyleIndex).getName();
+        mStyleName = mStyleList.get(mStyleIndex).getName();
+        mStyleCode = mStyleList.get(mStyleIndex).getCode();
 
         mPrice = mCostList.get(mPriceIndex).getCode();
 
@@ -121,10 +123,12 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
 
         FindDesignerBean findDesignerBean = new FindDesignerBean();
         findDesignerBean.setNick_name("");
-        if ("全部".equals(mStyle)) {
-            mStyle = "";
+        if ("全部".equals(mStyleName)) {
+            mStyleName = "";
+            mStyleCode = "";
         }
-        findDesignerBean.setStyle_names(mStyle);
+        findDesignerBean.setStyle_names(mStyleName);
+        findDesignerBean.setStyle(mStyleCode);
         findDesignerBean.setStart_experience(start_experience);
         findDesignerBean.setEnd_experience(end_experience);
         findDesignerBean.setDesign_price_code(mPrice);
@@ -205,7 +209,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerExperiences(okResponseCallback);
@@ -230,7 +234,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerCost(okResponseCallback);
@@ -255,7 +259,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,DesignerFiltrateActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, DesignerFiltrateActivity.this);
             }
         };
         MPServerHttpManager.getInstance().getDesignerStyles(okResponseCallback);
@@ -269,7 +273,8 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     private int mStyleIndex = 0;
     private int mPriceIndex = 0;
     private String mYear;
-    private String mStyle;
+    private String mStyleName;
+    private String mStyleCode;
     private String mPrice;
 
     private FiltrateWorkYearAdapter mYAdapter;

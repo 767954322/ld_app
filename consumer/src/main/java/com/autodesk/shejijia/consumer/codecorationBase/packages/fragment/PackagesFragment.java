@@ -13,16 +13,23 @@ import android.widget.ImageView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.activity.PackageDetailActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.activity.ReservationFormActivity;
+import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-
+import com.nostra13.universalimageloader.core.ImageLoader;
 /**
- * 套餐
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file PackagesFragment.java  .
+ * @brief 六大产品-套餐 .
  */
+
+
 public class PackagesFragment extends BaseFragment implements View.OnClickListener, GridView.OnItemClickListener {
 
-
-    public PackagesFragment() {
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -31,23 +38,36 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initView() {
+
         gv_packages = (GridView) rootView.findViewById(R.id.gv_packages);
         bt_packages_yuyue = (ImageButton) rootView.findViewById(R.id.bt_packages_yuyue);
         iv_packages_tital = (ImageView) rootView.findViewById(R.id.iv_packages_tital);
+
     }
 
     @Override
     protected void initData() {
-        PacksAdapter packasAdapter = new PacksAdapter();
-        gv_packages.setAdapter(packasAdapter);
+        isLoginUserJust = isLoginUser();
+        packages = ImageUrlUtils.getPackagesListImage();
+        banner_image = ImageUrlUtils.getPackagesListBanner();
+
+        iv_packages_tital.setFocusable(true);
+        iv_packages_tital.setFocusableInTouchMode(true);
+        iv_packages_tital.requestFocus();
+
+        ImageUtils.loadImageIcon(iv_packages_tital,banner_image);
+        PacksAdapter pagerAdapter = new PacksAdapter();
+        gv_packages.setAdapter(pagerAdapter);
+
     }
 
 
     @Override
     protected void initListener() {
+
         bt_packages_yuyue.setOnClickListener(this);
-        iv_packages_tital.setOnClickListener(this);
         gv_packages.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -55,16 +75,13 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
 
         switch (v.getId()) {
             case R.id.bt_packages_yuyue:
-                Intent intent_yuyue = new Intent(activity, ReservationFormActivity.class);
-                intent_yuyue.putExtra("item_num", 0);
-                intent_yuyue.putExtra("item_name", "套餐名称");
-                activity.startActivity(intent_yuyue);
-                break;
-            case R.id.iv_packages_tital:
-                Intent intent_detail = new Intent(activity, PackageDetailActivity.class);
-                intent_detail.putExtra("item_num", 0);
-                intent_detail.putExtra("item_name", "套餐名称");
-                activity.startActivity(intent_detail);
+                if (isLoginUserJust) {
+                    Intent intent_yuyue = new Intent(activity, ReservationFormActivity.class);
+                    intent_yuyue.putExtra("item_num", 0);
+                    activity.startActivity(intent_yuyue);
+                } else {
+                    AdskApplication.getInstance().doLogin(activity);
+                }
                 break;
             default:
                 break;
@@ -73,18 +90,38 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        isLoginUserJust = isLoginUser();
+
+    }
+
+    //判断该用户是否登陆了
+    public boolean isLoginUser() {
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+
+        if (memberEntity == null) {
+
+            return false;//未登录
+        } else {
+
+            return true;//已登录
+        }
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         Intent intent = new Intent(activity, PackageDetailActivity.class);
-        intent.putExtra("item_num", position + 1);
-        intent.putExtra("item_name", packages_name[position]);
+        intent.putExtra("item_num", position);
         startActivity(intent);
 
     }
 
+
     class PacksAdapter extends BaseAdapter {
-
-
         @Override
         public int getCount() {
             return packages.length;
@@ -111,8 +148,7 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
                 convertView.setTag(myHolder);
             }
             myHolder = (MyHolder) convertView.getTag();
-            myHolder.iv_packets.setImageResource(packages[position]);
-
+            ImageUtils.loadImageIcon(myHolder.iv_packets,packages[position]);
             return convertView;
         }
 
@@ -121,15 +157,12 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    private String[] packages_name = {"标题",
-            "居然装饰东捷套餐", "居然住美幸福家", "居然装饰北舒套餐",
-            "居然住美艺术家", "居然装饰南韵套餐", "居然住美品质家"};
+    private String[] packages;
+    private String banner_image;
+    private boolean isLoginUserJust;
 
-    private int[] packages = {R.drawable.one_pack, R.drawable.two_pack,
-            R.drawable.three_pack, R.drawable.four_pack,
-            R.drawable.five_pack, R.drawable.six_pack};//R.drawable.seven_pack, R.drawable.eight_pack第七个八个
     private GridView gv_packages;
-    private ImageButton bt_packages_yuyue;
     private ImageView iv_packages_tital;
+    private ImageButton bt_packages_yuyue;
 
 }

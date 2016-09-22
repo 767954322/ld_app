@@ -30,7 +30,8 @@ public final class UrlConstants {
     private static String MAIN_TRANSACTION = ApiManagerV2.TRANSACTION_PATH;
 
     //分享界面的url
-    public static final String MP_MAIN_SHARE = ApiManagerV2.SHARE_PATH + "/share/2dcase.html?caseid=";
+    public static final String MP_MAIN_SHARE = ApiManagerV2.SHARE_PATH;
+    public static final String MP_MAIN3_SHARE = ApiManagerV2.SHARE3_PATH;
 
     /**
      * 搜索.
@@ -132,6 +133,11 @@ public final class UrlConstants {
      * 设计师详情.
      */
     public static final String URL_GET_SEEK_DESIGNER_DETAIL = MAIN_DESIGN + "/designers/";
+
+    /**
+     * 节点优化.
+     */
+    public static final String URL_GET_NODE_CHANGE = MAIN_DESIGN;
 
     /**
      * 设计师个人中心3d详情

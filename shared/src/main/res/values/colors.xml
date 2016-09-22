@@ -57,6 +57,7 @@
     <!-- designer-designer-home colors -->
     <color name="text_green">#007100</color>
     <color name="grey_white">#F7F7F7</color>
+    <color name="grey_white_9">#f7f7f9</color>
     <!-- chat colors -->
     <color name="color_blue_0888ff">#0888ff</color>
     <color name="action_bar_tittle_color_555555">#555555</color>
@@ -92,10 +93,14 @@
     <color name="header">#58567D</color>
     <color name="grgray">#686868</color>
 
+    <color name="text_item_name">#333333</color>
+    <color name="text_item_">#333333</color>
+
     <!-- Common color management -->
     <color name="bg_00">#000000</color>
     <color name="bg_22">#1f1f1f</color>
     <color name="bg_33">#333333</color>
+    <color name="bg_ee_33">#ee333333</color>
     <color name="bg_40">#404040</color>
     <color name="bg_4A">#4A4A4A</color>
     <color name="bg_4E">#4E4E4E</color>
@@ -140,6 +145,7 @@
     <color name="bg_edf1f4">#EDF1F4</color>
     <color name="bg_336dad">#336DAB</color>
     <color name="bg_0084ff">#0084FF</color>
+    <color name="bg_2e2930">#2E2930</color>
     <color name="bg_eef1f4">#EEF1F4</color>
     <color name="bg_f1f6fb">#F1F6FB</color>
     <color name="zxing_title">#181314</color>
@@ -204,14 +210,20 @@
     <color name="navbar_bottom_border_color">#d4d4d4</color>
 
 
-
     <color name="app_primary">#1976D2</color>
     <color name="app_primary_dark">#1565C0</color>
     <color name="grey">#DDDDDD</color>
     <color name="light_grey">#EEEEEE</color>
     <color name="white_transparent">#99FFFFFF</color>
     <!--我的项目-->
-    <color name="my_project_title_pointer_color" >#0084ff</color>
+    <color name="my_project_title_pointer_color">#0084ff</color>
     <color name="my_project_title_text_color">#333333</color>
+    <!--工作室列表-->
+    <color name="studio_list_item_bg">#eef1f4</color>
+    <!--DIY-->
+    <color name="bg_color_diy">#F7F8FA</color>
+    <color name="bg_color_diy_easy">#55adff</color>
+    <color name="person_color">#666666</color>
+    <color name="person_color_be_good_at">#333333</color>
 
 </resources>

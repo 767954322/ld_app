@@ -3,17 +3,15 @@ package com.autodesk.shejijia.consumer.codecorationBase.grandmaster.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.uielements.matertab.Utils;
+import com.autodesk.shejijia.shared.components.common.utility.PhoneNumberUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 
 import java.util.regex.Matcher;
@@ -32,15 +30,15 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
     private EditText phoneNumber;
     private EditText name;
     private TextView commit;
-    private ImageView close;
+    private RelativeLayout close;
     private CommitListenser commitListenser;
     private TextView write_name;
     private TextView write_phone;
     private TextView line_name;
     private TextView line_phone;
+    private int header_drawble;
     private boolean phoneRight;
     private boolean nameSure = false;
-    private int header_drawble;
 
 
     public interface CommitListenser {
@@ -66,6 +64,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
         this.header_drawble = header_drawble;
         init();
     }
+
     public void init() {
 
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_grand_master_order, null);
@@ -76,7 +75,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
         phoneNumber = (EditText) view.findViewById(R.id.work_room_phoneNumber);
         name = (EditText) view.findViewById(R.id.work_room_name);
         commit = (TextView) view.findViewById(R.id.commit_information);
-        close = (ImageView) view.findViewById(R.id.work_room_dialog_close);
+        close = (RelativeLayout) view.findViewById(R.id.work_room_dialog_close);
         write_name = (TextView) view.findViewById(R.id.write_name);
         line_name = (TextView) view.findViewById(R.id.line_name);
         write_phone = (TextView) view.findViewById(R.id.write_phone);
@@ -138,7 +137,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
                 } else {
 
                     String mobile = phoneNumber.getText().toString();
-                    phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
+                    phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
                     if (phoneRight) {
 
                         line_phone.setBackgroundColor(Color.BLACK);
@@ -160,15 +159,6 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
 
             }
         });
-    }
-
-    //判断是不是手机号
-    public static boolean checkPhoneNumber(String phone) {
-        String str = "^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$";
-        Pattern p = Pattern.compile(str, Pattern.CASE_INSENSITIVE);
-        Matcher m = p.matcher(phone);
-        boolean isMatches = m.matches();
-        return isMatches;
     }
 
     @Override
@@ -197,7 +187,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
                 }
                 //phone
                 String mobile = phoneNumber.getText().toString();
-                phoneRight = checkPhoneNumber(mobile);
+                phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
                 if (phoneRight) {
 
                     line_phone.setBackgroundColor(Color.BLACK);

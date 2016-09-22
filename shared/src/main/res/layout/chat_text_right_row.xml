@@ -44,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/chat_room_textcell_message_margintop"
+            android:layout_marginRight="@dimen/chat_room_cell_message_sidemargin"
             android:background="@drawable/chat_text_right"
             android:orientation="vertical"
             android:layout_toLeftOf="@id/user_avatar">

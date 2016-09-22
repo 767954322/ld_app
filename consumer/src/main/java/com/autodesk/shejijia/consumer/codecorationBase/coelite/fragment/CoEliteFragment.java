@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment;
 
 
-
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -9,43 +8,31 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.IssueEliteDemanActivity;
-import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SelectionAdapter;
-import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DesignWorksBean;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
+import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
-import org.json.JSONObject;
-
 /**
- * 精选
+ * @author luchongbin .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file CoEliteFragment.java  .
+ * @brief 六大产品-精选 .
  */
-public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageChangeListener,View.OnClickListener {
-    private ViewPager vpSelection;
-    private ViewGroup vgSelection;
-    private ImageButton imReservationButton;
 
-    /**
-     * 图片资源id
-     */
-    private int[] imgIdArray ;
+public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageChangeListener, View.OnClickListener {
+
     /**
      * 装点点的ImageView数组
      */
     private ImageView[] tips;
-
-    private ImageView[] mImageViews;
+    private String [] pictures;
 
     @Override
     protected int getLayoutResId() {
@@ -54,54 +41,52 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
     @Override
     protected void initView() {
-        vgSelection = (ViewGroup)rootView.findViewById(R.id.vgSelection);
+        vgSelection = (ViewGroup) rootView.findViewById(R.id.vgSelection);
         vpSelection = (ViewPager) rootView.findViewById(R.id.vpSelection);
         imReservationButton = (ImageButton) rootView.findViewById(R.id.imReservationButton);
     }
 
     @Override
     protected void initData() {
-        //载入图片资源ID
-//        getDesignWorks();
-
-        imgIdArray = new int[]{R.drawable.pic1, R.drawable.pic2,R.drawable.pic3,R.drawable.pic4};
-        addImageViewtips();
-        addBackgroundForImageView();
-
-        vpSelection.setAdapter(new SelectionAdapter(mImageViews));
-        vpSelection.setOnPageChangeListener(this);
-        vpSelection.setCurrentItem((mImageViews.length) * 100);
-
-    }
-    /**
-     * 给每一个ImageView添加背景图
-     */
-    private void addBackgroundForImageView(){
-        mImageViews = new ImageView[imgIdArray.length];
-        for(int i=0; i<mImageViews.length; i++){
-
-            ImageView imageView = new ImageView(getActivity());
-            mImageViews[i] = imageView;
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//            ImageUtils.loadImage(imageView,"http://www.ciccphoto.com/01/02/201603/W020160301562832103832.jpg");
-            imageView.setBackgroundResource(imgIdArray[i]);
+        SixProductsPicturesBean sixProductsPicturesBean = WkFlowStateMap.sixProductsPicturesBean;
+        if(sixProductsPicturesBean != null ){
+            SixProductsPicturesBean.AndroidBean.SelectionBean selectionBean = sixProductsPicturesBean.getAndroid().getSelection().get(0);
+            String png = selectionBean.getPng();
+            pictures = png.split(",");
         }
+        updataView(pictures);
     }
+
+    /**
+     * 更新UI
+     *
+     * @param pictures
+     */
+    private void updataView(String [] pictures) {
+        int size = 1;
+        if (pictures != null && pictures.length > 0) {
+            size = pictures.length;
+        }
+        addImageViewtips(size);
+        vpSelection.setAdapter(new SelectionAdapter(getActivity(), pictures));
+        vpSelection.setOnPageChangeListener(this);
+    }
+
     /**
      * 将点点加入到ViewGroup中
      */
-    private void addImageViewtips(){
+    private void addImageViewtips(int size) {
 
-        tips = new ImageView[imgIdArray.length];
-        for(int i=0; i<tips.length; i++){
-            ImageView imageView = new ImageView(getActivity());
+        tips = new ImageView[size];
+        for (int i = 0; i < tips.length; i++) {
+            ImageView imageView = new ImageView(activity);
             LinearLayout.LayoutParams LayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            LayoutParams.setMargins(10,0,10,0);
+            LayoutParams.setMargins(10, 0, 10, 0);
             imageView.setLayoutParams(LayoutParams);
             tips[i] = imageView;
-            if(i == 0){
+            if (i == 0) {
                 tips[i].setBackgroundResource(R.drawable.page_indicator_focused);
-            }else{
+            } else {
                 tips[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
             }
 
@@ -109,6 +94,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         }
 
     }
+
     @Override
     protected void initListener() {
         imReservationButton.setOnClickListener(this);
@@ -116,50 +102,35 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imReservationButton:
                 showIssueDemandActivity();
-
                 break;
             default:
                 break;
         }
     }
-    private void showIssueDemandActivity(){
+
+    /**
+     * 点击立即预约按钮跳转到发布精选需求界面
+     */
+
+    private void showIssueDemandActivity() {
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (null == mMemberEntity){
+        if (null == mMemberEntity) {
             AdskApplication.getInstance().doLogin(getActivity());
             return;
         }
-        String nick_name = (mMemberEntity != null && mMemberEntity.getNick_name() != null
-                && mMemberEntity.getNick_name().length() > 0)?mMemberEntity.getNick_name():UIUtils.getString(R.string.anonymity);
+
+        String nick_name = mMemberEntity.getNick_name() ;
+        String phone_num = mMemberEntity.getMobile_number() ;
         Intent intent = new Intent(getActivity(), IssueEliteDemanActivity.class);
         intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, nick_name);
+        intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.PHONE_NUMBER, phone_num);
         startActivity(intent);
-//        getActivity().startActivityForResult(intent,1002);
-    }
-
-    //载入设计师作品
-    private void getDesignWorks(){
-        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                String str = GsonUtil.jsonToString(jsonObject);
-                DesignWorksBean myBidBean = GsonUtil.jsonToBean(str, DesignWorksBean.class);
-                myBidBean.getInnerPicList();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MyToast.show(getActivity(),"001");
-            }
-        };
-        MPServerHttpManager.getInstance().getDesignWorks(okResponseCallback);
 
     }
-
 
     @Override
     public void onPageScrollStateChanged(int arg0) {
@@ -173,17 +144,21 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
     @Override
     public void onPageSelected(int arg0) {
-        setImageBackground(arg0 % mImageViews.length);
+        setImageBackground(arg0 % tips.length);
     }
 
-    private void setImageBackground(int selectItems){
-        for(int i=0; i<tips.length; i++){
-            if(i == selectItems){
+    private void setImageBackground(int selectItems) {
+        for (int i = 0; i < tips.length; i++) {
+            if (i == selectItems) {
                 tips[i].setBackgroundResource(R.drawable.page_indicator_focused);
-            }else{
+            } else {
                 tips[i].setBackgroundResource(R.drawable.page_indicator_unfocused);
             }
         }
     }
+    private ViewPager vpSelection;
+    private ViewGroup vgSelection;
+    private ImageButton imReservationButton;
+
 
 }

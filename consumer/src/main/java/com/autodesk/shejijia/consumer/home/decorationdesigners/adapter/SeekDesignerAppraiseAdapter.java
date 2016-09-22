@@ -37,10 +37,6 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
         this.mDatas = datas;
     }
 
-    public SeekDesignerAppraiseAdapter(Context context, List<AppraiseDesignBeen.EstimatesBean> datas, ImageLoader imageLoader) {
-
-    }
-
 
     @Override
     public int getCount() {
@@ -94,9 +90,12 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
             }
 
             String time = mDatas.get(position).getEstimate_date();
+
+            String timeNew = time.substring(0,10);
+
             if (!TextUtils.isEmpty(time)) {
 
-                ((ViewHolder) viewHolder).mTvTime.setText(time);
+                ((ViewHolder) viewHolder).mTvTime.setText(timeNew);
             }
 
             int grade = mDatas.get(position).getMember_grade();
@@ -128,7 +127,6 @@ public class SeekDesignerAppraiseAdapter extends BaseAdapter {
     public void addMoreData(List<AppraiseDesignBeen.EstimatesBean> moreData) {
 
         this.mDatas = moreData;
-        notifyDataSetChanged();
     }
 
 }

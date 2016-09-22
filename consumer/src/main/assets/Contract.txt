@@ -25,47 +25,82 @@
 
 </head>
 <body>
-        <div id="content-block" style="background-color:#eef1f4;">
-            <div class="container" style="">
-                <h1>住宅室内装饰设计合同</h1>
-                <p>根据《中华人民共和国合同法》以及其他有关法律、法规规定的原则，结合室内装饰装修的特点，经甲、乙双方友好协商，现就甲方委托乙方承担室内装饰设计事宜达成如下协议。</p>
-            </div>
-            <div class="container" style="">
-                <p>1.设计工作内容</p>
-                <p>1.1  3D空间设计: 量房后乙方设计师根据甲方提供的需求信息开始3D规划设计，包括设计理念阐述、3D空间布置图、3D概念参考图等。甲方确认后，3D空间设计完成。
-1.2施工图设计：乙方提供给甲方的施工图包括但不限于：（图纸目录、主材明细表、设计说明、主材告知书、原始测量图、拆除图、新建图、平面布置图、强弱电插座图、开关控制灯具图、综合天花图、水路平面示意图、地面布置周长面积图、排砖图、墙体饰面图、客厅背景墙详图、节点大样）。</p>
-            </div>
-            <div class="container" style="">
-                <p>2.甲方权利与责任</p>
-                <p>2.1甲方应按乙方要求及时、准确且完整的提供设计所需原始户型图等项目建筑基本图纸等资料；<br>
-                2.2甲方应按约定的日期及金额向乙方支付设计费用； <br>
-                2.3甲方不得要求乙方设计师违反国家有关标准或规定进行设计；<br>
-                2.4本工程建筑材料、设备的加工订货如需乙方设计人员配合时，所需费用由甲方承担；<br>
-                2.5甲方有权对乙方提交的设计方案提出修改调整意见，并享有最终确认权。甲方应于乙方提交设计方案（含修改后方案）后三日内以书面形式或邮件形式提出修改意见或签署确认，但修改调整限定于已选定主调装饰风格范畴内。逾期既未确认又未提出书面修改意见的，视为同意确认该设计图纸或方案；<br>
-                2.6甲方如需改动承重结构图，由甲方向乙方提供原始结构及原始建筑图，结构改造图纸由专业设计院统一设计和盖章收费，如需乙方进行建筑设计的，则另行协商收费；<br>
-                2.7如甲方提供原始测量图（乙方未进行现场实地测量），乙方根据甲方提供的原始测量图数据，为甲方出具装饰施工图和约定效果图，相关设计图纸应标明尺寸、材质、用料、颜色 、图标以及设计说明等内容。<br>
-            </div>
-            <div class="container" style="">
-                <p>3.乙方权利与责任</p>
-                3.1如乙方进行现场实地测量，在收取设计费后，根据实际测量与设计方案需要，向甲方提供装饰施工图和约定效果图，相关设计图纸应标明尺寸、材质、用料、颜色 、图标以及设计说明等内容；
-                3.2乙方应尽职尽责完成设计方案，及时与甲方沟通征求意见并予以修改完善，按照约定向甲方交付和确认设计工程；
-                3.3在施工过程中，乙方设计师根据具体施工情况与进度，有责任提供不少于3次的现场施工指导或协助解决与设计有关的技术问题，以实现原设计效果；
-                3.4在装修过程中，如甲方需要，乙方有责任提供在居然在线进行线上推荐选购或陪同甲方在居然之家的线下实体店挑选装饰材料、家具配饰的服务。
-                <p>4.合同顺延</p>
-                <p>4.1甲方发生下列情形之一的，乙方有权顺延设计期限：
-（1）未按照约定支付设计费用的；
-（2）延期提交设计工作所依据的图纸资料的；
-（3）逾期提出修改意见或确认。<br></p>
-                <p>5.违约责任</p>
-                <p>5.1因乙方设计未按国家有关设计规定、规范要求而发生错误造成甲方工程质量事故的，乙方除负责采取补救措施外，还应根据损失程度按照国家相关规定向甲方支付赔偿金。
-5.2乙方未能按照合同约定的期限完成设计工作内容，甲方可在平台申请退款或向设计家平台发起投诉。</p>
-                <p>6.其他事项</p>
-                <p>6.1乙方对其为甲方设计的成果依法享有版权，甲方支付全部费用后，设计成果的版权除署名权外均 转让给甲方；但是未经乙方书面允许，甲方不得将本项目设计成果用于其它项目；乙方享有仅在本项目推广及乙方汇编作品集、设计家平台展示、参赛、出席研讨、行业内报刊投稿、乙方自身宣传中使用的权利，不得用于其它项目。
-6.2本合同在履行过程中发生纠纷，甲乙方应及时协商解决。协商不成时，向设计家平台发起投诉。
-6.3本合同于双方履行完毕各自义务后自动终止。
-6.4本合同经甲方确认并支付首款后生效。</p>
-            </div>
-
+        <div class="allframe">
+            <p class="part1">根据《中华人民共和国合同法》以及其他有关法律、法规规定的原则，结合室内装饰装修的特点，经甲、乙双方友好协商，现就甲方委托乙方承担室内装饰设计事宜达成如下协议。</p>
+            <p class="title2">1. 设计工作内容</p>
+            <p><ul class="textgroup">
+                    <li class="textgroupnm">1.1</li>
+                    <li class="textgroupex"> 3D空间设计: 量房后乙方设计师根据甲方提供的需求信息开始3D规划设计，包括设计理念阐述、3D空间布置图、3D概念参考图等。甲方确认后，3D空间设计完成。</li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">1.2</li>
+                    <li class="textgroupex">施工图设计：乙方提供给甲方的施工图包括但不限于：（图纸目录、主材明 细表、设计说明、主材告知书、原始测量图、拆除图、新建图、平面布置图、强弱电插座图、开关控制灯具图、综合天花图、水路平面示意图图、地面布置周长面积图、排砖图、墙体饰面图、客厅背景墙详图、节点大样）。</li>
+                </ul>
+                <div class="Cspace"></div>
+                <div class="title2">2.甲方权利与责任</div><ul class="textgroup">
+                    <li class="textgroupnm">2.1</li>
+                    <li class="textgroupex">甲方应按乙方要求及时、准确且完整的提供设计所需原始户型图等项目建筑基本图纸等资料；</li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">2.2</li>
+                    <li class="textgroupex">甲方应按约定的日期及金额向乙方支付设计费用； </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">2.3</li>
+                    <li class="textgroupex">甲方不得要求乙方设计师违反国家有关标准或规定进行设计； </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">2.4</li>
+                    <li class="textgroupex">本工程建筑材料、设备的加工订货如需乙方设计人员配合时，所需费用由甲方承担； </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">2.5</li>
+                    <li class="textgroupex">甲方有权对乙方提交的设计方案提出修改调整意见，并享有最终确认权。甲方应于乙方提交设计方案（含修改后方案）后三日内以书面形式或邮件形式提出修改意见或签署确认，但修改调整限定于已选定主调装饰风格范畴内。逾期既未确认又未提出书面修改意见的，视为同意确认该设计图纸或方案； </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">2.6</li>
+                    <li class="textgroupex">甲方如需改动承重结构图，由甲方向乙方提供原始结构及原始建筑图，结构改造图纸由专业设计院统一设计和盖章收费，如需乙方进行建筑设计的，则另行协商收费； </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">2.7</li>
+                    <li class="textgroupex">如甲方提供原始测量图（乙方未进行现场实地测量），乙方根据甲方提供的原始测量图数据，为甲方出具装饰施工图和约定效果图，相关设计图纸应标明尺寸、材质、用料、颜色 、图标以及设计说明等内容。 </li>
+                </ul>    <div class="Cspace"></div><p class="title2">3.乙方权利与责任</p><ul class="textgroup">
+                    <li class="textgroupnm">3.1</li>
+                    <li class="textgroupex">如乙方进行现场实地测量，在收取设计费后，根据实际测量与设计方案需要，向甲方提供装饰施工图和约定效果图，相关设计图纸应标明尺寸、材质、用料、颜色 、图标以及设计说明等内容； </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">3.2</li>
+                    <li class="textgroupex">乙方应尽职尽责完成设计方案，及时与甲方沟通征求意见并予以修改完善，按照约定向甲方交付和确认设计工程； </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">3.3</li>
+                    <li class="textgroupex">在施工过程中，乙方设计师根据具体施工情况与进度，有责任提供不少于3次的现场施工指导或协助解决与设计有关的技术问题，以实现原设计效果；</li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">3.4</li>
+                    <li class="textgroupex">在装修过程中，如甲方需要，乙方有责任提供在居然在线进行线上推荐选购或陪同甲方在居然之家挑选装饰材料、家具配饰的服务； </li>
+                </ul>    <div class="Cspace"></div><p class="title2">4.合同顺延</p><ul class="textgroup">
+                    <li class="textgroupnm">4.1</li>
+                    <li class="textgroupex">甲方发生下列情形之一的，乙方有权顺延设计期限： </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm"></li>
+                    <li class="textgroupex3"> （1）未按照约定支付设计费用的；</li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm"></li>
+                    <li class="textgroupex3"> （2）延期提交设计工作所依据的图纸资料的；</li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm"></li>
+                    <li class="textgroupex"> （3）逾期提出修改意见或签署确认书的；</li>
+                </ul>    <div class="Cspace"></div><p class="title2">5.违约责任</p><ul class="textgroup">
+                    <li class="textgroupnm">5.1</li>
+                    <li class="textgroupex">  因乙方设计未按国家有关设计规定、规范要求而发生错误造成甲方工程质量事故的，乙方除负责采取补救措施外，还应根据损失程度按照国家相关规定向甲方支付赔偿金。 </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">5.2</li>
+                    <li class="textgroupex">  乙方未能按照合同约定的期限完成设计工作内容，甲方可在平台申请退款或向平台客服发起投诉。 </li>
+                </ul>    <div class="Cspace"></div><p class="title2">6.其他事项</p><ul class="textgroup">
+                    <li class="textgroupnm">6.1</li>
+                    <li class="textgroupex"> 乙方对其为甲方设计的成果依法享有版权，甲方支付全部费用后，设计成果的版权除署名权外均 转让给甲方；但是未经乙方书面允许，甲方不得将本项目设计成果用于其它项目；乙方享有仅在本项目推广及乙方汇编作品集、参展、参赛、出席研讨、行业内报刊投稿、乙方自身宣传中使用的权利，不得用于其它项目。 </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">6.2</li>
+                    <li class="textgroupex"> 本合同在履行过程中发生纠纷，甲乙方应及时协商解决。协商不成时，向设计家平台发起投诉。 </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">6.3</li>
+                    <li class="textgroupex"> 本合同于双方履行完毕各自义务后自动终止。 </li>
+                </ul><ul class="textgroup">
+                    <li class="textgroupnm">6.4</li>
+                    <li class="textgroupex"> 本合同正本经甲乙双方签章后生效。</li>
+                </ul>
+        </div>
     </body>
 </html>
  

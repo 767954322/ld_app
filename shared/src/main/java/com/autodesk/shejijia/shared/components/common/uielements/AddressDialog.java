@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,12 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         void onClick(String province_name, String province, String city_name, String city, String district_name, String district);
     }
 
-    public AddressDialog() {
+    public static AddressDialog getInstance(String locationData) {
+        AddressDialog dialog = new AddressDialog();
+        Bundle data = new Bundle();
+        data.putString("location", locationData);
+        dialog.setArguments(data);
+        return dialog;
     }
 
     @Nullable
@@ -69,7 +75,12 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         mCityWheelView.addChangingListener(this);
         // 添加change事件
         mDistrictWheelView.addChangingListener(this);
-        initData();
+
+        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString("location"))) {
+            initData(getDefaultAddress(getArguments().getString("location")));
+        } else {
+            initData(null);
+        }
         return view;
     }
 
@@ -91,33 +102,48 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
     }
 
     //初始化数据
-    private void initData() {
+    private void initData(@Nullable String[] locationData) {
+        isFirstIn = true;
         mCityDataHelper = CityDataHelper.getInstance(getActivity());
         mDb = mCityDataHelper.openDataBase();
         mProvinceModelArrayList = mCityDataHelper.getProvince(mDb);
         if (mProvinceModelArrayList.size() > 0) {
-            province_name = mProvinceModelArrayList.get(0).NAME;
-            province = mProvinceModelArrayList.get(0).CODE;
-            mCityModelArrayList = mCityDataHelper.getCityByParentId(mDb, mProvinceModelArrayList.get(0).CODE);
+            if (locationData != null && locationData.length > 1) {
+                mProvinceIndex = getProvinceIndex(locationData[0]);
+            }
+            province_name = mProvinceModelArrayList.get(mProvinceIndex).NAME;
+            province = mProvinceModelArrayList.get(mProvinceIndex).CODE;
+            mCityModelArrayList = mCityDataHelper.getCityByParentId(mDb, mProvinceModelArrayList.get(mProvinceIndex).CODE);
         }
         if (mCityModelArrayList.size() > 0) {
-            mDistrictModelArrayList = mCityDataHelper.getDistrictById(mDb, mCityModelArrayList.get(0).CODE);
+            if (locationData != null && locationData.length > 1) {
+                mCityIndex = getCityIndex(locationData[1]);
+            }
+            mDistrictModelArrayList = mCityDataHelper.getDistrictById(mDb, mCityModelArrayList.get(mCityIndex).CODE);
         }
         mProvinceAdapter = new ProvinceAdapter(getActivity(), mProvinceModelArrayList);
         mProvinceAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));//设置字体大小
         mProvinceAdapter.setTextColor(UIUtils.getColor(R.color.black));
 
         mProvinceWheelView.setViewAdapter(mProvinceAdapter);
+        mProvinceWheelView.setCurrentItem(mProvinceIndex);
         province_name = mProvinceModelArrayList.get(mProvinceWheelView.getCurrentItem()).NAME;
         province = mProvinceModelArrayList.get(mProvinceWheelView.getCurrentItem()).CODE;
 
+        mCityWheelView.setCurrentItem(mCityIndex);
         city_name = mCityModelArrayList.get(mCityWheelView.getCurrentItem()).NAME;
         city = mCityModelArrayList.get(mCityWheelView.getCurrentItem()).CODE;
 
-        district_name = mDistrictModelArrayList.get(mDistrictWheelView.getCurrentItem()).NAME;
-        district = mDistrictModelArrayList.get(mDistrictWheelView.getCurrentItem()).CODE;
-        updateCities();
-        updateAreas();
+        if (mDistrictModelArrayList.size() > 0) {
+            if (locationData != null && locationData.length == 3) {
+                mDistrictIndex = getDistrictIndex(locationData[2]);
+            }
+            mDistrictWheelView.setCurrentItem(mDistrictIndex);
+            district_name = mDistrictModelArrayList.get(mDistrictWheelView.getCurrentItem()).NAME;
+            district = mDistrictModelArrayList.get(mDistrictWheelView.getCurrentItem()).CODE;
+        }
+        updateCities(true);
+        updateAreas(true);
     }
 
     @Override
@@ -125,58 +151,128 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         if (wheel == mProvinceWheelView) {
             province_name = mProvinceModelArrayList.get(newValue).NAME;
             province = mProvinceModelArrayList.get(newValue).CODE;
-            updateCities();
-        }
-        if (wheel == mCityWheelView) {
+            updateCities(false);
+            if (!isFirstIn) {
+                updateAreas(false);
+            }
+        } else if (wheel == mCityWheelView) {
             city_name = mCityModelArrayList.get(newValue).NAME;
             city = mCityModelArrayList.get(newValue).CODE;
-            updateAreas();
-        }
-        if (wheel == mDistrictWheelView) {
+            updateAreas(false);
+        } else if (wheel == mDistrictWheelView) {
             district_name = mDistrictModelArrayList.get(newValue).NAME;
             district = mDistrictModelArrayList.get(newValue).CODE;
         }
     }
 
-    private void updateAreas() {
+    private void updateAreas(boolean isDefault) {
+
         int cCurrent = mCityWheelView.getCurrentItem();
+
         if (mCityModelArrayList.size() > 0) {
             mDistrictModelArrayList = mCityDataHelper.getDistrictById(mDb, mCityModelArrayList.get(cCurrent).CODE);
         } else {
             mDistrictModelArrayList.clear();
         }
+
+        if (null == getActivity()) {
+            return;
+        }
         mAreaAdapter = new AreaAdapter(getActivity(), mDistrictModelArrayList);
         mAreaAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));
         mDistrictWheelView.setViewAdapter(mAreaAdapter);
         if (mDistrictModelArrayList.size() > 0) {
-            district_name = mDistrictModelArrayList.get(0).NAME;
-            district = mDistrictModelArrayList.get(0).CODE;
-            mDistrictWheelView.setCurrentItem(0);
+            if (isDefault) {
+                district_name = mDistrictModelArrayList.get(mDistrictIndex).NAME;
+                district = mDistrictModelArrayList.get(mDistrictIndex).CODE;
+                mDistrictWheelView.setCurrentItem(mDistrictIndex);
+            } else {
+                district_name = mDistrictModelArrayList.get(0).NAME;
+                district = mDistrictModelArrayList.get(0).CODE;
+                mDistrictWheelView.setCurrentItem(0);
+            }
         } else {
-            district_name = "";
-            district = "";
+            district_name = DEFAULT_DISTRICT_NAME;
+            district = DEFAULT_DISTRICT_CDOE;
         }
     }
 
-    private void updateCities() {
+    private void updateCities(boolean isDefault) {
+
         int pCurrent = mProvinceWheelView.getCurrentItem();
         if (mProvinceModelArrayList.size() > 0) {
             mCityModelArrayList = mCityDataHelper.getCityByParentId(mDb, mProvinceModelArrayList.get(pCurrent).CODE);
         } else {
             mCityModelArrayList.clear();
         }
+        if (null == getActivity()) {
+            return;
+        }
         mCityAdapter = new CityAdapter(getActivity(), mCityModelArrayList);
         mCityAdapter.setTextSize(UIUtils.dip2px(getActivity(), TEXT_SIZE));
         mCityWheelView.setViewAdapter(mCityAdapter);
         if (mCityModelArrayList.size() > 0) {
-            mCityWheelView.setCurrentItem(0);
-            city_name = mCityModelArrayList.get(0).NAME;
-            city = mCityModelArrayList.get(0).CODE;
+            if (isDefault) {
+                mCityWheelView.setCurrentItem(mCityIndex);
+                city_name = mCityModelArrayList.get(mCityIndex).NAME;
+                city = mCityModelArrayList.get(mCityIndex).CODE;
+            } else {
+                city_name = mCityModelArrayList.get(0).NAME;
+                city = mCityModelArrayList.get(0).CODE;
+                mCityWheelView.setCurrentItem(0);
+            }
         } else {
             city_name = "";
             city = "";
         }
-        updateAreas();
+        updateAreas(isDefault);
+    }
+
+    public String[] getDefaultAddress(String location) {
+        String[] locationData = location.split(" ");
+        if (locationData.length > 0) {
+            return locationData;
+        }
+        return null;
+    }
+
+    /*
+    * 确定 province 对应的index
+    * */
+    private int getProvinceIndex(@NonNull String province_name) {
+        int mProvinceIndex = 0;
+        for (int i = 0; i < mProvinceModelArrayList.size(); i++) {
+            if (mProvinceModelArrayList.get(i).NAME.equalsIgnoreCase(province_name)) {
+                mProvinceIndex = i;
+            }
+        }
+        return mProvinceIndex;
+    }
+
+    /*
+    * 确定 city 对应的index
+    * */
+    private int getCityIndex(@NonNull String city_name) {
+        int mCityIndex = 0;
+        for (int i = 0; i < mCityModelArrayList.size(); i++) {
+            if (mCityModelArrayList.get(i).NAME.equalsIgnoreCase(city_name)) {
+                mCityIndex = i;
+            }
+        }
+        return mCityIndex;
+    }
+
+    /*
+    * 确定 区 对应的index
+    * */
+    private int getDistrictIndex(@NonNull String district_name) {
+        int mDistrictIndex = 0;
+        for (int i = 0; i < mDistrictModelArrayList.size(); i++) {
+            if (mDistrictModelArrayList.get(i).NAME.equalsIgnoreCase(district_name)) {
+                mDistrictIndex = i;
+            }
+        }
+        return mDistrictIndex;
     }
 
     public void setAddressListener(OnAddressCListener onAddressCListener) {
@@ -195,6 +291,9 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         }
     }
 
+    private static final String DEFAULT_DISTRICT_CDOE = "0";/*区的默认code值*/
+    private static final String DEFAULT_DISTRICT_NAME = "none";/*区的名字默认值*/
+
     private static final int TEXT_SIZE = 7;//选择器的字体大小
     private WheelView mProvinceWheelView;
     private WheelView mCityWheelView;
@@ -205,6 +304,9 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
     private String province, province_name;
     private String city, city_name;
     private String district, district_name;
+    private int mProvinceIndex, mCityIndex, mDistrictIndex;
+    private boolean isFirstIn = false;
+
 
     private List<ProvinceModel> mProvinceModelArrayList = new ArrayList<>();
     private List<CityModel> mCityModelArrayList = new ArrayList<>();

@@ -14,13 +14,15 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.util.List;
+/**
+ * @author  .
+ * @version 1.0 .
+ * @date 16-8-16
+ * @file SelectDesignerActivity.java  .
+ * @brief 精选派单设计师 -选TA量房.
+ */
 
 public class SelectDesignerActivity extends NavigationBarActivity implements SelectDesignAdapter.MeasureFormCallBack{
-    private ListViewForScrollView lv_selection_design;
-    private List<DecorationBiddersBean> decorationBiddersBeans;
-    private SelectDesignAdapter selectDesignAdapter;
-    private DecorationNeedsListBean decorationNeedsListBean;
-    private boolean falg;
 
     @Override
     protected int getLayoutResId() {
@@ -29,7 +31,7 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
 
     @Override
     protected void initView() {
-        lv_selection_design = (ListViewForScrollView)findViewById(R.id.lv_selection_design);
+        lvselectionDesign = (ListViewForScrollView)findViewById(R.id.lv_selection_design);
     }
     @Override
     protected void initExtraBundle() {
@@ -40,16 +42,12 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     @Override
     protected void initData(Bundle savedInstanceState) {
         setTitleForNavbar(UIUtils.getString(R.string.send_design));
-        String payment_status=null;
         falg = false;
         isSelected();
-        if(decorationNeedsListBean.getElite() != null){
-            payment_status = decorationNeedsListBean.getElite().getMeasurement().getPayment_status();
-        }
         if(selectDesignAdapter == null){
-            selectDesignAdapter = new SelectDesignAdapter(this,decorationBiddersBeans,R.layout.item_select_designer,payment_status,falg);
+            selectDesignAdapter = new SelectDesignAdapter(this,decorationBiddersBeans,R.layout.item_select_designer,falg);
         }
-        lv_selection_design.setAdapter(selectDesignAdapter);
+        lvselectionDesign.setAdapter(selectDesignAdapter);
 
     }
     private void isSelected(){
@@ -77,10 +75,11 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if(resultCode == 10058){
             finish();
-//            setResult(FlowMeasureCostActivity.RESULT_CODE,new Intent());
-//        }
-
     }
+    private ListViewForScrollView lvselectionDesign;
+    private List<DecorationBiddersBean> decorationBiddersBeans;
+    private SelectDesignAdapter selectDesignAdapter;
+    private DecorationNeedsListBean decorationNeedsListBean;
+    private boolean falg;
 }

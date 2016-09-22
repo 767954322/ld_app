@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,17 +28,18 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.HomeTypeDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +55,7 @@ import java.util.Map;
  * @file IssueDemandActivity.java .
  * @brief 消费者发布需求.
  */
-public class IssueDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
+public class IssueDemandActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener,TextWatcher {
 
 
     Handler handler = new Handler() {
@@ -63,6 +66,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             et_issue_demand_name.setText(nick_name);
         }
     };
+    private HomeTypeDialog homeTypeDialog;
 
 
     @Override
@@ -76,6 +80,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         ll_issue_house_type = (LinearLayout) findViewById(R.id.ll_issue_house_type);
         ll_issue_style = (LinearLayout) findViewById(R.id.ll_issue_style);
         et_issue_demand_name = (TextView) findViewById(R.id.et_issue_demand_name);
+        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         et_issue_demand_mobile = (EditText) findViewById(R.id.et_issue_demand_mobile);
         et_issue_demand_area = (EditText) findViewById(R.id.et_issue_demand_area);
         btn_send_demand = (Button) findViewById(R.id.btn_send_demand);
@@ -113,6 +118,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        nav_title_textView.setTextColor(UIUtils.getColor(R.color.comment_gray));
         setTitleForNavbar(UIUtils.getString(R.string.requirements));
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         member_id = mMemberEntity.getAcs_member_id();
@@ -144,12 +150,15 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         tv_issue_demand_budget.setOnClickListener(this);
         tv_issue_demand_design_budget.setOnClickListener(this);
         tv_issue_address.setOnClickListener(this);
+
+        et_issue_demand_area.addTextChangedListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.ll_issue_house_type: /// 房屋类型 .
                 pvHouseTypeOptions.show();
                 et_issue_demand_area.clearFocus();
@@ -157,7 +166,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 break;
 
             case R.id.tv_issue_room: /// 请选择户型：室 厅 卫 .
-                pvRoomTypeOptions.show();
+                homeTypeDialog.show(getFragmentManager(), null);
                 et_issue_demand_area.clearFocus();
                 et_issue_demand_mobile.clearFocus();
                 break;
@@ -199,8 +208,10 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 //                    showAlertView(R.string.please_input_correct_area);
 //                    return;
 //                }
+
                 String mobile = et_issue_demand_mobile.getText().toString();
                 String detail_address = tv_issue_demand_detail_address.getText().toString();
+                String consumer_name = et_issue_demand_name.getText().toString();
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
                 boolean phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
                 boolean regex_address_right = detail_address.matches(RegexUtil.ADDRESS_REGEX);
@@ -224,6 +235,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     area = "0";
                 }
                 area = String.format("%.2f", Double.valueOf(area));
+                if (Double.valueOf(area) < 1 || Double.valueOf(area) > 9999) {
+                    showAlertView(R.string.alert_msg_area);
+                    return;
+                }
+
                 et_issue_demand_area.setText(area);
                 String subNum = "0";
                 if (area.contains(".")) {
@@ -252,7 +268,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(R.string.please_select_decorate_budget);
                     return;
                 }
-                if (TextUtils.isEmpty(room)) {
+                if (TextUtils.isEmpty(mRoom)) {
                     showAlertView(R.string.please_select_form);
                     return;
                 }
@@ -279,7 +295,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_MOBILE, mobile);/// "consumer_mobile" = 11012011900; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, nick_name);/// "consumer_name" = "APP\U7aef\U53d1\U5e03\U9700\U6c42-\U6b64\U5b57\U6bb5\U4e0d\U7528"; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_MOBILE, mobile);/// "contacts_mobile" = 15234948734; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, nick_name);/// "contacts_name" = "\U63a5\U4f60"; .
+                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_CONTACTS_NAME, consumer_name);/// "contacts_name" = "\U63a5\U4f60"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, mDecorationBudget);/// "decoration_budget" = "5\U4e07\U4ee5\U4e0b"; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_STYLE, style);/// "decoration_style" = Japan; .
                     jsonObject.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, mDesignBudget);/// "design_budget" = "3000\U4ee5\U4e0b"; .
@@ -288,11 +304,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DISTRICT_NAME, mCurrentDistrict);/// "district_name_name" = "\U4e1c\U57ce\U533a"; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_AREA, area);/// "house_area" = 36; .
                     jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_HOUSE_TYPE, house_type);/// "house_type" = house; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, living_room);/// "living_room" = one; .
+                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_LIVING_ROOM, mLivingRoom);/// "living_room" = one; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE, mCurrentProvinceCode);/// province = 110000; .
                     jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_PROVINCE_NAME, mCurrentProvince);/// "province_name" = "\U5317\U4eac"; .
-                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, room);///  room = one; .
-                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_TOILET, toilet);///  toilet = one; .
+                    jsonObject.put(JsonConstants.JSON_MODIFY_DESIGNER_REQUIREMENT_ROOM, mRoom);///  room = one; .
+                    jsonObject.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_TOILET, mToilet);///  toilet = one; .
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -335,9 +351,11 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                         mCurrentProvinceCode = provinceCode;
                         mCurrentCity = city;
                         mCurrentCityCode = cityCode;
-                        mCurrentDistrict = TextUtils.isEmpty(area) ? "none" : area;
-                        mCurrentDistrictCode = TextUtils.isEmpty(mCurrentDistrict) || "none".equals(mCurrentDistrict) || TextUtils.isEmpty(areaCode) || "none".equals(areaCode) ? "none" :
-                                areaCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
+                        mCurrentDistrict = area;
+                        mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
 
                         tv_issue_address.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();
@@ -353,12 +371,12 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
      * @param jsonObject
      */
     private void sendDesignRequirements(JSONObject jsonObject) {
-        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject,false,new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().sendDesignRequirements(jsonObject, false, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 String str = GsonUtil.jsonToString(jsonObject);
-                KLog.d(TAG, str);
+                LogUtils.i(TAG, str);
                 IssueDemandBean issueDemandBean = GsonUtil.jsonToBean(str, IssueDemandBean.class);
                 if (issueDemandBean != null && issueDemandBean.getNeeds_id() != null && issueDemandBean.getNeeds_id().length() > 0) {
                     mSendDesignRequirementSuccessAlertView.show();
@@ -374,7 +392,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 MPNetworkUtils.logError(TAG, volleyError);
                 isSendState = true;
                 CustomProgress.cancelDialog();
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,IssueDemandActivity.this);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, IssueDemandActivity.this);
             }
         });
     }
@@ -393,6 +411,13 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
 
+                // 使用手机注册的手机号码
+                String mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
+                if (!TextUtils.isEmpty(mobile_number)){
+
+                    et_issue_demand_mobile.setText(mobile_number);
+                }
+
                 Message msg = new Message();
                 msg.obj = mConsumerEssentialInfoEntity.getNick_name();
                 handler.sendMessage(msg);
@@ -410,60 +435,23 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
      * @brief 设置室 厅 卫
      */
     private void setRoomType() {
-        final ArrayList<ArrayList<String>> hallsList = new ArrayList<ArrayList<String>>();
-        final ArrayList<String> roomsList = new ArrayList<>();
-        final ArrayList<ArrayList<ArrayList<String>>> toiletsList = new ArrayList<ArrayList<ArrayList<String>>>();
-        List<String> rooms = filledData(UIUtils.getStringArray(R.array.mlivingroom));
-        List<String> halls = filledData(UIUtils.getStringArray(R.array.hall));
-        List<String> toilets = filledData(UIUtils.getStringArray(R.array.toilet));
-        pvRoomTypeOptions = new OptionsPickerView(this);
-        //room
-        for (String op : rooms) {
-            roomsList.add(op);
-        }
-
-        //hall
-        ArrayList<String> options2Items_01 = new ArrayList<>();
-        for (String op2 : halls) {
-            options2Items_01.add(op2);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            hallsList.add(options2Items_01);
-        }
-        //toilet
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<>();
-        ArrayList<String> options3Items_01_01 = new ArrayList<>();
-        for (String op3 : toilets) {
-            options3Items_01_01.add(op3);
-        }
-        for (int i = 0; i < halls.size(); i++) {
-            options3Items_01.add(options3Items_01_01);
-        }
-        for (int i = 0; i < rooms.size(); i++) {
-            toiletsList.add(options3Items_01);
-        }
-
-        pvRoomTypeOptions.setPicker(roomsList, hallsList, toiletsList, true);
-        pvRoomTypeOptions.setCyclic(false, false, false);
-        pvRoomTypeOptions.setSelectOptions(0, 0, 0);
-        pvRoomTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
+        homeTypeDialog = HomeTypeDialog.getInstance(this);
+        homeTypeDialog.setOnAddressCListener(new HomeTypeDialog.OnAddressCListener() {
             @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-                room = roomsList.get(options1);
-                living_room = hallsList.get(options1).get(option2);
-                toilet = toiletsList.get(options1).get(option2).get(options3);
-                String roomType = room + living_room + toilet;
+            public void onClick(String roomName, String livingRoom, String toilet) {
+                String roomType = roomName + livingRoom + toilet;
                 tv_issue_room.setText(roomType);
 
                 /// convet .
-                Map<String, String> livingRoom = AppJsonFileReader.getLivingRoom(IssueDemandActivity.this);
+                Map<String, String> livingRoomMap = AppJsonFileReader.getLivingRoom(IssueDemandActivity.this);
                 Map<String, String> roomHall = AppJsonFileReader.getRoomHall(IssueDemandActivity.this);
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(IssueDemandActivity.this);
 
-                living_room = ConvertUtils.getKeyByValue(livingRoom, living_room);
-                room = ConvertUtils.getKeyByValue(roomHall, room);
-                toilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
+                mLivingRoom = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                mRoom = ConvertUtils.getKeyByValue(roomHall, roomName);
+                mToilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
+
+                homeTypeDialog.dismiss();
             }
         });
     }
@@ -625,6 +613,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private TextView tv_issue_room;
     private TextView tv_issue_style;
     private TextView tv_issue_address;
+    private TextView nav_title_textView;
     private EditText tv_issue_demand_detail_address;
     private EditText et_issue_demand_mobile;
     private EditText et_issue_demand_area;
@@ -632,7 +621,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private AlertView mSendDesignRequirementSuccessAlertView;
     private AddressDialog mChangeAddressDialog;
     private OptionsPickerView pvDesignBudgetOptions;
-    private OptionsPickerView pvDecorationBudgetOptions, pvStyleOptions, pvRoomTypeOptions, pvHouseTypeOptions;
+    private OptionsPickerView pvDecorationBudgetOptions, pvStyleOptions,  pvHouseTypeOptions;
 
     /// 变量.
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
@@ -642,10 +631,44 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     private String mDesignBudget;
     private String mDecorationBudget;
     private String nick_name;
-//    private boolean isSelection = false;
-    private String room, living_room, toilet;
+    private String mRoom, mLivingRoom, mToilet;
     private boolean isSendState = true;
     private String success = "";
     public static final int RESULT_CODE = 101;
     private String member_id;
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().contains(".")) {
+                if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                    s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                    et_issue_demand_area.setText(s);
+                    et_issue_demand_area.setSelection(s.length());
+                }
+            }
+
+            if (s.toString().trim().substring(0).equals(".")) {
+                s = "0" + s;
+                et_issue_demand_area.setText(s);
+                et_issue_demand_area.setSelection(2);
+            }
+
+            if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                if (!s.toString().substring(1, 2).equals(".")) {
+                    et_issue_demand_area.setText(s.subSequence(0, 1));
+                    et_issue_demand_area.setSelection(1);
+                    return;
+                }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

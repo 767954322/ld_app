@@ -9,15 +9,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +35,6 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         this.mOnItemImageHeadClickListener = mOnItemImageHeadClickListener;
         this.mOnItemCaseClickListener = mOnItemCaseClickListener;
         this.OnItemHomechatclickListener = OnItemHomechatclickListener;
-
     }
 
     public UserHomeCaseAdapter(Context context, List<CaseLibraryBean.CasesEntity> datas, Activity activity, int screenWidth, int screenHeight) {
@@ -47,7 +46,6 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
         style = AppJsonFileReader.getStyle(activity);
     }
 
-
     @Override
     public int getLayoutId() {
         return R.layout.item_lv_consume_home;
@@ -57,6 +55,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
     public Holder initHolder(View container) {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.ivCase = (ImageView) container.findViewById(R.id.img_customer_home_case);
+        viewHolder.llContent = (LinearLayout) container.findViewById(R.id.ll_item_content);
         viewHolder.ivHeadIcon = (PolygonImageView) container.findViewById(R.id.piv_img_customer_home_header);
         viewHolder.tvRoom = (TextView) container.findViewById(R.id.tv_customer_home_room);
         viewHolder.tvStyle = (TextView) container.findViewById(R.id.tv_customer_home_style);
@@ -72,7 +71,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
     public void initItem(View view, Holder holder, int position) {
         if (null != mDatas && mDatas.size() > 0) {
             CaseLibraryBean.CasesEntity casesEntity = mDatas.get(position);
-            ((ViewHolder) holder).tvThumbUp.setText("点赞数 "+casesEntity.getFavorite_count());
+            ((ViewHolder) holder).tvThumbUp.setText(casesEntity.getFavorite_count() + "");
             List<CaseLibraryBean.CasesEntity.ImagesEntity> images = casesEntity.getImages();
             if (images != null && images.size() > 0) {
                 for (int i = 0; i < casesEntity.getImages().size(); i++) {
@@ -84,16 +83,13 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                 if (TextUtils.isEmpty(imageOneUrl)) {
                     imageOneUrl = casesEntity.getImages().get(0).getFile_url();
                 }
-                ImageUtils.loadImage(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
+                ImageUtils.loadImageIcon(((ViewHolder) holder).ivCase, imageOneUrl + "HD.jpg");
             }
             MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
             if (mMemberEntity != null && Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
-                ((ViewHolder) holder).imgConsumeChat.setVisibility(View.GONE);
-                // ((ViewHolder) holder).mLine.setVisibility(View.GONE);
-
+                ((ViewHolder) holder).imgConsumeChat.setVisibility(View.INVISIBLE);
             } else {
                 ((ViewHolder) holder).imgConsumeChat.setVisibility(View.VISIBLE);
-                // ((ViewHolder) holder).mLine.setVisibility(View.VISIBLE);
             }
 
             if (null != casesEntity) {
@@ -105,7 +101,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                 if (casesEntity.getRoom_area() == null) {
                     ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
-                    ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + "m²");
+                    ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + "㎡");
                 }
                 if (casesEntity.getRoom_type() == null) {
                     ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));
@@ -129,6 +125,8 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                 }
                 if (null != casesEntity.getDesigner_info() && !TextUtils.isEmpty(casesEntity.getDesigner_info().getAvatar())) {
                     ImageUtils.displayAvatarImage(casesEntity.getDesigner_info().getAvatar(), ((ViewHolder) holder).ivHeadIcon);
+                }else {
+                    ImageUtils.displayAvatarImage("", ((ViewHolder) holder).ivHeadIcon);
                 }
             }
         } else {
@@ -141,7 +139,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
 
 
         ((ViewHolder) holder).ivHeadIcon.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
-        ((ViewHolder) holder).ivCase.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
+        ((ViewHolder) holder).llContent.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         ((ViewHolder) holder).imgConsumeChat.setOnClickListener(new MyOnClickListener(position, ((ViewHolder) holder)));
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ((ViewHolder) holder).ivCase.getLayoutParams();
         lp.width = screenWidth;
@@ -152,6 +150,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
 
     public class ViewHolder extends BaseAdapter.Holder {
         public ImageView ivCase;
+        public LinearLayout llContent;
         public PolygonImageView ivHeadIcon;
         public TextView tvRoom;
         public TextView tvStyle;
@@ -178,7 +177,7 @@ public class UserHomeCaseAdapter extends BaseAdapter<CaseLibraryBean.CasesEntity
                         mOnItemImageHeadClickListener.OnItemImageHeadClick(position);
                     }
                     break;
-                case R.id.img_customer_home_case:
+                case R.id.ll_item_content:
                     if (mOnItemCaseClickListener != null) {
                         mOnItemCaseClickListener.OnItemCaseClick(position);
                     }

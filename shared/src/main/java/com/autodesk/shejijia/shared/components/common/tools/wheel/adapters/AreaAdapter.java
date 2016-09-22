@@ -6,10 +6,6 @@ import com.autodesk.shejijia.shared.components.common.tools.wheel.model.District
 
 import java.util.List;
 
-
-/**
- * Created by xuan on 16/1/7.
- */
 public class AreaAdapter extends AbstractWheelTextAdapter {
     private List<DistrictModel> mList;
     private Context mContext;

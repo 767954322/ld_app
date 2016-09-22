@@ -1,9 +1,9 @@
 package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 
 import android.content.Intent;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -59,6 +59,11 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
         updateViewFromDesignerData(state);
     }
 
+    public void setHandler(android.os.Handler handler){
+        this.myHandler = handler;
+
+    }
+
 
     /**
      * 设计师的信息更新
@@ -73,12 +78,12 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
 
         mCasesEntityArrayList.addAll(mSeekDesignerDetailBean.getCases());
         if (mCasesEntityArrayList.size() < 1) {
-            getEmptyAlertView(UIUtils.getString(R.string.case_is_empty)).show();
+           // getEmptyAlertView(UIUtils.getString(R.string.case_is_empty)).show();
         }
-        hideFooterView(mCasesEntityArrayList);
+//        hideFooterView(mCasesEntityArrayList);
         if (mSeekDesignerDetailAdapter == null) {
 
-            mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(getActivity(), mCasesEntityArrayList, getActivity());
+            mSeekDesignerDetailAdapter = new SeekDesignerDetailAdapter(getActivity(), mCasesEntityArrayList);
             mListView.setAdapter(mSeekDesignerDetailAdapter);
 
         } else {
@@ -100,40 +105,11 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        setListViewHeightBasedOnChildren(mListView);
-    }
 
-    /**
-     * 隐藏底部布局
-     * param 传入的信息集合
-     */
-    private void hideFooterView(ArrayList<SeekDesignerDetailBean.CasesEntity> list) {
-        if (list != null && list.size() > 0) {
-            mRlEmpty.setVisibility(View.GONE);
-        } else {
-            mRlEmpty.setVisibility(View.VISIBLE);
-        }
-        WindowManager wm = (WindowManager) getActivity().getSystemService(getActivity().WINDOW_SERVICE);
-        int height = wm.getDefaultDisplay().getHeight();
-        android.view.ViewGroup.LayoutParams layoutParams = mRlEmpty.getLayoutParams();
-        mRlEmpty.getLayoutParams();
-        layoutParams.height = height / 2;
-        mRlEmpty.setLayoutParams(layoutParams);
-        mTvEmptyMessage.setText(UIUtils.getString(R.string.no_designer_case));
+        Message message = myHandler.obtainMessage();
+        message.what = 0;
+        myHandler.sendMessage(message);
     }
-
-//    /**
-//     * 单击某个item进入查看详情
-//     *
-//     * @param position item的位置
-//     */
-//    @Override
-//    public void OnItemCaseLibraryClick(int position) {
-//        String case_id = mCasesEntityArrayList.get(position).getId();
-//        Intent intent = new Intent(getActivity(), CaseLibraryDetailActivity.class);
-//        intent.putExtra(Constant.CaseLibraryDetail.CASE_ID, case_id);
-//        startActivity(intent);
-//    }
 
     /**
      * 案例库为空时候显示的提示框
@@ -141,48 +117,6 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
     private AlertView getEmptyAlertView(String content) {
         return new AlertView(UIUtils.getString(R.string.tip), content, null, null, null, getActivity(),
                 AlertView.Style.Alert, null).setCancelable(true);
-    }
-
-    /**
-     * 计算listView的高
-     */
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        if (listView == null) {
-            return;
-        }
-
-
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-        int totalHeight = 0;
-
-
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-
-
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-
-
-            if (listItem != null) {
-                // 计算子项View 的宽高
-                listItem.measure(0, 0);
-                // 统计所有子项的总高度
-                totalHeight += listItem.getMeasuredHeight();
-            }
-        }
-
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight
-                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        // listView.getDividerHeight()获取子项间分隔符占用的高度
-        // params.height最后得到整个ListView完整显示需要的高度
-        listView.setLayoutParams(params);
-
     }
 
 
@@ -196,6 +130,7 @@ public class DesignerPersonMasterPageFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private int width;
+    private android.os.Handler myHandler;
     private ArrayList<SeekDesignerDetailBean.CasesEntity> mCasesEntityArrayList = new ArrayList<>();
     private SeekDesignerDetailAdapter mSeekDesignerDetailAdapter;
     private ListView mListView;

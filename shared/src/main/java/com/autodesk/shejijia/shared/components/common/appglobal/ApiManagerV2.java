@@ -13,12 +13,13 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
  */
 public class ApiManagerV2 {
 
-    private static final String PROPERTY_PATH = "apiurl.properties";
+    public static final String PROPERTY_PATH = "apiurl.properties";
     private static final String API_DOMAIN = "apiDomain";
     private static final String LOGIN_URL = "loginPath";
     private static final String MEMBER_APP = "memberApp";
     private static final String DESIGN_APP = "designApp";
     private static final String SHARE_URL = "shareUrl";
+    private static final String SHARE3_URL = "share3Url";
     private static final String TRANSACTION_APP = "transactionApp";
     private static final String IS_PRODUCTION = "isProduction";
     private static final String VERSION_NAME = "versionName";
@@ -33,6 +34,7 @@ public class ApiManagerV2 {
     public final static String DESIGN_PATH = getUrlPath(DESIGN_APP);
     /*share拼接地址*/
     public final static String SHARE_PATH = getUrlPath(SHARE_URL);
+    public final static String SHARE3_PATH = getUrlPath(SHARE3_URL);
 
     /*我的资产拼接地址*/
     public final static String TRANSACTION_PATH = getUrlPath(TRANSACTION_APP);

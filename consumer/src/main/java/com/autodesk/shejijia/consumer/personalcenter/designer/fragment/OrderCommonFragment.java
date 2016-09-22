@@ -2,8 +2,10 @@ package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -13,6 +15,7 @@ import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonBean;
+import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPMeasureFormBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
@@ -25,6 +28,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -32,7 +36,6 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-import com.socks.library.KLog;
 
 import org.json.JSONObject;
 
@@ -48,7 +51,7 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 
 /**
  * @file OrderCommonFragment.java .
- * @brief 我的订单:普通订单页面 .
+ * @brief 竟优.
  */
 public class OrderCommonFragment extends BaseFragment {
 
@@ -80,7 +83,11 @@ public class OrderCommonFragment extends BaseFragment {
 
         mCommonOrderAdapter = new MyCommonOrderAdapter(UIUtils.getContext(), commonOrderListEntities, R.layout.item_designer_order_list);
         mListView.setAdapter(mCommonOrderAdapter);
-        setSwipeRefreshInfo();
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+            setSwipeRefreshInfo();
+        }
     }
 
     private android.os.Handler handler = new android.os.Handler() {
@@ -106,15 +113,20 @@ public class OrderCommonFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-    }
 
+    }
+//
+    // fixme 这个方法当check到我的项目时候进行回调．
+    @Override
+    public void onFragmentShown() {
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+            setSwipeRefreshInfo();
+        }
+    }
 
     /**
      * 获取普通订单数据
-     *
-     * @param Member_Type
-     * @param designer_id
-     * @param limit
      */
     public void getDesignerOder(String Member_Type,
                                 String designer_id, final int offset, int limit) {
@@ -122,8 +134,9 @@ public class OrderCommonFragment extends BaseFragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
+                LogUtils.i(TAG, "onResponse: userInfo" + userInfo);
                 mOrderCommonEntity = GsonUtil.jsonToBean(userInfo, OrderCommonBean.class);
-                KLog.json(TAG, userInfo);
+                LogUtils.i(TAG, userInfo);
                 if (offset == 0) {
                     commonOrderListEntities.clear();
                 }
@@ -137,6 +150,8 @@ public class OrderCommonFragment extends BaseFragment {
 
                 if (null == commonOrderListEntities || commonOrderListEntities.size() == 0) {
                     mRlEmpty.setVisibility(View.VISIBLE);
+                } else {
+                    mRlEmpty.setVisibility(View.GONE);
                 }
 
                 Message msg = Message.obtain();
@@ -162,6 +177,7 @@ public class OrderCommonFragment extends BaseFragment {
                 getDesignerOder(mMemberType, designer_id, 0, LIMIT);
             }
         });
+
         mPtrLayout.setLastUpdateTimeRelateObject(this);
         mListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -203,7 +219,7 @@ public class OrderCommonFragment extends BaseFragment {
             String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
 
             district_name = UIUtils.getNoStringIfEmpty(district_name);
-            province_name =UIUtils.getNoStringIfEmpty(province_name);
+            province_name = UIUtils.getNoStringIfEmpty(province_name);
             city_name = UIUtils.getNoStringIfEmpty(city_name);
 
             String address = province_name + city_name + district_name;
@@ -262,12 +278,15 @@ public class OrderCommonFragment extends BaseFragment {
             holder.getView(R.id.btn_designer_order_projectdetail).setOnClickListener(/*this);*/new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
-                    intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, orderListEntity.getNeeds_id());
-                    intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_DESIGNERORDER_ACTIVITY);
-                    intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
-                    getActivity().startActivity(intent);
+//                    Intent intent = new Intent(getActivity(), BiddingHallDetailActivity.class);
+//                    intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, orderListEntity.getNeeds_id());
+//                    intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, Constant.DemandDetailBundleKey.TYPE_DESIGNERORDER_ACTIVITY);
+//                    intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, true);
+//                    getActivity().startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constant.ConsumerDecorationFragment.WK_TEMPLATE_ID, wk_template_id);
+                    bundle.putString(Constant.ConsumerDecorationFragment.NEED_ID, orderListEntity.getNeeds_id());
+                    DecorationDetailActivity.jumpTo(getActivity(), bundle);
                 }
             });
 

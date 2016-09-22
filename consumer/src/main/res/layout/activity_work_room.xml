@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView
+        android:id="@+id/scrollview_studio"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,8 +23,6 @@
             </LinearLayout>
 
 
-
-
             <ListView
                 android:id="@+id/listview"
                 android:layout_width="match_parent"
@@ -35,7 +34,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView>
 
 
     <TextView
@@ -45,11 +44,14 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/size_50"
+        android:background="@drawable/boutton"
         android:gravity="center"
         android:textColor="@color/bg_ff"
-        android:background="@drawable/boutton"
         android:textSize="@dimen/font_16" />
 
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
 
 
 </RelativeLayout>

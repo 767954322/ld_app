@@ -32,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_20"
             android:layout_toRightOf="@id/tv_account"
-            android:text="¥0.00"
+            android:text="¥ 0.00"
             android:textColor="@color/blue" />
 
         <Button
@@ -44,7 +44,8 @@
             android:layout_marginRight="@dimen/size_10"
             android:background="@drawable/bg_common_btn_gap_blue"
             android:text="@string/my_property_withdrawal"
-            android:textColor="@color/bg_0084ff" />
+            android:textColor="@color/bg_0084ff"
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <LinearLayout
@@ -79,7 +80,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
-            android:background="@color/line_color"></View>
+            android:background="@color/line_color" />
 
         <RelativeLayout
             android:id="@+id/rl_my_property_withdrawal_record"

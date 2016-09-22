@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -27,6 +28,7 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseLibrar
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.DesignerInfoBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -36,7 +38,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
@@ -48,11 +51,6 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -69,8 +67,10 @@ import java.util.Map;
  * @Author :willson
  * @创建日期 :2016.8.29
  */
-public class CaseLibraryNewActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
+public class CaseLibraryNewActivity extends NavigationBarActivity implements AbsListView.OnItemClickListener, AbsListView.OnScrollListener, View.OnTouchListener, View.OnClickListener {
 
+
+    private ImageView mIvCertification;
 
     @Override
     protected int getLayoutResId() {
@@ -88,6 +88,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         rlCaseLibraryBottom = (RelativeLayout) findViewById(R.id.rl_case_library_bottom);
 
         ivThumbUp = (ImageView) findViewById(R.id.iv_thumb_up);
+        mIvCertification = (ImageView) findViewById(R.id.iv_designer_certification);
+
 
         pivImgCustomerHomeHeader = (PolygonImageView) findViewById(R.id.piv_img_customer_home_header);
         ivCustomerIm = (ImageView) findViewById(R.id.img_look_more_detail_chat);
@@ -96,7 +98,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
-        mTvFollowedDesigner = (TextView) findViewById(R.id.iv_follow_designer);
+        mIvFollowedDesigner = (ImageView) findViewById(R.id.iv_follow_designer);
 
         //顶部图片head
         View view = LayoutInflater.from(this).inflate(R.layout.case_library_new_item, null);
@@ -105,6 +107,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         //分享 点赞的head
         View viewHead = LayoutInflater.from(this).inflate(R.layout.caselibrary_head, null);
         ll_fenxiang_down = (LinearLayout) viewHead.findViewById(R.id.ll_fenxiang);
+        ll_fenxiang_down.setClickable(true);
         rlThumbUp = (LinearLayout) viewHead.findViewById(R.id.rl_thumb_up);
         tvheadThumbUp = (TextView) viewHead.findViewById(R.id.tv_thumb_up);
         ivHeadThumbUp = (ImageView) viewHead.findViewById(R.id.iv_thumb_up);
@@ -131,15 +134,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-//        mTimer = new CountDownTimer(800, 800) {//点赞的点击事件，800ms内拦截
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//            }
-//            @Override
-//            public void onFinish() {
-//                rlThumbUp.setClickable(true);
-//            }
-//        };
         roomHall = AppJsonFileReader.getRoomHall(this);
         style = AppJsonFileReader.getStyle(this);
         CustomProgress.show(this, "", false, null);
@@ -161,7 +155,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         rlThumbUp.setOnClickListener(this);
         llThumbUp.setOnClickListener(this);
         caseLibraryNew.setOnItemClickListener(this);
-        mTvFollowedDesigner.setOnClickListener(this);
+        mIvFollowedDesigner.setOnClickListener(this);
 
     }
 
@@ -187,7 +181,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                     rlThumbUp.setOnClickListener(null);
                     llThumbUp.setOnClickListener(null);
                     CustomProgress.show(this, "", false, null);
-                    sendThumbUp(caseDetailBean.getId());
+                    String id = caseDetailBean.getId();
+                    if (id != null) {
+                        sendThumbUp(id);
+                    }
+
                 } else {
                     AdskApplication.getInstance().doLogin(this);
                 }
@@ -246,64 +244,17 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                     member_id = memberEntity.getAcs_member_id();
 
                     if (null != caseDetailBean) {
-                        final String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
-                        final String hs_uid = caseDetailBean.getHs_designer_uid();
-                        final String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
-                        final String recipient_ids = member_id + "," + designer_id + "," + ApiManager.getAdmin_User_Id();
+                        String designer_id = caseDetailBean.getDesigner_info().getDesigner().getAcs_member_id();
+                        String hs_uid = caseDetailBean.getHs_designer_uid();
+                        String receiver_name = caseDetailBean.getDesigner_info().getNick_name();
 
-                        MPChatHttpManager.getInstance().retrieveMultipleMemberThreads(recipient_ids, 0, 10, new OkStringRequest.OKResponseCallback() {
-                            @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                MPNetworkUtils.logError(TAG, volleyError);
-                                ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
-                            }
-
-                            @Override
-                            public void onResponse(String s) {
-
-                                MPChatThreads mpChatThreads = MPChatThreads.fromJSONString(s);
-
-                                final Intent intent = new Intent(CaseLibraryNewActivity.this, ChatRoomActivity.class);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, receiver_name);
-                                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, mMemberType);
-                                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
-
-                                if (mpChatThreads != null && mpChatThreads.threads.size() > 0) {
-
-                                    MPChatThread mpChatThread = mpChatThreads.threads.get(0);
-                                    int assetId = MPChatUtility.getAssetIdFromThread(mpChatThread);
-                                    intent.putExtra(ChatRoomActivity.THREAD_ID, mpChatThread.thread_id);
-                                    intent.putExtra(ChatRoomActivity.ASSET_ID, assetId + "");
-                                    intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                    startActivity(intent);
-
-                                } else {
-                                    MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(member_id, designer_id, new OkStringRequest.OKResponseCallback() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError volleyError) {
-                                            MPNetworkUtils.logError(TAG, volleyError);
-                                            ApiStatusUtil.getInstance().apiStatuError(volleyError, CaseLibraryNewActivity.this);
-                                        }
-
-                                        @Override
-                                        public void onResponse(String s) {
-                                            try {
-                                                JSONObject jsonObject = new JSONObject(s);
-                                                String thread_id = jsonObject.getString("thread_id");
-                                                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                                                intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, hs_uid);
-                                                intent.putExtra(ChatRoomActivity.THREAD_ID, thread_id);
-                                                startActivity(intent);
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    });
-                                }
-
-                            }
-                        });
+                        JumpBean jumpBean = new JumpBean();
+                        jumpBean.setAcs_member_id(member_id);
+                        jumpBean.setMember_type(mMemberType);
+                        jumpBean.setReciever_user_name(receiver_name);
+                        jumpBean.setReciever_user_id(designer_id);
+                        jumpBean.setReciever_hs_uid(hs_uid);
+                        JumpToChatRoom.getChatRoom(CaseLibraryNewActivity.this, jumpBean);
                     } else {
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, CaseLibraryNewActivity.this,
                                 AlertView.Style.Alert, null).show();
@@ -337,13 +288,18 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
         @Override
         public void onClick(View v) {
             String webUrl = ApiManager.getHtml5Url(case_id);
+            //TODO 后台现在只有这个环境的分享链接 别的环境还没有  暂时写死    by willson
+//            String webUrl ="http://uat-www.gdfcx.net/share/2dcase.html?caseid="+case_id;
             switch (v.getId()) {
 
                 case R.id.tv_wx_shared_tofriends:
-
                     ifIsSharedToFriends = true;
                     try {
-                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        if (null == caseDetailBean) {
+                            Toast.makeText(CaseLibraryNewActivity.this, "正在获取数据，请稍后分享", Toast.LENGTH_LONG).show();
+                        } else {
+                            SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -351,7 +307,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 case R.id.tv_wx_shared_tocircleof_friends:
                     ifIsSharedToFriends = false;
                     try {
-                        SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        if (null == caseDetailBean) {
+                            Toast.makeText(CaseLibraryNewActivity.this, "正在获取数据，请稍后分享", Toast.LENGTH_LONG).show();
+                        } else {
+                            SendWXShared.sendProjectToWX(CaseLibraryNewActivity.this, webUrl, caseDetailBean.getTitle(), caseDetailBean.getDescription() + " ", ifIsSharedToFriends, firstCaseLibraryImageUrl);
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -381,8 +341,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 ToastUtil.showCustomToast(CaseLibraryNewActivity.this, getString(R.string.dianzhangchenggong));
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
-                tvThumbUp.setText(getString(R.string.thumbup_conunt) + (caseDetailBean.getFavorite_count() + 1));
-                tvheadThumbUp.setText(getString(R.string.thumbup_conunt) + (caseDetailBean.getFavorite_count() + 1));
+                tvThumbUp.setText("点赞" + (caseDetailBean.getFavorite_count() + 1));
+                tvheadThumbUp.setText("点赞" + (caseDetailBean.getFavorite_count() + 1));
             }
 
             @Override
@@ -442,7 +402,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             public void onResponse(JSONObject jsonObject) {
                 String info = GsonUtil.jsonToString(jsonObject);
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
-                setTitleForNavbar(caseDetailBean.getTitle());
+                //set tital
+                String str_tital = caseDetailBean.getTitle();
+                boolean isTitalToLong = str_tital.length() > 6;
+                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
 
@@ -490,7 +454,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             if (!member_id.equals(designer_id)) {
                 setFollowedTitle(is_following);
             } else {
-                mTvFollowedDesigner.setVisibility(View.GONE);
+                mIvFollowedDesigner.setVisibility(View.GONE);
             }
         } else {
             setFollowedTitle(false);
@@ -502,12 +466,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             if (images.get(i).is_primary() == true) {
                 topPosition = i;
                 firstCaseLibraryImageUrl = images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG;
-                ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+//                ImageUtils.displayIconImage(images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
+                ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getFile_url() + Constant.CaseLibraryDetail.JPG);
             }
         }
 
         mCaseLibraryAdapter = new CaseLibraryAdapter(CaseLibraryNewActivity.this, images);
-
+        //mCaseLibraryAdapter.setShareOrPraiseListener(this);
         caseLibraryNew.setAdapter(mCaseLibraryAdapter);
         //设置简介
         String introduction = caseDetailBean.getDescription();
@@ -517,7 +482,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             mCaseLibraryText.setText("          " + introduction);
         }
 
-        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "m²");
+        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "㎡");
         String room_type = caseDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
@@ -528,13 +493,42 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             tvCustomerHomeStyle.setText(style.get(project_style));
         }
 
-        tvThumbUp.setText(getString(R.string.thumbup_conunt)
-                + caseDetailBean.getFavorite_count());
-        tvheadThumbUp.setText(getString(R.string.thumbup_conunt)
-                + caseDetailBean.getFavorite_count());
-        ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name()
-        );
-        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+        tvThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
+        tvheadThumbUp.setText("点赞" + caseDetailBean.getFavorite_count() + "");
+
+
+        DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
+        if (designer_info.getNick_name() != null) {
+            if (designer_info.getNick_name().length() > 8) {
+                String nickName = designer_info.getNick_name().substring(0, 8);
+                String nickNameNow = nickName + "…";
+                ivConsumeHomeDesigner.setText(nickNameNow);
+            } else {
+                ivConsumeHomeDesigner.setText(designer_info.getNick_name());
+            }
+        } else {
+            if (designer_info.getFirst_name().length() >8){
+                String firstName = designer_info.getFirst_name().substring(0, 8);
+                String firstNameNow = firstName + "…";
+                ivConsumeHomeDesigner.setText(firstNameNow);
+            }else {
+            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
+            }
+        }
+
+        //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
+//        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
+        ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, caseDetailBean.getDesigner_info().getAvatar());
+        com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean designer = mDesignerInfo.getDesigner();
+
+        if (null != designer) {
+            int is_real_name = designer.getIs_real_name();
+            if (WkTemplateConstants.CERHIGH_TYPE_AUTH_PASSED.equalsIgnoreCase(String.valueOf(is_real_name))) {
+                mIvCertification.setVisibility(View.VISIBLE);
+            }
+        } else {
+            mIvCertification.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -557,7 +551,6 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 setFollowedTitle(followsType);
                 if (followsType) {
                     MyToast.show(CaseLibraryNewActivity.this, UIUtils.getString(R.string.attention_success));
-                    /// TODO 临时处理，正常情况下，当点击关注时候，后台这个字段变成true .
                     mDesignerInfo.is_following = true;
                 } else {
                     mDesignerInfo.is_following = false;
@@ -597,22 +590,12 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
      * false : 取消关注-->对应关注
      */
     private void setFollowedTitle(boolean is_following) {
-//
-//        if (is_following) {
-//            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
-//
-//        } else {
-//            mIvFollowedDesigner.setImageDrawable(UIUtils.getDrawable(R.drawable.ic_followed_sure));
-//        }
+
         if (is_following) {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.actionsheet_blue));
-            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_unfollow_bg));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_cancel));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_cancel));
 
         } else {
-            mTvFollowedDesigner.setTextColor(UIUtils.getColor(R.color.white));
-            mTvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.textview_follow_bg));
-            mTvFollowedDesigner.setText(UIUtils.getString(R.string.attention_sure_add));
+            mIvFollowedDesigner.setBackground(UIUtils.getDrawable(R.drawable.ic_followed_sure));
         }
     }
 
@@ -638,13 +621,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
                 if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
                 } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
                     rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
                 }
+                break;
+            case MotionEvent.ACTION_UP:
                 break;
         }
         return false;
@@ -664,13 +647,15 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
             } else {
                 ivCustomerIm.setVisibility(View.GONE);
             }
+        } else {
+            ivCustomerIm.setVisibility(View.VISIBLE);
         }
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (position != 2 || position != 1) {
+        if (position != 2) {
             Intent intent = new Intent(this, CaseLibraryDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(Constant.CaseLibraryDetail.CASE_DETAIL_BEAN, caseDetailBean);
@@ -683,13 +668,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     @Override
     protected void onStop() {
         super.onStop();
-       // mTimer.cancel();
+        // mTimer.cancel();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-      //  mTimer.cancel();
+        //  mTimer.cancel();
     }
 
     private ListView caseLibraryNew;
@@ -706,7 +691,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private PolygonImageView pivImgCustomerHomeHeader;
     private ImageView ivCustomerIm;
     private TextView ivConsumeHomeDesigner;
-    private TextView mTvFollowedDesigner;
+    private ImageView mIvFollowedDesigner;
     private TextView tvCustomerHomeStyle;
     private TextView tvCustomerHomeRoom;
     private TextView tvCustomerHomeArea;
@@ -739,5 +724,28 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Ada
     private DesignerInfoBean mDesignerInfo;
     private String mHs_uid;
     private String mNickName;
+//
+//    @Override
+//    public void onShareClick() {
+//        if (null != memberEntity) {
+//
+//            if (isWeixinAvilible(CaseLibraryNewActivity.this)) {
+//                if (takePhotoPopWin == null) {
+//                    takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
+//                }
+//                takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+//            } else {
+//                ToastUtil.showCustomToast(CaseLibraryNewActivity.this, getString(R.string.anzhuangweixin));
+//            }
+//
+//        } else {
+//            AdskApplication.getInstance().doLogin(this);
+//        }
+//    }
+//
+//    @Override
+//    public void onPraiseClick() {
+//
+//    }
 //    private CountDownTimer mTimer;
 }

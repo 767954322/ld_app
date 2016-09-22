@@ -48,7 +48,7 @@ public class RegexUtil {
     /**
      * 验证姓名
      */
-    public static final String NAME_REGEX = "^([\u4e00-\u9fa5]{2,10})$";
+    public static final String NAME_REGEX = "^([\u4e00-\u9fa5]{2,10})$"; // 合同里的姓名判断有用到
     public static final String NAME_REGEX1 = "^[A-Za-z\\u4e00-\\u9fa5]{2,12}+$";
 
     /**
@@ -59,7 +59,8 @@ public class RegexUtil {
     /**
      * 验证昵称
      */
-    public static final String NICK_NAME_REGEX = "^[\\u4e00-\\u9fa5a-zA-Z0-9\\-]{2,10}$";
+    public static final String NICK_NAME_REGEX = "^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]{1,19}$"; // 中英文数据空格适配正则  +\S
+//    public static final String CONTRACT_NAME_REGEX = "^[\\u4e00-\\u9fa5a-zA-Z0-9\\-]{2,20}$";
 
     /**
      * 验证邮箱

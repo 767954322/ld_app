@@ -35,14 +35,17 @@
             android:textColor="@color/black"
             android:textSize="@dimen/size_12" />
 
-        <ImageView
+        <Button
             android:id="@+id/img_decoration_beishu_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_25"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/size_10"
-            android:src="@drawable/icon_chat_common_normal" />
+            android:background="@drawable/bg_btn_filtrate_pressed"
+            android:text="@string/designer_online_communication"
+            android:textColor="@color/bg_0084ff" />
 
     </LinearLayout>
 

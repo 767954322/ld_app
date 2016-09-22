@@ -88,4 +88,14 @@ public class ApiManager {
     public static String getHtml5Url(String caseId) {
         return UrlConstants.MP_MAIN_SHARE + caseId;
     }
+
+    /**
+     * 3d案例分享
+     *
+     * @param caseId
+     * @return
+     */
+    public static String getHtml53Url(String caseId) {
+        return UrlConstants.MP_MAIN3_SHARE + caseId;
+    }
 }

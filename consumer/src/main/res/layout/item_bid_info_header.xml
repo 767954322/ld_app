@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mybid_item_header"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/mybid_item_header_height"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/size_10">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_position_normal"/>
+
+    <TextView
+        android:id="@+id/tv_decoration_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_8"
+        android:layout_marginRight="@dimen/size_8"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/bg_33"
+        android:textStyle="normal"
+        android:textSize="@dimen/mybid_item_header_name_text_size"
+        tools:text="test"/>
+
+    <TextView
+        style="@style/BidItem.Text.Light"
+        android:textSize="@dimen/font_14"
+        android:text="@string/my_bid_budget"/>
+    <TextView
+        style="@style/BidItem.Text"
+        android:id="@+id/tv_decoration_buget"
+        android:textSize="@dimen/font_16"
+        tools:text="15万"/>
+</LinearLayout>

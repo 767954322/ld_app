@@ -56,6 +56,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -63,7 +64,6 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.zxing.WriterException;
-import com.socks.library.KLog;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -103,6 +103,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private static final int CROP_SMALL_PICTURE_1 = 6;//截图
 
     private int is_validated_by_mobile;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_essential_info;
@@ -155,10 +156,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         showState();
 
         /**
-         * 邮箱
+         * 邮箱为空时需要单独判断
          */
-
-        setTvString(mTvEmail, email);
+        if (TextUtils.isEmpty(email)) {
+            mTvEmail.setText(getResources().getString(R.string.no_email));
+        } else {
+            mTvEmail.setText(email);
+        }
         setGender();
     }
 
@@ -188,13 +192,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if(mConsumerEssentialInfoEntity!= null){
-            getConsumerInfoData(member_id);
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (mConsumerEssentialInfoEntity != null) {
+//            getConsumerInfoData(member_id);
+//        }
+//    }
 
 //    /**
 //     * 获取个人基本信息
@@ -283,9 +287,8 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         /**
          * 所在地
          */
-        if (TextUtils.isEmpty(province_name)
-                || TextUtils.isEmpty(city_name)) {
-            mTvConsumeAddress.setText(getResources().getString(R.string.has_yet_to_fill_out));
+        if (TextUtils.isEmpty(province_name) || TextUtils.isEmpty(city_name) || province_name.equals("<null>") || city_name.equals("<null>")) {
+            mTvConsumeAddress.setText(getResources().getString(R.string.temporarily_no_data));
         } else {
             if (TextUtils.isEmpty(district_name)
                     || "none".equals(district_name)
@@ -384,7 +387,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      * 获取省市区
      */
     private void getPCDAddress() {
-        mChangeAddressDialog = new AddressDialog();
+        if (!TextUtils.isEmpty(province_name)
+                || !TextUtils.isEmpty(city_name)) {
+            mChangeAddressDialog = AddressDialog.getInstance(province_name + " " + city_name + " " + district_name);
+        } else {
+            mChangeAddressDialog = AddressDialog.getInstance("尚未填写");
+        }
         mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
         mChangeAddressDialog
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
@@ -395,10 +403,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                         province = province_1;
                         city = city_1;
 
-                        district_name = TextUtils.isEmpty(district_name_1) ? "" : district_name_1;
-                        district = TextUtils.isEmpty(district_1)
-                                || TextUtils.isEmpty(district_name)
-                                || "none".equals(district_name) ? "" : district_1;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
+                        district_name = district_name_1;
+                        district = district_1;
 
                         JSONObject jsonObject = new JSONObject();
                         int intSex;
@@ -425,9 +432,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                             e.printStackTrace();
                         }
                         CustomProgress.show(ConsumerEssentialInfoActivity.this, UIUtils.getString(R.string.information_on_the_cross), false, null);
-
                         putAmendConsumerInfoData(member_id, jsonObject);
-                        mTvConsumeAddress.setText(province_name + " " + city_name + " " + district_name);
+
+                        district_name_1 = UIUtils.getNoStringIfEmpty(district_name);
+                        String address = province_name + " " + city_name + " " + district_name_1;
+
+                        mTvConsumeAddress.setText(address);
                         mChangeAddressDialog.dismiss();
                     }
                 });
@@ -437,6 +447,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
      * Open the system photo album .
      */
     private void systemPhoto() {
+        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
@@ -613,8 +624,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         ibnQrCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPopupWindow.dismiss();
-                mPopupWindow = null;
+                if (mPopupWindow != null) {
+                    mPopupWindow.dismiss();
+                    mPopupWindow = null;
+                }
             }
         });
         rl_consumer_zxing.setOnClickListener(new View.OnClickListener() {
@@ -622,7 +635,12 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             @Override
             public void onClick(View v) {
                 mPopupWindow.dismiss();
-                mPopupWindow = null;
+                if (mPopupWindow != null) {
+                    mPopupWindow.dismiss();
+                    mPopupWindow = null;
+                }
+
+
             }
         });
         /// mPopupWindow ScaleAnimation .
@@ -649,7 +667,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
         ConsumerQrEntity consumerQrEntity = new ConsumerQrEntity(mobile_number, memberType, member_id, hs_uid, nick_name, avatar);
         String qrJson = new Gson().toJson(consumerQrEntity);
-        KLog.d(TAG, qrJson);
+        LogUtils.i(TAG, qrJson);
 
         /// if the information is  Incomplete ,you can't generate qr code .
         if (null != consumerQrEntity) {
@@ -679,6 +697,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 } else {
                     intSex = 0;
                 }
+                nick_name = event.getmMsg();
                 jsonObject.put(Constant.PersonCenterKey.NICK_NAME, event.getmMsg());
                 jsonObject.put(Constant.PersonCenterKey.GENDER, intSex);
                 jsonObject.put(Constant.PersonCenterKey.HOME_PHONE, mConsumerEssentialInfoEntity.getHome_phone());
@@ -782,12 +801,11 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         handler.post(new Runnable() {
             public void run() {
                 MyToast.show(activity, string);
-                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
+//                mConsumeHeadIcon.setImageBitmap(headPicBitmap);
 
             }
         });
     }
-
 
 
     /**
@@ -803,6 +821,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             @Override
             public void onResponse(JSONObject jsonObject) {
                 jsonString = GsonUtil.jsonToString(jsonObject);
+                MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+                memberEntity.setNick_name(nick_name);
+                AdskApplication.getInstance().saveSignInInfo(memberEntity);
+                AdskApplication.getInstance().setMemberEntity(memberEntity);
                 CustomProgress.cancelDialog();
             }
 

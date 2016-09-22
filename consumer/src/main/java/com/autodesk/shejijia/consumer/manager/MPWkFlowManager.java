@@ -86,6 +86,9 @@ public class MPWkFlowManager {
         if (wk_template_id_int < 1) {
             return wkSubNodeName;
         }
+        if (wkFlowBeans.size() <= 0) {
+            return wkSubNodeName;
+        }
 
         tipWkFlowTemplateBean = wkFlowBeans.get(wk_template_id_int - 1);
         workflowInFos = tipWkFlowTemplateBean.getTip_workflow_infos();
@@ -119,44 +122,39 @@ public class MPWkFlowManager {
                                           int wk_cur_sub_node_id_int,
                                           List<TipWorkflowInfoBean> tipWorkflowInfoBeen) {
         String wkSubNodeName = "未知状态";
-        List<SubNodes> sub_nodes;
-        int subNodeId;
-
-        for (TipWorkflowInfoBean infoBean : tipWorkflowInfoBeen) {
-            switch (wk_cur_sub_node_id_int) {
-                case START_NODE:
-                    switch (memType) {
-                        case Constant.UerInfoKey.CONSUMER_TYPE:
-                            wkSubNodeName = infoBean.getTip_for_consumer();
-                            break;
-
-                        case Constant.UerInfoKey.DESIGNER_TYPE:
-                            wkSubNodeName = infoBean.getTip_for_designer();
-                            break;
-                    }
+        if (wk_cur_sub_node_id_int == -1){
+            switch (memType) {
+                case Constant.UerInfoKey.CONSUMER_TYPE:
+                    wkSubNodeName = tipWorkflowInfoBeen.get(0).getTip_for_consumer();
                     break;
 
-                default:
-                    sub_nodes = infoBean.getSub_nodes();
-                    Log.d("MPWkFlowManager", "sub_nodes:" + sub_nodes);
-                    if (null != sub_nodes) {
-                        for (SubNodes subNode : sub_nodes) {
-                            subNodeId = subNode.getId();
-                            if (wk_cur_sub_node_id_int == subNodeId) {
-                                switch (memType) {
-                                    case Constant.UerInfoKey.CONSUMER_TYPE:
-                                        wkSubNodeName = subNode.getTip_for_consumer();
-                                        break;
-
-                                    case Constant.UerInfoKey.DESIGNER_TYPE:
-                                        wkSubNodeName = subNode.getTip_for_designer();
-                                        break;
-                                }
-                            }
-                        }
-                    }
+                case Constant.UerInfoKey.DESIGNER_TYPE:
+                    wkSubNodeName = tipWorkflowInfoBeen.get(0).getTip_for_designer();
                     break;
             }
+            return wkSubNodeName;
+        }
+        List<SubNodes> sub_nodes;
+        int subNodeId;
+        for (TipWorkflowInfoBean infoBean : tipWorkflowInfoBeen) {
+            sub_nodes = infoBean.getSub_nodes();
+            Log.d("MPWkFlowManager", "sub_nodes:" + sub_nodes);
+            if (null != sub_nodes) {
+                for (SubNodes subNode : sub_nodes) {
+                    subNodeId = subNode.getId();
+                    if (wk_cur_sub_node_id_int == subNodeId) {
+                        switch (memType) {
+                            case Constant.UerInfoKey.CONSUMER_TYPE:
+                                wkSubNodeName = subNode.getTip_for_consumer();
+                                break;
+                            case Constant.UerInfoKey.DESIGNER_TYPE:
+                                wkSubNodeName = subNode.getTip_for_designer();
+                                break;
+                        }
+                    }
+                }
+            }
+
         }
         return wkSubNodeName;
     }

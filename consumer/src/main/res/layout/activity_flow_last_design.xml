@@ -183,7 +183,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_common_btn_blue"
-            android:text="@string/zhifushejiket"
+            android:text="@string/pay"
             android:textColor="@color/bg_ff" />
     </LinearLayout>
 

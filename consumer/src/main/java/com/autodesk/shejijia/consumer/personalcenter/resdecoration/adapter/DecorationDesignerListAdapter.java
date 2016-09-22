@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
@@ -16,6 +17,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
 import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
 
@@ -40,8 +42,8 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
     public DecorationDesignerListAdapter(Activity activity, List<DecorationBiddersBean> datas, String needs_id, String wk_template_id) {
         super(activity, datas, R.layout.item_decoration_designer_list);
         this.biddersEntities = (ArrayList<DecorationBiddersBean>) datas;
-        mActivity = activity;
-        mNeedsId = needs_id;
+        this.mActivity = activity;
+        this.mNeedsId = needs_id;
         this.wk_template_id = wk_template_id;
     }
 
@@ -52,11 +54,21 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         final String bidderUid = bidder.getUid();
         final String user_name = bidder.getUser_name();
         final String avatarUrl = bidder.getAvatar();
+        final String mThread_id = bidder.getDesign_thread_id();
 
         String wk_cur_sub_node_id = bidder.getWk_cur_sub_node_id();
 
         String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, wk_template_id, wk_cur_sub_node_id);
         holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
+
+        boolean falg = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63;
+        if (falg) {
+            holder.setText(R.id.tv_decoration_mesure, UIUtils.getString(R.string.evaluation));
+            holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_text_filtrate_pressed);
+        } else {
+            holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
+            holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_actionsheet_cancel);
+        }
 
 
         holder.setText(R.id.tv_designer_name, user_name);
@@ -67,11 +79,11 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
          * 判断进入全流程逻辑还是进入评价页面
          * 节点63,进入评价页面;其它节点，进入全流程逻辑
          */
-        if (StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63) {
+        if (falg) {
             /**
              * 进入评价页面
              */
-            holder.setOnClickListener(R.id.rl_item_decoration, new View.OnClickListener() {
+            holder.setOnClickListener(R.id.tv_decoration_mesure, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mMPBidderBean.setAvatar(avatarUrl);
@@ -79,10 +91,20 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                     mMPBidderBean.setDesigner_id(designerId);
 
                     Intent evaluateIntent = new Intent(mActivity, AppraiseDesignerActivity.class);
-                    evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_ASSET_NEED_ID, mNeedsId);
+                    evaluateIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeedsId);
                     evaluateIntent.putExtra(FlowUploadDeliveryActivity.BIDDER_ENTITY, mMPBidderBean);
-                    evaluateIntent.putExtra(Constant.BundleKey.BUNDLE_DESIGNER_ID, designerId);
+                    evaluateIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
                     mActivity.startActivity(evaluateIntent);
+                }
+            });
+            /**
+             * 全流程
+             */
+            holder.setOnClickListener(R.id.tv_designer_name, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int template_id = Integer.parseInt(wk_template_id);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id,mThread_id);
                 }
             });
         } else {
@@ -93,12 +115,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 @Override
                 public void onClick(View view) {
                     int template_id = Integer.parseInt(wk_template_id);
-                    Intent intent = new Intent();
-                    intent.setClass(mActivity, WkFlowStateActivity.class);
-                    intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, mNeedsId);
-                    intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
-                    intent.putExtra(Constant.BundleKey.TEMPDATE_ID, template_id);
-                    mActivity.startActivity(intent);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id,mThread_id);
                 }
             });
         }
@@ -116,5 +133,15 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 mActivity.startActivity(intent);
             }
         });
+    }
+
+    private void startWkFlowStateActivity(String needsId, String designerId, int template_id,String thread_id) {
+        Intent intent = new Intent();
+        intent.setClass(mActivity, WkFlowStateActivity.class);
+        intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needsId);
+        intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designerId);
+        intent.putExtra(Constant.BundleKey.TEMPDATE_ID, template_id);
+        intent.putExtra(Constant.ProjectMaterialKey.IM_TO_FLOW_THREAD_ID, thread_id);
+        mActivity.startActivity(intent);
     }
 }

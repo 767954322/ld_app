@@ -4,47 +4,10 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
+    <com.autodesk.shejijia.consumer.codecorationBase.packages.view.ResizableImageView
         android:id="@+id/iv_grandmaster_pic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
-
-
-    <TextView
-        android:id="@+id/tv_grandmaster_cn_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/font_15"
-        android:layout_marginTop="@dimen/font_24"
-        android:fontFamily="Regular"
-        android:textColor="#0084FF"
-        android:textSize="@dimen/font_30" />
-
-    <TextView
-        android:id="@+id/tv_grandmaster_en_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_grandmaster_cn_name"
-        android:layout_marginLeft="@dimen/font_15"
-        android:layout_marginTop="@dimen/font_5"
-        android:fontFamily="serif"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="@dimen/font_22"/>
-
-
-    <TextView
-        android:id="@+id/tv_grandmaster_detail"
-        android:layout_width="@dimen/font_230"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_grandmaster_en_name"
-        android:layout_marginLeft="@dimen/font_15"
-        android:layout_marginTop="@dimen/font_5"
-        android:maxLines="5"
-        android:fontFamily="Condensed bold-italic"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="@dimen/font_12"
-        android:textStyle="bold" />
-
+        android:scaleType="fitXY"/>
 
 </RelativeLayout>

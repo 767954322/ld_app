@@ -8,9 +8,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -27,12 +33,11 @@ import java.util.List;
 public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
     private  MeasureFormCallBack measureFormCallBack;
     private boolean falg;
-    private String payment_status;
     private Context context;
-    public SelectDesignAdapter(Context context, List<DecorationBiddersBean> biddersEntities, int layoutId,String payment_status,boolean falg) {
+    public SelectDesignAdapter(Context context, List<DecorationBiddersBean> biddersEntities,
+                               int layoutId,boolean falg) {
         super(context, biddersEntities, layoutId);
         this.measureFormCallBack = (MeasureFormCallBack)context;
-        this.payment_status = payment_status;
         this.falg = falg;
         this.context = context;
     }
@@ -40,16 +45,16 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
     public void convert(CommonViewHolder holder, final DecorationBiddersBean biddersBean) {
 
         String nick_name = biddersBean.getUser_name();
-        nick_name = TextUtils.isEmpty(nick_name) ? "匿名" : nick_name;
+        nick_name = TextUtils.isEmpty(nick_name) ? UIUtils.getString(R.string.anonymity) : nick_name;
         String style_names = biddersBean.getStyle_names();
         style_names = (style_names != null)?style_names.replace(","," "):"";
+        style_names = UIUtils.getNotDataIfEmpty(style_names);
         String avatar = biddersBean.getAvatar();
         avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
         PolygonImageView polygonImageView = holder.getView(R.id.piv_design_photo);
         ImageUtils.displayAvatarImage(avatar, polygonImageView);
         holder.setText(R.id.tv_designer_name, nick_name);
         holder.setText(R.id.tv_profession, UIUtils.getString(R.string.profession)+style_names);
-
         Button button = holder.getView(R.id.bt_select_ta_measure_form);
 
         TextView textView = holder.getView(R.id.tv_measure_invite);
@@ -60,34 +65,33 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         if(sub_node_id != MPWkFlowManager.START_NODE){
             String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(context, MPWkFlowManager.PAYMENT_OF_FIRST_FEE, wk_cur_sub_node_id);
             holder.setText(R.id.tv_measure_invite,wkSubNodeName);
+        }else{
+            holder.setText(R.id.tv_measure_invite,UIUtils.getString(R.string.optional_measure));
         }
-
-
         verification(sub_node_id,button,textView);
-
-
         holder.setOnClickListener(R.id.img_consume_home_chat, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /**
                  * 在线聊天 .
                  */
-                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-                Intent intent = new Intent(context, ChatRoomActivity.class);
-                String acs_member_id = mMemberEntity.getAcs_member_id();
-                String member_type = mMemberEntity.getMember_type();
-                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, biddersBean.getUser_name());
-                intent.putExtra(ChatRoomActivity.THREAD_ID, biddersBean.getDesign_thread_id());
-                intent.putExtra(ChatRoomActivity.ASSET_ID, "");
-                intent.putExtra(ChatRoomActivity.MEMBER_TYPE, member_type);
-                intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, biddersBean.getDesigner_id());
-                intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, acs_member_id);
+                openChatRoom(biddersBean);
+            }
+        });
+
+        holder.getView(R.id.piv_design_photo).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 进入设计师主页 .
+                 */
+                Intent intent = new Intent(context, SeekDesignerDetailActivity.class);
+                intent.putExtra(Constant.ConsumerDecorationFragment.designer_id, biddersBean.getDesigner_id());
+                intent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, biddersBean.getUid());
                 context.startActivity(intent);
 
             }
         });
-
-//
 
         holder.setOnClickListener(R.id.bt_select_ta_measure_form, new View.OnClickListener() {
             @Override
@@ -95,6 +99,24 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
                 measureFormCallBack.measureForm( biddersBean.getDesigner_id());
             }
         });
+    }
+    /**
+     * 打开聊天室
+     */
+    private void openChatRoom(DecorationBiddersBean biddersBean) {
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if(memberEntity == null){
+             return;
+        }
+        String userName = biddersBean.getUser_name();
+        String designer_id = biddersBean.getDesigner_id();
+        JumpBean jumpBean = new JumpBean();
+        jumpBean.setReciever_hs_uid(biddersBean.getUid());
+        jumpBean.setReciever_user_id(designer_id);
+        jumpBean.setReciever_user_name(userName);
+        jumpBean.setAcs_member_id(memberEntity.getAcs_member_id());
+        jumpBean.setMember_type(memberEntity.getMember_type());
+        JumpToChatRoom.getChatRoom(context,jumpBean);
     }
     private void verification(int key,Button button,TextView textView){
         if(falg){

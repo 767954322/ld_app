@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderBeiShuBean;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderBeiShutEntity;
+import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonBean;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
@@ -40,26 +44,38 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  * @version v1.0 .
  * @date 2016-6-7 .
  * @file OrderBeiShuFragment.java .
- * @brief 我的订单:北舒订单页面 .
+ * @brief taocan .
  */
 public class OrderBeiShuFragment extends BaseFragment {
+
+    private RelativeLayout mRlEmpty;
 
     public OrderBeiShuFragment() {
     }
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_beishu_meal;
+        return R.layout.fragment_elite;
     }
 
     @Override
     protected void initView() {
-        mListView = (ListViewFinal) rootView.findViewById(R.id.lv_designer_beishu_order);
-        mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
+        mListView = (ListViewFinal) rootView.findViewById(R.id.lv_designer_elite);
+        mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout_elite);
+        mRlEmpty = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
 
         mMyBeiShuMealAdapter = new MyBeiShuMealAdapter(UIUtils.getContext(), mBeiShuNeedsOrderListEntities, R.layout.item_lv_designer_beishu_order);
         mListView.setAdapter(mMyBeiShuMealAdapter);
-        setSwipeRefreshInfo();
+    }
+
+
+    @Override
+    public void onFragmentShown() {
+
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (null != memberEntity && Constant.UerInfoKey.DESIGNER_TYPE.equalsIgnoreCase(memberEntity.getMember_type())) {
+            setSwipeRefreshInfo();
+        }
     }
 
     @Override
@@ -105,14 +121,15 @@ public class OrderBeiShuFragment extends BaseFragment {
     /**
      * 北舒套餐订单列表适配器
      */
-    private class MyBeiShuMealAdapter extends CommonAdapter<OrderBeiShutEntity.BeishuNeedsOrderListEntity> {
+    private class MyBeiShuMealAdapter extends CommonAdapter<OrderBeiShuBean.BeishuNeedsOrderListBean> {
         String customer_id;
-        public MyBeiShuMealAdapter(Context context, List<OrderBeiShutEntity.BeishuNeedsOrderListEntity> datas, int layoutId) {
+
+        public MyBeiShuMealAdapter(Context context, List<OrderBeiShuBean.BeishuNeedsOrderListBean> datas, int layoutId) {
             super(context, datas, layoutId);
         }
 
         @Override
-        public void convert(CommonViewHolder holder, OrderBeiShutEntity.BeishuNeedsOrderListEntity beishuNeedsOrderListEntity) {
+        public void convert(CommonViewHolder holder, OrderBeiShuBean.BeishuNeedsOrderListBean beishuNeedsOrderListEntity) {
             String community_name = beishuNeedsOrderListEntity.getCommunity_name();
             int needs_id = beishuNeedsOrderListEntity.getNeeds_id();
             String contacts_mobile = beishuNeedsOrderListEntity.getContacts_mobile();
@@ -130,7 +147,7 @@ public class OrderBeiShuFragment extends BaseFragment {
             }
             final String beishu_thread_id = beishuNeedsOrderListEntity.getBeishu_thread_id();
             String community_name_cut = community_name.replace("北舒套餐 - ", "");/// 去除北舒套餐标志 .
-            holder.setText(R.id.tv_desinger_beishuorder_address, community_name_cut);
+            holder.setText(R.id.tv_desinger_beishuorder_address, contacts_name + "/" + community_name_cut);
             holder.setText(R.id.tv_desinger_beishuorder_projectid, needs_id + "");
             holder.setText(R.id.tv_desinger_beishuorder_contact_name, contacts_name);
             holder.setText(R.id.tv_desinger_beishuorder_phone, contacts_mobile);
@@ -173,7 +190,8 @@ public class OrderBeiShuFragment extends BaseFragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String userInfo = GsonUtil.jsonToString(jsonObject);
-                mOrderBeiShutEntity = GsonUtil.jsonToBean(userInfo, OrderBeiShutEntity.class);
+                mOrderBeiShutEntity = GsonUtil.jsonToBean(userInfo, OrderBeiShuBean.class);
+
                 if (offset == 0) {
                     mBeiShuNeedsOrderListEntities.clear();
                 }
@@ -184,6 +202,13 @@ public class OrderBeiShuFragment extends BaseFragment {
                 } else {
                     mListView.setHasLoadMore(true);
                 }
+
+                if (mOrderBeiShutEntity == null || mOrderBeiShutEntity.getBeishu_needs_order_list().size() == 0) {
+                    mRlEmpty.setVisibility(View.VISIBLE);
+                } else {
+                    mRlEmpty.setVisibility(View.GONE);
+                }
+
                 Message msg = Message.obtain();
                 msg.obj = offset;
                 handler.sendMessage(msg);
@@ -193,7 +218,7 @@ public class OrderBeiShuFragment extends BaseFragment {
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
                 if (getActivity() != null) {
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
                 }
             }
         };
@@ -212,6 +237,6 @@ public class OrderBeiShuFragment extends BaseFragment {
     private int LIMIT = 10;
     private int OFFSET = 0;
     private MyBeiShuMealAdapter mMyBeiShuMealAdapter;
-    private OrderBeiShutEntity mOrderBeiShutEntity;
-    private ArrayList<OrderBeiShutEntity.BeishuNeedsOrderListEntity> mBeiShuNeedsOrderListEntities = new ArrayList<>();
+    private OrderBeiShuBean mOrderBeiShutEntity;
+    private ArrayList<OrderBeiShuBean.BeishuNeedsOrderListBean> mBeiShuNeedsOrderListEntities = new ArrayList<>();
 }

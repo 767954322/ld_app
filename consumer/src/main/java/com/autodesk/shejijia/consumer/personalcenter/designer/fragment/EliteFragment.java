@@ -34,6 +34,17 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  */
 public class EliteFragment extends BaseFragment {
 
+    private RelativeLayout mRlEmpty;
+    private ListViewFinal mListView;
+    private PtrClassicFrameLayout ptrLayoutElite;
+
+    private ArrayList<OrderCommonEntity.OrderListEntity> orders = new ArrayList<>();
+    private String designer_id;
+    private int model;
+    private int LIMIT = 10;
+    private int OFFSET = 0;
+    private EliteAdapter eliteAdapter;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_elite;
@@ -41,10 +52,19 @@ public class EliteFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        if (getArguments() != null)
+            model = getArguments().getInt("model");
+
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_designer_elite);
         ptrLayoutElite = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout_elite);
         mRlEmpty = (RelativeLayout) rootView.findViewById(R.id.rl_empty);
     }
+
+    @Override
+    public void onFragmentShown() {
+        onLoad2Refresh2Api();
+    }
+
 
     @Override
     protected void initData() {
@@ -52,93 +72,69 @@ public class EliteFragment extends BaseFragment {
         if (mMemberEntity == null) {
             return;
         }
+
         designer_id = mMemberEntity.getAcs_member_id();
-        map = new HashMap<>();
-        map.put(JsonConstants.JSON_DEMAND_LIST_OFFSET,OFFSET);
-        map.put(JsonConstants.JSON_DEMAND_LIST_LIMIT,LIMIT);
-        map.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID,designer_id);
+//        map = new HashMap<>();
+//        map.put(JsonConstants.JSON_DEMAND_LIST_OFFSET, OFFSET);
+//        map.put(JsonConstants.JSON_DEMAND_LIST_LIMIT, LIMIT);
+//        map.put(JsonConstants.JSON_MEASURE_FORM_DESIGNER_ID, acs_member_id);
 
-        eliteAdapter = new EliteAdapter(getActivity(), commonOrderListEntities, R.layout.item_lv_designer_slite_order,designer_id);
+        eliteAdapter = new EliteAdapter(getActivity(), orders, R.layout.item_lv_designer_slite_order, designer_id);
         mListView.setAdapter(eliteAdapter);
-        setSwipeRefreshInfo();
-
+//        onLoad2Refresh2Api();
     }
-    /**
-     * 获取数据，刷新页面
-     */
-    private void setSwipeRefreshInfo() {
+
+
+    private void onLoad2Refresh2Api() {
         ptrLayoutElite.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getSliteOder(map,0, LIMIT);
+                OFFSET = 0;
+                connectOrder2Api(designer_id, OFFSET, LIMIT);
             }
         });
         ptrLayoutElite.setLastUpdateTimeRelateObject(this);
         mListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void loadMore() {
-                getSliteOder(map, OFFSET, LIMIT);
+                connectOrder2Api(designer_id, OFFSET, LIMIT);
             }
         });
         ptrLayoutElite.autoRefresh();
     }
 
-    private void getSliteOder(HashMap<String,Object > map,final int offset, int limit){
-        MPServerHttpManager.getInstance().getSliteOder(map,new OkJsonRequest.OKResponseCallback() {
+    private void connectOrder2Api(String designer_id, final int offset, int limit) {
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                String userInfo = GsonUtil.jsonToString(jsonObject);
-                mOrderCommonBean = GsonUtil.jsonToBean(userInfo, OrderCommonEntity.class);
-                if (offset == 0) {
-                    commonOrderListEntities.clear();
-                }
+                String orderInfo = GsonUtil.jsonToString(jsonObject);
+                OrderCommonEntity entity = GsonUtil.jsonToBean(orderInfo, OrderCommonEntity.class);
+                if (offset == 0)
+                    orders.clear();
+
                 OFFSET = offset + 10;
-                commonOrderListEntities.addAll(mOrderCommonBean.getOrder_list());
-                if (mOrderCommonBean.getOrder_list().size() < LIMIT) {
+                orders.addAll(entity.getOrder_list());
+                if (entity.getOrder_list().size() < LIMIT)
                     mListView.setHasLoadMore(false);
-                } else {
+                else
                     mListView.setHasLoadMore(true);
-                }
 
-                if (null == commonOrderListEntities || commonOrderListEntities.size() == 0) {
-                    mRlEmpty.setVisibility(View.VISIBLE);
-                }else{
-                    mRlEmpty.setVisibility(View.GONE);
-                }
+                if (offset == 0)
+                    ptrLayoutElite.onRefreshComplete();
+                else
+                    mListView.onLoadMoreComplete();
 
-                Message msg = Message.obtain();
-                msg.obj = offset;
-                handler.sendMessage(msg);
+                mRlEmpty.setVisibility(entity == null || entity.getOrder_list().size() == 0 ? View.VISIBLE : View.GONE);
+
+                eliteAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-            }
-        });
 
+            }
+        };
+        MPServerHttpManager.getInstance().getSliteOder(designer_id,offset,limit, callback);
     }
-    private android.os.Handler handler = new android.os.Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            int offset = (int) msg.obj;
-            if (offset == 0) {
-                ptrLayoutElite.onRefreshComplete();
-            } else {
-                mListView.onLoadMoreComplete();
-            }
-            eliteAdapter.notifyDataSetChanged();
-        }
-    };
 
-    private RelativeLayout mRlEmpty;
-    private ListViewFinal mListView;
-    private PtrClassicFrameLayout ptrLayoutElite;
-    private String designer_id;
-    private  OrderCommonEntity mOrderCommonBean;
-    private EliteAdapter eliteAdapter;
-    private ArrayList<OrderCommonEntity.OrderListEntity> commonOrderListEntities = new ArrayList<>();
-    private HashMap<String,Object > map;
-    private int LIMIT = 10;
-    private int OFFSET = 0;
 }

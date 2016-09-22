@@ -23,12 +23,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -156,20 +155,22 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 CustomProgress.cancelDialog();
+
                 String info = GsonUtil.jsonToString(jsonObject);
-                KLog.json(info);
+                LogUtils.i(info);
                 getAlertView(UIUtils.getString(R.string.designer_bid_detail_success), null, false).show();
                 mBtnSendBid.setEnabled(false);
-                mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-                mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+                mBtnSendBid.setBackgroundResource(R.drawable.abc_gray_button_style);
+                mBtnSendBid.setTextColor(UIUtils.getColor(R.color.bg_80));
                 mBtnSendBid.setText(UIUtils.getString(R.string.bided));
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
-                CustomProgress.dialog.cancel();
+                CustomProgress.cancelDialog();
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, BiddingHallDetailActivity.this);
             }
         };
@@ -186,10 +187,10 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         final OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+
                 String info = GsonUtil.jsonToString(jsonObject);
                 mRealNameBean = GsonUtil.jsonToBean(info, RealNameBean.class);
-                KLog.json(info);
-                CustomProgress.cancelDialog();
+                LogUtils.i(info);
                 updateViewFromRealNameData();
             }
 
@@ -207,14 +208,17 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * 获取姓名信息，并更新
      */
     private void updateViewFromRealNameData() {
+
         if (mRealNameBean.getDesigner().getIs_real_name() == 2) {
             String measurement_price = mRealNameBean.getDesigner().getMeasurement_price();
 
             if (TextUtils.isEmpty(measurement_price)) {
+                CustomProgress.cancelDialog();
                 noSetMeasureFee();
                 return;
             }
             if (bidder_count >= BIDDER_MAX) {
+                CustomProgress.cancelDialog();
                 bidCountFullDialog();
             } else {
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -223,7 +227,8 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 sendBidDemand("", user_name, needs_id, designer_id);
             }
         } else {
-            new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.msg_no_certification), null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
+            CustomProgress.cancelDialog();
+            new AlertView(UIUtils.getString(R.string.tip), "您还未通过实名认证\n请到网页端完成认证", null, null, new String[]{UIUtils.getString(R.string.sure)}, BiddingHallDetailActivity.this,
                     AlertView.Style.Alert, new OnItemClickListener() {
                 @Override
                 public void onItemClick(Object o, int position) {
@@ -270,19 +275,20 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         String toilet_cn = ConvertUtils.getConvert2CN(toiletJson, toilet);
         String house_type_convert = ConvertUtils.getConvert2CN(houseJson, house_type);
 
-//        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
+        String livingRoom_room_toilet = UIUtils.getNoDataIfEmpty(room_cn) + UIUtils.getNoDataIfEmpty(living_room_cn) + UIUtils.getNoDataIfEmpty(toilet_cn);
 
-        district_name = StringUtils.isEmpty(mBidHallEntity.getDistrict()) || StringUtils.isEmpty(district_name) ? "" : district_name;
+        district_name = UIUtils.getNoStringIfEmpty(district_name);
         String projectAddress = UIUtils.getNoDataIfEmpty(mBidHallEntity.getProvince_name()) + " " + UIUtils.getNoDataIfEmpty(mBidHallEntity.getCity_name()) + " " + district_name;
 
         setTitleForNavbar(community_name);
         mTvProjectNeedsId.setText(needs_id);
-        mTvHouseType.setText(TextUtils.isEmpty(house_type_convert) ? UIUtils.getString(R.string.no_select) : house_type_convert);
-        mTvHouseStyle.setText(TextUtils.isEmpty(decoration_style_convert) ? UIUtils.getString(R.string.no_select) : decoration_style_convert);
-        mTvHouseModel.setText(TextUtils.isEmpty(room_cn) ? UIUtils.getString(R.string.no_select) : room_cn);
+        mTvHouseType.setText(UIUtils.getNoSelectIfEmpty(house_type_convert));
+        mTvHouseStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style_convert));
+        mTvHouseModel.setText(livingRoom_room_toilet);
         mTvName.setText(mBidHallEntity.getContacts_name());
-        mTvDecorationBudget.setText(TextUtils.isEmpty(decoration_budget) ? UIUtils.getString(R.string.no_select) : decoration_budget);
-        mTvDesignBudget.setText(TextUtils.isEmpty(mBidHallEntity.getDesign_budget()) ? UIUtils.getString(R.string.no_select) : mBidHallEntity.getDesign_budget());
+        mTvDecorationBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget));
+        String design_budget = mBidHallEntity.getDesign_budget();
+        mTvDesignBudget.setText(UIUtils.getNoSelectIfEmpty(design_budget));
         mTvHouseArea.setText(mBidHallEntity.getHouse_area() + "m²");
         mTvProjectAddress.setText(projectAddress);
         mTvPublishTime.setText(mBidHallEntity.getPublish_time());
@@ -325,8 +331,8 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
 
         if (bid_status) {
             mBtnSendBid.setEnabled(false);
-            mBtnSendBid.setBackgroundResource(R.drawable.bg_common_btn_pressed);
-            mBtnSendBid.setTextColor(UIUtils.getColor(R.color.white));
+            mBtnSendBid.setBackgroundResource(R.drawable.abc_gray_button_style);
+            mBtnSendBid.setTextColor(UIUtils.getColor(R.color.bg_80));
             mBtnSendBid.setText(UIUtils.getString(R.string.bided));
             mTvPhone.setText(phone);
         } else {
@@ -358,6 +364,12 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * 应标成功提示
      */
     public void bidCountFullDialog() {
+        CustomProgress.cancelDialog();
+        CustomProgress.dialog.cancel();
+        mBtnSendBid.setEnabled(false);
+        mBtnSendBid.setBackgroundResource(R.drawable.abc_gray_button_style);
+        mBtnSendBid.setTextColor(UIUtils.getColor(R.color.bg_80));
+//        mBtnSendBid.setText(UIUtils.getString(R.string.bided));
         getAlertView(UIUtils.getString(R.string.should_number_full), null, false).show();
     }
 

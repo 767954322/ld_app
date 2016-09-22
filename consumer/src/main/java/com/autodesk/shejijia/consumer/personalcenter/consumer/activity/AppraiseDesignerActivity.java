@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploadDeliveryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -25,11 +26,11 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -82,7 +83,6 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         Bundle bundle = intent.getExtras();
         if (null != bundle) {
             mMPBidderBean = (MPBidderBean) bundle.getSerializable(FlowUploadDeliveryActivity.BIDDER_ENTITY);
-            mMPBidderBean.getDesigner_id();
             designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
             needs_id = bundle.getString(Constant.SeekDesignerDetailKey.NEEDS_ID);
         }
@@ -120,7 +120,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
         switch (v.getId()) {
             case R.id.btn_submit_appraisement:
                 String appeasementsContent = mEditEvaluationContent.getText().toString();
-                boolean regex_address_right = appeasementsContent.matches("^.{15,200}$");
+                boolean regex_address_right = appeasementsContent.matches("^[\\u4e00-\\u9fa5_a-zA-Z0-9_]{15,200}$");
 
                 boolean isValidateSubmitContent = validateSubmitContent(appeasementsContent, regex_address_right);
                 if (isValidateSubmitContent) {
@@ -128,6 +128,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
                     MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                     String hs_uid = memberEntity.getHs_uid();
                     JSONObject jsonObject = new JSONObject();
+
                     try {
                         jsonObject.put("designer_uid", hs_uid);             /// 消费者编号 .
                         jsonObject.put("member_grade", mRatingProgress);        /// 消费者评分 .
@@ -135,7 +136,7 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    KLog.d(TAG, "jsonObject:" + jsonObject);
+                    LogUtils.i(TAG, "jsonObject:" + jsonObject);
                     submitEvaluation(jsonObject);
                 }
                 break;
@@ -160,14 +161,20 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
     private boolean validateSubmitContent(String appeasementsContent, boolean regex_address_right) {
 
         float rating = mRatingBarStar.getRating();
-        if((int)rating==0){
+        if ((int) rating == 0) {
             showAlertView(R.string.you_have_not_score);
             return false;
         }
-        
-        if (!TextUtils.isEmpty(appeasementsContent) && !regex_address_right) {
-            showAlertView(R.string.please_enter_words);
-            return false;
+
+        if (appeasementsContent.length() != 0){
+
+            if (appeasementsContent.length()>200 || appeasementsContent.length()< 15){
+
+                showAlertView(R.string.please_enter_words);
+                return false;
+
+            }
+
         }
 
         if (TextUtils.isEmpty(appeasementsContent)) {
@@ -191,18 +198,19 @@ public class AppraiseDesignerActivity extends NavigationBarActivity implements
     private void submitEvaluation(JSONObject jsonObject) {
         MPServerHttpManager.getInstance().submitAppraisement(needs_id, designer_id, jsonObject,
                 new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                CustomProgress.cancelDialog();
-                mAppraiseDesignerSuccessAlertView.show();
-            }
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        CustomProgress.cancelDialog();
+                        mAppraiseDesignerSuccessAlertView.show();
+                    }
 
-            @Override
-            public void onErrorResponse(VolleyError volleyError) { /// 204 .
-                CustomProgress.cancelDialog();
-                MPNetworkUtils.logError(TAG, volleyError, true);
-            }
-        });
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) { /// 204 .
+                        CustomProgress.cancelDialog();
+                        MPNetworkUtils.logError(TAG, volleyError, true);
+                        ApiStatusUtil.getInstance().apiStatuError(volleyError, AppraiseDesignerActivity.this);
+                    }
+                });
     }
 
     /**

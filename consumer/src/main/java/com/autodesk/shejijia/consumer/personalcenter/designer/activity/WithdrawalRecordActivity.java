@@ -51,7 +51,7 @@ public class WithdrawalRecordActivity extends NavigationBarActivity implements V
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.my_property_withdrawal_record));
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-        designer_id = (memberEntity!=null)?memberEntity.getAcs_member_id():null;
+        designer_id = (memberEntity != null) ? memberEntity.getAcs_member_id() : null;
         mAdapter = new WithdrawalRecordAdapter(this, mList);
         mListView.setAdapter(mAdapter);
     }
@@ -63,7 +63,8 @@ public class WithdrawalRecordActivity extends NavigationBarActivity implements V
     }
 
     @Override
-    public void onClick(View v) {}
+    public void onClick(View v) {
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -117,7 +118,7 @@ public class WithdrawalRecordActivity extends NavigationBarActivity implements V
                 openAlertView(UIUtils.getString(R.string.tip_withdrawal_record));
             }
 
-        }catch ( Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             isSucceed = PullToRefreshLayout.FAIL;
 
@@ -127,7 +128,7 @@ public class WithdrawalRecordActivity extends NavigationBarActivity implements V
     }
 
     private void openAlertView(String content) {
-        new AlertView(UIUtils.getString(R.string.tip), content, null, null,new String[]{UIUtils.getString(R.string.sure)}, this,
+        new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.sure)}, this,
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object o, int position) {
@@ -138,6 +139,7 @@ public class WithdrawalRecordActivity extends NavigationBarActivity implements V
 
     /**
      * 提现记录数据
+     *
      * @param designer_id
      * @param offset
      * @param limit
