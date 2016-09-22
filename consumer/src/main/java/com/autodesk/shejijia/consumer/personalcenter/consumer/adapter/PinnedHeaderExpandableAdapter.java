@@ -36,6 +36,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
     private Map<String, String> roomJson;
     private Map<String, String> toiletJson;
     private String living_room_convert, room_convert, toilet_convert;
+    private String proJectAddress;
 
 
     public PinnedHeaderExpandableAdapter(ArrayList<DecorationNeedsListBean> mList, Activity activity, PinnedHeaderExpandableListView listView) {
@@ -92,7 +93,14 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         tv_house_area.setText(mList.get(groupPosition).getHouse_area() + "m²");
         tv_project_budget.setText(mList.get(groupPosition).getDecoration_budget());
         tv_planning_budget.setText(mList.get(groupPosition).getDesign_budget());
-        tv_measure_house_address.setText(mList.get(groupPosition).getProvince_name() + " " + mList.get(groupPosition).getCity_name() + " " + mList.get(groupPosition).getDistrict_name());
+
+
+        if (mList.get(groupPosition).getDistrict_name().equals("none")) {
+            proJectAddress = mList.get(groupPosition).getProvince_name() + " " + mList.get(groupPosition).getCity_name();
+        } else {
+            proJectAddress = mList.get(groupPosition).getProvince_name() + " " + mList.get(groupPosition).getCity_name() + " " + mList.get(groupPosition).getDistrict_name();
+        }
+        tv_measure_house_address.setText(proJectAddress);
         tv_village_name.setText(mList.get(groupPosition).getCommunity_name());
         return view;
     }
