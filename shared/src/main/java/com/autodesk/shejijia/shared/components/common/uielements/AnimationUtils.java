@@ -36,13 +36,13 @@ public class AnimationUtils {
      */
     public void setAnimationDismiss(View view) {
 
-//        if (alphaAnimationDismiss == null) {
-//
-//            alphaAnimationDismiss = new AlphaAnimation(1, 0);
-//            alphaAnimationDismiss.setDuration(1500);
-//            alphaAnimationDismiss.setFillAfter(true);
-//            view.startAnimation(alphaAnimationDismiss);
-//        }
+        if (alphaAnimationDismiss == null) {
+
+            alphaAnimationDismiss = new AlphaAnimation(1, 0);
+            alphaAnimationDismiss.setDuration(1500);
+            alphaAnimationDismiss.setFillAfter(true);
+            view.startAnimation(alphaAnimationDismiss);
+        }
     }
 
     public void setAnimationShow(View view) {
@@ -79,10 +79,6 @@ public class AnimationUtils {
             timer.schedule(timerTask,1500,5000);
         }
 
-    }
-    public void setHandler(Handler handler){
-
-        this.handler = handler;
     }
 
     public void clearAnimationControl(View view){

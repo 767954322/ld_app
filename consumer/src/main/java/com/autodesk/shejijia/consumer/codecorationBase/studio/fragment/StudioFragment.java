@@ -25,6 +25,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.activity.WorkRoomD
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AnimationUtils;
@@ -43,7 +44,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author  .
+ * @author .
  * @version 1.0 .
  * @date 16-8-16
  * @file StudioFragment.java  .
@@ -82,31 +83,30 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     protected void initData() {
         isLoginUserJust = isLoginUser();
 
-//        handler = new Handler(){
-//
-//            @Override
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                switch (msg.what){
-//
-//                    case 0:
-//                        if (now_order != null){
-//
-//                            AnimationUtils.getInstance().clearAnimationControl(now_order);
-//                            AnimationUtils.getInstance().setAnimationShow(now_order);
-//                        }
-//                        break;
-//                }
-//            }
-//        };
+        handler = new Handler() {
 
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
 
-//        AnimationUtils.getInstance().setHandler(handler);
-        getWorkRoomData("91", 0, 10);
-        if (WkFlowStateMap.sixProductsPicturesBean !=null){
+                    case 0:
+                        if (now_order != null) {
 
-            String pictrueName = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getStudio().get(0).getBanner();
-            ImageUtils.loadImageIcon(img_header,pictrueName);
+                            AnimationUtils.getInstance().clearAnimationControl(now_order);
+                            AnimationUtils.getInstance().setAnimationShow(now_order);
+                        }
+                        break;
+                }
+            }
+        };
+
+        //首次获取数据
+        getWorkRoomData("91", 0, 25);
+        if (WkFlowStateMap.sixProductsPicturesBean != null) {
+
+            String pictureName = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getStudio().get(0).getBanner();
+            ImageUtils.loadImageIcon(img_header, pictureName);
         }
     }
 
@@ -127,11 +127,11 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                             String member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
                             String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                             try {
-                                jsonObject.put("consumer_name", name);//姓名
-                                jsonObject.put("consumer_mobile", phoneNumber);//电话
-                                jsonObject.put("type", 2);//工作室类型
-                                jsonObject.put("customer_id", member_id);//消费者ID
-                                jsonObject.put("consumer_uid", hs_uid);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_NAME, name);//姓名
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_MOBILE, phoneNumber);//电话
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_TYPE, 2);//工作室类型
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_ID, member_id);//消费者ID
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_UID, hs_uid);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -139,9 +139,9 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                         } else {
 
                             try {
-                                jsonObject.put("consumer_name", name);
-                                jsonObject.put("consumer_mobile", phoneNumber);
-                                jsonObject.put("type", 2);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_NAME, name);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_MOBILE, phoneNumber);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_TYPE, 2);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -163,7 +163,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
         MPServerHttpManager.getInstance().getWorkRoomList(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
                 work_room_refresh_view.loadmoreFinish(PullToRefreshLayout.FAIL);
             }
 
@@ -187,16 +187,23 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                         work_room_refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                         isLoadMore = false;
                     } else {
+                        //清空原来的数据
+                        if (designerRetrieveRspAll != null && designerRetrieveRspAll.size() !=0){
+
+                            designerRetrieveRspAll.clear();
+                        }
                         for (int i = 0; i < designerListBeen.size(); i++) {
 
                             designerRetrieveRspAll.add(designerListBeen.get(i));
 
                         }
                         upDataForView(designerRetrieveRspAll);
+                        work_room_refresh_view.refreshFinish(PullToRefreshLayout.SUCCEED);
 
                     }
                 }
-                work_room_refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+
+                controlAnimation();//加载或者刷新更多时候也要消失按钮,完成后,慢慢显现
             }
         }, type, offset, limit);
     }
@@ -214,69 +221,65 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
                     Intent intent = new Intent(activity, WorkRoomDetailActivity.class);
 
-                    intent.putExtra("hs_uid", designerRetrieveRspAll.get(position - 1).getHs_uid());
+                    intent.putExtra(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_HS_UID, designerRetrieveRspAll.get(position - 1).getHs_uid());
                     activity.startActivity(intent);
 
                 }
             }
         });
 
-//        work_room_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//
-//                switch(scrollState){
-//
-//
-//                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE://当屏幕停止滚动时
-//
-//
-////                        AnimationUtils.getInstance().controlAnimation(now_order);
-//
-//                        controlAnimation();
-//
-//
-//                        break;
-//                    case AbsListView.OnScrollListener.SCROLL_STATE_FLING://惯性滑动时
-//
-//
-//                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
-//
-//                        break;
-//                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://手指触摸滑动时
-//
-//                        AnimationUtils.getInstance().setAnimationDismiss(now_order);
-//
-//                        break;
-//
-//                }
-//
-//                }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//
-////                //滑动到底部的时候
-////                if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1 ){
-////
-////
-////                    AnimationUtils.getInstance().controlAnimation(now_order);
-////                    AnimationUtils.getInstance().setAnimationShow(now_order);
-////                }
-////                //滑动到顶部了
-////                if (work_room_listView.getFirstVisiblePosition() == 0){
-////
-////
-////                    AnimationUtils.getInstance().controlAnimation(now_order);
-////                    AnimationUtils.getInstance().setAnimationShow(now_order);
-////
-////                }
-//
-//            }
-//
-//        }
+        work_room_listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                                   @Override
+                                                   public void onScrollStateChanged(AbsListView view, int scrollState) {
 
-//        );
+                                                       switch (scrollState) {
+
+
+                                                           case AbsListView.OnScrollListener.SCROLL_STATE_IDLE://当屏幕停止滚动时
+
+                                                               controlAnimation();
+
+                                                               break;
+                                                           case AbsListView.OnScrollListener.SCROLL_STATE_FLING://惯性滑动时
+
+
+                                                               AnimationUtils.getInstance().setAnimationDismiss(now_order);
+
+                                                               break;
+                                                           case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://手指触摸滑动时
+
+                                                               AnimationUtils.getInstance().setAnimationDismiss(now_order);
+
+                                                               break;
+
+                                                       }
+
+                                                   }
+
+                                                   @Override
+                                                   public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+//                //滑动到底部的时候
+//                if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1 ){
+//
+//
+//                    AnimationUtils.getInstance().controlAnimation(now_order);
+//                    AnimationUtils.getInstance().setAnimationShow(now_order);
+//                }
+//                //滑动到顶部了
+//                if (work_room_listView.getFirstVisiblePosition() == 0){
+//
+//
+//                    AnimationUtils.getInstance().controlAnimation(now_order);
+//                    AnimationUtils.getInstance().setAnimationShow(now_order);
+//
+//                }
+
+                                                   }
+
+                                               }
+
+        );
 
 
     }
@@ -290,16 +293,19 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-
+        OFFSET = 10;
+        isLoadMore = false;
+        getWorkRoomData("91", 0, 25);
+        AnimationUtils.getInstance().setAnimationDismiss(now_order);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
 
         isLoadMore = true;
-        OFFSET = OFFSET + 10;
-        AnimationUtils.getInstance().setAnimationDismiss(now_order);
+        OFFSET = OFFSET + 25;
         getWorkRoomData("91", OFFSET, LIMIT);
+        AnimationUtils.getInstance().setAnimationDismiss(now_order);
 
     }
 
@@ -342,33 +348,8 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
 
     }
-
-    //判断页面滚动监听，
-
-//    /**
-//     * 背景动画效果
-//     * */
-//    public void setAnimationDismiss(View view){
-//
-//        AnimationSet animationSet = new AnimationSet(true);
-//        AlphaAnimation alphaAnimation = new AlphaAnimation(1,0);
-//        alphaAnimation.setDuration(2000);
-//        alphaAnimation.setFillAfter(true);
-//        animationSet.addAnimation(alphaAnimation);
-//        view.startAnimation(animationSet);
-//    }
-//
-//    public void setAnimationShow(View view){
-//
-//        AnimationSet animationSet = new AnimationSet(true);
-//        AlphaAnimation alphaAnimation = new AlphaAnimation(0,1);
-//        alphaAnimation.setDuration(2000);
-//        alphaAnimation.setFillAfter(true);
-//        animationSet.addAnimation(alphaAnimation);
-//        view.startAnimation(animationSet);
-//    }
-
-    public void controlAnimation(){
+    //延时一段时间显现按钮
+    public void controlAnimation() {
 
         final TimerTask timerTask = new TimerTask() {
             @Override
@@ -377,17 +358,17 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                 Message message = handler.obtainMessage();
                 message.what = 0;
                 handler.sendMessage(message);
-                if (timer != null){
+                if (timer != null) {
 
                     timer.cancel();
                     timer = null;
                 }
             }
         };
-        if (timer == null){
+        if (timer == null) {
 
             timer = new Timer();
-            timer.schedule(timerTask,1500,5000);
+            timer.schedule(timerTask, 1500, 5000);
         }
 
     }
