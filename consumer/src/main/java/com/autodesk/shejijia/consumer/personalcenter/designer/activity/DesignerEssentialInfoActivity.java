@@ -178,10 +178,8 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         String province_name = mConsumerEssentialInfoEntity.getProvince_name();
         String city_name = mConsumerEssentialInfoEntity.getCity_name();
         String district_name = mConsumerEssentialInfoEntity.getDistrict_name();
-        if (TextUtils.isEmpty(province_name)
-                || TextUtils.isEmpty(city_name)
-                ) {
-            tvLocation.setText(getResources().getString(R.string.has_yet_to_fill_out));
+        if (TextUtils.isEmpty(province_name) || TextUtils.isEmpty(city_name) || "<null>".equals(province_name)) {
+            tvLocation.setText(getResources().getString(R.string.temporarily_no_data));
         } else {
             if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
                 district_name = "";
@@ -528,9 +526,9 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
      */
     private void getPCDAddress() {
         if (!TextUtils.isEmpty(strCurrentProvince)
-                || !TextUtils.isEmpty(mCurrentCity)){
-            mChangeAddressDialog = AddressDialog.getInstance(strCurrentProvince+" "+mCurrentCity+" "+mCurrentDistrict);
-        }else {
+                || !TextUtils.isEmpty(mCurrentCity)) {
+            mChangeAddressDialog = AddressDialog.getInstance(strCurrentProvince + " " + mCurrentCity + " " + mCurrentDistrict);
+        } else {
             mChangeAddressDialog = AddressDialog.getInstance("尚未填写");
         }
         mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
