@@ -67,6 +67,7 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
     @Override
     protected void initData() {
 
+        //bg picture load
         if (WkFlowStateMap.sixProductsPicturesBean != null) {
 
             String pictureUrl = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getBidding().get(0).getBack();
@@ -75,6 +76,7 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
             ImageUtils.loadImageIcon(average_img, backPicture[1]);
             ImageUtils.loadImageIcon(rl_container_img, backPicture[0]);
         }
+
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
             getConsumerInfoData(mMemberEntity.getAcs_member_id());

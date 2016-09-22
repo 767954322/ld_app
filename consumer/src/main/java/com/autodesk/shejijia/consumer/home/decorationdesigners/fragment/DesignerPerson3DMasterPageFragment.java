@@ -93,8 +93,8 @@ public class DesignerPerson3DMasterPageFragment extends BaseFragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String hs_design_id = (String) myData.get(position).getHs_design_id();
-                String designer_id = myData.get(position).getDesigner_id()+"";
+                String hs_design_id = (String) myDatas.get(position).getHs_design_id();
+                String designer_id = myDatas.get(position).getDesigner_id()+"";
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
 
                 /**
