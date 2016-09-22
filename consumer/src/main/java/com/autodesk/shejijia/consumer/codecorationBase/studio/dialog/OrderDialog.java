@@ -192,6 +192,7 @@ public class OrderDialog extends Dialog implements View.OnClickListener {
                     nameSure = true;
                 }
                 //phone
+
                 String mobile = phoneNumber.getText().toString();
                 phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
                 if (phoneRight) {
