@@ -64,7 +64,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         boolean falg = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63;
         if (falg) {
             holder.setText(R.id.tv_decoration_mesure, UIUtils.getString(R.string.evaluation));
-            holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_btn_filtrate_pressed);
+            holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_text_filtrate_pressed);
         } else {
             holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
             holder.getView(R.id.tv_decoration_mesure).setBackgroundResource(R.drawable.bg_actionsheet_cancel);
