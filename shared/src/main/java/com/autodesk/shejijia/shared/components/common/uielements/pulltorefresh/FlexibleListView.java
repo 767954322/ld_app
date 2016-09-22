@@ -35,13 +35,12 @@ public class FlexibleListView extends ListView implements Pullable
         if (getCount() == 0)
         {
             // 没有item的时候也可以下拉刷新
-            return false;
-        } else{
+            return true;
+        } else // 滑到ListView的顶部了
+            return getFirstVisiblePosition() == 0
+                    && getChildAt(0).getTop() >= 0;
 
-            return false;/*getFirstVisiblePosition() == 0
-                    && getChildAt(0).getTop() >= 0*/
-
-        } // 滑到ListView的顶部了
+         // 滑到ListView的顶部了
     }
 
     @Override
