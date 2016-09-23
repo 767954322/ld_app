@@ -1,30 +1,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".codecorationBase.average.fragment.AverageFragment">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/rl_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".codecorationBase.average.fragment.AverageFragment">
 
     <ImageView
+
         android:id="@+id/rl_container_img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <FrameLayout
         android:id="@+id/rl_average"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/size_40">
+        android:paddingTop="@dimen/size_35">
 
         <ImageView
             android:id="@+id/average_img"
             android:layout_width="wrap_content"
             android:layout_height="360dp"
-            android:scaleType="centerCrop"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-             />
+            android:scaleType="centerCrop"
+            />
 
         <ImageView
             android:id="@+id/iv_average_tip"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="@dimen/size_18"
-            android:src="@drawable/btn_rule_intro" />
+            android:src="@drawable/btn_rule_intro"/>
     </FrameLayout>
 
     <ImageView
@@ -41,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/size_25"
-        android:src="@drawable/btn_demand_send" />
+        android:layout_marginBottom="@dimen/size_18"
+        android:layout_marginTop="@dimen/size_10"
+        android:src="@drawable/btn_demand_send"/>
 </RelativeLayout>

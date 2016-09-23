@@ -4,30 +4,17 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
-
-import org.json.JSONObject;
 
 /**
  * @author luchongbin .
@@ -39,12 +26,10 @@ import org.json.JSONObject;
 
 public class AverageFragment extends BaseFragment implements View.OnClickListener {
 
-    private FrameLayout mRlAverage;
     private ImageView mIvAverageTip;
     private ImageView mIvSendDemand;
-    private ImageView average_img;
-    private ImageView rl_container_img;
-    private String mNick_name;
+    private ImageView mIvChart;
+    private ImageView mIvBackGround;
 
     public AverageFragment() {
     }
@@ -56,12 +41,11 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initView() {
-        mRlAverage = (FrameLayout) rootView.findViewById(R.id.rl_average);
         mIvAverageTip = (ImageView) rootView.findViewById(R.id.iv_average_tip);
         mIvSendDemand = (ImageView) rootView.findViewById(R.id.iv_send_demand);
 
-        rl_container_img = (ImageView) rootView.findViewById(R.id.rl_container_img);
-        average_img = (ImageView) rootView.findViewById(R.id.average_img);
+        mIvBackGround = (ImageView) rootView.findViewById(R.id.rl_container_img);
+        mIvChart = (ImageView) rootView.findViewById(R.id.average_img);
     }
 
     @Override
@@ -73,17 +57,9 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
             String pictureUrl = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getBidding().get(0).getBack();
             String backPicture[] = pictureUrl.split(",");
 
-            ImageUtils.loadImageIcon(average_img, backPicture[1]);
-            ImageUtils.loadImageIcon(rl_container_img, backPicture[0]);
+            ImageUtils.loadImageIcon(mIvChart, backPicture[1]);
+//            ImageUtils.displaySixImage(backPicture[0],mIvBackGround);
         }
-
-        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
-            getConsumerInfoData(mMemberEntity.getAcs_member_id());
-            return;
-        }
-
-
     }
 
     @Override
@@ -102,8 +78,6 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
                     AdskApplication.getInstance().doLogin(activity);
                 } else {
                     Intent intent = new Intent(activity, IssueDemandActivity.class);
-                    intent.putExtra(Constant.SixProductsFragmentKey.SELECTION, false);
-                    intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNick_name);
                     startActivity(intent);
                 }
                 break;
@@ -114,28 +88,6 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    /**
-     * 获取个人基本信息
-     *
-     * @param member_id
-     * @brief For details on consumers .
-     */
-    public void getConsumerInfoData(String member_id) {
-        MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                mNick_name = mConsumerEssentialInfoEntity.getNick_name();
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-            }
-        });
-    }
 
     private void showAlertView() {
         AlertView alertViewExt = new AlertView(UIUtils.getString(R.string.title_average_rule),
