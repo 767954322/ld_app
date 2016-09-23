@@ -2,6 +2,8 @@ package com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment;
 
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProduct
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -43,18 +46,21 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     protected void initView() {
         vgSelection = (ViewGroup) rootView.findViewById(R.id.vgSelection);
         vpSelection = (ViewPager) rootView.findViewById(R.id.vpSelection);
+        llBackground = (LinearLayout) rootView.findViewById(R.id.llBackground);
         imReservationButton = (ImageButton) rootView.findViewById(R.id.imReservationButton);
     }
 
     @Override
     protected void initData() {
         SixProductsPicturesBean sixProductsPicturesBean = WkFlowStateMap.sixProductsPicturesBean;
+        String backgroundURL = "";
         if(sixProductsPicturesBean != null ){
             SixProductsPicturesBean.AndroidBean.SelectionBean selectionBean = sixProductsPicturesBean.getAndroid().getSelection().get(0);
             String png = selectionBean.getPng();
+            backgroundURL = sixProductsPicturesBean.getAndroid().getBackground().get(0).getPic_1();
             pictures = png.split(",");
         }
-        updataView(pictures);
+        updataView(pictures,backgroundURL);
     }
 
     /**
@@ -62,11 +68,13 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
      *
      * @param pictures
      */
-    private void updataView(String [] pictures) {
+    private void updataView(String [] pictures,String backgroundURL) {
         int size = 1;
         if (pictures != null && pictures.length > 0) {
             size = pictures.length;
+            llBackground.setBackgroundResource(R.drawable.bg_ico3x);
         }
+
         addImageViewtips(size);
         vpSelection.setAdapter(new SelectionAdapter(getActivity(), pictures));
         vpSelection.setOnPageChangeListener(this);
@@ -159,6 +167,6 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
     private ViewPager vpSelection;
     private ViewGroup vgSelection;
     private ImageButton imReservationButton;
-
+    private LinearLayout llBackground;
 
 }
