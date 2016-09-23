@@ -9,13 +9,12 @@ import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.im.widget.MPFileHotspotView;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.widget.MPFileHotspotView;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 
 /**
@@ -46,13 +45,25 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
         initView(getTitleData());
     }
 
+//    public static void actionStart(Context context, MPDesignFileBean mpDesignFileBean, MPFileBean deliveryFilesEntity, String javaBean, boolean b) {
+//        Intent intent = new Intent(context, Wk3DPlanShowActivity.class);
+//        Bundle bundle = new Bundle();
+//
+//        bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mpDesignFileBean);
+//        bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS);
+//        bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
+//
+//        intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
+//        context.startActivity(intent);
+//    }
+
     /**
      * 标题栏状态
      */
     private void showState() {
         setVisibilityForNavButton(ButtonType.LEFT, false);
         setVisibilityForNavButton(ButtonType.RIGHT, true);
-        setImageForNavButton(ButtonType.RIGHT,R.drawable.ic_menu_share);
+        setImageForNavButton(ButtonType.RIGHT, R.drawable.ic_menu_share);
         tv_nav_left_textView.setVisibility(View.VISIBLE);
     }
 
@@ -81,7 +92,8 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
         } else {
             deliveryFilesEntity = (MPFileBean) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
             url = deliveryFilesEntity.getUrl();
-            title = deliveryFilesEntity.getName();
+//            title = deliveryFilesEntity.getName();
+            title = deliveryFilesEntity.getFiled_name();
         }
         String str = url.substring(url.lastIndexOf('.') + 1);
         if (Constant.DocumentTypeKey.TYPE_PNG.equals(str) || Constant.DocumentTypeKey.TYPE_JPG.equals(str)) {

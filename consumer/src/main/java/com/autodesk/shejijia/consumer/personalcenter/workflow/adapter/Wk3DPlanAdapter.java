@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -61,7 +62,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
         /**
          * 3D方案的缩略图
          */
-        String link = mpDesignFileBean.getLink();
+        final String link = mpDesignFileBean.getLink();
         String str = link.substring(link.lastIndexOf('.') + 1);
         if (Constant.DocumentTypeKey.TYPE_PNG.equals(str) || Constant.DocumentTypeKey.TYPE_JPG.equals(str)) {
             ImageUtils.displayIconImage(link, mImageVShow);
@@ -99,19 +100,33 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
             toggleButton.setChecked(false);
             mChooseBt.setImageResource(R.drawable.icon_common_radio_off);
         }
+        if (isDocument(str)) {
+            mImageVShow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(link);
+                    intent.setData(content_url);
 
-        mImageVShow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, Wk3DPlanShowActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mpDesignFileBean);
-                bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS);
-                bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
-                intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
-                mContext.startActivity(intent);
-            }
-        });
+                    mContext.startActivity(intent);
+                }
+            });
+        } else {
+            mImageVShow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, Wk3DPlanShowActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mpDesignFileBean);
+                    bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS);
+                    bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
+                    intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+
     }
 
     private void setReflectIcon(ImageView imageView, String str) {
@@ -142,6 +157,14 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
                 }
             }
         }
+    }
+
+    private boolean isDocument(String str) {
+        return str.equalsIgnoreCase(Constant.DocumentTypeKey.TYPE_DOCX) ||
+                str.equalsIgnoreCase(Constant.DocumentTypeKey.TYPE_DOC) ||
+                str.equalsIgnoreCase(Constant.DocumentTypeKey.TYPE_XLSX) ||
+                str.equalsIgnoreCase(Constant.DocumentTypeKey.TYPE_XLS) ||
+                str.equalsIgnoreCase(Constant.DocumentTypeKey.TYPE_PDF);
     }
 
     private final String TAG = getClass().getSimpleName();
