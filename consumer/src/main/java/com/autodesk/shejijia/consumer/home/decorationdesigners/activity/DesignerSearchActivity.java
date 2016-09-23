@@ -66,12 +66,14 @@ public class DesignerSearchActivity extends NavigationBarActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ect_searchc_back_pop:
+            case R.id.tv_ect_search_cancel_pop:
+
                 finish();
                 break;
 
-            case R.id.tv_ect_search_cancel_pop:
-                cancelPopupWindowAndClearSearchContent();
-                break;
+//            case R.id.tv_ect_search_cancel_pop:
+//                cancelPopupWindowAndClearSearchContent();
+//                break;
 
             default:
                 break;
