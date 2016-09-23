@@ -92,7 +92,7 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     protected void onPause(){
         super.onPause();
 
-//        wvRoaming.pauseTimers();
+        wvRoaming.pauseTimers();
 //        if(isFinishing()){
 ////            wvRoaming.loadUrl("about:blank");
 //            setContentView(new FrameLayout(this));
@@ -102,8 +102,7 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     @Override
     protected void onResume(){
         super.onResume();
-//        wvRoaming.resumeTimers();
+        wvRoaming.resumeTimers();
     }
-
 
 }
