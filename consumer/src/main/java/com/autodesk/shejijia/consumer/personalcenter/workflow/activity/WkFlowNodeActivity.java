@@ -45,7 +45,7 @@ public class WkFlowNodeActivity extends BaseWorkFlowActivity implements AdapterV
         polygonImageView = (PolygonImageView)findViewById(R.id.piv_consumer_order_photo_01);
         btnStopDemand = (Button)findViewById(R.id.btn_stop_demand);
         ll_piv = (LinearLayout) findViewById(R.id.ll_piv);
-        rlStopContract = (RelativeLayout) findViewById(R.id.rl_stop_contract);
+//        rlStopContract = (RelativeLayout) findViewById(R.id.rl_stop_contract);
         ibFlowChart = (ImageButton) findViewById(R.id.ib_flow_chart);
         //右上角三个按钮设置；
         right_contain = (LinearLayout) findViewById(R.id.right_contain);
@@ -68,9 +68,6 @@ public class WkFlowNodeActivity extends BaseWorkFlowActivity implements AdapterV
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-
-
         mPtrLayout.setLastUpdateTimeRelateObject(this);
 
     }

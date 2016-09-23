@@ -12,17 +12,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
-import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.WkFlowStateAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
@@ -30,6 +26,8 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
+import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -60,8 +58,6 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 public class WkFlowStateActivity extends BaseWorkFlowActivity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
 
-
-
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_designer_common_meal_detail;
@@ -72,15 +68,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.initView();
         context = this;
         mListView = (ListViewFinal) findViewById(R.id.lv_designer_meal_detail);
-        tvDesignerName = (TextView) findViewById(R.id.tv_designer_name);
-        tvCreateDate = (TextView) findViewById(R.id.tv_create_date);
         navTitleTextView = (TextView) findViewById(R.id.nav_title_textView);
-
         mPtrLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
-        polygonImageView = (PolygonImageView) findViewById(R.id.piv_consumer_order_photo_01);
-        btnStopDemand = (Button) findViewById(R.id.btn_stop_demand);
-        ll_piv = (LinearLayout) findViewById(R.id.ll_piv);
-        rlStopContract = (RelativeLayout) findViewById(R.id.rl_stop_contract);
         ibFlowChart = (ImageButton) findViewById(R.id.ib_flow_chart);
 
         //右上角三个按钮设置；
@@ -97,11 +86,21 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        ibFlowChart.setEnabled(false);
-        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
-            ll_piv.setVisibility(View.VISIBLE);
-        } else {
-            ll_piv.setVisibility(View.GONE);
+        if(footerView == null){
+            footerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_footer, null);
+            mListView.addFooterView(footerView);
+            tvCreateDate = (TextView)footerView.findViewById(R.id.tv_create_date);
+            btnStopDemand = (Button)footerView.findViewById(R.id.btn_stop_demand);
+        }
+
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && headerView== null) {
+            headerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_header, null);
+            mListView.addHeaderView(headerView);
+            polygonImageView = (PolygonImageView)headerView.findViewById(R.id.piv_consumer_order_photo_01);
+            ibFlowChart = (ImageButton) headerView.findViewById(R.id.ib_flow_chart);
+            ll_piv = (LinearLayout) headerView.findViewById(R.id.ll_piv);
+            tvDesignerName = (TextView)headerView.findViewById(R.id.tv_designer_name);
+            ibFlowChart.setOnClickListener(this);
         }
     }
 
@@ -124,7 +123,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         demandDetails.setOnClickListener(this);
         btnStopDemand.setOnClickListener(this);
         mListView.setOnItemClickListener(this);
-        ibFlowChart.setOnClickListener(this);
+
         mPtrLayout.setLastUpdateTimeRelateObject(this);
         mPtrLayout.setLastUpdateTimeRelateObject(this);
 
@@ -495,7 +494,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
         navTitleTextView.setMaxEms(20);
         setTitleForNavbar(contacts_name_new + "/" + community_name_new); /// 设置标题 .
-        ibFlowChart.setEnabled(true);
+//        ibFlowChart.setEnabled(true);
         tvCreateDate.setText(UIUtils.getString(R.string.create_date) + requirement.getPublish_time());
         mPtrLayout.onRefreshComplete();
 
@@ -524,9 +523,10 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mAdapter = new WkFlowStateAdapter(context, memberEntity.getMember_type(), mBiddersEntity, tipWorkFlowTemplateBean, WorkFlowTemplateStep());
         mListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        ImageUtils.displayAvatarImage(mBiddersEntity.getAvatar(), polygonImageView);
-        tvDesignerName.setText(mBiddersEntity.getUser_name());
-
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+            ImageUtils.displayAvatarImage(mBiddersEntity.getAvatar(), polygonImageView);
+            tvDesignerName.setText(mBiddersEntity.getUser_name());
+        }
     }
 
     @Override
@@ -553,7 +553,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.onBackPressed();
         refreshWkFlowState();
     }
-
+    private View footerView,headerView;
     private TextView navTitleTextView;
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
@@ -563,7 +563,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private ImageView projectInformation;
     private ImageButton ibFlowChart;
     private LinearLayout ll_piv;
-    private RelativeLayout rlStopContract;
+//    private RelativeLayout rlStopContract;
     private PolygonImageView polygonImageView;
     private Button btnStopDemand;
     private TextView tvDesignerName, tvCreateDate;
