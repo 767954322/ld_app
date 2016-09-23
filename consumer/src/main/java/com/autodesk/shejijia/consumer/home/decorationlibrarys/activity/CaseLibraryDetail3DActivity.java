@@ -561,11 +561,25 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         tvheadThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
         //ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
 
-        if (case3DDetailBean.getDesigner_info().getNick_name() != null) {
-            ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getNick_name());
+        Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
+        if (designer_info.getNick_name() != null) {
+            if (designer_info.getNick_name().length() > 8) {
+                String nickName = designer_info.getNick_name().substring(0, 8);
+                String nickNameNow = nickName + "…";
+                ivConsumeHomeDesigner.setText(nickNameNow);
+            } else {
+                ivConsumeHomeDesigner.setText(designer_info.getNick_name());
+            }
         } else {
-            ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
+            if (designer_info.getFirst_name().length() > 8) {
+                String firstName = designer_info.getFirst_name().substring(0, 8);
+                String firstNameNow = firstName + "…";
+                ivConsumeHomeDesigner.setText(firstNameNow);
+            } else {
+                ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
+            }
         }
+
 //        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.displayAvatarImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
 
