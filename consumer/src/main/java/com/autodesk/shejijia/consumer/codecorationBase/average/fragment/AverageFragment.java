@@ -57,8 +57,8 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
             String pictureUrl = WkFlowStateMap.sixProductsPicturesBean.getAndroid().getBidding().get(0).getBack();
             String backPicture[] = pictureUrl.split(",");
 
-            ImageUtils.loadImageIcon(mIvChart, backPicture[1]);
             ImageUtils.displaySixImage(backPicture[0],mIvBackGround);
+            ImageUtils.loadImageIcon(mIvChart, backPicture[1]);
         }
     }
 

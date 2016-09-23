@@ -415,12 +415,15 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
      * @brief For details on consumers .
      */
     public void getConsumerInfoData(String member_id) {
+        CustomProgress.show(this, "", false, null);
+
         MPServerHttpManager.getInstance().getConsumerInfoData(member_id, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
+                CustomProgress.cancelDialog();
 
                 // 使用手机注册的手机号码
                 String mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
@@ -436,6 +439,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         });
