@@ -295,7 +295,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
                 });
     }
 
-    //设置量房费
+    //设置装修预算
     private void setDecorationBudget() {
         final ArrayList<String> decorationBudgetItems = new ArrayList<>();
         List<String> decoration_budgets = filledData(getResources().getStringArray(R.array.decoration_budget));
@@ -306,6 +306,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
         pvDecorationBudgetOptions.setPicker(decorationBudgetItems);
         pvDecorationBudgetOptions.setSelectOptions(2);
         pvDecorationBudgetOptions.setCyclic(false);
+        pvDecorationBudgetOptions.setTitle(UIUtils.getString(R.string.demand_project_budget_title));
         pvDecorationBudgetOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {

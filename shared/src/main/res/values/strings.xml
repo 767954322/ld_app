@@ -170,7 +170,9 @@
 
     <!-- FlowMeasureFormActivity -->
     <string name="demand_planning_budget">设计预算：</string>
+    <string name="demand_planning_budget_title">设计预算</string>
     <string name="demand_project_budget">装修预算：</string>
+    <string name="demand_project_budget_title">装修预算</string>
     <string name="please_enter_your_name">请输入姓名</string>
     <string name="please_enter_your_phone">请输入手机号码</string>
     <string name="please_select_design_budget">请选择设计预算</string>
@@ -182,6 +184,7 @@
     <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
     <string name="please_select_style">请选择风格</string>
     <string name="demand_measure_house_time">量房时间：</string>
+    <string name="demand_measure_house_time_title">量房时间</string>
     <string name="please_select_quantity_room_time">请选择量房时间</string>
     <string name="europe_and_america_style">欧美风</string>
     <string name="demand_measure_house_address">项目地址：</string>
@@ -347,6 +350,8 @@
     <!-- AmendDemandActivity -->
     <string name="demand_phone">手机号码：</string>
     <string name="demand_project_types">房屋类型：</string>
+    <string name="demand_project_types_title">房屋类型</string>
+
     <string name="demand_project_address">项目地址：</string>
     <string name="consumer_decoration_buildtime">创建时间：</string>
     <string name="fitment_amend_demand">重新提交</string>
@@ -366,6 +371,7 @@
 
     <string name="issue_room_select">请选择户型：室 厅 卫(选填)</string>
     <string name="demand_please_style">请选择风格</string>
+    <string name="demand_please_style_title">风格</string>
     <string name="demand_please_style_select">请选择风格(选填)</string>
     <string name="demand_please_address">请选择地址：省 市 区</string>
     <string name="demand_please_project_address">请正确输入项目地址</string>

@@ -188,7 +188,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                         isLoadMore = false;
                     } else {
                         //清空原来的数据
-                        if (designerRetrieveRspAll != null && designerRetrieveRspAll.size() !=0){
+                        if (designerRetrieveRspAll != null && designerRetrieveRspAll.size() != 0) {
 
                             designerRetrieveRspAll.clear();
                         }
@@ -203,7 +203,11 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                     }
                 }
 
-                controlAnimation();//加载或者刷新更多时候也要消失按钮,完成后,慢慢显现
+                if (isFirst) {
+
+                    controlAnimation();//加载或者刷新更多时候也要消失按钮,完成后,慢慢显现
+                }
+                isFirst = true;
             }
         }, type, offset, limit);
     }
@@ -259,21 +263,20 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
                                                    @Override
                                                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-//                //滑动到底部的时候
-//                if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1 ){
+
+//                                                       //滑动到底部的时候
+//                                                       if (work_room_listView.getLastVisiblePosition() == work_room_listView.getCount() - 1) {
 //
 //
-//                    AnimationUtils.getInstance().controlAnimation(now_order);
-//                    AnimationUtils.getInstance().setAnimationShow(now_order);
-//                }
-//                //滑动到顶部了
-//                if (work_room_listView.getFirstVisiblePosition() == 0){
+//                                                           controlAnimation();
+//                                                       }
+//                                                       //滑动到顶部了
+//                                                       if (work_room_listView.getFirstVisiblePosition() == 0) {
 //
 //
-//                    AnimationUtils.getInstance().controlAnimation(now_order);
-//                    AnimationUtils.getInstance().setAnimationShow(now_order);
+//                                                           controlAnimation();
 //
-//                }
+//                                                       }
 
                                                    }
 
@@ -348,6 +351,7 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
 
 
     }
+
     //延时一段时间显现按钮
     public void controlAnimation() {
 
@@ -391,4 +395,5 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     private int OFFSET = 0;
     private boolean isLoginUserJust = false;
     private boolean isLoadMore = false;
+    private boolean isFirst = false;
 }

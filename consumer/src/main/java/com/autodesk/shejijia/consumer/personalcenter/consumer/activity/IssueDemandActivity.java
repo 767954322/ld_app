@@ -486,6 +486,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         pvStyleOptions.setPicker(styleItems);
         pvStyleOptions.setSelectOptions(0);
         pvStyleOptions.setCyclic(false);
+        pvStyleOptions.setTitle(UIUtils.getString(R.string.demand_please_style_title));
         pvStyleOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
@@ -511,6 +512,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         pvHouseTypeOptions.setPicker(houseTypeItems);
         pvHouseTypeOptions.setSelectOptions(0);
         pvHouseTypeOptions.setCyclic(false);
+        pvHouseTypeOptions.setTitle(UIUtils.getString(R.string.demand_project_types_title));
         pvHouseTypeOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
@@ -523,7 +525,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     }
 
     /**
-     * 设置设计费
+     * 设置设计预算
      */
     private void setDesignBudget() {
         final ArrayList<String> designBudgetItems = new ArrayList<>();
@@ -536,6 +538,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         pvDesignBudgetOptions.setPicker(designBudgetItems);
         pvDesignBudgetOptions.setSelectOptions(2);
         pvDesignBudgetOptions.setCyclic(false);
+        pvDesignBudgetOptions.setTitle(UIUtils.getString(R.string.demand_planning_budget_title));
         pvDesignBudgetOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
@@ -546,7 +549,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     }
 
     /**
-     * 设置量房费
+     * 设置装修预算
      */
     private void setDecorationBudget() {
         final ArrayList<String> decorationBudgetItems = new ArrayList<>();
@@ -558,6 +561,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         pvDecorationBudgetOptions.setPicker(decorationBudgetItems);
         pvDecorationBudgetOptions.setSelectOptions(2);
         pvDecorationBudgetOptions.setCyclic(false);
+        pvDecorationBudgetOptions.setTitle(UIUtils.getString(R.string.demand_project_budget_title));
         pvDecorationBudgetOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {

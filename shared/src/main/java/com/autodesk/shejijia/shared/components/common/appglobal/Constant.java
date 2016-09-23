@@ -490,6 +490,7 @@ public class Constant {
         public static final String WORK_ROOM_LIST_CONSUMER_ID = "customer_id";
         public static final String WORK_ROOM_LIST_CONSUMER_UID= "consumer_uid";
         public static final String WORK_ROOM_LIST_CONSUMER_HS_UID= "hs_uid";
+        public static final String WORK_ROOM_NAME = "name";
 
     }
 

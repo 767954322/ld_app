@@ -30,6 +30,16 @@
                 android:textSize="@dimen/font_18"/>
 
             <TextView
+                android:id="@+id/tvTiTle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_18"
+                android:text="项目地址"
+                android:layout_centerInParent="true"
+                />
+
+            <TextView
                 android:id="@+id/btn_select_sure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
