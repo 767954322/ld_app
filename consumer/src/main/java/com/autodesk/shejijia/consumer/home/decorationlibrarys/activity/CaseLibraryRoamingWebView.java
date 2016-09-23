@@ -8,7 +8,6 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -92,7 +91,8 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     protected void onPause(){
         super.onPause();
 
-        wvRoaming.pauseTimers();
+        wvRoaming.onPause();
+       // wvRoaming.pauseTimers();
 //        if(isFinishing()){
 ////            wvRoaming.loadUrl("about:blank");
 //            setContentView(new FrameLayout(this));
@@ -102,7 +102,7 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        wvRoaming.resumeTimers();
+     //   wvRoaming.resumeTimers();
     }
 
 }
