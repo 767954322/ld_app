@@ -146,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_3"
-                    android:text="@string/consume_phone"
+                    android:text="@string/user_phone"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15" />
 
