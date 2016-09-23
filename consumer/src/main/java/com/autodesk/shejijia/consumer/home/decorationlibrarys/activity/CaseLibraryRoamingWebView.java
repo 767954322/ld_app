@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 public class CaseLibraryRoamingWebView extends NavigationBarActivity {
@@ -68,6 +69,7 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
                 return true;
             }
         });
+        wvRoaming.loadUrl(roaming);
 
 
 //        wvRoaming.loadUrl("http://www.baidu.com/");
@@ -91,8 +93,9 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     protected void onPause(){
         super.onPause();
 
+        wvRoaming.pauseTimers();
         wvRoaming.onPause();
-       // wvRoaming.pauseTimers();
+        LogUtils.e("Case--pause","1111");
 //        if(isFinishing()){
 ////            wvRoaming.loadUrl("about:blank");
 //            setContentView(new FrameLayout(this));
@@ -102,7 +105,14 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     @Override
     protected void onResume(){
         super.onResume();
-     //   wvRoaming.resumeTimers();
+        wvRoaming.resumeTimers();
+        wvRoaming.onResume();
+        LogUtils.e("Case--resume","2222");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        wvRoaming.destroy();
+    }
 }

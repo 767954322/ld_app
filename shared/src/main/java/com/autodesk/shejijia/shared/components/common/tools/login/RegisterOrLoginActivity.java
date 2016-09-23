@@ -176,17 +176,20 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
         if (mWebView != null) {
+            mWebView.onResume();
             mWebView.resumeTimers();
         }
-
+        LogUtils.e("login--resume","1111");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (mWebView != null) {
+            mWebView.onPause();
             mWebView.pauseTimers();
         }
+        LogUtils.e("login--pause","2222");
     }
 
     @Override
@@ -196,6 +199,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
 //        if (CustomProgress.dialog != null){
 //            CustomProgress.dialog = null;
 //        }
+        if (mWebView != null) {
+            mWebView.destroy();
+        }
     }
 
     /**
