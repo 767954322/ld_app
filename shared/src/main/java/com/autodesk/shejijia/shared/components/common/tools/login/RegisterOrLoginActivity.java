@@ -173,12 +173,31 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mWebView != null) {
+            mWebView.onResume();
+            mWebView.resumeTimers();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mWebView != null) {
+            mWebView.onPause();
+            mWebView.pauseTimers();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         CustomProgress.cancelDialog();
-//        if (CustomProgress.dialog != null){
-//            CustomProgress.dialog = null;
-//        }
+
+        if (mWebView != null) {
+            mWebView.destroy();
+        }
     }
 
     /**
