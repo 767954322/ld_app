@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanLis
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.DeliverySelector;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -44,6 +46,26 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
         mGridView3DPlan = (GridView) findViewById(R.id.gridView_3dplan);
         mBtnSubmit3DPlan = (Button) findViewById(R.id.btn_submit_3dplan);
     }
+
+    public static void actionStart(Context context,
+                                   ArrayList<MPFileBean> mpFileBeen,
+                                   ArrayList<MPDesignFileBean> mpDesignFileBeen,
+                                   ArrayList<Wk3DPlanListBean> wk3DPlanListBeen,
+                                   int level,
+                                   int delivery_state) {
+
+        Intent intent = new Intent(context, Wk3DPlanActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable(Constant.DeliveryBundleKey.THREE_PLAN, mpDesignFileBeen);
+        bundle.putSerializable(Constant.DeliveryBundleKey.DELIVERY_ENTITY, mpFileBeen);
+        bundle.putSerializable(Constant.DeliveryBundleKey.THREE_PLAN_ALL, wk3DPlanListBeen);
+        bundle.putInt(Constant.DeliveryBundleKey.LEVEL, level);
+        bundle.putInt(Constant.DeliveryBundleKey.DELIVERY_STATE, delivery_state);
+        intent.putExtra(Constant.DeliveryBundleKey.LEVEL_BUNDLE, bundle);
+        context.startActivity(intent);
+    }
+
 
     @Override
     protected void initExtraBundle() {
@@ -84,16 +106,19 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
 
     @Override
     protected void leftNavButtonClicked(View view) {
-        setAdapterListener();
+        set3DClickEvents();
         super.leftNavButtonClicked(view);
     }
 
-    private void setAdapterListener() {
-        if (mWk3DLevelZeroAdapter != null) {
-            setWk3DLevelZeroAdapterOnItemCheckListener();
-        }
+    private void setOtherClickEvents() {
         if (mWk3DPlanAdapter != null) {
             setWk3DPlanAdapterOnItemCheckListener();
+        }
+    }
+
+    private void set3DClickEvents() {
+        if (mWk3DLevelZeroAdapter != null) {
+            setWk3DLevelZeroAdapterOnItemCheckListener();
         }
     }
 
@@ -142,6 +167,8 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                         chooseBt.setImageResource(R.drawable.icon_common_radio_off);
                         mDesignFileIdArrayList.remove(design_file_id);
                         ArrayList<String> strings1 = DeliverySelector.select_design_file_id_map.get(mLevel);
+
+
                         if (strings1 != null) {
                             strings1.remove(design_file_id);
                         }
@@ -152,12 +179,15 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                             }
                         }
                     }
-                    DeliverySelector.select_design_file_id_map.put(mLevel, mDesignFileIdArrayList);
-                    showSubmitBtnOthers();
+                    sureSubmit();
+                    setSubmit3DPlanOnClickListener(false);
+//                    DeliverySelector.select_design_file_id_map.put(mLevel, mDesignFileIdArrayList);
+
+//                    showSubmitBtnOthers();
                 }
             }
         });
-        setSubmit3DPlanOnClickListener(false);
+//        setSubmit3DPlanOnClickListener(false);
     }
 
     /**
@@ -166,6 +196,10 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
      * @param flag 是否提交
      */
     private void setSubmit3DPlanOnClickListener(final boolean flag) {
+//        if (!flag){
+//            DeliverySelector.select_design_file_id_map.put(mLevel, mDesignFileIdArrayList);
+//            showSubmitBtnOthers();
+//        }
         mBtnSubmit3DPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,16 +215,19 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                     }
                     DeliverySelector.isSelected = true;
                     bundle.putString(Constant.DeliveryResponseBundleKey.DESIGN_ASSET_ID, mSelectDesignAssetId);  /// 选中的某一套3D方案 .
-                    bundle.putString(Constant.DeliveryResponseBundleKey.FILE_LINK, mLink);                                           /// 选中的3D方案的id .
+                    bundle.putString(Constant.DeliveryResponseBundleKey.FILE_LINK, mLink);                      /// 选中的3D方案的id .
                     intent.putExtra(Constant.DeliveryResponseBundleKey.RESPONSE_BUNDLE, bundle);
                     setResult(RESULT_OK, intent);
                 } else {
                     DeliverySelector.isSelected = false;
                     mBtnSubmit3DPlan.setClickable(true);
+                    DeliverySelector.select_design_file_id_map.put(mLevel, mDesignFileIdArrayList);
+                    showSubmitBtnOthers();
                 }
                 finish();
             }
         });
+        LogUtils.d("Wk3DPlanActivity", "here");
     }
 
     /**
@@ -202,11 +239,12 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
     private void doingDelivery(Bundle level_bundle, int level) {
         if (level == 0) {
             refreshGridViewLevelZero(level_bundle);
+            set3DClickEvents();
         } else {
             mDesignFileEntities = (ArrayList<MPDesignFileBean>) level_bundle.getSerializable(Constant.DeliveryBundleKey.THREE_PLAN);
             refreshGridViewOthers(mDesignFileEntities, level);
+            setOtherClickEvents();
         }
-        setAdapterListener();
     }
 
     /**
@@ -237,17 +275,6 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
             }
             Wk3DFinishDeliveryAdapter wk3DFinishDeliveryAdapter = new Wk3DFinishDeliveryAdapter(this, mMPFileBeanArrayList);
             mGridView3DPlan.setAdapter(wk3DFinishDeliveryAdapter);
-//            mGridView3DPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Intent intent = new Intent(Wk3DPlanActivity.this, Wk3DPlanShowActivity.class);
-//                    Bundle bundle = new Bundle();
-//                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mDeliveryFilesEntities.get(position));
-//                    bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, false);
-//                    intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
-//                    startActivity(intent);
-//                }
-//            });
         } else {
             MyToast.show(this, UIUtils.getString(R.string.to_get_data_fail_try_again_later));
         }
@@ -307,7 +334,8 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
     public void showSubmitBtnOthers() {
         if (mLevel != -1) {
             ArrayList<String> strings = DeliverySelector.select_design_file_id_map.get(mLevel);
-            if (strings != null && strings.size() > 0) {
+            boolean isShowSubmitBtnOthers = strings != null && strings.size() > 0;
+            if (isShowSubmitBtnOthers) {
                 sureSubmit();
             } else {
                 cancelSubmit();
@@ -337,7 +365,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
 
     @Override
     public void onBackPressed() {
-        setAdapterListener();
+        set3DClickEvents();
         super.onBackPressed();
     }
 
