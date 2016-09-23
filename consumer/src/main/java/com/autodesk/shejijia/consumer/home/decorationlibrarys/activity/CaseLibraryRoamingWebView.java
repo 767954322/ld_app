@@ -69,7 +69,6 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
                 return true;
             }
         });
-        wvRoaming.loadUrl(roaming);
 
 
 //        wvRoaming.loadUrl("http://www.baidu.com/");
@@ -92,14 +91,8 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     @Override
     protected void onPause(){
         super.onPause();
-
         wvRoaming.pauseTimers();
         wvRoaming.onPause();
-        LogUtils.e("Case--pause","1111");
-//        if(isFinishing()){
-////            wvRoaming.loadUrl("about:blank");
-//            setContentView(new FrameLayout(this));
-//        }
     }
 
     @Override
@@ -107,7 +100,6 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
         super.onResume();
         wvRoaming.resumeTimers();
         wvRoaming.onResume();
-        LogUtils.e("Case--resume","2222");
     }
 
     @Override
