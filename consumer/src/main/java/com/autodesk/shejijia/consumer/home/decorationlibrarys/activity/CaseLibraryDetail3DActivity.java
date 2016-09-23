@@ -542,7 +542,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             mCaseLibraryText.setText(R.string.nodata);
         }
 
-        tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + "㎡");
+        tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
         String room_type = case3DDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));

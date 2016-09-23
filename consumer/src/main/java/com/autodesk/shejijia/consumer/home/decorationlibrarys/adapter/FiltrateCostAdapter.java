@@ -45,7 +45,8 @@ public class FiltrateCostAdapter extends BaseAdapter<DesignerWorkTimeBean.Relate
                 ((ViewHolder) holder).btn_filtrate.setBackgroundResource(R.drawable.bg_btn_filtrate_normal);
             }
         }
-        ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).getName()+mDatas.get(position).getDescription());
+        String description = mDatas.get(position).getName() + mDatas.get(position).getDescription();
+        ((ViewHolder) holder).btn_filtrate.setText(description.replace("㎡", "m²"));
     }
 
     /// 选中,并更新.

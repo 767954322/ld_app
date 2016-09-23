@@ -89,7 +89,7 @@ public class UserHome3DCaseAdapter extends BaseAdapter<Case3DLibraryListBean.Cas
                 if (casesEntity.getRoom_area() == null) {
                     ((ViewHolder) holder).tvAddress.setText(UIUtils.getString(R.string.str_others));
                 } else {
-                    ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + "㎡");
+                    ((ViewHolder) holder).tvArea.setText(casesEntity.getRoom_area() + UIUtils.getString(R.string.m2));
                 }
                 if (casesEntity.getRoom_type() == null) {
                     ((ViewHolder) holder).tvRoom.setText(UIUtils.getString(R.string.str_others));

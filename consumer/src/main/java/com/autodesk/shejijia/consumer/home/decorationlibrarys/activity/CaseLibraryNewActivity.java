@@ -482,7 +482,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
             mCaseLibraryText.setText("          " + introduction);
         }
 
-        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + "㎡");
+        tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
         String room_type = caseDetailBean.getRoom_type();
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
@@ -507,12 +507,12 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 ivConsumeHomeDesigner.setText(designer_info.getNick_name());
             }
         } else {
-            if (designer_info.getFirst_name().length() >8){
+            if (designer_info.getFirst_name().length() > 8) {
                 String firstName = designer_info.getFirst_name().substring(0, 8);
                 String firstNameNow = firstName + "…";
                 ivConsumeHomeDesigner.setText(firstNameNow);
-            }else {
-            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
+            } else {
+                ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
             }
         }
 

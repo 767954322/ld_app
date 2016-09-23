@@ -180,13 +180,16 @@ public class DesignerListFragment extends BaseFragment
     /**
      * 筛选设计师
      */
-    private void findDesignerList(FindDesignerBean findDesignerBean, int offset, int limit, final int state) {
+    private void findDesignerList(FindDesignerBean findDesignerBean, final int offset, int limit, final int state) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-
                 String filterDesignerString = GsonUtil.jsonToString(jsonObject);
                 SeekDesignerBean seekDesignerBean = GsonUtil.jsonToBean(filterDesignerString, SeekDesignerBean.class);
+                if (offset == 0) {
+                    mListView.requestFocusFromTouch();
+                    mListView.setSelection(0);
+                }
                 updateViewFromFindDesigner(seekDesignerBean, state);
             }
 

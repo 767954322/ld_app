@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.BidHallEntity;
 
@@ -49,7 +50,7 @@ public class BidHallAdapter extends BaseAdapter<BidHallEntity.NeedsListBean> {
 
         ((ViewHolder) holder).tv_bid_hall_style.setText(customBid.getDecoration_style() + "/");
         ((ViewHolder) holder).tv_bid_livingroom_roomhall_t_toilet.setText(customBid.getRoom() + customBid.getLiving_room() + customBid.getToilet());
-        ((ViewHolder) holder).tv_bid_hall_area.setText(customBid.getHouse_area() + "㎡");
+        ((ViewHolder) holder).tv_bid_hall_area.setText(customBid.getHouse_area() + UIUtils.getString(R.string.m2));
 
         ((ViewHolder) holder).tvCustomBidPerson.setText(customBid.getContacts_name());
         ((ViewHolder) holder).tvCustomBidBidBudget.setText(customBid.getDecoration_budget());

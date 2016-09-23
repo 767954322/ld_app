@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.Case3DBeen;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -114,7 +115,7 @@ public class SeekDesigner3DCaseAdapter extends BaseAdapter {
         }
         if (datas.get(position).getCustom_string_area() != null){
 
-            viewHolder.room_area.setText(datas.get(position).getRoom_area()+"㎡");
+            viewHolder.room_area.setText(datas.get(position).getRoom_area()+ UIUtils.getString(R.string.m2));
         }else {
             viewHolder.room_area.setText("0m²");
 

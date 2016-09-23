@@ -289,7 +289,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
         mTvDecorationBudget.setText(UIUtils.getNoSelectIfEmpty(decoration_budget));
         String design_budget = mBidHallEntity.getDesign_budget();
         mTvDesignBudget.setText(UIUtils.getNoSelectIfEmpty(design_budget));
-        mTvHouseArea.setText(mBidHallEntity.getHouse_area() + "m²");
+        mTvHouseArea.setText(mBidHallEntity.getHouse_area() + UIUtils.getString(R.string.m2));
         mTvProjectAddress.setText(projectAddress);
         mTvPublishTime.setText(mBidHallEntity.getPublish_time());
         mTvCommunityName.setText(community_name);

@@ -228,7 +228,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         if (TextUtils.isEmpty(demandDetailBean.getHouse_area())) {
             house_area = "未填写";
         } else {
-            house_area = demandDetailBean.getHouse_area() + "㎡";
+            house_area = demandDetailBean.getHouse_area() + "m²";
         }
 
         String contacts_mobile = demandDetailBean.getContacts_mobile();

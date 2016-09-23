@@ -15,6 +15,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesign
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -125,9 +126,9 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
             if (null != mDatas.get(position).getRoom_area()) {
                 String room_area = mDatas.get(position).getRoom_area();
                 if (mArea.containsKey(room_area)) {
-                    holder.mSeekArea.setText(mArea.get(room_area) + "㎡");
+                    holder.mSeekArea.setText(mArea.get(room_area) +  UIUtils.getString(R.string.m2));
                 } else {
-                    holder.mSeekArea.setText(room_area + "㎡");
+                    holder.mSeekArea.setText(room_area + UIUtils.getString(R.string.m2));
                 }
             } else {
                 holder.mSeekArea.setText(R.string.str_others);
