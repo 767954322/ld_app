@@ -322,6 +322,10 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                // 刷新和筛选的时候滚动到第一位
+                if (offset == 0) {
+                    mListView.setSelection(0);
+                }
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mCaseLibraryBean = GsonUtil.jsonToBean(jsonString, CaseLibraryBean.class);
                 updateViewFromCaseLibraryData(offset);
@@ -517,12 +521,12 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
         }
         mOffset = offset + 10;
         //设置数据小于等于2的是不显示没有更多数据了
-        if (mCaseLibraryBean.getCases().size()<=2){
+        if (mCaseLibraryBean.getCases().size() <= 2) {
             mListView.setNoLoadMoreHideView(true);
         }
-        if (mCaseLibraryBean.getCases().size()>0){
+        if (mCaseLibraryBean.getCases().size() > 0) {
             ll_default_view.setVisibility(View.GONE);
-        }else {
+        } else {
             ll_default_view.setVisibility(View.VISIBLE);
         }
         casesEntities.addAll(mCaseLibraryBean.getCases());

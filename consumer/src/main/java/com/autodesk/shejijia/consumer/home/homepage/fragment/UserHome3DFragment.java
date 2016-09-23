@@ -287,11 +287,14 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
     public void getCaseLibraryData(final String custom_string_style, final String custom_string_type, final String custom_string_keywords,
                                    final String custom_string_area, final String custom_string_bedroom, final String taxonomy_id,
                                    final int offset, final int limit, final String custom_string_restroom, final String custom_string_form, final int state) {
-
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
+                // 刷新和筛选的时候滚动到第一位
+                if (offset == 0) {
+                    mListView.setSelection(0);
+                }
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 case3DLibraryListBean = GsonUtil.jsonToBean(jsonString, Case3DLibraryListBean.class);
                 updateViewFromCaseLibraryData(offset);
