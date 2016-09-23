@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +44,11 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
         wvRoaming.getSettings().setBuiltInZoomControls(true);
         wvRoaming.getSettings().setDomStorageEnabled(true);
         wvRoaming.loadUrl(roaming);
+
+
+        setImageForNavButton(ButtonType.RIGHT,R.drawable.ic_menu_share);
+        setVisibilityForNavButton(ButtonType.RIGHT,true);
+
         //  wvRoaming.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         // wvRoaming.getSettings().setDefaultFontSize(18);
         //  wvRoaming.getSettings().setLoadsImagesAutomatically(true);
@@ -67,6 +74,19 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
 //        wvRoaming.loadUrl("http://www.baidu.com/");
     }
 
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+      //  Toast.makeText(this,"2",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addCategory("android.intent.category.BROWSABLE");
+        intent.setData(Uri.parse(roaming));
+        startActivity(intent);
+
+    }
 
     @Override
     protected void onPause(){
