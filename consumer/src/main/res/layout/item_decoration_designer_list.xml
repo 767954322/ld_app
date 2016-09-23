@@ -9,9 +9,10 @@
 
     <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
         android:id="@+id/piv_consumer_order_photo"
-        android:layout_width="@dimen/size_50"
-        android:layout_height="@dimen/size_50"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
         android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/size_5"
         app:poly_vertices="0"/>
 
     <RelativeLayout
@@ -41,10 +42,10 @@
             android:id="@+id/tv_decoration_mesure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/size_20"
-            android:layout_marginRight="@dimen/size_20"
-            android:layout_centerVertical="true"
             android:layout_alignRight="@+id/tv_decoration_mesure1"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_20"
+            android:drawablePadding="@dimen/size_20"
             android:text="@string/data_null"
             android:textColor="@color/comment_blue"
             android:textSize="@dimen/size_12"/>
