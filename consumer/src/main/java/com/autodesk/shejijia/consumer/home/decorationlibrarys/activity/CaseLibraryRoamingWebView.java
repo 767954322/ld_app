@@ -92,17 +92,17 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     protected void onPause(){
         super.onPause();
 
-        wvRoaming.pauseTimers();
-        if(isFinishing()){
-//            wvRoaming.loadUrl("about:blank");
-            setContentView(new FrameLayout(this));
-        }
+//        wvRoaming.pauseTimers();
+//        if(isFinishing()){
+////            wvRoaming.loadUrl("about:blank");
+//            setContentView(new FrameLayout(this));
+//        }
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        wvRoaming.resumeTimers();
+//        wvRoaming.resumeTimers();
     }
 
 
