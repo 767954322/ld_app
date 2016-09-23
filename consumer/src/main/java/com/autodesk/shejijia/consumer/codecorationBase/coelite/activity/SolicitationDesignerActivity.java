@@ -123,11 +123,11 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcMeasureFormStyle.setText(UIUtils.getNoSelectIfEmpty(style));//风格
         tvcAddress.setText(province_name + city_name + district_name);
         chageButtonValue();
-        for (DecorationBiddersBean decorationBiddersBean : list) {
-            if (decorationBiddersBean.getDesigner_id().equals(designerId)) {
-                tvcName.setText(decorationBiddersBean.getUser_name());
-            }
-        }
+//        for (DecorationBiddersBean decorationBiddersBean : list) {
+//            if (decorationBiddersBean.getDesigner_id().equals(designerId)) {
+//                tvcName.setText(decorationBiddersBean.getUser_name());
+//            }
+//        }
         setMeasureTime();
     }
 
