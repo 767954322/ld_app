@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrollView_decoration"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/scrollView_decoration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/ll_consumer_decoration"
@@ -24,7 +24,7 @@
                 android:id="@+id/iv_consumer_decoration_ref"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_position_normal" />
+                android:src="@drawable/icon_position_normal"/>
 
             <TextView
                 android:id="@+id/tv_decoration_name"
@@ -35,21 +35,21 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/bg_33"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_16"/>
 
             <TextView
                 android:id="@+id/tv_decoration_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/font_14" />
+                android:textSize="@dimen/font_14"/>
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/bg_impression" />
+            android:background="@color/bg_impression"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:layout_gravity="center"
                     android:text="@string/common_order_project_number"
                     android:textColor="@color/bg_9E"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_decoration_needs_id"
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/bg_9E"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <!--项目地址-->
@@ -95,14 +95,14 @@
                     android:layout_gravity="center"
                     android:text="@string/demand_project_address"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_decoration_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/bg_33" />
+                    android:textColor="@color/bg_33"/>
             </LinearLayout>
 
             <!--联系电话-->
@@ -118,7 +118,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/user_phone"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_decoration_phone"
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_decoration_mobile"
@@ -136,7 +136,7 @@
                     android:layout_marginRight="@dimen/size_10"
                     android:layout_weight="1"
                     android:drawableRight="@drawable/icon_unfold_normal"
-                    android:textColor="@color/bg_33" />
+                    android:textColor="@color/bg_33"/>
 
             </LinearLayout>
 
@@ -152,7 +152,7 @@
                     android:layout_gravity="center"
                     android:text="@string/demand_project_types"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_decoration_house_type"
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
             <!--风格-->
@@ -175,7 +175,7 @@
                     android:layout_gravity="center"
                     android:text="@string/fitment_style"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
 
                 <TextView
                     android:id="@+id/tv_decoration_style"
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15" />
+                    android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -192,7 +192,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginLeft="10dp"
-            android:background="@color/bg_impression" />
+            android:background="@color/bg_impression"/>
 
         <RelativeLayout
             android:id="@+id/rl_select_designer"
@@ -207,7 +207,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_10"
                 android:gravity="center"
-                android:text="@string/send_single_number" />
+                android:text="@string/send_single_number"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -215,74 +215,19 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/size_10"
-                android:background="@drawable/icon_unfold_normal" />
+                android:background="@drawable/icon_unfold_normal"/>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/size_50"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
-                    android:id="@+id/piv_consumer_slite_photo"
-                    android:layout_width="@dimen/size_40"
-                    android:layout_height="@dimen/size_40"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    app:poly_vertices="0" />
-
-                <TextView
-                    android:id="@+id/tv_customer_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/piv_consumer_slite_photo"
-                    android:textColor="@color/black" />
-
-                <Button
-                    android:id="@+id/bt_online_communication"
-                    android:layout_width="@dimen/size_80"
-                    android:layout_height="@dimen/size_25"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/vm_designer"
-                    android:background="@drawable/bg_btn_filtrate_pressed"
-                    android:text="@string/designer_online_communication"
-                    android:textColor="@color/bg_0084ff" />
-
-                <View
-                    android:id="@+id/vm_designer"
-                    android:layout_width="@dimen/size_10"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/bt_designer_projectdetail"
-                    android:background="@color/white" />
-
-                <Button
-                    android:id="@+id/bt_designer_projectdetail"
-                    android:layout_width="@dimen/size_80"
-                    android:layout_height="@dimen/size_25"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/size_15"
-                    android:background="@drawable/bg_btn_filtrate_pressed"
-                    android:text="@string/designer_order_projectdetail_progress"
-                    android:textColor="@color/bg_0084ff" />
-            </RelativeLayout>
-        </RelativeLayout>
+        <include layout="@layout/layout_order_common"></include>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
-            android:background="@color/line_color" />
+            android:background="@color/line_color"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_10"
-            android:background="@color/light_blue_2" />
+            android:background="@color/light_blue_2"/>
     </LinearLayout>
 </ScrollView>

@@ -42,6 +42,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
+            android:textSize="@dimen/font_13"
             android:layout_marginRight="@dimen/size_10"
             android:background="@drawable/bg_btn_filtrate_pressed"
             android:text="@string/designer_online_communication"

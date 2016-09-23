@@ -213,64 +213,7 @@
             android:background="@drawable/icon_unfold_normal" />
     </RelativeLayout>
 
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_50"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-
-            <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
-                android:id="@+id/piv_consumer_slite_photo"
-                android:layout_width="@dimen/size_40"
-                android:layout_height="@dimen/size_40"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/size_10"
-                app:poly_vertices="0" />
-
-            <TextView
-                android:id="@+id/tv_customer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/size_10"
-                android:layout_toRightOf="@id/piv_consumer_slite_photo"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/bt_online_communication"
-                android:layout_width="@dimen/size_80"
-                android:layout_height="@dimen/size_25"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/vm_designer"
-                android:background="@drawable/bg_btn_filtrate_pressed"
-                android:text="@string/designer_online_communication"
-                android:textColor="@color/bg_0084ff" />
-
-            <View
-                android:id="@+id/vm_designer"
-                android:layout_width="@dimen/size_10"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/bt_designer_projectdetail"
-                android:background="@color/white" />
-
-            <Button
-                android:id="@+id/bt_designer_projectdetail"
-                android:layout_width="@dimen/size_80"
-                android:layout_height="@dimen/size_25"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/size_15"
-                android:background="@drawable/bg_btn_filtrate_pressed"
-                android:text="@string/designer_order_projectdetail_progress"
-                android:textColor="@color/bg_0084ff" />
-        </RelativeLayout>
-    </RelativeLayout>
+    <include layout="@layout/layout_order_common"/>
 
     <TextView
         android:layout_width="match_parent"

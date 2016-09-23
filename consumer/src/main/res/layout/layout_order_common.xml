@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_50"
+    tools:showIn="@layout/item_designer_order_list">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+            android:id="@+id/piv_consumer_slite_photo"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/size_10"
+            app:poly_vertices="0"/>
+
+        <TextView
+            android:id="@+id/tv_customer_name"
+            android:layout_width="@dimen/size_1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/size_10"
+            android:layout_marginLeft="@dimen/size_10"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/bt_online_communication"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_25"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_btn_filtrate_pressed"
+            android:text="@string/designer_online_communication"
+            android:textSize="@dimen/font_13"
+            android:textColor="@color/bg_0084ff"/>
+
+        <View
+            android:id="@+id/vm_designer"
+            android:layout_width="@dimen/size_10"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+
+        <Button
+            android:id="@+id/bt_designer_projectdetail"
+            android:layout_width="@dimen/size_80"
+            android:layout_height="@dimen/size_25"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/size_15"
+            android:textSize="@dimen/font_13"
+            android:background="@drawable/bg_btn_filtrate_pressed"
+            android:text="@string/designer_order_projectdetail_progress"
+            android:textColor="@color/bg_0084ff"/>
+    </LinearLayout>
+</RelativeLayout>
