@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.GestureDetectorCompat;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
@@ -30,13 +32,16 @@ import com.autodesk.shejijia.consumer.codecorationBase.studio.entity.WorkRoomDet
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.HeightUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.AnimationUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView;
 import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -96,7 +101,7 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     protected void initExtraBundle() {
         super.initExtraBundle();
         Intent intent = getIntent();
-        hs_uid = intent.getStringExtra("hs_uid");
+        hs_uid = intent.getStringExtra(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_HS_UID);
 
     }
 
@@ -112,47 +117,45 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         getWorkRoomDetailData(acs_member_id, 0, 10, hs_uid);
-//        setAnimationBackgroud(common_navbar);
         isLoginUserJust = isLoginUser();
-//        handler = new Handler() {
-//
-//            @Override
-//            public void handleMessage(Message msg) {
-//                super.handleMessage(msg);
-//                switch (msg.what) {
-//
-//                    case 0:
-//                        if (now_order != null) {
-//
-//                            AnimationUtils.getInstance().clearAnimationControl(now_order);
-//                            AnimationUtils.getInstance().setAnimationShow(now_order);
-//                        }
-//                        break;
-//                }
-//            }
-//        };
+        handler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+
+                    case 0:
+                        if (now_order != null) {
+
+                            AnimationUtils.getInstance().clearAnimationControl(now_order);
+                            AnimationUtils.getInstance().setAnimationShow(now_order);
+                        }
+                        break;
+                }
+            }
+        };
 
 
-//        AnimationUtils.getInstance().setHandler(handler);
-//        mGestureDetector = new GestureDetectorCompat(this, new MyGestureDetectorImp());
-//        scrollview_studio.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//                switch (event.getAction()) {
-//
-//                    case MotionEvent.ACTION_UP:
-//
-//                        AnimationUtils.getInstance().clearAnimationControl(now_order_details);
-//                        AnimationUtils.getInstance().setAnimationShow(now_order_details);
-//                        break;
-//
-//                }
-//
-//
-//                return mGestureDetector.onTouchEvent(event);
-//            }
-//        });
+        mGestureDetector = new GestureDetectorCompat(this, new MyGestureDetectorImp());
+        scrollview_studio.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+
+                    case MotionEvent.ACTION_UP:
+
+                        AnimationUtils.getInstance().clearAnimationControl(now_order_details);
+                        AnimationUtils.getInstance().setAnimationShow(now_order_details);
+                        break;
+
+                }
+
+
+                return mGestureDetector.onTouchEvent(event);
+            }
+        });
     }
 
     public void upDataForView(WorkRoomDetailsBeen workRoomDetailsBeen) {
@@ -285,12 +288,13 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
                             String member_id = AdskApplication.getInstance().getMemberEntity().getAcs_member_id();
                             String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();
                             try {
-                                jsonObject.put("consumer_name", name);//姓名
-                                jsonObject.put("consumer_mobile", phoneNumber);//电话
-                                jsonObject.put("type", 2);//工作室类型
-                                jsonObject.put("customer_id", member_id);//消费者ID
-                                jsonObject.put("consumer_uid", hs_uid);
-                                jsonObject.put("name", workRoomDetailsBeen.getNick_name());
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_NAME, name);//姓名
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_MOBILE, phoneNumber);//电话
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_TYPE, 2);//工作室类型
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_ID, member_id);//消费者ID
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_UID, hs_uid);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_NAME, workRoomDetailsBeen.getNick_name());//工作室名字
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -298,10 +302,10 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
                         } else {
 
                             try {
-                                jsonObject.put("consumer_name", name);
-                                jsonObject.put("name", workRoomDetailsBeen.getNick_name());
-                                jsonObject.put("consumer_mobile", phoneNumber);
-                                jsonObject.put("type", 2);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_NAME, name);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_MOBILE, phoneNumber);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_LIST_CONSUMER_TYPE, 2);
+                                jsonObject.put(Constant.workRoomListFragment.WORK_ROOM_NAME, workRoomDetailsBeen.getNick_name());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -466,60 +470,50 @@ public class WorkRoomDetailActivity extends NavigationBarActivity implements Vie
     private GridView gridView;
 
 
-//    private class MyGestureDetectorImp extends GestureDetector.SimpleOnGestureListener {
-//
-//
-//        @Override
-//        public boolean onSingleTapUp(MotionEvent e) {
-////            controlAnimation();
-//            LogUtils.e("111", "onSingleTapUP");
-//
-//
-//            return super.onSingleTapUp(e);
-//        }
-//
-//
-//        @Override
-//        public boolean onDown(MotionEvent e) {
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-////            AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
-//            return super.onFling(e1, e2, velocityX, velocityY);
-//        }
-//
-//
-//        @Override
-//        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-//
-//            switch (e2.getAction()) {
-//                case MotionEvent.ACTION_DOWN:
-//                    LogUtils.e("111", "onSingleTapUP");
-//
-//                    break;
-//                case MotionEvent.ACTION_MOVE:
-//                    LogUtils.e("222", "onSingleTapUP");
-//                    AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
-//                    break;
-//                case MotionEvent.ACTION_UP:
-//                    LogUtils.e("333", "onSingleTapUP");
-//
-//                    break;
-//            }
-//
-//
-////            switch (e1.getAction()){
-////                case MotionEvent.ACTION_UP:
-////                    LogUtils.e("444","onSingleTapUP");
-////                    AnimationUtils.getInstance().clearAnimationControl(now_order_details);
-////                    AnimationUtils.getInstance().setAnimationShow(now_order_details);
-////                    break;
-////            }
-//            return super.onScroll(e1, e2, distanceX, distanceY);
-//        }
-//    }
+    private class MyGestureDetectorImp extends GestureDetector.SimpleOnGestureListener {
+
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+//            controlAnimation();
+
+
+            return super.onSingleTapUp(e);
+        }
+
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//            AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+            switch (e2.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+
+                    break;
+                //监听滚动类型,时时监听
+                case MotionEvent.ACTION_MOVE:
+                    AnimationUtils.getInstance().setAnimationDismiss(now_order_details);
+                    break;
+                case MotionEvent.ACTION_UP:
+
+                    break;
+            }
+
+
+            return super.onScroll(e1, e2, distanceX, distanceY);
+        }
+    }
 
     public void controlAnimation() {
 
