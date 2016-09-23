@@ -487,7 +487,17 @@
                     android:ems="10"
                     android:gravity="center_vertical"
                     android:hint="@string/please_select_measure_time"
+                    android:textColorHint="@color/bg_cc"
                     android:textSize="@dimen/font_15" />
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:src="@drawable/icon_unfold_normal" />
             </LinearLayout>
 
 
