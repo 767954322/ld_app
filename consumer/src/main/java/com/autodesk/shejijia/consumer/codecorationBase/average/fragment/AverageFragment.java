@@ -58,7 +58,7 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
             String backPicture[] = pictureUrl.split(",");
 
             ImageUtils.loadImageIcon(mIvChart, backPicture[1]);
-//            ImageUtils.displaySixImage(backPicture[0],mIvBackGround);
+            ImageUtils.displaySixImage(backPicture[0],mIvBackGround);
         }
     }
 

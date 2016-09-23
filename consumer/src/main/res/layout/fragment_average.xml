@@ -5,11 +5,11 @@
                 android:layout_height="match_parent"
                 tools:context=".codecorationBase.average.fragment.AverageFragment">
 
-    <ImageView
-
+    <com.autodesk.shejijia.consumer.codecorationBase.packages.view.ResizableImageView
         android:id="@+id/rl_container_img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
 
     <FrameLayout
         android:id="@+id/rl_average"
