@@ -106,6 +106,9 @@ public class DesignerListFragment extends BaseFragment
      */
     public void handleFilterOption() {
         intent = new Intent(getActivity(), DesignerFiltrateActivity.class);
+        intent.putExtra(Constant.CaseLibrarySearch.YEAR_INDEX, mFindDesignerBean == null ? 0 : mFindDesignerBean.getYearIndex());
+        intent.putExtra(Constant.CaseLibrarySearch.STYLEL_INDEX, mFindDesignerBean == null ? 0 : mFindDesignerBean.getStyleIndex());
+        intent.putExtra(Constant.CaseLibrarySearch.PRICE_INDEX, mFindDesignerBean == null ? 0 : mFindDesignerBean.getPriceIndex());
         startActivityForResult(intent, REQUEST_FILTRATE_CODE);
     }
 

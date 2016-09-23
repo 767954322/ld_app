@@ -17,12 +17,12 @@ import java.net.URLEncoder;
  */
 public class FindDesignerBean implements Serializable {
 
-//    nick_name 昵称
-//    style_names  风格
-//    style　  风格对应的英文
-//    start_experience 工作年限开始时间
-//    end_experience   工作年限结束时间
-//    design_price_code 设计师设计费区间code
+    // nick_name 昵称
+    // style_names  风格
+    // style　  风格对应的英文
+    // start_experience 工作年限开始时间
+    // end_experience   工作年限结束时间
+    // design_price_code 设计师设计费区间code
 
     private String nick_name;
     private String style_names;
@@ -30,6 +30,35 @@ public class FindDesignerBean implements Serializable {
     private String end_experience;
     private String design_price_code;
     private String style;
+
+    // 保存筛选索引
+    private int yearIndex = 0;
+    private int styleIndex = 0;
+    private int priceIndex = 0;
+
+    public int getYearIndex() {
+        return yearIndex;
+    }
+
+    public void setYearIndex(int yearIndex) {
+        this.yearIndex = yearIndex;
+    }
+
+    public int getStyleIndex() {
+        return styleIndex;
+    }
+
+    public void setStyleIndex(int styleIndex) {
+        this.styleIndex = styleIndex;
+    }
+
+    public int getPriceIndex() {
+        return priceIndex;
+    }
+
+    public void setPriceIndex(int priceIndex) {
+        this.priceIndex = priceIndex;
+    }
 
     public String getStyle() {
         return style;
@@ -120,6 +149,10 @@ public class FindDesignerBean implements Serializable {
                 ", start_experience='" + start_experience + '\'' +
                 ", end_experience='" + end_experience + '\'' +
                 ", design_price_code='" + design_price_code + '\'' +
+                ", style='" + style + '\'' +
+                ", yearIndex=" + yearIndex +
+                ", styleIndex=" + styleIndex +
+                ", priceIndex=" + priceIndex +
                 '}';
     }
 }

@@ -45,10 +45,19 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     @Override
     protected void initView() {
         super.initView();
+
         yGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_year);
         sGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_style);
         pGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_price);
 
+    }
+
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        mYearIndex = getIntent().getIntExtra(Constant.CaseLibrarySearch.YEAR_INDEX, 0);
+        mStyleIndex = getIntent().getIntExtra(Constant.CaseLibrarySearch.STYLEL_INDEX, 0);
+        mPriceIndex = getIntent().getIntExtra(Constant.CaseLibrarySearch.PRICE_INDEX, 0);
     }
 
     @Override
@@ -98,13 +107,16 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
-
-        mYear = mWorkTimeList.get(mYearIndex).getCode();
-
-        mStyleName = mStyleList.get(mStyleIndex).getName();
-        mStyleCode = mStyleList.get(mStyleIndex).getCode();
-
-        mPrice = mCostList.get(mPriceIndex).getCode();
+        if (null != mWorkTimeList && mYearIndex <= mWorkTimeList.size()) {
+            mYear = mWorkTimeList.get(mYearIndex).getCode();
+        }
+        if (null != mStyleList && mStyleIndex <= mStyleList.size()) {
+            mStyleName = mStyleList.get(mStyleIndex).getName();
+            mStyleCode = mStyleList.get(mStyleIndex).getCode();
+        }
+        if (null != mCostList && mPriceIndex <= mCostList.size()) {
+            mPrice = mCostList.get(mPriceIndex).getCode();
+        }
 
         String start_experience = "";
         String end_experience = "";
@@ -132,6 +144,10 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
         findDesignerBean.setStart_experience(start_experience);
         findDesignerBean.setEnd_experience(end_experience);
         findDesignerBean.setDesign_price_code(mPrice);
+
+        findDesignerBean.setYearIndex(mYearIndex);
+        findDesignerBean.setStyleIndex(mStyleIndex);
+        findDesignerBean.setPriceIndex(mPriceIndex);
 
         Intent intent = new Intent();
         intent.putExtra(Constant.CaseLibrarySearch.DESIGNER_FILTRATE, findDesignerBean);
@@ -272,6 +288,7 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     private int mYearIndex = 0;
     private int mStyleIndex = 0;
     private int mPriceIndex = 0;
+
     private String mYear;
     private String mStyleName;
     private String mStyleCode;
@@ -286,6 +303,5 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     private List<RelateInformationListBean> mStyleList = new ArrayList<>();
     private List<RelateInformationListBean> mCostList = new ArrayList<>();
     private RelateInformationListBean allListBean;
-
 
 }
