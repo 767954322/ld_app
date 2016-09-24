@@ -1,7 +1,5 @@
 package com.autodesk.shejijia.consumer.home.decorationlibrarys.activity;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +8,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 public class CaseLibraryRoamingWebView extends NavigationBarActivity {
@@ -43,12 +40,8 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
         wvRoaming.getSettings().setSupportZoom(true);
         wvRoaming.getSettings().setBuiltInZoomControls(true);
         wvRoaming.getSettings().setDomStorageEnabled(true);
+        wvRoaming.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         wvRoaming.loadUrl(roaming);
-
-
-        setImageForNavButton(ButtonType.RIGHT,R.drawable.ic_menu_share);
-        setVisibilityForNavButton(ButtonType.RIGHT,true);
-
         //  wvRoaming.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         // wvRoaming.getSettings().setDefaultFontSize(18);
         //  wvRoaming.getSettings().setLoadsImagesAutomatically(true);
@@ -75,36 +68,23 @@ public class CaseLibraryRoamingWebView extends NavigationBarActivity {
     }
 
 
-    @Override
-    protected void rightNavButtonClicked(View view) {
-        super.rightNavButtonClicked(view);
-      //  Toast.makeText(this,"2",Toast.LENGTH_LONG).show();
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.VIEW");
-        intent.addCategory("android.intent.category.DEFAULT");
-        intent.addCategory("android.intent.category.BROWSABLE");
-        intent.setData(Uri.parse(roaming));
-        startActivity(intent);
-
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        wvRoaming.pauseTimers();
-        wvRoaming.onPause();
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
-        wvRoaming.resumeTimers();
-        wvRoaming.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        wvRoaming.destroy();
-    }
+//    @Override
+//    protected void onPause(){
+//        super.onPause();
+//        wvRoaming.pauseTimers();
+//        wvRoaming.onPause();
+//    }
+//
+//    @Override
+//    protected void onResume(){
+//        super.onResume();
+//        wvRoaming.resumeTimers();
+//        wvRoaming.onResume();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        wvRoaming.destroy();
+//    }
 }
