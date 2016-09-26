@@ -36,10 +36,9 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
 
     private AlertView UIAlert;
 
-
     protected void leftNavButtonClicked(View view) {
 
-        SetReturnSesult();
+        SetReturnSesult(ContractDetail);
         super.leftNavButtonClicked(view);
     }
 
@@ -67,21 +66,13 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         ll_consumer_agree_content_layout.setVisibility(View.VISIBLE);
 
         img_agree_establish_contract = (ImageView) findViewById(R.id.img_agree_establish_contract);
-
-
     }
-
 
     protected void initViewVariables() {
 
-
         ll_designer_action_layout = (LinearLayout) findViewById(R.id.ll_flow_designer_send_contract); //設計師發送合同的layout
-
-
         ll_contract_input_form_layout = (LinearLayout) findViewById(R.id.design_contract_content_designer);//合同表單Layout
         ll_contract_webview_layout = (LinearLayout) findViewById(R.id.design_contract_content_consumer);//web view 合同表單
-
-
 
         /* init content for consumer form */
         twvc_contract_content_webview = (WebView) findViewById(R.id.contract_sub_content_webview);//webview 物件
@@ -89,15 +80,11 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         ll_consumer_agree_content_layout = (LinearLayout) findViewById(R.id.ll_agree_establish_contract);//消費者己閱讀的提示Layout
         btn_consumer_submit_button = (Button) findViewById(R.id.btn_send_establish_contract);
 
-
          /* init content for designer form */
         llbtn_see_contract_detail = (LinearLayout) findViewById(R.id.ll_flow_examine_contract); //設計師合同詳情點擊條
-
-
     }
 
     private void UpdateUIActionLayout() {
-
 
         ll_consumer_action_layout.setVisibility(View.VISIBLE);
         ll_consumer_agree_content_layout.setVisibility(View.VISIBLE);
@@ -119,7 +106,6 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
             }
         });
 
-
         img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +114,6 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
                 UpdateUIConsumerAgreeCheckBox();
             }
         });
-
     }
 
     private void UpdateUIConsumerAgreeCheckBox() {
@@ -142,7 +127,6 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
             btn_consumer_submit_button.setEnabled(true);
             btn_consumer_submit_button.setBackgroundResource(R.drawable.bg_common_btn_blue);
         }
-
     }
 
     @Override
@@ -192,21 +176,20 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == ContractForFirst) {
-
-            SetReturnSesult();
+            SetReturnSesult(ContractDetail);
             finish();
         }
 
         if (resultCode == FirstForContract) {
-            SetReturnSesult();
+            SetReturnSesult(FirstForContract);
             finish();
         }
     }
 
-    private void SetReturnSesult() {
+    private void SetReturnSesult(int code) {
         Intent reData = new Intent();
         reData.putExtra("CONSUMER_ACTION_AGREE", isAgree);
-        setResult(ContractDetail, reData);
+        setResult(code, reData);
     }
 
     //Web视图
