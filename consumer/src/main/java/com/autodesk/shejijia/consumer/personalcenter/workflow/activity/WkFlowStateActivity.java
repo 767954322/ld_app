@@ -273,6 +273,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     }
 
     private void onEliteItemClick(int position, int wk_cur_sub_node_idi, View view) {
+        position = getPosition(position);
         switch (position) {
             case 0://量房
 //                showNewActivity(FlowMeasureFormActivity.class,-1);
@@ -295,6 +296,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     }
 
     private void onOrdinaryItemClick(int position, int wk_cur_sub_node_idi, View view) {
+        position = getPosition(position);
         switch (position) {
             case 0://量房
                 if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType) && wk_cur_sub_node_idi == 11) {
@@ -319,6 +321,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             default:
                 break;
         }
+    }
+    private int getPosition(int position){
+        if(Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())){
+            position = position -1;
+        }
+        return position;
     }
 
     /**
