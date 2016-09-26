@@ -9,17 +9,11 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -75,16 +69,13 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         img_agree_establish_contract = (ImageView) findViewById(R.id.img_agree_establish_contract);
 
 
-
     }
 
 
     protected void initViewVariables() {
 
 
-
         ll_designer_action_layout = (LinearLayout) findViewById(R.id.ll_flow_designer_send_contract); //設計師發送合同的layout
-
 
 
         ll_contract_input_form_layout = (LinearLayout) findViewById(R.id.design_contract_content_designer);//合同表單Layout
@@ -94,7 +85,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
 
         /* init content for consumer form */
         twvc_contract_content_webview = (WebView) findViewById(R.id.contract_sub_content_webview);//webview 物件
-        ll_consumer_action_layout= (LinearLayout) findViewById(R.id.ll_send_establish_contract);//消費者支付動作Layout
+        ll_consumer_action_layout = (LinearLayout) findViewById(R.id.ll_send_establish_contract);//消費者支付動作Layout
         ll_consumer_agree_content_layout = (LinearLayout) findViewById(R.id.ll_agree_establish_contract);//消費者己閱讀的提示Layout
         btn_consumer_submit_button = (Button) findViewById(R.id.btn_send_establish_contract);
 
@@ -103,11 +94,8 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         llbtn_see_contract_detail = (LinearLayout) findViewById(R.id.ll_flow_examine_contract); //設計師合同詳情點擊條
 
 
-
-
-
-
     }
+
     private void UpdateUIActionLayout() {
 
 
@@ -132,7 +120,6 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         });
 
 
-
         img_agree_establish_contract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +130,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
         });
 
     }
+
     private void UpdateUIConsumerAgreeCheckBox() {
 
         if (!isAgree) { // 判断是否我已阅读（我已阅读）
@@ -209,14 +197,18 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
             finish();
         }
 
-
+        if (resultCode == FirstForContract) {
+            SetReturnSesult();
+            finish();
+        }
     }
 
-    private void SetReturnSesult (){
-        Intent reData=new Intent();
+    private void SetReturnSesult() {
+        Intent reData = new Intent();
         reData.putExtra("CONSUMER_ACTION_AGREE", isAgree);
-        setResult(ContractDetail,reData);
+        setResult(ContractDetail, reData);
     }
+
     //Web视图
     private class webViewClient extends WebViewClient {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -234,6 +226,7 @@ public class FlowWebContractDetailActivity extends NavigationBarActivity {
     private LinearLayout ll_contract_input_form_layout;
     private LinearLayout ll_contract_webview_layout;
     private int ContractForFirst = 0; //　从合同跳转到设计首款
+    private int FirstForContract = 1; // 首款调到设计合同
     private int ContractDetail = 2;
 
     private ImageView img_agree_establish_contract;
