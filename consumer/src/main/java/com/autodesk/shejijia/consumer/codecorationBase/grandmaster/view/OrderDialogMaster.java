@@ -25,20 +25,35 @@ import java.util.regex.Pattern;
  * @brief 查看工作室详情页面 .
  */
 public class OrderDialogMaster extends Dialog implements View.OnClickListener {
-
     private Context context;
     private EditText phoneNumber;
     private EditText name;
     private TextView commit;
-    private RelativeLayout close;
+    private ImageView close;
     private CommitListenser commitListenser;
     private TextView write_name;
     private TextView write_phone;
     private TextView line_name;
     private TextView line_phone;
-    private int header_drawble;
     private boolean phoneRight;
     private boolean nameSure = false;
+    private int header_drawble;
+    /**
+     * 中国电信号码格式验证 手机段： 133,153,180,181,189,177,1700
+     **/
+    private static final String CHINA_TELECOM_PATTERN = "(^1(33|53|77|8[019])\\d{8}$)|(^1700\\d{7}$)";
+
+    /**
+     * 中国联通号码格式验证 手机段：130,131,132,155,156,185,186,145,176,1709
+     **/
+    private static final String CHINA_UNICOM_PATTERN = "(^1(3[0-2]|4[5]|5[56]|7[6]|8[56])\\d{8}$)|(^1709\\d{7}$)";
+
+    /**
+     * 中国移动号码格式验证
+     * 手机段：134,135,136,137,138,139,150,151,152,157,158,159,182,183,184
+     * ,187,188,147,178,1705
+     **/
+    private static final String CHINA_MOBILE_PATTERN = "(^1(3[4-9]|4[7]|5[0-27-9]|7[8]|8[2-478])\\d{8}$)|(^1705\\d{7}$)";
 
 
     public interface CommitListenser {
@@ -75,7 +90,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
         phoneNumber = (EditText) view.findViewById(R.id.work_room_phoneNumber);
         name = (EditText) view.findViewById(R.id.work_room_name);
         commit = (TextView) view.findViewById(R.id.commit_information);
-        close = (RelativeLayout) view.findViewById(R.id.work_room_dialog_close);
+        close = (ImageView) view.findViewById(R.id.work_room_dialog_close);
         write_name = (TextView) view.findViewById(R.id.write_name);
         line_name = (TextView) view.findViewById(R.id.line_name);
         write_phone = (TextView) view.findViewById(R.id.write_phone);
@@ -115,12 +130,12 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
                             (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
                             (name.getText().toString().length() > 10)) {
 
-                        line_name.setBackgroundColor(Color.parseColor("#ff0000"));
+                        line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
                         write_name.setVisibility(View.VISIBLE);
                         nameSure = false;
                     } else {
 
-                        line_name.setBackgroundColor(Color.BLACK);
+                        line_name.setBackgroundColor(Color.parseColor("#d7d7d7"));
                         write_name.setVisibility(View.GONE);
                         nameSure = true;
                     }
@@ -146,11 +161,11 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
                     } else {
                         if (mobile.equals("") || (mobile.length() > 0 && mobile.length() <= 11)) {
 
-                            line_phone.setBackgroundColor(Color.parseColor("#ff0000"));
+                            line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
                             write_phone.setVisibility(View.VISIBLE);
                         } else {
 
-                            line_phone.setBackgroundColor(Color.BLACK);
+                            line_phone.setBackgroundColor(Color.parseColor("#d7d7d7"));
                             write_phone.setVisibility(View.GONE);
                         }
                     }
@@ -160,6 +175,7 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
             }
         });
     }
+
 
     @Override
     public void onClick(View v) {
@@ -176,27 +192,28 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
                         (name.getText().toString().length() < 2 && name.getText().toString().length() > 0) ||
                         (name.getText().toString().length() > 10)) {
 
-                    line_name.setBackgroundColor(Color.parseColor("#ff0000"));
+                    line_name.setBackgroundColor(Color.parseColor("#fe6e6e"));
                     write_name.setVisibility(View.VISIBLE);
                     nameSure = false;
                 } else {
 
-                    line_name.setBackgroundColor(Color.BLACK);
+                    line_name.setBackgroundColor(Color.parseColor("#d7d7d7"));
                     write_name.setVisibility(View.GONE);
                     nameSure = true;
                 }
                 //phone
+
                 String mobile = phoneNumber.getText().toString();
                 phoneRight = PhoneNumberUtils.justPhoneNumber(mobile);
                 if (phoneRight) {
 
-                    line_phone.setBackgroundColor(Color.BLACK);
+                    line_phone.setBackgroundColor(Color.parseColor("#d7d7d7"));
                     write_phone.setVisibility(View.GONE);
 
                 } else {
                     if (mobile.equals("") || (mobile.length() > 0 && mobile.length() <= 11)) {
 
-                        line_phone.setBackgroundColor(Color.parseColor("#ff0000"));
+                        line_phone.setBackgroundColor(Color.parseColor("#fe6e6e"));
                         write_phone.setVisibility(View.VISIBLE);
                     } else {
 
@@ -226,6 +243,5 @@ public class OrderDialogMaster extends Dialog implements View.OnClickListener {
         }
 
     }
-
 
 }
