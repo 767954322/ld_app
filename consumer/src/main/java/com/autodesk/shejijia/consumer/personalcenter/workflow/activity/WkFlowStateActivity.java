@@ -506,9 +506,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         tvCreateDate.setText(UIUtils.getString(R.string.create_date) + requirement.getPublish_time());
         mPtrLayout.onRefreshComplete();
 
-
+        int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && WorkFlowTemplateStep() == 4) {
-            int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
 
             if (isElite(wk_cur_template_id)) {
                 if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
@@ -534,6 +533,20 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
             ImageUtils.displayAvatarImage(mBiddersEntity.getAvatar(), polygonImageView);
             tvDesignerName.setText(mBiddersEntity.getUser_name());
+        }
+        isShowAlertView(sub_node_id);
+    }
+    private void isShowAlertView(int sub_node_id){
+        if (isElite(wk_cur_template_id)) {
+            if (sub_node_id < 11) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer__quantity_room), null,
+                        new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this, AlertView.Style.Alert, new OnItemClickListener(){
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        finish();
+                    }
+                }).show();
+            }
         }
     }
 

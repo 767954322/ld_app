@@ -261,6 +261,7 @@
     <string name="no_pay">没有发送量房费!</string>
     <string name="please_wait_consumer_send_design_first">请耐心等待客户支付设计首款</string>
     <string name="please_wait_consumer_send_design_end">请等待消费者发送设计尾款</string>
+    <string name="please_wait_consumer__quantity_room">请耐心等待客户邀请您去进行量房</string>
     <string name="please_wait_designer_send_contract">请等待设计师发送合同</string>
     <string name="error_on_get_contract_number">取得合同编号失败，请稍后再试</string>
     <string name="designer_meal_detail_title">接收量房费</string>
