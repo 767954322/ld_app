@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.autodesk.shejijia.shared.components.common.utility;
+package com.autodesk.shejijia.consumer.base.utils;
+
+import com.autodesk.shejijia.shared.components.common.utility.Assert;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FilterInputStream;
