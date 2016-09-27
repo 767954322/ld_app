@@ -192,7 +192,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
             }
             endTime = date.getTime();
-
+            Log.i("yaoxuehua--currentTime",""+currentTime);
+            Log.i("yaoxuehua--endTime",""+endTime);
             if (endTime >= currentTime) {
 
                 btnSubmit.setTextColor(UIUtils.getColor(R.color.pickerview_timebtn_nor));
@@ -285,6 +286,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
                     timeSelectListener.onTimeSelect(date);
                     if (timer != null) {
                         timer.cancel();
+                        timer = null;
 
                     }
                 } catch (ParseException e) {
