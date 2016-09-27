@@ -163,7 +163,7 @@
     </style>
 
     <!-- LookMore 主题 -->
-    <style name="LookMoreActivityTheme" parent="@android:style/Theme">
+    <style name="LookMoreActivityTheme" parent="@style/AppTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>

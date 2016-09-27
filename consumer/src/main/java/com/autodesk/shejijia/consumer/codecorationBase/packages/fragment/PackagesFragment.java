@@ -16,6 +16,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.packages.activity.Reserva
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -80,7 +81,7 @@ public class PackagesFragment extends BaseFragment implements View.OnClickListen
                     intent_yuyue.putExtra("item_num", 0);
                     activity.startActivity(intent_yuyue);
                 } else {
-                    AdskApplication.getInstance().doLogin(activity);
+                    LoginUtils.doLogin(activity);
                 }
                 break;
             default:

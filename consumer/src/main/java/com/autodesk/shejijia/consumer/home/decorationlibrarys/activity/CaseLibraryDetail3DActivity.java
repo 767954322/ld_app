@@ -48,6 +48,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -229,7 +230,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                     }
 
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
 
@@ -241,7 +242,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                         Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
                         if (TextUtils.isEmpty(member_id)) {
-                            AdskApplication.getInstance().doLogin(this);
+                            LoginUtils.doLogin(this);
                         } else {
                             if (is_following) {
                                 unFollowedAlertView.show();
@@ -252,7 +253,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                     }
                 } else {
                     isfromGuanZhu=true;
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
 
@@ -269,7 +270,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                     }
 
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
             case R.id.piv_img_customer_home_header:    /// 进入设计师详情页面.
@@ -294,7 +295,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                     jumpBean.setReciever_hs_uid(hs_uid);
                     JumpToChatRoom.getChatRoom(CaseLibraryDetail3DActivity.this, jumpBean);
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
 
             default:

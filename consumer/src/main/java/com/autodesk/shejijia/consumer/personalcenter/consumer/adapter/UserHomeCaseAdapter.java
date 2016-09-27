@@ -17,7 +17,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.BaseAdapter;
 
 import java.util.List;
 import java.util.Map;

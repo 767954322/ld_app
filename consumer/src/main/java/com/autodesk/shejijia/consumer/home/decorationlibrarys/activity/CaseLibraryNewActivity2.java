@@ -38,6 +38,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -299,7 +300,7 @@ public class CaseLibraryNewActivity2 extends NavigationBarActivity implements Vi
                     }
 
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
             case R.id.piv_img_customer_home_header://点击设计师头像，进入详情
@@ -317,7 +318,7 @@ public class CaseLibraryNewActivity2 extends NavigationBarActivity implements Vi
                         sendThumbUp(mCaseDetailBean.getId());
                     }
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
             case R.id.iv_follow_designer://关注
@@ -326,7 +327,7 @@ public class CaseLibraryNewActivity2 extends NavigationBarActivity implements Vi
                         DesignerInfoBean designer_info = mCaseDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
                         if (TextUtils.isEmpty(member_id)) {
-                            AdskApplication.getInstance().doLogin(this);
+                            LoginUtils.doLogin(this);
                         } else {
                             if (is_following) {
                                 unFollowedAlertView.show();
@@ -336,7 +337,7 @@ public class CaseLibraryNewActivity2 extends NavigationBarActivity implements Vi
                         }
                     }
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
             case R.id.case_library_new_2_activity_head_iv:
@@ -419,7 +420,7 @@ public class CaseLibraryNewActivity2 extends NavigationBarActivity implements Vi
                                 AlertView.Style.Alert, null).show();
                     }
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
             default:

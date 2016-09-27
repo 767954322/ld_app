@@ -18,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DataCleanManager;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -96,7 +97,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
             intentLogout.putExtra(Constant.LOGOUT, Constant.LOGOUT);
             setResult(RESULT_OK, intentLogout);
 
-            AdskApplication.getInstance().doLogout(this);
+            LoginUtils.doLogout(this);
             finish();
 
         }

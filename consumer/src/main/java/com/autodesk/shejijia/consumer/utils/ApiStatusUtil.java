@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -119,8 +120,8 @@ public class ApiStatusUtil {
             @Override
             public void onItemClick(Object object, int position) {
                 if (tag == 0) {
-                    AdskApplication.getInstance().doLogout(mContext);
-                    AdskApplication.getInstance().doLogin(mContext);
+                    LoginUtils.doLogout(mContext);
+                    LoginUtils.doLogin(mContext);
 
                 } else {
 

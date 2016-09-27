@@ -22,6 +22,7 @@ import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -158,7 +159,7 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             JumpToChatRoom.getChatRoom(mActivity, jumpBean);
 
         } else {
-            AdskApplication.getInstance().doLogin(mActivity);
+            LoginUtils.doLogin(mActivity);
         }
     }
 }

@@ -4,7 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
 
@@ -16,7 +16,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.L
  * @file BaseActivity.java .
  * @brief Activity的基类 .
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     protected String TAG = getClass().getSimpleName();
     private boolean destroyed = false;
 
@@ -33,7 +33,6 @@ public abstract class BaseActivity extends FragmentActivity {
 
     }
 
-
     /**
      * 获取布局的Id
      *
@@ -49,8 +48,7 @@ public abstract class BaseActivity extends FragmentActivity {
     /**
      * 获取bundle数据
      */
-    protected void initExtraBundle() {
-    }
+    protected void initExtraBundle() {}
 
     /**
      * 初始化数据操作
@@ -62,19 +60,11 @@ public abstract class BaseActivity extends FragmentActivity {
     /**
      * 设置监听
      */
-    protected void initListener() {
-    }
+    protected void initListener() {}
 
     public boolean isDestroyed() {
         return destroyed;
     }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
 
     @Override
     public Resources getResources() {
