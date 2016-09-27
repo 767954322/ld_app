@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
@@ -23,8 +22,8 @@ import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 
 import java.util.List;
 import java.util.Map;

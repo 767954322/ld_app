@@ -2,7 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdele
 
 import android.support.v4.util.SparseArrayCompat;
 
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 
 /**
  * <p>Description:item分发管理 </p>

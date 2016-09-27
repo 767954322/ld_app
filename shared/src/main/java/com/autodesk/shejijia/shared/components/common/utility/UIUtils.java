@@ -112,30 +112,31 @@ public class UIUtils {
         return getResources().getColor(resId);
     }
 
-    public static long getMainThreadId() {
+    /*public static long getMainThreadId() {
         return AdskApplication.getMainThreadId();
-    }
+    }*/
 
     /**
      * 判断当前的线程是不是在主线程
      *
      * @return
      */
-    public static boolean isRunInMainThread() {
+    /*public static boolean isRunInMainThread() {
         return android.os.Process.myTid() == getMainThreadId();
-    }
+    }*/
 
     /**
      * 获取主线程的handler
      */
-    public static Handler getHandler() {
+   /* public static Handler getHandler() {
         return AdskApplication.getMainThreadHandler();
     }
+    */
 
     /**
      * 在主线程执行runnable
      */
-    public static boolean post(Runnable runnable) {
+    /** public static boolean post(Runnable runnable) {
         return getHandler().post(runnable);
     }
 
@@ -146,6 +147,7 @@ public class UIUtils {
             post(runnable);
         }
     }
+     */
 
     public static void showInfoDialog(Context context, String message) {
         showInfoDialog(context, message, UIUtils.getString(R.string.tip), UIUtils.getString(R.string.sure), null);

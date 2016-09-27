@@ -26,6 +26,7 @@ import com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingA
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -123,7 +124,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                     Intent intent2 = new Intent(ConsumerPersonalCenterActivity.this, AttentionListActivity.class);
                     startActivity(intent2);
                 } else {
-                    AdskApplication.doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
         }

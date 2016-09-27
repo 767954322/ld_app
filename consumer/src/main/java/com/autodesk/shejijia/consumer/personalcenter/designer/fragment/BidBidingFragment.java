@@ -1,24 +1,12 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
-import android.app.Activity;
 import android.view.View;
 
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.MyBidBean;
-import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
-
-import org.json.JSONObject;
+import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 
 /**
  * @author DongXueQiu .

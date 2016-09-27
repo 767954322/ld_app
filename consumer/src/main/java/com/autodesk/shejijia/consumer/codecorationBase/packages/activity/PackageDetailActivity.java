@@ -18,6 +18,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.packages.adapter.BaseComm
 import com.autodesk.shejijia.consumer.codecorationBase.packages.view.ImageUrlUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -77,7 +78,7 @@ public class PackageDetailActivity extends BaseActivity implements View.OnClickL
                     intent_yuyue.putExtra("item_num", item_num + 1);
                     startActivity(intent_yuyue);
                 } else {
-                    AdskApplication.getInstance().doLogin(PackageDetailActivity.this);
+                    LoginUtils.doLogin(PackageDetailActivity.this);
                 }
 
                 break;

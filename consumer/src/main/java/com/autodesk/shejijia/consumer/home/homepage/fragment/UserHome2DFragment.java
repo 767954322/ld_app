@@ -42,6 +42,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -217,7 +218,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
             });
         } else {
             CustomProgress.cancelDialog();
-            AdskApplication.getInstance().doLogin(getActivity());
+            LoginUtils.doLogin(getActivity());
         }
     }
 
@@ -233,7 +234,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                     intent.putExtra(Constant.ConsumerPersonCenterFragmentKey.NICK_NAME, mNickNameConsumer);
                     startActivity(intent);
                 } else {
-                    AdskApplication.getInstance().doLogin(getActivity());
+                    LoginUtils.doLogin(getActivity());
                 }
                 break;
 

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.BaseAdapter;
 
 import java.util.List;
 

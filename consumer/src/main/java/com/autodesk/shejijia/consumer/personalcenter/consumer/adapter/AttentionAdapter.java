@@ -10,7 +10,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.AttentionEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.BaseAdapter;
 
 import java.util.List;
 

@@ -18,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -187,7 +188,7 @@ public class CaseDescriptionActivity extends NavigationBarActivity implements Vi
 
                     });
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
             default:

@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
@@ -824,7 +825,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 memberEntity.setNick_name(nick_name);
                 AdskApplication.getInstance().saveSignInInfo(memberEntity);
-                AdskApplication.getInstance().setMemberEntity(memberEntity);
+                ConsumerApplication.setMemberEntity(memberEntity);
                 CustomProgress.cancelDialog();
             }
 

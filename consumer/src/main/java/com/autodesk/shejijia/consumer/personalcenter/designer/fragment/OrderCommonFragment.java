@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonBean;
@@ -33,8 +31,8 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.adapter.CommonAdapter;
-import com.autodesk.shejijia.shared.framework.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;

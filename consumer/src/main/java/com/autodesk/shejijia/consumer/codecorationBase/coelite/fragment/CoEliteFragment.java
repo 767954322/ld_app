@@ -18,6 +18,7 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -127,7 +128,7 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null == mMemberEntity) {
-            AdskApplication.getInstance().doLogin(getActivity());
+            LoginUtils.doLogin(getActivity());
             return;
         }
 

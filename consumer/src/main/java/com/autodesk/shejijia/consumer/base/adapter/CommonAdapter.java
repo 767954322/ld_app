@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.framework.adapter;
+package com.autodesk.shejijia.consumer.base.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

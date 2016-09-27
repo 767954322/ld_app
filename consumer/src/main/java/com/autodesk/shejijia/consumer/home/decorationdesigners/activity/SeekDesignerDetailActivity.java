@@ -51,6 +51,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.Polyg
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -269,7 +270,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                             new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this, AlertView.Style.Alert, null).show();
                         }
                     } else {
-                        AdskApplication.getInstance().doLogin(this);
+                        LoginUtils.doLogin(this);
                     }
 
                 }
@@ -299,7 +300,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
                         new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error), null, new String[]{UIUtils.getString(R.string.sure)}, null, SeekDesignerDetailActivity.this, AlertView.Style.Alert, null).show();
                     }
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
 
@@ -911,7 +912,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
         if (TextUtils.isEmpty(mSelfAcsMemberId)) {
-            AdskApplication.getInstance().doLogin(this);
+            LoginUtils.doLogin(this);
         } else {
             if (seekDesignerDetailHomeBean.is_following) {
                 unFollowedAlertView.show();

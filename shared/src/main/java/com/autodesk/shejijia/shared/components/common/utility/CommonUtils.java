@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.common.utility;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -70,6 +71,19 @@ public class CommonUtils {
             e.printStackTrace();
         }
         return info.versionName;
+    }
+
+    /*
+    * 判断当前服务是否在运行
+    * */
+    public static boolean isChatServiceRunning(Context mContext, Class<?> websocketServiceClass) {
+        ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (websocketServiceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
