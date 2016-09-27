@@ -16,7 +16,7 @@ import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.projectdetails.activitys.ProjectDetailsActivity;
 import com.autodesk.shejijia.enterprise.projectlists.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.projectlists.viewholder.ProjectListVH;
-import com.orhanobut.logger.Logger;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.util.List;
 
@@ -89,8 +89,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             projectVh.mTaskListView.setHasFixedSize(true);
             projectVh.mTaskListView.setItemAnimator(new DefaultItemAnimator());
             projectVh.mTaskListView.setLayoutManager(layoutManager);
-
-            Logger.d(taskLists.get(position).getPlan().getTasks());
 
             if (taskLists.get(position).getPlan().getTasks()!=null && taskLists.get(position).getPlan().getTasks().size()>0){
                 projectVh.mViewLine.setVisibility(View.VISIBLE);

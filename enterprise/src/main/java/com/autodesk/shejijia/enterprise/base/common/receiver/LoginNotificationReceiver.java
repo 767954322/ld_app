@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.base.common.utils.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 
 /**

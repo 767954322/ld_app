@@ -2,42 +2,26 @@ package com.autodesk.shejijia.enterprise.projectlists.activitys;
 
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseFragmentActivity;
 import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.nodedetails.entity.NodeBean;
 import com.autodesk.shejijia.enterprise.personalcenter.activitys.PersonalCenterActivity;
 import com.autodesk.shejijia.enterprise.projectlists.entity.ProjectListBean;
-import com.autodesk.shejijia.enterprise.projectlists.fragments.GroupChatFragment;
-import com.autodesk.shejijia.enterprise.projectlists.fragments.IssueListFragment;
-import com.autodesk.shejijia.enterprise.projectlists.fragments.TaskListFragment;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-import com.orhanobut.logger.Logger;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.pgyersdk.update.PgyUpdateManager;
 
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
-
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class ProjectListsActivity extends BaseProjectListActivity implements OnCheckedChangeListener, View.OnClickListener {
 

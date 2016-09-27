@@ -67,7 +67,7 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener{
                 break;
             case R.id.tv_about_app:
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit,R.anim.slide_fragment_pop_enter,R.anim.slide_fragment_pop_exit)
+                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit)
                         .add(R.id.fly_personal_center_container,AboutAppFragment.newInstance())
                         .addToBackStack(AboutAppFragment.newInstance().getClass().getSimpleName())
                         .commit();

@@ -5,10 +5,10 @@ import android.support.v4.app.Fragment;
 
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
 import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.projectlists.fragments.GroupChatFragment;
 import com.autodesk.shejijia.enterprise.projectlists.fragments.IssueListFragment;
 import com.autodesk.shejijia.enterprise.projectlists.fragments.TaskListFragment;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.util.List;
 

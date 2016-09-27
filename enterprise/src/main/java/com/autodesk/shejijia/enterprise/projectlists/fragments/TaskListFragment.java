@@ -9,10 +9,7 @@ import android.view.View;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.common.Interface.OnRecyclerItemClickListener;
 import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
-import com.autodesk.shejijia.enterprise.base.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.base.network.MyOkJsonRequest;
@@ -20,8 +17,8 @@ import com.autodesk.shejijia.enterprise.projectlists.adapter.TaskListAdapter;
 import com.autodesk.shejijia.enterprise.projectlists.entity.TaskListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -46,9 +43,9 @@ public class TaskListFragment extends BaseFragment{
     @Override
     protected void initData() {
         entity = (MemberEntity) SharedPreferencesUtils.getObject(mContext, Constants.USER_INFO);
-        Logger.e("project--entity", entity + "");
+        LogUtils.e("project--entity", entity + "");
         if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
-            Logger.e("acs_token", entity.getToken());
+            LogUtils.e("acs_token", entity.getToken());
             //get TaskLists
             getTaskLists("2016-08-08",0,10,0,"587e1e6bd9c26875535868dec8e3045c");
         }
@@ -91,7 +88,7 @@ public class TaskListFragment extends BaseFragment{
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Logger.d(jsonObject+"");
+                LogUtils.d(jsonObject+"");
                 String result = jsonObject.toString();
                 TaskListBean taskListBean = GsonUtil.jsonToBean(result, TaskListBean.class);
 

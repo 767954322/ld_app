@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.base.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.nodedetails.activity.NodeDetailsActivity;
 import com.autodesk.shejijia.enterprise.projectlists.entity.TaskListBean;

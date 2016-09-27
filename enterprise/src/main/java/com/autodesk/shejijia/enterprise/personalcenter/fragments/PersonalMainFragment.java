@@ -49,14 +49,14 @@ public class PersonalMainFragment extends BaseFragment implements View.OnClickLi
                 break;
             case R.id.tv_personal_project: //全部项目
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit,R.anim.slide_fragment_pop_enter,R.anim.slide_fragment_pop_exit)
+                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit)
                         .add(R.id.fly_personal_center_container, MyProjectListFragment.newInstance())
                         .addToBackStack(MyProjectListFragment.newInstance().getClass().getSimpleName())
                         .commit();
                 break;
             case R.id.tv_personal_more: //更多
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit,R.anim.slide_fragment_pop_enter,R.anim.slide_fragment_pop_exit)
+                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit)
                         .add(R.id.fly_personal_center_container, MoreFragment.newInstance())
                         .addToBackStack(MoreFragment.newInstance().getClass().getSimpleName())
                         .commit();

@@ -13,16 +13,13 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
 import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.base.common.utils.LogUtils;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.base.network.MyOkJsonRequest;
 import com.autodesk.shejijia.enterprise.projectdetails.entity.ProjectBean;
-import com.autodesk.shejijia.enterprise.projectlists.adapter.TaskListAdapter;
-import com.autodesk.shejijia.enterprise.projectlists.entity.TaskListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -112,7 +109,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Logger.json(jsonObject.toString());
+                LogUtils.e(jsonObject.toString());
 
                 String result = jsonObject.toString();
                 ProjectBean projectBean = GsonUtil.jsonToBean(result, ProjectBean.class);

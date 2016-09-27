@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.autodesk.shejijia.enterprise.projectlists.activitys.ProjectListsActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 
