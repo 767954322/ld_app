@@ -30,15 +30,18 @@ import cn.jpush.android.api.JPushInterface;
  * @filename SplashActivity
  * @brief 闪屏页activity, 闪出logo并延时进入首页.
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity
+{
 
     @Override
-    protected int getLayoutResId() {
+    protected int getLayoutResId()
+    {
         return R.layout.activity_splash;
     }
 
     @Override
-    protected void initView() {
+    protected void initView()
+    {
         //每次进应用都默认清除缓存
         DataCleanManager.cleanInternalCache(UIUtils.getContext());
         DataCleanManager.cleanCustomCache(getCacheDir().getAbsolutePath());
@@ -48,7 +51,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
+    protected void initData(Bundle savedInstanceState)
+    {
 
         clearUnreadCount();
         /**
@@ -60,9 +64,11 @@ public class SplashActivity extends BaseActivity {
          */
         //设置如果应用到应用退至后台超过60秒，再次回到前端视为再次启动项目
         MobclickAgent.setSessionContinueMillis(60 * 1000);
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
 
                 if (getNextActivityToLaunch() != null)
                     startActivityAndFinish(getNextActivityToLaunch());
@@ -70,19 +76,23 @@ public class SplashActivity extends BaseActivity {
         }, 1000);
     }
 
-    protected  Class getNextActivityToLaunch()
+    protected Class getNextActivityToLaunch()
     {
         return null;
     }
 
     @Override
-    protected void initListener() {
+    protected void initListener()
+    {
     }
 
-    protected void startActivityAndFinish(final Class clazz) {
-        runOnUiThread(new Runnable() {
+    protected void startActivityAndFinish(final Class clazz)
+    {
+        runOnUiThread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 startActivity(new Intent(SplashActivity.this, clazz));
                 finish();
             }
@@ -90,19 +100,22 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    public void onResume() {
+    public void onResume()
+    {
         super.onResume();
         MobclickAgent.onResume(this);
     }
 
     @Override
-    public void onPause() {
+    public void onPause()
+    {
         super.onPause();
         MobclickAgent.onPause(this);
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         super.onDestroy();
         ImageUtils.clearCache();
     }
@@ -121,10 +134,12 @@ public class SplashActivity extends BaseActivity {
 
                 String notificationKey = String.valueOf(JPushMessageReceiver.DEFAULT_NOTIFICATION_ID);
 
-                try {
+                try
+                {
                     JSONObject jsonObject = new JSONObject(message);
 
-                    if (jsonObject != null) {
+                    if (jsonObject != null)
+                    {
 
                         JSONArray jArray = jsonObject.getJSONArray("data");
 
@@ -138,11 +153,12 @@ public class SplashActivity extends BaseActivity {
                         if (sharedpreferences != null && sharedpreferences.contains(notificationKey))
                         {
                             SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putInt(notificationKey,0);
+                            editor.putInt(notificationKey, 0);
                             editor.commit();
                         }
                     }
-                } catch (JSONException e) {
+                } catch (JSONException e)
+                {
                     e.printStackTrace();
                 }
             }
