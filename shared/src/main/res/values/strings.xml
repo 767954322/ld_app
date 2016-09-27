@@ -933,6 +933,9 @@
     <string name="push_notification_audio_message">%1$s发来一段语音</string>
     <string name="push_notification_image_message">%1$s发来一张图片</string>
 
+    <string name="push_notification_unread_message">You have %d new messages.</string>
+
+
     <string name="max_characters_limit_reached">你输入的内容过长，不能超过1000字符</string>
 
     <string name="photopicker_cloud_placeholder_label">请至设计家Web版上传资料</string>

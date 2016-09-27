@@ -362,4 +362,6 @@ public abstract class AdskApplication extends Application {
     public RequestQueue queue;
     private CityDataHelper dataHelper;
     private SignInNotificationReceiver mSignInNotificationReceiver;
+
+    public static final String JPUSH_STORE_KEY = "com.autodesk.easyhome.marketplace.JPUSHSTORE";
 }

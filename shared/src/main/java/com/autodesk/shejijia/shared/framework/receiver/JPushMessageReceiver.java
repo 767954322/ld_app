@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -146,14 +147,36 @@ public class JPushMessageReceiver extends BroadcastReceiver {
             // You can create custom notification UI also if you want
             NotificationManager nm;
             NotificationCompat.Builder builder;
-            int notificationId = (new Random()).nextInt(10000000);
+            int notificationId = getNotificationId(bundle.getString(JPushInterface.EXTRA_MESSAGE));
+            int unreadMessageCount = getUnreadMessagesCount(context,String.valueOf(notificationId));
 
+            //this default notification id is only used when we are not getting member id in
+            //json payload. This case may not hit but just adding this for fallback mechanism
+            boolean isDefaultNotificationId = isDefaultNotificationId(notificationId);
+            String description = null;
+            unreadMessageCount = unreadMessageCount + 1;
+
+            if (unreadMessageCount > 1)
+            {
+                if(isDefaultNotificationId)
+                    description = context.getResources().getString(R.string.push_notification_unread_message,unreadMessageCount);
+                else
+                    contentText = "(" + unreadMessageCount + ")" + " " + contentText;
+            }
+
+            updateUnreadMessagesCount(context,String.valueOf(notificationId),unreadMessageCount);
 
             builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.mipmap.icon_launcher_label)
                     .setContentTitle(title)
                     .setContentText(contentText)
                     .setContentIntent(getNotificationContentIntent(context,bundle));
+
+            if (description != null)
+            {
+                builder.setContentText(description);
+                builder.setSubText(contentText);
+            }
 
             Uri sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.push_notification);
 
@@ -163,8 +186,7 @@ public class JPushMessageReceiver extends BroadcastReceiver {
             builder.setAutoCancel(true);
             nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = builder.build();
-            notification.flags =  Notification.FLAG_ONLY_ALERT_ONCE | Notification.FLAG_AUTO_CANCEL;
-
+            notification.flags =  Notification.FLAG_AUTO_CANCEL;
             nm.notify(notificationId, notification);
         }
     }
@@ -197,13 +219,81 @@ public class JPushMessageReceiver extends BroadcastReceiver {
         Intent notificationIntent = null;
         notificationIntent = new Intent(context, AdskApplication.getInstance().getSplashActivityClass());
         notificationIntent.putExtras(bundle);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         return  contentIntent;
     }
 
+    private int getNotificationId(String jsonPayload)
+    {
+        String notificationKey = null; //same as notification Id eventually
+        int notificationId = DEFAULT_NOTIFICATION_ID;
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonPayload);
+
+            if (jsonObject != null) {
+
+                JSONArray jArray = jsonObject.getJSONArray("data");
+
+                if (jsonObject != null && jArray.length() > 1)
+                    notificationKey = jArray.getString(1); //get member id
+                else if (jsonObject.has("appId"))//give app level id
+                    notificationKey = jsonObject.getString("appId");
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (notificationKey != null &&  !notificationKey.isEmpty())
+        {
+            try
+            {
+                notificationId = Integer.parseInt(notificationKey);
+            }
+            catch (Exception e)
+            {
+                notificationId = DEFAULT_NOTIFICATION_ID; //safer side
+            }
+        }
+
+        return notificationId;
+    }
+
+
+    private int getUnreadMessagesCount(Context context, String messageKey)
+    {
+        int unreadMessageCount = 0;
+
+        SharedPreferences sharedpreferences = context.getSharedPreferences(AdskApplication.JPUSH_STORE_KEY,Context.MODE_PRIVATE);
+
+        if (sharedpreferences != null)
+            unreadMessageCount = sharedpreferences.getInt(messageKey,0);
+
+        return unreadMessageCount;
+    }
+
+
+    private void updateUnreadMessagesCount(Context context, String messageKey, int unreadMessageCount)
+    {
+        SharedPreferences sharedpreferences = context.getSharedPreferences(AdskApplication.JPUSH_STORE_KEY,Context.MODE_PRIVATE);
+
+        if (sharedpreferences != null)
+        {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putInt(messageKey,unreadMessageCount);
+            editor.commit();
+        }
+
+    }
+
+    private boolean isDefaultNotificationId(int notificationId)
+    {
+        return (notificationId == DEFAULT_NOTIFICATION_ID);
+    }
+
+
     private static final String TAG = "JPush";
-    public static final String MESSAGE_RECEIVED_ACTION = "com.autodesk.easyhome.marketplace.MESSAGE_RECEIVED_ACTION";
-    public static final String REGID_RECEIVED_ACTION = "com.autodesk.easyhome.marketplace.REGID_RECEIVED_ACTION";
-    public static final String PAYLOAD = "com.autodesk.easyhome.marketplace.PAYLOAD";
     public static final String REGID = "com.autodesk.easyhome.marketplace.REGID";
+    public static final int DEFAULT_NOTIFICATION_ID = 1001;
 }

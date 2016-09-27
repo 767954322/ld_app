@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.shared.framework.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -9,8 +11,16 @@ import com.autodesk.shejijia.shared.components.common.utility.DataCleanManager;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -39,6 +49,8 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
+
+        clearUnreadCount();
         /**
          * 使用时长（t2为应用在后台运行的时间）
          * t2＜30s，则本次启动的总时长t=t1+t2+t3
@@ -93,5 +105,48 @@ public class SplashActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         ImageUtils.clearCache();
+    }
+
+    private void clearUnreadCount()
+    {
+        Intent intent = this.getIntent();
+
+        if (intent != null)
+        {
+            Bundle bundle = intent.getExtras();
+
+            if (bundle != null && bundle.containsKey(JPushInterface.EXTRA_MESSAGE))
+            {
+                String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+
+                String notificationKey = String.valueOf(JPushMessageReceiver.DEFAULT_NOTIFICATION_ID);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(message);
+
+                    if (jsonObject != null) {
+
+                        JSONArray jArray = jsonObject.getJSONArray("data");
+
+                        if (jsonObject != null && jArray.length() > 1)
+                            notificationKey = jArray.getString(1); //get member id
+                        else if (jsonObject.has("appId"))//give app level id
+                            notificationKey = jsonObject.getString("appId");
+
+                        SharedPreferences sharedpreferences = getSharedPreferences(AdskApplication.JPUSH_STORE_KEY, Context.MODE_PRIVATE);
+
+                        if (sharedpreferences != null && sharedpreferences.contains(notificationKey))
+                        {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putInt(notificationKey,0);
+                            editor.commit();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 }
