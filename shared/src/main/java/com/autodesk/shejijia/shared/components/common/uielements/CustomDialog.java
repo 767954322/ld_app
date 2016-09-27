@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.utility.DensityUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 /**
@@ -95,14 +94,14 @@ public class CustomDialog {
         });
         if (isSure) {
             btnOK.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtil.dip2px(context, 120), DensityUtil.dip2px(context, 48));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(context, 120), UIUtils.dip2px(context, 48));
             btnOK.setLayoutParams(params);
         } else {
             btnOK.setVisibility(View.GONE);
         }
 
         if (isCancel) {
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtil.dip2px(context, 120), DensityUtil.dip2px(context, 48));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(context, 120), UIUtils.dip2px(context, 48));
             btnCancel.setLayoutParams(params);
             btnCancel.setVisibility(View.VISIBLE);
         } else {

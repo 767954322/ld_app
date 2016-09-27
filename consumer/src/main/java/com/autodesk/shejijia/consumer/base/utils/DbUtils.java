@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.utility;
+package com.autodesk.shejijia.consumer.base.utils;
 
 import android.content.Context;
 import android.database.Cursor;
