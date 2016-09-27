@@ -15,7 +15,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
  * created at: 2015/12/3 0003 9:14 .
  * Describe :Cell phone information  .
  */
-public class Device {
+public class DeviceUtils {
 
     private static String mDeviceId = null;
 

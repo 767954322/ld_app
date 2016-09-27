@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.utils.DensityUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 /**
  * @ClassName: BootstrapView.java
@@ -124,9 +124,9 @@ public class SwipeViewPager extends RelativeLayout implements AutoInterface {
         llIndexContainer.removeAllViews();
         for (int i = 0; i < size; i++) {
             ImageView iv = new ImageView(getContext());
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DensityUtil.dip2px(getContext(), 7), DensityUtil.dip2px(getContext(), 7));
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(UIUtils.dip2px(getContext(), 7), UIUtils.dip2px(getContext(), 7));
             if (i != 0) {
-                lp.leftMargin = DensityUtil.dip2px(getContext(), 12);
+                lp.leftMargin = UIUtils.dip2px(getContext(), 12);
             }
             iv.setLayoutParams(lp);
             //设置导航点的背景图片

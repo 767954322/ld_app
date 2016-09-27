@@ -10,7 +10,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
-import com.autodesk.shejijia.shared.components.common.utility.Device;
+import com.autodesk.shejijia.shared.components.common.utility.DeviceUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -67,7 +67,7 @@ public class MPChatHttpManager {
 
     public String getConnectWebSocketUrl(
             Context context) {
-        String deviceID = Device.getDeviceID(context);
+        String deviceID = DeviceUtils.getDeviceID(context);
         String WebSocketUrl = UrlMessagesContants.ConnectWebSocketUrl +
                 "sessionId=" + AdskApplication.getInstance().getMemberEntity().getAcs_x_session() +
                 "&memberId=" + AdskApplication.getInstance().getMemberEntity().getAcs_member_id() +
