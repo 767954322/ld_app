@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.workflow.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,10 +12,14 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFil
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.uielements.gallerywidget.BasePagerAdapter;
+import com.autodesk.shejijia.shared.components.common.uielements.gallerywidget.UrlPagerAdapter;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,10 +29,17 @@ import java.util.ArrayList;
  * @file Wk3DPlanShowActivity.java  .
  * @brief 展示上传的单个交付的页面，含有分享功能等.
  */
-public class Wk3DPlanShowActivity extends NavigationBarActivity {
-    ArrayList<MPFileBean> mMPFileBeens;
-    ArrayList<MPDesignFileBean> mMPDesignFileBeens;
+public class Wk3DPlanShowActivity extends NavigationBarActivity implements BasePagerAdapter.OnItemClickListener {
+
+    ArrayList<MPFileBean> mMPFileBeans = new ArrayList<>();
+    ArrayList<MPDesignFileBean> mMPDesignFileBeans = new ArrayList<>();
     private ViewPager mVpShowPager;
+    List<String> mLinkList = new ArrayList<>();
+    private UrlPagerAdapter mUrlPagerAdapter;
+    private TextView tv_nav_left_textView;
+    private Wk3DPlanListBean wk3DPlanListBean;
+    private String url;
+    private int mPosition;
 
     @Override
     protected int getLayoutResId() {
@@ -48,9 +58,37 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         showState();
-        initView(getTitleData());
+        setCurrentTitle(getTitleData());
+        mUrlPagerAdapter = new UrlPagerAdapter(this, mLinkList);
+        mVpShowPager.setAdapter(new UrlPagerAdapter(this, mLinkList));
+        mVpShowPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+                mPosition = position + 1;
+                String title = "";
+                String positionAll = mMPDesignFileBeans == null ? "" : mMPDesignFileBeans.size() + "";
+                String positionAll_1 = mMPFileBeans == null ? "" : mMPFileBeans.size() + "";
+
+                boolean isPositionAll = StringUtils.isEmpty(positionAll);
+                if (isPositionAll) {
+
+                } else {
+                    title = String.format("%s/%s", mPosition, positionAll);
+
+                }
+                setCurrentTitle(title);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 //    public static void actionStart(Context context, MPDesignFileBean mpDesignFileBean, MPFileBean deliveryFilesEntity, String javaBean, boolean b) {
@@ -93,37 +131,32 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
                 title = wk3DPlanListBean.getDesign_name();
 
             } else if (Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS.equals(string)) {
-                mMPDesignFileBeens = (ArrayList<MPDesignFileBean>) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
-                int position = (int) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._POSITION);
-                if (null != mMPFileBeens && mMPFileBeens.size() > 0 && position <= mMPFileBeens.size()) {
-                    MPDesignFileBean mpFileBean = mMPDesignFileBeens.get(position);
-                    url = mpFileBean.getLink();
-                    title = mpFileBean.getName();
+                mMPDesignFileBeans = (ArrayList<MPDesignFileBean>) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
+                mPosition = (int) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._POSITION);
+
+                for (MPDesignFileBean mpDesignFileBean : mMPDesignFileBeans) {
+                    String link = mpDesignFileBean.getLink();
+                    mLinkList.add(link);
+                }
+
+                if (null != mMPDesignFileBeans && mMPDesignFileBeans.size() > 0 && mPosition <= mMPDesignFileBeans.size()) {
+                    title = String.format("%s/%s", mPosition + 1, mMPDesignFileBeans.size());
                 }
             }
         } else {
-            mMPFileBeens = (ArrayList<MPFileBean>) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
-            int position = (int) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._POSITION);
-            if (null != mMPFileBeens && mMPFileBeens.size() > 0 && position <= mMPFileBeens.size()) {
-                MPFileBean mpFileBean = mMPFileBeens.get(position);
-                url = mpFileBean.getUrl();
-                title = mpFileBean.getFiled_name();
+            mMPFileBeans = (ArrayList<MPFileBean>) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
+            mPosition = (int) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._POSITION);
+
+            for (MPFileBean mpFileBean : mMPFileBeans) {
+                String url = mpFileBean.getUrl();
+                mLinkList.add(url);
+            }
+
+            if (null != mMPFileBeans && mMPFileBeans.size() > 0 && mPosition <= mMPFileBeans.size()) {
+                title = String.format("%s/%s", mPosition + 1, mMPFileBeans.size());
             }
         }
-
-        mVpShowPager.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return 0;
-            }
-
-            @Override
-            public boolean isViewFromObject(View view, Object object) {
-                return false;
-            }
-
-        });
-        String str = url.substring(url.lastIndexOf('.') + 1);
+//        String str = url.substring(url.lastIndexOf('.') + 1);
 //        if (Constant.DocumentTypeKey.TYPE_PNG.equals(str) || Constant.DocumentTypeKey.TYPE_JPG.equals(str)) {
 //            iv_image_show.setVisibility(View.VISIBLE);
 //
@@ -135,13 +168,7 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
         return title;
     }
 
-    /**
-     * 初始化控件
-     *
-     * @param title
-     */
-
-    private void initView(String title) {
+    private void setCurrentTitle(String title) {
         setTitleForNavbar(title);
         tv_nav_left_textView.setText(getResources().getString(R.string.select_finish));
     }
@@ -149,6 +176,8 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
     @Override
     protected void initListener() {
         super.initListener();
+        mUrlPagerAdapter.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -173,13 +202,8 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity {
         }
     }
 
-    private TextView tv_nav_left_textView;
-//    private MPFileHotspotView iv_image_show;
+    @Override
+    public void onItemClick(int currentPosition) {
 
-//    private MPFileBean deliveryFilesEntity;
-
-    private Wk3DPlanListBean wk3DPlanListBean;
-//    private MPDesignFileBean designFileEntity;
-
-    private String url;
+    }
 }
