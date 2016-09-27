@@ -193,6 +193,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
             case R.id.iv_follow_designer://关注
                 if (null != memberEntity) {
+                    member_id = memberEntity.getAcs_member_id();
                     if (null != caseDetailBean && null != caseDetailBean.getDesigner_info()) {
                         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
@@ -207,6 +208,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                         }
                     }
                 } else {
+                    isfromGuanZhu=true;
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
@@ -609,6 +611,12 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     @Override
     protected void onRestart() {
         super.onRestart();
+        if (isfromGuanZhu){
+            getCaseDetailData(case_id);
+        }else {
+            isfromGuanZhu=false;
+        }
+
         showOrHideChatBtn();
     }
 
@@ -713,6 +721,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private String mMemberType;
     private boolean isMemberLike;
     private ImageView ivThumbUp;
+    private boolean isfromGuanZhu=false;
     private ImageView ivHeadThumbUp;
     private String firstCaseLibraryImageUrl;
     private int topPosition;

@@ -70,7 +70,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private String case_id;
     private Case3DDetailBean case3DDetailBean;
     private ArrayList<Case3DDetailBean> case3DDetailList;
-
     private List3DLibraryAdapter mCase3DLibraryAdapter;
     private RelativeLayout rlCaseLibraryHead;
     private View viewHead;
@@ -113,6 +112,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private String mHs_uid;
     private String mNickName;
     private ImageView mIvCertification;
+    private boolean isfromGuanZhu=false;
 
 
     @Override
@@ -236,6 +236,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case R.id.iv_follow_designer://关注
 
                 if (null != memberEntity) {
+                    member_id = memberEntity.getAcs_member_id();
                     if (null != case3DDetailBean && null != case3DDetailBean.getDesigner_info()) {
                         Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
@@ -250,6 +251,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                         }
                     }
                 } else {
+                    isfromGuanZhu=true;
                     AdskApplication.getInstance().doLogin(this);
                 }
                 break;
@@ -735,6 +737,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     @Override
     protected void onRestart() {
         super.onRestart();
+
+        if (isfromGuanZhu){
+            getCase3DDetailData(case_id);
+        }else {
+            isfromGuanZhu=false;
+        }
+
         memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null != memberEntity) {
             getThumbUp(case3DDetailBean.getDesign_asset_id());
