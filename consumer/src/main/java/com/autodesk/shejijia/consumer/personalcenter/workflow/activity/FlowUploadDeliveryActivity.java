@@ -651,6 +651,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         MPServerHttpManager.getInstance().get3DPlanList(needs_id, design_asset_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+
                 try {
                     if (jsonObject != null) {
                         String userInfo = GsonUtil.jsonToString(jsonObject);

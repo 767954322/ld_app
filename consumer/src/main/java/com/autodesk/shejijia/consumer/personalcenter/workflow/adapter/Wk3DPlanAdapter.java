@@ -100,7 +100,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
         final ImageButton mChooseBt = holder.getView(R.id.ibn_choosedbt);
         ToggleButton toggleButton = holder.getView(R.id.toggle_button);
 
-        int position = holder.getPosition();
+        final int position = holder.getPosition();
         if (designFileEntities_3DPlan == null || designFileEntities_3DPlan.size() < 1) {
             return;
         }
@@ -137,7 +137,8 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, Wk3DPlanShowActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mpDesignFileBean);
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, designFileEntities_3DPlan);
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._POSITION, position);
                     bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS);
                     bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
                     intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);

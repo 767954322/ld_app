@@ -356,6 +356,7 @@ public class Constant {
 
         public static final String DESIGN_DELIVERY_LEVEL_ZERO = "DESIGN_DELIVERY";
         public static final String DESIGN_DELIVERY_OTHERS = "MEASURE_DELIVERY";
+        public static final String _POSITION = "item_position";
     }
 
     /**

@@ -27,10 +27,12 @@ import java.util.ArrayList;
  * @brief 交付完成含有分享页面的适配器 .
  */
 public class Wk3DFinishDeliveryAdapter extends CommonAdapter<MPFileBean> {
+    ArrayList<MPFileBean> mMPFileBeans;
 
     public Wk3DFinishDeliveryAdapter(Context context, ArrayList<MPFileBean> deliveryFilesEntities) {
         super(context, deliveryFilesEntities, R.layout.item_gridview_3dplan);
         this.context = context;
+        this.mMPFileBeans = deliveryFilesEntities;
     }
 
     @Override
@@ -58,20 +60,21 @@ public class Wk3DFinishDeliveryAdapter extends CommonAdapter<MPFileBean> {
                 public void onClick(View v) {
                     Intent intent = new Intent(context, Wk3DPlanShowActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, deliveryFilesEntity);
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mMPFileBeans);
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._POSITION, holder.getPosition());
                     bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, false);
                     intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
                     context.startActivity(intent);
                 }
             });
         } else {
-            setReflectIcon(mShowImageView, str,url,name);
+            setReflectIcon(mShowImageView, str, url, name);
         }
 
 
     }
 
-    private void setReflectIcon(ImageView imageView, String str, final String url,final String name) {
+    private void setReflectIcon(ImageView imageView, String str, final String url, final String name) {
         if (Constant.DocumentTypeKey.TYPE_DOCX.equals(str) || Constant.DocumentTypeKey.TYPE_DOC.equals(str)) {
             imageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_world));
             imageView.setOnClickListener(new View.OnClickListener() {
