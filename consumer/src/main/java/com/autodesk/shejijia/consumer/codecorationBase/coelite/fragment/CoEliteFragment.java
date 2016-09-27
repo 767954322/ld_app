@@ -2,8 +2,6 @@ package com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment;
 
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +11,11 @@ import android.widget.LinearLayout;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.activity.IssueEliteDemanActivity;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SelectionAdapter;
+import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.DownloadImageTask;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -72,13 +70,15 @@ public class CoEliteFragment extends BaseFragment implements ViewPager.OnPageCha
         int size = 1;
         if (pictures != null && pictures.length > 0) {
             size = pictures.length;
-            llBackground.setBackgroundResource(R.drawable.bg_ico3x);
+            new DownloadImageTask(llBackground).execute(backgroundURL);
         }
 
         addImageViewtips(size);
         vpSelection.setAdapter(new SelectionAdapter(getActivity(), pictures));
         vpSelection.setOnPageChangeListener(this);
     }
+
+
 
     /**
      * 将点点加入到ViewGroup中
