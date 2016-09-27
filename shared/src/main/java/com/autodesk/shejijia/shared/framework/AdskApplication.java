@@ -107,13 +107,13 @@ public abstract class AdskApplication extends Application {
             @Override
             public void onActivityResumed(Activity activity) {
                 //if (activity instanceof BaseChatRoomActivity)
-                    mIsChatRoomActivityInForeground = true;
+                mIsChatRoomActivityInForeground = true;
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
                 //if (activity instanceof BaseChatRoomActivity)
-                    mIsChatRoomActivityInForeground = false;
+                mIsChatRoomActivityInForeground = false;
             }
 
             @Override
@@ -172,8 +172,7 @@ public abstract class AdskApplication extends Application {
     }
 
 
-    public Class<?> getSplashActivityClass()
-    {
+    public Class<?> getSplashActivityClass() {
         return null;
     }
 
@@ -184,6 +183,9 @@ public abstract class AdskApplication extends Application {
     }
 
     public static void doLogout(Context ctx) {
+        //登陆状态，开启推送
+        // fix logout push  不确定有没有问题
+        JPushInterface.stopPush(AdskApplication.getInstance());
         Intent intent = new Intent();
         intent.setAction(BroadCastInfo.USER_DID_LOGOUT);
         ctx.sendBroadcast(intent);
@@ -298,10 +300,11 @@ public abstract class AdskApplication extends Application {
 
     /**
      * 用于处理登录后数据的操作
+     *
      * @param entity
      */
 
-    public  void saveSignInInfo(MemberEntity entity){
+    public void saveSignInInfo(MemberEntity entity) {
         String ZERO = "0";
         /// 为不符合规则的acs_member_id 补足位数 .
         String acs_member_id = entity.getAcs_member_id();
@@ -315,11 +318,11 @@ public abstract class AdskApplication extends Application {
     }
 
 
-
     /**
      * 全局的广播接收者,用于处理登录后数据的操作
      */
     private class SignInNotificationReceiver extends BroadcastReceiver {//此广播会有延时，在进入界面后会有获取不到登陆人信息的的情况
+
         @Override
         public void onReceive(Context context, Intent intent) {
 
