@@ -611,7 +611,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     @Override
     protected void onRestart() {
         super.onRestart();
-        if (isfromGuanZhu){
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (isfromGuanZhu&&null!=memberEntity){
             getCaseDetailData(case_id);
         }else {
             isfromGuanZhu=false;

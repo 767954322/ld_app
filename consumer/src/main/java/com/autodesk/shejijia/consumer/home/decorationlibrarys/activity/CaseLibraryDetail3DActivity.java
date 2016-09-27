@@ -737,14 +737,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     @Override
     protected void onRestart() {
         super.onRestart();
-
-        if (isfromGuanZhu){
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (isfromGuanZhu&&null!=memberEntity){
             getCase3DDetailData(case_id);
         }else {
             isfromGuanZhu=false;
         }
 
-        memberEntity = AdskApplication.getInstance().getMemberEntity();
+
         if (null != memberEntity) {
             getThumbUp(case3DDetailBean.getDesign_asset_id());
         }
