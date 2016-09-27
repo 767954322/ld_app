@@ -1,10 +1,12 @@
-package com.autodesk.shejijia.shared.components.common.utility;
+package com.autodesk.shejijia.consumer.base.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+
+import com.autodesk.shejijia.shared.components.common.utility.Assert;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

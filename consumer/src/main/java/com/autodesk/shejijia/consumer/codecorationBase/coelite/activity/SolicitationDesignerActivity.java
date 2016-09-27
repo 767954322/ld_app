@@ -25,7 +25,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
+import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
