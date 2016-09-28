@@ -175,16 +175,16 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
         MPServerHttpManager.getInstance().deleteMessage(mMemberEntity.getAcs_member_id(), messagesBean.getMessage_id(), new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(mContext, "删除失败了", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "删除失败,请重新删除", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 //请求成功后删除本地数据
+                --offset;
                 mListView.hiddenRight(convertView);
                 mCasesEntities.remove(position);
                 messageCenterAdapter.notifyDataSetChanged();
-                Toast.makeText(mContext, "删除成功了", Toast.LENGTH_SHORT).show();
             }
         });
 
