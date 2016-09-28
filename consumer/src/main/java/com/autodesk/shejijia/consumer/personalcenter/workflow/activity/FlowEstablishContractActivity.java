@@ -648,7 +648,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 Log.e("VolleyError body---->", new String(htmlBodyBytes), volleyError);
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
+                UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(Object o) {
+                        finish();
+                    }
+                });
                 UIAlert.show();
             }
         };
