@@ -17,7 +17,7 @@
         <include layout="@layout/view_refresh_head" />
 
 
-        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
+        <com.autodesk.shejijia.consumer.home.widget.SwipePullListView
             android:id="@+id/message_center_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,5 +30,35 @@
         <include layout="@layout/view_load_more" />
     </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_msg_delete_msgs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/size_17"
+        android:visibility="gone"
+        android:background="#eef1f4">
+
+        <CheckBox
+            android:id="@+id/cb_msg_delete_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_18"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:text="全选"/>
+
+
+        <TextView
+            android:id="@+id/tv_msg_delete_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_18"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:text="删除"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

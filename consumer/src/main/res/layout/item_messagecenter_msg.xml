@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#eef1f4">
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eef1f4"
+    android:orientation="horizontal">
 
     <RelativeLayout
+        android:id="@+id/item_relayout_left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/font_20"
         android:background="@color/white">
 
+        <CheckBox
+            android:id="@+id/item_msg_checkout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            />
+
         <RelativeLayout
             android:id="@+id/ll_msg_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_toRightOf="@+id/item_msg_checkout">
 
             <TextView
                 android:id="@+id/tv_msg_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/font_25"
+                android:layout_marginLeft="@dimen/font_15"
                 android:layout_marginRight="@dimen/font_35"
                 android:layout_marginTop="@dimen/font_10"
                 android:text="@string/item_messagecenter_tital"
                 android:textSize="@dimen/size_14"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_msg_date"
@@ -35,19 +44,19 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/size_20"
                 android:layout_marginTop="@dimen/font_10"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
         </RelativeLayout>
 
         <TextView
-            android:layout_marginTop="@dimen/size_2"
-            android:layout_marginLeft="@dimen/font_25"
-            android:layout_marginRight="@dimen/size_20"
             android:id="@+id/tv_msg_tag"
-            android:layout_below="@id/ll_msg_tag"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
-            android:background="@color/bg_d7"/>
+            android:layout_below="@id/ll_msg_tag"
+            android:layout_marginLeft="@dimen/font_25"
+            android:layout_marginRight="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_2"
+            android:background="@color/bg_d7" />
 
         <TextView
             android:id="@+id/tv_msg_content"
@@ -55,13 +64,34 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_msg_tag"
             android:layout_marginBottom="@dimen/font_15"
-            android:layout_marginLeft="@dimen/font_25"
+            android:layout_marginLeft="@dimen/font_15"
             android:layout_marginRight="@dimen/font_35"
             android:layout_marginTop="@dimen/font_10"
             android:text="内容"
-            android:textSize="@dimen/size_14"/>
+            android:textSize="@dimen/size_14"
+            android:layout_toRightOf="@+id/item_msg_checkout"/>
 
 
     </RelativeLayout>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/item_relayout_right"
+        android:layout_width="@dimen/size_20"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/font_20"
+        android:background="@android:color/holo_red_dark">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_delete"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_17"
+            android:textStyle="bold"
+            android:text="删除"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
