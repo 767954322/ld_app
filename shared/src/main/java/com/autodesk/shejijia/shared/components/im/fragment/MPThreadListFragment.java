@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.shared.components.im.fragment;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -72,6 +74,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
+        clearAllPushNotificationsFromStatusbar();
         refresh();
     }
 
@@ -92,6 +95,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
 
     public void onFragmentShown() {
+        clearAllPushNotificationsFromStatusbar();
         refresh();
     }
 
@@ -283,6 +287,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
     private void refresh() {
+
         if (mMemberId != null)
             getMemberThreadsForOffset(0, LIMIT);
     }
@@ -293,6 +298,23 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(BroadCastInfo.RECEVIER_RECEIVERMESSAGE))
                 onNewMessageReceived(intent);
+        }
+    }
+
+    private void clearAllPushNotificationsFromStatusbar() {
+
+        NotificationManager nm = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (nm != null)
+            nm.cancelAll();
+
+        SharedPreferences sharedpreferences =  getActivity().getSharedPreferences(AdskApplication.JPUSH_STORE_KEY, Context.MODE_PRIVATE);
+
+        if (sharedpreferences != null)
+        {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.clear();
+            editor.commit();
         }
     }
 
