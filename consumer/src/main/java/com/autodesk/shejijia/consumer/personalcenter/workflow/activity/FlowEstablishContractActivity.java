@@ -159,7 +159,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             UpdateUIcontractContentWebView();
         }
         UpdateUIActionLayout();
-
     }
 
     private void UpdateUIlayoutContractContent() {
@@ -168,6 +167,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_designer_phone.setText(designer_mobile);
         tvc_designer_name.setText(designer_name);
         tvc_designer_email.setText(designer_mail);
+        /* 填充消费者个人信息 */
+        tvc_consumer_name.setText(requirement.getCommunity_name());
+        tvc_consumer_phone.setText(requirement.getConsumer_mobile());
 
         if (bShowModeContentWebView) {
             ll_contract_input_form_layout.setVisibility(View.GONE);
@@ -464,6 +466,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             }
         });
+
         UpdateUIlayoutContract();
     }
 
@@ -564,8 +567,8 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         }
         if (resultCode == ContractDetail || resultCode == ContractForFirst) {
 
-            if (data!=null)
-                isAgree = data.getBooleanExtra("CONSUMER_ACTION_AGREE",false);
+            if (data != null)
+                isAgree = data.getBooleanExtra("CONSUMER_ACTION_AGREE", false);
 
             UpdateUIlayoutContract();
             fetchWorkFlowData();
