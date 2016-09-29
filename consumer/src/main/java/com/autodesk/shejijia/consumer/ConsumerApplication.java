@@ -1,8 +1,5 @@
 package com.autodesk.shejijia.consumer;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Handler;
 
 import com.android.volley.VolleyError;
@@ -20,10 +17,8 @@ import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
-import com.autodesk.shejijia.shared.framework.receiver.SignInNotificationReceiver;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -31,7 +26,9 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 
-public class ConsumerApplication extends AdskApplication {
+import cn.jpush.android.api.JPushInterface;
+
+public class ConsumerApplication extends AdskApplication implements RegisterOrLoginActivity.LoginFinishListener{
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,6 +36,7 @@ public class ConsumerApplication extends AdskApplication {
         mMainThreadId = android.os.Process.myTid();
 
         reqisterWXAppId();
+
 
     }
 
@@ -55,42 +53,48 @@ public class ConsumerApplication extends AdskApplication {
         dataHelper = CityDataHelper.getInstance(this);
         InputStream in = this.getResources().openRawResource(com.autodesk.shejijia.shared.R.raw.province);
         dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constant.UerInfoKey.USER_INFO);
+        if (entity != null){
+            LoginIn(entity);
+        }
     }
 
     @Override
     public void initListener() {
         super.initListener();
-        mSignInNotificationReceiver = new SignInNotificationReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-        filter.addAction(BroadCastInfo.USER_DID_LOGOUT);
-        filter.addAction(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
-        registerReceiver(mSignInNotificationReceiver, filter);
+
     }
 
+
     @Override
-    public void onLoginSuccess(MemberEntity entity) {
-        super.onLoginSuccess(entity);
+    public void LoginIn(MemberEntity entity) {
+        LogUtils.e("login-entity",entity.toString());
+        //登陆状态，开启推送
+        JPushInterface.resumePush(this);
+
+        openChatConnection();
         //注册推送回调
         registerForPushNotification();
         /// 将获取到底数据设置为全局可以访问.
         setMemberEntity(entity);
         /// 保存获取到的数据 .
         SharedPreferencesUtils.saveObject(getApplicationContext(), Constant.UerInfoKey.USER_INFO, entity);
-        //发送登录成功的广播
-        Intent loginIntent = new Intent(BroadCastInfo.USER_DID_LOGIN);
-        sendBroadcast(loginIntent);
     }
 
     @Override
-    public void onLogout(){
-        super.onLogout();
+    public void LoginOut() {
+        LogUtils.e("login-out","login out");
+        //退出登陆状态，关闭推送
+        JPushInterface.stopPush(this);
+
+        closeChatConnection();
         unRegisterForPushNotification();
         setMemberEntity(null);
         CommonUtils.clearCookie(this);
         CommonUtils.clearAppCache(this);
         SharedPreferencesUtils.clear(AdskApplication.getInstance(), SharedPreferencesUtils.CONFIG);
     }
+
 
     private void registerForPushNotification() {
         String regId = SharedPreferencesUtils.readString(JPushMessageReceiver.REGID);
@@ -196,6 +200,5 @@ public class ConsumerApplication extends AdskApplication {
     /// MainThread Id .
     private static int mMainThreadId;
     private CityDataHelper dataHelper;
-    private SignInNotificationReceiver mSignInNotificationReceiver;
 
 }

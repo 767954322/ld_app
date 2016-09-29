@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -47,6 +48,8 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
         rl_personal_b_about = (RelativeLayout) findViewById(R.id.rl_personal_b_about_designer);
         bt_consumer_exit = (TextView) findViewById(R.id.bt_consumer_exit);
         tv_cache_size = (TextView) findViewById(R.id.tv_cache_size);
+        //获取loginFinishListener实例
+        loginFinishListener = (RegisterOrLoginActivity.LoginFinishListener)AdskApplication.getInstance();
     }
 
     @Override
@@ -97,7 +100,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
             intentLogout.putExtra(Constant.LOGOUT, Constant.LOGOUT);
             setResult(RESULT_OK, intentLogout);
 
-            LoginUtils.doLogout(this);
+            loginFinishListener.LoginOut();
             finish();
 
         }
@@ -196,4 +199,6 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
     private Intent intentLogout;
     private String cacheSize, filesSize, externalSize;
     private File cacheDir, filesDir, externalCacheDir;
+    //loginListener
+    private RegisterOrLoginActivity.LoginFinishListener loginFinishListener;
 }
