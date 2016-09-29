@@ -824,7 +824,6 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 jsonString = GsonUtil.jsonToString(jsonObject);
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 memberEntity.setNick_name(nick_name);
-                AdskApplication.getInstance().saveSignInInfo(memberEntity);
                 ConsumerApplication.setMemberEntity(memberEntity);
                 CustomProgress.cancelDialog();
             }

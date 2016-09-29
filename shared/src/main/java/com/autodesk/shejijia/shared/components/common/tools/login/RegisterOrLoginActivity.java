@@ -44,6 +44,16 @@ import java.net.URLDecoder;
  */
 public class RegisterOrLoginActivity extends BaseActivity implements View.OnClickListener {
 
+    public interface LoginFinishListener{
+        void LoginIn(MemberEntity entity);
+        void LoginOut();
+    }
+
+    public void setLoginFinishListener(LoginFinishListener loginFinishListener){
+        this.loginFinishListener = loginFinishListener;
+    }
+
+    private LoginFinishListener loginFinishListener;
     private boolean isFirst = true;
 
     @Override
@@ -56,6 +66,8 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         mWebView = (WebView) findViewById(R.id.webview_login);
         mTvFinishWebView = (TextView) findViewById(R.id.tv_finish_webview);
         mLlWebViewBackup = (LinearLayout) findViewById(R.id.ll_webview_backup);
+        //初始化loginFinishListener
+        loginFinishListener = (LoginFinishListener)AdskApplication.getInstance();
     }
 
     @Override
@@ -143,13 +155,14 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
 
                 String member_type = entity.getMember_type();
                 if (!TextUtils.isEmpty(member_type) && ( member_type.equals("designer") || member_type.equals("member"))){//登陆账号为消费者或者设计师
-                    AdskApplication.getInstance().saveSignInInfo(entity);
+//                    AdskApplication.getInstance().saveSignInInfo(entity);
                     // 解决切换帐号的时候 我的项目Fragment 不刷新问题
                     SharedPreferencesUtils.writeBoolean("islogin", true);
 //                /// 登录成功后,发送广播 .
-                    Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+              /*      Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
                     intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
-                    sendBroadcast(intent);
+                    sendBroadcast(intent);*/
+                    loginFinishListener.LoginIn(entity);
                     finish();
                 }else {
                     runOnUiThread(new Runnable() {
@@ -159,7 +172,8 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                                     AlertView.Style.Alert, new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(Object object, int position) {
-                                    LoginUtils.doLogout(RegisterOrLoginActivity.this);
+//                                    LoginUtils.doLogout(RegisterOrLoginActivity.this);
+                                    loginFinishListener.LoginOut();
                                     finish();
                                 }
                             }).show();
