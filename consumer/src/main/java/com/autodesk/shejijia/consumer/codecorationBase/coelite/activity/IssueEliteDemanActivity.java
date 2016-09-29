@@ -131,6 +131,9 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     private void onFocusChangeForArea(boolean hasFocus) {
         if (!hasFocus) {
             String area = etIssueDemandArea.getText().toString().trim();
+            if(TextUtils.isEmpty(area)){
+                return;
+            }
             area = String.format("%.2f", Double.valueOf(area));
             etIssueDemandArea.setText(area);
         }
