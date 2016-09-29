@@ -12,21 +12,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.im.constants.IMChatInfo;
 import com.autodesk.shejijia.shared.components.im.constants.MPChatConstants;
 import com.autodesk.shejijia.shared.components.common.utility.MPAudioManager;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.io.File;
 
 /**
- * @author  mishraa .
+ * @author mishraa .
  * @version 1.0 .
- * @date    16-6-18
- * @file    ChatEventHandler.java  .
- * @brief    .
+ * @date 16-6-18
+ * @file ChatEventHandler.java  .
+ * @brief .
  */
 public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View.OnClickListener {
     public interface ChatEventHandlerInterface {
@@ -130,25 +133,20 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.chat_send_message_button)
-        {
+        if (i == R.id.chat_send_message_button) {
             onSendTextClicked();
 
-        }
-        else if (i == R.id.voice_imageview)
-        {
+        } else if (i == R.id.voice_imageview) {
             onVoiceClicked();
 
-        }
-        else if (i == R.id.chat_otherfeature_imageview)
-        {
+        } else if (i == R.id.chat_otherfeature_imageview) {
             mEventHandleInterface.customButtonDidClicked();
 
         }
     }
 
 
-    public void enableUserInteraction () {
+    public void enableUserInteraction() {
         if (mIsInVoiceRecordMode)
             setVoiceModeEnabled(true);
         else
@@ -160,7 +158,7 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
     }
 
 
-    public void disableUserInteraction () {
+    public void disableUserInteraction() {
         setVoiceModeEnabled(false);
         setTextModeEnabled(false);
 
@@ -182,6 +180,11 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
 
 
     private void onSendTextClicked() {
+        //fixme fix bug DP-6147  发送增加网络判断
+        if (!NetWorkHelper.isNetConnected(AdskApplication.getInstance())) {
+            Toast.makeText(mContext, R.string.net_error, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String info_Msg = mChatTextView.getText().toString();
 
@@ -298,8 +301,7 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
         alertDialog.show();
     }
 
-    private void setVoiceModeEnabled(boolean enabled)
-    {
+    private void setVoiceModeEnabled(boolean enabled) {
         if (enabled)
             mRecordTextView.setVisibility(View.VISIBLE);
         else
@@ -308,8 +310,7 @@ public class ChatEventHandler implements View.OnTouchListener, TextWatcher, View
         mRecordTextView.setEnabled(enabled);
     }
 
-    private void setTextModeEnabled(boolean enabled)
-    {
+    private void setTextModeEnabled(boolean enabled) {
         mChatTextView.setEnabled(enabled);
     }
 
