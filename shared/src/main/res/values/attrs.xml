@@ -68,10 +68,10 @@
     </string-array>
 
     <string-array name="area">
-        <item>60m²以下</item>
-        <item>60-80m²</item>
-        <item>80-120m²</item>
-        <item>120m²以上</item>
+        <item>60㎡以下</item>
+        <item>60-80㎡</item>
+        <item>80-120㎡</item>
+        <item>120㎡以上</item>
     </string-array>
 
     <string-array name="design_budget">

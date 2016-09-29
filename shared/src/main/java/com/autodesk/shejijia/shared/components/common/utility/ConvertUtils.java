@@ -2,8 +2,6 @@ package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.text.TextUtils;
 
-import com.autodesk.shejijia.shared.components.common.utility.ObjectUtils;
-
 import java.util.Map;
 
 /**
@@ -66,4 +64,21 @@ public class ConvertUtils {
         }
         return (K) value;
     }
+
+
+    public static <K, V> K getNewKeyByValue(Map<K, V> map, V value) {
+        if (isEmpty(map)) {
+            return null;
+        }
+
+        for(Map.Entry entry:map.entrySet()){
+            if (value.equals(entry.getValue())){
+                return (K) entry.getKey();
+            }
+        }
+        return (K) value;
+    }
+
+
+
 }

@@ -75,6 +75,12 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         mAreaData.addAll(filledData(getResources().getStringArray(R.array.all)));
         mAreaData.addAll(filledData(getResources().getStringArray(R.array.area)));
 
+        mHAdapter = new FiltrateAdapter(FiltrateActivity.this, mHouseData);
+        mAAdapter = new FiltrateAdapter(FiltrateActivity.this, mAreaData);
+        hGridView.setAdapter(mHAdapter);
+        aGridView.setAdapter(mAAdapter);
+        setSelection(mHAdapter, mHouseIndex);
+        setSelection(mAAdapter, mAreaIndex);
 
         getDesignerStyles();
 
@@ -125,8 +131,8 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         mLivingRoom = mLivingRoom.equals(all) ? BLANK : mLivingRoom;
 
         mArea = mAreaData.get(mAreaIndex);
-        mArea = ConvertUtils.getKeyByValue(area, mArea);
-        mArea = mArea.equals(all) ? BLANK : mArea;
+        String mmmArea = ConvertUtils.getNewKeyByValue(area, mArea);
+        mArea = mArea.equals(all) ? BLANK : mmmArea;
 
         mStyle = mStyleData.get(mStyleIndex);
         mStyle = ConvertUtils.getKeyByValue(style, mStyle);
@@ -187,14 +193,9 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
                 }
 
                 mSAdapter = new FiltrateAdapter(FiltrateActivity.this, mStyleData);
-                mHAdapter = new FiltrateAdapter(FiltrateActivity.this, mHouseData);
-                mAAdapter = new FiltrateAdapter(FiltrateActivity.this, mAreaData);
                 sGridView.setAdapter(mSAdapter);
-                hGridView.setAdapter(mHAdapter);
-                aGridView.setAdapter(mAAdapter);
                 setSelection(mSAdapter, mStyleIndex);
-                setSelection(mHAdapter, mHouseIndex);
-                setSelection(mAAdapter, mAreaIndex);
+
             }
 
             @Override
