@@ -193,7 +193,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
                 maIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 maIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                startActivity(maIntent);
+                startActivityForResult(maIntent,10001);
 
                 break;
 
@@ -574,6 +574,16 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.onBackPressed();
         refreshWkFlowState();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            finish();
+        }
+
+    }
+
     private View footerView,headerView;
     private TextView navTitleTextView;
     private ListViewFinal mListView;
