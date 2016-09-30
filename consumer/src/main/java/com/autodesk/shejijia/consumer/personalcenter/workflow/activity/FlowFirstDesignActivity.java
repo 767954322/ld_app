@@ -175,10 +175,13 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
                         return;
                     String order_line_no = order.getOrder_line_no();
                     String order_no = order.getOrder_no();
-                    if (isLock) {
+
+//                    if (isLock) {
                         getAliPayDetailInfo(order_no, order_line_no);
-                        isLock = false;
-                    }
+//                        isLock = false;
+//                    } else {
+
+//                    }
                 }
             });
         }
@@ -243,6 +246,15 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);
+                new AlertView(UIUtils.getString(R.string.tip), "暂时不能支付，请稍后重试", null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowFirstDesignActivity.this,
+                        AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object o, int position) {
+                        if (position != AlertView.CANCELPOSITION) {
+                            finish();
+                        }
+                    }
+                }).setCancelable(true).show();
             }
         });
     }
@@ -250,24 +262,27 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     AliPayService.AliPayActionStatus AliCallBack = new AliPayService.AliPayActionStatus() {
 
         public void onOK() {
-            openAlertView(UIUtils.getString(R.string.pay_success),0);
+            openAlertView(UIUtils.getString(R.string.pay_success), 0);
         }
 
         public void onFail() {
-            openAlertView(UIUtils.getString(R.string.pay_failed),1);
+            openAlertView(UIUtils.getString(R.string.pay_failed), 1);
         }
     };
-    private void openAlertView(String content,final int isSuccess){
+
+    private void openAlertView(String content, final int isSuccess) {
         new AlertView(UIUtils.getString(R.string.tip), content, null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, this,
                 AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
-                if(position == 0 && isSuccess == 0){
+                if (position == 0 && isSuccess == 0) {
                     setResult(FirstForContract);
                     finish();
-                }else if(position == 0 && isSuccess == 1){
-                    isLock = true;
-                }else{}
+                }
+//                else if (position == 0 && isSuccess == 1) {
+//                    isLock = true;
+//                } else {
+//                }
             }
         }).show();
     }
@@ -285,5 +300,6 @@ public class FlowFirstDesignActivity extends BaseWorkFlowActivity {
     private int FirstForContract = 1; // 首款调到设计合同
 
     protected DesignerInfoDetails designerInfoList;
-    private boolean isLock = true; // 是否锁定按键
+//    private boolean isLock = true; // 是否锁定按键
+    private AlertView UIAlert;
 }
