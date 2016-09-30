@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.WkFlowStateAdapter;
@@ -101,6 +102,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             ll_piv = (LinearLayout) headerView.findViewById(R.id.ll_piv);
             tvDesignerName = (TextView)headerView.findViewById(R.id.tv_designer_name);
             ibFlowChart.setOnClickListener(this);
+            polygonImageView.setOnClickListener(this);
         }
     }
 
@@ -147,6 +149,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.piv_consumer_order_photo_01:
+                Intent mintent = new Intent(context, SeekDesignerDetailActivity.class);
+                mintent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
+                mintent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
+                context.startActivity(mintent);
+                break;
             case R.id.ib_flow_chart:
 
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
