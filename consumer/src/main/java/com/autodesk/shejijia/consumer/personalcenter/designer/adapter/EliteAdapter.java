@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPMeasureFormBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -68,10 +69,10 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
 
         final String wk_template_id = orderListEntity.getWk_template_id();
         final List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
-
         if (bidders != null && bidders.size() > 0) {
+            OrderCommonEntity.OrderListEntity.BiddersBean bidder = bidders.get(0);
             String wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
-            holder.setText(R.id.tv_decoration_state, MPWkFlowManager.getWkSubNodeName(context, wk_template_id, wk_cur_sub_node_id));
+            holder.setText(R.id.tv_decoration_state, MPWkFlowManager.getWkSubNodeName(context, wk_template_id, wk_cur_sub_node_id,bidder.getDelivery()));
         } else {
             holder.setText(R.id.tv_decoration_state, UIUtils.getString(R.string.str_others));
         }

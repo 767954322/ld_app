@@ -58,6 +58,7 @@
     <string name="release_to_refresh_lastTime">最后更新：今天</string>
     <string name="im_toast_nomore_data">没有数据了</string>
     <string name="reservation">立即预约</string>
+    <string name="fish">订单结束&#160;&#160;&#160;&#160;已上传量房交付物</string>
 
     <!--AutonyAttestationActivity-->
     <string name="autonym_no_self_identity">本人持证正面照上传成功</string>

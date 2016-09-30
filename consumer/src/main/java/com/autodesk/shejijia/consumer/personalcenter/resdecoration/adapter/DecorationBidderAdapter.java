@@ -104,7 +104,7 @@ public class DecorationBidderAdapter extends CommonAdapter<DecorationBiddersBean
             holder.setVisible(R.id.ll_bidder_after_biding, false);
         }
 
-        holder.setText(R.id.tv_workflow_state, MPWkFlowManager.getWkSubNodeName(mActivity, mWkTempleId, wk_cur_sub_node_id));
+        holder.setText(R.id.tv_workflow_state, MPWkFlowManager.getWkSubNodeName(mActivity, mWkTempleId, wk_cur_sub_node_id,biddersBean.getDelivery()));
 
         final String designer_thread_id = biddersBean.getDesign_thread_id();
         final String userName = biddersBean.getUser_name();

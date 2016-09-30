@@ -350,7 +350,7 @@ public class MPMeasureFormBean implements Serializable {
         private String design_thread_id;
 
         private PaymentBean payment;
-        private DeliveryBean delivery;
+        private MPDeliveryBean delivery;
         private List<WkStepsBean> wk_steps;
         private List<MPDesignContractBean> design_contract;
         private List<WkNextPossibleSubNodeIdsBean> wk_next_possible_sub_node_ids;
@@ -517,13 +517,20 @@ public class MPMeasureFormBean implements Serializable {
             this.design_thread_id = design_thread_id;
         }
 
-        public DeliveryBean getDelivery() {
+        public MPDeliveryBean getDelivery() {
             return delivery;
         }
 
-        public void setDelivery(DeliveryBean delivery) {
+        public void setDelivery(MPDeliveryBean delivery) {
             this.delivery = delivery;
         }
+        //        public DeliveryBean getDelivery() {
+//            return delivery;
+//        }
+//
+//        public void setDelivery(DeliveryBean delivery) {
+//            this.delivery = delivery;
+//        }
 
         public List<WkStepsBean> getWk_steps() {
             return wk_steps;
@@ -691,36 +698,36 @@ public class MPMeasureFormBean implements Serializable {
                 this.total_fee = total_fee;
             }
         }
-
-        public static class DeliveryBean implements Serializable {
-            private int type;
-            private String designer_id;
-            private List<MPFileBean> files;
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
-            }
-
-            public String getDesigner_id() {
-                return designer_id;
-            }
-
-            public void setDesigner_id(String designer_id) {
-                this.designer_id = designer_id;
-            }
-
-            public List<MPFileBean> getFiles() {
-                return files;
-            }
-
-            public void setFiles(List<MPFileBean> files) {
-                this.files = files;
-            }
-        }
+//
+//        public static class DeliveryBean implements Serializable {
+//            private int type;
+//            private String designer_id;
+//            private List<MPFileBean> files;
+//
+//            public int getType() {
+//                return type;
+//            }
+//
+//            public void setType(int type) {
+//                this.type = type;
+//            }
+//
+//            public String getDesigner_id() {
+//                return designer_id;
+//            }
+//
+//            public void setDesigner_id(String designer_id) {
+//                this.designer_id = designer_id;
+//            }
+//
+//            public List<MPFileBean> getFiles() {
+//                return files;
+//            }
+//
+//            public void setFiles(List<MPFileBean> files) {
+//                this.files = files;
+//            }
+//        }
 
         public static class OrdersBean implements Serializable {
             private String order_line_no;

@@ -63,7 +63,7 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         int  sub_node_id =Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
 
         if(sub_node_id != MPWkFlowManager.START_NODE){
-            String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(context, MPWkFlowManager.PAYMENT_OF_FIRST_FEE, wk_cur_sub_node_id);
+            String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(context, MPWkFlowManager.PAYMENT_OF_FIRST_FEE, wk_cur_sub_node_id,biddersBean.getDelivery());
             holder.setText(R.id.tv_measure_invite,wkSubNodeName);
         }else{
             holder.setText(R.id.tv_measure_invite,UIUtils.getString(R.string.optional_measure));

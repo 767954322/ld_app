@@ -230,6 +230,7 @@ public class OrderCommonFragment extends BaseFragment {
             if (bidders != null && bidders.size() > 0) {
                 biddersBean = bidders.get(0);
 
+
                 String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
                 String avatar = orderListEntity.getAvatar();
                 avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
@@ -237,7 +238,7 @@ public class OrderCommonFragment extends BaseFragment {
                 ImageUtils.displayAvatarImage(avatar, polygonImageView);
 
                 holder.setText(R.id.tv_designer_order_state,
-                        MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id));
+                        MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id,biddersBean.getDelivery()));
 
             } else {
                 holder.setText(R.id.tv_designer_order_state, UIUtils.getString(R.string.no_data));

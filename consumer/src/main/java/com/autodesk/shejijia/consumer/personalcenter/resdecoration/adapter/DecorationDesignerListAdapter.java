@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.Decora
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploadDeliveryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -55,10 +56,11 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         final String user_name = bidder.getUser_name();
         final String avatarUrl = bidder.getAvatar();
         final String mThread_id = bidder.getDesign_thread_id();
+        MPDeliveryBean mpDeliveryBean = bidder.getDelivery();
 
         String wk_cur_sub_node_id = bidder.getWk_cur_sub_node_id();
 
-        String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, wk_template_id, wk_cur_sub_node_id);
+        String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, wk_template_id, wk_cur_sub_node_id,mpDeliveryBean);
         holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
 
         boolean falg = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63;
