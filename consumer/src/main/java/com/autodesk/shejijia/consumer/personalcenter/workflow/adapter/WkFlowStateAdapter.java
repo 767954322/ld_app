@@ -15,7 +15,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBea
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkflowInfoBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.List;

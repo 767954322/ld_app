@@ -52,7 +52,7 @@
                             android:layout_marginTop="@dimen/size_20"
                             >
 
-                            <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+                            <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
                                 android:id="@+id/piv_seek_designer_head"
                                 android:layout_width="@dimen/size_74"
                                 android:layout_height="@dimen/size_74"

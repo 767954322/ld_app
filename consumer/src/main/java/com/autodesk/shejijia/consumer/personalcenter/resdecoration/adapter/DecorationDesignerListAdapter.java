@@ -13,7 +13,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploa
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;

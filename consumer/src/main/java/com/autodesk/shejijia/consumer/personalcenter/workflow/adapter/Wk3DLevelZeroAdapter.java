@@ -17,7 +17,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.Wk3DPlanS
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.DeliverySelector;
+import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
 
 import java.util.ArrayList;
 

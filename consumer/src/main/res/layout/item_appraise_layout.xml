@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
 
-        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+        <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
             android:id="@+id/piv_designer_avatar"
             android:layout_width="@dimen/size_44"
             android:layout_height="@dimen/size_44"
