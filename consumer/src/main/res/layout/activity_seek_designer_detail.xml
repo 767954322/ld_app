@@ -269,7 +269,7 @@
                         </LinearLayout>
 
 
-                        <com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer
+                        <com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer
                             android:id="@+id/choose_point"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -397,7 +397,7 @@
         </LinearLayout>
 
 
-        <com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer
+        <com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer
             android:id="@+id/choose_point_replace"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

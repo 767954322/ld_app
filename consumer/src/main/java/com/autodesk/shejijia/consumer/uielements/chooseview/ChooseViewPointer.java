@@ -1,8 +1,7 @@
-package com.autodesk.shejijia.shared.components.common.uielements.chooseview;
+package com.autodesk.shejijia.consumer.uielements.chooseview;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
