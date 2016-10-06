@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.utility.Assert;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
