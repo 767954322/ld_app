@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.uielements.alertview;
+package com.autodesk.shejijia.shared.components.common.uielements.alertview;
 
 import android.view.Gravity;
 
