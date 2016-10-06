@@ -1,11 +1,10 @@
-package com.autodesk.shejijia.shared.components.common.uielements;
+package com.autodesk.shejijia.consumer.uielements;
 
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.AnimationSet;
 
 import java.util.Timer;
 import java.util.TimerTask;
