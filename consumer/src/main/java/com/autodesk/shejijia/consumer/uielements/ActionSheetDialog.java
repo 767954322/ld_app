@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements;
+package com.autodesk.shejijia.consumer.uielements;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -222,7 +222,8 @@ public class ActionSheetDialog {
     }
 
     public enum SheetItemColor {
-        Blue("#037BFF"), Red("#FD4A2E");
+        Blue("#037BFF"),
+        Red("#FD4A2E");
 
         private String name;
 
