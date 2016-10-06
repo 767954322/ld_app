@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements.viewgraph.shape;
+package com.autodesk.shejijia.consumer.uielements.viewgraph.shape;
 
 import android.graphics.Path;
 

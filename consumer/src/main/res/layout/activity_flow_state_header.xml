@@ -11,7 +11,7 @@
         android:layout_height="@dimen/size_60"
         android:orientation="horizontal">
 
-        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+        <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
             android:id="@+id/piv_consumer_order_photo_01"
             android:layout_width="@dimen/size_36"
             android:layout_height="@dimen/size_36"

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.autodesk.shejijia.shared.components.common.uielements.viewgraph;
+package com.autodesk.shejijia.consumer.uielements.viewgraph;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -42,9 +42,9 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.shape.PolygonShape;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.shape.PolygonShapeSpec;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.shape.RegularPolygonShape;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.shape.PolygonShape;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.shape.PolygonShapeSpec;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.shape.RegularPolygonShape;
 
 /**
  * @author Malidong .

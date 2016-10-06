@@ -47,7 +47,7 @@ import com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollView;
 import com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollViewLayout;
 import com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollViewListener;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
