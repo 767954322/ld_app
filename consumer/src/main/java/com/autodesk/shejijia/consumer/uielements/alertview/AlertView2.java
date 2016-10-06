@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements.alertview;
+package com.autodesk.shejijia.consumer.uielements.alertview;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,7 +32,7 @@ import java.util.List;
  * @brief AlertViewController控件
  * 点击取消按钮返回 －1，其他按钮从0开始算.
  */
-public class AlertView {
+public class AlertView2 {
     public enum Style {
         ActionSheet,
         Alert
@@ -72,7 +72,7 @@ public class AlertView {
     private Animation inAnim;
     private int gravity = Gravity.CENTER;
 
-    public AlertView(String title, String msg, String cancel, String[] destructive, String[] others, Context context, Style style, OnItemClickListener onItemClickListener) {
+    public AlertView2(String title, String msg, String cancel, String[] destructive, String[] others, Context context, Style style, OnItemClickListener onItemClickListener) {
         this.context = context;
         if (style != null) this.style = style;
         this.onItemClickListener = onItemClickListener;
@@ -179,7 +179,7 @@ public class AlertView {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 if (onItemClickListener != null)
-                    onItemClickListener.onItemClick(AlertView.this, position);
+                    onItemClickListener.onItemClick(AlertView2.this, position);
                 dismiss();
             }
         });
@@ -200,7 +200,7 @@ public class AlertView {
 
     protected void initAlertViews(LayoutInflater layoutInflater) {
 
-        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(R.layout.layout_alertview_alert, contentContainer);
+        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(R.layout.layout_alertview_alert2, contentContainer);
         initHeaderView(viewGroup);
 
         int position = 0;
@@ -267,7 +267,7 @@ public class AlertView {
     protected void initEvents() {
     }
 
-    public AlertView addExtView(View extView) {
+    public AlertView2 addExtView(View extView) {
 
         loAlertHeader.addView(extView);
         return this;
@@ -324,7 +324,7 @@ public class AlertView {
                         decorView.removeView(rootView);
                         isDismissing = false;
                         if (onDismissListener != null) {
-                            onDismissListener.onDismiss(AlertView.this);
+                            onDismissListener.onDismiss(AlertView2.this);
                         }
                     }
                 });
@@ -349,7 +349,7 @@ public class AlertView {
         return AnimationUtils.loadAnimation(context, res);
     }
 
-    public AlertView setOnDismissListener(OnDismissListener onDismissListener) {
+    public AlertView2 setOnDismissListener(OnDismissListener onDismissListener) {
         this.onDismissListener = onDismissListener;
         return this;
     }
@@ -365,7 +365,7 @@ public class AlertView {
         @Override
         public void onClick(View view) {
             if (onItemClickListener != null)
-                onItemClickListener.onItemClick(AlertView.this, position);
+                onItemClickListener.onItemClick(AlertView2.this, position);
             dismiss();
         }
     }
@@ -379,7 +379,7 @@ public class AlertView {
         contentContainer.setLayoutParams(params);
     }
 
-    public AlertView setCancelable(boolean isCancelable) {
+    public AlertView2 setCancelable(boolean isCancelable) {
         View view = rootView.findViewById(R.id.outmost_container);
 
         if (isCancelable) {

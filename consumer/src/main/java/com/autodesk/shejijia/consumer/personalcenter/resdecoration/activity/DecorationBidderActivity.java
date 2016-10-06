@@ -11,8 +11,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter.Decor
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureFormActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView2;
+import com.autodesk.shejijia.consumer.uielements.alertview.AlertView2;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 

@@ -14,7 +14,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.consumer.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import java.io.IOException;

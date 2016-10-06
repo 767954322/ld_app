@@ -170,7 +170,7 @@ public abstract class AdskApplication extends Application {
 
         onLoginSuccess(entity);
     }
-    
+
     private static AdskApplication sAdskApplication;
 
     private boolean IsWebSocketConnecting = false;
