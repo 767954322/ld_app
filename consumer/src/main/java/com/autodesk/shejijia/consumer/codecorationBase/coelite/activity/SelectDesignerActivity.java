@@ -7,9 +7,8 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SelectDesignAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureCostActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
+import com.autodesk.shejijia.consumer.uielements.ListViewForScrollView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 

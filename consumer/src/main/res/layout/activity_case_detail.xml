@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <com.autodesk.shejijia.shared.components.common.uielements.ImageShowView
+        <com.autodesk.shejijia.consumer.uielements.ImageShowView
             android:id="@+id/ad_view"
             android:layout_width="match_parent"
             android:layout_height="280dp"

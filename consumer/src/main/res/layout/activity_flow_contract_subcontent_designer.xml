@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_owner" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_phone" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_measure_house_address" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_decorate_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_email_address" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_consumer_email"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_second_party" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
@@ -188,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_phone" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
@@ -214,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_service_address" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_decorate_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_email_address" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/flow_establish_contract_designer_email"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
@@ -278,7 +278,7 @@
 
                         android:text="@string/flow_the_total_project_design" />
 
-                    <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                    <com.autodesk.shejijia.consumer.uielements.TextViewContent
                         android:id="@+id/flow_establish_contract_consumer_total_cost"
                         android:layout_width="@dimen/size_100"
                         android:layout_height="@dimen/size_28"
@@ -307,7 +307,7 @@
 
                         android:text="@string/flow_first_design_cost" />
 
-                    <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                    <com.autodesk.shejijia.consumer.uielements.TextViewContent
                         android:id="@+id/flow_establish_contract_consumer_first_cost"
                         android:layout_width="@dimen/size_100"
                         android:layout_height="@dimen/size_28"
@@ -341,7 +341,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/flow_last_design_cost" />
 
-                    <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                    <com.autodesk.shejijia.consumer.uielements.TextViewContent
                         android:id="@+id/tvc_flow_establish_contract_consumer_last_cost"
                         android:layout_width="@dimen/size_100"
                         android:layout_height="@dimen/size_28"
@@ -379,7 +379,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/flow_renderings" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <com.autodesk.shejijia.consumer.uielements.TextViewContent
                     android:id="@+id/tvc_flow_establish_contract_designer_render_map"
                     android:layout_width="@dimen/size_100"
                     android:layout_height="@dimen/size_28"

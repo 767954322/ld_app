@@ -39,7 +39,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.consumer.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;

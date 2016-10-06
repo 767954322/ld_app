@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements;
+package com.autodesk.shejijia.consumer.uielements;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
