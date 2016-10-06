@@ -1,16 +1,11 @@
-package com.autodesk.shejijia.shared.components.common.uielements.scrollview;
+package com.autodesk.shejijia.consumer.uielements.scrollview;
 
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.RotateAnimation;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.Pullable;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.Pullable;
 
 /**
  * @author yaoxuehua .

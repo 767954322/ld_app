@@ -8,21 +8,21 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"/>
 
-    <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout
+    <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include layout="@layout/view_refresh_head"/>
 
-        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
+        <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView
             android:id="@+id/xlv_seek_designer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none"/>
 
         <include layout="@layout/view_load_more"/>
-    </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
+    </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout>
 
     <include layout="@layout/view_empty_layout"></include>
 

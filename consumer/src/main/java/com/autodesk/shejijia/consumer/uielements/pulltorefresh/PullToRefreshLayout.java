@@ -1,22 +1,21 @@
-package com.autodesk.shejijia.shared.components.common.uielements.scrollview;
+package com.autodesk.shejijia.consumer.uielements.pulltorefresh;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.util.AttributeSet;
+import android.os.AsyncTask;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.Pullable;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
@@ -24,16 +23,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author yaoxuehua .
+ * @author luchongbin .
  * @version 1.0 .
- * @date 16-8-11
- * @file MyScrollViewLayout.java  .
- * @brief 自定义MyScrollViewLayout,方便监听ScrollView的滑动改变,完成刷加载
+ * @date 16-6-13 上午10:12
+ * @file PullToRefreshLayout.java  .
+ * @brief 自定义 RelativeLayout.
  */
-public class MyScrollViewLayout extends RelativeLayout{
-
-
-    public static final String TAG = "MyScrollViewLayout";
+public class PullToRefreshLayout extends RelativeLayout {
+    public static final String TAG = "PullToRefreshLayout";
     // 初始状态
     public static final int INIT = 0;
     // 释放刷新
@@ -175,21 +172,23 @@ public class MyScrollViewLayout extends RelativeLayout{
         mListener = listener;
     }
 
-    public MyScrollViewLayout(Context context) {
+    ///构造方法.
+    public PullToRefreshLayout(Context context) {
         super(context);
         initView(context);
     }
 
-    public MyScrollViewLayout(Context context, AttributeSet attrs) {
+    ///构造方法.
+    public PullToRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
 
-    public MyScrollViewLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    ///构造方法.
+    public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         initView(context);
     }
-
 
     private void initView(Context context) {
         mContext = context;
@@ -215,23 +214,23 @@ public class MyScrollViewLayout extends RelativeLayout{
      * @param refreshResult PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
      */
     public void refreshFinish(int refreshResult) {
-        refreshingView.clearAnimation();
-        refreshingView.setVisibility(View.GONE);
+        if (refreshingView != null) {
+            refreshingView.clearAnimation();
+            refreshingView.setVisibility(View.VISIBLE);
+        }
         switch (refreshResult) {
             case SUCCEED:
                 // 刷新成功
-                refreshStateImageView.setVisibility(View.VISIBLE);
-                refreshStateTextView.setText(R.string.refresh_succeed);
-                refreshStateImageView
-                        .setBackgroundResource(R.drawable.refresh_succeed);
+//                refreshStateImageView.setVisibility(View.VISIBLE);
+//                refreshStateTextView.setText(R.string.refresh_succeed);
+//                refreshStateImageView.setBackgroundResource(R.drawable.refresh_succeed);
                 break;
             case FAIL:
             default:
                 // 刷新失败
-                refreshStateImageView.setVisibility(View.VISIBLE);
-                refreshStateTextView.setText(R.string.refresh_fail);
-                refreshStateImageView
-                        .setBackgroundResource(R.drawable.refresh_failed);
+//                refreshStateImageView.setVisibility(View.VISIBLE);
+//                refreshStateTextView.setText(R.string.refresh_fail);
+//                refreshStateImageView.setBackgroundResource(R.drawable.refresh_failed);
                 break;
         }
         if (pullDownY > 0) {
@@ -255,38 +254,40 @@ public class MyScrollViewLayout extends RelativeLayout{
      * @param refreshResult PullToRefreshLayout.SUCCEED代表成功，PullToRefreshLayout.FAIL代表失败
      */
     public void loadmoreFinish(int refreshResult) {
-        loadingView.clearAnimation();
-        loadingView.setVisibility(View.GONE);
-        switch (refreshResult) {
-            case SUCCEED:
-                // 加载成功
-                loadStateImageView.setVisibility(View.VISIBLE);
-                loadStateTextView.setText(R.string.load_succeed);
-                loadStateImageView.setBackgroundResource(R.drawable.load_succeed);
-                break;
-            case FAIL:
-            default:
-                // 加载失败
-                loadStateImageView.setVisibility(View.VISIBLE);
-                loadStateTextView.setText(R.string.load_fail);
-                loadStateImageView.setBackgroundResource(R.drawable.load_failed);
-                break;
+        if (loadingView!=null){
+            loadingView.clearAnimation();
+            loadingView.setVisibility(View.GONE);
+            switch (refreshResult) {
+                case SUCCEED:
+                    // 加载成功
+                    loadStateImageView.setVisibility(View.VISIBLE);
+                    loadStateTextView.setText(R.string.load_succeed);
+                    loadStateImageView.setBackgroundResource(R.drawable.load_succeed);
+                    break;
+                case FAIL:
+                default:
+                    // 加载失败
+                    loadStateImageView.setVisibility(View.VISIBLE);
+                    loadStateTextView.setText(R.string.load_fail);
+                    loadStateImageView.setBackgroundResource(R.drawable.load_failed);
+                    break;
+            }
+            if (pullUpY < 0) {
+                // 刷新结果停留1秒
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        changeState(DONE);
+                        hide();
+                    }
+                }.sendEmptyMessageDelayed(0, 1000);
+            } else {
+                changeState(DONE);
+                hide();
+            }
         }
-        if (pullUpY < 0) {
-            // 刷新结果停留1秒
-            new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    changeState(DONE);
-                    hide();
-                }
-            }.sendEmptyMessageDelayed(0, 1000);
-        } else {
-            changeState(DONE);
-            hide();
-        }
-    }
 
+    }
 
     ///改变状态.
     public void changeState(int to) {
@@ -378,7 +379,8 @@ public class MyScrollViewLayout extends RelativeLayout{
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (mEvents == 0) {
-                    if (pullDownY > 0 || (((MyScrollView) pullableView).canPullDown()
+                    if (pullDownY > 0
+                            || (((Pullable) pullableView).canPullDown()
                             && canPullDown && state != LOADING)) {
                         // 可以下拉，正在加载时不能下拉
                         // 对实际滑动距离做缩小，造成用力拉的感觉
@@ -395,7 +397,7 @@ public class MyScrollViewLayout extends RelativeLayout{
                             isTouch = true;
                         }
                     } else if (pullUpY < 0
-                            || (((MyScrollView) pullableView).canPullUp() && canPullUp && state != REFRESHING)) {
+                            || (((Pullable) pullableView).canPullUp() && canPullUp && state != REFRESHING)) {
                         // 可以上拉，正在刷新时不能上拉
                         pullUpY = pullUpY + (ev.getY() - lastY) / radio;
                         if (pullUpY > 0) {
@@ -497,11 +499,12 @@ public class MyScrollViewLayout extends RelativeLayout{
 
         @Override
         protected void onPostExecute(String result) {
-            refresh_contain.setVisibility(View.VISIBLE);
+            if (refresh_contain != null)
+                refresh_contain.setVisibility(View.VISIBLE);
             changeState(REFRESHING);
             // 刷新操作
             if (mListener != null) {
-                mListener.onRefresh(MyScrollViewLayout.this);
+                mListener.onRefresh(PullToRefreshLayout.this);
             }
             hide();
         }
@@ -587,7 +590,6 @@ public class MyScrollViewLayout extends RelativeLayout{
                         + loadmoreView.getMeasuredHeight());
     }
 
-
     class MyTimer {
         private Handler handler;
         private Timer timer;
@@ -638,11 +640,12 @@ public class MyScrollViewLayout extends RelativeLayout{
         /**
          * 刷新操作
          */
-        void onRefresh(MyScrollViewLayout pullToRefreshLayout);
+        void onRefresh(PullToRefreshLayout pullToRefreshLayout);
 
         /**
          * 加载操作
          */
-        void onLoadMore(MyScrollViewLayout pullToRefreshLayout);
+        void onLoadMore(PullToRefreshLayout pullToRefreshLayout);
     }
+
 }

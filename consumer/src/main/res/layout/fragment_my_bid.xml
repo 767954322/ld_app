@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout
+    <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout
         android:id="@+id/pull_to_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <include layout="@layout/view_refresh_head" />
 
-        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullableLayout
+        <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-            <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
+            <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView
                 android:id="@id/pullable_listview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -25,10 +25,10 @@
                 android:scrollbars="none"/>
 
             <include layout="@layout/view_empty_layout"/>
-        </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullableLayout>
+        </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullableLayout>
 
 
         <include layout="@layout/view_load_more" />
-    </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
+    </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout>
 
 </LinearLayout>

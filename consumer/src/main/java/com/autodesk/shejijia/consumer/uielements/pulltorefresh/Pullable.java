@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh;
+package com.autodesk.shejijia.consumer.uielements.pulltorefresh;
 
 /**
  * @author  luchongbin .
