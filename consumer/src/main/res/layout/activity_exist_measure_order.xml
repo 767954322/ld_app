@@ -8,7 +8,7 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header" />
 
-    <com.autodesk.shejijia.shared.components.common.uielements.PinnedHeaderExpandableListView
+    <com.autodesk.shejijia.consumer.uielements.PinnedHeaderExpandableListView
         android:id="@+id/explistview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

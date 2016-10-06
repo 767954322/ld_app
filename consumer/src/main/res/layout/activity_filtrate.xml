@@ -73,7 +73,7 @@
                 android:text="户型"
                 android:textSize="@dimen/font_18"/>
 
-            <com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView
+            <com.autodesk.shejijia.consumer.uielements.NoScrollGridView
                 android:id="@+id/gv_filtrate_house"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 android:text="面积"
                 android:textSize="@dimen/font_18"/>
 
-            <com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView
+            <com.autodesk.shejijia.consumer.uielements.NoScrollGridView
                 android:id="@+id/gv_filtrate_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 android:text="风格"
                 android:textSize="@dimen/font_18"/>
 
-            <com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView
+            <com.autodesk.shejijia.consumer.uielements.NoScrollGridView
                 android:id="@+id/gv_filtrate_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

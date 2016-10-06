@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements;
+package com.autodesk.shejijia.consumer.uielements;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

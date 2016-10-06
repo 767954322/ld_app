@@ -17,7 +17,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdeleg
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView;
+import com.autodesk.shejijia.consumer.uielements.ListViewForScrollView;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
