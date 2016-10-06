@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements.alertview;
+package com.autodesk.shejijia.consumer.uielements.alertview;
 
 import android.content.Context;
 import android.view.LayoutInflater;

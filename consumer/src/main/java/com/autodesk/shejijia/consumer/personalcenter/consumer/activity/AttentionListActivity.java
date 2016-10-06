@@ -18,7 +18,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.consumer.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -272,7 +272,7 @@ public class AttentionListActivity extends NavigationBarActivity implements Atte
                 UIUtils.getString(R.string.following_cancel), null,
                 new String[]{UIUtils.getString(R.string.following_sure)},
                 AttentionListActivity.this,
-                AlertView.Style.Alert, new com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener() {
+                AlertView.Style.Alert, new com.autodesk.shejijia.consumer.uielements.alertview.OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
                 if (position != AlertView.CANCELPOSITION) {
