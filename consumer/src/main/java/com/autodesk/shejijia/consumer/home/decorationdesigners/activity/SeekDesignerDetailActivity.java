@@ -41,8 +41,8 @@ import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatR
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
-import com.autodesk.shejijia.consumer.uielements.alertview.AlertView;
-import com.autodesk.shejijia.consumer.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView;
 import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewLayout;
@@ -50,6 +50,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.scrollview.MySc
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;

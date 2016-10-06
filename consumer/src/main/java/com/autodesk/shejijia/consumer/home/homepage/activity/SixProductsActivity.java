@@ -15,7 +15,7 @@ import com.autodesk.shejijia.consumer.codecorationBase.coelite.adapter.SixProduc
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.consumer.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
 import com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
