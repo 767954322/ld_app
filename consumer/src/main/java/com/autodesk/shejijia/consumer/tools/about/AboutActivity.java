@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.tools.about;
+package com.autodesk.shejijia.consumer.tools.about;
 
 import com.autodesk.shejijia.shared.R;
 import android.content.Intent;
