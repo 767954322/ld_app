@@ -33,7 +33,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
-import com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingActivity;
+import com.autodesk.shejijia.consumer.tools.about.MPMoreSettingActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
