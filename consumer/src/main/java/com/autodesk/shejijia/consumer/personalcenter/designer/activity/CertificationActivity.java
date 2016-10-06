@@ -30,7 +30,7 @@ import com.autodesk.shejijia.consumer.utils.IDCardUtils;
 import com.autodesk.shejijia.consumer.utils.PhotoPathUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
+import com.autodesk.shejijia.consumer.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;

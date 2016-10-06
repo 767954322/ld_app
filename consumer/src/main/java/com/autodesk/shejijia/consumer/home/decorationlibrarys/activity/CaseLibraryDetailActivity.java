@@ -16,7 +16,7 @@ import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.SeekDesign
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseDetailBean;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
+import com.autodesk.shejijia.consumer.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.HackyViewPager;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.PhotoView;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.PhotoViewAttacher;
