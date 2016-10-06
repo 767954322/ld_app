@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.uielements;
+package com.autodesk.shejijia.shared.components.common.uielements;
 
 /**
  * @author allengu .
