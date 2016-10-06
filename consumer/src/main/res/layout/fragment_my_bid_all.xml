@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout
+    <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout
         android:id="@+id/refresh_my_bid_all_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <include layout="@layout/view_refresh_head" />
 
-        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullListView
+        <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView
             android:id="@+id/lv_my_bid_all"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,6 +19,6 @@
             android:scrollbars="none"/>
 
         <include layout="@layout/view_load_more" />
-    </com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout>
+    </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout>
 
 </LinearLayout>

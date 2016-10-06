@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements.scrollview;
+package com.autodesk.shejijia.consumer.uielements.scrollview;
 
 import android.content.Context;
 import android.util.AttributeSet;

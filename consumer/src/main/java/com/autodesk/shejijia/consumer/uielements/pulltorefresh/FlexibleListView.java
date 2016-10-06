@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh;
+package com.autodesk.shejijia.consumer.uielements.pulltorefresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,20 +11,20 @@ import android.widget.ListView;
  * @file    PullableListView.java  .
  * @brief    自定义 ListView.
  */
-public class PullListView extends ListView implements Pullable
+public class FlexibleListView extends ListView implements Pullable
 {
     ///构造方法.
-    public PullListView(Context context)
+    public FlexibleListView(Context context)
     {
         super(context);
     }
     ///构造方法.
-    public PullListView(Context context, AttributeSet attrs)
+    public FlexibleListView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
     ///构造方法.
-    public PullListView(Context context, AttributeSet attrs, int defStyle)
+    public FlexibleListView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
     }
@@ -39,6 +39,8 @@ public class PullListView extends ListView implements Pullable
         } else // 滑到ListView的顶部了
             return getFirstVisiblePosition() == 0
                     && getChildAt(0).getTop() >= 0;
+
+         // 滑到ListView的顶部了
     }
 
     @Override

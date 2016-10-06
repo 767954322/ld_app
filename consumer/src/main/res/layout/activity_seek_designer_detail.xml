@@ -11,7 +11,7 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header" />
 
-    <com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewLayout
+    <com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollViewLayout
         android:id="@+id/myScrollViewLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
 
         <include layout="@layout/view_refresh_head" />
 
-        <com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView
+        <com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollView
             android:id="@+id/myScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -334,10 +334,10 @@
 
                 </RelativeLayout>
             </LinearLayout>
-        </com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView>
+        </com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollView>
 
         <include layout="@layout/view_load_more" />
-    </com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewLayout>
+    </com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollViewLayout>
 
 
     <LinearLayout

@@ -2,11 +2,8 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.fragment;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -15,7 +12,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.adapter.SeekDesignerAppraiseAdapter;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.AppraiseDesignBeen;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerDetailHomeBean;
-import com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewListView;
+import com.autodesk.shejijia.consumer.uielements.scrollview.ScrollViewListView;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
