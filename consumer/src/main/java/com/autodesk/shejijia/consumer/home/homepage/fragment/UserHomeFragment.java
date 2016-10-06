@@ -8,7 +8,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.CaseViewPagerAdapter;
 import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.matertab.MaterialTabs;
-import com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager;
+import com.autodesk.shejijia.consumer.uielements.slippingviewpager.NoSlippingViewPager;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 

@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager;
+package com.autodesk.shejijia.consumer.uielements.slippingviewpager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
