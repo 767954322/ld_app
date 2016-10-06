@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
-import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.loopj.android.image.SmartImageView;
 

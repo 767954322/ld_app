@@ -15,7 +15,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.consumer.R;
 
 import java.util.ArrayList;
 import java.util.List;
