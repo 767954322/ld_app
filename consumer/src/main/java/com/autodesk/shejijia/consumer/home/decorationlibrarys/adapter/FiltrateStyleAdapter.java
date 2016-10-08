@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean;
@@ -31,7 +32,7 @@ public class FiltrateStyleAdapter extends BaseAdapter<DesignerWorkTimeBean.Relat
     @Override
     public Holder initHolder(View container) {
         viewHolder = new ViewHolder();
-        viewHolder.btn_filtrate = (Button) container.findViewById(R.id.btn_filtrate_style);
+        viewHolder.btn_filtrate = (TextView) container.findViewById(R.id.btn_filtrate_style);
         return viewHolder;
     }
 
@@ -54,7 +55,7 @@ public class FiltrateStyleAdapter extends BaseAdapter<DesignerWorkTimeBean.Relat
     }
 
     public class ViewHolder extends BaseAdapter.Holder {
-        Button btn_filtrate;
+        TextView btn_filtrate;
     }
 
     private int clickTemp = 0;

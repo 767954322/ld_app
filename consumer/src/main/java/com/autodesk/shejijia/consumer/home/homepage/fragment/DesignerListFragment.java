@@ -190,8 +190,14 @@ public class DesignerListFragment extends BaseFragment
                 String filterDesignerString = GsonUtil.jsonToString(jsonObject);
                 SeekDesignerBean seekDesignerBean = GsonUtil.jsonToBean(filterDesignerString, SeekDesignerBean.class);
                 if (offset == 0) {
-                    mListView.requestFocusFromTouch();
-                    mListView.setSelection(0);
+                    //fix 筛选 不回到初始位置
+                    mListView.clearFocus();
+                    mListView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mListView.setSelection(0);
+                        }
+                    });
                 }
                 updateViewFromFindDesigner(seekDesignerBean, state);
             }

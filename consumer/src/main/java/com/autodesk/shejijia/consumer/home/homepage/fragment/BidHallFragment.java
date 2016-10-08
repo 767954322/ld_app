@@ -132,14 +132,6 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                     BidHallEntity list = GsonUtil.jsonToBean(str, BidHallEntity.class);
                     switch (state) {
                         case 0:
-                            //fix 筛选 不回到初始位置
-                            mPullListView.clearFocus();
-                            mPullListView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mPullListView.setSelection(0);
-                                }
-                            });
                             OFFSET = 10;
                             mNeedsListEntities.clear();
                             break;
@@ -153,12 +145,12 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                     if (list != null && list.getNeeds_list() != null) {
                         List<BidHallEntity.NeedsListBean> entitys = getNeedsListEntitys(list.getNeeds_list());
                         mNeedsListEntities.addAll(entitys);
-                        mBidHallAdapter.notifyDataSetChanged();
                     }
                     if (state == 0) {
                         mNeedsListEntityArrayList.addAll(mNeedsListEntities);
                         mFlag = false;
                     }
+                    mBidHallAdapter.notifyDataSetChanged();
                 } finally {
                     hideFooterView(mNeedsListEntities);
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
@@ -247,6 +239,14 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         Bundle bundle = data.getExtras();
         switch (resultCode) {
             case FiltrateActivity.CBF_RESULT_CODE:
+                //fix 筛选 不回到初始位置
+                mPullListView.clearFocus();
+                mPullListView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullListView.setSelection(0);
+                    }
+                });
                 FiltrateContentBean filtrateContentBean = (FiltrateContentBean) bundle.getSerializable(CONTENT_BEAN);
                 updateNotify(filtrateContentBean);
                 break;
