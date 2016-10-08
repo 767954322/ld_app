@@ -124,7 +124,9 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         Map<String, String> area = AppJsonFileReader.getArea(this);
         Map<String, String> style = AppJsonFileReader.getStyle(this);
 
-
+        if (mHouseData.size() == 0 || mStyleData.size() == 0 || mAreaData.size() == 0) {
+            return;
+        }
         String all = UIUtils.getString(R.string.my_bid_all);
         mLivingRoom = mHouseData.get(mHouseIndex);
         mLivingRoom = ConvertUtils.getKeyByValue(room, mLivingRoom);
@@ -138,10 +140,11 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         mStyle = ConvertUtils.getKeyByValue(style, mStyle);
         mStyle = mStyle.equals(all) ? BLANK : mStyle;
 
+
         FiltrateContentBean filtrateContentBean = new FiltrateContentBean();
-        if (mLivingRoom.equals("其它")){
+        if (mLivingRoom.equals("其它")) {
             filtrateContentBean.setHousingType("other");
-        }else {
+        } else {
             filtrateContentBean.setHousingType(mLivingRoom);
         }
 
@@ -172,6 +175,7 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
 
     private List<DesignerWorkTimeBean.RelateInformationListBean> mStyleList = new ArrayList<>();
     private DesignerWorkTimeBean.RelateInformationListBean allListBean;
+
     /**
      * 获取设计师设计风格.
      */
@@ -187,8 +191,8 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
                 allListBean.setDescription("");
                 allListBean.setExtension("");
                 mStyleList.addAll(designerWorkTimeBean.getRelate_information_list());
-                mStyleList.add(0,allListBean);
-                for (int i=0;i<mStyleList.size();i++){
+                mStyleList.add(0, allListBean);
+                for (int i = 0; i < mStyleList.size(); i++) {
                     mStyleData.add(mStyleList.get(i).getName());
                 }
 

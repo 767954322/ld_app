@@ -28,8 +28,8 @@ public class MPSplashActivity extends SplashActivity {
     @Override
     protected Class getNextActivityToLaunch() {
         //fixme: 16-9-12 需要引导页逻辑
-//        Boolean isfirst = SharedPreferencesUtils.readBoolean(WelcomePagerAdapter.ISFIRST);
-//        return isfirst ? MPConsumerHomeActivity.class : WelcomeActivity.class;
-        return MPConsumerHomeActivity.class;
+        Boolean isfirst = SharedPreferencesUtils.readBoolean(WelcomePagerAdapter.ISFIRST);
+        return isfirst ? MPConsumerHomeActivity.class : WelcomeActivity.class;
+//        return MPConsumerHomeActivity.class;
     }
 }

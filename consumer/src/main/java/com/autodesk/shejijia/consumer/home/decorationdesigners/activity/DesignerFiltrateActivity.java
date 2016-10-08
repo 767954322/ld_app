@@ -107,6 +107,9 @@ public class DesignerFiltrateActivity extends NavigationBarActivity implements A
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
+        if (mWorkTimeList.size() == 0 || mStyleList.size() == 0 || mCostList.size() == 0) {
+            return;
+        }
         if (null != mWorkTimeList && mYearIndex <= mWorkTimeList.size()) {
             mYear = mWorkTimeList.get(mYearIndex).getCode();
         }
