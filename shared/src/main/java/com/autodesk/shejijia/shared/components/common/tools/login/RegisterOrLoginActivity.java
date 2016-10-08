@@ -45,15 +45,15 @@ import java.net.URLDecoder;
 public class RegisterOrLoginActivity extends BaseActivity implements View.OnClickListener {
 
     public interface LoginFinishListener{
-        void LoginIn(MemberEntity entity);
-        void LoginOut();
+        void onLogin(MemberEntity entity);
+        void onLogOut();
     }
 
     public void setLoginFinishListener(LoginFinishListener loginFinishListener){
-        this.loginFinishListener = loginFinishListener;
+        this.mLoginFinishListener = loginFinishListener;
     }
 
-    private LoginFinishListener loginFinishListener;
+    private LoginFinishListener mLoginFinishListener;
     private boolean isFirst = true;
 
     @Override
@@ -67,7 +67,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
         mTvFinishWebView = (TextView) findViewById(R.id.tv_finish_webview);
         mLlWebViewBackup = (LinearLayout) findViewById(R.id.ll_webview_backup);
         //初始化loginFinishListener
-        loginFinishListener = (LoginFinishListener)AdskApplication.getInstance();
+        mLoginFinishListener = (LoginFinishListener)AdskApplication.getInstance();
     }
 
     @Override
@@ -158,11 +158,9 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
 //                    AdskApplication.getInstance().saveSignInInfo(entity);
                     // 解决切换帐号的时候 我的项目Fragment 不刷新问题
                     SharedPreferencesUtils.writeBoolean("islogin", true);
-//                /// 登录成功后,发送广播 .
-              /*      Intent intent = new Intent(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
-                    intent.putExtra(BroadCastInfo.LOGIN_TOKEN, strToken);
-                    sendBroadcast(intent);*/
-                    loginFinishListener.LoginIn(entity);
+                  // 登录成功后,发送登录成功请求回调
+
+                    mLoginFinishListener.onLogin(entity);
                     finish();
                 }else {
                     runOnUiThread(new Runnable() {
@@ -173,7 +171,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                                 @Override
                                 public void onItemClick(Object object, int position) {
 //                                    LoginUtils.doLogout(RegisterOrLoginActivity.this);
-                                    loginFinishListener.LoginOut();
+                                    mLoginFinishListener.onLogOut();
                                     finish();
                                 }
                             }).show();

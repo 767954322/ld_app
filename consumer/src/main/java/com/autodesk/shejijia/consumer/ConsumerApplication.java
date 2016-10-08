@@ -55,7 +55,7 @@ public class ConsumerApplication extends AdskApplication implements RegisterOrLo
         dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
         MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constant.UerInfoKey.USER_INFO);
         if (entity != null){
-            LoginIn(entity);
+            onLogin(entity);
         }
     }
 
@@ -67,7 +67,7 @@ public class ConsumerApplication extends AdskApplication implements RegisterOrLo
 
 
     @Override
-    public void LoginIn(MemberEntity entity) {
+    public void onLogin(MemberEntity entity) {
         LogUtils.e("login-entity",entity.toString());
         //登陆状态，开启推送
         JPushInterface.resumePush(this);
@@ -82,7 +82,7 @@ public class ConsumerApplication extends AdskApplication implements RegisterOrLo
     }
 
     @Override
-    public void LoginOut() {
+    public void onLogOut() {
         LogUtils.e("login-out","login out");
         //退出登陆状态，关闭推送
         JPushInterface.stopPush(this);

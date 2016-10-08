@@ -48,7 +48,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
         bt_consumer_exit = (TextView) findViewById(R.id.bt_consumer_exit);
         tv_cache_size = (TextView) findViewById(R.id.tv_cache_size);
         //获取loginFinishListener实例
-        loginFinishListener = (RegisterOrLoginActivity.LoginFinishListener)AdskApplication.getInstance();
+        mLoginFinishListener = (RegisterOrLoginActivity.LoginFinishListener)AdskApplication.getInstance();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
             intentLogout.putExtra(Constant.LOGOUT, Constant.LOGOUT);
             setResult(RESULT_OK, intentLogout);
 
-            loginFinishListener.LoginOut();
+            mLoginFinishListener.onLogOut();
             finish();
 
         }
@@ -199,5 +199,5 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
     private String cacheSize, filesSize, externalSize;
     private File cacheDir, filesDir, externalCacheDir;
     //loginListener
-    private RegisterOrLoginActivity.LoginFinishListener loginFinishListener;
+    private RegisterOrLoginActivity.LoginFinishListener mLoginFinishListener;
 }
