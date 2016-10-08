@@ -28,7 +28,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -61,7 +61,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_15"
                 android:background="@color/bg_ef"/>
         </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -107,7 +107,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_15"
                 android:background="@color/bg_ef"/>
         </LinearLayout>
 
@@ -119,7 +119,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -160,7 +160,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_15"
                 android:background="@color/bg_ef"/>
         </LinearLayout>
 
@@ -170,7 +170,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -218,7 +218,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_15"
                 android:background="@color/bg_ef"/>
         </LinearLayout>
 
@@ -229,7 +229,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -268,7 +268,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_15"
                 android:background="@color/bg_ef"/>
         </LinearLayout>
 
@@ -278,7 +278,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
             <TextView
