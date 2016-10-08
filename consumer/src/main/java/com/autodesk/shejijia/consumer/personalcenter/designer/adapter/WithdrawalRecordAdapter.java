@@ -50,20 +50,20 @@ public class WithdrawalRecordAdapter extends BaseAdapter<WithdrawaRecoldBean.Tra
 
         switch (translogListEntity.getStatus()) {
             case -1:
-                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("" + amount); // 未处理
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("¥" + amount); // 未处理
                 ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.untreated));
                 break;
             case 0:
-                // DP-6086 fix 处理中
-                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("-" + amount); //　提现申请成功
+                // DP-6086 fix 处理中 to DP-6200
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("¥" + amount); //　提现申请成功
                 ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.in_the_processing));
                 break;
             case 1:
-                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("" + amount); //　提现成功
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("¥-" + amount); //　提现成功
                 ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.handle_successful));
                 break;
             case 2:
-                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("+" + amount); //　提现失败
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("¥+" + amount); //　提现失败
                 ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.handle_failure));
                 break;
             default:
