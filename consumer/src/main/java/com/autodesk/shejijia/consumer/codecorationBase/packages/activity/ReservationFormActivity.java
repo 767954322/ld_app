@@ -46,7 +46,6 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
 
     @Override
     protected int getLayoutResId() {
-
         return R.layout.activity_reservation_form;
     }
 
@@ -72,7 +71,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        setTitleForNavbar("预约表单");
+        setTitleForNavbar("立即预约");
         Intent intent = getIntent();
         item_num = intent.getIntExtra("item_num", -1);
         if (item_num == 0) {

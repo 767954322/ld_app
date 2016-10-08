@@ -48,7 +48,12 @@ public class FiltrateAdapter extends BaseAdapter {
                 ((ViewHolder) holder).btn_filtrate.setBackgroundResource(R.drawable.bg_btn_filtrate_normal);
             }
         }
-        ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).toString());
+        if (mDatas.get(position).toString().contains("㎡")) {
+            ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).toString().replace("㎡", "m²"));
+        } else {
+            ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).toString());
+        }
+
     }
 
     /// 选中,并更新.

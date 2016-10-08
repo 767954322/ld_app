@@ -994,8 +994,15 @@
     <string name="work_room_commit_fail">提交失败</string>
     <!-- 大师详情 -->
     <string name="grandmaster_title">大师详情</string>
+    <!--立即预约-->
+    <string name="hint_edit_input_mobile">请输入手机号码</string>
+    <string name="hint_edit_input_mianji">请输入项目面积(选填)</string>
+    <string name="hint_edit_input_yusuan">请选择装修预算</string>
+    <string name="hint_edit_input_address">请选择项目地址</string>
+    <string name="hint_edit_input_xiaoqu">请输入小区名称(选填)</string>
 
     <!-- 合同提示語 -->
+
     <string name="please_input_consumer_name_correctly">请正确输入甲方姓名</string>
     <string name="please_input_consumer_phone_correctly">请正确输入甲方手机号</string>
     <string name="please_input_consumer_email_correctly">请正确输入甲方电子邮箱</string>
