@@ -752,7 +752,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             if (null != designer && null != designer.getMeasurement_price()) {
                 mMeasureFee = designer.getMeasurement_price();
                 if (mMeasureFee.equals(Constant.NumKey.ZERO)) {
-                    mTvMeasureFee.setText(UIUtils.getString(R.string.has_yet_to_fill_out));
+//                    mTvMeasureFee.setText(UIUtils.getString(R.string.has_yet_to_fill_out));//量房费用默认值
                 } else {
                     mTvMeasureFee.setText(mMeasureFee + "元");
                 }
