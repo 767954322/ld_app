@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,8 +21,8 @@ import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingActivity;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.consumer.tools.about.MPMoreSettingActivity;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;

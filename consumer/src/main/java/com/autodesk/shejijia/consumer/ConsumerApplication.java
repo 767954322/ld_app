@@ -5,20 +5,13 @@ import android.os.Handler;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.base.activity.MPSplashActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
-import com.autodesk.shejijia.shared.components.common.network.PushNotificationHttpManager;
-import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
-import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -28,7 +21,7 @@ import java.io.InputStream;
 
 import cn.jpush.android.api.JPushInterface;
 
-public class ConsumerApplication extends AdskApplication implements RegisterOrLoginActivity.LoginFinishListener{
+public class ConsumerApplication extends AdskApplication{
     @Override
     public void onCreate() {
         super.onCreate();
@@ -53,81 +46,7 @@ public class ConsumerApplication extends AdskApplication implements RegisterOrLo
         dataHelper = CityDataHelper.getInstance(this);
         InputStream in = this.getResources().openRawResource(com.autodesk.shejijia.shared.R.raw.province);
         dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
-        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constant.UerInfoKey.USER_INFO);
-        if (entity != null){
-            LoginIn(entity);
-        }
     }
-
-    @Override
-    public void initListener() {
-        super.initListener();
-
-    }
-
-
-    @Override
-    public void LoginIn(MemberEntity entity) {
-        LogUtils.e("login-entity",entity.toString());
-        //登陆状态，开启推送
-        JPushInterface.resumePush(this);
-
-        openChatConnection();
-        //注册推送回调
-        registerForPushNotification();
-        /// 将获取到底数据设置为全局可以访问.
-        setMemberEntity(entity);
-        /// 保存获取到的数据 .
-        SharedPreferencesUtils.saveObject(getApplicationContext(), Constant.UerInfoKey.USER_INFO, entity);
-    }
-
-    @Override
-    public void LoginOut() {
-        LogUtils.e("login-out","login out");
-        //退出登陆状态，关闭推送
-        JPushInterface.stopPush(this);
-
-        closeChatConnection();
-        unRegisterForPushNotification();
-        setMemberEntity(null);
-        CommonUtils.clearCookie(this);
-        CommonUtils.clearAppCache(this);
-        SharedPreferencesUtils.clear(AdskApplication.getInstance(), SharedPreferencesUtils.CONFIG);
-    }
-
-
-    private void registerForPushNotification() {
-        String regId = SharedPreferencesUtils.readString(JPushMessageReceiver.REGID);
-        if (regId != null)
-            PushNotificationHttpManager.registerDeviceWithMarketplace(regId, new OkStringRequest.OKResponseCallback() {
-                @Override
-                public void onResponse(String s) {
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                }
-            });
-    }
-
-
-    private void unRegisterForPushNotification() {
-        String regId = SharedPreferencesUtils.readString(JPushMessageReceiver.REGID);
-        SharedPreferencesUtils.delete(getApplicationContext(), JPushMessageReceiver.REGID);
-
-        if (regId != null)
-            PushNotificationHttpManager.unRegisterDeviceWithMarketplace(regId, new OkStringRequest.OKResponseCallback() {
-                @Override
-                public void onResponse(String s) {
-                }
-
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                }
-            });
-    }
-
-
 
     /// MainThread Handler .
     public static Handler getMainThreadHandler() {
@@ -138,15 +57,6 @@ public class ConsumerApplication extends AdskApplication implements RegisterOrLo
     /// MainThread Id .
     public static int getMainThreadId() {
         return mMainThreadId;
-    }
-
-    public static void setMemberEntity(MemberEntity memberEntity) {
-        ConsumerApplication.memberEntity = memberEntity;
-    }
-
-    @Override
-    public MemberEntity getMemberEntity() {
-        return memberEntity;
     }
 
     @Override

@@ -8,7 +8,7 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"/>
 
-    <com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView
+    <com.autodesk.shejijia.consumer.uielements.ListViewForScrollView
         android:id="@+id/lv_selection_design"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

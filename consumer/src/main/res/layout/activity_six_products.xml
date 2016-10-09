@@ -20,7 +20,7 @@
         android:background="@color/white"
         />
 
-    <com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager
+    <com.autodesk.shejijia.consumer.uielements.slippingviewpager.NoSlippingViewPager
         android:id="@+id/consumer_six_products_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

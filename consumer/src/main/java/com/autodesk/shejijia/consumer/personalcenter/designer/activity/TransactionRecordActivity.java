@@ -19,7 +19,7 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;

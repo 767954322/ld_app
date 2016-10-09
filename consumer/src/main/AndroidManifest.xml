@@ -125,7 +125,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingActivity"
+            android:name=".tools.about.MPMoreSettingActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
@@ -150,17 +150,17 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutActivity"
+            android:name=".tools.about.AboutActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutDesignerIntroducedActivity"
+            android:name=".tools.about.AboutDesignerIntroducedActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutVersionIntroducedActivity"
+            android:name=".tools.about.AboutVersionIntroducedActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
@@ -387,7 +387,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutDesignerContactActivity"
+            android:name=".tools.about.AboutDesignerContactActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />

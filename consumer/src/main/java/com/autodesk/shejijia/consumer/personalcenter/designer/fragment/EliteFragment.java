@@ -1,27 +1,22 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.fragment;
 
-import android.os.Message;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.designer.adapter.EliteAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import cn.finalteam.loadingviewfinal.ListViewFinal;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;

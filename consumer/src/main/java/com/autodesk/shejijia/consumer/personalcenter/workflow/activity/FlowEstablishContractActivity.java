@@ -32,7 +32,7 @@ import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
+import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;

@@ -51,7 +51,7 @@
         android:background="@color/bg_ef"
         android:visibility="gone" />
 
-    <com.autodesk.shejijia.shared.components.common.uielements.scrollview.ScrollViewListView
+    <com.autodesk.shejijia.consumer.uielements.scrollview.ScrollViewListView
         android:id="@+id/lv_seek_appraise_detail_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

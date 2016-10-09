@@ -43,7 +43,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/size_10">
 
-        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+        <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
             android:id="@+id/ployimg_decoration_choose"
             android:layout_width="@dimen/size_80"
             android:layout_height="@dimen/size_80"

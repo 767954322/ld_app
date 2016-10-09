@@ -11,7 +11,7 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateAd
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.uielements.NoScrollGridView;
+import com.autodesk.shejijia.consumer.uielements.NoScrollGridView;
 import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
