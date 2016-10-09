@@ -323,6 +323,7 @@
     <string name="designer_measure_fee">量房费&#160;：</string>
     <string name="optional_measure">选TA量房</string>
     <string name="measure_invite">量房邀约</string>
+    <string name="measure_fee_default">0元</string>
 
     <!-- WK3DPlanActivity -->
     <string name="three_plan_name">设计方案名字</string>
