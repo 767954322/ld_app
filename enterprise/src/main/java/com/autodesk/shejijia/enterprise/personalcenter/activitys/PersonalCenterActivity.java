@@ -2,16 +2,9 @@ package com.autodesk.shejijia.enterprise.personalcenter.activitys;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
-import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.personalcenter.fragments.MoreFragment;
-import com.autodesk.shejijia.enterprise.personalcenter.fragments.MyProjectListFragment;
 import com.autodesk.shejijia.enterprise.personalcenter.fragments.PersonalMainFragment;
 
 /**

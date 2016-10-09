@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.autodesk.shejijia.enterprise.projectlists.activitys.ProjectListsActivity;
-import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-
 /**
  * Created by t_xuz on 9/2/16.
  *

@@ -55,7 +55,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.autodesk.shejijia.enterprise.projectlists.activitys.MPSplashActivity"
+            android:name=".nodeprocess.projectlists.activitys.MPSplashActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
@@ -69,21 +69,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".projectlists.activitys.ProjectListsActivity"
+            android:name=".nodeprocess.projectlists.activitys.ProjectListsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".projectdetails.activitys.ProjectDetailsActivity"
+            android:name=".nodeprocess.projectdetails.activitys.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".nodedetails.activity.NodeDetailsActivity"
+            android:name=".nodeprocess.nodedetails.activity.NodeDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustPan"
@@ -222,7 +222,7 @@
         </receiver>
 
         <!--登陆登出等广播接收器-->
-        <receiver android:name=".base.common.receiver.LoginNotificationReceiver"
+        <receiver android:name=".common.receiver.LoginNotificationReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.easyhome.enterprise.logout"/>

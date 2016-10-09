@@ -44,6 +44,5 @@ dependencies {
     compile 'com.android.support:design:'+rootProject.ext.androidSupportLibVersion
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:'+rootProject.ext.androidSupportLibVersion
-    compile 'com.orhanobut:logger:1.15'
     compile project(':shared')
 }

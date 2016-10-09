@@ -1,7 +1,7 @@
 package com.autodesk.shejijia.enterprise.base.network;
 
 import com.android.volley.AuthFailureError;
-import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
+import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
@@ -96,7 +96,7 @@ public class EnterpriseServerHttpManager {
                 + "&like=" + like
                 + "&limit=" + limit
                 + "&offset=" + offset;
-        MyOkJsonRequest okRequest = new MyOkJsonRequest(MyOkJsonRequest.Method.GET, url, null, callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
@@ -140,7 +140,7 @@ public class EnterpriseServerHttpManager {
         String url = Constants.BASE_URL + "/projects"
                 + "/" + pid
                 + "?task_data=true";
-        MyOkJsonRequest okRequest = new MyOkJsonRequest(MyOkJsonRequest.Method.GET, url, null, callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
