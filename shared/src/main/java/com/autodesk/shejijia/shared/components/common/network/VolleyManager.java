@@ -15,7 +15,7 @@ import com.android.volley.toolbox.Volley;
  */
 public class VolleyManager {
 
-    private static final String REQUEST_TAG = "volley_request";
+    public static final String REQUEST_TAG = "volley_request";
 
     private RequestQueue requestQueue = null;
 
@@ -78,7 +78,7 @@ public class VolleyManager {
     /*
     * cancel request by tag if request confirm canceled
     * */
-    public <T>void cancelRequest(@NonNull T tag,Request request){
+    public <T>void cancelRequest(@NonNull T tag,@NonNull Request request){
         if (requestQueue != null){
             if (!request.isCanceled()){
                 requestQueue.cancelAll(tag);
