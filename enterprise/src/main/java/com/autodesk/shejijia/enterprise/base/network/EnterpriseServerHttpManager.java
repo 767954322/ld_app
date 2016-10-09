@@ -7,6 +7,7 @@ import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.base.common.utils.SPConfigUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.network.VolleyManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        EnterpriseApplication.getInstance().queue.add(okRequest);
+        VolleyManager.getInstance().addRequest(okRequest);
     }
 
     /*
@@ -74,7 +75,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        EnterpriseApplication.getInstance().queue.add(okRequest);
+        VolleyManager.getInstance().addRequest("task_details",okRequest);
     }
 
 
@@ -107,7 +108,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        EnterpriseApplication.getInstance().queue.add(okRequest);
+        VolleyManager.getInstance().addRequest(okRequest);
     }
 
 
@@ -130,7 +131,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        EnterpriseApplication.getInstance().queue.add(okRequest);
+        VolleyManager.getInstance().addRequest(okRequest);
     }
 
     /*
@@ -151,6 +152,6 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        EnterpriseApplication.getInstance().queue.add(okRequest);
+        VolleyManager.getInstance().addRequest(okRequest);
     }
 }
