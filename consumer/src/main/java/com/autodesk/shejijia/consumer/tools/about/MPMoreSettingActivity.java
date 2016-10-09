@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -19,6 +18,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DataCleanManager;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -47,8 +47,6 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
         rl_personal_b_about = (RelativeLayout) findViewById(R.id.rl_personal_b_about_designer);
         bt_consumer_exit = (TextView) findViewById(R.id.bt_consumer_exit);
         tv_cache_size = (TextView) findViewById(R.id.tv_cache_size);
-        //获取loginFinishListener实例
-        mLoginFinishListener = (RegisterOrLoginActivity.LoginFinishListener)AdskApplication.getInstance();
     }
 
     @Override
@@ -99,7 +97,7 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
             intentLogout.putExtra(Constant.LOGOUT, Constant.LOGOUT);
             setResult(RESULT_OK, intentLogout);
 
-            mLoginFinishListener.onLogOut();
+            LoginUtils.doLogout(this);
             finish();
 
         }
@@ -198,6 +196,4 @@ public class MPMoreSettingActivity extends NavigationBarActivity implements OnCl
     private Intent intentLogout;
     private String cacheSize, filesSize, externalSize;
     private File cacheDir, filesDir, externalCacheDir;
-    //loginListener
-    private RegisterOrLoginActivity.LoginFinishListener mLoginFinishListener;
 }
