@@ -11,7 +11,7 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header" />
 
-    <com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewLayout
+    <com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollViewLayout
         android:id="@+id/myScrollViewLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +19,7 @@
 
         <include layout="@layout/view_refresh_head" />
 
-        <com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView
+        <com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollView
             android:id="@+id/myScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -52,7 +52,7 @@
                             android:layout_marginTop="@dimen/size_20"
                             >
 
-                            <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+                            <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
                                 android:id="@+id/piv_seek_designer_head"
                                 android:layout_width="@dimen/size_74"
                                 android:layout_height="@dimen/size_74"
@@ -269,7 +269,7 @@
                         </LinearLayout>
 
 
-                        <com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer
+                        <com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer
                             android:id="@+id/choose_point"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -334,10 +334,10 @@
 
                 </RelativeLayout>
             </LinearLayout>
-        </com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollView>
+        </com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollView>
 
         <include layout="@layout/view_load_more" />
-    </com.autodesk.shejijia.shared.components.common.uielements.scrollview.MyScrollViewLayout>
+    </com.autodesk.shejijia.consumer.uielements.scrollview.MyScrollViewLayout>
 
 
     <LinearLayout
@@ -397,7 +397,7 @@
         </LinearLayout>
 
 
-        <com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer
+        <com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer
             android:id="@+id/choose_point_replace"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

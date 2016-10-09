@@ -95,7 +95,7 @@
 
         <include layout="@layout/view_parting_line"></include>
 
-        <com.autodesk.shejijia.shared.components.common.uielements.ListViewForScrollView
+        <com.autodesk.shejijia.consumer.uielements.ListViewForScrollView
             android:id="@+id/lv_decoration_bid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

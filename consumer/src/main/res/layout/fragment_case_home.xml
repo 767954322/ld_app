@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:src="@drawable/shejijia_logo" />
 
-    <com.autodesk.shejijia.shared.components.common.uielements.slippingviewpager.NoSlippingViewPager
+    <com.autodesk.shejijia.consumer.uielements.slippingviewpager.NoSlippingViewPager
         android:id="@+id/case_library_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

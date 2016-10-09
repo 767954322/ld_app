@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools/sjj"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/listview_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_default_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bg_shejijia_emty" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无结果" />
+
+        </LinearLayout>
+
+
+        <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
+            android:id="@+id/ptr_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <cn.finalteam.loadingviewfinal.ListViewFinal
+                android:id="@+id/lv_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:divider="@null"
+                android:scrollbars="none"
+                app:loadMoreMode="scroll" />
+
+        </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
+    </RelativeLayout>
+
+    <com.autodesk.shejijia.consumer.uielements.FloatingActionMenu
+        android:id="@+id/add_menu_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="@dimen/size_16"
+        android:layout_marginRight="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_16"
+        android:visibility="gone"
+        fab:menu_colorNormal="@android:color/transparent"
+        fab:menu_colorPressed="@android:color/transparent"
+        fab:menu_icon="@drawable/openfloat"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_maxLines="2"
+        fab:menu_labels_style="@style/MenuLabelsStyle"
+        fab:menu_shadowRadius="@dimen/size_0">
+
+    </com.autodesk.shejijia.consumer.uielements.FloatingActionMenu>
+
+</RelativeLayout>

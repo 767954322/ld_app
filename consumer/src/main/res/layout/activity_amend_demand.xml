@@ -447,7 +447,7 @@
                 android:text="@string/demand_village_name"
                 android:textSize="@dimen/font_16" />
 
-            <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+            <com.autodesk.shejijia.consumer.uielements.TextViewContent
                 android:id="@+id/et_issue_demand_detail_address"
                 android:layout_width="@dimen/size_0"
                 android:layout_height="wrap_content"
