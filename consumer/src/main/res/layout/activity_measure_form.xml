@@ -475,12 +475,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_measure_house_time" />
 
-                <com.autodesk.shejijia.shared.components.common.uielements.TextViewContent
+                <TextView
                     android:id="@+id/tvc_measure_form_time"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
+                    android:gravity="center_vertical"
                     android:ems="10"
                     android:hint="请选择量房时间"
                     android:textSize="@dimen/font_12" />

@@ -84,7 +84,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         tvc_fitment_budget = (TextView) findViewById(R.id.tvc_measure_fitment_budget);
         tvc_area = (TextViewContent) findViewById(R.id.tvc_measure_form_area);
         tvc_house_type = (TextView) findViewById(R.id.tvc_measure_form_house_type);
-        tvc_time = (TextViewContent) findViewById(R.id.tvc_measure_form_time);
+        tvc_time = (TextView) findViewById(R.id.tvc_measure_form_time);
         tvc_address = (TextView) findViewById(R.id.tvc_measure_form_address);
         tvc_estate = (TextViewContent) findViewById(R.id.tvc_measure_form_estate);
         tv_measure_fee = (TextView) findViewById(R.id.tv_measure_form_liangfangfei);
@@ -828,7 +828,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private TextView tvc_fitment_budget;
     private TextViewContent tvc_area;
     private TextView tvc_house_type;
-    private TextViewContent tvc_time;
+    private TextView tvc_time;
     private TextView tvc_address;
     private TextViewContent tvc_estate;
     private TextView tv_measure_fee;
