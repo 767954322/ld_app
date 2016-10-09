@@ -171,7 +171,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:ems="10"
-                    android:hint="@string/demand_import_limit"
+                    android:hint="@string/demand_room_area"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12" />
 
