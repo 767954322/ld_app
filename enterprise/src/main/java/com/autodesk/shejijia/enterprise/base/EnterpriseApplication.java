@@ -2,12 +2,9 @@ package com.autodesk.shejijia.enterprise.base;
 
 import android.app.Application;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.shared.components.common.network.VolleyManager;
+import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
@@ -30,7 +27,7 @@ public class EnterpriseApplication extends Application{ //TODO why not extends s
         application = this;
 
         //初始化网络请求队列
-        VolleyManager.getInstance().init(this);
+        NetRequestManager.getInstance().init(this);
 
         //初始化 IM 相关
         boolean imServer = ApiManager.isRunningDevelopment(ApiManager.RUNNING_DEVELOPMENT);

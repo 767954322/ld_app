@@ -1,13 +1,10 @@
 package com.autodesk.shejijia.enterprise.base.network;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.autodesk.shejijia.enterprise.base.EnterpriseApplication;
 import com.autodesk.shejijia.enterprise.base.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.base.common.utils.SPConfigUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.VolleyManager;
+import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +47,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        VolleyManager.getInstance().addRequest(okRequest);
+        NetRequestManager.getInstance().addRequest(okRequest);
     }
 
     /*
@@ -75,7 +72,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        VolleyManager.getInstance().addRequest("task_details",okRequest);
+        NetRequestManager.getInstance().addRequest("task_details",okRequest);
     }
 
 
@@ -108,7 +105,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        VolleyManager.getInstance().addRequest(okRequest);
+        NetRequestManager.getInstance().addRequest(okRequest);
     }
 
 
@@ -131,7 +128,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        VolleyManager.getInstance().addRequest(okRequest);
+        NetRequestManager.getInstance().addRequest(okRequest);
     }
 
     /*
@@ -152,6 +149,6 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        VolleyManager.getInstance().addRequest(okRequest);
+        NetRequestManager.getInstance().addRequest(okRequest);
     }
 }
