@@ -66,7 +66,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcFitmentBudget = (TextView) findViewById(R.id.tvc_measure_fitment_budget);
         tvcArea = (TextViewContent) findViewById(R.id.tvc_measure_form_area);
         tvcHouseType = (TextView) findViewById(R.id.tvc_measure_form_house_type);
-        tvcTime = (TextViewContent) findViewById(R.id.tvc_measure_form_time);
+        tvcTime = (TextView) findViewById(R.id.tvc_measure_form_time);
         tvcAddress = (TextView) findViewById(R.id.tvc_measure_form_address);
         tvcEstate = (TextViewContent) findViewById(R.id.tvc_measure_form_estate);
         tvMeasureFee = (TextView) findViewById(R.id.tv_measure_form_liangfangfei);
@@ -367,7 +367,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     private TextView tvcFitmentBudget;
     private TextViewContent tvcArea;
     private TextView tvcHouseType;
-    private TextViewContent tvcTime;
+    private TextView tvcTime;
     private TextView tvcAddress;
     private TextViewContent tvcEstate;
     private TextView tvMeasureFee;
