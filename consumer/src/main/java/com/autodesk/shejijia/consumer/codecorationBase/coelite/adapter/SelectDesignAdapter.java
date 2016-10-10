@@ -114,9 +114,11 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         jumpBean.setReciever_hs_uid(biddersBean.getUid());
         jumpBean.setReciever_user_id(designer_id);
         jumpBean.setReciever_user_name(userName);
+        jumpBean.setThread_id(biddersBean.getDesign_thread_id());
         jumpBean.setAcs_member_id(memberEntity.getAcs_member_id());
         jumpBean.setMember_type(memberEntity.getMember_type());
         JumpToChatRoom.getChatRoom(context,jumpBean);
+
     }
     private void verification(int key,Button button,TextView textView){
         if(falg){
