@@ -1,14 +1,13 @@
 package com.autodesk.shejijia.shared.components.im.fragment;
 
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +73,6 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        clearAllPushNotificationsFromStatusbar();
         refresh();
     }
 
@@ -95,7 +93,6 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
 
     public void onFragmentShown() {
-        clearAllPushNotificationsFromStatusbar();
         refresh();
     }
 
@@ -215,12 +212,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         mActivity.startActivity(intent);
     }
 
-    private void onThreadsReceived(MPChatThreads threads) {
-        ArrayList<MPChatThread> threadArray = threads.threads;
-        insertThreads(threadArray);
 
-        mThreadsExhausted = threadArray.size() < LIMIT;
-    }
 
 
     private void onNewMessageReceived(Intent intent) {
@@ -272,9 +264,18 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         MPChatHttpManager.getInstance().retrieveMemberThreads(mMemberId, mIsFileBase, offset, limit, callback);
     }
 
+    private void onThreadsReceived(MPChatThreads threads) {
+        ArrayList<MPChatThread> threadArray = threads.threads;
+        insertThreads(threadArray);
+
+        mThreadsExhausted = threadArray.size() < LIMIT;
+    }
+
 
     private void insertThreads(ArrayList<MPChatThread> threads) {
         mThreadList.addAll(threads);
+        TOTALITEMCOUNT = mThreadList.size();
+        Log.i("yaoxuehua",""+TOTALITEMCOUNT);
         mThreadListAdapter.notifyDataSetChanged();
     }
 
@@ -287,9 +288,17 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
     private void refresh() {
+        if (mMemberId != null){
 
-        if (mMemberId != null)
-            getMemberThreadsForOffset(0, LIMIT);
+            if (mIsFirstInto){
+
+                getMemberThreadsForOffset(0, LIMIT);
+                mIsFirstInto = false;
+            }else {
+
+                getMemberThreadsForOffset(0, TOTALITEMCOUNT);
+            }
+        }
     }
 
 
@@ -301,28 +310,13 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    private void clearAllPushNotificationsFromStatusbar() {
-
-        NotificationManager nm = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (nm != null)
-            nm.cancelAll();
-
-        SharedPreferences sharedpreferences =  getActivity().getSharedPreferences(AdskApplication.JPUSH_STORE_KEY, Context.MODE_PRIVATE);
-
-        if (sharedpreferences != null)
-        {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.clear();
-            editor.commit();
-        }
-    }
-
     private static final int LIMIT = 20;
+    private static int TOTALITEMCOUNT = 0;//totalItemCount
 
     private String mMemberId;
     private String mMemberType;
     private boolean mIsFileBase;
+    private boolean mIsFirstInto = true;
 
     private ArrayList<MPChatThread> mThreadList = new ArrayList<MPChatThread>();
     private boolean mThreadsExhausted;
