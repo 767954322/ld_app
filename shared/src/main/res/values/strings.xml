@@ -368,7 +368,7 @@
     <string name="demand_please_project_types">请选择房屋类型</string>
     <string name="demand_please_project_types_select">请选择房屋类型(选填)</string>
     <string name="demand_import_area">请输入面积</string>
-    <string name="demand_import_limit">请输入1-9999数值</string>
+    <string name="demand_import_limit">请输入房屋面积</string>
     <string name="demand_room_area">请输入房屋面积</string>
     <string name="issue_room">请选择户型</string>
 
@@ -492,7 +492,7 @@
     <string name="requirements_optimal">竞优量房表单</string>
     <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
     <string name="please_input_correct_area">房屋面积必须是1到9999之间的值</string>
-    <string name="alert_msg_area">请输入1-9999之间的数字</string>
+    <string name="alert_msg_area">房屋面积必须是1到9999之间的值</string>
     <string name="please_input_correct_area_point">整数部分不允许全部为0</string>
 
     <string name="please_select_form">请选择户型</string>
