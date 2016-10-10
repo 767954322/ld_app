@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -177,6 +176,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 return;
             }
             mTvLoginOrRegister.setText(mConsumerEssentialInfoEntity.getNick_name());
+
             if (!TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar()) && ConsumerPersonalCenterActivity.this != null) {
                 ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), mPolygonImageView);
             }

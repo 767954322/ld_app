@@ -58,8 +58,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
+                    android:ellipsize="end"
                     android:focusable="true"
-                    android:text="@string/login"
+                    android:singleLine="true"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_18"/>
             </LinearLayout>
@@ -75,17 +76,17 @@
                     android:id="@+id/edit_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="@dimen/size_20"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/size_20"
                     android:src="@drawable/icon_issue_demand_normal"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/edit_icon"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/edit_icon"
                     android:text="@string/requirements"
                     android:textColor="@color/bg_33"/>
 
@@ -157,17 +158,17 @@
                     android:id="@+id/focus_icon"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="@dimen/size_20"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/size_20"
                     android:src="@drawable/ic_following"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/focus_icon"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/focus_icon"
                     android:text="@string/my_attention"
                     android:textColor="@color/bg_33"/>
 
