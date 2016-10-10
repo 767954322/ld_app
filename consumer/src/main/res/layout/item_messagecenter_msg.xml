@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
             android:layout_below="@id/ll_msg_tag"
-            android:layout_marginLeft="@dimen/font_25"
+            android:layout_marginLeft="@dimen/font_15"
             android:layout_marginRight="@dimen/size_20"
             android:layout_marginTop="@dimen/size_2"
             android:background="@color/bg_d7" />

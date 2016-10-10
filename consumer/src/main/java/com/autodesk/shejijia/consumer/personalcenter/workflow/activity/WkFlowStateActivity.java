@@ -26,6 +26,7 @@ import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
@@ -168,9 +169,9 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
                 jumpBean.setThread_id(mThreead_id);
                 jumpBean.setAsset_id(needs_id);
-
                 jumpBean.setAcs_member_id(mMemberEntity.getAcs_member_id());
                 jumpBean.setMember_type(mMemberEntity.getMember_type());
+                jumpBean.setMediaIdProject(UrlMessagesContants.mediaIdProject);
                 JumpToChatRoom.getChatRoom(this, jumpBean);
 
                 break;
