@@ -93,7 +93,8 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         holder.setOnClickListener(R.id.bt_select_ta_measure_form, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                measureFormCallBack.measureForm( biddersBean.getDesigner_id());
+
+                measureFormCallBack.measureForm( biddersBean.getDesigner_id(),biddersBean.getOrders().size() > 0?true:false);
             }
         });
     }
@@ -139,6 +140,6 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
 
     }
     public interface MeasureFormCallBack {
-        void measureForm(String designer_id);
+        void measureForm(String designer_id,boolean falg);
     }
 }

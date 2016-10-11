@@ -192,6 +192,7 @@ public class Constant {
         public static String HS_UID = "HS_UID";
         public static String FLOW_STATE = "FLOW_STATE";
         public static String DESIGNER_STYLE_ALL = "DESIGNERSTYLEALL";
+        public static String ORDERS = "ORSERSIZE";
 
         public static String ORDER_ID = "order_id";
         public static String ORDER_LINE_ID = "order_line_id";
