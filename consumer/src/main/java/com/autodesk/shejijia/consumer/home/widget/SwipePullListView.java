@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.Pullable;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.Pullable;
 
 /**
  * @author luchongbin .

@@ -2,6 +2,8 @@ package com.autodesk.shejijia.consumer.base.utils;
 
 import android.text.TextUtils;
 
+import com.autodesk.shejijia.shared.components.common.utility.ObjectUtils;
+
 import java.util.Map;
 
 /**
