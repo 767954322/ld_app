@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#eef1f4"
     android:orientation="horizontal">
+
+    <include
+        android:id="@+id/decoration_ref"
+        layout="@layout/view_navigation_header" />
 
     <RelativeLayout
         android:id="@+id/item_relayout_left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/font_20"
+        android:layout_below="@+id/decoration_ref"
         android:background="@color/white">
-
-        <CheckBox
-            android:id="@+id/item_msg_checkout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            />
 
         <RelativeLayout
             android:id="@+id/ll_msg_tag"
@@ -33,14 +30,15 @@
                 android:layout_marginLeft="@dimen/font_15"
                 android:layout_marginRight="@dimen/font_35"
                 android:layout_marginTop="@dimen/font_10"
-                android:text="@string/item_messagecenter_tital"
-                android:textSize="@dimen/size_14"
+                android:text="清单编号："
+                android:textSize="@dimen/size_16"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_msg_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/size_16"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/size_20"
                 android:layout_marginTop="@dimen/font_10"
@@ -68,30 +66,9 @@
             android:layout_marginRight="@dimen/font_35"
             android:layout_marginTop="@dimen/font_10"
             android:text="内容"
-            android:textSize="@dimen/size_14"
+            android:textSize="@dimen/size_16"
             android:layout_toRightOf="@+id/item_msg_checkout"/>
 
 
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/item_relayout_right"
-        android:layout_width="@dimen/size_24"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/font_20"
-        android:background="@android:color/holo_red_dark">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_delete"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_17"
-            android:textStyle="bold"
-            android:text="删除"/>
-
-    </RelativeLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

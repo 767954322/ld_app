@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBody;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -130,18 +132,20 @@ public class MessageCenterAdapter extends BaseAdapter {
         myHolder.tv_msg_title.setText(title);
         myHolder.tv_msg_date.setText(timeMY);
 
+        String show_Body = "";
         if (!TextUtils.isEmpty(body) && body.contains("&quot;")) {
             MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
 
             Log.d("test", messageCenterBody.toString());
             if (ifIsDesiner) {
-                myHolder.item_msg_content.setText(messageCenterBody.getFor_designer().replace("&gt;", ">"));
+                show_Body = messageCenterBody.getFor_designer().replace("&gt;", ">");
             } else {
-                myHolder.item_msg_content.setText(messageCenterBody.getFor_consumer().replace("&gt;", ">"));
+                show_Body = messageCenterBody.getFor_consumer().replace("&gt;", ">");
             }
         } else {
-            myHolder.item_msg_content.setText(body.replace("&gt;", ">"));
+            show_Body = body.replace("&gt;", ">");
         }
+        myHolder.item_msg_content.setText(show_Body);
         // 设置添加消息左滑删除功能
         LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
@@ -149,10 +153,16 @@ public class MessageCenterAdapter extends BaseAdapter {
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(right_wid, LinearLayout.LayoutParams.MATCH_PARENT);
         myHolder.item_right.setLayoutParams(lp2);
 
+        final String finalShow_Body = show_Body;
         myHolder.item_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(mContext, "左侧", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(mContext, MessageCenterDetailActivity.class);
+                intent.putExtra("messagesBean", messagesBean);
+                intent.putExtra("show_Body", finalShow_Body);
+                mContext.startActivity(intent);
+
             }
         });
         final View finalConvertView = convertView;
@@ -167,6 +177,7 @@ public class MessageCenterAdapter extends BaseAdapter {
             }
         });
         myHolder.checkBox.setChecked(mCheckeds.contains(position));
+        Log.d("tezst", position + ":" + mCheckeds.size() + "");
         //checkBox设置
         if (!isClickEditor) {
             myHolder.checkBox.setVisibility(View.GONE);
@@ -174,15 +185,27 @@ public class MessageCenterAdapter extends BaseAdapter {
             myHolder.checkBox.setVisibility(View.VISIBLE);
         }
         //checkBox监听
-        myHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mCheckeds.add(position);
-                } else {
-                    mCheckeds.remove(position);
-                }
+//        myHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    mCheckeds.add(position);
+//                } else {
+//                    mCheckeds.remove(position);
+//                    Log.d("tezst",position+"被从Set集合清楚了删除了");
+//                }
+//
+//            }
+//        });
 
+        myHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCheckeds.contains(position)) {
+                    mCheckeds.remove(position);
+                } else {
+                    mCheckeds.add(position);
+                }
             }
         });
 
