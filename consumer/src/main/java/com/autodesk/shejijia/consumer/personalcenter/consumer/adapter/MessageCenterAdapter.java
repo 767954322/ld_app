@@ -44,6 +44,8 @@ public class MessageCenterAdapter extends BaseAdapter {
 
 
     private List<MessageCenterBean.MessagesBean> mCasesEntities;
+    private List<MessageCenterBean.MessagesBean> listMessagesBeans;
+    private List<Integer> listposition;
     private final Set<Integer> mCheckeds;
 
 
@@ -53,6 +55,8 @@ public class MessageCenterAdapter extends BaseAdapter {
         this.mCasesEntities = mCasesEntities;
         this.ifIsDesiner = ifIsDesiner;
         this.right_wid = right_wid;
+        listMessagesBeans = new ArrayList<>();
+        listposition = new ArrayList<>();
     }
 
     public Set<Integer> getmCheckeds() {
@@ -155,30 +159,32 @@ public class MessageCenterAdapter extends BaseAdapter {
         myHolder.item_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                deleteMessage.deleteOneMsg(position, messagesBean, finalConvertView);
+                listMessagesBeans.clear();
+                listMessagesBeans.add(messagesBean);
+                listposition.add(position);
+                deleteMessage.deleteMsgs(listposition, listMessagesBeans, finalConvertView);
 
             }
         });
-//        myHolder.checkBox.setChecked(mCheckeds.contains(position));
-//        //checkBox设置
-//        if (!isClickEditor) {
-//            myHolder.checkBox.setVisibility(View.GONE);
-//        } else {
-//            myHolder.checkBox.setVisibility(View.VISIBLE);
-//        }
-//        //checkBox监听
-//        myHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked) {
-//                    mCheckeds.add(position);
-//                } else {
-//                    mCheckeds.remove(position);
-//                }
-//
-//            }
-//        });
+        myHolder.checkBox.setChecked(mCheckeds.contains(position));
+        //checkBox设置
+        if (!isClickEditor) {
+            myHolder.checkBox.setVisibility(View.GONE);
+        } else {
+            myHolder.checkBox.setVisibility(View.VISIBLE);
+        }
+        //checkBox监听
+        myHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mCheckeds.add(position);
+                } else {
+                    mCheckeds.remove(position);
+                }
+
+            }
+        });
 
         return convertView;
     }
@@ -212,7 +218,7 @@ public class MessageCenterAdapter extends BaseAdapter {
     }
 
     public interface DeleteMessage {
-        public void deleteOneMsg(int position, MessageCenterBean.MessagesBean messagesBean,View convertView);
+        public void deleteMsgs(List<Integer> listpositions, List<MessageCenterBean.MessagesBean> listMessagesBeans, View convertView);
     }
 
 }
