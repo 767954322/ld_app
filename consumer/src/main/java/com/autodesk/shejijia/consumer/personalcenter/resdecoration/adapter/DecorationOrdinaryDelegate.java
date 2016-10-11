@@ -98,6 +98,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         }
 
         district_name = StringUtils.isEmpty(district_name) ? "" : district_name;
+
         String address = province_name + city_name + district_name;
 
         /// 项目地址
