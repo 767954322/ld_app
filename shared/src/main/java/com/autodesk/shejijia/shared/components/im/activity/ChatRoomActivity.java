@@ -276,6 +276,8 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
 
             @Override
             public void onResponse(String response) {
+//                //fixme bug DP-6146
+                refresh();
             }
         };
 
