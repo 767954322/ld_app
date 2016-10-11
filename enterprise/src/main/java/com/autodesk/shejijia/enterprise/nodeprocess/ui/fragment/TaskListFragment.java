@@ -6,12 +6,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
+import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListsPresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.impl.ProjectListsPresenterImpl;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.TaskListAdapter;
@@ -53,7 +55,7 @@ public class TaskListFragment extends BaseFragment implements ProjectListsView{
             LogUtils.e("acs_token", entity.getToken());
             //get TaskLists
             //getTaskLists("2016-08-08",0,10,0,"587e1e6bd9c26875535868dec8e3045c");
-            mProjectListPresenter.loadTaskListData("2016-08-08","tasklist",10,false);
+            mProjectListPresenter.loadTaskListData("2016-08-08",Constants.REFRESH_EVENT,"tasklist",0,false);
         }
     }
 
@@ -70,9 +72,21 @@ public class TaskListFragment extends BaseFragment implements ProjectListsView{
     protected void initEvents() {
     }
 
+    /*
+    * 当网络请求返回结果成功,presenter回掉view层的该方法,进行结果集的传递
+    * */
     @Override
     public void refreshProjectListData(TaskListBean taskListBean) {
 
+        if (taskListBean != null){
+            //获取当前日期(默认就是当前日期)的任务列表
+            taskLists = taskListBean.getData();
+            if (taskLists!=null && taskLists.size()>0) {
+                //显示任务列表到页面上
+                mTaskListAdapter = new TaskListAdapter(taskLists, R.layout.listitem_task_list_view, mContext);
+                mTaskListView.setAdapter(mTaskListAdapter);
+            }
+        }
     }
 
     @Override
@@ -87,26 +101,6 @@ public class TaskListFragment extends BaseFragment implements ProjectListsView{
 
     @Override
     public void navigateTaskDetails(View view, int position, TaskListBean taskListBean) {
-
-    }
-
-    @Override
-    public void showNetError(String msg) {
-
-    }
-
-    @Override
-    public void showError(String msg) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
 
     }
 

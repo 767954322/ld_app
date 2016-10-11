@@ -31,5 +31,8 @@ public class Constants {
     public static final String REFRESH_EVENT = "refresh";
     public static final String LOAD_MORE_EVENT = "loadMore";
 
+    //分页加载数据每页数据的个数
+    public static final int PAGE_LIMIT = 10;
+
 
 }

@@ -91,9 +91,8 @@ public class EnterpriseServerHttpManager {
                              final int offset,
                              final String token,
                              OkJsonRequest.OKResponseCallback callback) {
-        String url = Constants.BASE_URL + "/tasks?"
+        String url = Constants.BASE_URL + "/users/projects?"
                 + "findDate=" + findDate
-                + "&like=" + like
                 + "&limit=" + limit
                 + "&offset=" + offset;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {

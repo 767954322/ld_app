@@ -5,5 +5,5 @@ package com.autodesk.shejijia.enterprise.nodeprocess.interactor;
  */
 public interface ProjectListInteractor {
 
-    void getProjectListData(String findDate,String requestTag,int pageSize);
+    void getProjectListData(String findDate,String eventTag,String requestTag,int pageSize,String token);
 }

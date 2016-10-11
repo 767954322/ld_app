@@ -3,6 +3,7 @@ package com.autodesk.shejijia.enterprise.nodeprocess.interactor.impl;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.Interface.BaseLoadedListener;
+import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.nodeprocess.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.interactor.ProjectListInteractor;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
@@ -25,16 +26,16 @@ public class ProjectListInteratorImpl implements ProjectListInteractor{
     }
 
     @Override
-    public void getProjectListData(String findDate,String requestTag, int pageSize) {
+    public void getProjectListData(String findDate,final String eventTag,String requestTag, int pageSize, String token) {
 
-        EnterpriseServerHttpManager.getInstance().getTaskLists(findDate, 0, 10, pageSize, "", new OkJsonRequest.OKResponseCallback() {
+        EnterpriseServerHttpManager.getInstance().getTaskLists(findDate, 0, Constants.PAGE_LIMIT, pageSize, token, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
                 LogUtils.d(jsonObject+"");
                 String result = jsonObject.toString();
                 TaskListBean taskListBean = GsonUtil.jsonToBean(result, TaskListBean.class);
-                mLoadedListener.onSuccess(taskListBean);
+                mLoadedListener.onSuccess(eventTag,taskListBean);
             }
 
             @Override

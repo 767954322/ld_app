@@ -20,13 +20,19 @@ public class ProjectListsPresenterImpl implements ProjectListsPresenter,BaseLoad
     private Context mContext;
     private ProjectListsView mProjectListsView;
     private ProjectListInteractor mProjectListInteractor;
+    private String XToken;
 
     public ProjectListsPresenterImpl(Context context,ProjectListsView projectListsView){
         this.mContext = context;
         this.mProjectListsView = projectListsView;
         mProjectListInteractor = new ProjectListInteratorImpl(this);
+        //获取token
+        XToken = "587e1e6bd9c26875535868dec8e3045c";
     }
 
+    /*
+    * 从model层获取数据成功回调方法(如:网络请求返回的结果,数据库查询的结果)
+    * */
     @Override
     public void onSuccess(String eventTag,TaskListBean data) {
         mProjectListsView.hideLoading();
@@ -37,16 +43,22 @@ public class ProjectListsPresenterImpl implements ProjectListsPresenter,BaseLoad
         }
     }
 
+    /*
+    * 从 model层获取数据失败回调方法(如:网络返回错误,数据库查询错误)
+    * */
     @Override
     public void onError(String msg) {
         mProjectListsView.hideLoading();
         mProjectListsView.showNetError(msg);
     }
 
+    /*
+    * presenter层提供给view层回调的方法,主要根据view层传入的参数来调用model层的方法
+    * */
     @Override
-    public void loadTaskListData(String findDate,String requestTag, int pageSize, boolean isSwipeRefresh) {
+    public void loadTaskListData(String findDate,String eventTag,String requestTag, int pageSize, boolean isSwipeRefresh) {
         mProjectListsView.hideLoading();
-        mProjectListInteractor.getProjectListData(findDate,requestTag,pageSize);
+        mProjectListInteractor.getProjectListData(findDate,eventTag,requestTag,pageSize,XToken);
     }
 
     @Override

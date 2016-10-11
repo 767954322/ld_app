@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseFragmentActivity;
+import com.autodesk.shejijia.enterprise.nodeprocess.view.base.BaseView;
 
 /**
  * Created by t_xuz on 8/15/16.
  *
  */
-public abstract class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment implements BaseView{
 
     protected BaseActivity mContext;
 
@@ -49,5 +50,23 @@ public abstract class BaseFragment extends Fragment{
 
     protected abstract void initEvents();
 
+    @Override
+    public void showNetError(String msg) {
 
+    }
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
 }

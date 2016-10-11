@@ -14,7 +14,7 @@ public interface ProjectListsPresenter {
     /*
     * 加载所有任务列表的方法
     * */
-    void loadTaskListData(String findDate,String requestTag,int pageSize,boolean isSwipeRefresh);
+    void loadTaskListData(String findDate,String eventTag,String requestTag,int pageSize,boolean isSwipeRefresh);
 
     /*
     * 跳转项目详情页的监听器
