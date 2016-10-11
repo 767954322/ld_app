@@ -694,7 +694,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
             //REFACTOR
             if (!consumerEmail.equals("")) { // 验证邮箱可以为空，不为空的时候用正则验证
-                if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
+                if (!consumerEmail.matches(RegexUtil.EMAIL)) {
                     showAlertView(R.string.please_input_consumer_email_correctly);
                     bValid = false;
                     break;
