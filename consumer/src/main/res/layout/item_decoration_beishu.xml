@@ -257,8 +257,8 @@
                 android:layout_gravity="center"
                 android:background="@drawable/bg_btn_filtrate_pressed"
                 android:text="@string/designer_online_communication"
-                android:textColor="@color/bg_0084ff"
-                android:textSize="@dimen/font_13"/>
+                android:textSize="@dimen/font_13"
+                android:textColor="@color/bg_0084ff"/>
 
         </LinearLayout>
 
