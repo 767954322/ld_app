@@ -95,17 +95,16 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? UIUtils.getString(R.string.no_select) : house_type);
         }
 
-        district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
+        district_name = StringUtils.isEmpty(district_name)?"":district_name;
         String address = province_name + city_name + district_name;
 
         /// 项目地址
-        if (TextUtils.isEmpty(city_name)) {
+        if (StringUtils.isEmpty(province_name)) {
             holder.setText(R.id.tv_decoration_address, UIUtils.getString(R.string.no_select));
         } else {
             holder.setText(R.id.tv_decoration_address, address);
         }
 
-        holder.setText(R.id.tv_decoration_address, province_name + city_name + district_name);
         holder.setText(R.id.tv_decoration_phone, decorationNeedsListBean.getContacts_mobile());
 
         String decoration_style = decorationNeedsListBean.getDecoration_style();
