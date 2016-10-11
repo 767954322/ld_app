@@ -46,6 +46,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     public static final String CHOSEN_PHOTO = "chosenphoto";
 
 
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_chat_room;
@@ -62,6 +63,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
         rl_chat_custom_button = (RelativeLayout) findViewById(R.id.rl_chat_custom_button);
         mWorkflowText = (TextView) findViewById(R.id.chat_custom_button_hint);
         mAudioParentView = (RelativeLayout) findViewById(R.id.audio_recording_parent_view);
+        titleTextView = (TextView) findViewById(R.id.nav_title_textView);
         mBottomCustomLayout.setVisibility(View.GONE);
 
 
@@ -76,6 +78,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mIsToolViewOpen = false;
+        titleTextView.setMaxEms(20);//因为不知道修改公用的布局会不会有影响才在此处修改当前类的标题长度
     }
 
 
@@ -572,6 +575,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     private ImageView mSelectTakeImageButton;
     private ImageView mWorkflowButton;
     private TextView mWorkflowText;
+    private TextView titleTextView;
     private int wk_cur_sub_node_idi; //全流程标识
     private ImageButton secondaryImageButton;
     private ImageButton rightImageButton;

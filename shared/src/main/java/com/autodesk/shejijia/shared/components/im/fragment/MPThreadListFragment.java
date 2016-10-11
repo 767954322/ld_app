@@ -194,7 +194,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
         String mediaType = MPChatUtility.getMediaTypeFromThread(thread);
         intent.putExtra(ChatRoomActivity.MEDIA_TYPE, mediaType);
-
+        intent.putExtra(ChatRoomActivity.PROJECT_TITLE, MPChatUtility.getAssetNameFromThread(thread));
         if (mIsFileBase) {
             intent.putExtra(ImageChatRoomActivity.SERVERFILEURL, MPChatUtility.getFileUrlFromThread(thread));
 
