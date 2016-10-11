@@ -27,5 +27,9 @@ public class Constants {
     public static final String PERSONAL_MORE_FRAGMENT = "MoreFragment";
     public static final String PERSONAL_POJECTLIST_FRAGMENT = "MyProjectListFragment";
 
+    //下拉刷新,上拉加载更多事件标记
+    public static final String REFRESH_EVENT = "refresh";
+    public static final String LOAD_MORE_EVENT = "loadMore";
+
 
 }

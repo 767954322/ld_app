@@ -36,13 +36,11 @@ public class bottomDialogTest {
        /* textView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showShort(ProjectListsActivity.this,"预约时间已录入!");
             }
         });
         textView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showShort(ProjectListsActivity.this,"预约时间已录入!");
             }
         });*/
 

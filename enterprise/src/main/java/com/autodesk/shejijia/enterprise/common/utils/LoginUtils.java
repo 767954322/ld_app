@@ -3,7 +3,7 @@ package com.autodesk.shejijia.enterprise.common.utils;
 import android.content.Context;
 import android.content.Intent;
 
-import com.autodesk.shejijia.enterprise.nodeprocess.projectlists.activitys.ProjectListsActivity;
+import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.EnterpriseHomeActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
@@ -52,7 +52,7 @@ public class LoginUtils {
 
         LogUtils.e("login--entity",entity+"");
         // 跳转到项目列表页
-        Intent intent = new Intent(mContext, ProjectListsActivity.class);
+        Intent intent = new Intent(mContext, EnterpriseHomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
     }

@@ -55,7 +55,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".nodeprocess.projectlists.activitys.MPSplashActivity"
+            android:name=".base.activitys.MPSplashActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
@@ -69,21 +69,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".nodeprocess.projectlists.activitys.ProjectListsActivity"
+            android:name=".nodeprocess.ui.activity.EnterpriseHomeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".nodeprocess.projectdetails.activitys.ProjectDetailsActivity"
+            android:name=".nodeprocess.ui.activity.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".nodeprocess.nodedetails.activity.NodeDetailsActivity"
+            android:name=".nodeprocess.ui.activity.NodeDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustPan"
