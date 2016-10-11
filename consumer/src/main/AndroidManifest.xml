@@ -125,6 +125,11 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".personalcenter.consumer.activity.MessageCenterDetailActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".personalcenter.consumer.activity.ConsumerEssentialInfoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -402,6 +407,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             />
+
         <activity
             android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity2"
             android:alwaysRetainTaskState="true"
@@ -561,6 +567,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             />
+
         <activity
             android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"
             android:alwaysRetainTaskState="true"
