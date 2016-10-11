@@ -264,16 +264,16 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 setItemAnimationForView(textColor, viewHolder);
             }
         } else {
-            if (stateCode >= 41) {
+            if (stateCode >= 41||stateCode == 32) {
                 textColor = StepEnableColor;
                 drawable = R.drawable.flow_first_pay_liang;
             } else {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.flow_first_pay_an;
             }
-//            if (stateCode == 32) {
-//                setItemAnimationForView(textColor, viewHolder);
-//            }
+            if (stateCode == 32) {
+                setItemAnimationForView(textColor, viewHolder);
+            }
         }
         initViewHolder(viewHolder, drawable, textColor);
 
@@ -311,9 +311,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.flow_contract_an;
             }
-            if (stateCode == 32) {
-                setItemAnimationForView(textColor, viewHolder);
-            }
+//            if (stateCode == 32) {
+//                setItemAnimationForView(textColor, viewHolder);
+//            }
         }
 
         if (stateCode == 11 || stateCode == 31 || stateCode == 24 || stateCode == 33) {
@@ -350,9 +350,9 @@ public class WkFlowStateAdapter extends BaseAdapter {
                 textColor = StepDisEnableColor;
                 drawable = R.drawable.flow_contract_an;
             }
-            if (stateCode == 32) {
-                setItemAnimationForView(textColor, viewHolder);
-            }
+//            if (stateCode == 32) {
+//                setItemAnimationForView(textColor, viewHolder);
+//            }
         }
         if (stateCode == 21 || stateCode == 22 || stateCode == 31) {
             setItemAnimationForView(textColor, viewHolder);
