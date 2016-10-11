@@ -50,10 +50,9 @@
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/size_5"
-                android:background="@color/white"
                 android:drawablePadding="@dimen/size_8"
                 android:enabled="false"
-                android:src="@drawable/im_ico" />
+                android:background="@drawable/im_ico" />
         </RelativeLayout>
 
     </LinearLayout>
