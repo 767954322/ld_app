@@ -36,6 +36,7 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -53,6 +54,8 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     private TextView tv_msg_delete_all;
     private CheckBox cb_msg_delete_all;
     private RelativeLayout rl_msg_delete_msgs;
+    private List<MessageCenterBean.MessagesBean> listMessagesBeans;
+    private List<Integer> listpositions;
 
     @Override
     protected int getLayoutResId() {
@@ -82,9 +85,11 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
 
         mContext = this;
         setTitleForNavbar(UIUtils.getString(R.string.title_messagecenter));
-//        nav_right_textView.setVisibility(View.VISIBLE);
-//        nav_right_textView.setTextColor(Color.BLUE);
-//        nav_right_textView.setText("编辑");
+        listMessagesBeans = new ArrayList<>();
+        listpositions = new ArrayList<>();
+        nav_right_textView.setVisibility(View.VISIBLE);
+        nav_right_textView.setTextColor(Color.BLUE);
+        nav_right_textView.setText("编辑");
         mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(mMemberEntity.getMember_type())) {
             ifIsDesiner = true;
@@ -119,35 +124,36 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
             case R.id.nav_left_imageButton:
                 finish();
                 break;
-            case R.id.nav_right_textView:
+            case R.id.nav_right_textView://编辑
 
-                //编辑
-//                boolean changeStatus_editor = messageCenterAdapter.getEditor() ? false : true;
-//                if (changeStatus_editor) {
-//                    rl_msg_delete_msgs.setVisibility(View.VISIBLE);
-//                } else {
-//                    rl_msg_delete_msgs.setVisibility(View.GONE);
-//                }
-//                messageCenterAdapter.setEditor(changeStatus_editor);
-//                messageCenterAdapter.notifyDataSetChanged();
-
+                cb_msg_delete_all.setChecked(false);
+                boolean changeStatus_editor = messageCenterAdapter.getEditor() ? false : true;
+                if (changeStatus_editor) {
+                    nav_right_textView.setText("取消");
+                    rl_msg_delete_msgs.setVisibility(View.VISIBLE);
+                } else {
+                    nav_right_textView.setText("编辑");
+                    rl_msg_delete_msgs.setVisibility(View.GONE);
+                }
+                messageCenterAdapter.setEditor(changeStatus_editor);
+                messageCenterAdapter.clearChose();
                 break;
             case R.id.tv_msg_delete_all:
 
                 //删除
-//                Set<Integer> integers = messageCenterAdapter.getmCheckeds();
-//                if (integers.size() > 0) {
-//                    Toast.makeText(MessageCenterActivity.this, "删除:" + integers.size(), Toast.LENGTH_LONG).show();
-//                    Log.d("test", "size:" + integers.size());
-//
-//                } else {
-//                    Toast.makeText(MessageCenterActivity.this, "删除", Toast.LENGTH_LONG).show();
-//                }
-
-                //请求成功后删除本地数据
-//                mCasesEntities.remove(0);
-//                messageCenterAdapter.notifyDataSetChanged();
-
+                Set<Integer> integers = messageCenterAdapter.getmCheckeds();
+                listMessagesBeans.clear();
+                if (integers.size() > 0) {
+                    Iterator<Integer> it = integers.iterator();
+                    while (it.hasNext()) {
+                        int id = it.next();
+                        listMessagesBeans.add(mCasesEntities.get(id));
+                        listpositions.add(id);
+                    }
+                    deleteMsgs(listpositions, listMessagesBeans, null);
+                } else {
+                    Toast.makeText(MessageCenterActivity.this, "请选择删除条目", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
@@ -169,9 +175,15 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
 
     //删除单条消息
     @Override
-    public void deleteOneMsg(final int position, MessageCenterBean.MessagesBean messagesBean, final View convertView) {
+    public void deleteMsgs(final List<Integer> msgListpositions, final List<MessageCenterBean.MessagesBean> listMessagesBeans, final View convertView) {
 
-        MPServerHttpManager.getInstance().deleteMessage(mMemberEntity.getAcs_member_id(), messagesBean.getMessage_id(), new OkJsonRequest.OKResponseCallback() {
+        StringBuffer sb_msg_ids = new StringBuffer();
+        for (int i = 0; i < listMessagesBeans.size(); i++) {
+            sb_msg_ids.append(listMessagesBeans.get(i).getMessage_id() + ",");
+        }
+        String msg_ids = sb_msg_ids.toString().substring(0, sb_msg_ids.length() - 1);
+
+        MPServerHttpManager.getInstance().deleteMessage(mMemberEntity.getAcs_member_id(), msg_ids, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Toast.makeText(mContext, "删除失败,请重新删除", Toast.LENGTH_SHORT).show();
@@ -180,10 +192,20 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
             @Override
             public void onResponse(JSONObject jsonObject) {
                 //请求成功后删除本地数据
-                --offset;
-                mListView.hiddenRight(convertView);
-                mCasesEntities.remove(position);
-                messageCenterAdapter.notifyDataSetChanged();
+                for (int i = 0; i < listMessagesBeans.size(); i++) {
+                    --offset;
+                    mCasesEntities.remove(listMessagesBeans.get(i));
+                }
+                if (null != convertView) {
+                    mListView.hiddenRight(convertView);
+                } else {
+                    //请求成功后删除本地数据
+                    messageCenterAdapter.setEditor(false);
+                    cb_msg_delete_all.setChecked(false);
+                    rl_msg_delete_msgs.setVisibility(View.GONE);
+                    nav_right_textView.setText("编辑");
+                }
+                messageCenterAdapter.clearChose();
             }
         });
 
