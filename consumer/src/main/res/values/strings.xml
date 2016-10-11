@@ -167,6 +167,7 @@
     <string name="alert_material">请先在web端上传材料清单</string>
     <string name="bind_per">位设计师</string>
     <string name="other_qita">其他</string>
+    <string name="thumbUp">点赞</string>
 
     <!-- dialog-->
     <string name="application_successful">申请成功</string>

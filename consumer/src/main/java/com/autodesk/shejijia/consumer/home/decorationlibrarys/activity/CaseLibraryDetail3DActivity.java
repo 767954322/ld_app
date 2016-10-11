@@ -6,7 +6,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -375,8 +374,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 ToastUtil.showCustomToast(CaseLibraryDetail3DActivity.this, getString(R.string.dianzhangchenggong));
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
-                tvThumbUp.setText("点赞" + (case3DDetailBean.getFavorite_count() + 1) + "");
-                tvheadThumbUp.setText("点赞" + (case3DDetailBean.getFavorite_count() + 1) + "");
+                tvThumbUp.setText(getString(R.string.thumbUp) + (case3DDetailBean.getFavorite_count() + 1) + "");
+                tvheadThumbUp.setText(getString(R.string.thumbUp) + (case3DDetailBean.getFavorite_count() + 1) + "");
             }
 
             @Override
@@ -402,7 +401,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Log.d("yxw", jsonObject.toString());
                 try {
                     isMemberLike = jsonObject.getBoolean("is_member_like");
                     if (isMemberLike) {
@@ -560,8 +558,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             tvCustomerHomeStyle.setText(R.string.other_qita);
         }
 
-        tvThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
-        tvheadThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
+        tvThumbUp.setText(getString(R.string.thumbUp) + case3DDetailBean.getFavorite_count() + "");
+        tvheadThumbUp.setText(getString(R.string.thumbUp)+ case3DDetailBean.getFavorite_count() + "");
         //ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
 
         Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
@@ -617,7 +615,16 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             if (type.equalsIgnoreCase("0")) {
                 imageListsXuanRan.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             } else if (type.equalsIgnoreCase("4")) {
-                imageListsManYou.add(imageBeanLists.get(i).getLink());
+                String cover = imageBeanLists.get(i).getCover();
+                String coverAndLink;
+                if (cover!=null){
+                     coverAndLink = cover+"HD.jpg"+"COVERANDLINK"+imageBeanLists.get(i).getLink();
+
+                }else {
+                    coverAndLink ="HD.jpg"+"COVERANDLINK"+imageBeanLists.get(i).getLink();
+                }
+                imageListsManYou.add(coverAndLink);
+
             } else if (type.equalsIgnoreCase("9")) {
                 imageListsHuXing.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             }

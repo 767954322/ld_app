@@ -809,6 +809,16 @@ public class Case3DDetailBean implements Serializable {
         private String type;
         private String extended_data;
         private String source_id;
+
+        public String getCover() {
+            return cover;
+        }
+
+        public void setCover(String cover) {
+            this.cover = cover;
+        }
+
+        private String cover;
         private boolean is_primary;
 
         public String getId() {
