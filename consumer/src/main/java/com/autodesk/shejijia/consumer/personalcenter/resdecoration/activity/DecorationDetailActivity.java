@@ -283,14 +283,14 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
             if (Constant.NumKey.CERTIFIED_PASS.equals(custom_string_status)
                     || Constant.NumKey.CERTIFIED_PASS_1.equals(custom_string_status)) {
 
-                setButtonGray(mBtnAmendDemand);
+//                setButtonGray(mBtnAmendDemand);
 
                 if (null != bidders) {
                     if (bidders.size() <= 0) {
                         mLlDemandModify.setVisibility(View.VISIBLE);
-                        mBtnAmendDemand.setVisibility(View.VISIBLE);
+//                        mBtnAmendDemand.setVisibility(View.VISIBLE);
                         mBtnStopDemand.setVisibility(View.VISIBLE);
-                        setButtonGray(mBtnAmendDemand);
+                        setButtonGray(mBtnStopDemand);
                     } else {
                         mLlDemandModify.setVisibility(View.GONE);
                     }
@@ -315,10 +315,10 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
      * 按钮置灰，不可点击
      */
     private void setButtonGray(Button btn) {
-        btn.setClickable(false);
-        btn.setPressed(false);
+//        btn.setClickable(false);
+//        btn.setPressed(false);
         btn.setTextColor(UIUtils.getColor(R.color.white));
-        btn.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_gray));
+        btn.setBackground(UIUtils.getDrawable(R.drawable.bg_common_btn_blue));
     }
 
     /**
