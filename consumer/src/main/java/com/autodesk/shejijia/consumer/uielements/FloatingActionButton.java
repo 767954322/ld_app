@@ -36,7 +36,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.consumer.R;
 
 
 public class FloatingActionButton extends ImageButton {

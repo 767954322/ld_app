@@ -778,7 +778,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         } else {
 
             new AlertView(UIUtils.getString(com.autodesk.shejijia.shared.R.string.tip)
-                    , UIUtils.getString(com.autodesk.shejijia.shared.R.string.unable_create_beishu_meal)
+                    , UIUtils.getString(R.string.unable_create_beishu_meal)
                     , null, null, new String[]{UIUtils.getString(com.autodesk.shejijia.shared.R.string.sure)}
                     , MPConsumerHomeActivity.this
                     , AlertView.Style.Alert, null).show();
