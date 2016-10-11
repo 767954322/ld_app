@@ -23,6 +23,8 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
@@ -231,7 +233,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
 
     private void isSendMeasureForm(JSONObject jsonObject) {
         if (isPay) {
-            if (orderLineId != null && orderId != null && !orderLineId.equals("0") && !orderId.equals("0")) {
+            if (orderLineId != null && orderId != null && !orderLineId.equals("0") && !orderId.equals("0") && falg) {
                 pay(orderLineId, orderId);
                 return;
             }
