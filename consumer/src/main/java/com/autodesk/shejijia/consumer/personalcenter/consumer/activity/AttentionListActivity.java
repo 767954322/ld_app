@@ -59,16 +59,16 @@ public class AttentionListActivity extends NavigationBarActivity implements Atte
         super.initExtraBundle();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        // 第一次进入自动刷新
-        if (isFirstIn) {
-            //changeState
-            mPullToRefreshLayout.autoRefresh();
-            isFirstIn = false;
-        }
-    }
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        // 第一次进入自动刷新
+//        if (isFirstIn) {
+//            //changeState
+//            mPullToRefreshLayout.autoRefresh();
+//            isFirstIn = false;
+//        }
+//    }
 
     @Override
     protected void onResume() {
