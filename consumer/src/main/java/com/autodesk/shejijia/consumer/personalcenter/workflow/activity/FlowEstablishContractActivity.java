@@ -588,7 +588,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 isAgree = data.getBooleanExtra("CONSUMER_ACTION_AGREE", false);
 
             UpdateUIlayoutContract();
-            MyToast.show(this,resultCode+"");
+            MyToast.show(this, resultCode + "");
             fetchWorkFlowData();
         }
 
