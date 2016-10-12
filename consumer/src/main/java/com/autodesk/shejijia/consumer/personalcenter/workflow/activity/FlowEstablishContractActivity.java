@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -574,7 +575,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())){
+        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
             return;
         }
         if (resultCode == FirstForContract) {
@@ -586,7 +587,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 isAgree = data.getBooleanExtra("CONSUMER_ACTION_AGREE", false);
 
             UpdateUIlayoutContract();
-            MyToast.show(this,resultCode+"");
+            MyToast.show(this, resultCode + "");
             fetchWorkFlowData();
         }
 
@@ -740,7 +741,22 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 //                bValid = false;
 //                break;
 //            }
-            if (null != renderCount && renderCount.length() > 0) {
+//            if (null != renderCount && renderCount.length() > 0) {
+//                inputNum = Integer.parseInt(renderCount);
+//                if (inputNum < 0 || inputNum > 99) {
+//                    showAlertView(R.string.please_input_render_count_correctly);
+//                    bValid = false;
+//                    break;
+//                }
+//            } else {
+//                showAlertView(R.string.please_input_render_count_correctly);
+//            }
+
+            if (TextUtils.isEmpty(renderCount)) {
+                showAlertView(R.string.please_input_render_count_correctly);
+                bValid = false;
+                break;
+            } else if (null != renderCount && renderCount.length() > 0) {
                 inputNum = Integer.parseInt(renderCount);
                 if (inputNum < 0 || inputNum > 99) {
                     showAlertView(R.string.please_input_render_count_correctly);
@@ -801,13 +817,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
-//            if (firstCost <= Double.valueOf(meansurePrice)) {
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
-//                        AlertView.Style.Alert, null).show();
-//                bValid = false;
-//                break;
-//            }
-//            break;
             if (firstCost <= Double.valueOf(meansurePrice)) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_measure_fee) + meansurePrice + UIUtils.getString(R.string.flow_monad_rmb), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
