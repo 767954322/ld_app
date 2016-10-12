@@ -168,7 +168,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_designer_name.setText(designer_name);
         tvc_designer_email.setText(designer_mail);
         /* 填充消费者个人信息 */
-        tvc_consumer_name.setText(requirement.getCommunity_name());
+        tvc_consumer_name.setText(requirement.getConsumer_name());
         tvc_consumer_phone.setText(requirement.getConsumer_mobile());
 
         if (bShowModeContentWebView) {
@@ -214,8 +214,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 }
             });
 
-            tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
-            tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
+            if (requirement.getDistrict_name().equals("none")) {
+                tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name());
+                tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name());
+            } else {
+                tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
+                tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
+            }
         } else {
 
             if (!bAllowUserInput) {
@@ -451,8 +456,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             public void onJsonResponse(String jsonResponse) {
                 designer_detail_entity = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
 
-                tvc_consumer_local_area.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
-                tvc_designer_decorate_address.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
+                if (designer_detail_entity.getDistrict_name().equals("none")) {
+                    tvc_consumer_local_area.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name());
+                    tvc_designer_decorate_address.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name());
+                } else {
+                    tvc_consumer_local_area.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
+                    tvc_designer_decorate_address.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
+                }
 
                 designer_name = designer_detail_entity.getReal_name().getReal_name();
                 designer_mobile = designer_detail_entity.getReal_name().getMobile_number().toString();
