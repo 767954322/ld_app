@@ -122,6 +122,12 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 bank_name = getText(tv_withdrawal_open_account_bank);
                 String tv_branch_bank_ = getText(tv_withdrawal_branch_bank);
                 branch_bank_name = (tv_branch_bank_ == null) ? getText(et_withdrawal_branch_bank) : tv_branch_bank_;
+                String bank_name_var = getText(et_withdrawal_branch_bank);
+                //增加银行的名称的判断
+                if (!bank_name_var.matches(RegexUtil.ADDRESS_REGEX)) {
+                    Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String tv_card_number = getText(tv_withdrawal_bank_card_number);
                 deposit_card = (tv_card_number == null) ? getText(et_withdrawal_bank_card_number) : tv_card_number;
                 if (!"".equals(deposit_card)) {
