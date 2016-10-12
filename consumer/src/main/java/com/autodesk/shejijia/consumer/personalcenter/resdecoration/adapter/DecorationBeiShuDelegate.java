@@ -95,10 +95,13 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             final String designer_id = decorationBiddersBean.getDesigner_id();
             final String beishu_thread_id = decorationNeedsListBean.getBeishu_thread_id();
 
+            holder.setTag(R.id.poly_designer_photo_beishu, avatar);
             PolygonImageView polygonImageView = holder.getView(R.id.poly_designer_photo_beishu);
-            ImageUtils.displayAvatarImage(avatar, polygonImageView);
-            holder.setText(R.id.tv_designer_name_beishu, user_name);
+            if (avatar.equalsIgnoreCase((String) polygonImageView.getTag())) {
+                ImageUtils.displayAvatarImage(avatar, polygonImageView);
+            }
 
+            holder.setText(R.id.tv_designer_name_beishu, user_name);
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
