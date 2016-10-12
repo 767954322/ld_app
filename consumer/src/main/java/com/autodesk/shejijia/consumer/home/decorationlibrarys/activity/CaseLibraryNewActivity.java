@@ -261,6 +261,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 } else {
                     isfromGuanZhu=true;
                     LoginUtils.doLogin(this);
+
                 }
                 break;
 
