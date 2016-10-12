@@ -6,7 +6,7 @@ import android.util.Log;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 /**
- * Created by jasonxu on 2015/8/28.
+ * Created by t_xuz on 2015/8/28.
  */
 public final class LogUtils {
 
@@ -15,7 +15,8 @@ public final class LogUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static boolean isDebug = AdskApplication.getInstance().isDebug();// 是否需要打印bug，可以在application的onCreate函数里面初始化
+//    public static boolean isDebug = AdskApplication.getInstance().isDebug();// 是否需要打印bug，可以在application的onCreate函数里面初始化
+    public static boolean isDebug = true;
     private static final String TAG = "AutoDesk--Log--";
 
     // 下面四个是默认tag的函数

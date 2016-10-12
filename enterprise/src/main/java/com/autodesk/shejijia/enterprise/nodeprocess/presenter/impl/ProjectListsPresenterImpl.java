@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.presenter.impl;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.enterprise.common.Interface.BaseLoadedListener;
@@ -10,6 +11,9 @@ import com.autodesk.shejijia.enterprise.nodeprocess.interactor.ProjectListIntera
 import com.autodesk.shejijia.enterprise.nodeprocess.interactor.impl.ProjectListInteratorImpl;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListsPresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.view.ProjectListsView;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
 /**
  * Created by t_xuz on 10/11/16.
@@ -27,7 +31,13 @@ public class ProjectListsPresenterImpl implements ProjectListsPresenter,BaseLoad
         this.mProjectListsView = projectListsView;
         mProjectListInteractor = new ProjectListInteratorImpl(this);
         //获取token
-        XToken = "587e1e6bd9c26875535868dec8e3045c";
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(mContext, Constants.USER_INFO);
+        if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
+//            XToken = "587e1e6bd9c26875535868dec8e3045c";
+            XToken = entity.getHs_accesstoken();
+            LogUtils.e("XToken",XToken);
+        }
+
     }
 
     /*
