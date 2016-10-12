@@ -411,7 +411,7 @@ public class DesignPlatformDelegate implements IWorkflowDelegate {
                     case 31: // 首款
 
                         if (ifIsDesiner) {
-                            return "接收首款";
+                            return "修改合同";
                         } else {
                             return "支付首款";
                         }

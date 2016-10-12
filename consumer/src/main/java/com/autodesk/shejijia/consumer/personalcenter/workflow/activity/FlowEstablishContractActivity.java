@@ -33,6 +33,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
+import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -226,13 +228,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             if (!bAllowUserInput) {
                 UpdateUIdisableFieldsInput();
             }
-            MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+            designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) {
                 return;
             }
-            String contractData = designContractEntity.getContract_data();
+            contractData = designContractEntity.getContract_data();
             String str = contractData.toString().replace("@jr@", "\"");
-            MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
+            designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
 
             contract_no = designContractEntity.getContract_no();
             tvc_consumer_name.setText(designContractBean.getName());
@@ -572,6 +574,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())){
+            return;
+        }
         if (resultCode == FirstForContract) {
             finish();
         }
@@ -581,6 +586,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 isAgree = data.getBooleanExtra("CONSUMER_ACTION_AGREE", false);
 
             UpdateUIlayoutContract();
+            MyToast.show(this,resultCode+"");
             fetchWorkFlowData();
         }
 
@@ -1096,4 +1102,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private boolean bDesignerContractCreated = false;
     private boolean bAllowUserInput = false;
     private boolean bShowModeContentWebView = false;
+    private MPDesignContractBean designContractEntity;
+    private String contractData;
+    private MPContractDataBean designContractBean;
 }
