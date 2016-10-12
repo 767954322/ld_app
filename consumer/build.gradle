@@ -9,6 +9,7 @@ android {
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         versionCode 68
         versionName "4.1.1.9"
+
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
