@@ -274,8 +274,6 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
     private void insertThreads(ArrayList<MPChatThread> threads) {
         mThreadList.addAll(threads);
-        TOTALITEMCOUNT = mThreadList.size();
-        Log.i("yaoxuehua",""+TOTALITEMCOUNT);
         mThreadListAdapter.notifyDataSetChanged();
     }
 
@@ -290,14 +288,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     private void refresh() {
         if (mMemberId != null){
 
-            if (mIsFirstInto){
-
                 getMemberThreadsForOffset(0, LIMIT);
-                mIsFirstInto = false;
-            }else {
-
-                getMemberThreadsForOffset(0, TOTALITEMCOUNT);
-            }
         }
     }
 
@@ -311,12 +302,10 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
     private static final int LIMIT = 20;
-    private static int TOTALITEMCOUNT = 0;//totalItemCount
 
     private String mMemberId;
     private String mMemberType;
     private boolean mIsFileBase;
-    private boolean mIsFirstInto = true;
 
     private ArrayList<MPChatThread> mThreadList = new ArrayList<MPChatThread>();
     private boolean mThreadsExhausted;

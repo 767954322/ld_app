@@ -21,5 +21,15 @@ public class SingleClickUtils {
         lastClickTime = time;
         return false;
     }
+
+    public static boolean isFastDoubleClickShort() {
+        long time = System.currentTimeMillis();
+        long timeD = time - lastClickTime;
+        if (0 < timeD && timeD < 1000) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
+    }
 }
 
