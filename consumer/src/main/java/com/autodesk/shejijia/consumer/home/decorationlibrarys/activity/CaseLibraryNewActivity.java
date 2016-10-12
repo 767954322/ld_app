@@ -480,9 +480,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         //设置简介
         String introduction = caseDetailBean.getDescription();
         if (introduction == null || introduction.equals("")) {
-            mCaseLibraryText.setText(R.string.nodescription);
+            mCaseLibraryText.setText("\u3000\u3000" + R.string.nodescription);
         } else {
-            mCaseLibraryText.setText("          " + introduction);
+            mCaseLibraryText.setText("\u3000\u3000" + introduction);
         }
 
         tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
@@ -521,7 +521,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
         //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
 //        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
-        ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, caseDetailBean.getDesigner_info().getAvatar());
+        ImageUtils.displayAvatarImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean designer = mDesignerInfo.getDesigner();
 
         if (null != designer) {
@@ -613,10 +613,10 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     protected void onRestart() {
         super.onRestart();
         memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (isfromGuanZhu&&null!=memberEntity){
+        if (isfromGuanZhu && null != memberEntity) {
             getCaseDetailData(case_id);
-        }else {
-            isfromGuanZhu=false;
+        } else {
+            isfromGuanZhu = false;
         }
 
         showOrHideChatBtn();
@@ -723,7 +723,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private String mMemberType;
     private boolean isMemberLike;
     private ImageView ivThumbUp;
-    private boolean isfromGuanZhu=false;
+    private boolean isfromGuanZhu = false;
     private ImageView ivHeadThumbUp;
     private String firstCaseLibraryImageUrl;
     private int topPosition;
