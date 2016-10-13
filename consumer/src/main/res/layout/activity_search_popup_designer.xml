@@ -32,6 +32,7 @@
             android:layout_weight="1"
             android:background="@drawable/bg_input_search_or"
             android:drawableLeft="@drawable/icon_search_or"
+            android:drawablePadding="@dimen/size_10"
             android:hint="@string/key_words"
             android:imeOptions="actionSearch"
             android:paddingLeft="@dimen/size_15"
