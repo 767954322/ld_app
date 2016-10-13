@@ -76,6 +76,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
 
         holder.setTag(R.id.piv_consumer_order_photo, avatarUrl);
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_order_photo);
+
         if (avatarUrl.equalsIgnoreCase((String) polygonImageView.getTag())) {
             if (StringUtils.isEmpty(avatarUrl)) {
                 polygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
