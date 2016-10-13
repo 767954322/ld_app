@@ -76,6 +76,14 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcMeasureFormType = (TextView) findViewById(R.id.tvc_measure_form_type);
         tvcMeasureFormStyle = (TextView) findViewById(R.id.tvc_measure_form_style);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
+
+        tvcName.setEnabled(false);
+        tvcPhone.setEnabled(false);
+        tvcArea.setEnabled(false);
+
+        tvcName.setTextColor(getResources().getColor(R.color.bg_66));
+        tvcPhone.setTextColor(getResources().getColor(R.color.bg_66));
+        tvcArea.setTextColor(getResources().getColor(R.color.bg_66));
     }
 
     @Override
