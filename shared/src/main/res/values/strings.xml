@@ -149,7 +149,7 @@
     <string name="flow_cost_detail">支付详情</string>
     <string name="pay_success">支付成功</string>
     <string name="pay_failed">支付失败</string>
-    <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
     <string name="telephone_space">电&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;话：</string>
     <string name="flow_particular_cost">支付明细</string>
     <string name="flow_aggregate_amount">总&#160;&#160;金&#160;&#160;额：</string>
@@ -180,9 +180,9 @@
     <string name="please_select_decorate_budget">请选择装修预算</string>
     <string name="demand_project_area">项目面积：</string>
     <string name="please_enter_area">请输入面积(平米)</string>
-    <string name="demand_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="demand_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
     <string name="please_select_family">请选择户型：室 厅 卫</string>
-    <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
+    <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
     <string name="please_select_style">请选择风格</string>
     <string name="demand_measure_house_time">量房时间：</string>
     <string name="demand_measure_house_time_title">量房时间</string>
