@@ -1,5 +1,8 @@
 package com.autodesk.shejijia.enterprise.base.network;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.android.volley.AuthFailureError;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -72,30 +75,19 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        NetRequestManager.getInstance().addRequest("task_details",okRequest);
+        NetRequestManager.getInstance().addRequest("task_details", okRequest);
     }
 
 
     /*
     * 按日期查询任务列表
-    * findDate 查询日期 (例:2016-08-08)
-    * like 星标项目:0 所有 ,1 星标
-    * limit 每页条数:为0时不启用分页
-    * offset 当前页:从0开始
+    * requestUrl 查询的请求url
     * token 当前登陆用户的access token
     * callback 请求回调接口
     * */
-    public void getTaskLists(final String findDate,
-                             final int like,
-                             final int limit,
-                             final int offset,
-                             final String token,
-                             OkJsonRequest.OKResponseCallback callback) {
-        String url = Constants.BASE_URL + "/users/projects?"
-                + "findDate=" + findDate
-                + "&limit=" + limit
-                + "&offset=" + offset;
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+    public void getUserProjectLists(@NonNull String requestUrl, @NonNull final String token,@Nullable String requestTag,
+                                    OkJsonRequest.OKResponseCallback callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
@@ -104,7 +96,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        NetRequestManager.getInstance().addRequest(okRequest);
+        NetRequestManager.getInstance().addRequest(requestTag,okRequest);
     }
 
 
@@ -135,7 +127,7 @@ public class EnterpriseServerHttpManager {
     * */
     public void getProjectDetails(final long pid,
                                   final String token,
-                                  OkJsonRequest.OKResponseCallback callback){
+                                  OkJsonRequest.OKResponseCallback callback) {
         String url = Constants.BASE_URL + "/projects"
                 + "/" + pid
                 + "?task_data=true";

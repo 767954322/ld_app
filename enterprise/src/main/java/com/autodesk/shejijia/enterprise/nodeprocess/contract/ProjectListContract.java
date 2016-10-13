@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.contract;
 
 
+import android.support.annotation.NonNull;
+
 import com.autodesk.shejijia.enterprise.nodeprocess.BaseModel;
 import com.autodesk.shejijia.enterprise.nodeprocess.BasePresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.BaseView;
@@ -8,13 +10,13 @@ import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
 
 /**
  * Created by t_xuz on 10/13/16.
- * 首页任务列表mvp每个角色对应的接口
+ * 首页--任务列表mvp接口
  */
 public interface ProjectListContract {
 
     interface Model extends BaseModel {
 
-        void getProjectListData(String findDate, String eventTag, String requestTag, int pageSize, String token);
+        void getProjectListData(String requestUrl, String eventTag, String requestTag, String token);
 
     }
 
@@ -33,7 +35,7 @@ public interface ProjectListContract {
         /*
         * 加载所有任务列表的方法
         * */
-        void loadTaskListData(String findDate, String eventTag, String requestTag, int pageSize, boolean isSwipeRefresh);
+        void loadProjectListData(String requestUrl, String eventTag, String requestTag, boolean isSwipeRefresh);
 
         /*
         * 跳转项目详情页的监听器

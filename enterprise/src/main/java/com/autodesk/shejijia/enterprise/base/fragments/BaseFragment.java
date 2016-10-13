@@ -35,8 +35,8 @@ public abstract class BaseFragment extends Fragment implements BaseView{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initData();
         initViews(view,savedInstanceState);
+        initData();
         initEvents();
     }
 

@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.personalcenter.fragments;
+package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +10,14 @@ import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
 
 /**
  * Created by t_xuz on 9/2/16.
- * 关于 app 的页面
+ * 我页--关于app页面
  */
-public class AboutAppFragment extends BaseFragment{
+public class AboutFragment extends BaseFragment{
     private ImageButton mBackBtn;
     private TextView mTopBarTitle;
 
-    public static AboutAppFragment newInstance(){
-        return new AboutAppFragment();
+    public static AboutFragment newInstance(){
+        return new AboutFragment();
     }
     @Override
     protected int getLayoutId() {

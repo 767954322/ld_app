@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.personalcenter.fragments;
+package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -50,8 +50,8 @@ public class PersonalMainFragment extends BaseFragment implements View.OnClickLi
             case R.id.tv_personal_project: //全部项目
                 getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit,R.anim.slide_fragment_pop_enter,R.anim.slide_fragment_pop_exit)
-                        .add(R.id.fly_personal_center_container, MyProjectListFragment.newInstance())
-                        .addToBackStack(MyProjectListFragment.newInstance().getClass().getSimpleName())
+                        .add(R.id.fly_personal_center_container, ProjectListFragment.newInstance())
+                        .addToBackStack(ProjectListFragment.newInstance().getClass().getSimpleName())
                         .commit();
                 break;
             case R.id.tv_personal_more: //更多

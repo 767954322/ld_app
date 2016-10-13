@@ -1,11 +1,11 @@
-package com.autodesk.shejijia.enterprise.personalcenter.activitys;
+package com.autodesk.shejijia.enterprise.personalcenter.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
-import com.autodesk.shejijia.enterprise.personalcenter.fragments.PersonalMainFragment;
+import com.autodesk.shejijia.enterprise.personalcenter.fragment.PersonalMainFragment;
 
 /**
  * Created by t_xuz on 8/30/16.

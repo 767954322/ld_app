@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.personalcenter.fragments;
+package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -71,8 +71,8 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener{
             case R.id.tv_about_app:
                 getFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit,R.anim.slide_fragment_pop_enter,R.anim.slide_fragment_pop_exit)
-                        .add(R.id.fly_personal_center_container,AboutAppFragment.newInstance())
-                        .addToBackStack(AboutAppFragment.newInstance().getClass().getSimpleName())
+                        .add(R.id.fly_personal_center_container, AboutFragment.newInstance())
+                        .addToBackStack(AboutFragment.newInstance().getClass().getSimpleName())
                         .commit();
                 break;
             case R.id.tv_clear_cache:

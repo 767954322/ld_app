@@ -25,14 +25,19 @@ public class Constants {
 
     //我页流程式fragment对应的tag
     public static final String PERSONAL_MORE_FRAGMENT = "MoreFragment";
-    public static final String PERSONAL_POJECTLIST_FRAGMENT = "MyProjectListFragment";
+    public static final String PERSONAL_POJECTLIST_FRAGMENT = "ProjectListFragment";
 
     //下拉刷新,上拉加载更多事件标记
     public static final String REFRESH_EVENT = "refresh";
     public static final String LOAD_MORE_EVENT = "loadMore";
 
-    //分页加载数据每页数据的个数
-    public static final int PAGE_LIMIT = 10;
+    //项目列表请求tag
+    public static final String PROJECT_LIST_BY_DATE = "projectLists_by_date"; //根据日期查询列表的标记
+    public static final String PROJECT_LIST_BY_STATUS = "projectLists_by_status"; //根据状态查询列表的标记
+    public static final String PROJECT_LIST_BY_LIKE = "projectLists_by_like"; //根据是否星标查询列表的标记
 
-
+    //项目列表查询的状态
+    public static final String PROJECT_STATUS_COMPLETE = "COMPLETED";//已完成
+    public static final String PROJECT_STATUS_UNCOMPLETE = "UNCOMPLETED";//未完成
+    public static final String PROJECT_STATUS_INPROGRESS = "INPROGRESS";//进行中
 }

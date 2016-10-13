@@ -91,7 +91,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".personalcenter.activitys.PersonalCenterActivity"
+            android:name=".personalcenter.activity.PersonalCenterActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"

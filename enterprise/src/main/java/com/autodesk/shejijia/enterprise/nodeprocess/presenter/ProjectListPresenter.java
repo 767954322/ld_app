@@ -64,9 +64,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter,BaseL
     * presenter层提供给view层回调的方法,主要根据view层传入的参数来调用model层的方法
     * */
     @Override
-    public void loadTaskListData(String findDate,String eventTag,String requestTag, int pageSize, boolean isSwipeRefresh) {
+    public void loadProjectListData(String requestUrl,String eventTag,String requestTag, boolean isSwipeRefresh) {
         mProjectListView.hideLoading();
-        mProjectListModel.getProjectListData(findDate,eventTag,requestTag,pageSize,XToken);
+        mProjectListModel.getProjectListData(requestUrl,eventTag,requestTag,XToken);
     }
 
     @Override

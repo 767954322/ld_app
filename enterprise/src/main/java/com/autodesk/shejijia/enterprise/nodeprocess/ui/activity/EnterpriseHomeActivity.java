@@ -16,7 +16,7 @@ import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.NodeBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.ProjectListBean;
-import com.autodesk.shejijia.enterprise.personalcenter.activitys.PersonalCenterActivity;
+import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
