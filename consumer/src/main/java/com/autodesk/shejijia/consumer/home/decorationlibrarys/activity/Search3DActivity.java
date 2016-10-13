@@ -87,7 +87,7 @@ public class Search3DActivity extends NavigationBarActivity implements
         mPtrLayout = ((PullToRefreshLayout) findViewById(R.id.refresh_view));
         mPlvContentView = (ListView) findViewById(R.id.content_view);
         mSearchBack = (ImageView) findViewById(R.id.searchc_back);
-
+        tvSearchCancel = (TextView)findViewById(R.id.tv_search_cancel);
         mFooterView = View.inflate(this, R.layout.view_empty_layout, null);
         mRlEmpty = (RelativeLayout) mFooterView.findViewById(R.id.rl_empty);
         mTvEmptyMessage = (TextView) mFooterView.findViewById(R.id.tv_empty_message);
@@ -104,24 +104,13 @@ public class Search3DActivity extends NavigationBarActivity implements
     protected void initData(Bundle savedInstanceState) {
         screenWidth = this.getWindowManager().getDefaultDisplay().getWidth();
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
-        mCharacterParser = CharacterParser.getInstance();
 
         mSearchKeywords = "";
-//        initSearchData(0, AppJsonFileReader.getRoomHall(this));
-//        initSearchData(1, AppJsonFileReader.getStyle(this));
-//        initSearchData(2, AppJsonFileReader.getArea(this));
-
         if (userHome3DCaseAdapter == null) {
             userHome3DCaseAdapter = new UserHome3DCaseAdapter(this, case3DBeanList, this, screenWidth, screenHeight);
         }
         mPlvContentView.setAdapter(userHome3DCaseAdapter);
         userHome3DCaseAdapter.setOnItemImageHeadClickListener(this, this, this);
-
-//        MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (mMemberEntity == null) {
-//            return;
-//        }
-
     }
 
     @Override
@@ -129,19 +118,19 @@ public class Search3DActivity extends NavigationBarActivity implements
         mPtrLayout.setOnRefreshListener(this);
         mCetSearchClick.setOnClickListener(this); /// cancel search.
         mSearchBack.setOnClickListener(this);
+        tvSearchCancel.setOnClickListener(this);
+        setOnKeyListenerForClearEditText();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_search_cancel:
+                finish();
+                break;
             case R.id.et_search:/// 搜索.
-                openPopupWindow(mCetSearchClick.getText().toString());
                 break;
             case R.id.searchc_back:/// 返回.
-                if (mCetSearchContent != null) {
-                    mCetSearchContent.setText("");
-                }
-
                 finish();
                 break;
             default:
@@ -250,39 +239,6 @@ public class Search3DActivity extends NavigationBarActivity implements
     }
 
     /**
-     * 点击搜索表格行的Click事件
-     *
-     * @param pinnedHeaderListView
-     */
-    private void setOnItemClickListenerForTvEctSearchListView(PinnedHeaderListView pinnedHeaderListView) {
-        pinnedHeaderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SearchHoverCaseBean selectedHoverCaseBean = mSearchHoverCaseBeanArrayList.get(position - 1);
-                mCetSearchClick.setText(selectedHoverCaseBean.getValue());
-                setSelection(mCetSearchClick);
-                mFiltrateContentBean = new FiltrateContentBean();
-                mSearchKeywords = "";
-                switch (selectedHoverCaseBean.getType()) {
-                    case 0:
-                        mFiltrateContentBean.setHousingType(selectedHoverCaseBean.getKey());
-                        break;
-                    case 1:
-                        mFiltrateContentBean.setStyle(selectedHoverCaseBean.getKey());
-                        break;
-                    case 2:
-                        mFiltrateContentBean.setArea(selectedHoverCaseBean.getKey());
-                        break;
-                    default:
-                        break;
-                }
-                isFirstIn = true;
-                cancelPopupWindowAndClearSearchContent();
-            }
-        });
-    }
-
-    /**
      * 请求访问网络的公用方法
      *
      * @param offset
@@ -342,144 +298,25 @@ public class Search3DActivity extends NavigationBarActivity implements
 
 
     }
-
-    /**
-     * 搜索数据
-     *
-     * @param type 类型
-     * @param map  集合
-     */
-    private void initSearchData(int type, Map<String, String> map) {
-        for (Map.Entry mapString : map.entrySet()) {
-            String key = (String) mapString.getKey();
-            String value = (String) mapString.getValue();
-
-            SearchHoverCaseBean searchHoverCaseBean = new SearchHoverCaseBean();
-            searchHoverCaseBean.setType(type);
-            searchHoverCaseBean.setKey(key);
-            searchHoverCaseBean.setValue(value);
-
-            mSearchHoverCaseBeenList.add(searchHoverCaseBean);
-        }
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        // 第一次进入自动刷新
-        if (isFirstIn) {
-            mPtrLayout.autoRefresh();
-            isFirstIn = false;
-        }
-    }
-
-    /**
-     * 打开PopupWindow窗口
-     *
-     * @param searchTextData
-     */
-    private void openPopupWindow(String searchTextData) {
-
-        mSearchLayout = LayoutInflater.from(this).inflate(R.layout.activity_search_popup, null);
-        final ImageView ivSearchCBack = (ImageView) mSearchLayout.findViewById(R.id.ect_searchc_back);
-        final TextView tvSearchCancel = (TextView) mSearchLayout.findViewById(R.id.tv_ect_search_cancel);
-        PinnedHeaderListView pinnedHeaderListView = (PinnedHeaderListView) mSearchLayout.findViewById(R.id.tv_ect_search_listview);
-        mCetSearchContent = (ClearEditText) mSearchLayout.findViewById(R.id.ect_et_search);
-
-        mCetSearchContent.setText(searchTextData);
-        setSelection(mCetSearchContent);
-        mSearchHoverCaseBeanArrayList.clear();
-        if (searchTextData != null && searchTextData.length() > 0) {
-
-            mSearchHoverCaseBeanArrayList.addAll(filterData(searchTextData));
-        }
-        if (mFuzzySearchAdapter == null) {
-            mFuzzySearchAdapter = new FuzzySearchAdapter(Search3DActivity.this, mSearchHoverCaseBeanArrayList);
-        }
-        pinnedHeaderListView.setAdapter(mFuzzySearchAdapter);
-        mFuzzySearchAdapter.notifyDataSetChanged();
-
-        setOnClickListener(tvSearchCancel, ivSearchCBack);
-        setOnKeyListenerForClearEditText();
-        addTextChangedListenerForClearEditText();
-        setOnItemClickListenerForTvEctSearchListView(pinnedHeaderListView);
-
-        mSearchPopupWindow = new PopupWindow(mSearchLayout, android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT);
-        mSearchPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
-        mSearchPopupWindow.setTouchable(true);
-        mSearchPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mSearchPopupWindow.showAtLocation(mSearchBack, Gravity.CENTER, 0, 0);
-        mSearchPopupWindow.setFocusable(true);
-        mSearchPopupWindow.update();
-    }
-
-    /**
-     * 设置取消和返回的监听.
-     *
-     * @param textView
-     * @param imageView
-     */
-    private void setOnClickListener(TextView textView, ImageView imageView) {
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelPopupWindowAndClearSearchContent();
-                mCetSearchContent.setText("");
-            }
-        });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelPopupWindowAndClearSearchContent();
-                mCetSearchContent.setText("");
-                Search3DActivity.this.finish();
-            }
-        });
-    }
-
-    /**
-     * 搜索框内容改变监听.
-     */
-    private void addTextChangedListenerForClearEditText() {
-        mCetSearchContent.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mSearchHoverCaseBeanArrayList.clear();
-                String searchInPutString = s.toString().trim();
-                mSearchHoverCaseBeanArrayList.addAll(filterData(searchInPutString));
-                mFuzzySearchAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
     /**
      * 搜索按键监听.
      */
     private void setOnKeyListenerForClearEditText() {
-        mCetSearchContent.setOnKeyListener(new View.OnKeyListener() {
+        mCetSearchClick.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                             .hideSoftInputFromWindow(Search3DActivity.this.getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
-                    mSearchKeywords = mCetSearchContent.getText().toString().trim();
-                    mCetSearchClick.setText(mSearchKeywords);
+                    mSearchKeywords = mCetSearchClick.getText().toString().trim();
+//                    mCetSearchClick.setText(mSearchKeywords);
                     if (mSearchKeywords != null && mSearchKeywords.length() > 0) {
                         try {
                             mSearchKeywords = URLEncoder.encode(mSearchKeywords, Constant.NetBundleKey.UTF_8);
                             setSelection(mCetSearchClick);
                             mFiltrateContentBean = null;
-                            isFirstIn = true;
-                            cancelPopupWindowAndClearSearchContent();
+                            mPtrLayout.autoRefresh();
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
@@ -491,41 +328,6 @@ public class Search3DActivity extends NavigationBarActivity implements
             }
         });
     }
-
-    /**
-     * 弹框消失,搜索条件制空.
-     */
-    private void cancelPopupWindowAndClearSearchContent() {
-        if (null != mSearchPopupWindow) {
-            mSearchPopupWindow.dismiss();
-        }
-        mCetSearchContent.setText("");
-    }
-
-    /**
-     * 根据输入框中的值来过滤数据并更新ListView
-     *
-     * @param filterStr
-     */
-    private List<SearchHoverCaseBean> filterData(String filterStr) {
-        List<SearchHoverCaseBean> filterDateList = new ArrayList<SearchHoverCaseBean>();
-
-        if (TextUtils.isEmpty(filterStr)) {
-            filterDateList = mSearchHoverCaseBeenList;
-        } else {
-            filterDateList.clear();
-            for (SearchHoverCaseBean sortModel : mSearchHoverCaseBeenList) {
-                String name = sortModel.getValue();
-                name = name.toLowerCase();
-                filterStr = filterStr.toLowerCase();
-                if (name.indexOf(filterStr.toString()) != -1 || mCharacterParser.getSelling(name).startsWith(filterStr.toString())) {
-                    filterDateList.add(sortModel);
-                }
-            }
-        }
-        return filterDateList;
-    }
-
     /// 加载更多.
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
@@ -611,17 +413,10 @@ public class Search3DActivity extends NavigationBarActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSearchHoverCaseBeenList = null;
-        mSearchHoverCaseBeanArrayList = null;
         case3DBeanList = null;
-        mFuzzySearchAdapter = null;
         userHome3DCaseAdapter = null;
-        mCharacterParser = null;
         mFiltrateContentBean = null;
         mSearchKeywords = null;
-        if (mSearchPopupWindow != null) {
-            mSearchPopupWindow.dismiss();
-        }
         if (mSearchLayout != null) {
             mSearchLayout = null;
         }
@@ -631,15 +426,12 @@ public class Search3DActivity extends NavigationBarActivity implements
 
     /// 控件.
     private ClearEditText mCetSearchClick;
-    private ClearEditText mCetSearchContent;
     private ListView mPlvContentView;
     private PullToRefreshLayout mPtrLayout;
     private ImageView mSearchBack;
     private RelativeLayout mRlEmpty;
-    private TextView mTvEmptyMessage;
+    private TextView mTvEmptyMessage,tvSearchCancel;
     private ImageView mIvEmptyIcon;
-    /// 点击搜索框时弹出的popupWindow .
-    private PopupWindow mSearchPopupWindow;
     private View mSearchLayout;
     private View mFooterView;
     private int LIMIT = 10;
@@ -647,18 +439,11 @@ public class Search3DActivity extends NavigationBarActivity implements
     private int screenWidth;
     private int screenHeight;
     private String mSearchKeywords;
-    private boolean isFirstIn = false;
     private String hsUid, member_id;
-    private List<SearchHoverCaseBean> mSearchHoverCaseBeenList = new ArrayList<>();
-    private List<SearchHoverCaseBean> mSearchHoverCaseBeanArrayList = new ArrayList<>();
-    //    private ArrayList<CaseLibraryBean.CasesEntity> mCasesEntities = new ArrayList<>();
-//    private UserHomeCaseAdapter mUserHomeCaseAdapter;
+
     private ArrayList<Case3DLibraryListBean.CasesBean> case3DBeanList = new ArrayList<>();
     private UserHome3DCaseAdapter userHome3DCaseAdapter;
     private FiltrateContentBean mFiltrateContentBean;
-    //    private CaseLibraryBean mCaseLibraryBean;
     private Case3DLibraryListBean case3DLibraryListBean;
-    private FuzzySearchAdapter mFuzzySearchAdapter;
-    private CharacterParser mCharacterParser;
     private Intent mIntent;
 }
