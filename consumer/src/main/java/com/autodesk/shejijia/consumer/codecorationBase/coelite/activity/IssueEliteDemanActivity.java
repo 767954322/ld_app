@@ -366,8 +366,8 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         homeTypeDialog = HomeTypeDialog.getInstance(this);
         homeTypeDialog.setOnAddressCListener(new HomeTypeDialog.OnAddressCListener() {
             @Override
-            public void onClick(String roomName, String livingRoom, String toilet) {
-                String roomType = roomName + livingRoom + toilet;
+            public void onClick(String roomName, String lR, String toilet) {
+                String roomType = roomName + lR + toilet;
                 tvIssueRoom.setText(roomType);
 
                 /// convet .
@@ -375,7 +375,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
                 Map<String, String> roomHallMap = AppJsonFileReader.getRoomHall(IssueEliteDemanActivity.this);
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(IssueEliteDemanActivity.this);
 
-                livingRoom = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                livingRoom = ConvertUtils.getKeyByValue(livingRoomMap, lR);
                 room = ConvertUtils.getKeyByValue(roomHallMap, roomName);
                 mToilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
 

@@ -123,7 +123,12 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcHouseType.setText(tvHouseType);//设置室 厅 卫
         String style = styleMap.get(decorationNeedsListBean.getDecoration_style());
         tvcMeasureFormStyle.setText(UIUtils.getNoSelectIfEmpty(style));//风格
-        tvcAddress.setText(province_name + city_name + district_name);
+
+        if (district_name.equals("none")){
+            tvcAddress.setText(province_name + city_name);
+        }else {
+            tvcAddress.setText(province_name + city_name + district_name);
+        }
         chageButtonValue();
 //        for (DecorationBiddersBean decorationBiddersBean : list) {
 //            if (decorationBiddersBean.getDesigner_id().equals(designerId)) {
@@ -315,33 +320,6 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             }
         });
     }
-
-    /**
-     * 获取省市区地址
-     */
-    private void getPCDAddress() {
-        mChangeAddressDialog = new AddressDialog();
-        mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
-        mChangeAddressDialog
-                .setAddressListener(new AddressDialog.OnAddressCListener() {
-                    @Override
-                    public void onClick(String province, String proviceCode, String city, String cityCode, String district, String areaCode) {
-                        mCurrentProvince = province;
-                        mCurrentProvinceCode = proviceCode;
-                        mCurrentCity = city;
-                        mCurrentCityCode = cityCode;
-                        mCurrentDistrict = district;
-                        mCurrentDistrictCode = areaCode;
-
-                        district = UIUtils.getNoStringIfEmpty(district);
-
-                        tvcAddress.setText(province + city + district);
-                        mChangeAddressDialog.dismiss();
-                    }
-
-                });
-    }
-
     /**
      * @brief 获取yyyy-MM-dd HH:mm:ss 格式的时间
      */
