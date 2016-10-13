@@ -51,9 +51,9 @@
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/size_5"
+                android:background="@drawable/im_ico"
                 android:drawablePadding="@dimen/size_8"
-                android:enabled="false"
-                android:background="@drawable/im_ico" />
+                android:enabled="false"/>
         </RelativeLayout>
 
     </LinearLayout>
