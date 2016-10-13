@@ -146,7 +146,7 @@
 
 
     <!-- FlowFirstDesignActivity && FlowLastDesignActivity -->
-    <string name="flow_cost_detail">支付详情</string>
+    <string name="flow_cost_detail">我要支付</string>
     <string name="pay_success">支付成功</string>
     <string name="pay_failed">支付失败</string>
     <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
