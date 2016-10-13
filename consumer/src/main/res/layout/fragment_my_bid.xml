@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/pull_to_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include layout="@layout/view_refresh_head" />
+
+        <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView
+                android:id="@id/pullable_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:divider="@color/light_blue_2"
+                android:dividerHeight="@dimen/size_10"
+                android:footerDividersEnabled="false"
+                android:scrollbars="none"/>
+
+            <include layout="@layout/view_empty_layout"/>
+        </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullableLayout>
+
+
+        <include layout="@layout/view_load_more" />
+    </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout>
+
+</LinearLayout>

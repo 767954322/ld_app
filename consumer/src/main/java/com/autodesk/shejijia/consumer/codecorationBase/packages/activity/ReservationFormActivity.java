@@ -26,6 +26,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.Alert
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -368,7 +369,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
 
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (null == mMemberEntity) {
-            AdskApplication.getInstance().doLogin(this);
+            LoginUtils.doLogin(this);
             return;
         }
 

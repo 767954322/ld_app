@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:background="@color/white">
 
-        <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+        <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
             android:id="@+id/piv_consumer_slite_photo"
             android:layout_width="@dimen/size_40"
             android:layout_height="@dimen/size_40"

@@ -62,7 +62,7 @@
             android:layout_height="1000dp"
             android:background="@null" />
 
-        <com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView
+        <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PinnedHeaderListView
             android:id="@+id/tv_ect_search_listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

@@ -34,6 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
@@ -47,12 +48,12 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.zxing.encoding.EncodingHandler;
-import com.autodesk.shejijia.shared.components.common.uielements.ActionSheetDialog;
+import com.autodesk.shejijia.consumer.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -823,8 +824,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 jsonString = GsonUtil.jsonToString(jsonObject);
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 memberEntity.setNick_name(nick_name);
-                AdskApplication.getInstance().saveSignInInfo(memberEntity);
-                AdskApplication.getInstance().setMemberEntity(memberEntity);
+                ConsumerApplication.setMemberEntity(memberEntity);
                 CustomProgress.cancelDialog();
             }
 

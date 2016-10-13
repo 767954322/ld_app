@@ -39,10 +39,11 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.ClearEditText;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PinnedHeaderListView;
-import com.autodesk.shejijia.shared.components.common.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PinnedHeaderListView;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -176,7 +177,7 @@ public class SearchActivity extends NavigationBarActivity implements
     public void OnItemHomeChatClick(final int position) {
         MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
         if (mMemberEntity == null) {
-            AdskApplication.getInstance().doLogin(this);
+            LoginUtils.doLogin(this);
             return;
         }
         final String member_id = mMemberEntity.getAcs_member_id();
@@ -238,7 +239,7 @@ public class SearchActivity extends NavigationBarActivity implements
                 }
             });
         } else {
-            AdskApplication.getInstance().doLogin(SearchActivity.this);
+            LoginUtils.doLogin(SearchActivity.this);
         }
     }
 

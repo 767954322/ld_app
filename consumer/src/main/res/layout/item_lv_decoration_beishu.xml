@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:padding="@dimen/size_5">
 
-    <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+    <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
         android:id="@+id/ib_personal_b_photo_beishu"
         android:layout_width="@dimen/size_50"
         android:layout_height="@dimen/size_50"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.autodesk.shejijia.shared.components.common.uielements.RatioImageView
+    <com.autodesk.shejijia.consumer.uielements.RatioImageView
         android:id="@+id/iv_case_library_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

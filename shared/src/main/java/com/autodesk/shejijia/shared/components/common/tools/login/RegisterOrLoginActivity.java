@@ -25,6 +25,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnIte
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
@@ -158,7 +159,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                                     AlertView.Style.Alert, new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(Object object, int position) {
-                                    AdskApplication.getInstance().doLogout(RegisterOrLoginActivity.this);
+                                    LoginUtils.doLogout(RegisterOrLoginActivity.this);
                                     finish();
                                 }
                             }).show();

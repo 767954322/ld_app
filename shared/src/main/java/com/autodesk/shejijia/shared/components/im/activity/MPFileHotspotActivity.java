@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -38,7 +37,7 @@ import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.ImageProcessingUtil;
 
 import com.autodesk.shejijia.shared.components.im.widget.MPFileHotspotView;
-import com.autodesk.shejijia.shared.components.common.utility.Device;
+import com.autodesk.shejijia.shared.components.common.utility.DeviceUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPFileUtility;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -673,7 +672,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         SharedPreferencesUtils.delete(UIUtils.getContext(), ONBOARDING_SHOWN);
         SharedPreferencesUtils.delete(UIUtils.getContext(),APP_VERSION);
 
-        int currentAppVersion = Device.getVersionCode();
+        int currentAppVersion = DeviceUtils.getVersionCode();
         SharedPreferencesUtils.writeBoolean(ONBOARDING_SHOWN, true);
         SharedPreferencesUtils.writeInt(APP_VERSION,currentAppVersion);
     }
@@ -686,7 +685,7 @@ public class MPFileHotspotActivity extends NavigationBarActivity
         if (savedAppVersion > 0)
         {
             //get current bundle version
-            int currentAppVersion = Device.getVersionCode();
+            int currentAppVersion = DeviceUtils.getVersionCode();
             boolean bOnBoardingShown = SharedPreferencesUtils.readBoolean(ONBOARDING_SHOWN);
 
             if ((savedAppVersion == currentAppVersion) && bOnBoardingShown)

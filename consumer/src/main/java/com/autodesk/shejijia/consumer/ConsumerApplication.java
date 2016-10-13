@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.consumer;
 
+import android.os.Handler;
+
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.consumer.home.homepage.activity.MPSplashActivity;
+import com.autodesk.shejijia.consumer.base.activity.MPSplashActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
@@ -15,12 +17,19 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONObject;
 
-public class ConsumerApplication extends AdskApplication {
+import java.io.InputStream;
+
+import cn.jpush.android.api.JPushInterface;
+
+public class ConsumerApplication extends AdskApplication{
     @Override
     public void onCreate() {
         super.onCreate();
+        mMainThreadHandler = new Handler();
+        mMainThreadId = android.os.Process.myTid();
 
         reqisterWXAppId();
+
 
     }
 
@@ -32,11 +41,22 @@ public class ConsumerApplication extends AdskApplication {
     }
 
     @Override
-    protected void onLoginSuccess(MemberEntity entity) {
+    public void initData(){
+        super.initData();
+        dataHelper = CityDataHelper.getInstance(this);
+        InputStream in = this.getResources().openRawResource(com.autodesk.shejijia.shared.R.raw.province);
+        dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
+    }
 
-        super.onLoginSuccess(entity);
+    /// MainThread Handler .
+    public static Handler getMainThreadHandler() {
+        return mMainThreadHandler;
+    }
 
-        //  getLoginThreadId(getMemberEntity().getAcs_member_id());
+
+    /// MainThread Id .
+    public static int getMainThreadId() {
+        return mMainThreadId;
     }
 
     @Override
@@ -85,5 +105,10 @@ public class ConsumerApplication extends AdskApplication {
     private static final String APP_ID = "wx4128c321fa069fa8";
     public static IWXAPI api;
     private DesignPlatformDelegate mDesignPlatformDelegate = new DesignPlatformDelegate();
+    /// MainThread Hanlder .
+    private static Handler mMainThreadHandler = null;
+    /// MainThread Id .
+    private static int mMainThreadId;
+    private CityDataHelper dataHelper;
 
 }

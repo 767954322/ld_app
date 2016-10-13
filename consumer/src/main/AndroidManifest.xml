@@ -60,7 +60,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".home.homepage.activity.MPSplashActivity"
+            android:name=".base.activity.MPSplashActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation|locale|layoutDirection"
             android:label="@string/app_name"
@@ -108,8 +108,7 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.consumer.activity.IssueDemandActivity"
             android:alwaysRetainTaskState="true"
@@ -126,7 +125,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.MPMoreSettingActivity"
+            android:name=".tools.about.MPMoreSettingActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
@@ -151,17 +150,17 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutActivity"
+            android:name=".tools.about.AboutActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutDesignerIntroducedActivity"
+            android:name=".tools.about.AboutDesignerIntroducedActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutVersionIntroducedActivity"
+            android:name=".tools.about.AboutVersionIntroducedActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
@@ -388,13 +387,12 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.autodesk.shejijia.shared.components.common.tools.about.AboutDesignerContactActivity"
+            android:name=".tools.about.AboutDesignerContactActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
@@ -417,8 +415,7 @@
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:exported="false"
-            android:theme="@android:style/Theme.NoTitleBar">
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
 
@@ -555,7 +552,6 @@
             android:name=".home.decorationlibrarys.activity.CaseLibraryDetail3DActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"

@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
@@ -347,7 +348,7 @@ public class BaseHomeActivity extends NavigationBarActivity implements RadioGrou
             showFragment(radioBtnId);
         } else {
             mRadioGroup.check(R.id.consumer_main_radio_btn);
-            AdskApplication.doLogin(this);
+            LoginUtils.doLogin(this);
         }
     }
 

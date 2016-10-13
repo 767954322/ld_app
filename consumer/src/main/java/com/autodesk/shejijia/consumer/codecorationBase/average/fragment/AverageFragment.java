@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
@@ -75,7 +76,7 @@ public class AverageFragment extends BaseFragment implements View.OnClickListene
             case R.id.iv_send_demand: /// .
                 MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
                 if (null == memberEntity) {
-                    AdskApplication.getInstance().doLogin(activity);
+                    LoginUtils.doLogin(activity);
                 } else {
                     Intent intent = new Intent(activity, IssueDemandActivity.class);
                     startActivity(intent);

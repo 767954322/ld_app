@@ -1,28 +1,23 @@
 package com.autodesk.shejijia.shared.framework;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.multidex.MultiDex;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.network.PushNotificationHttpManager;
-import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.utility.CommonUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ConfigProperties;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -33,8 +28,6 @@ import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.service.webSocketService;
 import com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver;
-
-import java.io.InputStream;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -52,8 +45,7 @@ public abstract class AdskApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sAdskApplication = this;
-        mMainThreadHandler = new Handler();
-        mMainThreadId = android.os.Process.myTid();
+
         ConfigProperties.initProperties(this);
 
         boolean imServer = ApiManager.isRunningDevelopment(ApiManager.RUNNING_DEVELOPMENT);
@@ -72,12 +64,11 @@ public abstract class AdskApplication extends Application {
     /**
      * 初始化操作
      */
-    private void initData() {
+    public void initData() {
         queue = Volley.newRequestQueue(this);
         ImageUtils.initImageLoader(this);
-        dataHelper = CityDataHelper.getInstance(this);
-        InputStream in = this.getResources().openRawResource(R.raw.province);
-        dataHelper.copyFile(in, CityDataHelper.DATABASE_NAME, CityDataHelper.DATABASES_DIR);
+        JPushInterface.setDebugMode(false);    // Enable logging settings, turn off logging when you publish
+        JPushInterface.init(this);            // Init JPush
 
         MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(sAdskApplication, Constant.UerInfoKey.USER_INFO);
         if (entity != null) {
@@ -87,7 +78,8 @@ public abstract class AdskApplication extends Application {
         JPushInterface.init(this);            // Init JPush
     }
 
-    private void initListener() {
+    public void initListener() {
+
         mSignInNotificationReceiver = new SignInNotificationReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
@@ -129,24 +121,10 @@ public abstract class AdskApplication extends Application {
             }
         });
 
-//        // integrate MPCrashHandler
-//        MPCrashHandler.getInstance().configure(this, SplashActivity.class);
-//        Thread.setDefaultUncaughtExceptionHandler(MPCrashHandler.getInstance());
     }
 
     public static synchronized AdskApplication getInstance() {
         return sAdskApplication;
-    }
-
-    /// MainThread Handler .
-    public static Handler getMainThreadHandler() {
-        return mMainThreadHandler;
-    }
-
-
-    /// MainThread Id .
-    public static int getMainThreadId() {
-        return mMainThreadId;
     }
 
     public abstract boolean isDebug();
@@ -176,26 +154,6 @@ public abstract class AdskApplication extends Application {
         return null;
     }
 
-
-    // call this function and listen to USER_DID_LOGIN broadcast
-    public static void doLogin(Context ctx) {
-        ctx.startActivity(new Intent(ctx, RegisterOrLoginActivity.class));
-    }
-
-    public static void doLogout(Context ctx) {
-        //登陆状态，开启推送
-        // fix logout push  不确定有没有问题
-        JPushInterface.stopPush(AdskApplication.getInstance());
-        Intent intent = new Intent();
-        intent.setAction(BroadCastInfo.USER_DID_LOGOUT);
-        ctx.sendBroadcast(intent);
-    }
-
-    /**
-     * 登录成功后执行的操作
-     *
-     * @param entity 登录后的用户信息
-     */
     protected void onLoginSuccess(MemberEntity entity) {
         /// 将获取到底数据设置为全局可以访问.
         AdskApplication.setMemberEntity(entity);
@@ -230,7 +188,6 @@ public abstract class AdskApplication extends Application {
         SharedPreferencesUtils.clear(AdskApplication.getInstance(), SharedPreferencesUtils.CONFIG);
 
     }
-
 
     private void registerForPushNotification() {
         String regId = SharedPreferencesUtils.readString(JPushMessageReceiver.REGID);
@@ -267,7 +224,7 @@ public abstract class AdskApplication extends Application {
      * 开启聊天室服务
      */
     public void openChatConnection() {
-        if (isChatServiceRunning(webSocketService.class))
+        if (CommonUtils.isChatServiceRunning(this,webSocketService.class))
             closeChatConnection();
 
         if (memberEntity != null) {
@@ -278,21 +235,10 @@ public abstract class AdskApplication extends Application {
         }
     }
 
-    private void closeChatConnection() {
+    public void closeChatConnection() {
         Intent stopIntent = new Intent(this, webSocketService.class);
         stopService(stopIntent);
     }
-
-    private boolean isChatServiceRunning(Class<?> websocketServiceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (websocketServiceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     public static void setMemberEntity(MemberEntity memberEntity) {
         AdskApplication.memberEntity = memberEntity;
@@ -300,11 +246,10 @@ public abstract class AdskApplication extends Application {
 
     /**
      * 用于处理登录后数据的操作
-     *
      * @param entity
      */
 
-    public void saveSignInInfo(MemberEntity entity) {
+    public  void saveSignInInfo(MemberEntity entity){
         String ZERO = "0";
         /// 为不符合规则的acs_member_id 补足位数 .
         String acs_member_id = entity.getAcs_member_id();
@@ -317,12 +262,10 @@ public abstract class AdskApplication extends Application {
         onLoginSuccess(entity);
     }
 
-
     /**
      * 全局的广播接收者,用于处理登录后数据的操作
      */
     private class SignInNotificationReceiver extends BroadcastReceiver {//此广播会有延时，在进入界面后会有获取不到登陆人信息的的情况
-
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -349,19 +292,13 @@ public abstract class AdskApplication extends Application {
         }
     }
 
-    private static final String TAG = "APPLICATION";
     private static AdskApplication sAdskApplication;
-    private static MemberEntity memberEntity;
-    /// MainThread Hanlder .
-    private static Handler mMainThreadHandler = null;
-    /// MainThread Id .
-    private static int mMainThreadId;
+    private SignInNotificationReceiver mSignInNotificationReceiver;
 
     private boolean IsWebSocketConnecting = false;
     private boolean mIsChatRoomActivityInForeground = false;
+    protected static MemberEntity memberEntity;
     public RequestQueue queue;
-    private CityDataHelper dataHelper;
-    private SignInNotificationReceiver mSignInNotificationReceiver;
 
     public static final String JPUSH_STORE_KEY = "com.autodesk.easyhome.marketplace.JPUSHSTORE";
 }

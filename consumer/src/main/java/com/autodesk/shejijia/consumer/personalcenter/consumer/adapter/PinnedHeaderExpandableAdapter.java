@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
-import com.autodesk.shejijia.shared.components.common.uielements.PinnedHeaderExpandableListView;
-import com.autodesk.shejijia.shared.components.common.utility.ConvertUtils;
+import com.autodesk.shejijia.consumer.uielements.PinnedHeaderExpandableListView;
+import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 
 import java.util.ArrayList;
 import java.util.Map;

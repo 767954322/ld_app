@@ -18,7 +18,7 @@
             android:layout_height="@dimen/size_60"
             android:layout_gravity="center_vertical">
 
-            <com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView
+            <com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView
                 android:id="@+id/piv_designer_meal_detail"
                 android:layout_width="@dimen/size_40"
                 android:layout_height="@dimen/size_40"

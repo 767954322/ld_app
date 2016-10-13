@@ -41,13 +41,14 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.uielements.viewgraph.PolygonImageView;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.PictureProcessingUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -187,7 +188,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                     }
 
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
 
@@ -198,7 +199,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
                         if (TextUtils.isEmpty(member_id)) {
-                            AdskApplication.getInstance().doLogin(this);
+                            LoginUtils.doLogin(this);
                         } else {
                             if (is_following) {
                                 unFollowedAlertView.show();
@@ -209,7 +210,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                     }
                 } else {
                     isfromGuanZhu=true;
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
 
@@ -226,7 +227,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                     }
 
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
 
@@ -262,7 +263,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                                 AlertView.Style.Alert, null).show();
                     }
                 } else {
-                    AdskApplication.getInstance().doLogin(this);
+                    LoginUtils.doLogin(this);
                 }
                 break;
 
@@ -749,7 +750,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 //            }
 //
 //        } else {
-//            AdskApplication.getInstance().doLogin(this);
+//            LoginUtils.doLogin(this);
 //        }
 //    }
 //

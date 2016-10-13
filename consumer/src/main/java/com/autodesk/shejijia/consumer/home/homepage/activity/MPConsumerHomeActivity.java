@@ -42,7 +42,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.chooseview.ChooseViewPointer;
+import com.autodesk.shejijia.consumer.uielements.chooseview.ChooseViewPointer;
 import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -778,7 +778,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         } else {
 
             new AlertView(UIUtils.getString(com.autodesk.shejijia.shared.R.string.tip)
-                    , UIUtils.getString(com.autodesk.shejijia.shared.R.string.unable_create_beishu_meal)
+                    , UIUtils.getString(R.string.unable_create_beishu_meal)
                     , null, null, new String[]{UIUtils.getString(com.autodesk.shejijia.shared.R.string.sure)}
                     , MPConsumerHomeActivity.this
                     , AlertView.Style.Alert, null).show();

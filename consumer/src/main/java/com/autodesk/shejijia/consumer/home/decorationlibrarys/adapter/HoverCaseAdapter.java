@@ -11,7 +11,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
-import com.autodesk.shejijia.shared.framework.adapter.BaseAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.BaseAdapter;
 
 import java.util.List;
 

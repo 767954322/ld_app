@@ -168,5 +168,784 @@
     <string name="bind_per">位设计师</string>
     <string name="other_qita">其他</string>
 
+    <!-- dialog-->
+    <string name="application_successful">申请成功</string>
+    <string name="application_failure">申请失败</string>
+    <string name="application_detail">请在提现记录中查看详情</string>
+    <string name="application_unbing">解除绑定成功</string>
+
+    <string name="tip_content_one">持卡人姓名不能为空</string>
+    <string name="tip_content_two">支行名称不能为空</string>
+    <string name="tip_content_three">银行卡号不能为空</string>
+    <string name="application_unbing_fail">解除失败</string>
+    <string name="tip_withdrawal_record">您目前还没有进行提现</string>
+    <string name="tip_transaction_record">您目前还没有进行交易</string>
+
+    <string name="tip_stop">你确定要终止与设计师的合作吗？</string>
+    <string name="serviced">设计师已做过量房服务</string>
+    <string name="serviceding">设计师还未提供量房服务</string>
+    <string name="tip_success">保存成功</string>
+    <string name="network_error">网络连接失败!</string>
+    <string name="call_phone">拨打</string>
+    <string name="call_number">拨打400-650-3333？</string>
+    <string name="designer_bid_detail_bid">是否确定应标</string>
+    <string name="designer_bid_detail_realy_name">请先到个人中心完成实名认证</string>
+    <string name="designer_bid_detail_realy_immediately_validation">立即验证</string>
+    <string name="designer_bid_detail_success">应标成功</string>
+    <string name="consume_send_success">选TA量房成功</string>
+    <!--<string name="consume_send_success">选他量房成功</string>-->
+    <string name="alipay_error">支付失败！</string>
+
+    <!--AutonyAttestationActivity-->
+    <string name="autonym_no_self_identity">本人持证正面照上传成功</string>
+    <string name="autonym_no_identity_front">身份证正面照上传成功</string>
+    <string name="autonym_no_identity_contrary">身份证反面照上传成功</string>
+    <string name="autonym_information_delivery">提交信息</string>
+
+    <!-- FlowEstablishContractActivity -->
+    <string name="design_contract">设计合同</string>
+    <string name="send_design_contract">发送设计合同</string>
+    <string name="uploaded_deliverable">上传量房交付物</string>
+    <string name="in_contract_sent">合同发送中...</string>
+    <string name="agree_and_send_design_first">同意并支付设计首款</string>
+    <string name="agree_and_send_design_first_new">立即付款</string>
+    <string name="confirmation_and_payment">确认并付款</string>
+    <string name="receiving_room_deliverable">接收量房交付物</string>
+    <string name="room_first_less_than_eighty_percent_of_the_total_amount_of_design">设计首款不能低于设计总额的80%</string>
+    <string name="room_first_less_than_eighty_percent_of_the_total_amount_measure_fee">设计首款不能少于量房款</string>
+    <string name="room_first_less_than_eighty_percent_of_the_total_measure_fee">首款金额应大于量房费用</string>
+    <string name="total_quantity_room_first_is_not_greater_than_design">设计首款不能大于设计总额</string>
+    <string name="please_fill_out_the_design_first">请正确填写设计首款</string>
+    <string name="costs_cannot_be_negative">费用不能为负数</string>
+    <string name="please_fill_in_the_total_project_design">请填写项目设计总额</string>
+    <string name="please_fill_out_each_increases_the_cost_of_a">请填写每增加一张的费用</string>
+    <string name="please_fill_in_the_number_of_rendering">请填写渲染图的张数</string>
+    <string name="please_fill_in_the_number_of_drawing">请填写效果图的张数</string>
+    <string name="detailed_address_cannot_be_empty">请正确填写小区名称</string>
+    <string name="please_fill_in_the_right_phone_number">请正确填写手机号</string>
+    <string name="please_fill_in_the_right_post_number">请正确填写邮编</string>
+    <string name="please_fill_in_the_right_phone_email">请正确填写邮箱</string>
+    <string name="the_name_cannot_be_empty">姓名不能为空</string>
+    <string name="the_contract_sent_successfully">合同发送成功</string>
+    <string name="the_contract_sent_failure">合同发送失败</string>
+    <string name="sure_and_send">确定发送</string>
+    <string name="sure_modify_send">修改发送</string>
+    <string name="flow_contract_num">合同编号：</string>
+    <string name="flow_basic_info">基本信息</string>
+    <string name="flow_owner">甲方(消费者)：</string>
+    <string name="flow_phone">手机号码：</string>
+
+    <!--string name="flow_postal_code">邮政编号：</string>-->
+
+
+    <string name="flow_email_address">电子邮箱：</string>
+    <string name="flow_address_email">邮箱地址：</string>
+    <string name="flow_postal_code">邮箱编号：</string>
+    <string name="flow_decorate_address">装修地址：</string>
+    <string name="flow_second_party">乙方(设计师)：</string>
+    <string name="flow_detail_address">详细地址：</string>
+    <string name="flow_hint_project_address">请输入项目地址</string>
+    <string name="flow_hint_email">请输入电子邮箱（选填）</string>
+    <string name="flow_hint_jiafang_name">请输入甲方姓名</string>
+    <string name="flow_hint_first_past_cost">设计首款不低于设计费总额的80%</string>
+    <string name="flow_material_list">材料清单(包括:主材清单、家具清单、施工报价单) 1 份</string>
+    <string name="flow_construction_drawings">施工图纸 1 套</string>
+    <string name="flow_3D_project">3D空间方案设计 1 份</string>
+    <string name="flow_service_address">服务地址：</string>
+    <string name="flow_hint_jiafang_name_address">请输入甲方姓名</string>
+    <string name="flow_renderings">渲&#160;&#160;染&#160;&#160;图：</string>
+    <string name="flow_monad_zhang">张</string>
+    <string name="flow_every_increase_a_rendering_fee">每增加一张效果图费用：</string>
+    <string name="flow_monad_rmb">元</string>
+    <string name="flow_the_total_project_design">本项目设计费总额：</string>
+    <string name="flow_the_project_design">本项目设计费用</string>
+    <string name="flow_first_design_cost">设计首款：</string>
+    <string name="flow_last_design_cost">设计尾款：</string>
+    <string name="flow_examine_contract_detail">查看合同详情</string>
+    <string name="flow_contract_detail">合同详情</string>
+    <string name="flow_project_deliverables">设计项目交付物</string>
+    <string name="flow_have_read_all_contract_detail">我已阅读所有合同内容</string>
+    <string name="flow_design_work_content">设计工作内容</string>
+    <string name="flow_effect_picture">效果图：</string>
+    <string name="flow_project_data">项目资料</string>
+
+
+    <!-- FlowFirstDesignActivity && FlowLastDesignActivity -->
+    <string name="flow_cost_detail">支付详情</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_failed">支付失败</string>
+    <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="telephone_space">电&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;话：</string>
+    <string name="flow_particular_cost">支付明细</string>
+    <string name="flow_aggregate_amount">总&#160;&#160;金&#160;&#160;额：</string>
+    <string name="flow_pay_way">支付方式：</string>
+    <string name="flow_should_first">本次应付设计首款：</string>
+    <string name="flow_deduct_measure_cost">已扣除量房费</string>
+    <string name="deduct_measure_cost">&#160;&#160;量房费</string>
+    <string name="flow_agree_pay">同意合同并支付首款</string>
+    <string name="flow_should_last">本次应付设计尾款：</string>
+
+    <!-- FlowMeasureCostActivity -->
+    <string name="flow_measure_house_cost">量&#160;&#160;房&#160;&#160;费：</string>
+    <string name="evaluation">&#160;&#160;立即评价&#160;&#160;</string>
+    <string name="i_want_to_pay">我要支付</string>
+    <string name="loding">加载中...</string>
+    <string name="loding_end">已为最后一条需求。</string>
+    <string name="loding_finish">加载完成</string>
+
+    <!-- FlowMeasureFormActivity -->
+    <string name="demand_planning_budget">设计预算：</string>
+    <string name="demand_planning_budget_title">设计预算</string>
+    <string name="demand_project_budget">装修预算：</string>
+    <string name="demand_project_budget_title">装修预算</string>
+    <string name="please_enter_your_name">请输入姓名</string>
+    <string name="please_enter_your_phone">请输入手机号码</string>
+    <string name="please_select_design_budget">请选择设计预算</string>
+    <string name="please_select_decorate_budget">请选择装修预算</string>
+    <string name="demand_project_area">项目面积：</string>
+    <string name="please_enter_area">请输入面积(平米)</string>
+    <string name="demand_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="please_select_family">请选择户型：室 厅 卫</string>
+    <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
+    <string name="please_select_style">请选择风格</string>
+    <string name="demand_measure_house_time">量房时间：</string>
+    <string name="demand_measure_house_time_title">量房时间</string>
+    <string name="please_select_quantity_room_time">请选择量房时间</string>
+    <string name="europe_and_america_style">欧美风</string>
+    <string name="demand_measure_house_address">项目地址：</string>
+    <string name="please_select_address">请选择省市区</string>
+    <string name="demand_village_name">小区名称：</string>
+    <string name="please_select_community_name">请输入小区名称</string>
+    <string name="demand_measure_house_charge">量&#160;&#160;房&#160;&#160;费：</string>
+    <string name="flow_send">发送</string>
+    <string name="agreed">同意</string>
+    <string name="agreed_home">确定量房</string>
+    <string name="refuse">拒绝</string>
+    <string name="amount_of_time_is_empty">请选择量房时间</string>
+    <string name="amount_of_time_than_current_time_one_hour">量房时间至少大于当前时间一小时</string>
+    <string name="confirm_room_success">确认量房成功</string>
+    <string name="confirm_room_fail">确认量房失败</string>
+    <string name="refused_room_fail">拒绝量房失败</string>
+    <string name="refused_room_success">拒绝量房成功</string>
+    <string name="choose_ta_room_success">选TA量房成功</string>
+    <string name="choose_ta_room_fail">选TA量房失败</string>
+    <string name="agree_measure_house_time">请选择量房时间</string>
+    <string name="the_designer_rejected_quantity">WkFlowMea.设计师拒绝量房</string>
+    <string name="consumer_should_agree_with_mark">WkFlowMea.消费者同意应标</string>
+    <string name="phone">手机号码：</string>
+
+    <!--  FlowUploadDeliveryActivity -->
+    <string name="data_null">暂无数据</string>
+    <string name="flow_rendering_design">渲染图设计</string>
+    <string name="flow_design_blueprint">设计图纸</string>
+    <string name="flow_bill_of_materials">材料清单</string>
+    <string name="deliver_measure_consumer">量房交付</string>
+    <string name="deliver_measure_consumer_title">我的量房交付</string>
+    <string name="three_plan">3D设计方案</string>
+    <string name="three_plan_no_name">未命名</string>
+    <string name="measure_home_order">材料清单</string>
+    <string name="deliver_consumer">我的设计交付</string>
+    <string name="deliver_designer">我要交付</string>
+    <string name="flow_3d">我的3D方案</string>
+    <string name="successful_delivery">交付成功</string>
+    <string name="successful_design_delivery">发送设计交付成功</string>
+    <string name="volume_housing_delivery">量房交付中，请稍后0</string>
+    <string name="volume_room_deliver">量房交付中</string>
+    <string name="please_submit_deliverable_into_web_pages">请先进入网页提交交付物</string>
+    <string name="in_design_deliverable_zero">设计交付中</string>
+    <string name="in_design_deliverable_one">设计交付中1</string>
+    <string name="in_design_deliverable_two">设计交付中2</string>
+    <string name="in_design_deliverable_three">设计交付中3</string>
+    <string name="waiting_designer_upload_design_deliverable">请耐心等待设计师发送设计交付物</string>
+    <string name="waiting_designer_uploaded_room_deliverable">请耐心等待设计师发送量房交付物</string>
+    <string name="waiting_cons_uploaded_room_deliverable">请耐心等待消费者支付量房费</string>
+    <string name="please_enter_web_page_submitted_room_deliverable">请登陆Web端上传量房交付物</string>
+    <string name="please_enter_web_page_submitted_design_deliverable">您还没有做设计方案\n请到网页端完成设计方案</string>
+    <string name="please_select_3d_design">请先选择3D设计方案</string>
+    <string name="please_select_design_blueprint">您还没有上传设计图纸\n请先在网页端上传设计图纸</string>
+    <string name="please_select_rendering">您还没有上传渲染图设计\n请先在网页端上传渲染图设计</string>
+    <string name="please_select_maaterial_bill">您还没有上传材料清单\n请先在网页端上传材料清单</string>
+    <string name="my_project_phone">手机：</string>
+    <string name="my_project_communication">沟通</string>
+    <string name="my_project_design_deliverable">设计交付</string>
+    <string name="tab_designer">设计师</string>
+    <!-- HoverCaseActivity -->
+    <string name="case_library">案例库</string>
+    <!-- SearchActivity -->
+    <string name="search">搜索风格、户型、面积</string>
+    <string name="search_new">请输入关键字搜索</string>
+    <string name="search_designer">搜索价格、风格、从业年限</string>
+    <!-- Wk3DPlanActivity -->
+    <string name="autonym_confirm">确定</string>
+    <string name="to_get_data_fail_try_again_later">获取数据失败，稍后再试</string>
+    <string name="my_room_deliverable">我的量房交付物</string>
+    <string name="delivery_quantity_room">量房交付</string>
+
+    <!-- WkFlowStateActivity -->
+    <string name="order_detail">订单详情</string>
+    <string name="no_pay">没有发送量房费!</string>
+    <string name="please_wait_consumer_send_design_first">请耐心等待客户支付设计首款</string>
+    <string name="please_wait_consumer_send_design_end">请等待消费者发送设计尾款</string>
+    <string name="please_wait_designer_send_contract">请等待设计师发送合同</string>
+    <string name="please_wait_consumer__quantity_room">请耐心等待客户邀请您去进行量房</string>
+    <string name="error_on_get_contract_number">取得合同编号失败，请稍后再试</string>
+    <string name="designer_meal_detail_title">接收量房费</string>
+    <string name="designer_meal_detail_desc">接收量房费</string>
+    <string name="send_invitation_designer_quantity_room">您已发送设计师量房邀请</string>
+    <string name="refused_designer_quantity_room_invitation">您已拒绝设计师量房邀请</string>
+    <string name="designer_agreed_room_invitation">设计师已同意量房邀请</string>
+    <string name="designer_refused_room_invitation">设计师已拒绝量房邀请</string>
+    <string name="designers_have_complete_quantity">设计师已经完成量房</string>
+    <string name="pay_amount_of_room_charge">支付量房费</string>
+    <string name="please_pay_designer_volume_rate">请向设计师支付量房费</string>
+    <string name="designer_has_declined_room">设计师已拒绝量房,不需要支付量房费</string>
+    <string name="you_designers_pay_excess_rate">您已向设计师支付过量房费</string>
+    <string name="receive_design_contract">接收设计合同</string>
+    <string name="choose_designer_design_contract">选择一位设计师，签署设计合同</string>
+    <string name="designers_send_contract">已有设计师发送合同，请同意付首款或拒绝</string>
+    <string name="receive_designer_from_deliverables">请接收设计师发来的量房交付物</string>
+    <string name="your_contract_agreed_designer">您已同意设计师发来的合同</string>
+    <string name="choose_designer_online_payment_first">选择设计师线上支付设计费首款</string>
+    <string name="designers_pay_design_first">线上支付设计费首款</string>
+    <string name="choose_designer_online_payment_balance_payment">选择设计师线上支付设计费尾款</string>
+    <string name="payment_designers_make_design">线上支付设计费尾款</string>
+    <string name="receive_designer_send_design_deliverables">请接收设计师发送的设计交付物</string>
+    <string name="you_receiving_designer_sent_design_deliverables">您已接收设计师发送的设计交付物</string>
+    <string name="receiving_designer_sent_design_deliverables">接收设计师发送的设计交付物</string>
+    <string name="check_room_invitation_and_confirm_room">查看量房邀请，并确认要去量房</string>
+    <string name="your_confirmed_quantity">您已确认量房</string>
+    <string name="consumers_refused_standard">消费者已拒绝应标</string>
+    <string name="consumers_refused_you_standard">消费者已经拒绝您的应标</string>
+    <string name="refused_to_amount_of_room">您已拒绝量房</string>
+    <string name="you_refused_customer_amount_room">您已拒绝消费者量房</string>
+    <string name="waiting_owner_pay_room">等待业主支付量房费</string>
+    <string name="you_have_receiving_volume_rate">您已接收量房费</string>
+    <string name="you_received_amount_room_charge_consumers">您已接收过消费者的量房费</string>
+    <string name="create_design_contract_sent_customer">创建设计合同并发给客户</string>
+    <string name="design_contract_sent">设计合同已发送</string>
+    <string name="design_contract_sent_consumer">设计合同已发送至消费者</string>
+    <string name="upload_your_room_deliverables">请上传您的量房交付物</string>
+    <string name="waiting_receiving_customer_send_design_down_payment">等待接收客户发送的设计首付款</string>
+    <string name="waiting_receiving_customer_send_design_down_payment_end">等待接收客户发送的设计尾款</string>
+    <string name="have_received_first_design">已接收设计首款</string>
+    <string name="have_received_end_design">已接收设计尾款</string>
+    <string name="have_received_customer_down_payment">已接收客户发送的设计首付款</string>
+    <string name="have_received_customer_down_payment_end">已接收客户发送的设计尾款</string>
+    <string name="waiting_uploading_final_version_design_deliverables">等待上传最终版的设计交付物</string>
+    <string name="wait_uploading_final_version_design_deliverables">已上传最终版的设计交付物</string>
+
+    <!-- SeekDesignerDetailActivity -->
+    <string name="work">作品：</string>
+    <string name="be_good_at">擅长：</string>
+    <!--<string name="be_good_at">擅长风格：</string>-->
+    <string name="has_yet_to_fill_out">尚未填写</string>
+    <string name="temporarily_no_data">暂无数据</string>
+    <string name="find_designer">设计师</string>
+    <string name="designer_working_year">从业年限&#160;：</string>
+    <string name="designer_good_style">擅长风格&#160;：</string>
+    <string name="designer_design_fee">设计费&#160;：</string>
+    <string name="designer_measure_fee">量房费&#160;：</string>
+    <string name="optional_measure">选TA量房</string>
+    <string name="measure_invite">量房邀约</string>
+    <string name="measure_fee_default">0元</string>
+
+    <!-- WK3DPlanActivity -->
+    <string name="three_plan_name">设计方案名字</string>
+    <string name="select_finish">完成</string>
+
+    <string name="product_name">商品名称：</string>
+    <string name="product_test">测试的商品</string>
+    <string name="product_description">商品描述：</string>
+    <string name="product_price">商品价格：</string>
+    <string name="detailed_description_test">该测试商品的详细描述</string>
+    <string name="product_price_detail">0.01元</string>
+    <string name="payment_order">支付订单</string>
+    <string name="check_account">检查账户</string>
+    <string name="turn_pay_native_web_pages">网页支付转native</string>
+
+    <!-- AboutActivity -->
+    <string name="more_about">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;简约风格是由“极简主义”演化而来，它代表的是简洁和品味。简约不等于简单，只是经过精心设计后对房子进行精简，但每一处精简都能看出主人花的心思。田园风格有很多种，但是万变不离其宗，它的主要特点就是回归自然。田园风格是向往田园，喜爱自然的人所钟爱的。</string>
+    <string name="version">Version BQ0.0.0.1</string>
+    <string name="designer_home_about">关于设计家</string>
+    <string name="designer_introduced">设计家介绍</string>
+    <string name="reservation">立即预约</string>
+
+    <string name="contact">联系方式</string>
+    <string name="version_introduced">版权说明</string>
+    <string name="version_detail">版本</string>
+
+    <!-- AmendDemandActivity -->
+    <string name="demand_phone">手机号码：</string>
+    <string name="demand_project_types">房屋类型：</string>
+    <string name="demand_project_types_title">房屋类型</string>
+
+    <string name="demand_project_address">项目地址：</string>
+    <string name="consumer_decoration_buildtime">创建时间：</string>
+    <string name="fitment_amend_demand">重新提交</string>
+    <string name="fitment_stop_demand">终止</string>
+    <string name="stop_demand">终止合作</string>
+    <string name="create_date">创建日期：</string>
+    <string name="demand_design_budget_hint">请选择设计预算</string>
+    <string name="demand_design_budget_hint_select">请选择设计预算(选填)</string>
+    <string name="demand_budget_hint">请选择装修预算</string>
+    <string name="demand_budget_hint_select">请选择装修预算(选填)</string>
+    <string name="demand_please_project_types">请选择房屋类型</string>
+    <string name="demand_please_project_types_select">请选择房屋类型(选填)</string>
+    <string name="demand_import_area">请输入面积</string>
+    <string name="demand_import_limit">请输入1-9999数值</string>
+    <string name="demand_room_area">请输入房屋面积</string>
+    <string name="issue_room">请选择户型</string>
+
+    <string name="issue_room_select">请选择户型：室 厅 卫(选填)</string>
+    <string name="demand_please_style">请选择风格</string>
+    <string name="demand_please_style_title">风格</string>
+    <string name="demand_please_style_select">请选择风格(选填)</string>
+    <string name="demand_please_address">请选择地址：省 市 区</string>
+    <string name="demand_please_project_address">请正确输入项目地址</string>
+    <string name="demand_please_input_project_address">请选择项目地址</string>
+    <string name="demand_please_specific_address">请输入小区名称</string>
+    <string name="termination_demand">终止需求</string>
+    <string name="amend_demand">修改需求</string>
+    <string name="termination_demand_true">您确定要终止需求吗?</string>
+    <string name="amend_demand_true">您确定要修改需求吗?</string>
+    <string name="termination_demand_success">终止需求成功</string>
+    <string name="modify_success">修改成功</string>
+
+    <!-- AppealActivity -->
+    <string name="back">返回</string>
+    <string name="content_edit_hint">欢迎在这儿发表宝贵的意见哦~</string>
+    <string name="mobile_number">手机</string>
+    <string name="mobile_number_hint">方便我们尽快反馈</string>
+
+    <!--CaseDetailActivity -->
+    <string name="case_detail_work_introduce">作品介绍</string>
+    <string name="no_cache">暂无缓存</string>
+
+    <!--ConsumerEssentialInfoActivity -->
+    <string name="consumer_user_name">用户名</string>
+    <string name="be_good_at_simple">擅长：</string>
+    <string name="consumer_myQR">我的二维码</string>
+    <string name="consumer_mobile_number">手机</string>
+    <string name="sex">性别</string>
+    <string name="consumer_address">所在地</string>
+    <string name="consumer_mails">邮箱</string>
+    <string name="not_filled">尚未填写</string>
+    <string name="no_mobile">未绑定手机</string>
+    <string name="no_email">未绑定邮箱</string>
+    <string name="secret">保密</string>
+    <string name="boy">男</string>
+    <string name="girl">女</string>
+    <string name="essential_info">基本信息</string>
+    <string name="photograph">拍照</string>
+    <string name="savelocal">保存图片</string>
+    <string name="photo_album">从手机相册选择</string>
+    <string name="information_on_the_cross">信息上传中...</string>
+    <string name="autonym_sd_disabled">SD卡不可用！</string>
+    <string name="head_on_the_cross">头像上传中...</string>
+    <string name="uploaded_successfully">上传成功</string>
+    <string name="uploaded_failed">上传失败</string>
+    <string name="file_does_not_exist">文件不存在</string>
+    <string name="qr_Incomplete">请先完善个人信息</string>
+    <string name="fill_in_nickname">填写昵称</string>
+    <string name="nickname_format_error">昵称格式错误</string>
+    <string name="nickname_on_the_cross">昵称上传中...</string>
+    <string name="content_cannot_be_empty">内容不能为空</string>
+    <string name="fail">error</string>
+    <string name="gender_on_the_cross">性别上传中...</string>
+
+    <!--ConsumerSettingActivity -->
+    <string name="cache">清除缓存</string>
+    <string name="chache">0.00M</string>
+    <string name="about_designer">关于设计家</string>
+    <string name="exit">退出登录</string>
+    <string name="more">更多</string>
+    <string name="clearcache_detail">确定清空本地缓存数据(包括图片和语音缓存)?</string>
+    <string name="clearcache">清空缓存数据</string>
+    <string name="security_center">安全中心</string>
+    <string name="version_update">版本更新</string>
+
+    <!--DecorationActivity -->
+    <string name="empty_order_fitment">您还没有装修项目</string>
+    <string name="consumer_decoration">我的项目</string>
+    <string name="loding_more">点击加载更多</string>
+    <string name="anonymity">匿名</string>
+    <string name="end_day">已结束</string>
+    <string name="canceled">已取消</string>
+    <string name="checking">审核中</string>
+    <string name="unchecking">未审核</string>
+    <string name="approve">审核通过</string>
+    <string name="disapprove">审核未通过</string>
+    <string name="designing">设计中</string>
+
+    <!-- DemandDetailsActivity -->
+    <string name="fitment_name">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="fitment_phone">手机号码：</string>
+    <string name="fitment_budget">装修预算：</string>
+    <string name="fitment_house_type">房屋类型：</string>
+    <string name="fitment_area">房屋面积：</string>
+    <string name="fitment_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="fitment_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
+    <string name="are">房屋面积：</string>
+    <string name="fitment_address">项目地址：</string>
+    <string name="fitment_specific_address">具体地址：</string>
+    <string name="fitment_release_time">发布时间：</string>
+    <string name="fitment_note">备注要求：</string>
+
+    <!-- ExamineRespondActivity -->
+    <string name="fitment_respond">应标设计师</string>
+    <string name="failed_get_information">获取信息失败</string>
+    <string name="success">成功</string>
+
+    <!-- ExistMeasureOrderActivity -->
+    <string name="measure_room_time">量房时间：</string>
+    <string name="please_select_time">请选择时间</string>
+    <string name="getting_data">获取数据中...</string>
+    <string name="sending_request">发送请求中...</string>
+    <string name="please_select_a_project_first">请先选择一个项目</string>
+    <string name="WkFlowMeasure_consumer_agree_bid">WkFlowMeasure,消费者同意应标"</string>
+
+    <!--  IssueDemandActivity -->
+    <string name="autonym_submit">提交</string>
+    <string name="send_design_requirement_save_success_alert_view">温馨提示</string>
+    <string name="send_design_requirement_success_alert_view">恭喜您已发布成功，请到个人中心的我的装修中查看</string>
+    <string name="send_design_requirement_success_alert_view_1">提交成功，我们将会尽快为您审核！</string>
+    <string name="refuse_measure_house_alertview">是否拒绝量房？</string>
+    <string name="requirements">发布需求</string>
+    <string name="requirements_optimal">竞优量房表单</string>
+    <string name="please_enter_correct_phone_number">请输入正确的手机号码</string>
+    <string name="please_input_correct_area">房屋面积必须是1到9999之间的值</string>
+    <string name="alert_msg_area">请输入1-9999之间的数字</string>
+    <string name="please_input_correct_area_point">整数部分不允许全部为0</string>
+
+    <string name="please_select_form">请选择户型</string>
+    <string name="please_select_addresses">请选择地址</string>
+    <string name="please_choose_addresses">请选择项目地址</string>
+    <string name="please_enter_correct_address">请输入正确的小区名称(字符长度为2-32之间且不包含特殊字符)</string>
+    <string name="data_submission">数据提交中...</string>
+
+    <!--  LookMoreCaseDetailActivity -->
+    <string name="char_msg__file">解析数据失败</string>
+    <string name="no_designer_case">抱歉，暂无消息！</string>
+    <string name="no_designer_case_2">暂无结果</string>
+
+    <!-- MeasureFormActivity -->
+    <string name="demand_send">发送</string>
+    <string name="volume_rate_cannot_empty">量房费不能为空</string>
+    <string name="please_fill_your_name">请正确填写姓名</string>
+    <string name="please_fill_phone_number">请填写正确的手机号码</string>
+    <string name="please_fill_housing_area">请正确填写面积（整数位不超过四位，小数不超过两位）</string>
+    <string name="please_fill_housing_area_point">整数部位不允许全为0</string>
+
+    <string name="please_fill_detailed_address">请正确填写小区名称</string>
+    <string name="data_send">数据发送中...</string>
+    <string name="demand_house_area">面&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;积：</string>
+    <string name="demand_measure_house_form">量房资料</string>
+    <string name="is_average_measure_house_form">竞优量房表单</string>
+    <string name="is_elite_measure_house_form">精选量房表单</string>
+    <string name="measure_house_form">量房表单</string>
+    <string name="demand_elite_measure_house_form">精选量房表单</string>
+    <string name="exist_measure_order_information">已有量房资料</string>
+
+
+    <!-- MyDecorationActivity -->
+    <string name="fitment_me">我的装修</string>
+    <string name="just">刚刚</string>
+
+    <!-- ConsumeHomeFragment -->
+    <string name="anonymous">匿名</string>
+    <string name="name">姓名</string>
+
+    <!-- ConsumePersonalCenterFragment -->
+    <string name="login">登录/注册</string>
+    <string name="functional_development">功能开发中</string>
+    <string name="my_fitment">发布装修需求</string>
+    <string name="title_fitment">发布装修需求</string>
+    <string name="my_family_order">我的装修项目</string>
+    <string name="message_center">消息中心</string>
+    <string name="consumer_more">更多</string>
+    <string name="designer_personal">个人中心</string>
+
+    <!-- DecorationBeiShuFragment -->
+    <string name="designer">设计师名字</string>
+    <string name="designer_online_communication">在线沟通</string>
+    <string name="designer_order_projectdetail">项目详情</string>
+    <string name="designer_order_projectdetail_progress">项目进度</string>
+    <string name="decoration_choose_measure">选TA量房</string>
+    <string name="decoration_choose_chat">在线沟通</string>
+    <string name="decoration_choose_refuse">拒绝</string>
+    <string name="decoration_choose_title">应标设计师</string>
+
+    <!-- DecorationFragment -->
+    <string name="consumer_decoration_name">家装订单名字</string>
+    <string name="consumer_decoration_state">审核中</string>
+    <string name="consumer_decoration_project_id">项目编号：</string>
+    <string name="consumer_decoration_address">房屋地址</string>
+    <string name="bid_num">应标人数： </string>
+    <string name="bid_designer_num">%1$d位设计师</string>
+    <string name="select_Ta_measure">是否确认选他量房</string>
+    <string name="select_Ta_chat">开启IM聊天</string>
+    <string name="select_Ta_refuse">拒绝应标</string>
+    <string name="designer_much">位设计师</string>
+
+    <string name="common_order_project_number">项目编号：</string>
+    <string name="common_order_decoration_budget">装修预算：</string>
+    <string name="common_order_house_type">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="common_order_project_area">项目面积：</string>
+    <string name="common_order_project_address">项目地址：</string>
+
+
+    <!-- AttestationInfoActivity -->
+    <string name="autonym_message_moderation">信息审核中</string>
+    <string name="autonym_message_moderationa">资料审核</string>
+    <string name="autonym_audit_pass">审核通过</string>
+    <string name="autonym_audit_failure">审核失败</string>
+    <string name="data_sent_please_patience_wait_audit">资料已送出，请耐心等待审核!</string>
+    <string name="not_real_name_authentication">未实名认证</string>
+    <string name="desiner_not_real_name_authentication">设计师未通过认证</string>
+    <string name="information_has_been_submitted">资料已提交</string>
+    <string name="information_review_please_patient">资料正在审核中，请耐心等待！</string>
+    <string name="audit_not_pass">审核未通过</string>
+    <string name="you_identity_audit_failure">很遗憾，您的身份审核失败。</string>
+    <string name="congratulations_you">恭喜您！您已通过实名认证</string>
+
+    <!-- CertificationActivity -->
+    <string name="attestation_true_name">真实姓名：</string>
+    <string name="attestation_phone">手机号码：</string>
+    <string name="attestation_id_number">身份证号：</string>
+    <string name="id_photo">证件照片</string>
+    <string name="autonym_no_uploading">未上传</string>
+    <string name="autonym_title">实名认证</string>
+    <string name="no_upload_id_opposite">没有上传身份证反面照</string>
+    <string name="no_upload_id_positive">没有上传身份证正面照</string>
+    <string name="no_holder_upload_my_front">没有上传本人持证正面照</string>
+    <string name="id_number_input_is_not_correct">身份证号输入不正确</string>
+    <string name="mobile_phone_number_input_is_not_correct">手机号输入不正确</string>
+    <string name="no_input_name">姓名格式输入不正确（长度为二到十位中文）</string>
+    <string name="xingming_xianzhi">长度为二到十个汉字</string>
+    <string name="id_size">请输入18位身份证号码</string>
+
+    <!-- BeiShuMealActivity -->
+    <string name="consuer_data">客户资料</string>
+    <string name="consume_phone">联系电话：</string>
+    <string name="consume_mobile">手机号码：</string>
+    <string name="consume_phone_hint">手机号码：</string>
+    <string name="consume_phone_number_hint">请输入手机号码</string>
+    <string name="consume_adress">房屋地址：</string>
+    <string name="consume_adress_hint">选择地址</string>
+    <string name="consume_detail_address">小区名称：</string>
+    <string name="consume_detail_address_hint">请输入小区名称</string>
+    <string name="complete">完成</string>
+    <string name="designer_beishu_meal_form">套餐项目表单</string>
+    <string name="save_decoration_success">请在我的项目中查看详情</string>
+    <string name="please_input_correct_address">请输入正确的地址</string>
+    <string name="data_save">数据保存中</string>
+
+
+    <!-- ReservationFormActivity -->
+    <string name="consume_phone_number">手机号码：</string>
+    <string name="fitment_area_project">项目面积：</string>
+
+    <!-- BiddingHallDetailActivity -->
+    <string name="bidding_contact_decoration_budget">装修预算：</string>
+    <string name="my_bid_design_budget">设计预算：</string>
+    <string name="my_bid_house_type">房屋类型：</string>
+    <string name="my_bid_house_area">项目面积：</string>
+    <string name="my_bid_house_area_1">房屋面积：</string>
+    <string name="project_address">项目地址：</string>
+    <string name="bidding_should_standard">我要应标</string>
+    <string name="bidding_detail">应标案件详情</string>
+    <string name="shall_visible_bid_after">设计师中标后可见</string>
+    <string name="my_bid_demand_particulars">需求详情</string>
+    <string name="bided">已应标 </string>
+    <string name="designer_bid_detail_realy_no_finish">你还尚未完成实名认证!</string>
+    <string name="msg_no_certification">未实名认证，不能应标，请先认证</string>
+    <string name="msg_no_certification_web">您还未通过实名认证请到网页端完成认证</string>
+    <string name="certification_immediately">立即认证</string>
+    <string name="is_biding">正在应标...</string>
+    <string name="should_number_full">应标人数已满，目前无法应标</string>
+    <string name="designer_bid_detail_fail">无法应标</string>
+
+    <!--DesignerEssentialInfoActivity -->
+    <string name="uploading_photo">上传头像</string>
+    <string name="nick_name">昵称</string>
+
+    <string name="bidbiding_no_data_massage">您还没有应标，快去应标大厅看看吧~</string>
+    <string name="bid_success_no_data_massage">暂无中标项目</string>
+    <string name="bid_failure_no_data_massage">暂无未中标项目</string>
+
+
+    <string name="measurement_fee">设计费：</string>
+    <string name="measurement">元/㎡</string>
+    <string name="user_name">用户名</string>
+    <string name="tel">手机</string>
+    <string name="location">所在地</string>
+    <string name="mail">邮箱</string>
+    <string name="measure_house_cost">量房费</string>
+    <string name="design_fees_on_cross">设计费用上传中...</string>
+    <string name="autonym_camera">拍照</string>
+    <string name="autonym_album">从手机相册获取</string>
+    <string name="gender_changes">性别修改中...</string>
+    <string name="area_changes">地区修改中...</string>
+    <string name="amend_nick">修改昵称</string>
+    <string name="amend_measure_house">修改量房费</string>
+    <string name="please_enter_room">请输入量房费</string>
+    <string name="please_true_enter_room">请正确填写量房费</string>
+    <string name="nick_name_uploading">昵称上传中...</string>
+    <string name="nick_name_format_error">昵称格式错误</string>
+    <string name="nick_name_format_Empty">昵称不能为空</string>
+    <string name="nick_name_cross">昵称上传中...</string>
+    <string name="measure_room_cross">量房费上传中...</string>
+    <string name="content_cannot_empty">内容不能为空</string>
+    <string name="project_cost">设计费</string>
+    <string name="dialog_hint">支持2-20个中、英文、数字</string>
+    <string name="nick_name_format">昵称应为2-20个字符</string>
+    <string name="measure_format_tip">量房费格式不正确(证书部分不超过四位小数部分不超过两位)</string>
+
+    <!--DesignerOrderBeiShuActivity -->
+    <string name="my_project_bei_shu">套餐项目</string>
+    <string name="my_project_common">普通订单</string>
+    <string name="decoration_order">我的订单</string>
+
+    <!-- MyBidActivity -->
+    <string name="my_bid_all">全部</string>
+    <string name="elite_project">精选项目</string>
+    <string name="average_project">竞优项目</string>
+    <string name="packages_project">套餐项目</string>
+
+    <string name="response_manage">我的应标</string>
+    <string name="my_bid_be_being_bid">应标中</string>
+    <string name="my_bid_bingo_bid">已中标</string>
+    <string name="my_bid_outflow_bid">未中标</string>
+    <string name="my_bid_address">居然大厦</string>
+    <string name="my_bid_time">距结束还有</string>
+    <string name="my_bid_living_room">室</string>
+    <string name="my_bid_hall">厅</string>
+    <string name="my_bid_toilet">卫</string>
+    <string name="bidding_room_shape">房屋类型：</string>
+    <string name="bidding_room_space">住宅空间</string>
+    <string name="designer_order_style">房屋风格：</string>
+    <string name="designer_slite_style">风&#160;&#160;&#160;&#160;;&#160;&#160;格：</string>
+    <string name="designer_order_style_detail">简约</string>
+    <string name="my_bid_budget_money">50万</string>
+    <string name="my_bid_budget">装修预算</string>
+    <string name="my_bid_look">您已中标，请到我的订单中查看</string>
+    <string name="my_project_my_project">我的订单</string>
+    <string name="my_project_out_bid">很抱歉您未中标，请再接再厉！</string>
+    <string name="consumer_decoration_remaintime">剩余天数：</string>
+
+
+    <!-- MyBidDemandDetailsActivity -->
+    <string name="my_bid_black">&#160;&#160;</string>
+    <string name="my_bid_name">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="my_bid_mobile">手机号码：</string>
+    <string name="my_bid_decoration_budget">装修预算：</string>
+    <string name="my_bid_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="my_bid_details_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
+    <string name="my_bid_project_address">项目地址：</string>
+    <string name="my_bid_specific_address">小区名称：</string>
+    <string name="my_bid_release_time">发布时间：</string>
+    <string name="my_bid_demand_details">需求详情</string>
+    <string name="error_capture_requirements_details">获取需求详情出错</string>
+
+    <!-- MyPropertyActivity -->
+    <string name="my_property_account_balance">账户余额：</string>
+    <string name="my_property_withdrawal">提现</string>
+    <string name="my_property_transaction_record">交易记录</string>
+    <string name="my_property_withdrawal_record">提现记录</string>
+    <string name="my_property">我的资产</string>
+    <string name="transaction_name">交易名称：</string>
+    <string name="transaction_amount">交易金额：</string>
+    <string name="order_reference">订单编号：</string>
+    <string name="transaction_type">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态：</string>
+    <string name="cash_state">状态</string>
+    <string name="cash_amount">提现金额</string>
+    <string name="cash_stream_number">提现流水号</string>
+    <string name="takeout_record_bill_time">时间</string>
+    <string name="cash_remark">备注：您的银行卡号有误，请查证后再试。</string>
+
+    <!-- WithdrawalActivity -->
+    <string name="withdrawal_account_balance">账户余额：</string>
+    <string name="withdrawal_account">提现金额：</string>
+    <string name="withdrawal_cardholder_name">持卡人姓名：</string>
+    <string name="withdrawal_open_account_bank">开户银行：</string>
+    <string name="withdrawal_branch_name">支行名称：</string>
+    <string name="withdrawal_bank_card_number">银行卡号：</string>
+    <string name="replace_rank_card">更换银行卡</string>
+    <string name="un_bind_rank_card">解除绑定</string>
+    <string name="confirm_and_submit">确认并提交</string>
+
+    <!-- CustomBidFragment-->
+    <string name="bidding_contact">招标人 ：</string>
+    <string name="bidding_con">应标人数 ：</string>
+    <string name="bid_hall_decorate_budget">装修预算</string>
+
+    <!-- TransactionRecordActivity -->
+    <string name="no_payment">待支付</string>
+    <string name="paid">已支付</string>
+    <string name="transfer_room_design">量房转设计</string>
+    <string name="has_been_booked">已入账</string>
+
+    <!--WithdrawalRecordActivity -->
+    <string name="remark">备注：</string>
+    <string name="in_the_processing">处理中</string>
+    <string name="handle_successful">提现成功</string>
+    <string name="handle_failure">提现失败</string>
+    <string name="untreated">未处理</string>
+
+    <!-- DesignerPersonalCenterFragment -->
+    <string name="immediately_go_to_certification">您还未进行实名认证，马上去认证吧</string>
+    <string name="set_meal">套餐项目</string>
+    <string name="my_home">我的主页</string>
+    <string name="camera_is_not_available">相机不可用</string>
+    <string name="unable_create_beishu_meal">二维码格式错误，无法创建套餐项目</string>
+    <string name="please_go_to_certification">您还没有进行实名认证，请去认证</string>
+    <string name="please_patient">正在进行认证，请耐心等待</string>
+    <string name="authentication_failed">认证失败，请重新认证</string>
+    <string name="title_activity_chat_room_base">ChatRoomBaseActivity</string>
+    <string name="monad_rmb_meters">元/m²</string>
+
+    <string name="no_measure_fee">请正确填写量房费</string>
+
+    <!-- ReservationFormActivity -->
+    <string name="reservation_please_enter_your_name">请输入姓名</string>
+    <string name="reservation_please_enter_your_phone">请填写手机号码</string>
+    <string name="reservation_please_enter_your_area">请填写项目面积(可选)</string>
+    <string name="reservation_please_enter_your_price">请选择装修预算</string>
+    <string name="reservation_please_enter_your_address">请选择项目地址</string>
+    <string name="reservation_please_enter_your_community_name">请填写小区名称(可选)</string>
+    <string name="jy_packages_name_null">姓名不能为空</string>
+    <string name="jy_packages_name_error">请输入正确的姓名</string>
+    <string name="jy_packages_phone_null">手机号不能为空</string>
+    <string name="jy_packages_area_null">项目面积不能为空</string>
+    <string name="jy_packages_zx_price_null">装修预算不能为空</string>
+    <string name="jy_packages_address_null">小区名称不能为空</string>
+    <string name="jy_packages_phone_error">手机号不能为空</string>
+    <string name="jy_packages_area_error">项目面积不能为空</string>
+    <string name="jy_packages_zx_price_error">装修预算不能为空</string>
+    <string name="jy_packages_address_error">小区名称不能为空</string>
+    <!--工作室预约弹窗-->
+    <string name="work_room_name_text">姓名</string>
+    <string name="work_room_name">请填写您的姓名</string>
+    <string name="work_room_phone_text">电话</string>
+    <string name="work_room_phone_number">请输入您的手机号码</string>
+    <!--工作室列表-->
+    <string name="work_room_commit_successful">提交成功</string>
+    <string name="work_room_commit_fail">提交失败</string>
+    <!-- 大师详情 -->
+    <string name="grandmaster_title">大师详情</string>
+    <!--立即预约-->
+    <string name="hint_edit_input_mobile">请输入手机号码</string>
+    <string name="hint_edit_input_mianji">请输入项目面积(选填)</string>
+    <string name="hint_edit_input_yusuan">请选择装修预算</string>
+    <string name="hint_edit_input_address">请选择项目地址</string>
+    <string name="hint_edit_input_xiaoqu">请输入小区名称(选填)</string>
+
+    <!-- 合同提示語 -->
+
+    <string name="please_input_consumer_name_correctly">请正确输入甲方姓名</string>
+    <string name="please_input_consumer_phone_correctly">请正确输入甲方手机号</string>
+    <string name="please_input_consumer_email_correctly">请正确输入甲方电子邮箱</string>
+    <string name="please_input_render_count_correctly">请正确输入渲染图张数</string>
+    <string name="please_input_project_amount_correctly">请正确输入本项目设计总额</string>
 
 </resources>
