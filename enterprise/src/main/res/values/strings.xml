@@ -23,6 +23,7 @@
 
     <!-- 个人中心里的文本 -->
     <string name="personal_center_my_project">全部项目</string>
+    <string name="personal_center_completed_project">已完成项目</string>
     <string name="personal_center_more">更多</string>
     <string name="personal_center_more_clear">清除缓存</string>
     <string name="personal_center_more_about">关于APP</string>

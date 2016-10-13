@@ -17,6 +17,7 @@ import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract
 import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.TaskListAdapter;
+import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
@@ -31,7 +32,7 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     private ImageButton mScreenBtn;
     private ImageButton mBackBtn;
     private RecyclerView mProjectListView;
-    private TaskListAdapter mTaskListAdapter;
+    private ProjectListAdapter mProjectListAdapter;
     private MemberEntity entity;
     private List<TaskListBean.TaskList> taskLists;
     private ProjectListContract.Presenter mProjectListPresenter;
@@ -51,7 +52,7 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
         mScreenBtn = (ImageButton) view.findViewById(R.id.imgBtn_screen);
         mBackBtn = (ImageButton) view.findViewById(R.id.imgBtn_back);
         mProjectListView = (RecyclerView) view.findViewById(R.id.rcy_project_list);
-        mTopBarTitle.setText(getString(R.string.personal_center_my_project));
+        mTopBarTitle.setText(getString(R.string.personal_center_completed_project));
         //init recyclerView
         mProjectListView.setLayoutManager(new LinearLayoutManager(mContext));
         mProjectListView.setHasFixedSize(true);
@@ -93,8 +94,8 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
             taskLists = taskListBean.getData();
             if (taskLists != null && taskLists.size() > 0) {
                 //显示任务列表到页面上
-                mTaskListAdapter = new TaskListAdapter(taskLists, R.layout.listitem_task_list_view, mContext);
-                mProjectListView.setAdapter(mTaskListAdapter);
+                mProjectListAdapter = new ProjectListAdapter(taskLists, R.layout.listitem_project_list_view, mContext);
+                mProjectListView.setAdapter(mProjectListAdapter);
             }
         }
     }
