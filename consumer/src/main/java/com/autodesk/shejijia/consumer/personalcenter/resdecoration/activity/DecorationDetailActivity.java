@@ -125,7 +125,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         super.initData(savedInstanceState);
 
         setTitleForNavbar(UIUtils.getString(R.string.title_decoration_detail));
-        mTvNeedsId.setText(needs_id);
+
 
         getJsonFileReader();
 
@@ -256,6 +256,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         living_room = convertEn2Cn(mLivingRoomJson, living_room);
         toilet = convertEn2Cn(mToiletJson, toilet);
         String livingRoom_room_toilet = room + living_room + toilet;
+
+        mTvNeedsId.setText(demandDetailBean.getNeeds_id()+"");
         mTvAmendRoomType.setText(UIUtils.getNoSelectIfEmpty(livingRoom_room_toilet));
 
         mTvAmendStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style));

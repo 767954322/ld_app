@@ -149,7 +149,7 @@
     <string name="flow_cost_detail">支付详情</string>
     <string name="pay_success">支付成功</string>
     <string name="pay_failed">支付失败</string>
-    <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="name_space">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
     <string name="telephone_space">电&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;话：</string>
     <string name="flow_particular_cost">支付明细</string>
     <string name="flow_aggregate_amount">总&#160;&#160;金&#160;&#160;额：</string>
@@ -180,9 +180,9 @@
     <string name="please_select_decorate_budget">请选择装修预算</string>
     <string name="demand_project_area">项目面积：</string>
     <string name="please_enter_area">请输入面积(平米)</string>
-    <string name="demand_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="demand_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
     <string name="please_select_family">请选择户型：室 厅 卫</string>
-    <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
+    <string name="demand_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
     <string name="please_select_style">请选择风格</string>
     <string name="demand_measure_house_time">量房时间：</string>
     <string name="demand_measure_house_time_title">量房时间</string>
@@ -651,6 +651,136 @@
     <!-- CaptureActivity -->
     <string name="scanner_title">二维码</string>
     <string name="qr_code_format_error_tip">二维码格式错误，无法创建套餐项目</string>
+
+    <!--DesignerEssentialInfoActivity -->
+    <string name="uploading_photo">上传头像</string>
+    <string name="nick_name">昵称</string>
+    <string name="no_data">暂无数据</string>
+    <string name="no_select">未选择</string>
+    <string name="no_data_nodata">暂无数据/暂无数据</string>
+
+    <string name="bidbiding_no_data_massage">您还没有应标，快去应标大厅看看吧~</string>
+    <string name="bid_success_no_data_massage">暂无中标项目</string>
+    <string name="bid_failure_no_data_massage">暂无未中标项目</string>
+
+
+    <string name="measurement_fee">设计费：</string>
+    <string name="measurement">元/㎡</string>
+    <string name="user_name">用户名</string>
+    <string name="tel">手机</string>
+    <string name="location">所在地</string>
+    <string name="mail">邮箱</string>
+    <string name="measure_house_cost">量房费</string>
+    <string name="design_fees_on_cross">设计费用上传中...</string>
+    <string name="autonym_camera">拍照</string>
+    <string name="autonym_album">从手机相册获取</string>
+    <string name="gender_changes">性别修改中...</string>
+    <string name="area_changes">地区修改中...</string>
+    <string name="amend_nick">修改昵称</string>
+    <string name="amend_measure_house">修改量房费</string>
+    <string name="please_enter_room">请输入量房费</string>
+    <string name="please_true_enter_room">请正确填写量房费</string>
+    <string name="nick_name_uploading">昵称上传中...</string>
+    <string name="nick_name_format_error">昵称格式错误</string>
+    <string name="nick_name_format_Empty">昵称不能为空</string>
+    <string name="nick_name_cross">昵称上传中...</string>
+    <string name="measure_room_cross">量房费上传中...</string>
+    <string name="content_cannot_empty">内容不能为空</string>
+    <string name="project_cost">设计费</string>
+    <string name="dialog_hint">支持2-20个中、英文、数字</string>
+    <string name="nick_name_format">昵称应为2-20个字符</string>
+    <string name="measure_format_tip">量房费格式不正确(证书部分不超过四位小数部分不超过两位)</string>
+
+    <!--DesignerOrderBeiShuActivity -->
+    <string name="my_project_bei_shu">套餐项目</string>
+    <string name="my_project_common">普通订单</string>
+    <string name="decoration_order">我的订单</string>
+
+    <!-- MyBidActivity -->
+    <string name="my_bid_all">全部</string>
+    <string name="elite_project">精选项目</string>
+    <string name="average_project">竞优项目</string>
+    <string name="packages_project">套餐项目</string>
+
+    <string name="response_manage">我的应标</string>
+    <string name="my_bid_be_being_bid">应标中</string>
+    <string name="my_bid_bingo_bid">已中标</string>
+    <string name="my_bid_outflow_bid">未中标</string>
+    <string name="my_bid_address">居然大厦</string>
+    <string name="my_bid_time">距结束还有</string>
+    <string name="my_bid_living_room">室</string>
+    <string name="my_bid_hall">厅</string>
+    <string name="my_bid_toilet">卫</string>
+    <string name="bidding_room_shape">房屋类型：</string>
+    <string name="bidding_room_space">住宅空间</string>
+    <string name="designer_order_style">房屋风格：</string>
+    <string name="designer_slite_style">风&#160;&#160;&#160;&#160;;&#160;&#160;格：</string>
+    <string name="designer_order_style_detail">简约</string>
+    <string name="my_bid_budget_money">50万</string>
+    <string name="my_bid_budget">装修预算</string>
+    <string name="my_bid_look">您已中标，请到我的项目中查看</string>
+    <string name="my_project_my_project">我的订单</string>
+    <string name="my_project_out_bid">很抱歉您未中标，请再接再厉！</string>
+    <string name="consumer_decoration_remaintime">剩余天数：</string>
+
+
+    <!-- MyBidDemandDetailsActivity -->
+    <string name="my_bid_black">&#160;&#160;</string>
+    <string name="my_bid_name">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名：</string>
+    <string name="my_bid_mobile">手机号码：</string>
+    <string name="my_bid_decoration_budget">装修预算：</string>
+    <string name="my_bid_house_model">户&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型：</string>
+    <string name="my_bid_details_style">风&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;格：</string>
+    <string name="my_bid_project_address">项目地址：</string>
+    <string name="my_bid_specific_address">小区名称：</string>
+    <string name="my_bid_release_time">发布时间：</string>
+    <string name="my_bid_demand_details">需求详情</string>
+    <string name="error_capture_requirements_details">获取需求详情出错</string>
+
+    <!-- MyPropertyActivity -->
+    <string name="my_property_account_balance">账户余额：</string>
+    <string name="my_property_withdrawal">提现</string>
+    <string name="my_property_transaction_record">交易记录</string>
+    <string name="my_property_withdrawal_record">提现记录</string>
+    <string name="my_property">我的资产</string>
+    <string name="transaction_name">交易名称：</string>
+    <string name="transaction_amount">交易金额：</string>
+    <string name="order_reference">订单编号：</string>
+    <string name="transaction_type">状&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;态：</string>
+    <string name="cash_state">状态</string>
+    <string name="cash_amount">提现金额</string>
+    <string name="cash_stream_number">提现流水号</string>
+    <string name="takeout_record_bill_time">时间</string>
+    <string name="cash_remark">备注：您的银行卡号有误，请查证后再试。</string>
+
+    <!-- WithdrawalActivity -->
+    <string name="withdrawal_account_balance">账户余额：</string>
+    <string name="withdrawal_account">提现金额：</string>
+    <string name="withdrawal_cardholder_name">持卡人姓名：</string>
+    <string name="withdrawal_open_account_bank">开户银行：</string>
+    <string name="withdrawal_branch_name">支行名称：</string>
+    <string name="withdrawal_bank_card_number">银行卡号：</string>
+    <string name="replace_rank_card">更换银行卡</string>
+    <string name="un_bind_rank_card">解除绑定</string>
+    <string name="confirm_and_submit">确认并提交</string>
+
+    <!-- CustomBidFragment-->
+    <string name="bidding_contact">招标人 ：</string>
+    <string name="bidding_con">应标人数 ：</string>
+    <string name="bid_hall_decorate_budget">装修预算</string>
+
+    <!-- TransactionRecordActivity -->
+    <string name="no_payment">待支付</string>
+    <string name="paid">已支付</string>
+    <string name="transfer_room_design">量房转设计</string>
+    <string name="has_been_booked">已入账</string>
+
+    <!--WithdrawalRecordActivity -->
+    <string name="remark">备注：</string>
+    <string name="in_the_processing">提现申请成功</string>
+    <string name="handle_successful">提现成功</string>
+    <string name="handle_failure">提现失败</string>
+    <string name="untreated">未处理</string>
 
     <!-- ChatActivity-->
     <string name="im_msg_sending">发送中...</string>
