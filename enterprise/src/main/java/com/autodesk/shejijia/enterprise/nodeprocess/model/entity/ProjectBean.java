@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.entity;
+package com.autodesk.shejijia.enterprise.nodeprocess.model.entity;
 
 import java.io.Serializable;
 import java.util.List;

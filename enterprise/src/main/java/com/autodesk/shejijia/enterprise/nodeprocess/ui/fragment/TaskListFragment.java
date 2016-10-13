@@ -6,19 +6,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
-import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListsPresenter;
-import com.autodesk.shejijia.enterprise.nodeprocess.presenter.impl.ProjectListsPresenterImpl;
+import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
+import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.TaskListAdapter;
-import com.autodesk.shejijia.enterprise.nodeprocess.entity.TaskListBean;
-import com.autodesk.shejijia.enterprise.nodeprocess.view.ProjectListsView;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -33,13 +30,13 @@ import java.util.List;
  * Created by t_xuz on 8/25/16.
  *
  */
-public class TaskListFragment extends BaseFragment implements ProjectListsView{
+public class TaskListFragment extends BaseFragment implements ProjectListContract.View{
 
     private RecyclerView mTaskListView;
     private List<TaskListBean.TaskList> taskLists;
     private TaskListAdapter mTaskListAdapter;
     private MemberEntity entity;
-    private ProjectListsPresenter mProjectListPresenter;
+    private ProjectListPresenter mProjectListPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -49,7 +46,7 @@ public class TaskListFragment extends BaseFragment implements ProjectListsView{
     @Override
     protected void initData() {
         entity = (MemberEntity) SharedPreferencesUtils.getObject(mContext, Constants.USER_INFO);
-        mProjectListPresenter = new ProjectListsPresenterImpl(getActivity(),this);
+        mProjectListPresenter = new ProjectListPresenter(getActivity(),this);
         LogUtils.e("project--entity", entity + "");
         if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
             LogUtils.e("acs_token", entity.getToken());

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
-import com.autodesk.shejijia.enterprise.nodeprocess.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.NodeDetailsActivity;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.viewholder.TaskListVH;
 

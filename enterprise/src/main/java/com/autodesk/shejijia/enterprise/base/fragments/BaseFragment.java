@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.enterprise.base.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseFragmentActivity;
-import com.autodesk.shejijia.enterprise.nodeprocess.view.base.BaseView;
+import com.autodesk.shejijia.enterprise.nodeprocess.BaseView;
 
 /**
  * Created by t_xuz on 8/15/16.

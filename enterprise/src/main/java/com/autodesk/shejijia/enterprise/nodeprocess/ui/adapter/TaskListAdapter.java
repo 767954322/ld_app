@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;
-import com.autodesk.shejijia.enterprise.nodeprocess.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.viewholder.ProjectListVH;
 
 import java.util.List;

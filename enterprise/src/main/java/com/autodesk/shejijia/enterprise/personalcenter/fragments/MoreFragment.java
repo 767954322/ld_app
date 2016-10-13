@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.enterprise.personalcenter.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -13,8 +14,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 
 /**
  * Created by t_xuz on 8/30/16.
@@ -76,7 +79,10 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener{
                 initBottomPopup();
                 break;
             case R.id.tv_logout_app:
-
+                LoginUtils.doLogout(mContext);
+                Intent intent = new Intent(mContext, RegisterOrLoginActivity.class);
+                startActivity(intent);
+                mContext.finish();
                 break;
         }
     }

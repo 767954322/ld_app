@@ -2,6 +2,7 @@ package com.autodesk.shejijia.enterprise.nodeprocess.ui.activity;
 
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -13,12 +14,15 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.nodeprocess.entity.NodeBean;
-import com.autodesk.shejijia.enterprise.nodeprocess.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.NodeBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.personalcenter.activitys.PersonalCenterActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.pgyersdk.update.PgyUpdateManager;
 
 import org.json.JSONObject;
@@ -36,6 +40,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     private ImageButton mPersonalCenter;
     private ImageButton mSearchBtn; //搜索
     private ImageButton mScreenBtn; //筛选
+    private MemberEntity mMemberEntity;//用户信息
 
     @Override
     protected int getContentViewId() {
@@ -45,6 +50,12 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     @Override
     protected int getFragmentContentId() {
         return R.id.main_content;
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+        mMemberEntity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constants.USER_INFO);
     }
 
     @Override
@@ -99,9 +110,13 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         Intent intent = null;
         switch (view.getId()){
             case R.id.imgBtn_personal_center:
-                intent = new Intent();
-                intent.setClass(this, PersonalCenterActivity.class);
-                startActivity(intent);
+                if (mMemberEntity != null) {
+                    intent = new Intent(this, PersonalCenterActivity.class);
+                    startActivity(intent);
+                }else {
+                    intent = new Intent(this, RegisterOrLoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.imgBtn_screen:
 

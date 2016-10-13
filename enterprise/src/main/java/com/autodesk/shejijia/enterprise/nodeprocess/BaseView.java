@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.view.base;
+package com.autodesk.shejijia.enterprise.nodeprocess;
 
 /**
  * Created by t_xuz on 10/10/16.

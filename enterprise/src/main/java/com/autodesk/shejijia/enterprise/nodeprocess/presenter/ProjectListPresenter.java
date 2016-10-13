@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.presenter.impl;
+package com.autodesk.shejijia.enterprise.nodeprocess.presenter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -6,11 +6,9 @@ import android.view.View;
 
 import com.autodesk.shejijia.enterprise.common.Interface.BaseLoadedListener;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.nodeprocess.entity.TaskListBean;
-import com.autodesk.shejijia.enterprise.nodeprocess.interactor.ProjectListInteractor;
-import com.autodesk.shejijia.enterprise.nodeprocess.interactor.impl.ProjectListInteratorImpl;
-import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListsPresenter;
-import com.autodesk.shejijia.enterprise.nodeprocess.view.ProjectListsView;
+import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
+import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.model.interactor.ProjectListModel;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
@@ -19,17 +17,17 @@ import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesU
  * Created by t_xuz on 10/11/16.
  * 主页 项目(任务)列表页对应的presenter的实现类-->对应 TaskListFragment
  */
-public class ProjectListsPresenterImpl implements ProjectListsPresenter,BaseLoadedListener<TaskListBean>{
+public class ProjectListPresenter implements ProjectListContract.Presenter,BaseLoadedListener<TaskListBean>{
 
     private Context mContext;
-    private ProjectListsView mProjectListsView;
-    private ProjectListInteractor mProjectListInteractor;
+    private ProjectListContract.View mProjectListView;
+    private ProjectListContract.Model mProjectListModel;
     private String XToken;
 
-    public ProjectListsPresenterImpl(Context context,ProjectListsView projectListsView){
+    public ProjectListPresenter(Context context, ProjectListContract.View projectListsView){
         this.mContext = context;
-        this.mProjectListsView = projectListsView;
-        mProjectListInteractor = new ProjectListInteratorImpl(this);
+        this.mProjectListView = projectListsView;
+        mProjectListModel = new ProjectListModel(this);
         //获取token
         MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(mContext, Constants.USER_INFO);
         if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
@@ -45,11 +43,11 @@ public class ProjectListsPresenterImpl implements ProjectListsPresenter,BaseLoad
     * */
     @Override
     public void onSuccess(String eventTag,TaskListBean data) {
-        mProjectListsView.hideLoading();
+        mProjectListView.hideLoading();
         if (eventTag.equalsIgnoreCase(Constants.REFRESH_EVENT)){
-            mProjectListsView.refreshProjectListData(data);
+            mProjectListView.refreshProjectListData(data);
         }else if (eventTag.equalsIgnoreCase(Constants.LOAD_MORE_EVENT)){
-            mProjectListsView.addMoreProjectListData(data);
+            mProjectListView.addMoreProjectListData(data);
         }
     }
 
@@ -58,8 +56,8 @@ public class ProjectListsPresenterImpl implements ProjectListsPresenter,BaseLoad
     * */
     @Override
     public void onError(String msg) {
-        mProjectListsView.hideLoading();
-        mProjectListsView.showNetError(msg);
+        mProjectListView.hideLoading();
+        mProjectListView.showNetError(msg);
     }
 
     /*
@@ -67,17 +65,17 @@ public class ProjectListsPresenterImpl implements ProjectListsPresenter,BaseLoad
     * */
     @Override
     public void loadTaskListData(String findDate,String eventTag,String requestTag, int pageSize, boolean isSwipeRefresh) {
-        mProjectListsView.hideLoading();
-        mProjectListInteractor.getProjectListData(findDate,eventTag,requestTag,pageSize,XToken);
+        mProjectListView.hideLoading();
+        mProjectListModel.getProjectListData(findDate,eventTag,requestTag,pageSize,XToken);
     }
 
     @Override
     public void onItemTopClickListener(View view, int position, TaskListBean entity) {
-        mProjectListsView.navigateProjectDetails(view,position,entity);
+        mProjectListView.navigateProjectDetails(view,position,entity);
     }
 
     @Override
     public void onItemChildItemClickListener(View view, int position, TaskListBean entity) {
-        mProjectListsView.navigateTaskDetails(view,position,entity);
+        mProjectListView.navigateTaskDetails(view,position,entity);
     }
 }
