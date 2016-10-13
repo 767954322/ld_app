@@ -158,6 +158,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
 //                    if (!checkNameChese(branch_bank_name)) {
                     if (!isBranchBankName || TextUtils.isEmpty(branch_bank_name)) {
                         openAlertView("支行名称只能包含2-32位字符");
+
 //                        Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -170,7 +171,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())) {
                         if (!checkNameChese(branch_bank_name) || TextUtils.isEmpty(branch_bank_name)) {
                             if (!isBranchBankName) {
-                                openAlertView("支行名称只能包含2-32位字符");
+                                openAlertView("支行名称只能包含2-32位汉字");
 //                                Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                                 break;
                             }
