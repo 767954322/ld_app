@@ -73,6 +73,8 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         tvIssueStyle = (TextView) findViewById(R.id.tv_issue_style);
         tvIssueAddress = (TextView) findViewById(R.id.tv_issue_address);
         tvIssueDemandDetailAddress = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
+        ll_house_type_select = (LinearLayout) findViewById(R.id.ll_house_type_select);
+        ll_line = (LinearLayout) findViewById(R.id.ll_line);
 
     }
 
@@ -236,6 +238,15 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
             showAlertView(R.string.please_input_correct_area);
             return false;
+        }
+        if (!TextUtils.isEmpty(house_type)){
+
+            if (!tvIssueHouseType.getText().toString().equals("住宅空间")){
+
+                livingRoom = null;
+                room = "其他";
+                mToilet = null;
+            }
         }
 
         if (TextUtils.isEmpty(mCurrentDistrictCode)) {
@@ -430,6 +441,15 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             public void onOptionsSelect(int options1, int option2, int options3) {
                 house_type = houseTypeItems.get(options1);
                 tvIssueHouseType.setText(house_type);
+                if (house_type.equals("住宅空间")){
+
+                    ll_house_type_select.setVisibility(View.VISIBLE);
+                    ll_line.setVisibility(View.VISIBLE);
+                }else {
+
+                    ll_house_type_select.setVisibility(View.GONE);
+                    ll_line.setVisibility(View.GONE);
+                }
                 Map<String, String> space = AppJsonFileReader.getSpace(IssueEliteDemanActivity.this);
                 house_type = ConvertUtils.getKeyByValue(space, house_type);
             }
@@ -538,6 +558,8 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     /// 控件.
     private LinearLayout llIssueHouseType;
     private LinearLayout llIssueStyle;
+    private LinearLayout ll_house_type_select;
+    private LinearLayout ll_line;
     private EditText etIssueDemandName;
     private TextView tvIssueDemandBudget;
     private TextView tvIssueDemandDesignBudget;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -95,6 +96,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         tvc_measure_form_style = (TextView) findViewById(R.id.tvc_measure_form_style);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
         ll_time_restrict = (LinearLayout) findViewById(R.id.ll_time_restrict);
+        ll_house_type = (LinearLayout) findViewById(R.id.ll_house_type);
+        ll_line = (LinearLayout) findViewById(R.id.ll_line);
 
 
         tvc_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -325,9 +328,17 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                if (room == null || hall == null || toilet == null) {
-                    getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
-                    return;
+                if (tvc_measure_form_type.getText().toString().equals("住宅空间")){
+
+                    if (room == null || hall == null || toilet == null) {
+                        getErrorHintAlertView(UIUtils.getString(R.string.please_select_form));
+                        return;
+                    }
+                }else {
+                    room = "其他";
+                    hall = null;
+                    toilet = null;
+
                 }
 
                 if (style == null) {
@@ -578,7 +589,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
      * @brief 设置房屋类型
      */
     private void setHouseType() {
-        List<String> houseType = filledData(getResources().getStringArray(R.array.hType));
+        final List<String> houseType = filledData(getResources().getStringArray(R.array.hType));
         pvHouseTypeOptions = new OptionsPickerView(this);
         for (String item : houseType) {
             houseTypeItems.add(item);
@@ -592,9 +603,20 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
             public void onOptionsSelect(int options1, int option2, int options3) {
                 housingType = houseTypeItems.get(options1);
                 tvc_measure_form_type.setText(housingType);
+                if (housingType.equals("住宅空间")){
+
+                    ll_house_type.setVisibility(View.VISIBLE);
+                    ll_line.setVisibility(View.VISIBLE);
+                    tvc_house_type.setHint("请选择户型");
+                }else {
+                    ll_house_type.setVisibility(View.GONE);
+                    ll_line.setVisibility(View.GONE);
+                }
 
                 Map<String, String> space = AppJsonFileReader.getSpace(MeasureFormActivity.this); // 转换成英文
                 housType = ConvertUtils.getKeyByValue(space, housingType);
+
+
             }
         });
     }
@@ -821,6 +843,8 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
     private LinearLayout ll_time_restrict;
     private LinearLayout ll_type;
     private LinearLayout ll_style;
+    private LinearLayout ll_house_type;
+    private LinearLayout ll_line;
     private TextView text_notuse;
     private EditText tvc_name;
     private TextViewContent tvc_phone;
