@@ -236,7 +236,7 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     @Override
     protected int getRightButtonImageResourceId() {
         //default set in XML
-        return R.drawable.msg_file;
+        return R.drawable.img_hots;
     }
 
     @Override

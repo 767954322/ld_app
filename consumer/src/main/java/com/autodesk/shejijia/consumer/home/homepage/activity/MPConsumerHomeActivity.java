@@ -472,7 +472,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 setVisibilityForNavButton(ButtonType.middle, true);
                 String acs_Member_Type = AdskApplication.getInstance().getMemberEntity().getMember_type();
                 Boolean ifIsDesiner = Constant.UerInfoKey.DESIGNER_TYPE.equals(acs_Member_Type);
-                setImageForNavButton(ButtonType.RIGHT, R.drawable.msg_file);
+                setImageForNavButton(ButtonType.RIGHT, R.drawable.img_hots);
                 if (ifIsDesiner) {
                     setImageForNavButton(ButtonType.SECONDARY, R.drawable.scan);
                     String hs_uid = AdskApplication.getInstance().getMemberEntity().getHs_uid();

@@ -122,7 +122,7 @@
             android:background="@drawable/transparent"
             android:padding="@dimen/navbar_icon_padding"
             android:scaleType="centerInside"
-            android:src="@drawable/msg_file"
+            android:src="@drawable/img_hots"
             android:visibility="gone"
              />
 

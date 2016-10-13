@@ -58,7 +58,7 @@
         android:layout_marginRight="@dimen/size_10"
         android:layout_marginTop="@dimen/size_10"
         android:background="@drawable/transparent"
-        android:src="@drawable/msg_file" />
+        android:src="@drawable/img_hots" />
 
     <TextView
         android:id="@+id/nav_badge_val"

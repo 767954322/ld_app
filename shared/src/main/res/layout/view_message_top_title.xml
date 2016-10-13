@@ -54,7 +54,7 @@
         android:layout_marginRight="@dimen/size_10"
         android:layout_toLeftOf="@+id/ibn_public_file"
         android:background="@drawable/transparent"
-        android:src="@drawable/msg_file"
+        android:src="@drawable/img_hots"
         android:visibility="gone" />
 
     <ImageButton
@@ -65,7 +65,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/size_10"
         android:background="@drawable/transparent"
-        android:src="@drawable/msg_file" />
+        android:src="@drawable/img_hots" />
 
     <TextView
         android:id="@+id/tv_un_read"
