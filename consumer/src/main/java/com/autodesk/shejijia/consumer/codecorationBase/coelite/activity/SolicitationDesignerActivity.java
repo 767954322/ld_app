@@ -136,6 +136,9 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         if (district_name.equals("none")) {
             tvcAddress.setText(province_name + city_name);
         } else {
+        if (district_name.equals("none")){
+            tvcAddress.setText(province_name + city_name);
+        }else {
             tvcAddress.setText(province_name + city_name + district_name);
         }
         chageButtonValue();
@@ -333,7 +336,6 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             }
         });
     }
-
     /**
      * @brief 获取yyyy-MM-dd HH:mm:ss 格式的时间
      */
