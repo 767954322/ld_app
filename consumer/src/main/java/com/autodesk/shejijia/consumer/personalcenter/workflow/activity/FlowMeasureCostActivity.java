@@ -15,6 +15,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPAliPayBea
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPOrderBean;
 import com.autodesk.shejijia.consumer.utils.AliPayService;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
+import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -66,7 +67,7 @@ public class FlowMeasureCostActivity extends BaseWorkFlowActivity implements Vie
                 String order_line_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.ORDER_LINE_ID);
                 String order_id = intent.getStringExtra(Constant.SeekDesignerDetailKey.ORDER_ID);
                 MPOrderBean order = getOrderEntityByStep(this.nodeState);
-                if (order == null) {
+                if (order == null && wk_cur_template_id != MPStatusMachine.NODE__DESIGN_FIRST_PAY) {
                     return;
                 }
                 if (order_line_id != null && order_id != null) {
