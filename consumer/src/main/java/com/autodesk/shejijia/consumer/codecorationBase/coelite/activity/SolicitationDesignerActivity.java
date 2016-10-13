@@ -233,7 +233,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
 
     private void isSendMeasureForm(JSONObject jsonObject) {
         if (isPay) {
-            if (orderLineId != null && orderId != null && !orderLineId.equals("0") && !orderId.equals("0") && falg) {
+            if (orderLineId != null && orderId != null && !orderLineId.equals("0") && !orderId.equals("0")) {
                 pay(orderLineId, orderId);
                 return;
             }
