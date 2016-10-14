@@ -19,6 +19,7 @@
 
     <TextView
         android:id="@+id/line"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_1"
         android:layout_below="@id/text_notuse"
@@ -116,7 +117,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
             <!--住宅空间-->
@@ -373,7 +373,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 
@@ -491,7 +490,7 @@
                     android:textSize="@dimen/font_15" />
 
                 <ImageView
-
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -510,7 +509,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/size_18"
                     android:background="@color/bg_ef" />
             </LinearLayout>
 

@@ -111,12 +111,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         CustomProgress.cancelDialog();
-        if (!isElite(wk_cur_template_id)) {
-            setTitleForNavbar(getResources().getString(R.string.is_average_measure_house_form)); /// 竞优 .
-        } else {
-            setTitleForNavbar(getResources().getString(R.string.is_elite_measure_house_form)); ///  精选.
-        }
-
+//        if (!isElite(wk_cur_template_id)) {
+//            setTitleForNavbar(getResources().getString(R.string.is_average_measure_house_form)); /// 竞优 .
+//        } else {
+//            setTitleForNavbar(getResources().getString(R.string.is_elite_measure_house_form)); ///  精选.
+//        }
+        //fix bug DP-6395
+        setTitleForNavbar(getResources().getString(R.string.measure_house_form));
         updateDisplayData();
         updateRoomData();
         updateCityData();
@@ -249,7 +250,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
                     tvc_measure_form_time.setText("");
                 } else {
-                    tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
+                    tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm")); /// 量房时间 .
                 }
             } else {
                 ll_consumer_send.setVisibility(View.VISIBLE);
