@@ -552,7 +552,9 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             } else {
                 ImageUtils.loadUserAvatar(polygonImageView, avatar);
             }
-            tvDesignerName.setText(mBiddersEntity.getUser_name());
+            if (!TextUtils.isEmpty(mBiddersEntity.getUser_name())) {
+                tvDesignerName.setText(UIUtils.substring(mBiddersEntity.getUser_name(), 8));
+            }
         }
         isShowAlertView(sub_node_id);
     }
