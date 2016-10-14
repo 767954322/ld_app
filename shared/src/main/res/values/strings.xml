@@ -12,19 +12,12 @@
     <string name="scanner_text">将二维码放入框内,即可自动扫描</string>
     <string name="consumer_zxing_describe">请设计师扫码为您创建套餐项目</string>
 
-    <!--Tab-->
-    <string name="tab_im">聊天</string>
-    <string name="tab_personalcenter">我的项目</string>
-    <string name="tab_hall">应标大厅</string>
-    <string name="tab_home">案例</string>
-    <string name="tab_six_products">我要装修</string>
 
     <!--Common string-->
     <string name="save">保存</string>
     <string name="send">发送</string>
     <string name="cancel">取消</string>
     <string name="tip">提示</string>
-    <string name="pay">立即支付</string>
     <string name="autonym_uploading">上传中...</string>
     <string name="day_much">天</string>
     <string name="not_write">未填写</string>
@@ -67,8 +60,6 @@
     <string name="autonym_information_delivery">提交信息</string>
 
     <!--Qr-->
-    <string name="scanner_text">将二维码放入框内,即可自动扫描</string>
-    <string name="consumer_zxing_describe">请设计师扫码为您创建套餐项目</string>
 
     <!--Tab-->
     <string name="tab_im">聊天</string>
@@ -406,7 +397,6 @@
     <string name="consumer_address">所在地</string>
     <string name="consumer_mails">邮箱</string>
     <string name="not_filled">尚未填写</string>
-    <string name="not_write">未填写</string>
     <string name="no_mobile">未绑定手机</string>
     <string name="no_email">未绑定邮箱</string>
     <string name="secret">保密</string>
@@ -476,7 +466,6 @@
     <!-- ExistMeasureOrderActivity -->
     <string name="measure_room_time">量房时间：</string>
     <string name="please_select_time">请选择时间</string>
-    <string name="send">发送</string>
     <string name="getting_data">获取数据中...</string>
     <string name="sending_request">发送请求中...</string>
     <string name="please_select_a_project_first">请先选择一个项目</string>
@@ -531,10 +520,8 @@
     <string name="just">刚刚</string>
 
     <!-- ConsumeHomeFragment -->
-    <string name="app_name">设计家</string>
     <string name="anonymous">匿名</string>
     <string name="name">姓名</string>
-    <string name="save">保存</string>
 
 
     <!-- ConsumePersonalCenterFragment -->
@@ -546,8 +533,6 @@
     <string name="message_center">消息中心</string>
     <string name="consumer_more">更多</string>
     <string name="designer_personal">个人中心</string>
-    <string name="autonym_uploading">上传中...</string>
-    <string name="finish_cur_pager">关闭</string>
     <!-- DecorationBeiShuFragment -->
     <string name="designer">设计师名字</string>
     <string name="designer_online_communication">在线沟通</string>
@@ -569,7 +554,6 @@
     <string name="select_Ta_chat">开启IM聊天</string>
     <string name="select_Ta_refuse">拒绝应标</string>
     <string name="designer_much">位设计师</string>
-    <string name="day_much">天</string>
 
     <string name="common_order_project_number">项目编号：</string>
     <string name="common_order_decoration_budget">装修预算：</string>
@@ -655,8 +639,6 @@
     <!--DesignerEssentialInfoActivity -->
     <string name="uploading_photo">上传头像</string>
     <string name="nick_name">昵称</string>
-    <string name="no_data">暂无数据</string>
-    <string name="no_select">未选择</string>
     <string name="no_data_nodata">暂无数据/暂无数据</string>
 
     <string name="bidbiding_no_data_massage">您还没有应标，快去应标大厅看看吧~</string>
