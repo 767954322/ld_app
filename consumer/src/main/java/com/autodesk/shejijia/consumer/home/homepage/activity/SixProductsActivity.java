@@ -137,7 +137,7 @@ public class SixProductsActivity extends NavigationBarActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         unregisterReceiver(signInNotificationReceiver);
+        super.onDestroy();
     }
 }

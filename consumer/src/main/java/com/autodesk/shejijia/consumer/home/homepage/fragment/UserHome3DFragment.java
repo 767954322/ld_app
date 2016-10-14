@@ -581,12 +581,12 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
         if (mSignInNotificationReceiver != null) {
 
             getActivity().unregisterReceiver(mSignInNotificationReceiver);
         }
+
+        super.onDestroy();
     }
 
     private static final String REQUIREMENT_BUTTON_TAG = "requirement_button";

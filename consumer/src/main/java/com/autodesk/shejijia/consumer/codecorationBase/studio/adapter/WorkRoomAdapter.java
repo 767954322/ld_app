@@ -51,7 +51,7 @@ public class WorkRoomAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if (convertView == null){
 
@@ -76,7 +76,7 @@ public class WorkRoomAdapter extends BaseAdapter{
         return convertView;
     }
 
-    class ViewHolder{
+    static class ViewHolder{
 
         private ImageView workRoomImageView;
         private TextView workRoomName;

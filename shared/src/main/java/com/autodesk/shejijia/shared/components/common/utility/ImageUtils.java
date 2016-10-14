@@ -46,63 +46,74 @@ public class ImageUtils {
             .showImageOnLoading(R.drawable.common_case_icon)
             .showImageOnFail(R.drawable.common_case_icon)
             .showImageForEmptyUri(R.drawable.common_case_icon)
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
             .bitmapConfig(Bitmap.Config.RGB_565)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .resetViewBeforeLoading(true)
             .build();
 
     private static final DisplayImageOptions optionsIcon = new DisplayImageOptions.Builder()
             .showImageOnLoading(R.drawable.home_page_icon)
             .showImageOnFail(R.drawable.home_page_icon)
             .showImageForEmptyUri(R.drawable.home_page_icon)
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
             .bitmapConfig(Bitmap.Config.RGB_565)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .resetViewBeforeLoading(true)
             .build();
 
     private static final DisplayImageOptions userAvatarOptions = new DisplayImageOptions.Builder()
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
             .bitmapConfig(Bitmap.Config.RGB_565)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .resetViewBeforeLoading(true)
             .build();
 
     private static final DisplayImageOptions fileHotspotOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(false)
             .cacheOnDisk(false)
             .bitmapConfig(Bitmap.Config.RGB_565)
-            .imageScaleType(ImageScaleType.NONE)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .resetViewBeforeLoading(true)
             .build();
 
     private static final DisplayImageOptions RoundOptions = new DisplayImageOptions.Builder()
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .displayer(new RoundedBitmapDisplayer(360))
             .cacheOnDisk(true)
             .bitmapConfig(Bitmap.Config.RGB_565)
-//            .imageScaleType(ImageScaleType.NONE)
+            .imageScaleType(ImageScaleType.EXACTLY)
             .build();
 
     private static final DisplayImageOptions round = new DisplayImageOptions.Builder()
             .showImageOnLoading(R.drawable.home_page_icon)
             .showImageOnFail(R.drawable.home_page_icon)
             .showImageForEmptyUri(R.drawable.home_page_icon)
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
             .displayer(new RoundedBitmapDisplayer(20))
+            .imageScaleType(ImageScaleType.EXACTLY)
             .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
             .build();
 
 
     private static final DisplayImageOptions FileOptions = new DisplayImageOptions.Builder()
-//            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
             .bitmapConfig(Bitmap.Config.RGB_565)
-            .imageScaleType(ImageScaleType.NONE)
+            .imageScaleType(ImageScaleType.EXACTLY)
             .build();
 
     private static final DisplayImageOptions ListViewImageOptions = new DisplayImageOptions.Builder()
             .cacheOnDisk(true)
+            .cacheInMemory(false)
             .bitmapConfig(Bitmap.Config.RGB_565)
             .imageScaleType(ImageScaleType.EXACTLY)
+            .resetViewBeforeLoading(true)
             .build();
 
     public static void initImageLoader(Context context) {
@@ -111,22 +122,21 @@ public class ImageUtils {
                 .threadPoolSize(3) // default
                 .threadPriority(Thread.NORM_PRIORITY - 1) // default
                 .tasksProcessingOrder(QueueProcessingType.FIFO) // default
-                .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new LRULimitedMemoryCache(1 * 1024 * 1024))//弱引用缓存策略，减少OOM出现
-//                .memoryCache(new LruMemoryCache(1 * 1024 * 1024))
-                .memoryCacheSize(1 * 1024 * 1024)
-                .memoryCacheSizePercentage(13) // default
                 .diskCache(new UnlimitedDiskCache(createDefaultCacheDir())) // default
                 .diskCacheSize(50 * 1024 * 1024)
                 .diskCacheFileCount(100)
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
                 .imageDownloader(new BaseImageDownloader(context)) // default
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
-//                .memoryCache(new WeakMemoryCache())
                 .build();
         ImageLoader.getInstance().init(config);
     }
 
+    private static ImageLoaderConfiguration getDefautImageLoaderConfig(Context context)
+    {
+        ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(context);
+        return config;
+    }
 
     private static File createDefaultCacheDir() {
         File cache = new File(getCacheDir());
@@ -179,11 +189,11 @@ public class ImageUtils {
             .showImageOnLoading(R.drawable.common_case_icon)
             .showImageOnFail(R.drawable.common_case_icon)
             .showImageForEmptyUri(R.drawable.common_case_icon)
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
-            .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-
+            .imageScaleType(ImageScaleType.EXACTLY)
             .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
             .build();
     /**
      * 缩略图的设置
@@ -192,11 +202,11 @@ public class ImageUtils {
             .showImageOnLoading(R.drawable.home_page_icon)
             .showImageOnFail(R.drawable.home_page_icon)
             .showImageForEmptyUri(R.drawable.home_page_icon)
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
-            .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-
+            .imageScaleType(ImageScaleType.EXACTLY)
             .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
             .build();
     /**
      * 头像的设置
@@ -205,9 +215,11 @@ public class ImageUtils {
             .showImageOnLoading(R.drawable.icon_default_avator)
             .showImageOnFail(R.drawable.icon_default_avator)
             .showImageForEmptyUri(R.drawable.icon_default_avator)
-            .cacheInMemory(true)
+            .cacheInMemory(false)
             .cacheOnDisk(true)
-            .bitmapConfig(Bitmap.Config.ARGB_8888)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .resetViewBeforeLoading(true)
             .build();
 
     /**

@@ -109,7 +109,7 @@ public class PullToRefreshLayout extends RelativeLayout {
     private boolean canPullDown = true;
     private boolean canPullUp = true;
 
-    private Context mContext;
+    //private Context mContext;
 
     /**
      * 执行自动回滚的handler
@@ -170,6 +170,13 @@ public class PullToRefreshLayout extends RelativeLayout {
     ///设置刷新监听.
     public void setOnRefreshListener(OnRefreshListener listener) {
         mListener = listener;
+
+        if(listener == null && timer != null)
+        {
+            timer.cancel();
+            timer = null;
+            updateHandler = null;
+        }
     }
 
     ///构造方法.
@@ -191,7 +198,7 @@ public class PullToRefreshLayout extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        mContext = context;
+       //mContext = context;
         timer = new MyTimer(updateHandler);
         rotateAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
                 context, R.anim.reverse_anim);
@@ -613,6 +620,16 @@ public class PullToRefreshLayout extends RelativeLayout {
             if (mTask != null) {
                 mTask.cancel();
                 mTask = null;
+                handler = null;
+            }
+
+            if (handler != null)
+                handler = null;
+
+            if (timer != null)
+            {
+                timer.cancel();
+                timer = null;
             }
         }
 

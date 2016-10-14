@@ -107,6 +107,14 @@ public class StudioFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
+    public void onDestroyView()
+    {
+        if(work_room_refresh_view != null)
+            work_room_refresh_view.setOnRefreshListener(null);
+        super.onDestroyView();
+    }
+
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
