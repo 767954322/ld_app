@@ -281,6 +281,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
             android:background="@color/bg_ff"
@@ -294,6 +295,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_house_type"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
             android:background="@color/bg_ff"

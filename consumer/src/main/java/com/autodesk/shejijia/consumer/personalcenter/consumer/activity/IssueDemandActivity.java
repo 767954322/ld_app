@@ -291,7 +291,7 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                 }else {
 
                     mLivingRoom = null;
-                    mRoom = "其他";
+                    mRoom = "other";
                     mToilet = null;
                 }
                 if (TextUtils.isEmpty(style)) {

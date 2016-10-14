@@ -335,7 +335,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                         return;
                     }
                 }else {
-                    room = "其他";
+                    room = "other";
                     hall = null;
                     toilet = null;
 

@@ -247,9 +247,16 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             if (!tvIssueHouseType.getText().toString().equals("住宅空间")){
 
                 livingRoom = null;
-                room = "其他";
+                room = "other";
                 mToilet = null;
             }
+        }
+
+        if (TextUtils.isEmpty(tvIssueRoom.getText().toString())){
+
+            livingRoom = null;
+            room = "other";
+            mToilet = null;
         }
 
         if (TextUtils.isEmpty(mCurrentDistrictCode)) {
