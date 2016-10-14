@@ -3,7 +3,9 @@ package com.autodesk.shejijia.consumer.codecorationBase.packages.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -42,7 +44,7 @@ import java.util.List;
 /**
  * Created by allengu on 16-8-23.
  */
-public class ReservationFormActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener {
+public class ReservationFormActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener, TextWatcher {
 
 
     @Override
@@ -109,6 +111,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
                 }
             }
         });
+        et_issue_demand_area.addTextChangedListener(this);
 
     }
 
@@ -411,4 +414,38 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String mDecorationBudget;
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.toString().contains(".")) {
+            if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                et_issue_demand_area.setText(s);
+                et_issue_demand_area.setSelection(s.length());
+            }
+        }
+
+        if (s.toString().trim().substring(0).equals(".")) {
+            s = "0" + s;
+            et_issue_demand_area.setText(s);
+            et_issue_demand_area.setSelection(2);
+        }
+
+        if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+            if (!s.toString().substring(1, 2).equals(".")) {
+                et_issue_demand_area.setText(s.subSequence(0, 1));
+                et_issue_demand_area.setSelection(1);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

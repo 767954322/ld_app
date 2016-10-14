@@ -2,7 +2,9 @@ package com.autodesk.shejijia.consumer.codecorationBase.coelite.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -48,7 +50,7 @@ import java.util.Map;
  * @brief 精选发布需求 .
  */
 
-public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener, View.OnFocusChangeListener {
+public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener, View.OnFocusChangeListener, TextWatcher {
     private HomeTypeDialog homeTypeDialog;
     private String phone_num;
 
@@ -112,6 +114,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         tvIssueDemandDesignBudget.setOnClickListener(this);
         tvIssueAddress.setOnClickListener(this);
         etIssueDemandArea.setOnFocusChangeListener(this);
+        etIssueDemandArea.addTextChangedListener(this);
     }
 
     @Override
@@ -589,4 +592,38 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     public static final int RESULT_CODE = 101;
 
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.toString().contains(".")) {
+            if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                etIssueDemandArea.setText(s);
+                etIssueDemandArea.setSelection(s.length());
+            }
+        }
+
+        if (s.toString().trim().substring(0).equals(".")) {
+            s = "0" + s;
+            etIssueDemandArea.setText(s);
+            etIssueDemandArea.setSelection(2);
+        }
+
+        if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+            if (!s.toString().substring(1, 2).equals(".")) {
+                etIssueDemandArea.setText(s.subSequence(0, 1));
+                etIssueDemandArea.setSelection(1);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }
