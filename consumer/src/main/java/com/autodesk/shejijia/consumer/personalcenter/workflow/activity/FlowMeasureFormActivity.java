@@ -445,7 +445,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             house_type_content = requirement.getHouse_type();
         }
         String rlt = room_convert + " " + living_room_convert + " " + toilet_convert;
-        rlt = (rlt.equals("null" + " " + "null" + " " + "null")) ? UIUtils.getString(R.string.no_select) : rlt;
+        rlt = (rlt.equals("null" + " " + " " + " " + " ")) ? UIUtils.getString(R.string.str_others) : rlt;
         tvc_measure_form_house_type_model.setText(rlt);
 
         tvc_measure_form_type.setText(house_type_content != null ? house_type_content : UIUtils.getString(R.string.no_select));
@@ -547,6 +547,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         pvTime = new TimePickerView(this, TimePickerView.Type.ALL);
         /// Control the time range .
         pvTime.setRange(2016, 2018);
+        pvTime.setTitle("量房时间");
         pvTime.setTime(new Date());
         pvTime.setCyclic(false);
         pvTime.setCancelable(true);
