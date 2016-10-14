@@ -173,7 +173,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         if(listener == null && timer != null)
         {
-            timer.cancel();
+            timer.cleanUp();
             timer = null;
             updateHandler = null;
         }
@@ -617,6 +617,13 @@ public class PullToRefreshLayout extends RelativeLayout {
         }
 
         public void cancel() {
+            if (mTask != null) {
+                mTask.cancel();
+                mTask = null;
+            }
+        }
+
+        public void cleanUp() {
             if (mTask != null) {
                 mTask.cancel();
                 mTask = null;
