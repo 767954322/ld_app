@@ -569,6 +569,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         pvGenderOptions.setPicker(genderList);
         pvGenderOptions.setSelectOptions(0);
         pvGenderOptions.setCyclic(false);
+        pvGenderOptions.setTitle("性别");
         pvGenderOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
