@@ -130,7 +130,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                 }
                 //增加银行的名称的判断
                 if (!bank_name_var.matches(RegexUtil.ADDRESS_REGEX)) {
-                    openAlertView("支行名称只能包含2-32位汉字");
+                    openAlertView("支行名称只能包含2-32位字符");
 //                    Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -157,7 +157,7 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     }
 //                    if (!checkNameChese(branch_bank_name)) {
                     if (!isBranchBankName || TextUtils.isEmpty(branch_bank_name)) {
-                        openAlertView("支行名称只能包含2-32位汉字");
+                        openAlertView("支行名称只能包含2-32位字符");
 //                        Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -170,12 +170,13 @@ public class WithdrawalActivity extends NavigationBarActivity implements View.On
                     if (TextUtils.isEmpty(myPropertyBean.getBranch_bank_name())) {
                         if (!checkNameChese(branch_bank_name) || TextUtils.isEmpty(branch_bank_name)) {
                             if (!isBranchBankName) {
-                                openAlertView("支行名称只能包含2-32位汉字");
+                                openAlertView("支行名称只能包含2-32位字符");
 //                                Toast.makeText(WithdrawalActivity.this, "支行名称只能包含2-32位汉字", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                         }
                         if (TextUtils.isEmpty(myPropertyBean.getDeposit_card())) {
+
                             if (!isBankNum) {
                                 openAlertView("银行卡号请输入16到19位数字");
 //                                Toast.makeText(WithdrawalActivity.this, "银行卡号请输入16到19位数字", Toast.LENGTH_SHORT).show();
