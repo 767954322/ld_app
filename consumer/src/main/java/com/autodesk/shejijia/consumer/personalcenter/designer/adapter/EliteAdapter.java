@@ -52,7 +52,7 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
             return;
         }
         final String needs_id = orderListEntity.getNeeds_id();
-        String community_name = orderListEntity.getCommunity_name();
+        final String community_name = orderListEntity.getCommunity_name();
         String province_name = orderListEntity.getProvince_name();
         String city_name = orderListEntity.getCity_name();
         String district_name = orderListEntity.getDistrict_name();
@@ -157,8 +157,9 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
 
                 Intent intent = new Intent(context, ChatRoomActivity.class);
                 intent.putExtra(ChatRoomActivity.THREAD_ID, designer_thread_id);
+                intent.putExtra(ChatRoomActivity.PROJECT_TITLE, community_name);
                 intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, userName);
+                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, contacts_name);
                 intent.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
                 intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, memType);
