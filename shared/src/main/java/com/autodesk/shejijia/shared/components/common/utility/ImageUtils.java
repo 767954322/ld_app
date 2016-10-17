@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import com.autodesk.shejijia.shared.R;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -66,6 +65,14 @@ public class ImageUtils {
 
     private static final DisplayImageOptions userAvatarOptions = new DisplayImageOptions.Builder()
             .cacheInMemory(false)
+            .cacheOnDisk(true)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .imageScaleType(ImageScaleType.EXACTLY)
+            .resetViewBeforeLoading(true)
+            .build();
+
+    private static final DisplayImageOptions userAvatarOptions1 = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)
             .cacheOnDisk(true)
             .bitmapConfig(Bitmap.Config.RGB_565)
             .imageScaleType(ImageScaleType.EXACTLY)
@@ -132,8 +139,7 @@ public class ImageUtils {
         ImageLoader.getInstance().init(config);
     }
 
-    private static ImageLoaderConfiguration getDefautImageLoaderConfig(Context context)
-    {
+    private static ImageLoaderConfiguration getDefautImageLoaderConfig(Context context) {
         ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(context);
         return config;
     }
@@ -263,6 +269,10 @@ public class ImageUtils {
 
     public static void loadUserAvatar(ImageView target, String imageUrl) {
         ImageLoader.getInstance().displayImage(imageUrl, target, userAvatarOptions);
+    }
+
+    public static void loadUserAvatar1(ImageView target, String imageUrl) {
+        ImageLoader.getInstance().displayImage(imageUrl, target, userAvatarOptions1);
     }
 
     public static void loadFileImage(ImageView target, String imageUrl) {

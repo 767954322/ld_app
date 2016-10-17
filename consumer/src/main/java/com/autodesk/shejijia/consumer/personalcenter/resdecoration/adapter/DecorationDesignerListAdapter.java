@@ -81,7 +81,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
             if (StringUtils.isEmpty(avatarUrl)) {
                 polygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
             } else {
-                ImageUtils.loadUserAvatar(polygonImageView, avatarUrl);
+                ImageUtils.loadUserAvatar1(polygonImageView, avatarUrl);
             }
         }
 
