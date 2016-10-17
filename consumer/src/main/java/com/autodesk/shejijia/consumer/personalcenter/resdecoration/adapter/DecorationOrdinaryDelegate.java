@@ -84,7 +84,9 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
 //        final String thread_id = decorationNeedsListBean.getBeishu_thread_id();
         String custom_string_status = decorationNeedsListBean.getCustom_string_status();
 
-        holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name) + "/" + UIUtils.getNoDataIfEmpty(community_name));
+        holder.setText(R.id.tv_decoration_name, UIUtils.getNoDataIfEmpty(contacts_name.trim()));
+        holder.setText(R.id.tv_decoration_community_name, "/" + UIUtils.getNoDataIfEmpty(community_name.trim()));
+
         holder.setText(R.id.tv_decoration_needs_id, decorationNeedsListBean.getNeeds_id());
 
         String house_type = decorationNeedsListBean.getHouse_type();
@@ -95,7 +97,7 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
             holder.setText(R.id.tv_decoration_house_type, TextUtils.isEmpty(house_type) ? UIUtils.getString(R.string.no_select) : house_type);
         }
 
-        district_name = StringUtils.isEmpty(district_name)?"":district_name;
+        district_name = StringUtils.isEmpty(district_name) ? "" : district_name;
         String address = province_name + city_name + district_name;
 
         /// 项目地址
@@ -215,13 +217,13 @@ public class DecorationOrdinaryDelegate implements ItemViewDelegate<DecorationNe
         holder.setOnClickListener(R.id.decoration_phone_container, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startDecorationDetailActivity(wk_template_id,mNeeds_id);
+                startDecorationDetailActivity(wk_template_id, mNeeds_id);
             }
         });
         holder.setOnClickListener(R.id.tv_decoration_detail, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startDecorationDetailActivity(wk_template_id,mNeeds_id);
+                startDecorationDetailActivity(wk_template_id, mNeeds_id);
             }
         });
 

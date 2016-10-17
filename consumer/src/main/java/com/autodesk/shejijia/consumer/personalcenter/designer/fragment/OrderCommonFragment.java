@@ -113,7 +113,8 @@ public class OrderCommonFragment extends BaseFragment {
         super.onResume();
 
     }
-//
+
+    //
     // fixme 这个方法当check到我的项目时候进行回调．
     @Override
     public void onFragmentShown() {
@@ -236,7 +237,7 @@ public class OrderCommonFragment extends BaseFragment {
                 ImageUtils.displayAvatarImage(avatar, polygonImageView);
 
                 holder.setText(R.id.tv_designer_order_state,
-                        MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id,biddersBean.getDelivery()));
+                        MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id, biddersBean.getDelivery()));
 
             } else {
                 holder.setText(R.id.tv_designer_order_state, UIUtils.getString(R.string.no_data));
@@ -245,7 +246,8 @@ public class OrderCommonFragment extends BaseFragment {
             holder.setText(R.id.tv_decoration_phone, consumer_mobile);
             holder.setText(R.id.tv_designer_order_house_type, house_type_convert);
             holder.setText(R.id.tv_designer_order_house_style, decoration_style_convert);
-            holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(consumer_name) + "/" + community_name);
+            holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(consumer_name));
+            holder.setText(R.id.tv_designer_order_community, "/" + community_name);
             holder.setText(R.id.tv_address, address);
             holder.setText(R.id.tv_customer_name, UIUtils.getNoStringIfEmpty(consumer_name));
 

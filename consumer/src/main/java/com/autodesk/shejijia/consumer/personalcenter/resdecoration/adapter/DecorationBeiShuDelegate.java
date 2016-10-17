@@ -67,7 +67,8 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
         String district = decorationNeedsListBean.getDistrict();
         String district_name = decorationNeedsListBean.getDistrict_name();
 
-        holder.setText(R.id.tv_decoration_beishu_name, contacts_name + "/" + community_name);
+        holder.setText(R.id.tv_decoration_beishu_name, contacts_name);
+        holder.setText(R.id.tv_decoration_community_name, "/" + community_name);
         holder.setText(R.id.tv_decoration_beishu_needs_id, needs_id);
         holder.setText(R.id.tv_decoration_beishu_consumer_name, contacts_name);
         holder.setText(R.id.tv_decoration_beishu_phone, contacts_mobile);

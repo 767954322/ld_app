@@ -70,6 +70,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private String needs_id;
     private DecorationDetailBean mDecorationDetailBean;
     private Map<String, String> mStyleJson, mSpaceJson, mLivingRoomJson, mRoomJson, mToiletJson;
+    private TextView mTvDecorationCommunityName;
 
 
     public static void jumpTo(Context context, Bundle bundle) {
@@ -101,6 +102,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         mBtnStopDemand = (Button) findViewById(R.id.btn_fitment_stop_demand);
         mTvNeedsId = (TextView) findViewById(R.id.tv_decoration_needs_id);
         mTvDecorationName = (TextView) findViewById(R.id.tv_decoration_name);
+        mTvDecorationCommunityName = (TextView) findViewById(R.id.tv_decoration_community_name);
+
 
         mLlDemandModify = (LinearLayout) findViewById(R.id.ll_demand_modify);
     }
@@ -257,7 +260,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         toilet = convertEn2Cn(mToiletJson, toilet);
         String livingRoom_room_toilet = room + living_room + toilet;
 
-        mTvNeedsId.setText(demandDetailBean.getNeeds_id()+"");
+        mTvNeedsId.setText(demandDetailBean.getNeeds_id() + "");
         mTvAmendRoomType.setText(UIUtils.getNoSelectIfEmpty(livingRoom_room_toilet));
 
         mTvAmendStyle.setText(UIUtils.getNoSelectIfEmpty(decoration_style));
@@ -271,7 +274,8 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
         mTvCommunityName.setText(UIUtils.getNoDataIfEmpty(community_name));
         mTvPublicTime.setText(UIUtils.getNoDataIfEmpty(publish_time));
 
-        mTvDecorationName.setText(contacts_name + "/" + community_name);
+        mTvDecorationName.setText(contacts_name);
+        mTvDecorationCommunityName.setText("/" + community_name);
         if (WkTemplateConstants.IS_AVERAGE.equals(wk_template_id)) {
             mLlDemandModify.setVisibility(View.VISIBLE);
 

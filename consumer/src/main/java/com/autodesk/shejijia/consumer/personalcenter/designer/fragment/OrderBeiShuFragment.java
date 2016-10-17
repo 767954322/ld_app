@@ -145,7 +145,8 @@ public class OrderBeiShuFragment extends BaseFragment {
             }
             final String beishu_thread_id = beishuNeedsOrderListEntity.getBeishu_thread_id();
             String community_name_cut = community_name.replace("北舒套餐 - ", "");/// 去除北舒套餐标志 .
-            holder.setText(R.id.tv_desinger_beishuorder_address, contacts_name + "/" + community_name_cut);
+            holder.setText(R.id.tv_desinger_beishuorder_address, contacts_name);
+            holder.setText(R.id.tv_decoration_community_name, "/" + community_name_cut);
             holder.setText(R.id.tv_desinger_beishuorder_projectid, needs_id + "");
             holder.setText(R.id.tv_desinger_beishuorder_contact_name, contacts_name);
             holder.setText(R.id.tv_desinger_beishuorder_phone, contacts_mobile);
