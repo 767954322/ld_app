@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:ellipsize="end"
-        android:maxEms="6"
+        android:maxEms="17"
         android:singleLine="true"
         android:textColor="#333333"
         android:textSize="@dimen/font_16"
