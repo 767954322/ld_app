@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -28,6 +30,8 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetai
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -40,11 +44,9 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
@@ -200,6 +202,54 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState){
+            case SCROLL_STATE_IDLE:
+                TranslateAnimation moveToViewLocationAnimation = AnimationUtil.moveToViewLocation();
+                rlCaseLibraryBottom.startAnimation(moveToViewLocationAnimation);
+                moveToViewLocationAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL:
+                TranslateAnimation moveToViewBottomAnimation = AnimationUtil.moveToViewBottom();
+                rlCaseLibraryBottom.startAnimation(moveToViewBottomAnimation);
+                moveToViewBottomAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                //正在滚动时调用
+                break;
+            case SCROLL_STATE_FLING:
+                //手指快速滑动时,在离开ListView由于惯性滑动
+                break;
+        }
     }
 
     @Override
@@ -768,11 +818,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
-                }
+            //    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
+//                }
                 break;
             case MotionEvent.ACTION_UP:
                 break;
