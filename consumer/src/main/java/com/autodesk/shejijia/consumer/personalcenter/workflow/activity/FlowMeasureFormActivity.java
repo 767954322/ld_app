@@ -315,10 +315,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         final AnimationSet animationSetHide = new AnimationSet(true);
         AlphaAnimation alphaAnimationShow = new AlphaAnimation(0, 1);
         AlphaAnimation alphaAnimationHide = new AlphaAnimation(1, 0);
-        alphaAnimationShow.setDuration(3000);
-        alphaAnimationHide.setDuration(3000);
+        alphaAnimationShow.setDuration(1500);
+        alphaAnimationHide.setDuration(1500);
         animationSetShow.addAnimation(alphaAnimationShow);
         animationSetHide.addAnimation(alphaAnimationHide);
+        animationSetHide.setStartOffset(4000);
 
         viewAnimation.setAnimation(animationSetShow);
         //动画显现监听
