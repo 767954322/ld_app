@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.home.decorationdesigners.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,7 +119,7 @@ public class SeekDesignerDetailAdapter extends BaseAdapter {
                 if (mStyle.containsKey(project_style)) {
                     holder.mSeekStyle.setText(mStyle.get(project_style));
                 } else {
-                    holder.mSeekStyle.setText(project_style);
+                    holder.mSeekStyle.setText(R.string.str_others);
                 }
             } else {
                 holder.mSeekStyle.setText(R.string.str_others);
