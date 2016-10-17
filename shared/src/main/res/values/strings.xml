@@ -203,7 +203,7 @@
 
     <!--  FlowUploadDeliveryActivity -->
     <string name="data_null">暂无数据</string>
-    <string name="flow_rendering_design">渲染图设计</string>
+    <string name="flow_rendering_design">渲染图</string>
     <string name="flow_design_blueprint">设计图纸</string>
     <string name="flow_bill_of_materials">材料清单</string>
     <string name="deliver_measure_consumer">量房交付</string>
