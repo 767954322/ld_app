@@ -271,7 +271,7 @@
         <activity
             android:name=".home.decorationlibrarys.activity.CaseDescriptionActivity"
             android:launchMode="singleTask"
-            android:theme="@style/LookMoreActivityTheme"/>
+            />
         <activity
             android:name=".personalcenter.workflow.activity.FlowMeasureFormActivity"
             android:alwaysRetainTaskState="true"
@@ -417,7 +417,8 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity"/>
+        <activity
+            android:name="com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity"/>
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -559,7 +560,7 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+            />
         <activity
             android:name=".personalcenter.workflow.activity.WkFlowNodeActivity"
             android:alwaysRetainTaskState="true"
