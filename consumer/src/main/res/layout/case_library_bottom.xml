@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_case_library_bottom"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:background="@android:color/white"
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -49,7 +50,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/size_20"
-            android:layout_marginBottom="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_8"
             android:orientation="horizontal">
 
             <TextView
@@ -107,7 +108,7 @@
             android:layout_width="@dimen/size_45"
             android:layout_height="@dimen/size_45"
             android:layout_gravity="top"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="18dp"
             android:layout_marginLeft="@dimen/size_10"
             android:src="@drawable/icon_default_avator"
             app:poly_border="true"
@@ -121,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/size_19"
+            android:layout_marginBottom="18dp"
             android:layout_marginLeft="@dimen/size_43"
             android:src="@drawable/icon_real_name_small"
             android:textColor="@color/white"
