@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -162,6 +164,54 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState){
+            case SCROLL_STATE_IDLE:
+                TranslateAnimation moveToViewLocationAnimation = AnimationUtil.moveToViewLocation();
+                rlCaseLibraryBottom.startAnimation(moveToViewLocationAnimation);
+                moveToViewLocationAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL:
+                TranslateAnimation moveToViewBottomAnimation = AnimationUtil.moveToViewBottom();
+                rlCaseLibraryBottom.startAnimation(moveToViewBottomAnimation);
+                moveToViewBottomAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                //正在滚动时调用
+                break;
+            case SCROLL_STATE_FLING:
+                //手指快速滑动时,在离开ListView由于惯性滑动
+                break;
+        }
     }
 
     @Override
@@ -631,11 +681,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
-                }
+//                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
+//                }
                 break;
             case MotionEvent.ACTION_UP:
                 break;
