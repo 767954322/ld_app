@@ -111,7 +111,6 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
         ll_case_choose_contain_replace = (LinearLayout) findViewById(R.id.ll_case_choose_contain_replace);
         ll_case_choose_contain = (LinearLayout) findViewById(R.id.ll_case_choose_contain);
         mTvYeas = (TextView) findViewById(R.id.tv_seek_designer_detail_yeas);
-        mTvStyle = (TextView) findViewById(R.id.tv_seek_designer_detail_style);
         mTvDesignFee = (TextView) findViewById(R.id.tv_seek_designer_design_fee);
         mTvMeasureFee = (TextView) findViewById(R.id.tv_seek_designer_detail_measure_fee);
         mBtnChat = (Button) findViewById(R.id.btn_seek_designer_detail_chat);
@@ -734,7 +733,7 @@ public class SeekDesignerDetailActivity extends NavigationBarActivity implements
             } else {
                 mTvYeas.setText(designer.getExperience() + "年");
             }
-            if (null != designer && null != designer.getStyle_names()) {
+            if (null != designer && null != designer.getStyle_names() && !designer.getStyle_names().toString().equals("")) {
 
                 String style = designer.getStyle_names();
                 style = style.replaceAll(",", " ");
