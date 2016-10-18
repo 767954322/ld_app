@@ -236,7 +236,7 @@ public class OrderCommonFragment extends BaseFragment {
                 PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_slite_photo);
                 ImageUtils.displayAvatarImage(avatar, polygonImageView);
 
-                holder.setText(R.id.tv_designer_order_state,
+                holder.setText (R.id.tv_designer_order_state,
                         MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id, biddersBean.getDelivery()));
 
             } else {
@@ -247,7 +247,7 @@ public class OrderCommonFragment extends BaseFragment {
             holder.setText(R.id.tv_designer_order_house_type, house_type_convert);
             holder.setText(R.id.tv_designer_order_house_style, decoration_style_convert);
             holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(consumer_name));
-            holder.setText(R.id.tv_designer_order_community, "/" + community_name);
+            holder.setText(R.id.tv_designer_order_community, "/" + UIUtils.getNoStringIfEmpty(consumer_name));
             holder.setText(R.id.tv_address, address);
             holder.setText(R.id.tv_customer_name, UIUtils.getNoStringIfEmpty(consumer_name));
 
