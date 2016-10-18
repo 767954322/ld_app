@@ -7,23 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
-import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
-import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
-import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.TaskListAdapter;
+import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -31,11 +25,11 @@ import java.util.List;
  * Created by t_xuz on 8/25/16.
  * 首页-项目列表
  */
-public class TaskListFragment extends BaseFragment implements ProjectListContract.View {
+public class TaskListFragment extends BaseFragment implements ProjectListContract.View ,ProjectListAdapter.ProjectListItemListener{
 
     private RecyclerView mTaskListView;
     private List<TaskListBean.TaskList> taskLists;
-    private TaskListAdapter mTaskListAdapter;
+    private ProjectListAdapter mProjectListAdapter;
     private MemberEntity entity;
     private ProjectListContract.Presenter mProjectListPresenter;
 
@@ -81,8 +75,8 @@ public class TaskListFragment extends BaseFragment implements ProjectListContrac
             taskLists = taskListBean.getData();
             if (taskLists != null && taskLists.size() > 0) {
                 //显示任务列表到页面上
-                mTaskListAdapter = new TaskListAdapter(taskLists, R.layout.listitem_task_list_view, mContext);
-                mTaskListView.setAdapter(mTaskListAdapter);
+                mProjectListAdapter = new ProjectListAdapter(taskLists, R.layout.listitem_task_list_view, mContext,this);
+                mTaskListView.setAdapter(mProjectListAdapter);
             }
         }
     }
@@ -93,12 +87,12 @@ public class TaskListFragment extends BaseFragment implements ProjectListContrac
     }
 
     @Override
-    public void navigateProjectDetails(View view, int position, TaskListBean taskListBean) {
-
+    public void onProjectClick(List<TaskListBean.TaskList> projectList, int position) {
+        mProjectListPresenter.onProjectClickListener(projectList,position);
     }
 
     @Override
-    public void navigateTaskDetails(View view, int position, TaskListBean taskListBean) {
-
+    public void onTaskClick(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int position) {
+        mProjectListPresenter.onTaskClickListener(taskIdLists,position);
     }
 }

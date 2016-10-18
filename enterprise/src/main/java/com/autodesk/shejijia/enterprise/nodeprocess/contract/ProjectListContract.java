@@ -1,24 +1,17 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.contract;
 
 
-import android.support.annotation.NonNull;
-
-import com.autodesk.shejijia.enterprise.nodeprocess.BaseModel;
 import com.autodesk.shejijia.enterprise.nodeprocess.BasePresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.BaseView;
-import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
+
+import java.util.List;
 
 /**
  * Created by t_xuz on 10/13/16.
- * 首页--任务列表mvp接口
+ * 施工主线mvp中的vp对应的接口
  */
 public interface ProjectListContract {
-
-    interface Model extends BaseModel {
-
-        void getProjectListData(String requestUrl, String eventTag, String requestTag, String token);
-
-    }
 
     interface View extends BaseView {
 
@@ -26,25 +19,21 @@ public interface ProjectListContract {
 
         void addMoreProjectListData(TaskListBean taskListBean);
 
-        void navigateProjectDetails(android.view.View view, int position, TaskListBean taskListBean);
-
-        void navigateTaskDetails(android.view.View view, int position, TaskListBean taskListBean);
     }
 
     interface Presenter extends BasePresenter {
         /*
-        * 加载所有任务列表的方法
+        * 加载所有任务列表
         * */
         void loadProjectListData(String requestUrl, String eventTag, String requestTag, boolean isSwipeRefresh);
-
         /*
-        * 跳转项目详情页的监听器
-        * */
-        void onItemTopClickListener(android.view.View view, int position, TaskListBean entity);
+       * 跳转项目详情页的监听器
+       * */
+        void onProjectClickListener(List<TaskListBean.TaskList> projectList, int position);
 
         /*
         * 每个item中每个任务条目点击跳转的监听器
         * */
-        void onItemChildItemClickListener(android.view.View view, int position, TaskListBean entity);
+        void onTaskClickListener(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int position);
     }
 }

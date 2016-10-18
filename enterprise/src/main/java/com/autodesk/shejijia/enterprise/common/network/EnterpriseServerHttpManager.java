@@ -1,10 +1,12 @@
-package com.autodesk.shejijia.enterprise.base.network;
+package com.autodesk.shejijia.enterprise.common.network;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
+import com.autodesk.shejijia.enterprise.base.EnterpriseApplication;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
+import com.autodesk.shejijia.enterprise.common.utils.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
@@ -85,14 +87,14 @@ public class EnterpriseServerHttpManager {
     * token 当前登陆用户的access token
     * callback 请求回调接口
     * */
-    public void getUserProjectLists(@NonNull String requestUrl, @NonNull final String token,@Nullable String requestTag,
+    public void getUserProjectLists(@NonNull String requestUrl, @Nullable String requestTag,
                                     OkJsonRequest.OKResponseCallback callback) {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", token);
+                header.put("X-Token", UserInfoUtils.getToken(EnterpriseApplication.getInstance()));
                 return header;
             }
         };

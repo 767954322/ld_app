@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.network.EnterpriseServerHttpManager;
+import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.NodeBean;
-import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.NodeBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;

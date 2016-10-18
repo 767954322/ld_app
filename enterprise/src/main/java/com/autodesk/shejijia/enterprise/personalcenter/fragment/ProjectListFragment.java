@@ -14,9 +14,8 @@ import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
-import com.autodesk.shejijia.enterprise.nodeprocess.model.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
-import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.TaskListAdapter;
 import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
@@ -105,13 +104,4 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
 
     }
 
-    @Override
-    public void navigateProjectDetails(View view, int position, TaskListBean taskListBean) {
-
-    }
-
-    @Override
-    public void navigateTaskDetails(View view, int position, TaskListBean taskListBean) {
-
-    }
 }
