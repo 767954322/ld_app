@@ -189,7 +189,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                         getActivity().startActivity(intent);
 
                     } else {
-                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id + "",member_id, new OkStringRequest.OKResponseCallback() {
+                        MPChatHttpManager.getInstance().getThreadIdIfNotChatBefore(designer_id + "", member_id, new OkStringRequest.OKResponseCallback() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
                                 MPNetworkUtils.logError(TAG, volleyError);
@@ -483,15 +483,15 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         }
         mOffset = offset + 10;
 
-        //设置数据小于等于2的是不显示没有更多数据了
-        if (mAdapter != null && mAdapter.getCount()<=2){
-            mListView.setNoLoadMoreHideView(true);
-        }else{
+        //设置数据小于等于2的是不显示没有更多数据了 fix bug DP-6440
+//        if (mAdapter != null && case3DLibraryListBean.getCases().size() <= 2) {
+//            mListView.setNoLoadMoreHideView(true);
+//        } else {
             mListView.setNoLoadMoreHideView(false);
-        }
-        if (case3DLibraryListBean.getCases().size()>0){
+//        }
+        if (case3DLibraryListBean.getCases().size() > 0) {
             ll_default_view.setVisibility(View.GONE);
-        }else {
+        } else {
             ll_default_view.setVisibility(View.VISIBLE);
         }
         case3DBeanList.addAll(case3DLibraryListBean.getCases());
