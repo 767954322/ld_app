@@ -27,10 +27,10 @@ public final class NodeProcessRepository implements NodeProcessDataSource{
     }
 
     @Override
-    public void getProjectList(String requestUrl, String eventTag, String requestTag, @NonNull LoadProjectListCallback callback) {
+    public void getProjectList(String requestUrl, String eventTag, String requestTag, @NonNull final LoadProjectListCallback callback) {
 
-        NodeProcessRemoteDataSource.getInstance().getProjectList(requestUrl,eventTag,requestTag,callback);
-       /* if (mTaskListBean != null){
+        //NodeProcessRemoteDataSource.getInstance().getProjectList(requestUrl,eventTag,requestTag,callback);
+        if (mTaskListBean != null){
             callback.onProjectListLoadSuccess(mTaskListBean);
         }else {
 
@@ -38,14 +38,15 @@ public final class NodeProcessRepository implements NodeProcessDataSource{
                 @Override
                 public void onProjectListLoadSuccess(TaskListBean taskList) {
                     mTaskListBean = taskList;
+                    callback.onProjectListLoadSuccess(taskList);
                 }
 
                 @Override
                 public void onProjectListLoadFailed(String errorMsg) {
-
+                    callback.onProjectListLoadFailed(errorMsg);
                 }
             });
-        }*/
+        }
     }
 
     @Override
