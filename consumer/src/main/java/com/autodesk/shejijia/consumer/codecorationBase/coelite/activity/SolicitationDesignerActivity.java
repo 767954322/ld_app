@@ -24,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -130,9 +131,9 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         String style = styleMap.get(decorationNeedsListBean.getDecoration_style());
         tvcMeasureFormStyle.setText(UIUtils.getNoSelectIfEmpty(style));//风格
 
-        if (district_name.equals("none")){
+        if (district_name.equals("none")) {
             tvcAddress.setText(province_name + city_name);
-        }else {
+        } else {
             tvcAddress.setText(province_name + city_name + district_name);
         }
         chageButtonValue();
@@ -278,11 +279,15 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                     pay(solicitationSelection.getElite().getMeasurement().getOrder_line_id(),
                             solicitationSelection.getElite().getMeasurement().getOrder_id());
                 } else {
-                    setResult(10058, new Intent());
-                    finish();
+                    new AlertView(UIUtils.getString(R.string.tip), "选TA量房成功", null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, SolicitationDesignerActivity.this,
+                            AlertView.Style.Alert, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object object, int position) {
+                            setResult(10058, new Intent());
+                            finish();
+                        }
+                    }).show();
                 }
-
-
             }
 
             @Override
@@ -307,7 +312,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         Intent intent = getIntent();
         decorationNeedsListBean = (DecorationNeedsListBean) intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
         designerId = intent.getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-        falg = intent.getBooleanExtra(Constant.SeekDesignerDetailKey.ORDERS,false);
+        falg = intent.getBooleanExtra(Constant.SeekDesignerDetailKey.ORDERS, false);
     }
 
     //设置量房时间
@@ -326,6 +331,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             }
         });
     }
+
     /**
      * @brief 获取yyyy-MM-dd HH:mm:ss 格式的时间
      */
