@@ -258,6 +258,12 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             } else {
                 mListView.onLoadMoreComplete();
             }
+            //设置数据小于等于2的是不显示没有更多数据了 fix bug DP-6440
+            if (mAdapter != null && mAdapter.getCount() <= 2 ) {
+                mListView.setNoLoadMoreHideView(true);
+            } else {
+                mListView.setNoLoadMoreHideView(false);
+            }
             mAdapter.notifyDataSetChanged();
         }
     };
@@ -483,12 +489,6 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         }
         mOffset = offset + 10;
 
-        //设置数据小于等于2的是不显示没有更多数据了 fix bug DP-6440
-//        if (mAdapter != null && case3DLibraryListBean.getCases().size() <= 2) {
-//            mListView.setNoLoadMoreHideView(true);
-//        } else {
-            mListView.setNoLoadMoreHideView(false);
-//        }
         if (case3DLibraryListBean.getCases().size() > 0) {
             ll_default_view.setVisibility(View.GONE);
         } else {
@@ -503,6 +503,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         Message msg = Message.obtain();
         msg.obj = offset;
         handler.sendMessage(msg);
+
     }
 
 
