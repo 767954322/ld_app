@@ -50,7 +50,7 @@ import java.util.Map;
 public class SolicitationDesignerActivity extends NavigationBarActivity implements View.OnClickListener {
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_measure_form;
+        return R.layout.activity_measure_form2;
     }
 
     @Override
