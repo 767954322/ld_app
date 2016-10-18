@@ -23,8 +23,6 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
-import com.autodesk.shejijia.shared.components.common.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
@@ -136,18 +134,19 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         if (district_name.equals("none")) {
             tvcAddress.setText(province_name + city_name);
         } else {
-        if (district_name.equals("none")){
-            tvcAddress.setText(province_name + city_name);
-        }else {
-            tvcAddress.setText(province_name + city_name + district_name);
-        }
-        chageButtonValue();
+            if (district_name.equals("none")) {
+                tvcAddress.setText(province_name + city_name);
+            } else {
+                tvcAddress.setText(province_name + city_name + district_name);
+            }
+            chageButtonValue();
 //        for (DecorationBiddersBean decorationBiddersBean : list) {
 //            if (decorationBiddersBean.getDesigner_id().equals(designerId)) {
 //                tvcName.setText(decorationBiddersBean.getUser_name());
 //            }
 //        }
-        setMeasureTime();
+            setMeasureTime();
+        }
     }
 
     @Override
@@ -336,6 +335,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
             }
         });
     }
+
     /**
      * @brief 获取yyyy-MM-dd HH:mm:ss 格式的时间
      */

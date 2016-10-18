@@ -110,7 +110,6 @@
                     android:background="@color/no_color"
                     android:text="@string/no_data"
                     android:textColor="@color/bg_9E"
-                    android:text="@string/no_data"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
@@ -139,7 +138,6 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:singleLine="true"
-                    android:text="@string/no_data"
                     android:textColor="@color/bg_33"
                     android:text="@string/no_data"
                     android:textSize="@dimen/font_15"/>
@@ -227,7 +225,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:text="@string/no_select"
                     android:textColor="@color/bg_33"
                     android:text="@string/no_select"
                     android:textSize="@dimen/font_15"/>
@@ -271,7 +268,6 @@
                     android:inputType="numberDecimal"
                     android:text="@string/no_select"
                     android:textColor="@color/bg_33"
-                    android:text="@string/no_select"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_15"/>
 
@@ -305,7 +301,6 @@
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:inputType="numberDecimal"
-                    android:text="@string/no_select"
                     android:textColor="@color/bg_33"
                     android:text="@string/no_select"
                     android:textColorHint="#999"
@@ -340,7 +335,6 @@
                     android:gravity="center_vertical"
                     android:text="@string/no_select"
                     android:textColor="@color/bg_33"
-                    android:text="@string/no_select"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
@@ -378,7 +372,6 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:text="@string/no_select"
                         android:textColor="@color/bg_33"
                         android:text="@string/no_select"
                         android:textSize="@dimen/font_15"/>
@@ -414,7 +407,6 @@
                     android:text="@string/no_data"
                     android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:text="@string/no_data"
                     android:textSize="@dimen/font_15"/>
 
             </LinearLayout>
@@ -444,7 +436,6 @@
                     android:background="@color/no_color"
                     android:text="@string/no_select"
                     android:textColor="@color/bg_33"
-                    android:text="@string/no_select"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
@@ -486,7 +477,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:text="@string/no_data"
                     android:textColor="@color/bg_33"
                     android:text="@string/no_data"
                     android:textSize="@dimen/font_14"/>
