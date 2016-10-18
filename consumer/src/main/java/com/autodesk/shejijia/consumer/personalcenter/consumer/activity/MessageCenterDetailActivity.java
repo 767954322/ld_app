@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,12 +14,11 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 /**
  * Created by allengu on 16-10-11.
  */
-public class MessageCenterDetailActivity extends NavigationBarActivity {
+public class MessageCenterDetailActivity extends NavigationBarActivity implements View.OnClickListener {
 
 
     private MessageCenterBean.MessagesBean messagesBean;
     private ImageButton nav_left_imageButton;
-    private TextView nav_title_textView;
     private TextView tv_msg_date;
     private String show_Body;
     private TextView tv_msg_content;
@@ -32,7 +32,6 @@ public class MessageCenterDetailActivity extends NavigationBarActivity {
     protected void initView() {
 
         nav_left_imageButton = (ImageButton) findViewById(R.id.nav_left_imageButton);
-        nav_title_textView = (TextView) findViewById(R.id.nav_title_textView);
         tv_msg_date = (TextView) findViewById(R.id.tv_msg_date);
         tv_msg_content = (TextView) findViewById(R.id.tv_msg_content);
 
@@ -53,10 +52,26 @@ public class MessageCenterDetailActivity extends NavigationBarActivity {
             timeMY = DateUtil.showDate(aLong);
         }
 
-        nav_title_textView.setText(title);
+        setTitleForNavbar(title);
         tv_msg_date.setText(timeMY);
         tv_msg_content.setText(show_Body);
 
     }
 
+    @Override
+    protected void initListener() {
+        super.initListener();
+        nav_left_imageButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.nav_left_imageButton:
+                finish();
+                break;
+        }
+
+    }
 }
