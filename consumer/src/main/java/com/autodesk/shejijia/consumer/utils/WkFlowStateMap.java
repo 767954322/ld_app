@@ -27,6 +27,6 @@ public class WkFlowStateMap {
      */
     public static List<TipWorkFlowTemplateBean> sWkFlowBeans = new ArrayList<>();
 
-    public static SixProductsPicturesBean sixProductsPicturesBean = new SixProductsPicturesBean();
+    public static SixProductsPicturesBean sixProductsPicturesBean;
 
 }
