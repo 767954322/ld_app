@@ -158,10 +158,10 @@ public class MessageCenterAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(mContext, MessageCenterDetailActivity.class);
-                intent.putExtra("messagesBean", messagesBean);
-                intent.putExtra("show_Body", finalShow_Body);
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, MessageCenterDetailActivity.class);
+//                intent.putExtra("messagesBean", messagesBean);
+//                intent.putExtra("show_Body", finalShow_Body);
+//                mContext.startActivity(intent);
 
             }
         });
