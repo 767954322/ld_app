@@ -13,20 +13,19 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.shared.components.common.network.PushNotificationHttpManager;
-import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
+import com.autodesk.shejijia.shared.components.common.network.PushNotificationHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
+import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
-import java.util.Random;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -221,7 +220,23 @@ public class JPushMessageReceiver extends BroadcastReceiver
             nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
-            nm.notify(notificationId, notification);
+            nm.notify(getNotificationId(1), notification);
+        }
+    }
+
+    /**
+     * 获取提示类型
+     * @param notificationId
+     * @return
+     */
+    public int getNotificationId(int notificationId) {
+        switch (notificationId) {
+            case 1:
+                return 1;
+            default:
+                return 0;
+
+
         }
     }
 
