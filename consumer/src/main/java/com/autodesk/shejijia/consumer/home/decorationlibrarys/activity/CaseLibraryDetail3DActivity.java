@@ -590,7 +590,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         if (introduction != null) {
             mCaseLibraryText.setText("          " + introduction);
         } else {
-            mCaseLibraryText.setText(R.string.nodata);
+            mCaseLibraryText.setText("          "+R.string.noinfo);
         }
 
         tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
