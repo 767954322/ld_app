@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,7 +15,8 @@ public class Profile implements Serializable{
     private String name;
     private String mobile;
     private String email;
-    private List<String> groupids;
+    @SerializedName("groupids")
+    private List<String> groupIds;
 
     public String getName() {
         return name;
@@ -39,11 +42,11 @@ public class Profile implements Serializable{
         this.email = email;
     }
 
-    public List<String> getGroupids() {
-        return groupids;
+    public List<String> getGroupIds() {
+        return groupIds;
     }
 
-    public void setGroupids(List<String> groupids) {
-        this.groupids = groupids;
+    public void setGroupIds(List<String> groupIds) {
+        this.groupIds = groupIds;
     }
 }

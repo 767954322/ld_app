@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -11,7 +13,8 @@ public class Comment implements Serializable{
     private String content;
     private String submitted;
     private String modified;
-    private String comment_id;
+    @SerializedName("comment_id")
+    private String commentId;
 
     public String getUid() {
         return uid;
@@ -45,11 +48,11 @@ public class Comment implements Serializable{
         this.modified = modified;
     }
 
-    public String getComment_id() {
-        return comment_id;
+    public String getCommentId() {
+        return commentId;
     }
 
-    public void setComment_id(String comment_id) {
-        this.comment_id = comment_id;
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 }

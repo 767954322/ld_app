@@ -17,9 +17,9 @@ public interface ProjectListContract {
 
     interface View extends BaseView {
 
-        void refreshProjectListData(ProjectListBean projectListBean);
+        void refreshProjectListData(List<ProjectBean> projectList);
 
-        void addMoreProjectListData(ProjectListBean projectListBean);
+        void addMoreProjectListData(List<ProjectBean> projectList);
 
     }
 

@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,19 +21,32 @@ public class Task implements Serializable{
     private List<Form> forms;
     private List<File> files;
     private boolean milestone;
-    private String doc_type;
-    private String task_id;
-    private String task_index;
-    private String task_template_id;
-    private long project_id;
-    private String plan_id;
-    private boolean is_milestone;
-    private Time planning_time;
-    private Time effect_time;
-    private Time reserve_time;
-    private int unfinished_subtask_count;
-    private List<SubTask> subtasks;
-    private String current_subtask_id;
+    @SerializedName("doc_type")
+    private String docType;
+    @SerializedName("task_id")
+    private String taskId;
+    @SerializedName("task_index")
+    private String taskIndex;
+    @SerializedName("task_template_id")
+    private String taskTemplateId;
+    @SerializedName("project_id")
+    private long projectId;
+    @SerializedName("plan_id")
+    private String planId;
+    @SerializedName("is_milestone")
+    private boolean isMilestone;
+    @SerializedName("planning_time")
+    private Time planningTime;
+    @SerializedName("effect_time")
+    private Time effectTime;
+    @SerializedName("reserve_time")
+    private Time reserveTime;
+    @SerializedName("unfinished_subtask_count")
+    private int unfinishedSubTaskCount;
+    @SerializedName("subtasks")
+    private List<SubTask> subTasks;
+    @SerializedName("current_subtask_id")
+    private String currentSubTaskId;
 
     public String getStatus() {
         return status;
@@ -105,107 +120,99 @@ public class Task implements Serializable{
         this.milestone = milestone;
     }
 
-    public String getDoc_type() {
-        return doc_type;
+    public String getDocType() {
+        return docType;
     }
 
-    public void setDoc_type(String doc_type) {
-        this.doc_type = doc_type;
+    public void setDocType(String docType) {
+        this.docType = docType;
     }
 
-    public String getTask_id() {
-        return task_id;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setTask_id(String task_id) {
-        this.task_id = task_id;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
-    public String getTask_index() {
-        return task_index;
+    public String getTaskIndex() {
+        return taskIndex;
     }
 
-    public void setTask_index(String task_index) {
-        this.task_index = task_index;
+    public void setTaskIndex(String taskIndex) {
+        this.taskIndex = taskIndex;
     }
 
-    public String getTask_template_id() {
-        return task_template_id;
+    public String getTaskTemplateId() {
+        return taskTemplateId;
     }
 
-    public void setTask_template_id(String task_template_id) {
-        this.task_template_id = task_template_id;
+    public void setTaskTemplateId(String taskTemplateId) {
+        this.taskTemplateId = taskTemplateId;
     }
 
-    public long getProject_id() {
-        return project_id;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(long project_id) {
-        this.project_id = project_id;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
-    public String getPlan_id() {
-        return plan_id;
+    public String getPlanId() {
+        return planId;
     }
 
-    public void setPlan_id(String plan_id) {
-        this.plan_id = plan_id;
+    public void setPlanId(String planId) {
+        this.planId = planId;
     }
 
-    public boolean is_milestone() {
-        return is_milestone;
+    public Time getPlanningTime() {
+        return planningTime;
     }
 
-    public void setIs_milestone(boolean is_milestone) {
-        this.is_milestone = is_milestone;
+    public void setPlanningTime(Time planningTime) {
+        this.planningTime = planningTime;
     }
 
-    public Time getPlanning_time() {
-        return planning_time;
+    public Time getEffectTime() {
+        return effectTime;
     }
 
-    public void setPlanning_time(Time planning_time) {
-        this.planning_time = planning_time;
+    public void setEffectTime(Time effectTime) {
+        this.effectTime = effectTime;
     }
 
-    public Time getEffect_time() {
-        return effect_time;
+    public Time getReserveTime() {
+        return reserveTime;
     }
 
-    public void setEffect_time(Time effect_time) {
-        this.effect_time = effect_time;
+    public void setReserveTime(Time reserveTime) {
+        this.reserveTime = reserveTime;
     }
 
-    public Time getReserve_time() {
-        return reserve_time;
+    public int getUnfinishedSubTaskCount() {
+        return unfinishedSubTaskCount;
     }
 
-    public void setReserve_time(Time reserve_time) {
-        this.reserve_time = reserve_time;
+    public void setUnfinishedSubTaskCount(int unfinishedSubTaskCount) {
+        this.unfinishedSubTaskCount = unfinishedSubTaskCount;
     }
 
-    public int getUnfinished_subtask_count() {
-        return unfinished_subtask_count;
+    public List<SubTask> getSubTasks() {
+        return subTasks;
     }
 
-    public void setUnfinished_subtask_count(int unfinished_subtask_count) {
-        this.unfinished_subtask_count = unfinished_subtask_count;
+    public void setSubTasks(List<SubTask> subTasks) {
+        this.subTasks = subTasks;
     }
 
-    public List<SubTask> getSubtasks() {
-        return subtasks;
+    public String getCurrentSubTaskId() {
+        return currentSubTaskId;
     }
 
-    public void setSubtasks(List<SubTask> subtasks) {
-        this.subtasks = subtasks;
-    }
-
-    public String getCurrent_subtask_id() {
-        return current_subtask_id;
-    }
-
-    public void setCurrent_subtask_id(String current_subtask_id) {
-        this.current_subtask_id = current_subtask_id;
+    public void setCurrentSubTaskId(String currentSubTaskId) {
+        this.currentSubTaskId = currentSubTaskId;
     }
 }

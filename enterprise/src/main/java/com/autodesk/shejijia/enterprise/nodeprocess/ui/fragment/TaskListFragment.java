@@ -21,18 +21,17 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by t_xuz on 8/25/16.
  * 首页-项目列表
  */
-public class TaskListFragment extends BaseFragment implements ProjectListContract.View ,ProjectListAdapter.ProjectListItemListener{
+public class TaskListFragment extends BaseFragment implements ProjectListContract.View, ProjectListAdapter.ProjectListItemListener {
 
-    private RecyclerView mTaskListView;
-    private List<ProjectBean> projectLists;
+    private RecyclerView mProjectListView;
     private ProjectListAdapter mProjectListAdapter;
-    private MemberEntity entity;
     private ProjectListContract.Presenter mProjectListPresenter;
 
     @Override
@@ -42,24 +41,24 @@ public class TaskListFragment extends BaseFragment implements ProjectListContrac
 
     @Override
     protected void initData() {
-        entity = (MemberEntity) SharedPreferencesUtils.getObject(mContext, Constants.USER_INFO);
+
         mProjectListPresenter = new ProjectListPresenter(getActivity(), this);
-        LogUtils.e("project--entity", entity + "");
-        if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
-            LogUtils.e("acs_token", entity.getToken());
-            //get ProjectLists
-            String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_DATE, "2016-08-08", null, false, 0);
-            mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
-        }
+        //get ProjectLists
+        String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_DATE, "2016-08-08", null, false, 0);
+        mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
+
     }
 
     @Override
     protected void initViews(View view, Bundle savedInstanceState) {
-        mTaskListView = (RecyclerView) mContext.findViewById(R.id.rcy_task_list);
+        mProjectListView = (RecyclerView) mContext.findViewById(R.id.rcy_task_list);
         //init recyclerView
-        mTaskListView.setLayoutManager(new LinearLayoutManager(mContext));
-        mTaskListView.setHasFixedSize(true);
-        mTaskListView.setItemAnimator(new DefaultItemAnimator());
+        mProjectListView.setLayoutManager(new LinearLayoutManager(mContext));
+        mProjectListView.setHasFixedSize(true);
+        mProjectListView.setItemAnimator(new DefaultItemAnimator());
+        //init recyclerView adapter
+        mProjectListAdapter = new ProjectListAdapter(new ArrayList<ProjectBean>(0), R.layout.listitem_task_list_view, mContext, this);
+        mProjectListView.setAdapter(mProjectListAdapter);
     }
 
     @Override
@@ -70,31 +69,24 @@ public class TaskListFragment extends BaseFragment implements ProjectListContrac
     * 当网络请求返回结果成功,presenter回掉view层的该方法,进行结果集的传递
     * */
     @Override
-    public void refreshProjectListData(ProjectListBean projectListBean) {
-
-        if (projectListBean != null) {
-            //获取当前日期(默认就是当前日期)的任务列表
-            projectLists = projectListBean.getData();
-            if (projectLists != null && projectLists.size() > 0) {
-                //显示任务列表到页面上
-                mProjectListAdapter = new ProjectListAdapter(projectLists, R.layout.listitem_task_list_view, mContext,this);
-                mTaskListView.setAdapter(mProjectListAdapter);
-            }
+    public void refreshProjectListData(List<ProjectBean> projectList) {
+        if (projectList != null && projectList.size() > 0) {
+            mProjectListAdapter.setProjectLists(projectList);
         }
     }
 
     @Override
-    public void addMoreProjectListData(ProjectListBean projectListBean) {
+    public void addMoreProjectListData(List<ProjectBean> projectList) {
 
     }
 
     @Override
     public void onProjectClick(List<ProjectBean> projectList, int position) {
-        mProjectListPresenter.navigateToProjectDetail(projectList,position);
+        mProjectListPresenter.navigateToProjectDetail(projectList, position);
     }
 
     @Override
     public void onTaskClick(List<Task> taskLists, int position) {
-        mProjectListPresenter.navigateToTaskDetail(taskLists,position);
+        mProjectListPresenter.navigateToTaskDetail(taskLists, position);
     }
 }

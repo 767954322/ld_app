@@ -42,9 +42,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter{
             public void onLoadSuccess(ProjectListBean taskList) {
                 mProjectListView.hideLoading();
                 if (eventTag.equalsIgnoreCase(Constants.REFRESH_EVENT)){
-                    mProjectListView.refreshProjectListData(taskList);
+                    mProjectListView.refreshProjectListData(taskList.getData());
                 }else if (eventTag.equalsIgnoreCase(Constants.LOAD_MORE_EVENT)){
-                    mProjectListView.addMoreProjectListData(taskList);
+                    mProjectListView.addMoreProjectListData(taskList.getData());
                 }
             }
 
@@ -58,7 +58,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter{
 
     @Override
     public void navigateToProjectDetail(List<ProjectBean> projectList, int position) {
-        long projectId = projectList.get(position).getProject_id();
+        long projectId = projectList.get(position).getProjectId();
         Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
         intent.putExtra("projectId",projectId);
         mContext.startActivity(intent);
@@ -68,7 +68,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter{
     public void navigateToTaskDetail(List<Task> taskIdLists, int position) {
         ToastUtils.showShort((Activity)mContext,"node-details22"+position);
         Intent intent = new Intent(mContext, NodeDetailsActivity.class);
-        intent.putExtra("taskId",taskIdLists.get(position).getTask_id());
+        intent.putExtra("taskId",taskIdLists.get(position).getTaskId());
         mContext.startActivity(intent);
     }
 }

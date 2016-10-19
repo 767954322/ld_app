@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -10,9 +12,12 @@ import java.io.Serializable;
 public class File implements Serializable{
 
     private String name;
-    private String file_id;
-    private String file_type;
-    private String file_url;
+    @SerializedName("file_id")
+    private String fileId;
+    @SerializedName("file_type")
+    private String fileType;
+    @SerializedName("file_url")
+    private String fileUrl;
 
     public String getName() {
         return name;
@@ -22,27 +27,27 @@ public class File implements Serializable{
         this.name = name;
     }
 
-    public String getFile_id() {
-        return file_id;
+    public String getFileId() {
+        return fileId;
     }
 
-    public void setFile_id(String file_id) {
-        this.file_id = file_id;
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
     }
 
-    public String getFile_type() {
-        return file_type;
+    public String getFileType() {
+        return fileType;
     }
 
-    public void setFile_type(String file_type) {
-        this.file_type = file_type;
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
-    public String getFile_url() {
-        return file_url;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setFile_url(String file_url) {
-        this.file_url = file_url;
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }

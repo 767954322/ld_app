@@ -5,6 +5,7 @@ import com.autodesk.shejijia.enterprise.common.entity.microbean.Like;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Member;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Plan;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.PlanTask;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,12 +22,16 @@ public class ProjectBean implements Serializable{
     private long owner;
     private PlanTask plan;
     private String name;
-    private long project_id;
-    private long main_project_id;
-    private int coupon_type;
-    private String create_time;
-    private String group_chat_thread_id;
-
+    @SerializedName("project_id")
+    private long projectId;
+    @SerializedName("main_project_id")
+    private long mainProjectId;
+    @SerializedName("coupon_type")
+    private int couponType;
+    @SerializedName("create_time")
+    private String createTime;
+    @SerializedName("group_chat_thread_id")
+    private String groupChatThreadId;
 
     public List<Like> getLikes() {
         return likes;
@@ -34,10 +39,6 @@ public class ProjectBean implements Serializable{
 
     public void setLikes(List<Like> likes) {
         this.likes = likes;
-    }
-
-    public PlanTask getPlan() {
-        return plan;
     }
 
     public List<Member> getMembers() {
@@ -64,10 +65,13 @@ public class ProjectBean implements Serializable{
         this.owner = owner;
     }
 
+    public PlanTask getPlan() {
+        return plan;
+    }
+
     public void setPlan(PlanTask plan) {
         this.plan = plan;
     }
-
 
     public String getName() {
         return name;
@@ -77,43 +81,43 @@ public class ProjectBean implements Serializable{
         this.name = name;
     }
 
-    public long getProject_id() {
-        return project_id;
+    public long getProjectId() {
+        return projectId;
     }
 
-    public void setProject_id(long project_id) {
-        this.project_id = project_id;
+    public void setProjectId(long projectId) {
+        this.projectId = projectId;
     }
 
-    public long getMain_project_id() {
-        return main_project_id;
+    public long getMainProjectId() {
+        return mainProjectId;
     }
 
-    public void setMain_project_id(long main_project_id) {
-        this.main_project_id = main_project_id;
+    public void setMainProjectId(long mainProjectId) {
+        this.mainProjectId = mainProjectId;
     }
 
-    public int getCoupon_type() {
-        return coupon_type;
+    public int getCouponType() {
+        return couponType;
     }
 
-    public void setCoupon_type(int coupon_type) {
-        this.coupon_type = coupon_type;
+    public void setCouponType(int couponType) {
+        this.couponType = couponType;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getGroup_chat_thread_id() {
-        return group_chat_thread_id;
+    public String getGroupChatThreadId() {
+        return groupChatThreadId;
     }
 
-    public void setGroup_chat_thread_id(String group_chat_thread_id) {
-        this.group_chat_thread_id = group_chat_thread_id;
+    public void setGroupChatThreadId(String groupChatThreadId) {
+        this.groupChatThreadId = groupChatThreadId;
     }
 }

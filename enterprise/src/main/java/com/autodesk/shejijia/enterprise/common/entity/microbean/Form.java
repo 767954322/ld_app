@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -10,8 +12,10 @@ import java.io.Serializable;
 public class Form implements Serializable{
 
     private String category;
-    private String template_id;
-    private String form_id;
+    @SerializedName("template_id")
+    private String templateId;
+    @SerializedName("form_id")
+    private String formId;
 
     public String getCategory() {
         return category;
@@ -21,19 +25,19 @@ public class Form implements Serializable{
         this.category = category;
     }
 
-    public String getTemplate_id() {
-        return template_id;
+    public String getTemplateId() {
+        return templateId;
     }
 
-    public void setTemplate_id(String template_id) {
-        this.template_id = template_id;
+    public void setTemplateId(String templateId) {
+        this.templateId = templateId;
     }
 
-    public String getForm_id() {
-        return form_id;
+    public String getFormId() {
+        return formId;
     }
 
-    public void setForm_id(String form_id) {
-        this.form_id = form_id;
+    public void setFormId(String formId) {
+        this.formId = formId;
     }
 }

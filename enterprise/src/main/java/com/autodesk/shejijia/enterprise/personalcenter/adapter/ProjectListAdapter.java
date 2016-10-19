@@ -88,7 +88,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         projectVh.mProjectDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long projectId = projectLists.get(position).getProject_id();
+                long projectId = projectLists.get(position).getProjectId();
                 Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
                 intent.putExtra("projectId", projectId);
                 mContext.startActivity(intent);

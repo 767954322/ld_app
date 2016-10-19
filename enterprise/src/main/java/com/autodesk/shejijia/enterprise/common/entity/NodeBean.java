@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Created by t_xuz on 8/23/16.
- * task 每个节点的详情
+ * task 每个节点的详情 (未调试)
  */
 public class NodeBean {
 
@@ -28,7 +28,7 @@ public class NodeBean {
     private Time effectTime;
     private Time reserveTime;
     private List<Comment> comments;
-    private List<TaskForm> taskFroms;
+    private List<TaskForm> taskFroms;//待确定字段
     private List<SubTask> subtasks;
     private boolean milestone;
 

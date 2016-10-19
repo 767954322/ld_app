@@ -9,19 +9,25 @@ import java.io.Serializable;
  * update 10/19
  */
 public class Building implements Serializable{
-    
+
     private int halls;
     private int bathrooms;
     private int area;
     private String province;
     private String city;
     private String district;
-    private Boolean is_new;
-    private int room_type;
-    private String province_name;
-    private String city_name;
-    private String district_name;
-    private String community_name;
+    @SerializedName("is_new")
+    private Boolean isNew;
+    @SerializedName("room_type")
+    private int roomType;
+    @SerializedName("province_name")
+    private String provinceName;
+    @SerializedName("city_name")
+    private String cityName;
+    @SerializedName("district_name")
+    private String districtName;
+    @SerializedName("community_name")
+    private String communityName;
 
     public int getHalls() {
         return halls;
@@ -71,51 +77,51 @@ public class Building implements Serializable{
         this.district = district;
     }
 
-    public Boolean getIs_new() {
-        return is_new;
+    public Boolean getNew() {
+        return isNew;
     }
 
-    public void setIs_new(Boolean is_new) {
-        this.is_new = is_new;
+    public void setNew(Boolean aNew) {
+        isNew = aNew;
     }
 
-    public int getRoom_type() {
-        return room_type;
+    public int getRoomType() {
+        return roomType;
     }
 
-    public void setRoom_type(int room_type) {
-        this.room_type = room_type;
+    public void setRoomType(int roomType) {
+        this.roomType = roomType;
     }
 
-    public String getProvince_name() {
-        return province_name;
+    public String getProvinceName() {
+        return provinceName;
     }
 
-    public void setProvince_name(String province_name) {
-        this.province_name = province_name;
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
     }
 
-    public String getCity_name() {
-        return city_name;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setCity_name(String city_name) {
-        this.city_name = city_name;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
-    public String getDistrict_name() {
-        return district_name;
+    public String getDistrictName() {
+        return districtName;
     }
 
-    public void setDistrict_name(String district_name) {
-        this.district_name = district_name;
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 
-    public String getCommunity_name() {
-        return community_name;
+    public String getCommunityName() {
+        return communityName;
     }
 
-    public void setCommunity_name(String community_name) {
-        this.community_name = community_name;
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
     }
 }

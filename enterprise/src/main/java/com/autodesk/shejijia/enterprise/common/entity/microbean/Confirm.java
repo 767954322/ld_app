@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,8 @@ public class Confirm implements Serializable{
 
     private String role;
     private String uid;
-    private boolean signoff;
+    @SerializedName("signoff")
+    private boolean signOff;
 
     public String getRole() {
         return role;
@@ -27,11 +30,12 @@ public class Confirm implements Serializable{
         this.uid = uid;
     }
 
-    public boolean isSignoff() {
-        return signoff;
+    public boolean isSignOff() {
+        return signOff;
     }
 
-    public void setSignoff(boolean signoff) {
-        this.signoff = signoff;
+    public void setSignOff(boolean signOff) {
+        this.signOff = signOff;
     }
+
 }

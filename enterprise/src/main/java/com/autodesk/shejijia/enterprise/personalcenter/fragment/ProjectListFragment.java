@@ -33,8 +33,6 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     private ImageButton mBackBtn;
     private RecyclerView mProjectListView;
     private ProjectListAdapter mProjectListAdapter;
-    private MemberEntity entity;
-    private List<ProjectBean> taskLists;
     private ProjectListContract.Presenter mProjectListPresenter;
 
     public static ProjectListFragment newInstance() {
@@ -61,12 +59,9 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     protected void initData() {
-        entity = (MemberEntity) SharedPreferencesUtils.getObject(mContext, Constants.USER_INFO);
         mProjectListPresenter = new ProjectListPresenter(mContext, this);
-        if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
-            String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_STATUS, null, Constants.PROJECT_STATUS_COMPLETE, false, 0);
-            mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
-        }
+        String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_STATUS, null, Constants.PROJECT_STATUS_COMPLETE, false, 0);
+        mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
     }
 
     @Override
@@ -88,20 +83,16 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    public void refreshProjectListData(ProjectListBean projectListBean) {
-        if (projectListBean != null) {
-            //获取当前日期(默认就是当前日期)的任务列表
-            taskLists = projectListBean.getData();
-            if (taskLists != null && taskLists.size() > 0) {
-                //显示任务列表到页面上
-                mProjectListAdapter = new ProjectListAdapter(taskLists, R.layout.listitem_project_list_view, mContext);
-                mProjectListView.setAdapter(mProjectListAdapter);
-            }
-        }
+    public void refreshProjectListData(List<ProjectBean> projectList) {
+        //获取当前日期(默认就是当前日期)的任务列表
+        //显示任务列表到页面上
+        mProjectListAdapter = new ProjectListAdapter(projectList, R.layout.listitem_project_list_view, mContext);
+        mProjectListView.setAdapter(mProjectListAdapter);
+
     }
 
     @Override
-    public void addMoreProjectListData(ProjectListBean projectListBean) {
+    public void addMoreProjectListData(List<ProjectBean> projectList) {
 
     }
 

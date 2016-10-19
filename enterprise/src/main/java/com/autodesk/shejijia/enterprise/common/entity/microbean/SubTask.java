@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +16,8 @@ public class SubTask implements Serializable{
     private String start;
     private String completion;
     private List<Confirm> confirms;
-    private long subtask_id;
+    @SerializedName("subtask_id")
+    private long subTaskId;
 
     public String getStatus() {
         return status;
@@ -64,11 +67,11 @@ public class SubTask implements Serializable{
         this.confirms = confirms;
     }
 
-    public long getSubtask_id() {
-        return subtask_id;
+    public long getSubTaskId() {
+        return subTaskId;
     }
 
-    public void setSubtask_id(long subtask_id) {
-        this.subtask_id = subtask_id;
+    public void setSubTaskId(long subTaskId) {
+        this.subTaskId = subTaskId;
     }
 }

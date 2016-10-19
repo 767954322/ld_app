@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -11,8 +13,10 @@ public class Member implements Serializable{
     private String role;
     private String uid;
     private Profile profile;
-    private int acs_member_id;
-    private String thread_id;
+    @SerializedName("acs_member_id")
+    private int acsMemberId;
+    @SerializedName("thread_id")
+    private String threadId;
 
     public String getRole() {
         return role;
@@ -38,19 +42,19 @@ public class Member implements Serializable{
         this.profile = profile;
     }
 
-    public int getAcs_member_id() {
-        return acs_member_id;
+    public int getAcsMemberId() {
+        return acsMemberId;
     }
 
-    public void setAcs_member_id(int acs_member_id) {
-        this.acs_member_id = acs_member_id;
+    public void setAcsMemberId(int acsMemberId) {
+        this.acsMemberId = acsMemberId;
     }
 
-    public String getThread_id() {
-        return thread_id;
+    public String getThreadId() {
+        return threadId;
     }
 
-    public void setThread_id(String thread_id) {
-        this.thread_id = thread_id;
+    public void setThreadId(String threadId) {
+        this.threadId = threadId;
     }
 }

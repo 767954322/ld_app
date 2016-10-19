@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.enterprise.common.entity.microbean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,16 +10,19 @@ import java.util.List;
  * update 10/19
  * Project接口中，tasks字段对应的是任务详情集合，List<Task>类型
  */
-public class PlanTask implements Serializable{
+public class PlanTask implements Serializable {
 
     private String status;
     private String milestone;
     private String start;
     private String completion;
     private List<Task> tasks;
-    private String plan_template_id;
-    private String modified_time;
-    private int plan_id;
+    @SerializedName("plan_template_id")
+    private String planTemplateId;
+    @SerializedName("modified_time")
+    private String modifiedTime;
+    @SerializedName("plan_id")
+    private int planId;
 
     public String getStatus() {
         return status;
@@ -59,27 +64,27 @@ public class PlanTask implements Serializable{
         this.tasks = tasks;
     }
 
-    public String getPlan_template_id() {
-        return plan_template_id;
+    public String getPlanTemplateId() {
+        return planTemplateId;
     }
 
-    public void setPlan_template_id(String plan_template_id) {
-        this.plan_template_id = plan_template_id;
+    public void setPlanTemplateId(String planTemplateId) {
+        this.planTemplateId = planTemplateId;
     }
 
-    public String getModified_time() {
-        return modified_time;
+    public String getModifiedTime() {
+        return modifiedTime;
     }
 
-    public void setModified_time(String modified_time) {
-        this.modified_time = modified_time;
+    public void setModifiedTime(String modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 
-    public int getPlan_id() {
-        return plan_id;
+    public int getPlanId() {
+        return planId;
     }
 
-    public void setPlan_id(int plan_id) {
-        this.plan_id = plan_id;
+    public void setPlanId(int planId) {
+        this.planId = planId;
     }
 }
