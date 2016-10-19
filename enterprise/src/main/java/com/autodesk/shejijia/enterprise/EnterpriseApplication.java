@@ -1,6 +1,5 @@
-package com.autodesk.shejijia.enterprise.base;
+package com.autodesk.shejijia.enterprise;
 
-import com.autodesk.shejijia.enterprise.BuildConfig;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.pgyersdk.crash.PgyCrashManager;

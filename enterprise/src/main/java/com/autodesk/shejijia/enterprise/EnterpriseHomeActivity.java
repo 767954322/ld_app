@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.ui.activity;
+package com.autodesk.shejijia.enterprise;
 
 
 import android.content.Intent;
@@ -11,11 +11,11 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.NodeBean;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.NodeBean;
+import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.BaseEnterpriseHomeActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;

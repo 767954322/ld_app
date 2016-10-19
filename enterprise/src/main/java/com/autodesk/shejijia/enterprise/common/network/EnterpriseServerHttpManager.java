@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
-import com.autodesk.shejijia.enterprise.base.EnterpriseApplication;
+import com.autodesk.shejijia.enterprise.EnterpriseApplication;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;

@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.viewholder.TaskListVH;
 
 import java.util.List;
@@ -21,13 +22,13 @@ import java.util.List;
  */
 public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private List<TaskListBean.TaskList.Plan.Task> taskIdLists ;
+    private List<Task> taskLists ;
     private int resId;
     private Context mContext;
     private ProjectListAdapter.ProjectListItemListener mTaskListItemListener;
 
-    public TaskListAdapter(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int resId, Context mContext, ProjectListAdapter.ProjectListItemListener mTaskListItemListener){
-        this.taskIdLists = taskIdLists;
+    public TaskListAdapter(List<Task> taskLists, int resId, Context mContext, ProjectListAdapter.ProjectListItemListener mTaskListItemListener){
+        this.taskLists = taskLists;
         this.resId = resId;
         this.mContext = mContext;
         this.mTaskListItemListener = mTaskListItemListener;
@@ -51,18 +52,18 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return taskIdLists.size();
+        return taskLists.size();
     }
 
     private void initView(TaskListVH taskListVH,int position){
         // 当前任务节点名
-        if (!TextUtils.isEmpty(taskIdLists.get(position).getName())) {
-            taskListVH.mTaskName.setText(taskIdLists.get(position).getName());
+        if (!TextUtils.isEmpty(taskLists.get(position).getName())) {
+            taskListVH.mTaskName.setText(taskLists.get(position).getName());
         }
 
         // 当前任务节点的状态
-        if (!TextUtils.isEmpty(taskIdLists.get(position).getStatus())) {
-            String status = taskIdLists.get(position).getStatus();
+        if (!TextUtils.isEmpty(taskLists.get(position).getStatus())) {
+            String status = taskLists.get(position).getStatus();
             if (status.equalsIgnoreCase("open")) {
                 taskListVH.mTaskStatus.setText("未开始");
                 taskListVH.mTaskStatus.setBackground(ContextCompat.getDrawable(mContext,R.drawable.project_list_tv_blue_shape));
@@ -95,8 +96,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         //当前任务节点的类型
-        if (!TextUtils.isEmpty(taskIdLists.get(position).getCategory())){
-            String category = taskIdLists.get(position).getCategory();
+        if (!TextUtils.isEmpty(taskLists.get(position).getCategory())){
+            String category = taskLists.get(position).getCategory();
             if (category.equalsIgnoreCase("timeline")){ //开工交底
                 Drawable drawable = ContextCompat.getDrawable(mContext,R.mipmap.default_head);
                 drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
@@ -125,7 +126,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         taskListVH.mTaskDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTaskListItemListener.onTaskClick(taskIdLists,position);
+                mTaskListItemListener.onTaskClick(taskLists,position);
             }
         });
     }

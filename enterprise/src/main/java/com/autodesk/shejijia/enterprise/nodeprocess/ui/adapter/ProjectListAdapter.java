@@ -10,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.viewholder.ProjectListVH;
 
 import java.util.List;
@@ -21,20 +22,20 @@ import java.util.List;
  */
 public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private List<TaskListBean.TaskList> taskLists;
+    private List<ProjectBean> projectLists;
     private int resId;
     private Context mContext;
     private ProjectListItemListener mProjectListItemListener;
 
-    public ProjectListAdapter(List<TaskListBean.TaskList> taskLists, int resId, Context mContext, ProjectListItemListener projectListItemListener) {
+    public ProjectListAdapter(List<ProjectBean> projectLists, int resId, Context mContext, ProjectListItemListener projectListItemListener) {
         this.resId = resId;
         this.mContext = mContext;
-        this.taskLists = taskLists;
+        this.projectLists = projectLists;
         this.mProjectListItemListener = projectListItemListener;
     }
 
-    public void setTaskLists(List<TaskListBean.TaskList> taskLists) {
-        this.taskLists = taskLists;
+    public void setProjectLists(List<ProjectBean> projectLists) {
+        this.projectLists = projectLists;
         notifyDataSetChanged();
     }
 
@@ -55,16 +56,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
-        return taskLists.size();
+        return projectLists.size();
     }
 
     private void initView(ProjectListVH projectVh,int position){
 
-        if (!TextUtils.isEmpty(taskLists.get(position).getName())) {
-            projectVh.mProjectName.setText(taskLists.get(position).getName());
+        if (!TextUtils.isEmpty(projectLists.get(position).getName())) {
+            projectVh.mProjectName.setText(projectLists.get(position).getName());
         }
-        if (!TextUtils.isEmpty(taskLists.get(position).getPlan().getStatus())) {
-            String status = taskLists.get(position).getPlan().getStatus();
+        if (!TextUtils.isEmpty(projectLists.get(position).getPlan().getStatus())) {
+            String status = projectLists.get(position).getPlan().getStatus();
             if (status.equalsIgnoreCase("open")) {
                 projectVh.mProjectStatus.setText("开工交底");
             }else if (status.equalsIgnoreCase("ready")){
@@ -78,7 +79,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         }
 
-        if (taskLists != null && taskLists.size() > 0) {
+        if (projectLists != null && projectLists.size() > 0) {
             projectVh.mViewLine.setVisibility(View.VISIBLE);
             //设置任务列表里的数据
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -87,10 +88,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             projectVh.mTaskListView.setItemAnimator(new DefaultItemAnimator());
             projectVh.mTaskListView.setLayoutManager(layoutManager);
 
-            if (taskLists.get(position).getPlan().getTasks()!=null && taskLists.get(position).getPlan().getTasks().size()>0){
+            if (projectLists.get(position).getPlan().getTasks()!=null && projectLists.get(position).getPlan().getTasks().size()>0){
                 projectVh.mViewLine.setVisibility(View.VISIBLE);
                 projectVh.mTaskListView.setVisibility(View.VISIBLE);
-                projectVh.mTaskListView.setAdapter(new TaskListAdapter(taskLists.get(position).getPlan().getTasks(), R.layout.listitem_task_list_details_view,mContext,mProjectListItemListener));
+                projectVh.mTaskListView.setAdapter(new TaskListAdapter(projectLists.get(position).getPlan().getTasks(), R.layout.listitem_task_list_details_view,mContext,mProjectListItemListener));
             }else {//隐藏分割线,与recyclerView
                 projectVh.mViewLine.setVisibility(View.GONE);
                 projectVh.mTaskListView.setVisibility(View.GONE);
@@ -102,7 +103,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         projectVh.mProjectDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mProjectListItemListener.onProjectClick(taskLists,position);
+                mProjectListItemListener.onProjectClick(projectLists,position);
             }
         });
     }
@@ -110,8 +111,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public interface ProjectListItemListener{
         //项目详情
-        void onProjectClick(List<TaskListBean.TaskList> projectList,int position);
+        void onProjectClick(List<ProjectBean> projectList, int position);
         //节点详情
-        void onTaskClick(List<TaskListBean.TaskList.Plan.Task> taskList,int position);
+        void onTaskClick(List<Task> taskList, int position);
     }
 }

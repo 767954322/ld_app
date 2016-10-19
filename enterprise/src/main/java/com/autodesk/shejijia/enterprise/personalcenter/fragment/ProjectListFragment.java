@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -33,7 +34,7 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     private RecyclerView mProjectListView;
     private ProjectListAdapter mProjectListAdapter;
     private MemberEntity entity;
-    private List<TaskListBean.TaskList> taskLists;
+    private List<ProjectBean> taskLists;
     private ProjectListContract.Presenter mProjectListPresenter;
 
     public static ProjectListFragment newInstance() {
@@ -87,10 +88,10 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    public void refreshProjectListData(TaskListBean taskListBean) {
-        if (taskListBean != null) {
+    public void refreshProjectListData(ProjectListBean projectListBean) {
+        if (projectListBean != null) {
             //获取当前日期(默认就是当前日期)的任务列表
-            taskLists = taskListBean.getData();
+            taskLists = projectListBean.getData();
             if (taskLists != null && taskLists.size() > 0) {
                 //显示任务列表到页面上
                 mProjectListAdapter = new ProjectListAdapter(taskLists, R.layout.listitem_project_list_view, mContext);
@@ -100,7 +101,7 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    public void addMoreProjectListData(TaskListBean taskListBean) {
+    public void addMoreProjectListData(ProjectListBean projectListBean) {
 
     }
 

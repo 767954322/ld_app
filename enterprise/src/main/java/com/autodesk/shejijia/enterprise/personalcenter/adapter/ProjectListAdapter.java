@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
@@ -25,17 +25,17 @@ import java.util.List;
  */
 public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<TaskListBean.TaskList> projectLists;
+    private List<ProjectBean> projectLists;
     private int resId;
     private Context mContext;
 
-    public ProjectListAdapter(List<TaskListBean.TaskList> projectLists, int resId, Context mContext) {
+    public ProjectListAdapter(List<ProjectBean> projectLists, int resId, Context mContext) {
         this.resId = resId;
         this.mContext = mContext;
         this.projectLists = projectLists;
     }
 
-    public void setProjectLists(List<TaskListBean.TaskList> projectLists) {
+    public void setProjectLists(List<ProjectBean> projectLists) {
         this.projectLists = projectLists;
         notifyDataSetChanged();
     }

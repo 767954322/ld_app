@@ -1,4 +1,10 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.data.entity;
+package com.autodesk.shejijia.enterprise.common.entity;
+
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Building;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Like;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Member;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Plan;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.PlanTask;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,11 +15,11 @@ import java.util.List;
  */
 public class ProjectBean implements Serializable{
 
-    private List<TaskListBean.TaskList.Like> likes;
-    private List<ProjectListBean.ProjectList.Member> members;
-    private ProjectListBean.ProjectList.Building building;
+    private List<Like> likes;
+    private List<Member> members;
+    private Building building;
     private long owner;
-    private TaskListBean.TaskList.Plan plan;
+    private PlanTask plan;
     private String name;
     private long project_id;
     private long main_project_id;
@@ -22,27 +28,31 @@ public class ProjectBean implements Serializable{
     private String group_chat_thread_id;
 
 
-    public List<TaskListBean.TaskList.Like> getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<TaskListBean.TaskList.Like> likes) {
+    public void setLikes(List<Like> likes) {
         this.likes = likes;
     }
 
-    public List<ProjectListBean.ProjectList.Member> getMembers() {
+    public PlanTask getPlan() {
+        return plan;
+    }
+
+    public List<Member> getMembers() {
         return members;
     }
 
-    public void setMembers(List<ProjectListBean.ProjectList.Member> members) {
+    public void setMembers(List<Member> members) {
         this.members = members;
     }
 
-    public ProjectListBean.ProjectList.Building getBuilding() {
+    public Building getBuilding() {
         return building;
     }
 
-    public void setBuilding(ProjectListBean.ProjectList.Building building) {
+    public void setBuilding(Building building) {
         this.building = building;
     }
 
@@ -54,13 +64,10 @@ public class ProjectBean implements Serializable{
         this.owner = owner;
     }
 
-    public TaskListBean.TaskList.Plan getPlan() {
-        return plan;
-    }
-
-    public void setPlan(TaskListBean.TaskList.Plan plan) {
+    public void setPlan(PlanTask plan) {
         this.plan = plan;
     }
+
 
     public String getName() {
         return name;

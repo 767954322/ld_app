@@ -3,7 +3,7 @@ package com.autodesk.shejijia.enterprise.common.utils;
 import android.content.Context;
 import android.content.Intent;
 
-import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.EnterpriseHomeActivity;
+import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;

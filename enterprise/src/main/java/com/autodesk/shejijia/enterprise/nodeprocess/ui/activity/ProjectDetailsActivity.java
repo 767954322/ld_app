@@ -14,7 +14,7 @@ import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
 import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;

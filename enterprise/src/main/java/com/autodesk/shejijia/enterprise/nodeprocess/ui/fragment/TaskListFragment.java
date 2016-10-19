@@ -9,10 +9,12 @@ import android.view.View;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -28,7 +30,7 @@ import java.util.List;
 public class TaskListFragment extends BaseFragment implements ProjectListContract.View ,ProjectListAdapter.ProjectListItemListener{
 
     private RecyclerView mTaskListView;
-    private List<TaskListBean.TaskList> taskLists;
+    private List<ProjectBean> projectLists;
     private ProjectListAdapter mProjectListAdapter;
     private MemberEntity entity;
     private ProjectListContract.Presenter mProjectListPresenter;
@@ -68,31 +70,31 @@ public class TaskListFragment extends BaseFragment implements ProjectListContrac
     * 当网络请求返回结果成功,presenter回掉view层的该方法,进行结果集的传递
     * */
     @Override
-    public void refreshProjectListData(TaskListBean taskListBean) {
+    public void refreshProjectListData(ProjectListBean projectListBean) {
 
-        if (taskListBean != null) {
+        if (projectListBean != null) {
             //获取当前日期(默认就是当前日期)的任务列表
-            taskLists = taskListBean.getData();
-            if (taskLists != null && taskLists.size() > 0) {
+            projectLists = projectListBean.getData();
+            if (projectLists != null && projectLists.size() > 0) {
                 //显示任务列表到页面上
-                mProjectListAdapter = new ProjectListAdapter(taskLists, R.layout.listitem_task_list_view, mContext,this);
+                mProjectListAdapter = new ProjectListAdapter(projectLists, R.layout.listitem_task_list_view, mContext,this);
                 mTaskListView.setAdapter(mProjectListAdapter);
             }
         }
     }
 
     @Override
-    public void addMoreProjectListData(TaskListBean taskListBean) {
+    public void addMoreProjectListData(ProjectListBean projectListBean) {
 
     }
 
     @Override
-    public void onProjectClick(List<TaskListBean.TaskList> projectList, int position) {
-        mProjectListPresenter.onProjectClickListener(projectList,position);
+    public void onProjectClick(List<ProjectBean> projectList, int position) {
+        mProjectListPresenter.navigateToProjectDetail(projectList,position);
     }
 
     @Override
-    public void onTaskClick(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int position) {
-        mProjectListPresenter.onTaskClickListener(taskIdLists,position);
+    public void onTaskClick(List<Task> taskLists, int position) {
+        mProjectListPresenter.navigateToTaskDetail(taskLists,position);
     }
 }

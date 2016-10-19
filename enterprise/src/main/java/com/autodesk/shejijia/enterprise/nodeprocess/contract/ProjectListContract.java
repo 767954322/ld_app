@@ -1,9 +1,11 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.contract;
 
 
+import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.nodeprocess.BasePresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.BaseView;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.entity.TaskListBean;
 
 import java.util.List;
 
@@ -15,9 +17,9 @@ public interface ProjectListContract {
 
     interface View extends BaseView {
 
-        void refreshProjectListData(TaskListBean taskListBean);
+        void refreshProjectListData(ProjectListBean projectListBean);
 
-        void addMoreProjectListData(TaskListBean taskListBean);
+        void addMoreProjectListData(ProjectListBean projectListBean);
 
     }
 
@@ -27,13 +29,13 @@ public interface ProjectListContract {
         * */
         void loadProjectListData(String requestUrl, String eventTag, String requestTag, boolean isSwipeRefresh);
         /*
-       * 跳转项目详情页的监听器
+       * 跳转项目详情页
        * */
-        void onProjectClickListener(List<TaskListBean.TaskList> projectList, int position);
+        void navigateToProjectDetail(List<ProjectBean> projectList, int position);
 
         /*
-        * 每个item中每个任务条目点击跳转的监听器
+        * 每个item中每个任务条目点击跳转到节点详情
         * */
-        void onTaskClickListener(List<TaskListBean.TaskList.Plan.Task> taskIdLists, int position);
+        void navigateToTaskDetail(List<Task> taskLists, int position);
     }
 }
