@@ -579,9 +579,9 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         //设置简介
         String introduction = case3DDetailBean.getConception();
         if (introduction != null) {
-            mCaseLibraryText.setText("          " + introduction);
+            mCaseLibraryText.setText("\u3000\u3000" + introduction);
         } else {
-            mCaseLibraryText.setText("          "+R.string.noinfo);
+            mCaseLibraryText.setText("\u3000\u3000"+getString(R.string.noinfo));
         }
 
         tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));

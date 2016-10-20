@@ -531,7 +531,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         //设置简介
         String introduction = caseDetailBean.getDescription();
         if (introduction == null || introduction.equals("")) {
-            mCaseLibraryText.setText("\u3000\u3000" + R.string.nodescription);
+            mCaseLibraryText.setText("\u3000\u3000" +getString( R.string.nodescription));
         } else {
             mCaseLibraryText.setText("\u3000\u3000" + introduction);
         }
