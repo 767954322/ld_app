@@ -492,8 +492,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
                 //set tital
                 String str_tital = case3DDetailBean.getDesign_name();
-                boolean isTitalToLong = str_tital.length() > 6;
-                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                boolean isTitalToLong = str_tital.length() > 8;
+                str_tital = isTitalToLong ? str_tital.substring(0, 8) + "..." : str_tital;
                 setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
@@ -569,15 +569,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         if (thumbnailMainPath != null) {
             ImageUtils.displayIconImage(thumbnailMainPath, mdesignerAvater);
         }
-//
-//        //查找是否是封面图片  若是就添加到头部
-//        for (int i = 0; i < images.size(); i++) {
-//            if (images.get(i).isIs_primary()) {
-//                firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-//                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
-//                // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
-//            }
-//        }
 
         List<Case3DDetailImageListBean> imageListBeanList = getImageLists(images);
         imageListBean = imageListBeanList;
@@ -610,28 +601,14 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
         tvThumbUp.setText(getString(R.string.thumbUp) + case3DDetailBean.getFavorite_count() + "");
         tvheadThumbUp.setText(getString(R.string.thumbUp)+ case3DDetailBean.getFavorite_count() + "");
-        //ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
 
         Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
         if (designer_info.getNick_name() != null) {
-            if (designer_info.getNick_name().length() > 8) {
-                String nickName = designer_info.getNick_name().substring(0, 8);
-                String nickNameNow = nickName + "…";
-                ivConsumeHomeDesigner.setText(nickNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getNick_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getNick_name());
         } else {
-            if (designer_info.getFirst_name().length() > 8) {
-                String firstName = designer_info.getFirst_name().substring(0, 8);
-                String firstNameNow = firstName + "…";
-                ivConsumeHomeDesigner.setText(firstNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
         }
 
-//        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.displayAvatarImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
 
         Case3DDetailBean.DesignerInfoBean.DesignerBean designer = mDesignerInfo.getDesigner();

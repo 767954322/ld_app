@@ -458,8 +458,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
                 //set tital
                 String str_tital = caseDetailBean.getTitle();
-                boolean isTitalToLong = str_tital.length() > 6;
-                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                boolean isTitalToLong = str_tital.length() > 8;
+                str_tital = isTitalToLong ? str_tital.substring(0, 8) + "..." : str_tital;
                 setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
@@ -553,21 +553,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
         if (designer_info.getNick_name() != null) {
-            if (designer_info.getNick_name().length() > 8) {
-                String nickName = designer_info.getNick_name().substring(0, 8);
-                String nickNameNow = nickName + "…";
-                ivConsumeHomeDesigner.setText(nickNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getNick_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getNick_name());
         } else {
-            if (designer_info.getFirst_name().length() > 8) {
-                String firstName = designer_info.getFirst_name().substring(0, 8);
-                String firstNameNow = firstName + "…";
-                ivConsumeHomeDesigner.setText(firstNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
         }
 
         //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
