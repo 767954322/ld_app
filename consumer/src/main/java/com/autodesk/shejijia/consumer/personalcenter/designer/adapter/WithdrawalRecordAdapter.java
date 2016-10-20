@@ -56,11 +56,11 @@ public class WithdrawalRecordAdapter extends BaseAdapter<WithdrawaRecoldBean.Tra
                 break;
             case 0:
                 // DP-6086 fix 处理中 to DP-6200
-                ((ViewHolder) holder).tv_withdrawal_recold_money.setText(amount + "元"); //　提现申请成功
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("-" + amount + "元"); //　提现申请成功
                 ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.in_the_processing));
                 break;
             case 1:
-                ((ViewHolder) holder).tv_withdrawal_recold_money.setText("-" + amount + "元"); //　提现成功
+                ((ViewHolder) holder).tv_withdrawal_recold_money.setText(amount + "元"); //　提现成功
                 ((ViewHolder) holder).tv_withdrawal_recold_state.setText(UIUtils.getString(R.string.handle_successful));
                 break;
             case 2:
