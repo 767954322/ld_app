@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
+import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
 import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
@@ -27,7 +27,7 @@ import org.json.JSONObject;
  * Created by t_xuz on 8/24/16.
  *
  */
-public class ProjectDetailsActivity extends BaseActivity implements View.OnClickListener{
+public class ProjectDetailsActivity extends BaseEnterpriseActivity implements View.OnClickListener{
 
     //bottom bar
     private TextView mPatrolBtn;
@@ -41,12 +41,12 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
     private MemberEntity entity;
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutResId() {
         return R.layout.activity_project_details_main;
     }
 
     @Override
-    protected void initViews() {
+    protected void initView() {
         mProjectTaskListView = (RecyclerView)findViewById(R.id.rcy_project_task);
         //init recyclerView
         mProjectTaskListView.setLayoutManager(new LinearLayoutManager(this));
@@ -62,7 +62,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    protected void initEvents() {
+    protected void initListener() {
         mBackBtn.setOnClickListener(this);
         mPatrolBtn.setOnClickListener(this);
         mIssueBtn.setOnClickListener(this);
@@ -118,7 +118,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
                 updateUI(projectBean);
             }
         };
-        EnterpriseServerHttpManager.getInstance().getProjectDetails(pid,token,callback);
+        EnterpriseServerHttpManager.getInstance().getProjectDetails(pid,token,true,callback);
     }
 
     private void updateUI(ProjectBean projectBean){

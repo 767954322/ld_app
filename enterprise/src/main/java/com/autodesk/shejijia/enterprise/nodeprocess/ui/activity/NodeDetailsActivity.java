@@ -3,16 +3,16 @@ package com.autodesk.shejijia.enterprise.nodeprocess.ui.activity;
 import android.os.Bundle;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
+import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
 
 /**
  * Created by t_xuz on 8/26/16.
  * 节点详情页面
  */
-public class NodeDetailsActivity extends BaseActivity{
+public class NodeDetailsActivity extends BaseEnterpriseActivity {
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutResId() {
         return R.layout.activity_node_details_main;
     }
 
@@ -22,12 +22,8 @@ public class NodeDetailsActivity extends BaseActivity{
     }
 
     @Override
-    protected void initViews() {
+    protected void initView() {
 
     }
 
-    @Override
-    protected void initEvents() {
-
-    }
 }

@@ -4,22 +4,18 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
 import java.util.List;
 
@@ -27,7 +23,7 @@ import java.util.List;
  * Created by t_xuz on 8/30/16.
  * 我页--全部项目列表页面
  */
-public class ProjectListFragment extends BaseFragment implements View.OnClickListener, ProjectListContract.View {
+public class ProjectListFragment extends BaseEnterpriseFragment implements View.OnClickListener, ProjectListContract.View {
     private TextView mTopBarTitle;
     private ImageButton mScreenBtn;
     private ImageButton mBackBtn;
@@ -40,12 +36,12 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutResId() {
         return R.layout.fragment_personal_center_project;
     }
 
     @Override
-    protected void initViews(View view, Bundle savedInstanceState) {
+    protected void initView(View view,Bundle savedInstanceState) {
         mTopBarTitle = (TextView) view.findViewById(R.id.tv_personal_title);
         mScreenBtn = (ImageButton) view.findViewById(R.id.imgBtn_screen);
         mBackBtn = (ImageButton) view.findViewById(R.id.imgBtn_back);
@@ -60,12 +56,12 @@ public class ProjectListFragment extends BaseFragment implements View.OnClickLis
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(mContext, this);
-        String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_STATUS, null, Constants.PROJECT_STATUS_COMPLETE, false, 0);
-        mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
-    }
+    String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_STATUS, null, Constants.PROJECT_STATUS_COMPLETE, false, 0);
+    mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
+}
 
     @Override
-    protected void initEvents() {
+    protected void initListener() {
         mScreenBtn.setOnClickListener(this);
         mBackBtn.setOnClickListener(this);
     }

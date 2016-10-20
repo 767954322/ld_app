@@ -6,13 +6,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 
 /**
  * Created by t_xuz on 9/2/16.
  * 我页--关于app页面
  */
-public class AboutFragment extends BaseFragment{
+public class AboutFragment extends BaseEnterpriseFragment {
     private ImageButton mBackBtn;
     private TextView mTopBarTitle;
 
@@ -20,12 +20,12 @@ public class AboutFragment extends BaseFragment{
         return new AboutFragment();
     }
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutResId() {
         return R.layout.fragment_personal_center_about;
     }
 
     @Override
-    protected void initViews(View view, Bundle savedInstanceState) {
+    protected void initView(View view,Bundle savedInstanceState) {
         mBackBtn = (ImageButton)view.findViewById(R.id.imgBtn_back);
         mTopBarTitle = (TextView)view.findViewById(R.id.tv_personal_title);
         mTopBarTitle.setText(mContext.getString(R.string.personal_center_more_about));
@@ -35,7 +35,7 @@ public class AboutFragment extends BaseFragment{
     protected void initData() {}
 
     @Override
-    protected void initEvents() {
+    protected void initListener() {
         mBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

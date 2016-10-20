@@ -1,21 +1,19 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 
 /**
- * Created by t_xuz on 8/25/16.
- *
+ * Created by t_xuz on 10/20/16.
+ * 项目详情
  */
-public class IssueListFragment extends BaseEnterpriseFragment {
+public class ProjectDetailsFragment extends BaseEnterpriseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_task_list_view;
+        return 0;
     }
 
     @Override

@@ -4,22 +4,17 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.ProjectListAdapter;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +23,14 @@ import java.util.List;
  * Created by t_xuz on 8/25/16.
  * 首页-项目列表
  */
-public class TaskListFragment extends BaseFragment implements ProjectListContract.View, ProjectListAdapter.ProjectListItemListener {
+public class TaskListFragment extends BaseEnterpriseFragment implements ProjectListContract.View, ProjectListAdapter.ProjectListItemListener {
 
     private RecyclerView mProjectListView;
     private ProjectListAdapter mProjectListAdapter;
     private ProjectListContract.Presenter mProjectListPresenter;
 
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutResId() {
         return R.layout.fragment_task_list_view;
     }
 
@@ -50,8 +45,8 @@ public class TaskListFragment extends BaseFragment implements ProjectListContrac
     }
 
     @Override
-    protected void initViews(View view, Bundle savedInstanceState) {
-        mProjectListView = (RecyclerView) mContext.findViewById(R.id.rcy_task_list);
+    protected void initView(View view,Bundle savedInstanceState) {
+        mProjectListView = (RecyclerView) view.findViewById(R.id.rcy_task_list);
         //init recyclerView
         mProjectListView.setLayoutManager(new LinearLayoutManager(mContext));
         mProjectListView.setHasFixedSize(true);
@@ -59,10 +54,6 @@ public class TaskListFragment extends BaseFragment implements ProjectListContrac
         //init recyclerView adapter
         mProjectListAdapter = new ProjectListAdapter(new ArrayList<ProjectBean>(0), R.layout.listitem_task_list_view, mContext, this);
         mProjectListView.setAdapter(mProjectListAdapter);
-    }
-
-    @Override
-    protected void initEvents() {
     }
 
     /*

@@ -6,25 +6,25 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 
 /**
  * Created by t_xuz on 8/31/16.
  * 个人中心主fragment
  */
-public class PersonalMainFragment extends BaseFragment implements View.OnClickListener {
+public class PersonalMainFragment extends BaseEnterpriseFragment implements View.OnClickListener {
 
     private ImageButton mHeadPicBtn;
     private TextView mPersonalProject;
     private TextView mPersonalMore;
 
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutResId() {
         return R.layout.fragment_personal_center_main;
     }
 
     @Override
-    protected void initViews(View view, Bundle savedInstanceState) {
+    protected void initView(View view,Bundle savedInstanceState) {
         mPersonalProject = (TextView) view.findViewById(R.id.tv_personal_project);
         mPersonalMore = (TextView) view.findViewById(R.id.tv_personal_more);
         mHeadPicBtn = (ImageButton) view.findViewById(R.id.imgBtn_personal_headPic);
@@ -35,7 +35,7 @@ public class PersonalMainFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
-    protected void initEvents() {
+    protected void initListener() {
         mHeadPicBtn.setOnClickListener(this);
         mPersonalProject.setOnClickListener(this);
         mPersonalMore.setOnClickListener(this);

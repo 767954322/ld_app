@@ -98,7 +98,7 @@ public class EnterpriseServerHttpManager {
                 return header;
             }
         };
-        NetRequestManager.getInstance().addRequest(requestTag,okRequest);
+        NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 
 
@@ -129,10 +129,11 @@ public class EnterpriseServerHttpManager {
     * */
     public void getProjectDetails(final long pid,
                                   final String token,
+                                  final boolean isTaskDetail,
                                   OkJsonRequest.OKResponseCallback callback) {
         String url = Constants.BASE_URL + "/projects"
                 + "/" + pid
-                + "?task_data=true";
+                + "?task_data=" + isTaskDetail;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

@@ -16,14 +16,14 @@ import android.widget.TextView;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseFragment;
+import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 
 /**
  * Created by t_xuz on 8/30/16.
  * 我页--更多页面
  */
-public class MoreFragment extends BaseFragment implements View.OnClickListener{
+public class MoreFragment extends BaseEnterpriseFragment implements View.OnClickListener{
 
     private TextView mMoreTitle;
     private TextView mClearCache;
@@ -36,12 +36,12 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener{
         return new MoreFragment();
     }
     @Override
-    protected int getLayoutId() {
+    protected int getLayoutResId() {
         return R.layout.fragment_personal_center_more;
     }
 
     @Override
-    protected void initViews(View view, Bundle savedInstanceState) {
+    protected void initView(View view,Bundle savedInstanceState) {
         mBackBtn = (ImageButton)view.findViewById(R.id.imgBtn_back);
         mClearCache = (TextView)view.findViewById(R.id.tv_clear_cache);
         mAboutApp = (TextView)view.findViewById(R.id.tv_about_app);
@@ -55,7 +55,7 @@ public class MoreFragment extends BaseFragment implements View.OnClickListener{
     protected void initData() {}
 
     @Override
-    protected void initEvents() {
+    protected void initListener() {
         mClearCache.setOnClickListener(this);
         mAboutApp.setOnClickListener(this);
         mLogoutApp.setOnClickListener(this);

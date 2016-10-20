@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
 import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.LoadDataCallback;
+import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
 
 /**
  * Created by t_xuz on 10/17/16.

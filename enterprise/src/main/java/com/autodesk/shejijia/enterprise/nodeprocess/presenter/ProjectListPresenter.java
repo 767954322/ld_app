@@ -10,9 +10,8 @@ import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.LoadDataCallback;
+import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.enterprise.nodeprocess.data.ProjectRepository;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.source.ProjectDataSource;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.NodeDetailsActivity;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;
 

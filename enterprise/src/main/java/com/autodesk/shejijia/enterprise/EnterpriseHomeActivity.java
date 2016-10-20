@@ -10,22 +10,13 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.android.volley.VolleyError;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
-import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.common.entity.NodeBean;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.BaseEnterpriseHomeActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.pgyersdk.update.PgyUpdateManager;
-
-import org.json.JSONObject;
 
 public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener, View.OnClickListener {
 
@@ -43,7 +34,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     private MemberEntity mMemberEntity;//用户信息
 
     @Override
-    protected int getContentViewId() {
+    protected int getLayoutResId() {
         return R.layout.activity_enterprise_main;
     }
 
@@ -59,7 +50,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     }
 
     @Override
-    protected void initViews() {
+    protected void initView() {
         //bottomBar
         mTaskBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_task);
         mIssueBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_issue);
@@ -73,7 +64,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     }
 
     @Override
-    protected void initEvents() {
+    protected void initListener() {
         //init RadioBtn Event
         mProjectGroup.setOnCheckedChangeListener(this);
         mTaskBtn.setChecked(true);
@@ -134,69 +125,6 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         mProjectDate.setText("8月8日");
     }
 
-    private void getProjectLists(final long uid,
-                                 final int project_status,
-                                 final int limit,
-                                 final int offset,
-                                 final String token) {
-        OkJsonRequest.OKResponseCallback callbackResult = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                LogUtils.e("projects-->", jsonObject.toString());
-                String result = GsonUtil.jsonToString(jsonObject);
-                ProjectListBean projectListBean = GsonUtil.jsonToBean(result, ProjectListBean.class);
-                //获取项目列表
-
-            }
-        };
-        EnterpriseServerHttpManager.getInstance().getProjectLists(offset, limit, token, callbackResult);
-    }
-
-    private void getPlanDetails(final long pid,
-                                final String token) {
-        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-            }
-        };
-
-        EnterpriseServerHttpManager.getInstance().getPlanDetails(pid, token, callback);
-    }
-
-
-    private void getTaskDetails(final long pid,
-                                final String tid,
-                                final String token) {
-
-        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-
-                String result = GsonUtil.jsonToString(jsonObject);
-                NodeBean nodeBean = GsonUtil.jsonToBean(result, NodeBean.class);
-
-                LogUtils.e("TaskDetails", nodeBean.toString());
-
-            }
-        };
-        EnterpriseServerHttpManager.getInstance().getTaskDetails(pid, tid, token, callback);
-    }
 
 }
 

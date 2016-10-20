@@ -7,49 +7,23 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
-import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.pgyersdk.feedback.PgyFeedbackShakeManager;
-import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.views.PgyerDialog;
 
 /**
  * Created by t_xuz on 8/15/16.
  *
  */
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseEnterpriseActivity extends BaseActivity{
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(getContentViewId());
         //注册蒲公英
         registerPgy();
-
-        initData(savedInstanceState);
-
-        initViews();
-
-        initEvents();
-    }
-
-    protected abstract int getContentViewId();
-
-    protected abstract void initData(Bundle savedInstanceState);
-
-    protected abstract void initViews();
-
-    protected abstract void initEvents();
-
-    @Override
-    public Resources getResources() {
-        Resources res = super.getResources();
-        Configuration config = new Configuration();
-        config.setToDefaults();
-        res.updateConfiguration(config, res.getDisplayMetrics());
-        return res;
     }
 
     private void registerPgy(){
@@ -82,11 +56,11 @@ public abstract class BaseActivity extends AppCompatActivity{
         PgyFeedbackShakeManager.setShakingThreshold(1000);
 
         // Open as a dialog
-        PgyFeedbackShakeManager.register(BaseActivity.this);
+        PgyFeedbackShakeManager.register(BaseEnterpriseActivity.this);
 
         // 以页面的形式展示反馈页面有点丑,屏蔽
         //  Open as an Activity, in the case you must configure FeedbackActivity in the file of AndroidManifest.xml
-//        PgyFeedbackShakeManager.register(BaseActivity.this, false);
+//        PgyFeedbackShakeManager.register(Base Activity.this, false);
 
     }
 

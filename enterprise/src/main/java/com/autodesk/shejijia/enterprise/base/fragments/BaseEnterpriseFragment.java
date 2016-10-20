@@ -8,45 +8,60 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.autodesk.shejijia.enterprise.base.activitys.BaseActivity;
-import com.autodesk.shejijia.enterprise.nodeprocess.BaseView;
+import com.autodesk.shejijia.enterprise.base.BaseView;
+import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
 
 /**
  * Created by t_xuz on 8/15/16.
  *
  */
-public abstract class BaseFragment extends Fragment implements BaseView{
+public abstract class BaseEnterpriseFragment extends Fragment implements BaseView{
 
-    protected BaseActivity mContext;
+    protected BaseEnterpriseActivity mContext;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = (BaseActivity) context;
+        mContext = (BaseEnterpriseActivity) context;
     }
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutId(),container,false);
+        return inflater.inflate(getLayoutResId(),container,false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews(view,savedInstanceState);
+        initView(view,savedInstanceState);
         initData();
-        initEvents();
+        initListener();
     }
 
-    protected abstract int getLayoutId();
+    /**
+     * 获取当前布局的id
+     *
+     * @return
+     */
+    protected abstract int getLayoutResId();
 
-    protected abstract void initViews(View view,Bundle savedInstanceState);
+    /**
+     * 查找控件
+     */
+    protected abstract void initView(View view,Bundle savedInstanceState);
 
+    /**
+     * 初始化数据
+     */
     protected abstract void initData();
 
-    protected abstract void initEvents();
+    /**
+     * 监听事件
+     */
+    protected void initListener() {
+    }
+
 
     @Override
     public void showNetError(String msg) {
