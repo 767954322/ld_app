@@ -182,9 +182,7 @@
                     android:id="@+id/tvc_measure_form_area"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:ems="10"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/font_15" />
 

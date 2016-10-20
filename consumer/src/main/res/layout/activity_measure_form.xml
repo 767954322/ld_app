@@ -168,9 +168,7 @@
                     android:id="@+id/tvc_measure_form_area"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:ems="10"
                     android:hint="@string/demand_room_area"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12" />
