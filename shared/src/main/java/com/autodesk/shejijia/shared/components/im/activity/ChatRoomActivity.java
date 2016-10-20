@@ -78,7 +78,6 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatEventH
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mIsToolViewOpen = false;
-        titleTextView.setMaxEms(20);//因为不知道修改公用的布局会不会有影响才在此处修改当前类的标题长度
     }
 
 

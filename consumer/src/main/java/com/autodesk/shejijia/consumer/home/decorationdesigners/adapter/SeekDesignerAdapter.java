@@ -55,7 +55,7 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
         nick_name = UIUtils.getNoDataIfEmpty(nick_name);
         avatar = UIUtils.getNoStringIfEmpty(avatar);
         following_count = TextUtils.isEmpty(following_count) ? "0" : following_count;
-        holder.setText(R.id.tv_seek_designer_name, nick_name);
+        holder.setText(R.id.tv_seek_designer_name, trimAndAddEllipsis(nick_name, 8));
         holder.setText(R.id.tv_attention_num, UIUtils.getString(R.string.attention_num) + following_count);
 
         PolygonImageView polygonImageView = holder.getView(R.id.piv_seek_designer_photo);
@@ -124,5 +124,12 @@ public class SeekDesignerAdapter extends CommonAdapter<SeekDesignerBean.Designer
 
     public void setOnItemChatClickListener(OnItemChatClickListener mOnItemChatClickListener) {
         this.mOnItemChatClickListener = mOnItemChatClickListener;
+    }
+
+    public String trimAndAddEllipsis(String original, int maxCharacters) {
+        if (original.length() > maxCharacters)
+            return original.substring(0, maxCharacters) + "…";
+        else
+            return original;
     }
 }

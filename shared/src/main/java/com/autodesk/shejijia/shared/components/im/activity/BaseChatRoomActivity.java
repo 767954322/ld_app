@@ -134,7 +134,7 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
 
             }else {
 
-                setTitleForNavbar(trimAndAddEllipsis(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName),3));
+                setTitleForNavbar(trimAndAddEllipsis(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName),8));
 
             }
 
