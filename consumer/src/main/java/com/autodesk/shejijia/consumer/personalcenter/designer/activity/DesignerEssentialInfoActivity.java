@@ -184,7 +184,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
                 district_name = "";
             }
-            tvLocation.setText(province_name + city_name + district_name);
+            tvLocation.setText(province_name + " " + city_name + " " + district_name);
         }
 
         if (mConsumerEssentialInfoEntity.getMobile_number() == null || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 0 || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 2)
