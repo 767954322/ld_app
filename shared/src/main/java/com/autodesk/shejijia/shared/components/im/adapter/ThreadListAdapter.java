@@ -233,7 +233,7 @@ public class ThreadListAdapter extends BaseAdapter
             if (assetName != null && !assetName.isEmpty())
             {
                 assetName = trimAndAddEllipsis(assetName, kMaxAssetNameLength);
-                userName = trimAndAddEllipsis(assetName, kMaxUserName);
+                userName = trimAndAddEllipsis(userName, kMaxUserName);
                 displayName = userName + "/" + assetName;
             }
             else
