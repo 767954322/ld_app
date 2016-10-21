@@ -15,17 +15,19 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AppraiseDesignerActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.DeliveryDelayBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPThreeDimensBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanDelivery;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
+import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -64,6 +66,8 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
 
 
     private List<MPFileBean> mFiles;
+    private String mRenderMap;
+    private MPDesignContractBean mDesignContractEntity;
 
 
     @Override
@@ -113,6 +117,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
         wk_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
         community_name = requirement.getCommunity_name();
         mTvCommunityName.setText(community_name);
+
+        getRenderMap();
+
 
         /// [1]节点33，设计师尚未上传交付物，mDeliveryBean为null，提示：消费者等待，设计师上传 .
         /// [2]如果mDeliveryBean不为null，说明已经设计师已经上传了交付物，消费者可以查看，需要隐藏延期及确认按钮.
@@ -976,22 +983,32 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
      */
     private void changeSubmitOkState() {
         cancelSubmit();
-        if (DeliverySelector.select_design_file_id_map.size() < 4) {
+        if (DeliverySelector.select_design_file_id_map.size() < 3) {
             return;
         }
         m3DStrings = DeliverySelector.select_design_file_id_map.get(0);
         mRenderingStrings = DeliverySelector.select_design_file_id_map.get(1);
         mBlueprintStrings = DeliverySelector.select_design_file_id_map.get(2);
         mMaterialBillStrings = DeliverySelector.select_design_file_id_map.get(3);
-
-        if (m3DStrings != null && m3DStrings.size() > 0
-                && mRenderingStrings != null && mRenderingStrings.size() > 0
-                && mBlueprintStrings != null && mBlueprintStrings.size() > 0
-                && mMaterialBillStrings != null && mMaterialBillStrings.size() > 0) {
-            sureSubmit();
+        if ((StringUtils.isEmpty(mRenderMap) || "0".equalsIgnoreCase(mRenderMap))) {
+            if (m3DStrings != null && m3DStrings.size() > 0
+                    && mBlueprintStrings != null && mBlueprintStrings.size() > 0
+                    && mMaterialBillStrings != null && mMaterialBillStrings.size() > 0) {
+                sureSubmit();
+            } else {
+                cancelSubmit();
+            }
         } else {
-            cancelSubmit();
+            if (m3DStrings != null && m3DStrings.size() > 0
+                    && mRenderingStrings != null && mRenderingStrings.size() > 0
+                    && mBlueprintStrings != null && mBlueprintStrings.size() > 0
+                    && mMaterialBillStrings != null && mMaterialBillStrings.size() > 0) {
+                sureSubmit();
+            } else {
+                cancelSubmit();
+            }
         }
+
     }
 
     /**
@@ -1334,6 +1351,22 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * 获取设计合同中的渲染图数量
+     */
+    public void getRenderMap() {
+        if (mBidders.size() >= 0) {
+            mDesignContractEntity = mBidders.get(0).getDesign_contract();
+            if (null != mDesignContractEntity) {
+                String contractData = mDesignContractEntity.getContract_data();
+                String str = contractData.toString().replace("@jr@", "\"");                  /// 由于合同内容中不能含有特殊字符，所以把“'”用@jr@代替 .
+                MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
+                mRenderMap = designContractBean.getRender_map();
+
+            }
         }
     }
 }
