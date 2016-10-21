@@ -247,7 +247,7 @@ public class OrderCommonFragment extends BaseFragment {
             holder.setText(R.id.tv_designer_order_house_type, house_type_convert);
             holder.setText(R.id.tv_designer_order_house_style, decoration_style_convert);
             holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(consumer_name));
-            holder.setText(R.id.tv_designer_order_community, "/" + UIUtils.getNoStringIfEmpty(consumer_name));
+            holder.setText(R.id.tv_designer_order_community, "/" + UIUtils.getNoStringIfEmpty(community_name));
             holder.setText(R.id.tv_address, address);
             holder.setText(R.id.tv_customer_name, UIUtils.getNoStringIfEmpty(consumer_name));
 
