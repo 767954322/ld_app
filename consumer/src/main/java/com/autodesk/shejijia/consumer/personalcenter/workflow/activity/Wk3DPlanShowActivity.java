@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPFileBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.Wk3DPlanListBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.gallerywidget.BasePagerAdapter;
+import com.autodesk.shejijia.shared.components.common.uielements.gallerywidget.GalleryViewPager;
 import com.autodesk.shejijia.shared.components.common.uielements.gallerywidget.UrlPagerAdapter;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -33,7 +34,7 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
 
     ArrayList<MPFileBean> mMPFileBeans = new ArrayList<>();
     ArrayList<MPDesignFileBean> mMPDesignFileBeans = new ArrayList<>();
-    private ViewPager mVpShowPager;
+    private GalleryViewPager mVpShowPager;
     List<String> mLinkList = new ArrayList<>();
     private UrlPagerAdapter mUrlPagerAdapter;
     private TextView tv_nav_left_textView;
@@ -51,7 +52,7 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
         super.initView();
 //        iv_image_show = (MPFileHotspotView) findViewById(iv_image_show);
         tv_nav_left_textView = (TextView) findViewById(R.id.nav_left_textView);
-        mVpShowPager = (ViewPager) findViewById(R.id.vp_show_pager);
+        mVpShowPager = (GalleryViewPager) findViewById(R.id.vp_show_pager);
     }
 
     @Override
