@@ -124,11 +124,7 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".personalcenter.consumer.activity.MessageCenterDetailActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".personalcenter.consumer.activity.ConsumerEssentialInfoActivity"
             android:alwaysRetainTaskState="true"
@@ -201,6 +197,11 @@
         <!--我的推荐下内容-->
         <activity
             android:name=".personalcenter.recommend.activity.MyRecommendActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".personalcenter.recommend.activity.NewInventoryActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>

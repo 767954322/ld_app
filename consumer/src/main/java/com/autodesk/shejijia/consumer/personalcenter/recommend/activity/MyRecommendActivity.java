@@ -91,7 +91,8 @@ public class MyRecommendActivity extends NavigationBarActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav_right_textView:
-                ToastUtil.showCustomToast(this, "新建清单");
+                Intent intent = new Intent(MyRecommendActivity.this,NewInventoryActivity.class);
+                startActivity(intent);
                 break;
         }
     }

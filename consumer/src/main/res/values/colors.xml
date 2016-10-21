@@ -7,4 +7,5 @@
 
     <color name="mybid_text_color_normal">@color/bg_33</color>
     <color name="mybid_text_color_light">@color/bg_99</color>
+    <color name="common_line_color">#e2e4e5</color>
 </resources>

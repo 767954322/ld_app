@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/activity_new_inventory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/common_navbar"
+            layout="@layout/view_navigation_header" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:background="@color/bgColor_actionsheet_cancel_nor"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/new_inventory_select_project"
+                android:textColor="@color/text_item_name"
+                android:textSize="@dimen/font_13" />
+
+            <TextView
+                android:id="@+id/tv_new_inventory_project_name"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:hint="@string/new_inventory_please_select_project"
+                android:textColor="@color/bg_99"
+                android:textSize="@dimen/font_13" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_unfold_normal" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/common_line_color"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:background="@color/bgColor_actionsheet_cancel_nor"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/new_inventory_member_account"
+                android:textColor="@color/text_item_name"
+                android:textSize="@dimen/font_13" />
+
+            <EditText
+                android:id="@+id/et_new_inventory_member_account"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:background="@color/no_color"
+                android:gravity="center_vertical"
+                android:hint="@string/new_inventory_please_input_member_account"
+                android:textColor="@color/bg_99"
+                android:textSize="@dimen/font_13" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/common_line_color"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:background="@color/bgColor_actionsheet_cancel_nor"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/new_inventory_name"
+                android:textColor="@color/text_item_name"
+                android:textSize="@dimen/font_13" />
+
+            <EditText
+                android:id="@+id/et_new_inventory_name"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:gravity="center_vertical"
+                android:hint="@string/new_inventory_please_input_name"
+                android:textColor="@color/bg_99"
+                android:textSize="@dimen/font_13" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/common_line_color"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:background="@color/bgColor_actionsheet_cancel_nor"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/new_inventory_phone_number"
+                android:textColor="@color/text_item_name"
+                android:textSize="@dimen/font_13" />
+
+            <EditText
+                android:id="@+id/et_new_inventory_phone_number"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:inputType="phone"
+                android:gravity="center_vertical"
+                android:hint="@string/new_inventory_please_input_phone_number"
+                android:textColor="@color/bg_99"
+                android:textSize="@dimen/font_13" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/common_line_color"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:background="@color/bgColor_actionsheet_cancel_nor"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/new_inventory_project_address"
+                android:textColor="@color/text_item_name"
+                android:textSize="@dimen/font_13" />
+
+            <EditText
+                android:id="@+id/et_new_inventory_project_address"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:gravity="center_vertical"
+                android:hint="@string/new_inventory_please_input_project_address"
+                android:textColor="@color/bg_99"
+                android:textSize="@dimen/font_13" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/icon_unfold_normal" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/common_line_color"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:background="@color/bgColor_actionsheet_cancel_nor"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/new_inventory_community_name"
+                android:textColor="@color/text_item_name"
+                android:textSize="@dimen/font_13" />
+
+            <EditText
+                android:id="@+id/et_new_inventory_community_name"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:gravity="center_vertical"
+                android:hint="@string/new_inventory_please_input_community_name"
+                android:textColor="@color/bg_99"
+                android:textSize="@dimen/font_13" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/common_line_color"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:background="@color/bgColor_actionsheet_cancel_nor"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/size_15"
+            android:paddingRight="@dimen/size_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/new_inventory_detailed_address"
+                android:textColor="@color/text_item_name"
+                android:textSize="@dimen/font_13" />
+
+            <EditText
+                android:id="@+id/et_new_inventory_detailed_address"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/no_color"
+                android:gravity="center_vertical"
+                android:hint="@string/new_inventory_please_input_detailed_address"
+                android:textColor="@color/bg_99"
+                android:textSize="@dimen/font_13" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/common_line_color"></View>
+
+        <Button
+            android:id="@+id/btn_new_inventory_next"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginLeft="@dimen/size_15"
+            android:layout_marginRight="@dimen/size_15"
+            android:layout_marginTop="@dimen/size_60"
+            android:background="@drawable/bg_common_btn_gray"
+            android:text="@string/new_inventory_next"
+            android:textColor="@color/bg_ff"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</ScrollView>

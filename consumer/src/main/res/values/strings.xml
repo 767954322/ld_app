@@ -670,6 +670,22 @@
     <string name="consumer_more">更多</string>
     <string name="designer_personal">个人中心</string>
     <string name="personal_recommend">我的推荐</string>
+    <string name="personal_new_inventory">新建清单</string>
+    <string name="new_inventory_select_project">选择项目&#160;:&#160;</string>
+    <string name="new_inventory_please_select_project">请选择项目</string>
+    <string name="new_inventory_member_account">会员帐号&#160;:&#160;</string>
+    <string name="new_inventory_please_input_member_account">请输入手机/邮箱/会员卡号</string>
+    <string name="new_inventory_name">客户姓名&#160;:&#160;</string>
+    <string name="new_inventory_please_input_name">请输入客户姓名</string>
+    <string name="new_inventory_phone_number">手机号码&#160;:&#160;</string>
+    <string name="new_inventory_please_input_phone_number">请输入手机号码</string>
+    <string name="new_inventory_project_address">项目地址&#160;:&#160;</string>
+    <string name="new_inventory_please_input_project_address">请输入项目地址</string>
+    <string name="new_inventory_community_name">小区名称&#160;:&#160;</string>
+    <string name="new_inventory_please_input_community_name">请输入小区名称</string>
+    <string name="new_inventory_detailed_address">详细地址&#160;:&#160;</string>
+    <string name="new_inventory_please_input_detailed_address">请填写到楼层和门牌号</string>
+    <string name="new_inventory_next">下一步</string>
 
 
     <!-- DecorationBeiShuFragment -->
