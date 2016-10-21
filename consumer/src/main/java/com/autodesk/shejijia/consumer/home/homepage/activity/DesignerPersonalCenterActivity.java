@@ -28,7 +28,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActi
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyPropertyActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.MyRecommendActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.MyRecommendActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;

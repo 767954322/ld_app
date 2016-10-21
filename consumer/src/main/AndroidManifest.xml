@@ -200,7 +200,7 @@
 
         <!--我的推荐下内容-->
         <activity
-            android:name=".personalcenter.recommend.MyRecommendActivity"
+            android:name=".personalcenter.recommend.activity.MyRecommendActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>

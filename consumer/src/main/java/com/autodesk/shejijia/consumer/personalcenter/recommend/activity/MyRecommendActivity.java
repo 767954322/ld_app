@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.consumer.personalcenter.recommend;
+package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
 import android.content.Context;
 import android.content.Intent;
