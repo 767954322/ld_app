@@ -5,8 +5,10 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
+import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.pgyersdk.feedback.PgyFeedbackShakeManager;
@@ -29,23 +31,9 @@ public abstract class BaseEnterpriseActivity extends BaseActivity{
     private void registerPgy(){
         //crash注册
         PgyCrashManager.register(this);
-        //version update
-//        PgyUpdateManager.register(this); //放在主页里(projectListActivity)提示version update
         //设置反馈页面dialog的风格,符合app
         PgyerDialog.setDialogTitleBackgroundColor("#2B77C1");
         PgyerDialog.setDialogTitleTextColor("#ffffff");
-    }
-
-    //返回键事件监听
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-       /* if (KeyEvent.KEYCODE_BACK == keyCode) {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-                finish();
-                return true;
-            }
-        }*/
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -57,10 +45,6 @@ public abstract class BaseEnterpriseActivity extends BaseActivity{
 
         // Open as a dialog
         PgyFeedbackShakeManager.register(BaseEnterpriseActivity.this);
-
-        // 以页面的形式展示反馈页面有点丑,屏蔽
-        //  Open as an Activity, in the case you must configure FeedbackActivity in the file of AndroidManifest.xml
-//        PgyFeedbackShakeManager.register(Base Activity.this, false);
 
     }
 

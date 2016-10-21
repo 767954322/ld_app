@@ -41,11 +41,11 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     }
 
     @Override
-    protected void initView(View view,Bundle savedInstanceState) {
-        mTopBarTitle = (TextView) view.findViewById(R.id.tv_personal_title);
-        mScreenBtn = (ImageButton) view.findViewById(R.id.imgBtn_screen);
-        mBackBtn = (ImageButton) view.findViewById(R.id.imgBtn_back);
-        mProjectListView = (RecyclerView) view.findViewById(R.id.rcy_project_list);
+    protected void initView() {
+        mTopBarTitle = (TextView) rootView.findViewById(R.id.tv_personal_title);
+        mScreenBtn = (ImageButton) rootView.findViewById(R.id.imgBtn_screen);
+        mBackBtn = (ImageButton) rootView.findViewById(R.id.imgBtn_back);
+        mProjectListView = (RecyclerView) rootView.findViewById(R.id.rcy_project_list);
         mTopBarTitle.setText(getString(R.string.personal_center_completed_project));
         //init recyclerView
         mProjectListView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -56,9 +56,9 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(mContext, this);
-    String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_STATUS, null, Constants.PROJECT_STATUS_COMPLETE, false, 0);
-    mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
-}
+        String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_STATUS, null, Constants.PROJECT_STATUS_COMPLETE, false, 0);
+        mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
+    }
 
     @Override
     protected void initListener() {

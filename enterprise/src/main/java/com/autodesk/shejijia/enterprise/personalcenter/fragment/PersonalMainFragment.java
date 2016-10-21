@@ -24,10 +24,10 @@ public class PersonalMainFragment extends BaseEnterpriseFragment implements View
     }
 
     @Override
-    protected void initView(View view,Bundle savedInstanceState) {
-        mPersonalProject = (TextView) view.findViewById(R.id.tv_personal_project);
-        mPersonalMore = (TextView) view.findViewById(R.id.tv_personal_more);
-        mHeadPicBtn = (ImageButton) view.findViewById(R.id.imgBtn_personal_headPic);
+    protected void initView() {
+        mPersonalProject = (TextView) rootView.findViewById(R.id.tv_personal_project);
+        mPersonalMore = (TextView) rootView.findViewById(R.id.tv_personal_more);
+        mHeadPicBtn = (ImageButton) rootView.findViewById(R.id.imgBtn_personal_headPic);
     }
 
     @Override

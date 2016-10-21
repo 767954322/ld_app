@@ -19,7 +19,7 @@ public class IssueListFragment extends BaseEnterpriseFragment {
     }
 
     @Override
-    protected void initView(View view,Bundle savedInstanceState) {
+    protected void initView() {
 
     }
 

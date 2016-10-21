@@ -3,6 +3,10 @@ package com.autodesk.shejijia.enterprise;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -18,19 +22,16 @@ import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLogi
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.pgyersdk.update.PgyUpdateManager;
 
-public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener, View.OnClickListener {
+public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener {
 
     //RadioButton
     private RadioButton mTaskBtn;
     private RadioButton mIssueBtn;
     private RadioButton mSessionBtn;
     //RadioGroup
-    private RadioGroup mProjectGroup;
+    private RadioGroup mBottomGroup;
     //topBar
-    private TextView mProjectDate;
-    private ImageButton mPersonalCenter;
-    private ImageButton mSearchBtn; //搜索
-    private ImageButton mScreenBtn; //筛选
+    private Toolbar toolbar;
     private MemberEntity mMemberEntity;//用户信息
 
     @Override
@@ -55,24 +56,20 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         mTaskBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_task);
         mIssueBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_issue);
         mSessionBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_session);
-        mProjectGroup = (RadioGroup) this.findViewById(R.id.rdoGrp_project_list);
-        //topBar
-        mProjectDate = (TextView) this.findViewById(R.id.tv_project_date);
-        mScreenBtn = (ImageButton) this.findViewById(R.id.imgBtn_screen);
-        mSearchBtn = (ImageButton) this.findViewById(R.id.imgBtn_search);
-        mPersonalCenter = (ImageButton) this.findViewById(R.id.imgBtn_personal_center);
+        mBottomGroup = (RadioGroup) this.findViewById(R.id.rdoGrp_project_list);
+        //toolBar
+        toolbar = (Toolbar)this.findViewById(R.id.toolbar_topBar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     @Override
     protected void initListener() {
         //init RadioBtn Event
-        mProjectGroup.setOnCheckedChangeListener(this);
+        mBottomGroup.setOnCheckedChangeListener(this);
         mTaskBtn.setChecked(true);
-        //init TopBar Event
-        mPersonalCenter.setOnClickListener(this);
-        mScreenBtn.setOnClickListener(this);
-        mSearchBtn.setOnClickListener(this);
-        mProjectDate.setOnClickListener(this);
 
         //version update
         PgyUpdateManager.register(this);
@@ -84,8 +81,12 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         switch (checkId) {
             case R.id.rdoBtn_project_task:
                 changeFragment(Constants.TASK_LIST_FRAGMENT, 0);
-                //init topBar status
-                initViewsData();
+                //init toolbar
+                // 显示导航按钮
+                toolbar.setNavigationIcon(R.mipmap.default_head);
+                // 显示标题
+                toolbar.setTitle(R.string.toolbar_title);
+                toolbar.setTitleTextColor(getResources().getColor(R.color.white));
                 break;
             case R.id.rdoBtn_project_issue:
                 changeFragment(Constants.ISSUE_LIST_FRAGMENT, 1);
@@ -94,13 +95,21 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
                 changeFragment(Constants.GROUP_CHAT_FRAGMENT, 2);
                 break;
         }
+        //会自动执行onPrepareOptionsMenu，用来管理不同fragment下的menu。
+        invalidateOptionsMenu();
     }
 
     @Override
-    public void onClick(View view) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_activity_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = null;
-        switch (view.getId()){
-            case R.id.imgBtn_personal_center:
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 if (mMemberEntity != null) {
                     intent = new Intent(this, PersonalCenterActivity.class);
                     startActivity(intent);
@@ -109,20 +118,22 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
                     startActivity(intent);
                 }
                 break;
-            case R.id.imgBtn_screen:
+            case R.id.home_toolbar_search:
 
                 break;
-            case R.id.imgBtn_search:
+            case R.id.home_toolbar_screen:
 
                 break;
-            case R.id.tv_project_date:
-
-                break;
+            default:
+               break;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    private void initViewsData(){
-        mProjectDate.setText("8月8日");
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
     }
 
 

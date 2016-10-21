@@ -45,14 +45,14 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
     }
 
     @Override
-    protected void initView(View view,Bundle savedInstanceState) {
-        mProjectListView = (RecyclerView) view.findViewById(R.id.rcy_task_list);
+    protected void initView() {
+        mProjectListView = (RecyclerView) rootView.findViewById(R.id.rcy_task_list);
         //init recyclerView
         mProjectListView.setLayoutManager(new LinearLayoutManager(mContext));
         mProjectListView.setHasFixedSize(true);
         mProjectListView.setItemAnimator(new DefaultItemAnimator());
         //init recyclerView adapter
-        mProjectListAdapter = new ProjectListAdapter(new ArrayList<ProjectBean>(0), R.layout.listitem_task_list_view, mContext, this);
+        mProjectListAdapter = new ProjectListAdapter(new ArrayList<ProjectBean>(0), R.layout.listitem_task_list_view, activity, this);
         mProjectListView.setAdapter(mProjectListAdapter);
     }
 

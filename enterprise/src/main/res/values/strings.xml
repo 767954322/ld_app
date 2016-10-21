@@ -29,4 +29,10 @@
     <string name="personal_center_more_about">关于APP</string>
     <string name="personal_center_more_logout">退出登陆</string>
 
+    <!-- toolBar menu text-->
+    <string name="menu_search">搜索</string>
+    <string name="menu_screen">筛选</string>
+    <string name="toolbar_title">今日任务</string>
+
+
 </resources>

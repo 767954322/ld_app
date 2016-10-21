@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,9 +27,9 @@ public class AboutFragment extends BaseEnterpriseFragment {
     }
 
     @Override
-    protected void initView(View view,Bundle savedInstanceState) {
-        mBackBtn = (ImageButton)view.findViewById(R.id.imgBtn_back);
-        mTopBarTitle = (TextView)view.findViewById(R.id.tv_personal_title);
+    protected void initView() {
+        mBackBtn = (ImageButton)rootView.findViewById(R.id.imgBtn_back);
+        mTopBarTitle = (TextView)rootView.findViewById(R.id.tv_personal_title);
         mTopBarTitle.setText(mContext.getString(R.string.personal_center_more_about));
     }
 
@@ -43,4 +45,5 @@ public class AboutFragment extends BaseEnterpriseFragment {
             }
         });
     }
+
 }

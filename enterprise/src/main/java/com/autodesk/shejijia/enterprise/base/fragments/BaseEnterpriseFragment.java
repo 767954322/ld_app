@@ -10,12 +10,13 @@ import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.base.BaseView;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
+import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 /**
  * Created by t_xuz on 8/15/16.
  *
  */
-public abstract class BaseEnterpriseFragment extends Fragment implements BaseView{
+public abstract class BaseEnterpriseFragment extends BaseFragment implements BaseView{
 
     protected BaseEnterpriseActivity mContext;
 
@@ -24,44 +25,6 @@ public abstract class BaseEnterpriseFragment extends Fragment implements BaseVie
         super.onAttach(context);
         mContext = (BaseEnterpriseActivity) context;
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutResId(),container,false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initView(view,savedInstanceState);
-        initData();
-        initListener();
-    }
-
-    /**
-     * 获取当前布局的id
-     *
-     * @return
-     */
-    protected abstract int getLayoutResId();
-
-    /**
-     * 查找控件
-     */
-    protected abstract void initView(View view,Bundle savedInstanceState);
-
-    /**
-     * 初始化数据
-     */
-    protected abstract void initData();
-
-    /**
-     * 监听事件
-     */
-    protected void initListener() {
-    }
-
 
     @Override
     public void showNetError(String msg) {

@@ -41,12 +41,12 @@ public class MoreFragment extends BaseEnterpriseFragment implements View.OnClick
     }
 
     @Override
-    protected void initView(View view,Bundle savedInstanceState) {
-        mBackBtn = (ImageButton)view.findViewById(R.id.imgBtn_back);
-        mClearCache = (TextView)view.findViewById(R.id.tv_clear_cache);
-        mAboutApp = (TextView)view.findViewById(R.id.tv_about_app);
-        mLogoutApp = (TextView)view.findViewById(R.id.tv_logout_app);
-        mMoreTitle = (TextView)view.findViewById(R.id.tv_personal_title);
+    protected void initView() {
+        mBackBtn = (ImageButton)rootView.findViewById(R.id.imgBtn_back);
+        mClearCache = (TextView)rootView.findViewById(R.id.tv_clear_cache);
+        mAboutApp = (TextView)rootView.findViewById(R.id.tv_about_app);
+        mLogoutApp = (TextView)rootView.findViewById(R.id.tv_logout_app);
+        mMoreTitle = (TextView)rootView.findViewById(R.id.tv_personal_title);
 
         mMoreTitle.setText(getString(R.string.personal_center_more));
     }

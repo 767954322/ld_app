@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <include layout="@layout/activity_enterprise_main_topbar"/>
+    <include layout="@layout/toolbar_topbar_view"/>
 
     <include layout="@layout/activity_enterprise_main_content"/>
 
