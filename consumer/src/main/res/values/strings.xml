@@ -665,8 +665,11 @@
     <string name="title_fitment">发布装修需求</string>
     <string name="my_family_order">我的装修项目</string>
     <string name="message_center">消息中心</string>
+    <string name="recommend_listing">我的推荐清单</string>
     <string name="consumer_more">更多</string>
     <string name="designer_personal">个人中心</string>
+    <string name="personal_recommend">我的推荐</string>
+
 
     <!-- DecorationBeiShuFragment -->
     <string name="designer">设计师名字</string>

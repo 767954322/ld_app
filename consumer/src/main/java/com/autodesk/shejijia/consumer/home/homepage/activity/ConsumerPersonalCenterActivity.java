@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerE
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.MyRecommendActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -82,6 +83,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
         mRlPersonalSetting.setOnClickListener(this);
         mPolygonImageView.setOnClickListener(this);
         mDesignerAttention.setOnClickListener(this);
+        findViewById(R.id.rl_personal_recommend).setOnClickListener(this);
     }
 
     @Override
@@ -125,6 +127,10 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 } else {
                     LoginUtils.doLogin(this);
                 }
+                break;
+
+            case R.id.rl_personal_recommend: /// 我的关注 .
+                MyRecommendActivity.jumpTo(this, MyRecommendActivity.CONSUMER);
                 break;
         }
     }

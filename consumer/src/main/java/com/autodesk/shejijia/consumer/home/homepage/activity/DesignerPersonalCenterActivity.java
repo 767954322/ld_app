@@ -28,6 +28,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActi
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyPropertyActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.MyRecommendActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -122,6 +123,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
         mLlPersonalDesignerMsgCenter.setOnClickListener(this);
 
         mTvDesignerAttention.setOnClickListener(this);
+        findViewById(R.id.ll_personal_recommend).setOnClickListener(this);
     }
 
     /**
@@ -145,7 +147,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 } else {
                     mLlSetMeal.setVisibility(View.GONE);
                 }
-                Log.i("DesignerCenter","设计师个人信息接口时间："+(System.currentTimeMillis() - start));
+                Log.i("DesignerCenter", "设计师个人信息接口时间：" + (System.currentTimeMillis() - start));
             }
 
             @Override
@@ -304,6 +306,10 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             case R.id.ll_personal_designer_msg_center:/// 消息中心页面.
                 Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
                 startActivity(intent_messagecenter);
+                break;
+
+            case R.id.ll_personal_recommend:/// 消息中心页面.
+                MyRecommendActivity.jumpTo(this, MyRecommendActivity.DESIGNER);
                 break;
         }
     }

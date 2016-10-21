@@ -125,6 +125,11 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".personalcenter.consumer.activity.MessageCenterDetailActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".personalcenter.consumer.activity.ConsumerEssentialInfoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -192,6 +197,14 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
+
+        <!--我的推荐下内容-->
+        <activity
+            android:name=".personalcenter.recommend.MyRecommendActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".personalcenter.designer.activity.CertificationActivity"
             android:alwaysRetainTaskState="true"
