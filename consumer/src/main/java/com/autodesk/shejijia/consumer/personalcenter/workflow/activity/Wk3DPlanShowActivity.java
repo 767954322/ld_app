@@ -62,6 +62,8 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
         setCurrentTitle(getTitleData());
         mUrlPagerAdapter = new UrlPagerAdapter(this, mLinkList);
         mVpShowPager.setAdapter(new UrlPagerAdapter(this, mLinkList));
+
+
         mVpShowPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -77,10 +79,8 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
 
                 boolean isPositionAll = StringUtils.isEmpty(positionAll);
                 if (isPositionAll) {
-
                 } else {
                     title = String.format("%s/%s", mPosition, positionAll);
-
                 }
                 setCurrentTitle(title);
             }
@@ -130,6 +130,7 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
                 wk3DPlanListBean = (Wk3DPlanListBean) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
                 url = wk3DPlanListBean.getLink();
                 title = wk3DPlanListBean.getDesign_name();
+                mLinkList.add(url);
 
             } else if (Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS.equals(string)) {
                 mMPDesignFileBeans = (ArrayList<MPDesignFileBean>) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
@@ -143,6 +144,8 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
                 if (null != mMPDesignFileBeans && mMPDesignFileBeans.size() > 0 && mPosition <= mMPDesignFileBeans.size()) {
                     title = String.format("%s/%s", mPosition + 1, mMPDesignFileBeans.size());
                 }
+                mVpShowPager.setCurrentItem(mPosition);
+
             }
         } else {
             mMPFileBeans = (ArrayList<MPFileBean>) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
@@ -156,16 +159,9 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
             if (null != mMPFileBeans && mMPFileBeans.size() > 0 && mPosition <= mMPFileBeans.size()) {
                 title = String.format("%s/%s", mPosition + 1, mMPFileBeans.size());
             }
+            mVpShowPager.setCurrentItem(mPosition);
+
         }
-//        String str = url.substring(url.lastIndexOf('.') + 1);
-//        if (Constant.DocumentTypeKey.TYPE_PNG.equals(str) || Constant.DocumentTypeKey.TYPE_JPG.equals(str)) {
-//            iv_image_show.setVisibility(View.VISIBLE);
-//
-//            ImageUtils.displayIconImage(url, iv_image_show);
-//            iv_image_show.setEnableTouch(true);
-//        } else {
-//            setReflectIcon(iv_image_show, str);
-//        }
         return title;
     }
 

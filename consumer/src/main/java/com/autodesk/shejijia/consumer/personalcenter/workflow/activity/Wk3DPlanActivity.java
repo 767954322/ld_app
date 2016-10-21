@@ -195,6 +195,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
      * @param flag 是否提交
      */
     private void setSubmit3DPlanOnClickListener(final boolean flag) {
+
         mBtnSubmit3DPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
