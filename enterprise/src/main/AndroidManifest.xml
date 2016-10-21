@@ -83,7 +83,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".nodeprocess.ui.activity.NodeDetailsActivity"
+            android:name=".nodeprocess.ui.activity.TaskDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustPan"

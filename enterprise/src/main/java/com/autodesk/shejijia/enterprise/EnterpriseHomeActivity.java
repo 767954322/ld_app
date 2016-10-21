@@ -3,19 +3,15 @@ package com.autodesk.shejijia.enterprise;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.BaseEnterpriseHomeActivity;
+import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseHomeActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;

@@ -12,7 +12,7 @@ import java.util.List;
  * Created by t_xuz on 8/23/16.
  * task 每个节点的详情 (未调试)
  */
-public class NodeBean {
+public class TaskBean {
 
     private String docType;
     private String taskId;

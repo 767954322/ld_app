@@ -12,7 +12,7 @@ import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.enterprise.nodeprocess.data.ProjectRepository;
-import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.NodeDetailsActivity;
+import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.TaskDetailsActivity;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;
 
 import java.util.List;
@@ -66,7 +66,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter{
     @Override
     public void navigateToTaskDetail(List<Task> taskIdLists, int position) {
         ToastUtils.showShort((Activity)mContext,"node-details22"+position);
-        Intent intent = new Intent(mContext, NodeDetailsActivity.class);
+        Intent intent = new Intent(mContext, TaskDetailsActivity.class);
         intent.putExtra("taskId",taskIdLists.get(position).getTaskId());
         mContext.startActivity(intent);
     }

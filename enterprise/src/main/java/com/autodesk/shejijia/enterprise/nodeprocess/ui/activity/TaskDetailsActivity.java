@@ -9,7 +9,7 @@ import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
  * Created by t_xuz on 8/26/16.
  * 节点详情页面
  */
-public class NodeDetailsActivity extends BaseEnterpriseActivity {
+public class TaskDetailsActivity extends BaseEnterpriseActivity {
 
     @Override
     protected int getLayoutResId() {

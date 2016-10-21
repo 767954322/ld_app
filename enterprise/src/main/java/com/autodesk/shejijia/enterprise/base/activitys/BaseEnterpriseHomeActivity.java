@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.ui.activity;
+package com.autodesk.shejijia.enterprise.base.activitys;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

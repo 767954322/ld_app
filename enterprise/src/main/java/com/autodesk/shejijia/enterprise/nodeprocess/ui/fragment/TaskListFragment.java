@@ -34,14 +34,20 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
         return R.layout.fragment_task_list_view;
     }
 
+
+    @Override
+    protected void onFirstUserVisible() {
+
+
+
+    }
+
     @Override
     protected void initData() {
-
         mProjectListPresenter = new ProjectListPresenter(getActivity(), this);
         //get ProjectLists
         String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_DATE, "2016-08-08", null, false, 0);
         mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
-
     }
 
     @Override
