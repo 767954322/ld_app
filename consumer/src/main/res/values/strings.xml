@@ -483,6 +483,7 @@
     <string name="demand_project_types_title">房屋类型</string>
 
     <string name="demand_project_address">项目地址：</string>
+    <string name="address_details">详细地址：</string>
     <string name="consumer_decoration_buildtime">创建时间：</string>
     <string name="fitment_amend_demand">重新提交</string>
     <string name="fitment_stop_demand">终止</string>

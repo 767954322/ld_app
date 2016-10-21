@@ -60,6 +60,7 @@
     <color name="grey_white_9">#f7f7f9</color>
     <!-- chat colors -->
     <color name="color_blue_0888ff">#0888ff</color>
+    <color name="color_blue_0084ff">#0084ff</color>
     <color name="action_bar_tittle_color_555555">#555555</color>
     <color name="color_gray_d9d9d9">#d9d9d9</color>
 
