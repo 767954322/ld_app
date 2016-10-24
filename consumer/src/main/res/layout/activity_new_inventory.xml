@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,10 +32,12 @@
                 android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
 
-            <TextView
-                android:id="@+id/tv_new_inventory_project_name"
+            <EditText
+                android:id="@+id/et_new_inventory_project_name"
                 android:layout_width="@dimen/size_0"
                 android:layout_height="match_parent"
+                android:editable="false"
+                android:background="@color/no_color"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_select_project"
@@ -177,6 +180,7 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
+                android:editable="false"
                 android:hint="@string/new_inventory_please_input_project_address"
                 android:textColor="@color/bg_99"
                 android:textSize="@dimen/font_13" />
@@ -265,6 +269,7 @@
             android:layout_height="@dimen/size_40"
             android:layout_marginLeft="@dimen/size_15"
             android:layout_marginRight="@dimen/size_15"
+            android:focusable="false"
             android:layout_marginTop="@dimen/size_60"
             android:background="@drawable/bg_common_btn_gray"
             android:text="@string/new_inventory_next"

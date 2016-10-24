@@ -686,6 +686,11 @@
     <string name="new_inventory_detailed_address">详细地址&#160;:&#160;</string>
     <string name="new_inventory_please_input_detailed_address">请填写到楼层和门牌号</string>
     <string name="new_inventory_next">下一步</string>
+    <string name="new_inventory_input_right_name">请输入2-10个汉字的客户姓名</string>
+    <string name="new_inventory_input_right_phone_number">请输入正确格式的手机号码</string>
+    <string name="new_inventory_input_right_account_number">请输入正确格式的会员帐号</string>
+    <string name="new_inventory_input_right_community_name">请输入2-32个字符的小区名称</string>
+    <string name="new_inventory_input_right_detail_address">请输入2-32个字符的详细地址</string>
 
 
     <!-- DecorationBeiShuFragment -->

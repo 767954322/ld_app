@@ -48,6 +48,7 @@ public class RegexUtil {
     /**
      * 验证姓名
      */
+
     public static final String NAME_REGEX = "^([\u4e00-\u9fa5]{2,10})$"; // 合同里的姓名判断有用到
     public static final String NAME_REGEX1 = "^[A-Za-z\\u4e00-\\u9fa5]{2,12}+$";
 
@@ -78,5 +79,15 @@ public class RegexUtil {
      */
     public static final String ID_CARD_REGEX = "^[1-9]\\d{7}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}$|^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}([0-9]|X|x)$";
 
+    /**
+     * 会员帐号正则
+     */
+    public static final String ACCOUNT_NUMBER_REGEX = "[0-9]{9}";
+
+    /**
+     * 验证小区名称
+     */
+
+    public static final String COMMUNITY_NAME_REGEX = "^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]{3,33}$"; // 中英文数据空格适配正则  +\S
 
 }
