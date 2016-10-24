@@ -263,6 +263,11 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".personalcenter.recommend.activity.StoreActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".personalcenter.consumer.activity.MeasureFormActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

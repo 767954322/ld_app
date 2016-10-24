@@ -294,4 +294,8 @@ public final class UrlConstants {
      */
     public static final String SEND_PACKAGES_FORM = MAIN_DESIGN + "/appointMeal/";
 
+    /**
+     * 获取店面信息
+     * */
+
 }
