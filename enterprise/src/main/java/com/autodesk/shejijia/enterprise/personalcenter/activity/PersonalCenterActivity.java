@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.fragment.PersonalMainFragment;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
  * Created by t_xuz on 8/30/16.
  * 我页--业务管理页面
  */
-public class PersonalCenterActivity extends BaseEnterpriseActivity {
+public class PersonalCenterActivity extends BaseActivity {
 
     //主fragment
     private PersonalMainFragment mPersonalMainFragment;

@@ -10,13 +10,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseHomeActivity;
+import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-import com.pgyersdk.update.PgyUpdateManager;
 
 public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener {
 
@@ -66,9 +65,6 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         //init RadioBtn Event
         mBottomGroup.setOnCheckedChangeListener(this);
         mTaskBtn.setChecked(true);
-
-        //version update
-        PgyUpdateManager.register(this);
     }
 
     @Override

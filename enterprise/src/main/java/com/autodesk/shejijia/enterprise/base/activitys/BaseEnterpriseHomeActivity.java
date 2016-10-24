@@ -3,12 +3,12 @@ package com.autodesk.shejijia.enterprise.base.activitys;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.TaskListFragment;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by t_xuz on 8/26/16.
  * 主页同级fragment的管理
  */
-public abstract class BaseEnterpriseHomeActivity extends BaseEnterpriseActivity {
+public abstract class BaseEnterpriseHomeActivity extends BaseActivity {
 
     private TaskListFragment mTaskListFragment;
     private IssueListFragment mIssueListFragment;

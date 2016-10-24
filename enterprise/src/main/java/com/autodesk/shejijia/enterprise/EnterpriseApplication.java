@@ -2,7 +2,6 @@ package com.autodesk.shejijia.enterprise;
 
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.pgyersdk.crash.PgyCrashManager;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -26,8 +25,6 @@ public class EnterpriseApplication extends AdskApplication {
         //内存检测工具初始化
         LeakCanary.install(this);
 
-        //注册蒲公英
-        PgyCrashManager.register(this);
     }
 
     @Override

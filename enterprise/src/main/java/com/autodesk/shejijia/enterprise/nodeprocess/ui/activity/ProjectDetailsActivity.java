@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 import org.json.JSONObject;
 
@@ -27,7 +27,7 @@ import org.json.JSONObject;
  * Created by t_xuz on 8/24/16.
  *
  */
-public class ProjectDetailsActivity extends BaseEnterpriseActivity implements View.OnClickListener{
+public class ProjectDetailsActivity extends BaseActivity implements View.OnClickListener{
 
     //bottom bar
     private TextView mPatrolBtn;

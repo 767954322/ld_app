@@ -1,9 +1,9 @@
 package com.autodesk.shejijia.enterprise.base.fragments;
 
 import android.content.Context;
+
 import com.autodesk.shejijia.enterprise.base.BaseView;
-import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
+import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
  * Created by t_xuz on 8/15/16.
@@ -11,12 +11,12 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
  */
 public abstract class BaseEnterpriseFragment extends BaseLazyFragment implements BaseView{
 
-    protected BaseEnterpriseActivity mContext;
+    protected BaseActivity mContext;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = (BaseEnterpriseActivity) context;
+        mContext = (BaseActivity) context;
     }
 
     @Override
