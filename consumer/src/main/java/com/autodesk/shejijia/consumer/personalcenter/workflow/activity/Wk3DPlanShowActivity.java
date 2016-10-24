@@ -41,6 +41,7 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
     private Wk3DPlanListBean wk3DPlanListBean;
     private String url;
     private int mPosition;
+    private boolean isLevel;
 
     @Override
     protected int getLayoutResId() {
@@ -62,7 +63,7 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
         setCurrentTitle(getTitleData());
         mUrlPagerAdapter = new UrlPagerAdapter(this, mLinkList);
         mVpShowPager.setAdapter(new UrlPagerAdapter(this, mLinkList));
-
+        mVpShowPager.setCurrentItem(getCurrentPosition());
 
         mVpShowPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -122,9 +123,9 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
     private String getTitleData() {
         Intent intent = getIntent();
         Bundle bundleExtra = intent.getBundleExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT);
-        boolean aBoolean = bundleExtra.getBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG);
+        isLevel = bundleExtra.getBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG);
         String title = null;
-        if (aBoolean) {
+        if (isLevel) {
             String string = bundleExtra.getString(Constant.DeliveryShowBundleKey._JAVA_BEAN);
             if (Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_LEVEL_ZERO.equals(string)) {
                 wk3DPlanListBean = (Wk3DPlanListBean) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
@@ -144,8 +145,6 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
                 if (null != mMPDesignFileBeans && mMPDesignFileBeans.size() > 0 && mPosition <= mMPDesignFileBeans.size()) {
                     title = String.format("%s/%s", mPosition + 1, mMPDesignFileBeans.size());
                 }
-                mVpShowPager.setCurrentItem(mPosition);
-
             }
         } else {
             mMPFileBeans = (ArrayList<MPFileBean>) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN);
@@ -159,8 +158,6 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
             if (null != mMPFileBeans && mMPFileBeans.size() > 0 && mPosition <= mMPFileBeans.size()) {
                 title = String.format("%s/%s", mPosition + 1, mMPFileBeans.size());
             }
-            mVpShowPager.setCurrentItem(mPosition);
-
         }
         return title;
     }
@@ -202,5 +199,21 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
     @Override
     public void onItemClick(int currentPosition) {
 
+    }
+
+    public int getCurrentPosition() {
+        Intent intent = getIntent();
+        Bundle bundleExtra = intent.getBundleExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT);
+        isLevel = bundleExtra.getBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG);
+        int currentPosition = 0;
+        if (isLevel) {
+            String string = bundleExtra.getString(Constant.DeliveryShowBundleKey._JAVA_BEAN);
+            if (Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS.equals(string)) {
+                currentPosition = (int) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._POSITION);
+            }
+        } else {
+            currentPosition = (int) bundleExtra.getSerializable(Constant.DeliveryShowBundleKey._POSITION);
+        }
+        return currentPosition;
     }
 }
