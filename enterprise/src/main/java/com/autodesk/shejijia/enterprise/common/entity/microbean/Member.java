@@ -3,20 +3,28 @@ package com.autodesk.shejijia.enterprise.common.entity.microbean;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by t_xuz on 10/19/16.
- * update 10/19
+ * update 10/24
  */
 public class Member implements Serializable{
 
     private String role;
     private String uid;
+    private boolean group;
     private Profile profile;
     @SerializedName("acs_member_id")
     private int acsMemberId;
     @SerializedName("thread_id")
     private String threadId;
+    @SerializedName("is_group")
+    private boolean isGroup;
+    @SerializedName("group_members")
+    private List<Member> groupMembers;
+    private List<String> allowed;
+
 
     public String getRole() {
         return role;
@@ -32,6 +40,30 @@ public class Member implements Serializable{
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public boolean isGroup() {
+        return group;
+    }
+
+    public void setGroup(boolean group) {
+        this.group = group;
+    }
+
+    public List<Member> getGroupMembers() {
+        return groupMembers;
+    }
+
+    public void setGroupMembers(List<Member> groupMembers) {
+        this.groupMembers = groupMembers;
+    }
+
+    public List<String> getAllowed() {
+        return allowed;
+    }
+
+    public void setAllowed(List<String> allowed) {
+        this.allowed = allowed;
     }
 
     public Profile getProfile() {

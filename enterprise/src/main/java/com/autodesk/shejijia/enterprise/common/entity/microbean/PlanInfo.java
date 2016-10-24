@@ -7,10 +7,10 @@ import java.util.List;
 
 /**
  * Created by t_xuz on 10/19/16.
- * update 10/19
+ * update 10/24
  * Project接口中，tasks字段对应的是任务详情集合，List<Task>类型
  */
-public class PlanTask implements Serializable {
+public class PlanInfo implements Serializable {
 
     private String status;
     private String milestone;
@@ -19,8 +19,6 @@ public class PlanTask implements Serializable {
     private List<Task> tasks;
     @SerializedName("plan_template_id")
     private String planTemplateId;
-    @SerializedName("modified_time")
-    private String modifiedTime;
     @SerializedName("plan_id")
     private int planId;
 
@@ -70,14 +68,6 @@ public class PlanTask implements Serializable {
 
     public void setPlanTemplateId(String planTemplateId) {
         this.planTemplateId = planTemplateId;
-    }
-
-    public String getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(String modifiedTime) {
-        this.modifiedTime = modifiedTime;
     }
 
     public int getPlanId() {

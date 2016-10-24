@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Created by t_xuz on 10/19/16.
- * update 10/19
+ * update 10/24
  * Project接口中，tasks字段对应的是任务id集合，List<String>类型
  */
 public class Plan implements Serializable{
@@ -19,8 +19,6 @@ public class Plan implements Serializable{
     private List<String> tasks;
     @SerializedName("plan_template_id")
     private String planTemplateId;
-    @SerializedName("modified_time")
-    private String modifiedTime;
     @SerializedName("plan_id")
     private int planId;
 
@@ -70,14 +68,6 @@ public class Plan implements Serializable{
 
     public void setPlanTemplateId(String planTemplateId) {
         this.planTemplateId = planTemplateId;
-    }
-
-    public String getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(String modifiedTime) {
-        this.modifiedTime = modifiedTime;
     }
 
     public int getPlanId() {

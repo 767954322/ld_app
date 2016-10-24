@@ -2,8 +2,8 @@ package com.autodesk.shejijia.enterprise.nodeprocess.data;
 
 import android.support.annotation.NonNull;
 
-import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
 import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.enterprise.nodeprocess.data.source.ProjectDataSource;
 import com.autodesk.shejijia.enterprise.nodeprocess.data.source.ProjectRemoteDataSource;
@@ -14,7 +14,7 @@ import com.autodesk.shejijia.enterprise.nodeprocess.data.source.ProjectRemoteDat
  */
 public final class ProjectRepository implements ProjectDataSource {
 
-    private ProjectListBean mProjectListBean;
+    private ProjectList mProjectList;
 
     private ProjectRepository(){
     }
@@ -28,16 +28,16 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectList(String requestUrl, String eventTag, String requestTag, @NonNull final LoadDataCallback<ProjectListBean> callback) {
+    public void getProjectList(String requestUrl, String eventTag, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
 
-        if (mProjectListBean != null){
-            callback.onLoadSuccess(mProjectListBean);
+        if (mProjectList != null){
+            callback.onLoadSuccess(mProjectList);
         }else {
 
-            ProjectRemoteDataSource.getInstance().getProjectList(requestUrl, eventTag, requestTag, new LoadDataCallback<ProjectListBean>() {
+            ProjectRemoteDataSource.getInstance().getProjectList(requestUrl, eventTag, requestTag, new LoadDataCallback<ProjectList>() {
                 @Override
-                public void onLoadSuccess(ProjectListBean data) {
-                    mProjectListBean = data;
+                public void onLoadSuccess(ProjectList data) {
+                    mProjectList = data;
                     callback.onLoadSuccess(data);
                 }
 
@@ -50,7 +50,7 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectDetails(@NonNull LoadDataCallback<ProjectBean> callback) {
+    public void getProjectDetails(@NonNull LoadDataCallback<Project> callback) {
         ProjectRemoteDataSource.getInstance().getProjectDetails(callback);
     }
 }

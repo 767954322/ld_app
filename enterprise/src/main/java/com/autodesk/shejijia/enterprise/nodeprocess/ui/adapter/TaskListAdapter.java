@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.viewholder.TaskListVH;
 

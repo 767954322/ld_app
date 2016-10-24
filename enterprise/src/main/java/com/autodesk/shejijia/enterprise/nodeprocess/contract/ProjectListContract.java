@@ -1,7 +1,7 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.contract;
 
 
-import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.Project;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.base.BasePresenter;
 import com.autodesk.shejijia.enterprise.base.BaseView;
@@ -16,9 +16,9 @@ public interface ProjectListContract {
 
     interface View extends BaseView {
 
-        void refreshProjectListData(List<ProjectBean> projectList);
+        void refreshProjectListData(List<Project> projectList);
 
-        void addMoreProjectListData(List<ProjectBean> projectList);
+        void addMoreProjectListData(List<Project> projectList);
 
     }
 
@@ -30,7 +30,7 @@ public interface ProjectListContract {
         /*
        * 跳转项目详情页
        * */
-        void navigateToProjectDetail(List<ProjectBean> projectList, int position);
+        void navigateToProjectDetail(List<Project> projectList, int position);
 
         /*
         * 每个item中每个任务条目点击跳转到节点详情

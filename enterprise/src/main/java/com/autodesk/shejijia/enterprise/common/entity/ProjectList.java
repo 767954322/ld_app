@@ -8,12 +8,12 @@ import java.util.List;
  * update 10/19
  * 项目列表接口返回的json解析对应的bean
  */
-public class ProjectListBean implements Serializable{
+public class ProjectList implements Serializable{
 
     private int total;
     private int limit;
     private int offset;
-    private List<ProjectBean> data;
+    private List<Project> data;
 
     public int getTotal() {
         return total;
@@ -39,11 +39,11 @@ public class ProjectListBean implements Serializable{
         this.offset = offset;
     }
 
-    public List<ProjectBean> getData() {
+    public List<Project> getData() {
         return data;
     }
 
-    public void setData(List<ProjectBean> data) {
+    public void setData(List<Project> data) {
         this.data = data;
     }
 }

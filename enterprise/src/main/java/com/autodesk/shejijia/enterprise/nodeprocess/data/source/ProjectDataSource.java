@@ -2,8 +2,8 @@ package com.autodesk.shejijia.enterprise.nodeprocess.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
 import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
 
 /**
@@ -15,11 +15,11 @@ public interface ProjectDataSource {
     /*
     ＊获取项目列表
     * */
-    void getProjectList(String requestUrl, final String eventTag, String requestTag,@NonNull LoadDataCallback<ProjectListBean> callback);
+    void getProjectList(String requestUrl, final String eventTag, String requestTag,@NonNull LoadDataCallback<ProjectList> callback);
 
     /*
     * 获取项目详情
     * */
-    void getProjectDetails(@NonNull LoadDataCallback<ProjectBean> callback);
+    void getProjectDetails(@NonNull LoadDataCallback<Project> callback);
 
 }

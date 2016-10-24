@@ -6,26 +6,21 @@ import java.io.Serializable;
 
 /**
  * Created by t_xuz on 10/19/16.
- * version 1.0 update 10/19
+ * version 2.0 update 10/24
  * Task 里 files字段
  */
 public class File implements Serializable{
 
-    private String name;
     @SerializedName("file_id")
     private String fileId;
-    @SerializedName("file_type")
-    private String fileType;
-    @SerializedName("file_url")
-    private String fileUrl;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private String type;
+    private String name;
+    private String md5sum;
+    private int size;
+    @SerializedName("public_url")
+    private String publicUrl;
+    @SerializedName("thumbnail_url")
+    private String thumbnailUrl;
 
     public String getFileId() {
         return fileId;
@@ -35,19 +30,51 @@ public class File implements Serializable{
         this.fileId = fileId;
     }
 
-    public String getFileType() {
-        return fileType;
+    public String getType() {
+        return type;
     }
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getName() {
+        return name;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMd5sum() {
+        return md5sum;
+    }
+
+    public void setMd5sum(String md5sum) {
+        this.md5sum = md5sum;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getPublicUrl() {
+        return publicUrl;
+    }
+
+    public void setPublicUrl(String publicUrl) {
+        this.publicUrl = publicUrl;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

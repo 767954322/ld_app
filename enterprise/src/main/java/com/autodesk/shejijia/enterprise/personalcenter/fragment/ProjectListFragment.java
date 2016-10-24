@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.Project;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
@@ -79,7 +78,7 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     }
 
     @Override
-    public void refreshProjectListData(List<ProjectBean> projectList) {
+    public void refreshProjectListData(List<Project> projectList) {
         //获取当前日期(默认就是当前日期)的任务列表
         //显示任务列表到页面上
         mProjectListAdapter = new ProjectListAdapter(projectList, R.layout.listitem_project_list_view, mContext);
@@ -88,7 +87,7 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     }
 
     @Override
-    public void addMoreProjectListData(List<ProjectBean> projectList) {
+    public void addMoreProjectListData(List<Project> projectList) {
 
     }
 

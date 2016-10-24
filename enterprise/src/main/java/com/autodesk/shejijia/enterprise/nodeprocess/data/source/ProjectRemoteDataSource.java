@@ -3,9 +3,9 @@ package com.autodesk.shejijia.enterprise.nodeprocess.data.source;
 import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
 import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
+import com.autodesk.shejijia.enterprise.common.entity.Project;
 import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -31,7 +31,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectList(String requestUrl, final String eventTag, String requestTag, @NonNull final LoadDataCallback<ProjectListBean> callback) {
+    public void getProjectList(String requestUrl, final String eventTag, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
 
         EnterpriseServerHttpManager.getInstance().getUserProjectLists(requestUrl, requestTag, new OkJsonRequest.OKResponseCallback() {
 
@@ -39,8 +39,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             public void onResponse(JSONObject jsonObject) {
                 LogUtils.d(jsonObject + "");
                 String result = jsonObject.toString();
-                ProjectListBean projectListBean = GsonUtil.jsonToBean(result, ProjectListBean.class);
-                callback.onLoadSuccess(projectListBean);
+                ProjectList projectList = GsonUtil.jsonToBean(result, ProjectList.class);
+                callback.onLoadSuccess(projectList);
             }
 
             @Override
@@ -51,7 +51,7 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectDetails(@NonNull LoadDataCallback<ProjectBean> callback) {
+    public void getProjectDetails(@NonNull LoadDataCallback<Project> callback) {
 
     }
 }

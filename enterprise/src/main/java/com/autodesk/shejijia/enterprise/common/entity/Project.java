@@ -3,8 +3,7 @@ package com.autodesk.shejijia.enterprise.common.entity;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Building;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Like;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Member;
-import com.autodesk.shejijia.enterprise.common.entity.microbean.Plan;
-import com.autodesk.shejijia.enterprise.common.entity.microbean.PlanTask;
+import com.autodesk.shejijia.enterprise.common.entity.microbean.PlanInfo;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -14,13 +13,13 @@ import java.util.List;
  * Created by t_xuz on 8/25/16.
  * 每个项目详情的bean,含task数据
  */
-public class ProjectBean implements Serializable{
+public class Project implements Serializable{
 
     private List<Like> likes;
     private List<Member> members;
     private Building building;
     private long owner;
-    private PlanTask plan;
+    private PlanInfo plan;
     private String name;
     @SerializedName("project_id")
     private long projectId;
@@ -32,6 +31,9 @@ public class ProjectBean implements Serializable{
     private String createTime;
     @SerializedName("group_chat_thread_id")
     private String groupChatThreadId;
+    @SerializedName("design_id")
+    private String designId;
+
 
     public List<Like> getLikes() {
         return likes;
@@ -65,11 +67,11 @@ public class ProjectBean implements Serializable{
         this.owner = owner;
     }
 
-    public PlanTask getPlan() {
+    public PlanInfo getPlan() {
         return plan;
     }
 
-    public void setPlan(PlanTask plan) {
+    public void setPlan(PlanInfo plan) {
         this.plan = plan;
     }
 
@@ -119,5 +121,13 @@ public class ProjectBean implements Serializable{
 
     public void setGroupChatThreadId(String groupChatThreadId) {
         this.groupChatThreadId = groupChatThreadId;
+    }
+
+    public String getDesignId() {
+        return designId;
+    }
+
+    public void setDesignId(String designId) {
+        this.designId = designId;
     }
 }

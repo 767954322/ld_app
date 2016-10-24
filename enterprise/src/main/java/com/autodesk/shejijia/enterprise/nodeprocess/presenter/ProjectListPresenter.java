@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.autodesk.shejijia.enterprise.common.entity.ProjectBean;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectListBean;
+import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
@@ -36,9 +36,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter{
     @Override
     public void loadProjectListData(String requestUrl,final String eventTag,String requestTag, boolean isSwipeRefresh) {
 
-        mNodeProcessRepository.getProjectList(requestUrl, eventTag, requestTag, new LoadDataCallback<ProjectListBean>() {
+        mNodeProcessRepository.getProjectList(requestUrl, eventTag, requestTag, new LoadDataCallback<ProjectList>() {
             @Override
-            public void onLoadSuccess(ProjectListBean taskList) {
+            public void onLoadSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
                 if (eventTag.equalsIgnoreCase(Constants.REFRESH_EVENT)){
                     mProjectListView.refreshProjectListData(taskList.getData());
@@ -56,7 +56,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter{
     }
 
     @Override
-    public void navigateToProjectDetail(List<ProjectBean> projectList, int position) {
+    public void navigateToProjectDetail(List<Project> projectList, int position) {
         long projectId = projectList.get(position).getProjectId();
         Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
         intent.putExtra("projectId",projectId);
