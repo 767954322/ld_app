@@ -287,6 +287,7 @@
             </LinearLayout>
 
             <include layout="@layout/view_common_line"/>
+
             <LinearLayout
                 android:id="@+id/ll_personal_recommend"
                 android:layout_width="match_parent"
@@ -300,7 +301,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_20"
                     android:layout_marginRight="@dimen/size_20"
-                    android:src="@drawable/icon_info_normal"/>
+                    android:src="@drawable/icon_profile_recommend"/>
 
                 <TextView
                     android:layout_width="wrap_content"

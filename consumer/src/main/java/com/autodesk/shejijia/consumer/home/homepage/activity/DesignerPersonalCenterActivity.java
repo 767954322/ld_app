@@ -138,6 +138,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
+                Log.e("----------",jsonString);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 /// 判断设计师的类型,快屋设计师有北舒,乐屋设计师IM有扫一扫 .
                 mIsLoho = designerInfoDetails.getDesigner().getIs_loho();

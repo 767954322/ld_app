@@ -58,7 +58,7 @@ public class MyRecommendActivity extends NavigationBarActivity implements View.O
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         for (int i = 0; i < 3; i++) {
-            mFragments.add(RecommendFragment.newInstance(mType));
+            mFragments.add(RecommendFragment.newInstance(mType, i));
         }
         FragmentTabAdapter adapter = new FragmentTabAdapter(getSupportFragmentManager(), mFragments, tabs);
         mViewPager.setAdapter(adapter);

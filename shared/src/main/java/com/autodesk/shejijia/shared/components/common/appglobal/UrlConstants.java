@@ -22,6 +22,11 @@ public final class UrlConstants {
     public static String MAIN_DESIGN = Config.DESIGN_PATH;
 
     /**
+     * recommend-app的url公共部分 .
+     */
+    public static String MAIN_RECOMMEND = ApiManagerV2.RECOMMEND_PATH;
+
+    /**
      * member-app 的url的公共部分 .
      */
     public static String MAIN_MEMBER = Config.MEMBER_PATH;
@@ -34,6 +39,12 @@ public final class UrlConstants {
     //分享界面的url
     public static final String MP_MAIN_SHARE = Config.SHARE_PATH;
     public static final String MP_MAIN3_SHARE = Config.SHARE3_PATH;
+
+
+    /**
+     * 我要装修中的几张图片.
+     */
+    public static final String URL_GET_RECOMMEND_LIST = MAIN_DESIGN + "/materials-recommend-app/v1/api/designers/";
 
     /**
      * 搜索.

@@ -52,6 +52,27 @@ public class MPServerHttpManager {
     /**
      * 我的家装订单
      */
+    public void getRecommendList(String design_id, final int offset, final int limit, int status, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + design_id + "/recommends?" +
+                "&offset=" + offset +
+                "&limit=" + limit +
+                "&status=" + status;
+        Log.d("RecommendFragment", url);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+
+    /**
+     * 我的家装订单
+     */
     public void getMyDecorationData(final int offset, final int limit, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.URL_GET_MY_DECORATION_LIST + member_id + "/needs?" +
                 "media_type_id=" + 53 +
