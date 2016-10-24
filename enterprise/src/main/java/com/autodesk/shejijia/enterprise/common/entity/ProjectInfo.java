@@ -12,16 +12,16 @@ import java.util.List;
 
 /**
  * Created by t_xuz on 8/25/16.
- * 每个项目详情的bean,不含task详情数据
+ * 每个项目详情的bean,含task数据
  */
-public class Project implements Serializable{
+public class ProjectInfo implements Serializable{
 
     private String description;
     private List<Like> likes;
     private List<Member> members;
     private Building building;
     private long owner;
-    private Plan plan;
+    private PlanInfo plan;
     private String name;
     @SerializedName("project_id")
     private long projectId;
@@ -69,11 +69,11 @@ public class Project implements Serializable{
         this.owner = owner;
     }
 
-    public Plan getPlan() {
+    public PlanInfo getPlan() {
         return plan;
     }
 
-    public void setPlan(Plan plan) {
+    public void setPlan(PlanInfo plan) {
         this.plan = plan;
     }
 

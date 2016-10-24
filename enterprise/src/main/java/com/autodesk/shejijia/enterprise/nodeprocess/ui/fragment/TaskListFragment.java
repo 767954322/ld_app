@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
-import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
@@ -36,8 +36,6 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
     @Override
     protected void onFirstUserVisible() {
 
-
-
     }
 
     @Override
@@ -56,7 +54,7 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
         mProjectListView.setHasFixedSize(true);
         mProjectListView.setItemAnimator(new DefaultItemAnimator());
         //init recyclerView adapter
-        mProjectListAdapter = new ProjectListAdapter(new ArrayList<Project>(0), R.layout.listitem_task_list_view, activity, this);
+        mProjectListAdapter = new ProjectListAdapter(new ArrayList<ProjectInfo>(0), R.layout.listitem_task_list_view, activity, this);
         mProjectListView.setAdapter(mProjectListAdapter);
     }
 
@@ -64,19 +62,19 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
     * 当网络请求返回结果成功,presenter回掉view层的该方法,进行结果集的传递
     * */
     @Override
-    public void refreshProjectListData(List<Project> projectList) {
+    public void refreshProjectListData(List<ProjectInfo> projectList) {
         if (projectList != null && projectList.size() > 0) {
             mProjectListAdapter.setProjectLists(projectList);
         }
     }
 
     @Override
-    public void addMoreProjectListData(List<Project> projectList) {
+    public void addMoreProjectListData(List<ProjectInfo> projectList) {
 
     }
 
     @Override
-    public void onProjectClick(List<Project> projectList, int position) {
+    public void onProjectClick(List<ProjectInfo> projectList, int position) {
         mProjectListPresenter.navigateToProjectDetail(projectList, position);
     }
 

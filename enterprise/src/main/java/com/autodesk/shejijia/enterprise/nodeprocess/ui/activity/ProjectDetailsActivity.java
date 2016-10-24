@@ -14,7 +14,7 @@ import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseActivity;
 import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -112,7 +112,7 @@ public class ProjectDetailsActivity extends BaseEnterpriseActivity implements Vi
                 LogUtils.e(jsonObject.toString());
 
                 String result = jsonObject.toString();
-                Project project = GsonUtil.jsonToBean(result, Project.class);
+                ProjectInfo project = GsonUtil.jsonToBean(result, ProjectInfo.class);
 
                 //update ui view
                 updateUI(project);
@@ -121,7 +121,7 @@ public class ProjectDetailsActivity extends BaseEnterpriseActivity implements Vi
         EnterpriseServerHttpManager.getInstance().getProjectDetails(pid,token,true,callback);
     }
 
-    private void updateUI(Project project){
+    private void updateUI(ProjectInfo project){
         if (!TextUtils.isEmpty(project.getName())) {
             mProjectName.setText(project.getName());
         }

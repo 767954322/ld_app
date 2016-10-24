@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
-import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
@@ -78,7 +78,7 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     }
 
     @Override
-    public void refreshProjectListData(List<Project> projectList) {
+    public void refreshProjectListData(List<ProjectInfo> projectList) {
         //获取当前日期(默认就是当前日期)的任务列表
         //显示任务列表到页面上
         mProjectListAdapter = new ProjectListAdapter(projectList, R.layout.listitem_project_list_view, mContext);
@@ -87,7 +87,7 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     }
 
     @Override
-    public void addMoreProjectListData(List<Project> projectList) {
+    public void addMoreProjectListData(List<ProjectInfo> projectList) {
 
     }
 

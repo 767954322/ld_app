@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.viewholder.ProjectListVH;
 
@@ -22,19 +22,19 @@ import java.util.List;
  */
 public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private List<Project> projectLists;
+    private List<ProjectInfo> projectLists;
     private int resId;
     private Context mContext;
     private ProjectListItemListener mProjectListItemListener;
 
-    public ProjectListAdapter(List<Project> projectLists, int resId, Context mContext, ProjectListItemListener projectListItemListener) {
+    public ProjectListAdapter(List<ProjectInfo> projectLists, int resId, Context mContext, ProjectListItemListener projectListItemListener) {
         this.resId = resId;
         this.mContext = mContext;
         this.projectLists = projectLists;
         this.mProjectListItemListener = projectListItemListener;
     }
 
-    public void setProjectLists(List<Project> projectLists) {
+    public void setProjectLists(List<ProjectInfo> projectLists) {
         this.projectLists = projectLists;
         notifyDataSetChanged();
     }
@@ -111,7 +111,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public interface ProjectListItemListener{
         //项目详情
-        void onProjectClick(List<Project> projectList, int position);
+        void onProjectClick(List<ProjectInfo> projectList, int position);
         //节点详情
         void onTaskClick(List<Task> taskList, int position);
     }

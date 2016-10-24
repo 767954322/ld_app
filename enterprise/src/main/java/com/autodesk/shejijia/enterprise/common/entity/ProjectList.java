@@ -13,7 +13,7 @@ public class ProjectList implements Serializable{
     private int total;
     private int limit;
     private int offset;
-    private List<Project> data;
+    private List<ProjectInfo> data;
 
     public int getTotal() {
         return total;
@@ -39,11 +39,11 @@ public class ProjectList implements Serializable{
         this.offset = offset;
     }
 
-    public List<Project> getData() {
+    public List<ProjectInfo> getData() {
         return data;
     }
 
-    public void setData(List<Project> data) {
+    public void setData(List<ProjectInfo> data) {
         this.data = data;
     }
 }

@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
@@ -25,17 +25,17 @@ import java.util.List;
  */
 public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Project> projectLists;
+    private List<ProjectInfo> projectLists;
     private int resId;
     private Context mContext;
 
-    public ProjectListAdapter(List<Project> projectLists, int resId, Context mContext) {
+    public ProjectListAdapter(List<ProjectInfo> projectLists, int resId, Context mContext) {
         this.resId = resId;
         this.mContext = mContext;
         this.projectLists = projectLists;
     }
 
-    public void setProjectLists(List<Project> projectLists) {
+    public void setProjectLists(List<ProjectInfo> projectLists) {
         this.projectLists = projectLists;
         notifyDataSetChanged();
     }

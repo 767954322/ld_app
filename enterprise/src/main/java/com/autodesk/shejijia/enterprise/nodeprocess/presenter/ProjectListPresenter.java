@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.autodesk.shejijia.enterprise.common.entity.Project;
+import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
 import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
 import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
 import com.autodesk.shejijia.enterprise.common.utils.Constants;
@@ -56,7 +56,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter{
     }
 
     @Override
-    public void navigateToProjectDetail(List<Project> projectList, int position) {
+    public void navigateToProjectDetail(List<ProjectInfo> projectList, int position) {
         long projectId = projectList.get(position).getProjectId();
         Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
         intent.putExtra("projectId",projectId);
