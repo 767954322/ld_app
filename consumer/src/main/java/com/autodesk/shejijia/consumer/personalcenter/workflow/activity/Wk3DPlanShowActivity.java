@@ -75,8 +75,9 @@ public class Wk3DPlanShowActivity extends NavigationBarActivity implements BaseP
             public void onPageSelected(int position) {
                 mPosition = position + 1;
                 String title = "";
+
                 String positionAll = mMPFileBeans == null ? "" : mMPFileBeans.size() + "";
-                if (StringUtils.isEmpty(positionAll)) {
+                if (StringUtils.isEmpty(positionAll) || "0".equalsIgnoreCase(positionAll)) {
                     positionAll = mMPDesignFileBeans == null ? "" : mMPDesignFileBeans.size() + "";
                 }
 
