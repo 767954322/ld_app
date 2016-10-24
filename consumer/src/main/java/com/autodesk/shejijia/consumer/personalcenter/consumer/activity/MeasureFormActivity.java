@@ -259,11 +259,11 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
         switch (v.getId()) {
 
             case R.id.btn_send_measure_house_form:
-                if (true){
-
-                    Intent intent = new Intent(MeasureFormActivity.this, StoreActivity.class);
-                    startActivity(intent);
-                }else {
+//                if (true){
+//
+//                    Intent intent = new Intent(MeasureFormActivity.this, StoreActivity.class);
+//                    startActivity(intent);
+//                }else {
                     name = tvc_name.getText().toString().trim();
                     mobileNumber = tvc_phone.getText().toString().trim();
                     communityName = tvc_estate.getText().toString().trim();
@@ -420,13 +420,7 @@ public class MeasureFormActivity extends NavigationBarActivity implements View.O
                     }
 
                     postSendMeasureForm(jsonObject);
-//                    } else {
-//                        new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.amount_of_time_than_current_time_one_hour), null, null, new String[]{UIUtils.getString(R.string.sure)}, MeasureFormActivity.this, AlertView.Style.Alert, null).show();
-//                    }
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
 //                }
-                }
                 break;
             case R.id.tvc_measure_form_project_budget:
                 pvDesignBudgetOptions.show();

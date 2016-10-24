@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewControls;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 /**
@@ -40,6 +41,7 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
     @Override
     protected void initView() {
         super.initView();
+        setTitleForNavbar(UIUtils.getString(R.string.store_show_title));
         showStoreViewGroup = (LinearLayout) findViewById(R.id.ll_store);
         store_sure_btn = (Button) findViewById(R.id.store_sure_btn);
 

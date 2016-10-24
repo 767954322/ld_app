@@ -971,4 +971,8 @@
     <string name="please_input_render_count_correctly">请正确输入渲染图张数</string>
     <string name="please_input_project_amount_correctly">请正确输入本项目设计总额</string>
 
+    <!--店面展示-->
+    <string name="store_show_title">店面</string>
+
+
 </resources>
