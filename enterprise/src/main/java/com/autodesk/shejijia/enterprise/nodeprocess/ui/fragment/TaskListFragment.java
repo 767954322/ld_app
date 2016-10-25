@@ -114,13 +114,13 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
         switch (item.getItemId()) {
             case R.id.home_toolbar_search:
                 ToastUtils.showShort(mContext, "search");
-                // TODO: 10/25/16 search 条件修改
-                mProjectListPresenter.onFilterLikeChange(null);
-                mProjectListPresenter.refreshProjectList();
+                // TODO: 10/25/16 跳转到搜索页面
                 break;
             case R.id.home_toolbar_screen:
                 ToastUtils.showShort(mContext, "screen");
-                // TODO: 10/25/16 跳转到搜索页面
+                // TODO: 10/25/16 筛选－－ 条件修改
+                mProjectListPresenter.onFilterLikeChange(null);
+                mProjectListPresenter.refreshProjectList();
                 break;
         }
         return super.onOptionsItemSelected(item);
