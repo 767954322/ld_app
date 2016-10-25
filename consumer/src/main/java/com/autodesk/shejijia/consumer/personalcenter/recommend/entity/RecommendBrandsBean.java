@@ -2,9 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
 import java.util.List;
 
-Log
-
-import java.util.List;
 
 /**
  * 清单编辑页推荐品牌

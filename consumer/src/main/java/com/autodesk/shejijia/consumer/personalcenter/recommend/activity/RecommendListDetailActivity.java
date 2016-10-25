@@ -16,10 +16,12 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendListDetailBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -58,7 +60,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         super.initView();
         mRecyclerViewList = (RecyclerView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
-
     }
 
     @Override
@@ -114,14 +115,16 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     private void updateUI(RecommendListDetailBean recommendListDetailBean) {
-        setTitleForNavbar(recommendListDetailBean.getCommunity_name());
-        setTitleForNavButton(ButtonType.RIGHT, "添加主材");
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
+        setTitle(recommendListDetailBean);
 
-        // 更新适配器
         String scfd = recommendListDetailBean.getScfd();
-        Log.d("RecommendListDetailActi", scfd);
+        updateItemView(scfd);
+    }
 
+    private void updateItemView(String scfd) {
+        // 更新适配器
+        RecommendSCFDBean recommendSCFDBean = GsonUtil.jsonToBean(scfd, RecommendSCFDBean.class);
+        Log.d("RecommendListDetailActi", scfd);
     }
 
     @Override
@@ -154,6 +157,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
          }
          */
         super.leftNavButtonClicked(view);
+    }
+
+    private void setTitle(RecommendListDetailBean recommendListDetailBean) {
+        setTitleForNavbar(recommendListDetailBean.getCommunity_name());
+        setTitleForNavButton(ButtonType.RIGHT, "添加主材");
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
     private void initRecycleView() {
