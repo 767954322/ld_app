@@ -197,8 +197,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             tvTel.setText(mConsumerEssentialInfoEntity.getMobile_number() + "");
         }
 
-        if (mConsumerEssentialInfoEntity.getEmail() == null)
-
+        if (mConsumerEssentialInfoEntity.getEmail() == null||mConsumerEssentialInfoEntity.getIs_email_binding()==0||mConsumerEssentialInfoEntity.getIs_email_binding()==2)
         {
             tvEmail.setText(getResources().getString(R.string.not_filled));
         } else
