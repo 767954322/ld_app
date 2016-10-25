@@ -125,11 +125,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".personalcenter.consumer.activity.MessageCenterDetailActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".personalcenter.consumer.activity.ConsumerEssentialInfoActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
