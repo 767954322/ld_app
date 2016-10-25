@@ -4,17 +4,21 @@ package com.autodesk.shejijia.enterprise;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseHomeActivity;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
+import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.TaskListFragment;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
+import com.autodesk.shejijia.shared.components.common.utility.Constants;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
 public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener {
@@ -27,6 +31,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     private RadioGroup mBottomGroup;
     //topBar
     private Toolbar toolbar;
+    private TextView toolbarTitle;//self define
     private MemberEntity mMemberEntity;//用户信息
 
     @Override
@@ -42,7 +47,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mMemberEntity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constants.USER_INFO);
+        mMemberEntity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constant.UerInfoKey.USER_INFO);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -55,7 +60,11 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         mBottomGroup = (RadioGroup) this.findViewById(R.id.rdoGrp_project_list);
         //toolBar
         toolbar = (Toolbar)this.findViewById(R.id.toolbar_topBar);
+        //self define toolbar title
+        toolbarTitle = (TextView)toolbar.findViewById(R.id.tv_toolbar_title);
         setSupportActionBar(toolbar);
+        // 显示导航按钮
+        toolbar.setNavigationIcon(R.mipmap.default_head);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -75,35 +84,38 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         switch (checkId) {
             case R.id.rdoBtn_project_task:
                 changeFragment(Constants.TASK_LIST_FRAGMENT, 0);
-                //init toolbar
-                // 显示导航按钮
-                toolbar.setNavigationIcon(R.mipmap.default_head);
-                // 显示标题
-                toolbar.setTitle(R.string.toolbar_title);
-                toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                toolbarTitle.setText(R.string.toolbar_task_title);
+                toolbarTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // TODO: 10/25/16  get date from calendar and set data to taskListFragment
+                        ToastUtils.showShort(EnterpriseHomeActivity.this, "title");
+                        TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(Constants.TASK_LIST_FRAGMENT);
+                        if (taskListFragment != null){
+                            taskListFragment.onQueryByDate("2016-10-25");
+                        }
+                    }
+                });
                 break;
             case R.id.rdoBtn_project_issue:
                 changeFragment(Constants.ISSUE_LIST_FRAGMENT, 1);
+                toolbarTitle.setText(R.string.toolbar_question_title);
+                toolbarTitle.setOnClickListener(null);
                 break;
             case R.id.rdoBtn_project_session:
                 changeFragment(Constants.GROUP_CHAT_FRAGMENT, 2);
+                toolbarTitle.setText(R.string.toolbar_groupChat_title);
+                toolbarTitle.setOnClickListener(null);
                 break;
         }
-        //会自动执行onPrepareOptionsMenu，用来管理不同fragment下的menu。
-        invalidateOptionsMenu();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_activity_menu,menu);
-        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = null;
+
         switch (item.getItemId()) {
             case android.R.id.home:
+                Intent intent = null;
                 if (mMemberEntity != null) {
                     intent = new Intent(this, PersonalCenterActivity.class);
                     startActivity(intent);
@@ -112,22 +124,11 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
                     startActivity(intent);
                 }
                 break;
-            case R.id.home_toolbar_search:
-
-                break;
-            case R.id.home_toolbar_screen:
-
-                break;
             default:
                break;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
     }
 
 

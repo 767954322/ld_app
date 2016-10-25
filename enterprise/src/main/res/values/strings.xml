@@ -32,7 +32,9 @@
     <!-- toolBar menu text-->
     <string name="menu_search">搜索</string>
     <string name="menu_screen">筛选</string>
-    <string name="toolbar_title">今日任务</string>
+    <string name="toolbar_task_title">今日任务</string>
+    <string name="toolbar_question_title">问题列表</string>
+    <string name="toolbar_groupChat_title">群聊列表</string>
 
 
     <string name="has_question">有问题</string>
