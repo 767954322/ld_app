@@ -1,16 +1,14 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.base.adapter.BaseAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.Date;
@@ -24,13 +22,14 @@ import java.util.List;
 
 public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
     private boolean isDesiner = false;
+
     public RecommendAdapter(Context context, List<RecommendEntity.ItemsBean> datas, int layoutId, boolean isDesiner) {
         super(context, datas, layoutId);
         this.isDesiner = isDesiner;
     }
 
     @Override
-    public void convert(CommonViewHolder holder, RecommendEntity.ItemsBean item) {
+    public void convert(CommonViewHolder holder, final RecommendEntity.ItemsBean item) {
         holder.setVisible(R.id.tv_cancel_btn, isDesiner);
         String status = item.getStatus();
         if (!TextUtils.isEmpty(status)) {
@@ -48,7 +47,9 @@ public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
         holder.setOnClickListener(R.id.tv_edit_btn, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showCustomToast((Activity) mContext, isDesiner ? "编辑" : "删除");
+                if (isDesiner) {
+                    RecommendListDetailActivity.actionStartActivity(mContext, item.getAsset_id() + "");
+                }
             }
         });
     }

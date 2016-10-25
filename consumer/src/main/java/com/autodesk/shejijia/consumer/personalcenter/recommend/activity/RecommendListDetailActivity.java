@@ -10,7 +10,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.RelativeLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -35,7 +34,6 @@ import org.json.JSONObject;
  */
 public class RecommendListDetailActivity extends NavigationBarActivity {
 
-    private RelativeLayout mActivityRecommendListDetail;
     private RecyclerView mRecyclerViewList;
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
@@ -49,7 +47,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity {
     @Override
     protected void initView() {
         super.initView();
-        mActivityRecommendListDetail = (RelativeLayout) findViewById(R.id.activity_recommend_list_detail);
         mRecyclerViewList = (RecyclerView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
 
@@ -100,7 +97,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
-                String jsonString = GsonUtil.jsonToString(jsonObject);
+                String jsonString = jsonObject.toString();
                 Log.d("RecommendListDetailAc", jsonString);
                 RecommendListDetailBean recommendListDetailBean = GsonUtil.jsonToBean(jsonString, RecommendListDetailBean.class);
                 updateUI(recommendListDetailBean);

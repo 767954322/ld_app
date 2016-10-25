@@ -53,14 +53,14 @@ public class MPServerHttpManager {
      * 从推荐草稿中获取推荐清单信息
      */
     public void getRecommendDraftDetail(String designer_id, String asset_id, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.MAIN_RECOMMEND + "/designers/％/recommends/%";
+        String url = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s";
         String formatUrl = String.format(url, designer_id, asset_id);
         LogUtils.d(TAG, formatUrl);
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, formatUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
-                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                header.put("X-Token", xToken);
                 return header;
             }
         };
