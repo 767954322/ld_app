@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header"/>
+        layout="@layout/view_navigation_header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/icon_position_normal"/>
+                    android:src="@drawable/icon_position_normal" />
 
 
                 <LinearLayout
@@ -57,7 +57,7 @@
                         android:singleLine="true"
                         android:text="@string/no_data_nodata"
                         android:textColor="@color/bg_33"
-                        android:textSize="@dimen/font_16"/>
+                        android:textSize="@dimen/font_16" />
 
                     <TextView
                         android:id="@+id/tv_decoration_community_name"
@@ -69,7 +69,7 @@
                         android:singleLine="true"
                         android:text="@string/consumer_decoration_name"
                         android:textColor="@color/bg_33"
-                        android:textSize="@dimen/font_16"/>
+                        android:textSize="@dimen/font_16" />
 
                 </LinearLayout>
 
@@ -78,11 +78,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/bg_0d74bc"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
-            <include
-                layout="@layout/view_parting_line"></include>
+            <include layout="@layout/view_parting_line"></include>
             <!--项目编号-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,7 +99,7 @@
                     android:background="@color/bg_ff"
                     android:text="@string/common_order_project_number"
                     android:textColor="@color/bg_9E"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_decoration_needs_id"
@@ -110,7 +109,7 @@
                     android:background="@color/no_color"
                     android:text="@string/no_data"
                     android:textColor="@color/bg_9E"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
 
@@ -129,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/my_bid_name"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/et_amend_amend_name"
@@ -138,9 +137,9 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:singleLine="true"
-                    android:textColor="@color/bg_33"
                     android:text="@string/no_data"
-                    android:textSize="@dimen/font_15"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
 
@@ -159,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/consume_mobile"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/et_issue_amend_mobile"
@@ -170,7 +169,7 @@
                     android:singleLine="true"
                     android:text="@string/no_data"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
             <LinearLayout
@@ -187,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_village_name"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/et_issue_demand_detail_address"
@@ -198,7 +197,7 @@
                     android:singleLine="true"
                     android:text="@string/no_data"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
             <LinearLayout
@@ -217,7 +216,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_project_address"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_issue_address"
@@ -225,16 +224,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:textColor="@color/bg_33"
                     android:text="@string/no_select"
-                    android:textSize="@dimen/font_15"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_15" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/icon_unfold_normal"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -253,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_planning_budget"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_amend_design_budget"
@@ -269,7 +267,7 @@
                     android:text="@string/no_select"
                     android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
 
             </LinearLayout>
@@ -288,7 +286,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_project_budget"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_aemand_budget"
@@ -301,10 +299,10 @@
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:inputType="numberDecimal"
-                    android:textColor="@color/bg_33"
                     android:text="@string/no_select"
+                    android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
             </LinearLayout>
 
@@ -324,7 +322,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_project_types"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_amend_house_type"
@@ -336,7 +334,7 @@
                     android:text="@string/no_select"
                     android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
             <LinearLayout
@@ -354,7 +352,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_house_model"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <LinearLayout
                     android:layout_width="@dimen/size_1"
@@ -372,9 +370,9 @@
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
-                        android:textColor="@color/bg_33"
                         android:text="@string/no_select"
-                        android:textSize="@dimen/font_15"/>
+                        android:textColor="@color/bg_33"
+                        android:textSize="@dimen/font_15" />
 
 
                 </LinearLayout>
@@ -394,7 +392,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/common_order_project_area"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/et_ademand_area"
@@ -407,7 +405,7 @@
                     android:text="@string/no_data"
                     android:textColor="@color/bg_33"
                     android:textColorHint="#999"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
             </LinearLayout>
 
@@ -426,7 +424,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_style"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
 
                 <TextView
                     android:id="@+id/tv_amend_style"
@@ -436,7 +434,7 @@
                     android:background="@color/no_color"
                     android:text="@string/no_select"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_15"/>
+                    android:textSize="@dimen/font_15" />
             </LinearLayout>
 
 
@@ -451,7 +449,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
-                    android:background="@color/bg_ef"/>
+                    android:background="@color/bg_ef" />
             </LinearLayout>
 
 
@@ -469,7 +467,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/consumer_decoration_buildtime"
                     android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_14"/>
+                    android:textSize="@dimen/font_14" />
 
                 <TextView
                     android:id="@+id/tv_public_time"
@@ -477,9 +475,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:textColor="@color/bg_33"
                     android:text="@string/no_data"
-                    android:textSize="@dimen/font_14"/>
+                    android:textColor="@color/bg_33"
+                    android:textSize="@dimen/font_14" />
             </LinearLayout>
 
             <LinearLayout
@@ -497,8 +495,7 @@
                     android:background="@drawable/btn_border_cancel"
                     android:text="@string/button_decoration_stop"
                     android:textColor="@color/bg_0084ff"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btn_fitment_amend_demand"
@@ -509,8 +506,7 @@
                     android:background="@drawable/bg_common_btn_blue"
                     android:text="@string/button_decoration_amend"
                     android:textColor="@color/white"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

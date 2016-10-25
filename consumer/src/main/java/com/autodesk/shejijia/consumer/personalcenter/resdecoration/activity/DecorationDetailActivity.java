@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
+import com.autodesk.shejijia.consumer.home.homepage.activity.AlertViewUtil;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.AmendDemandActivity;
@@ -23,7 +25,6 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -64,7 +65,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     private Button mBtnAmendDemand;
     private Button mBtnStopDemand;
     private LinearLayout mLlDemandModify;
-    private AlertView mStopDemandAlertView;
+    private AlertViewUtil mStopDemandAlertView;
     private AlertView mStopDemandSuccessAlertView;
     private String wk_template_id;
     private String needs_id;
@@ -333,7 +334,7 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
     @Override
     public void onItemClick(Object obj, int position) {
 
-        if (obj == mStopDemandAlertView && position != AlertView.CANCELPOSITION) {
+        if (obj == mStopDemandAlertView && position == AlertView.CANCELPOSITION) {
             CustomProgress.show(this, "", false, null);
             sendStopDemand(needs_id, 1);
         }
@@ -366,12 +367,12 @@ public class DecorationDetailActivity extends NavigationBarActivity implements V
      * 提示框.
      */
     private void initAlertView() {
-        mStopDemandAlertView = new AlertView(
+        mStopDemandAlertView = new AlertViewUtil(
                 UIUtils.getString(R.string.alert_decoration_title),
                 UIUtils.getString(R.string.alert_decoration_message),
-                UIUtils.getString(R.string.cancel), null,
-                new String[]{UIUtils.getString(R.string.sure)}, this,
-                AlertView.Style.Alert, this).setCancelable(true);
+                UIUtils.getString(R.string.sure), null,
+                new String[]{UIUtils.getString(R.string.cancel)}, this,
+                AlertViewUtil.Style.Alert, this).setCancelable(true);
 
         mStopDemandSuccessAlertView = new AlertView(
                 UIUtils.getString(R.string.tip),
