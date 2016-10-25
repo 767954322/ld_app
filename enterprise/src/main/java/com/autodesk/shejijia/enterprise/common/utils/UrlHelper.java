@@ -1,9 +1,9 @@
 package com.autodesk.shejijia.enterprise.common.utils;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.autodesk.shejijia.shared.components.common.utility.Constants;
 
 /**
  * Created by t_xuz on 10/13/16.

@@ -2,9 +2,9 @@ package com.autodesk.shejijia.enterprise.nodeprocess.data.source;
 
 import android.support.annotation.NonNull;
 
-import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
-import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 
 /**
  * Created by t_xuz on 10/17/16.

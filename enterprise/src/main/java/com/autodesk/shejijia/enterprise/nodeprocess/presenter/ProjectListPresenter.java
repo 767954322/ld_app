@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
-import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
-import com.autodesk.shejijia.enterprise.common.utils.Constants;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
-import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.enterprise.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.TaskDetailsActivity;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;

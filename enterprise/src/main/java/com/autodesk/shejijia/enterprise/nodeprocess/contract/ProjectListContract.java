@@ -1,10 +1,10 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.contract;
 
 
-import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
-import com.autodesk.shejijia.enterprise.common.entity.microbean.Task;
-import com.autodesk.shejijia.enterprise.base.BasePresenter;
-import com.autodesk.shejijia.enterprise.base.BaseView;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.framework.BasePresenter;
+import com.autodesk.shejijia.shared.framework.BaseView;
 
 import java.util.List;
 

@@ -1,15 +1,14 @@
-package com.autodesk.shejijia.enterprise.common.network;
+package com.autodesk.shejijia.shared.components.common.network;
 
+import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
-import com.autodesk.shejijia.enterprise.EnterpriseApplication;
-import com.autodesk.shejijia.enterprise.common.utils.Constants;
-import com.autodesk.shejijia.enterprise.common.utils.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
+import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,7 +93,7 @@ public class EnterpriseServerHttpManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", UserInfoUtils.getToken(EnterpriseApplication.getInstance()));
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
             }
         };

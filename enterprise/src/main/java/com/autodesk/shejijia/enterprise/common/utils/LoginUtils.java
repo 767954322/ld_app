@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
+import com.autodesk.shejijia.shared.components.common.utility.Constants;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
@@ -36,16 +38,8 @@ public class LoginUtils {
     * 登陆成功做一些处理
     * */
     public static void onLoginSuccess(MemberEntity entity,Context mContext) {
-        /// 将获取到底数据设置为全局可以访问.
-//        EnterpriseApplication.setMemberEntity(entity);
 
-//        openChatConnection();
-
-//        registerForPushNotification();
-
-        // 保存获取到的数据 .
-//        SPConfigUtils.put(mContext,Constants.USER_INFO,entity);
-        SharedPreferencesUtils.saveObject(mContext,Constants.USER_INFO,entity);
+        SharedPreferencesUtils.saveObject(mContext, Constant.UerInfoKey.USER_INFO,entity);
         // 更新未读消息
 //        Intent loginIntent = new Intent(BroadCastInfo.USER_DID_LOGIN);
 //        sendBroadcast(loginIntent);

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.autodesk.shejijia.enterprise.common.utils.Constants;
+import com.autodesk.shejijia.shared.components.common.utility.Constants;
 import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -24,7 +24,7 @@ public class LoginNotificationReceiver extends BroadcastReceiver{
         String action = intent.getAction();
         if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(Constants.LOGIN_OUT_ACTION)){
             LoginUtils.doLogout(context);
-        }else if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(Constants.LOGIN_IN_ACTIVITY_FINISHED)){
+        }else if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)){
             String strToken = intent.getStringExtra(BroadCastInfo.LOGIN_TOKEN);
             LogUtils.e("login-result",strToken);
             MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);

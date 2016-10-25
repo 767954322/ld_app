@@ -1,6 +1,4 @@
-package com.autodesk.shejijia.enterprise.common.entity.microbean;
-
-import com.google.gson.annotations.SerializedName;
+package com.autodesk.shejijia.shared.components.common.entity.microbean;
 
 import java.io.Serializable;
 

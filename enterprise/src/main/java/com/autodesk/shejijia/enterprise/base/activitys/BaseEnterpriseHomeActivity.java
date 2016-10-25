@@ -3,7 +3,7 @@ package com.autodesk.shejijia.enterprise.base.activitys;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.autodesk.shejijia.enterprise.common.utils.Constants;
+import com.autodesk.shejijia.shared.components.common.utility.Constants;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.TaskListFragment;

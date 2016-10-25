@@ -2,8 +2,9 @@ package com.autodesk.shejijia.enterprise.base.fragments;
 
 import android.content.Context;
 
-import com.autodesk.shejijia.enterprise.base.BaseView;
+import com.autodesk.shejijia.shared.framework.BaseView;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.autodesk.shejijia.shared.framework.fragment.BaseLazyFragment;
 
 /**
  * Created by t_xuz on 8/15/16.

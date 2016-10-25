@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.common.entity;
+package com.autodesk.shejijia.shared.components.common.entity;
 
 import java.io.Serializable;
 import java.util.List;

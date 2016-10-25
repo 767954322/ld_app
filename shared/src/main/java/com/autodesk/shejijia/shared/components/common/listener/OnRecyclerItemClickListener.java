@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.common.listener;
+package com.autodesk.shejijia.shared.components.common.listener;
 
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.RecyclerView;

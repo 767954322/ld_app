@@ -3,10 +3,10 @@ package com.autodesk.shejijia.enterprise.nodeprocess.data.source;
 import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectList;
-import com.autodesk.shejijia.enterprise.common.network.EnterpriseServerHttpManager;
-import com.autodesk.shejijia.enterprise.common.entity.ProjectInfo;
-import com.autodesk.shejijia.enterprise.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.network.EnterpriseServerHttpManager;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;

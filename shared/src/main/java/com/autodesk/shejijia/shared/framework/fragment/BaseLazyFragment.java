@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.base.fragments;
+package com.autodesk.shejijia.shared.framework.fragment;
 
 import android.os.Bundle;
 

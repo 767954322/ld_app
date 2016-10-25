@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.common.listener;
+package com.autodesk.shejijia.shared.components.common.listener;
 
 /**
  * Created by t_xuz on 10/19/16.

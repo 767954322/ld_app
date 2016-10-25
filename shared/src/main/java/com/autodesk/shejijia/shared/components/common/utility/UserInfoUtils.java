@@ -1,9 +1,10 @@
-package com.autodesk.shejijia.enterprise.common.utils;
+package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
@@ -19,7 +20,7 @@ public final class UserInfoUtils {
     }
 
     public static String getToken(@NonNull Context context){
-        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constants.USER_INFO);
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
         if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
             return entity.getHs_accesstoken();
         }

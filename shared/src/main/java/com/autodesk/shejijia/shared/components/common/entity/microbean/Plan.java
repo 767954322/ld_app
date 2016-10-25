@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.common.entity.microbean;
+package com.autodesk.shejijia.shared.components.common.entity.microbean;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,15 +8,15 @@ import java.util.List;
 /**
  * Created by t_xuz on 10/19/16.
  * update 10/24
- * Project接口中，tasks字段对应的是任务详情集合，List<Task>类型
+ * Project接口中，tasks字段对应的是任务id集合，List<String>类型
  */
-public class PlanInfo implements Serializable {
+public class Plan implements Serializable{
 
     private String status;
     private String milestone;
     private String start;
     private String completion;
-    private List<Task> tasks;
+    private List<String> tasks;
     @SerializedName("plan_template_id")
     private String planTemplateId;
     @SerializedName("plan_id")
@@ -54,11 +54,11 @@ public class PlanInfo implements Serializable {
         this.completion = completion;
     }
 
-    public List<Task> getTasks() {
+    public List<String> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<String> tasks) {
         this.tasks = tasks;
     }
 

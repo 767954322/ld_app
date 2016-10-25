@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.base;
+package com.autodesk.shejijia.shared.framework;
 
 /**
  * Created by t_xuz on 10/10/16.

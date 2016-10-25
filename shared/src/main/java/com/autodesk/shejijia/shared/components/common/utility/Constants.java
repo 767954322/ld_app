@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.common.utils;
+package com.autodesk.shejijia.shared.components.common.utility;
 
 /**
  * Created by t_xuz on 8/15/16.
