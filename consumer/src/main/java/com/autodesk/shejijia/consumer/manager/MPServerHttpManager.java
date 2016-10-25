@@ -50,7 +50,25 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 设计师推荐列表页面
+     * 从推荐草稿中获取推荐清单信息
+     */
+    public void getRecommendDraftDetail(String designer_id, String asset_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_RECOMMEND + "/designers/％/recommends/%";
+        String formatUrl = String.format(url, designer_id, asset_id);
+        LogUtils.d(TAG, formatUrl);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
+     * 我的推荐列表
      */
     public void getRecommendList(String design_id, final int offset, final int limit, int status, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + design_id + "/recommends?" +

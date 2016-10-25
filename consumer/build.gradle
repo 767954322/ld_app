@@ -76,4 +76,5 @@ dependencies {
     uatReleaseCompile project(path: ':shared', configuration: 'uatRelease')
     productionDebugCompile project(path: ':shared', configuration: 'productionDebug')
     productionReleaseCompile project(path: ':shared', configuration: 'productionRelease')
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }
