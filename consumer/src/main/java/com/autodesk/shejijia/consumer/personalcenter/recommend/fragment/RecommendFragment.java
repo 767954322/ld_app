@@ -99,7 +99,7 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
         getRecommendList(OFFSET, LIMIT, mStatus);
     }
 
-    public void getRecommendList(int offset, int limit, int status) {
+    public void getRecommendList(final int offset, int limit, int status) {
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity == null) {
             return;
@@ -110,7 +110,7 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
             public void onResponse(JSONObject jsonObject) {
                 Log.d("RecommendFragment", jsonObject.toString());
                 RecommendEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendEntity.class);
-                updateViewFromApi(entity.getItems());
+                updateViewFromApi(offset, entity.getItems());
             }
 
             @Override
@@ -121,9 +121,9 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
         MPServerHttpManager.getInstance().getRecommendList(member_id, offset, limit, status, callback);
     }
 
-    private void updateViewFromApi(List<RecommendEntity.ItemsBean> items) {
+    private void updateViewFromApi(int offset, List<RecommendEntity.ItemsBean> items) {
         if (items != null && items.size() > 0) {
-            if (OFFSET == 0) {
+            if (offset == 0) {
                 mRecommends.clear();
                 mFrameLayout.onRefreshComplete();
             } else

@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/iv_reco_wfsico"
-            android:text="西山一号"
-            android:textColor="@color/text_item_name"/>
+            android:textColor="@color/text_item_name"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_asset_id"
@@ -38,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="清单编号：5552545222"
             android:textColor="@color/font_gray"/>
 
         <View
@@ -62,8 +61,7 @@
 
         <TextView
             android:id="@+id/tv_reco_consumer_name"
-            style="@style/item_text_style"
-            android:text="赵大宝"/>
+            style="@style/item_text_style"/>
     </LinearLayout>
 
     <LinearLayout
@@ -79,8 +77,7 @@
 
         <TextView
             android:id="@+id/tv_reco_consumer_mobile"
-            style="@style/item_text_style"
-            android:text="15245228786"/>
+            style="@style/item_text_style"/>
     </LinearLayout>
 
     <LinearLayout
@@ -97,8 +94,7 @@
         <TextView
             android:id="@+id/tv_reco_item_address"
             style="@style/item_text_style"
-            android:layout_weight="1"
-            android:text="紫光发展大厦"/>
+            android:layout_weight="1"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -120,8 +116,7 @@
 
         <TextView
             android:id="@+id/tv_reco_item_details_address"
-            style="@style/item_text_style"
-            android:text="小关东街4号楼"/>
+            style="@style/item_text_style"/>
     </LinearLayout>
 
     <LinearLayout
@@ -137,8 +132,7 @@
 
         <TextView
             android:id="@+id/tv_create_date"
-            style="@style/item_text_style"
-            android:text="2016-05-06 10:20"/>
+            style="@style/item_text_style"/>
     </LinearLayout>
 
     <View

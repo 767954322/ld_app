@@ -3,11 +3,11 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -18,7 +18,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -29,7 +28,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +49,9 @@ public class DesignRecomDetailsActivity extends NavigationBarActivity {
     private TextView tvRecoItemAddress;
     private TextView tvRecoItemDetailsAddress;
     private TextView tvCreateDate;
-    private RecyclerView mDetailsRecyclerView;
+    private ListView mListview;
+    private RecoDetailsAdapter mAdapter;
+    private List<ScfdEntity> brands = new ArrayList<>();
 
     public static void jumpTo(Context context, String asset_id) {
         Intent intent = new Intent(context, DesignRecomDetailsActivity.class);
@@ -62,17 +63,24 @@ public class DesignRecomDetailsActivity extends NavigationBarActivity {
     protected void initView() {
         super.initView();
         setTitleBarView();
-        ivRecoWfsico = (ImageView) findViewById(R.id.iv_reco_wfsico);
-        tvRecommendName = (TextView) findViewById(R.id.tv_recommend_name);
-        tvAssetId = (TextView) findViewById(R.id.tv_asset_id);
-        tvRecoConsumerName = (TextView) findViewById(R.id.tv_reco_consumer_name);
-        tvRecoConsumerMobile = (TextView) findViewById(R.id.tv_reco_consumer_mobile);
-        tvRecoItemAddress = (TextView) findViewById(R.id.tv_reco_item_address);
-        tvRecoItemDetailsAddress = (TextView) findViewById(R.id.tv_reco_item_details_address);
-        tvCreateDate = (TextView) findViewById(R.id.tv_create_date);
-        mDetailsRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_details);
-        mDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mDetailsRecyclerView.setAdapter(new RecoDetailsAdapter());
+        View rootView = LayoutInflater.from(this).inflate(R.layout.layout_recommend_details_header, null);
+        mListview = (ListView) findViewById(R.id.listview);
+        mListview.addHeaderView(rootView);
+        ivRecoWfsico = (ImageView) rootView.findViewById(R.id.iv_reco_wfsico);
+        tvRecommendName = (TextView) rootView.findViewById(R.id.tv_recommend_name);
+        tvAssetId = (TextView) rootView.findViewById(R.id.tv_asset_id);
+        tvRecoConsumerName = (TextView) rootView.findViewById(R.id.tv_reco_consumer_name);
+        tvRecoConsumerMobile = (TextView) rootView.findViewById(R.id.tv_reco_consumer_mobile);
+        tvRecoItemAddress = (TextView) rootView.findViewById(R.id.tv_reco_item_address);
+        tvRecoItemDetailsAddress = (TextView) rootView.findViewById(R.id.tv_reco_item_details_address);
+        tvCreateDate = (TextView) rootView.findViewById(R.id.tv_create_date);
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mAdapter = new RecoDetailsAdapter(this, brands, R.layout.item_recommend_details_brand);
+        mListview.setAdapter(mAdapter);
     }
 
     private void setTitleBarView() {
@@ -130,11 +138,16 @@ public class DesignRecomDetailsActivity extends NavigationBarActivity {
         tvRecoConsumerMobile.setText(item.getConsumer_mobile());
         tvRecoItemAddress.setText(item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
         tvRecoItemDetailsAddress.setText(item.getCommunity_address());
+        // FIXME: 16-10-25  缺少日期字段
 //        tvCreateDate.setText(DateUtil.getStringDateByFormat(new Date(item.getDate_submitted()), "yyyy-MM-dd HH:mm"));
         String scfd = item.getScfd();
         List<ScfdEntity> brand_lst = new Gson()
                 .fromJson(scfd, new TypeToken<List<ScfdEntity>>() {
                 }.getType());
+        if (brand_lst != null && brand_lst.size() > 0) {
+            brands.addAll(brand_lst);
+            mAdapter.notifyDataSetChanged();
+        }
 
     }
 }
