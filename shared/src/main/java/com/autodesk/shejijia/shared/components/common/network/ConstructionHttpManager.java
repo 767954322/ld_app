@@ -1,11 +1,13 @@
 package com.autodesk.shejijia.shared.components.common.network;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -85,8 +87,9 @@ public class ConstructionHttpManager {
     * token 当前登陆用户的access token
     * callback 请求回调接口
     * */
-    public void getUserProjectLists(@NonNull String requestUrl, @Nullable String requestTag,
+    public void getUserProjectLists(@NonNull Bundle requestParams, @Nullable String requestTag,
                                     OkJsonRequest.OKResponseCallback callback) {
+        String requestUrl = UrlUtils.buildUrl(Constants.BASE_URL + "/users/projects?", requestParams);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

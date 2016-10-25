@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.data.source;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
@@ -31,9 +32,9 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectList(String requestUrl, final String eventTag, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
+    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
 
-        ConstructionHttpManager.getInstance().getUserProjectLists(requestUrl, requestTag, new OkJsonRequest.OKResponseCallback() {
+        ConstructionHttpManager.getInstance().getUserProjectLists(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {

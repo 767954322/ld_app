@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.data.source;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -15,7 +16,7 @@ public interface ProjectDataSource {
     /*
     ＊获取项目列表
     * */
-    void getProjectList(String requestUrl, final String eventTag, String requestTag,@NonNull LoadDataCallback<ProjectList> callback);
+    void getProjectList(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectList> callback);
 
     /*
     * 获取项目详情

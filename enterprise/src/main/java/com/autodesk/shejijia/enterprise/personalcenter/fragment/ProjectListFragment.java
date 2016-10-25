@@ -11,7 +11,7 @@ import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.utility.Constants;
-import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
+import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
@@ -55,8 +55,8 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(mContext, this);
-        String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_STATUS, null, Constants.PROJECT_STATUS_COMPLETE, false, 0);
-        mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
+        mProjectListPresenter.initRequestOptions("2016-10-20",null,Constants.PROJECT_STATUS_COMPLETE);
+        mProjectListPresenter.refreshProjectList();
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     }
 
     @Override
-    public void refreshProjectListData(List<ProjectInfo> projectList) {
+    public void refreshProjectListView(List<ProjectInfo> projectList) {
         //获取当前日期(默认就是当前日期)的任务列表
         //显示任务列表到页面上
         mProjectListAdapter = new ProjectListAdapter(projectList, R.layout.listitem_project_list_view, mContext);
@@ -87,7 +87,7 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     }
 
     @Override
-    public void addMoreProjectListData(List<ProjectInfo> projectList) {
+    public void addMoreProjectListView(List<ProjectInfo> projectList) {
 
     }
 

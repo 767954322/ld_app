@@ -92,7 +92,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
                         ToastUtils.showShort(EnterpriseHomeActivity.this, "title");
                         TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(Constants.TASK_LIST_FRAGMENT);
                         if (taskListFragment != null){
-                            taskListFragment.onQueryByDate("2016-10-25");
+                            taskListFragment.refreshProjectListByDate("2016-10-25");
                         }
                     }
                 });

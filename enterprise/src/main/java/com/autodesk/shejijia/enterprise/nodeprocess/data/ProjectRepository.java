@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.enterprise.nodeprocess.data;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
@@ -28,13 +29,13 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectList(String requestUrl, String eventTag, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
+    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
 
         if (mProjectList != null){
             callback.onLoadSuccess(mProjectList);
         }else {
 
-            ProjectRemoteDataSource.getInstance().getProjectList(requestUrl, eventTag, requestTag, new LoadDataCallback<ProjectList>() {
+            ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, new LoadDataCallback<ProjectList>() {
                 @Override
                 public void onLoadSuccess(ProjectList data) {
                     mProjectList = data;

@@ -6,18 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
-import com.autodesk.shejijia.enterprise.common.utils.UrlHelper;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +43,9 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(getActivity(), this);
-        //get ProjectLists
-        String requestUrl = UrlHelper.getInstance().getUserProjectListUrl(Constants.PROJECT_LIST_BY_DATE, "2016-08-08", null, false, 0);
-        mProjectListPresenter.loadProjectListData(requestUrl, Constants.REFRESH_EVENT, "project_list", false);
+        //refresh ProjectLists
+        mProjectListPresenter.initRequestOptions("2016-10-08", null, null);
+        mProjectListPresenter.refreshProjectList();
     }
 
     @Override
@@ -65,23 +62,36 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
         setHasOptionsMenu(true);
     }
 
-    public void onQueryByDate(String date){
-        ToastUtils.showShort(mContext, date);
+    // TODO: 10/25/16 模拟上拉刷新监听
+    private void onRefresh() {
+        mProjectListPresenter.refreshProjectList();
+    }
+
+    // TODO: 10/25/16 模拟下拉加载更多监听
+    private void onLoadMore() {
+        mProjectListPresenter.loadMoreProjectList();
     }
 
     /*
-      * 当网络请求返回结果成功,presenter回掉view层的该方法,进行结果集的传递
-     * */
+    * toolbar 日期变更点击回调方法（EnterpriseHomeActivity调用）
+    * */
+    public void refreshProjectListByDate(String date) {
+        mProjectListPresenter.onFilterDateChange(date);
+        mProjectListPresenter.refreshProjectList();
+    }
+
     @Override
-    public void refreshProjectListData(List<ProjectInfo> projectList) {
+    public void refreshProjectListView(List<ProjectInfo> projectList) {
         if (projectList != null && projectList.size() > 0) {
             mProjectListAdapter.setProjectLists(projectList);
         }
     }
 
     @Override
-    public void addMoreProjectListData(List<ProjectInfo> projectList) {
-
+    public void addMoreProjectListView(List<ProjectInfo> projectList) {
+        if (projectList != null && projectList.size() > 0) {
+            mProjectListAdapter.appendProjectLists(projectList);
+        }
     }
 
     @Override
@@ -104,9 +114,13 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
         switch (item.getItemId()) {
             case R.id.home_toolbar_search:
                 ToastUtils.showShort(mContext, "search");
+                // TODO: 10/25/16 search 条件修改
+                mProjectListPresenter.onFilterLikeChange(null);
+                mProjectListPresenter.refreshProjectList();
                 break;
             case R.id.home_toolbar_screen:
                 ToastUtils.showShort(mContext, "screen");
+                // TODO: 10/25/16 跳转到搜索页面
                 break;
         }
         return super.onOptionsItemSelected(item);
