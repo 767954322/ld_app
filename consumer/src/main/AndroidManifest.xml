@@ -195,7 +195,14 @@
             android:name=".personalcenter.recommend.activity.MyRecommendActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".personalcenter.recommend.activity.DesignRecomDetailsActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".personalcenter.recommend.activity.NewInventoryActivity"
             android:alwaysRetainTaskState="true"

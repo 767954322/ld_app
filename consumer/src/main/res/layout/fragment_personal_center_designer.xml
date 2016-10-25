@@ -253,7 +253,7 @@
                 android:id="@+id/ll_personal_designer_attention"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_50"
-                android:layout_marginBottom="10dp"
+
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -287,7 +287,6 @@
             </LinearLayout>
 
             <include layout="@layout/view_common_line"/>
-
             <LinearLayout
                 android:id="@+id/ll_personal_recommend"
                 android:layout_width="match_parent"
@@ -324,7 +323,9 @@
 
             <include layout="@layout/view_common_line"/>
 
+
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:id="@+id/ll_personal_designer_msg_center"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_50"

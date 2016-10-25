@@ -1,31 +1,25 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.homepage.activity.DesignerPersonalCenterActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.BeiShuMealEntity;
-import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DesignRecomDetailsActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
-import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cn.finalteam.loadingviewfinal.ListViewFinal;
@@ -56,6 +50,7 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
     private RecommendAdapter mAdapter;
     private PtrClassicFrameLayout mFrameLayout;
     private int mStatus;
+    private int mType;
     private static int OFFSET = 0;
     private static final int LIMIT = 10;
 
@@ -64,10 +59,11 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
         return R.layout.fragment_recommend_list;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        RecommendEntity.ItemsBean item = (RecommendEntity.ItemsBean) parent.getAdapter().getItem(position);
+        if (mType == 1)
+            DesignRecomDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "");
     }
 
     @Override
@@ -86,11 +82,9 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
 
     @Override
     protected void initView() {
-        int type = getArguments().getInt("type");
-        mStatus = getArguments().getInt("status");
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_recommend);
         mFrameLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
-        mAdapter = new RecommendAdapter(getActivity(), mRecommends, R.layout.item_recommend, type == 1);
+        mAdapter = new RecommendAdapter(getActivity(), mRecommends, R.layout.item_recommend, mType == 1);
         mListView.setAdapter(mAdapter);
     }
 
@@ -114,9 +108,8 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                String jsonString = GsonUtil.jsonToString(jsonObject);
-                Log.d("RecommendFragment", jsonString);
-                RecommendEntity entity = GsonUtil.jsonToBean(jsonString, RecommendEntity.class);
+                Log.d("RecommendFragment", jsonObject.toString());
+                RecommendEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendEntity.class);
                 updateViewFromApi(entity.getItems());
             }
 
@@ -125,8 +118,7 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
-        // 20730531 测试id after reset member_id
-        MPServerHttpManager.getInstance().getRecommendList("20730531", offset, limit, status, callback);
+        MPServerHttpManager.getInstance().getRecommendList(member_id, offset, limit, status, callback);
     }
 
     private void updateViewFromApi(List<RecommendEntity.ItemsBean> items) {
@@ -143,6 +135,8 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
 
     @Override
     protected void loadData2Remote() {
+        mType = getArguments().getInt("type");
+        mStatus = getArguments().getInt("status");
         getRecommendList(0, LIMIT, mStatus);
     }
 }

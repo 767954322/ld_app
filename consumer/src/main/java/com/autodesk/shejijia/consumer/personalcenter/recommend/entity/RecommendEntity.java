@@ -13,7 +13,6 @@ public class RecommendEntity {
     private int total;
     private int offset;
     private int limit;
-
     private List<ItemsBean> items;
 
     public int getTotal() {
@@ -51,8 +50,8 @@ public class RecommendEntity {
     public static class ItemsBean {
         private String province;
         private String city;
-        private Object district;
-        private Object scfd;
+        private String district;
+        private String scfd;
         private Object scfc;
         private String status;
         private Object type;
@@ -68,7 +67,7 @@ public class RecommendEntity {
         private String consumer_mobile;
         private String province_name;
         private String city_name;
-        private Object district_name;
+        private String district_name;
         private String community_name;
         private int effective_time;
         private int expiration_time;
@@ -93,19 +92,19 @@ public class RecommendEntity {
             this.city = city;
         }
 
-        public Object getDistrict() {
+        public String getDistrict() {
             return district;
         }
 
-        public void setDistrict(Object district) {
+        public void setDistrict(String district) {
             this.district = district;
         }
 
-        public Object getScfd() {
+        public String getScfd() {
             return scfd;
         }
 
-        public void setScfd(Object scfd) {
+        public void setScfd(String scfd) {
             this.scfd = scfd;
         }
 
@@ -229,11 +228,11 @@ public class RecommendEntity {
             this.city_name = city_name;
         }
 
-        public Object getDistrict_name() {
+        public String getDistrict_name() {
             return district_name;
         }
 
-        public void setDistrict_name(Object district_name) {
+        public void setDistrict_name(String district_name) {
             this.district_name = district_name;
         }
 

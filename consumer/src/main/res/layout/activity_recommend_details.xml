@@ -5,7 +5,9 @@
               android:background="#eef1f4"
               android:orientation="vertical">
 
-    <include layout="@layout/line_view"/>
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,20 +21,29 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+            <ImageView
+                android:id="@+id/iv_reco_wfsico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/size_7.5"
+                android:background="@drawable/icon_recommend_wfsico"
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/tv_recommend_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="西山一号"
+                android:layout_toRightOf="@id/iv_reco_wfsico"
                 android:textColor="@color/text_item_name"/>
 
             <TextView
+                android:id="@+id/tv_asset_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="清单编号：5552545222"
                 android:textColor="@color/font_gray"/>
 
             <View
@@ -55,8 +66,8 @@
                 android:text="@string/name_space"/>
 
             <TextView
-                style="@style/item_text_style"
-                android:text="赵大宝"/>
+                android:id="@+id/tv_reco_consumer_name"
+                style="@style/item_text_style"/>
         </LinearLayout>
 
         <LinearLayout
@@ -71,8 +82,8 @@
                 android:text="@string/consume_phone_number"/>
 
             <TextView
-                style="@style/item_text_style"
-                android:text="15245228786"/>
+                android:id="@+id/tv_reco_consumer_mobile"
+                style="@style/item_text_style"/>
         </LinearLayout>
 
         <LinearLayout
@@ -87,15 +98,16 @@
                 android:text="@string/demand_project_address"/>
 
             <TextView
+                android:id="@+id/tv_reco_item_address"
                 style="@style/item_text_style"
-                android:layout_weight="1"
-                android:text="紫光发展大厦"/>
+                android:layout_weight="1"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:background="@drawable/icon_unfold_normal"/>
+                android:background="@drawable/icon_unfold_normal"
+                android:visibility="gone"/>
         </LinearLayout>
 
         <LinearLayout
@@ -110,8 +122,8 @@
                 android:text="@string/address_details"/>
 
             <TextView
-                style="@style/item_text_style"
-                android:text="小关东街4号楼"/>
+                android:id="@+id/tv_reco_item_details_address"
+                style="@style/item_text_style"/>
         </LinearLayout>
 
         <LinearLayout
@@ -126,53 +138,12 @@
                 android:text="@string/consumer_decoration_buildtime"/>
 
             <TextView
+                android:id="@+id/tv_create_date"
                 style="@style/item_text_style"
                 android:text="2016-05-06 10:20"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_0.5"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="5dp"
-            android:background="#dedede"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:paddingRight="16dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true">
-
-                <TextView
-                    android:id="@+id/tv_cancel_btn"
-                    android:layout_width="68dp"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="16dp"
-                    android:background="@drawable/bg_btn_filtrate_pressed"
-                    android:gravity="center"
-                    android:text="撤销"
-                    android:textColor="@color/color_blue_0084ff"
-                    android:textSize="@dimen/font_12"/>
-
-                <TextView
-                    android:id="@+id/tv_edit_btn"
-                    android:layout_width="68dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/bg_btn_filtrate_pressed"
-                    android:gravity="center"
-                    android:text="编辑"
-                    android:textColor="@color/color_blue_0084ff"
-                    android:textSize="@dimen/font_12"/>
-            </LinearLayout>
-
-            <include layout="@layout/line_view"/>
-
-        </RelativeLayout>
+        <include layout="@layout/line_view"/>
     </LinearLayout>
 
     <TextView
@@ -184,6 +155,7 @@
         android:text="瓷砖"/>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"/>

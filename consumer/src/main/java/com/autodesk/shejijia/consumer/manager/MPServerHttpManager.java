@@ -50,13 +50,14 @@ public class MPServerHttpManager {
     }
 
     /**
-     * 我的家装订单
+     * 设计师推荐列表页面
      */
     public void getRecommendList(String design_id, final int offset, final int limit, int status, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + design_id + "/recommends?" +
                 "&offset=" + offset +
                 "&limit=" + limit +
-                "&status=" + status;
+                "&status=" + status +
+                "&asset_name=" + design_id;
         Log.d("RecommendFragment", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
@@ -69,6 +70,23 @@ public class MPServerHttpManager {
         queue.add(okRequest);
     }
 
+    /**
+     * 设计师清单详情
+     */
+    public void getRecommendDetails(String design_id, String assetId, OkJsonRequest.OKResponseCallback callback) {
+        //materials-recommend-app/v1/api/designers/{designer_id}/recommends/{asset_id}
+        String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + design_id + "/recommends/" + assetId;
+        Log.d("RecommendFragment", url);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
 
     /**
      * 我的家装订单
