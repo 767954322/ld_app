@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.RelativeLayout;
@@ -22,7 +24,6 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONObject;
 
@@ -49,7 +50,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity {
     protected void initView() {
         super.initView();
         mActivityRecommendListDetail = (RelativeLayout) findViewById(R.id.activity_recommend_list_detail);
-        mRecyclerViewList = (RecyclerView) findViewById(R.id.recycler_view_list);
+        mRecyclerViewList = (RecyclerView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
 
     }
@@ -71,8 +72,16 @@ public class RecommendListDetailActivity extends NavigationBarActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mActivity = this;
-        CustomProgress.showDefaultProgress(mActivity);
+        initRecycleView();
+
         getRecommendDraftDetail();
+    }
+
+    private void initRecycleView() {
+        //init recyclerView
+        mRecyclerViewList.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewList.setHasFixedSize(true);
+        mRecyclerViewList.setItemAnimator(new DefaultItemAnimator());
     }
 
 
@@ -80,6 +89,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity {
      * 从推荐草稿中获取推荐清单信息
      */
     void getRecommendDraftDetail() {
+        CustomProgress.showDefaultProgress(mActivity);
+
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity == null) {
             return;
@@ -92,10 +103,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 Log.d("RecommendListDetailAc", jsonString);
                 RecommendListDetailBean recommendListDetailBean = GsonUtil.jsonToBean(jsonString, RecommendListDetailBean.class);
-
-                setTitleForNavbar(recommendListDetailBean.getCommunity_name());
-                setTitleForNavButton(ButtonType.RIGHT, "添加主材");
-                setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
+                updateUI(recommendListDetailBean);
             }
 
             @Override
@@ -107,4 +115,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity {
         MPServerHttpManager.getInstance().getRecommendDraftDetail(designer_id, mAsset_id, callback);
     }
 
+
+    private void updateUI(RecommendListDetailBean recommendListDetailBean) {
+        setTitleForNavbar(recommendListDetailBean.getCommunity_name());
+        setTitleForNavButton(ButtonType.RIGHT, "添加主材");
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
+
+        // 更新适配器
+    }
 }

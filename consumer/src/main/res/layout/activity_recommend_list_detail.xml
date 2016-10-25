@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_recommend_list_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_list"
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header"/>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <include layout="@layout/activity_recommend_list_content"></include>
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btn_list_send"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_common_btn_blue"
-        android:text="@string/send"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_20"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_list_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/bg_0084ff"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_20"/>
+    </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>
