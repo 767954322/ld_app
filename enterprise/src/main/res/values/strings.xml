@@ -35,4 +35,6 @@
     <string name="toolbar_title">今日任务</string>
 
 
+    <string name="has_question">有问题</string>
+    <string name="has_update">有更新</string>
 </resources>

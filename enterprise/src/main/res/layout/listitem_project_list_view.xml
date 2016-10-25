@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -47,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/project_list_tv_gray_shape"
-                    android:text="有问题"
+                    android:text="@string/has_question"
                     android:textColor="@color/font_gray"
                     android:textSize="@dimen/font_small"
                     android:visibility="gone" />
@@ -75,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/project_list_tv_gray_shape"
-                    android:text="有更新"
+                    android:text="@string/has_update"
                     android:textColor="@color/font_gray"
                     android:textSize="@dimen/font_small"
                     android:visibility="gone" />

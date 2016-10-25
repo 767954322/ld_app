@@ -7,7 +7,6 @@ import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;

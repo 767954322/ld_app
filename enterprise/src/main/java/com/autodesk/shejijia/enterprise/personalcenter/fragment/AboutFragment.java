@@ -1,8 +1,5 @@
 package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -14,8 +11,10 @@ import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
  * Created by t_xuz on 9/2/16.
  * 我页--关于app页面
  */
+@SuppressWarnings("ALL")
 public class AboutFragment extends BaseEnterpriseFragment {
     private ImageButton mBackBtn;
+    @SuppressWarnings("FieldCanBeLocal")
     private TextView mTopBarTitle;
 
     public static AboutFragment newInstance(){

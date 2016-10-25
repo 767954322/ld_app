@@ -1,6 +1,5 @@
 package com.autodesk.shejijia.shared.components.common.network;
 
-import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -17,16 +16,16 @@ import java.util.Map;
  * Created by t_xuz on 8/16/16.
  * 与 服务端主线相关的 服务端api接口的封装类
  */
-public class EnterpriseServerHttpManager {
+public class ConstructionHttpManager {
 
-    private EnterpriseServerHttpManager() {
+    private ConstructionHttpManager() {
     }
 
     private static class ServerHttpManagerHolder {
-        private static final EnterpriseServerHttpManager INSTANCE = new EnterpriseServerHttpManager();
+        private static final ConstructionHttpManager INSTANCE = new ConstructionHttpManager();
     }
 
-    public static EnterpriseServerHttpManager getInstance() {
+    public static ConstructionHttpManager getInstance() {
         return ServerHttpManagerHolder.INSTANCE;
     }
 

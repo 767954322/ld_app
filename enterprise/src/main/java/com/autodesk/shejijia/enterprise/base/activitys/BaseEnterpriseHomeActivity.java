@@ -70,7 +70,7 @@ public abstract class BaseEnterpriseHomeActivity extends BaseActivity {
     protected void changeFragment(String tag,int position){
         List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
         if (fragmentList == null) return;
-        LogUtils.e("fragmentlist=-size",fragmentList.size()+"");
+        LogUtils.e("fragmentLis－－－size",fragmentList.size()+"");
         for (Fragment fragment : fragmentList){
             if (fragment.getTag().equalsIgnoreCase(tag) && position==0){
                 getSupportFragmentManager().beginTransaction()

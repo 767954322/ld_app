@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.network.EnterpriseServerHttpManager;
+import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.Constants;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -118,7 +118,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
                 updateUI(project);
             }
         };
-        EnterpriseServerHttpManager.getInstance().getProjectDetails(pid,token,true,callback);
+        ConstructionHttpManager.getInstance().getProjectDetails(pid,token,true,callback);
     }
 
     private void updateUI(ProjectInfo project){

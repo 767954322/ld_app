@@ -2,7 +2,6 @@ package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,9 +13,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 
 /**
@@ -96,7 +95,7 @@ public class MoreFragment extends BaseEnterpriseFragment implements View.OnClick
         mCacheSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.showShort((Activity) mContext,"预约时间已录入!");
+                ToastUtils.showShort( mContext,"预约时间已录入!");
             }
         });
         mCacheConfirm.setOnClickListener(new View.OnClickListener() {
@@ -141,8 +140,8 @@ public class MoreFragment extends BaseEnterpriseFragment implements View.OnClick
     }
 
     private void setBackGround(float alpha){
-        WindowManager.LayoutParams layoutParams = ((Activity)mContext).getWindow().getAttributes();
+        WindowManager.LayoutParams layoutParams = mContext.getWindow().getAttributes();
         layoutParams.alpha = alpha;
-        ((Activity)mContext).getWindow().setAttributes(layoutParams);
+        mContext.getWindow().setAttributes(layoutParams);
     }
 }

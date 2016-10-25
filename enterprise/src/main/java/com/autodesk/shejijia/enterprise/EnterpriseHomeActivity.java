@@ -45,6 +45,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         mMemberEntity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constants.USER_INFO);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     protected void initView() {
         //bottomBar
@@ -67,6 +68,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         mTaskBtn.setChecked(true);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
 

@@ -155,7 +155,7 @@
         <service
             android:name="com.autodesk.shejijia.shared.components.im.service.webSocketService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <service
             android:name="cn.jpush.android.service.DownloadService"
@@ -206,6 +206,7 @@
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
         <receiver
             android:name="com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver"
+            android:exported="false"
             android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->

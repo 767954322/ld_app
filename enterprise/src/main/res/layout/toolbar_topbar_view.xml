@@ -9,7 +9,8 @@
     android:elevation="@dimen/spacing_padding_micro"
     android:gravity="center"
     app:navigationIcon="@drawable/icon_back_normal_z"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    tools:targetApi="lollipop">
 
     <TextView
         android:id="@+id/tv_center_content"
