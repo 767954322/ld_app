@@ -43,7 +43,7 @@
             android:text="数量："/>
 
         <EditText
-            android:id="@+id/tv_brand_num"
+            android:id="@+id/et_brand_num"
             style="@style/style_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:text="规格："/>
 
         <EditText
-            android:id="@+id/tv_brand_dimension"
+            android:id="@+id/et_brand_dimension"
             style="@style/style_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             android:text="空间："/>
 
         <ExpandableListView
-            android:id="@+id/tv_brand_apartment"
+            android:id="@+id/elv_brand_apartment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="卫生间"/>
@@ -94,9 +94,9 @@
             android:text="备注："/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_brand_remarks"
+            android:id="@+id/et_brand_remarks"
             style="@style/style_edit_text"
             android:hint="请填写备注"/>
     </LinearLayout>

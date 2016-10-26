@@ -47,9 +47,11 @@
     </style>
 
     <style name="style_edit_text">
+        <item name="android:layout_gravity">center</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/gray</item>
-        <item name="android:textSize">@dimen/font_13</item>
+        <item name="android:textSize">@dimen/font_15</item>
+        <item name="android:background">@drawable/edit_text_selector</item>
 
     </style>
 

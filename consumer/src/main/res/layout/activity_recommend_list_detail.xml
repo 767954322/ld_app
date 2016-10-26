@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/size_15"
+        android:layout_marginTop="@dimen/size_8"
         android:background="@color/bg_0084ff"
         android:text="@string/send"
         android:textColor="@color/white"
