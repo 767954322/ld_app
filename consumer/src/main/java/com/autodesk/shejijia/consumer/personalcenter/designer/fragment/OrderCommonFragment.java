@@ -205,12 +205,12 @@ public class OrderCommonFragment extends BaseFragment {
                 return;
             }
             final String needs_id = orderListEntity.getNeeds_id();
-            String consumer_name = orderListEntity.getContacts_name();
+            final String contacts_name = orderListEntity.getContacts_name();
+            final String community_name = orderListEntity.getCommunity_name();
             String consumer_mobile = orderListEntity.getContacts_mobile();
             String province_name = orderListEntity.getProvince_name();
             String city_name = orderListEntity.getCity_name();
             String district_name = orderListEntity.getDistrict_name();
-            String community_name = orderListEntity.getCommunity_name();
             String house_type = orderListEntity.getHouse_type();
             String decoration_style = orderListEntity.getDecoration_style();
 
@@ -236,7 +236,7 @@ public class OrderCommonFragment extends BaseFragment {
                 PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_slite_photo);
                 ImageUtils.displayAvatarImage(avatar, polygonImageView);
 
-                holder.setText (R.id.tv_designer_order_state,
+                holder.setText(R.id.tv_designer_order_state,
                         MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id, biddersBean.getDelivery()));
 
             } else {
@@ -246,10 +246,10 @@ public class OrderCommonFragment extends BaseFragment {
             holder.setText(R.id.tv_decoration_phone, consumer_mobile);
             holder.setText(R.id.tv_designer_order_house_type, house_type_convert);
             holder.setText(R.id.tv_designer_order_house_style, decoration_style_convert);
-            holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(consumer_name));
+            holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(contacts_name));
             holder.setText(R.id.tv_designer_order_community, "/" + UIUtils.getNoStringIfEmpty(community_name));
             holder.setText(R.id.tv_address, address);
-            holder.setText(R.id.tv_customer_name, UIUtils.getNoStringIfEmpty(consumer_name));
+            holder.setText(R.id.tv_customer_name, UIUtils.getNoStringIfEmpty(contacts_name));
 
             /**
              * 项目进度．
@@ -315,11 +315,12 @@ public class OrderCommonFragment extends BaseFragment {
                     Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
                     intent.putExtra(ChatRoomActivity.THREAD_ID, designer_thread_id);
                     intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, userName);
+                    intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, contacts_name);
                     intent.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
                     intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
                     intent.putExtra(ChatRoomActivity.MEMBER_TYPE, memType);
                     intent.putExtra(ChatRoomActivity.MEDIA_TYPE, UrlMessagesContants.mediaIdProject);
+                    intent.putExtra(ChatRoomActivity.PROJECT_TITLE, community_name);
                     getActivity().startActivity(intent);
 
                 }
