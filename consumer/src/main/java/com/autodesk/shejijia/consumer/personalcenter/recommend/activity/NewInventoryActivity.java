@@ -296,7 +296,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 Log.d("NewInventoryActivity", "成功啦");
-                
+
             }
 
             @Override

@@ -146,6 +146,7 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_phone_number"
                 android:textColor="@color/bg_99"

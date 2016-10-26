@@ -84,10 +84,5 @@ public class RegexUtil {
      */
     public static final String ACCOUNT_NUMBER_REGEX = "[0-9]{9}";
 
-    /**
-     * 验证小区名称
-     */
-
-    public static final String COMMUNITY_NAME_REGEX = "^\\S[a-zA-Z\\s\\d\\u4e00-\\u9fa5]{3,33}$"; // 中英文数据空格适配正则  +\S
 
 }

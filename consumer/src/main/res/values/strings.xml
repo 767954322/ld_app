@@ -691,6 +691,9 @@
     <string name="new_inventory_input_right_account_number">请输入正确格式的会员帐号</string>
     <string name="new_inventory_input_right_community_name">请输入2-32个字符的小区名称</string>
     <string name="new_inventory_input_right_detail_address">请输入2-32个字符的详细地址</string>
+    <string name="new_inventory_save_project_fail">保存项目失败</string>
+
+    <string name="select_project">选择项目</string>
 
 
     <!-- DecorationBeiShuFragment -->
