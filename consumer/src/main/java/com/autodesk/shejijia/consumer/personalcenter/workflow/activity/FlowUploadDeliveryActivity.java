@@ -609,7 +609,9 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                 if (TextUtils.isEmpty(design_asset_id_measure)) {
                     return;
                 }
-                postDelivery(design_asset_id_measure, needs_id, designer_id, stringBuilder.toString(), type);
+                String s = stringBuilder.toString();
+                s=s.replace(s.charAt(s.length()-1)+"","");
+                postDelivery(design_asset_id_measure, needs_id, designer_id, s, type);
                 break;
         }
     }
