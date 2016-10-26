@@ -2,7 +2,9 @@ package com.autodesk.shejijia.consumer.codecorationBase.coelite.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -48,7 +50,7 @@ import java.util.Map;
  * @brief 精选发布需求 .
  */
 
-public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener, View.OnFocusChangeListener {
+public class IssueEliteDemanActivity extends NavigationBarActivity implements View.OnClickListener, OnItemClickListener, View.OnFocusChangeListener, TextWatcher {
     private HomeTypeDialog homeTypeDialog;
     private String phone_num;
 
@@ -73,6 +75,8 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         tvIssueStyle = (TextView) findViewById(R.id.tv_issue_style);
         tvIssueAddress = (TextView) findViewById(R.id.tv_issue_address);
         tvIssueDemandDetailAddress = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
+        ll_house_type_select = (LinearLayout) findViewById(R.id.ll_house_type_select);
+        ll_line = (LinearLayout) findViewById(R.id.ll_line);
 
     }
 
@@ -110,6 +114,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         tvIssueDemandDesignBudget.setOnClickListener(this);
         tvIssueAddress.setOnClickListener(this);
         etIssueDemandArea.setOnFocusChangeListener(this);
+        etIssueDemandArea.addTextChangedListener(this);
     }
 
     @Override
@@ -130,6 +135,9 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     private void onFocusChangeForArea(boolean hasFocus) {
         if (!hasFocus) {
             String area = etIssueDemandArea.getText().toString().trim();
+            if(TextUtils.isEmpty(area)){
+                return;
+            }
             area = String.format("%.2f", Double.valueOf(area));
             etIssueDemandArea.setText(area);
         }
@@ -233,6 +241,22 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         if (!area.matches("^[0-9]{1,4}+(.[0-9]{1,2})?$") || subNum.length() > 4) {
             showAlertView(R.string.please_input_correct_area);
             return false;
+        }
+        if (!TextUtils.isEmpty(house_type)){
+
+            if (!tvIssueHouseType.getText().toString().equals("住宅空间")){
+
+                livingRoom = null;
+                room = "other";
+                mToilet = null;
+            }
+        }
+
+        if (TextUtils.isEmpty(tvIssueRoom.getText().toString())){
+
+            livingRoom = null;
+            room = "other";
+            mToilet = null;
         }
 
         if (TextUtils.isEmpty(mCurrentDistrictCode)) {
@@ -363,8 +387,8 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
         homeTypeDialog = HomeTypeDialog.getInstance(this);
         homeTypeDialog.setOnAddressCListener(new HomeTypeDialog.OnAddressCListener() {
             @Override
-            public void onClick(String roomName, String livingRoom, String toilet) {
-                String roomType = roomName + livingRoom + toilet;
+            public void onClick(String roomName, String lR, String toilet) {
+                String roomType = roomName + lR + toilet;
                 tvIssueRoom.setText(roomType);
 
                 /// convet .
@@ -372,7 +396,7 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
                 Map<String, String> roomHallMap = AppJsonFileReader.getRoomHall(IssueEliteDemanActivity.this);
                 Map<String, String> toiletMap = AppJsonFileReader.getToilet(IssueEliteDemanActivity.this);
 
-                livingRoom = ConvertUtils.getKeyByValue(livingRoomMap, livingRoom);
+                livingRoom = ConvertUtils.getKeyByValue(livingRoomMap, lR);
                 room = ConvertUtils.getKeyByValue(roomHallMap, roomName);
                 mToilet = ConvertUtils.getKeyByValue(toiletMap, toilet);
 
@@ -427,6 +451,15 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
             public void onOptionsSelect(int options1, int option2, int options3) {
                 house_type = houseTypeItems.get(options1);
                 tvIssueHouseType.setText(house_type);
+                if (house_type.equals("住宅空间")){
+
+                    ll_house_type_select.setVisibility(View.VISIBLE);
+                    ll_line.setVisibility(View.VISIBLE);
+                }else {
+
+                    ll_house_type_select.setVisibility(View.GONE);
+                    ll_line.setVisibility(View.GONE);
+                }
                 Map<String, String> space = AppJsonFileReader.getSpace(IssueEliteDemanActivity.this);
                 house_type = ConvertUtils.getKeyByValue(space, house_type);
             }
@@ -535,6 +568,8 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     /// 控件.
     private LinearLayout llIssueHouseType;
     private LinearLayout llIssueStyle;
+    private LinearLayout ll_house_type_select;
+    private LinearLayout ll_line;
     private EditText etIssueDemandName;
     private TextView tvIssueDemandBudget;
     private TextView tvIssueDemandDesignBudget;
@@ -564,4 +599,38 @@ public class IssueEliteDemanActivity extends NavigationBarActivity implements Vi
     public static final int RESULT_CODE = 101;
 
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if (s.toString().contains(".")) {
+            if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                s = s.toString().subSequence(0, s.toString().indexOf(".") + 3);
+                etIssueDemandArea.setText(s);
+                etIssueDemandArea.setSelection(s.length());
+            }
+        }
+
+        if (s.toString().trim().substring(0).equals(".")) {
+            s = "0" + s;
+            etIssueDemandArea.setText(s);
+            etIssueDemandArea.setSelection(2);
+        }
+
+        if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+            if (!s.toString().substring(1, 2).equals(".")) {
+                etIssueDemandArea.setText(s.subSequence(0, 1));
+                etIssueDemandArea.setSelection(1);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }

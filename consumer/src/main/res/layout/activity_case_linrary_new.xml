@@ -16,9 +16,9 @@
         android:id="@+id/case_library_new"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_white"
-        android:dividerHeight="@dimen/size_5"
-        android:divider="@color/grey_white"
+        android:background="@color/white"
+        android:dividerHeight="@dimen/size_2"
+        android:divider="@color/white"
         android:layout_below="@+id/common_navbar" />
 
     <include

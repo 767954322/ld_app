@@ -55,7 +55,7 @@ public class PersonalMainFragment extends BaseEnterpriseFragment implements View
                 break;
             case R.id.tv_personal_more: //更多
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit,R.anim.slide_fragment_pop_enter,R.anim.slide_fragment_pop_exit)
+                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter,R.anim.slide_fragment_horizontal_exit)
                         .add(R.id.fly_personal_center_container, MoreFragment.newInstance())
                         .addToBackStack(MoreFragment.newInstance().getClass().getSimpleName())
                         .commit();

@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -162,6 +164,54 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState){
+            case SCROLL_STATE_IDLE:
+                TranslateAnimation moveToViewLocationAnimation = AnimationUtil.moveToViewLocation();
+                rlCaseLibraryBottom.startAnimation(moveToViewLocationAnimation);
+                moveToViewLocationAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL:
+                TranslateAnimation moveToViewBottomAnimation = AnimationUtil.moveToViewBottom();
+                rlCaseLibraryBottom.startAnimation(moveToViewBottomAnimation);
+                moveToViewBottomAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                //正在滚动时调用
+                break;
+            case SCROLL_STATE_FLING:
+                //手指快速滑动时,在离开ListView由于惯性滑动
+                break;
+        }
     }
 
     @Override
@@ -194,6 +244,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
             case R.id.iv_follow_designer://关注
                 if (null != memberEntity) {
+                    member_id = memberEntity.getAcs_member_id();
                     if (null != caseDetailBean && null != caseDetailBean.getDesigner_info()) {
                         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
@@ -208,7 +259,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                         }
                     }
                 } else {
+                    isfromGuanZhu=true;
                     LoginUtils.doLogin(this);
+
                 }
                 break;
 
@@ -405,8 +458,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 caseDetailBean = GsonUtil.jsonToBean(info, CaseDetailBean.class);
                 //set tital
                 String str_tital = caseDetailBean.getTitle();
-                boolean isTitalToLong = str_tital.length() > 6;
-                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                boolean isTitalToLong = str_tital.length() > 8;
+                str_tital = isTitalToLong ? str_tital.substring(0, 8) + "..." : str_tital;
                 setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
@@ -478,9 +531,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         //设置简介
         String introduction = caseDetailBean.getDescription();
         if (introduction == null || introduction.equals("")) {
-            mCaseLibraryText.setText(R.string.nodescription);
+            mCaseLibraryText.setText("\u3000\u3000" +getString( R.string.nodescription));
         } else {
-            mCaseLibraryText.setText("          " + introduction);
+            mCaseLibraryText.setText("\u3000\u3000" + introduction);
         }
 
         tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
@@ -500,26 +553,14 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
         DesignerInfoBean designer_info = caseDetailBean.getDesigner_info();
         if (designer_info.getNick_name() != null) {
-            if (designer_info.getNick_name().length() > 8) {
-                String nickName = designer_info.getNick_name().substring(0, 8);
-                String nickNameNow = nickName + "…";
-                ivConsumeHomeDesigner.setText(nickNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getNick_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getNick_name());
         } else {
-            if (designer_info.getFirst_name().length() > 8) {
-                String firstName = designer_info.getFirst_name().substring(0, 8);
-                String firstNameNow = firstName + "…";
-                ivConsumeHomeDesigner.setText(firstNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
         }
 
         //ivConsumeHomeDesigner.setText(caseDetailBean.getDesigner_info().getFirst_name());
 //        ImageUtils.displayIconImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
-        ImageUtils.loadImageIcon(pivImgCustomerHomeHeader, caseDetailBean.getDesigner_info().getAvatar());
+        ImageUtils.displayAvatarImage(caseDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerInfoBean designer = mDesignerInfo.getDesigner();
 
         if (null != designer) {
@@ -610,6 +651,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     @Override
     protected void onRestart() {
         super.onRestart();
+        memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (isfromGuanZhu && null != memberEntity) {
+            getCaseDetailData(case_id);
+        } else {
+            isfromGuanZhu = false;
+        }
+
         showOrHideChatBtn();
     }
 
@@ -622,11 +670,11 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
-                }
+//                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
+//                }
                 break;
             case MotionEvent.ACTION_UP:
                 break;
@@ -714,6 +762,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private String mMemberType;
     private boolean isMemberLike;
     private ImageView ivThumbUp;
+    private boolean isfromGuanZhu = false;
     private ImageView ivHeadThumbUp;
     private String firstCaseLibraryImageUrl;
     private int topPosition;

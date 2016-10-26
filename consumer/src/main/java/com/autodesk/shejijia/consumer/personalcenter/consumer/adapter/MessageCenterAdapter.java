@@ -1,22 +1,33 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBody;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author gumenghao .
@@ -26,16 +37,48 @@ import java.util.List;
  * @brief 消息中心 .
  */
 public class MessageCenterAdapter extends BaseAdapter {
-
+    private DeleteMessage deleteMessage;
+    private int right_wid;
     private Context mContext;
     private Boolean ifIsDesiner;
+    private boolean isClickEditor = false;
+    private boolean isClickedAll = false;
+
+
     private List<MessageCenterBean.MessagesBean> mCasesEntities;
+    private List<MessageCenterBean.MessagesBean> listMessagesBeans;
+    private List<Integer> listposition;
+    private final Set<Integer> mCheckeds;
 
 
-    public MessageCenterAdapter(Context mContext, List<MessageCenterBean.MessagesBean> mCasesEntities, Boolean ifIsDesiner) {
+    public MessageCenterAdapter(Context mContext, List<MessageCenterBean.MessagesBean> mCasesEntities, Boolean ifIsDesiner, int right_wid) {
+        mCheckeds = new HashSet<>();
         this.mContext = mContext;
         this.mCasesEntities = mCasesEntities;
         this.ifIsDesiner = ifIsDesiner;
+        this.right_wid = right_wid;
+        listMessagesBeans = new ArrayList<>();
+        listposition = new ArrayList<>();
+    }
+
+    public Set<Integer> getmCheckeds() {
+        return mCheckeds;
+    }
+
+    public void setEditor(boolean status) {
+        isClickEditor = status;
+    }
+
+    public boolean getEditor() {
+        return isClickEditor;
+    }
+
+    public boolean getClickedAll() {
+        return isClickedAll;
+    }
+
+    public void setClickedAll(boolean clickedAll) {
+        isClickedAll = clickedAll;
     }
 
     @Override
@@ -54,7 +97,7 @@ public class MessageCenterAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         MyHolder myHolder;
         if (convertView == null) {
@@ -63,11 +106,14 @@ public class MessageCenterAdapter extends BaseAdapter {
             myHolder.item_msg_content = (TextView) convertView.findViewById(R.id.tv_msg_content);
             myHolder.tv_msg_title = (TextView) convertView.findViewById(R.id.tv_msg_title);
             myHolder.tv_msg_date = (TextView) convertView.findViewById(R.id.tv_msg_date);
+            myHolder.checkBox = (CheckBox) convertView.findViewById(R.id.item_msg_checkout);
+            myHolder.item_left = (View) convertView.findViewById(R.id.item_relayout_left);
+            myHolder.item_right = (View) convertView.findViewById(R.id.item_relayout_right);
             convertView.setTag(myHolder);
         } else {
             myHolder = (MyHolder) convertView.getTag();
         }
-        MessageCenterBean.MessagesBean messagesBean = mCasesEntities.get(position);
+        final MessageCenterBean.MessagesBean messagesBean = mCasesEntities.get(position);
 
         String body = messagesBean.getBody();
         String title = messagesBean.getTitle();
@@ -78,30 +124,104 @@ public class MessageCenterAdapter extends BaseAdapter {
             Long aLong = Long.valueOf(sent_time);
             timeMY = DateUtil.showDate(aLong);
         }
-
         title = TextUtils.isEmpty(title) ? "消息中心" : title;
 
-        if(title.length()>12){
-            title = title.substring(0,12)+"...";
+        if (title.length() > 12) {
+            title = title.substring(0, 12) + "...";
         }
         myHolder.tv_msg_title.setText(title);
         myHolder.tv_msg_date.setText(timeMY);
 
+        String show_Body = "";
         if (!TextUtils.isEmpty(body) && body.contains("&quot;")) {
             MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
 
             Log.d("test", messageCenterBody.toString());
             if (ifIsDesiner) {
-                myHolder.item_msg_content.setText(messageCenterBody.getFor_designer().replace("&gt;",">"));
+                show_Body = messageCenterBody.getFor_designer().replace("&gt;", ">");
             } else {
-                myHolder.item_msg_content.setText(messageCenterBody.getFor_consumer().replace("&gt;",">"));
+                show_Body = messageCenterBody.getFor_consumer().replace("&gt;", ">");
             }
         } else {
-            myHolder.item_msg_content.setText(body.replace("&gt;",">"));
+            show_Body = body.replace("&gt;", ">");
         }
+        myHolder.item_msg_content.setText(show_Body);
+        // 设置添加消息左滑删除功能
+        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        myHolder.item_left.setLayoutParams(lp1);
+        LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(right_wid, LinearLayout.LayoutParams.MATCH_PARENT);
+        myHolder.item_right.setLayoutParams(lp2);
 
+        final String finalShow_Body = show_Body;
+        myHolder.item_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                Intent intent = new Intent(mContext, MessageCenterDetailActivity.class);
+//                intent.putExtra("messagesBean", messagesBean);
+//                intent.putExtra("show_Body", finalShow_Body);
+//                mContext.startActivity(intent);
+
+            }
+        });
+        final View finalConvertView = convertView;
+        myHolder.item_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listMessagesBeans.clear();
+                listMessagesBeans.add(messagesBean);
+                listposition.add(position);
+                deleteMessage.deleteMsgs(listposition, listMessagesBeans, finalConvertView);
+
+            }
+        });
+        myHolder.checkBox.setChecked(mCheckeds.contains(position));
+        Log.d("tezst", position + ":" + mCheckeds.size() + "");
+        //checkBox设置
+        if (!isClickEditor) {
+            myHolder.checkBox.setVisibility(View.GONE);
+        } else {
+            myHolder.checkBox.setVisibility(View.VISIBLE);
+        }
+        //checkBox监听
+//        myHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    mCheckeds.add(position);
+//                } else {
+//                    mCheckeds.remove(position);
+//                    Log.d("tezst",position+"被从Set集合清楚了删除了");
+//                }
+//
+//            }
+//        });
+
+        myHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCheckeds.contains(position)) {
+                    mCheckeds.remove(position);
+                } else {
+                    mCheckeds.add(position);
+                }
+            }
+        });
 
         return convertView;
+    }
+
+    public void addAll() {
+        for (int i = 0; i < mCasesEntities.size(); i++) {
+            mCheckeds.add(i);
+        }
+        this.notifyDataSetChanged();
+    }
+
+    public void clearChose() {
+        mCheckeds.clear();
+        this.notifyDataSetChanged();
     }
 
     class MyHolder {
@@ -109,7 +229,19 @@ public class MessageCenterAdapter extends BaseAdapter {
         private TextView tv_msg_date;
         private TextView tv_msg_title;
         private TextView item_msg_content;
+        private View item_left;
 
+        private CheckBox checkBox;
+        private View item_right;
+
+    }
+
+    public void setDeleteMessageListener(DeleteMessage deleteMessage) {
+        this.deleteMessage = deleteMessage;
+    }
+
+    public interface DeleteMessage {
+        public void deleteMsgs(List<Integer> listpositions, List<MessageCenterBean.MessagesBean> listMessagesBeans, View convertView);
     }
 
 }

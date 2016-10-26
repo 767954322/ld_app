@@ -55,7 +55,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     @Override
     protected void initView() {
 
-        vp_grand_selection = (ViewPager) rootView.findViewById(R.id.vp_grand_selection);
+        //vp_grand_selection = (ViewPager) rootView.findViewById(R.id.vp_grand_selection);
         bt_grand_reservation = (ImageButton) rootView.findViewById(R.id.bt_grand_reservation);
         ll_grand_selection = (ViewGroup) rootView.findViewById(R.id.ll_grand_selection);
     }
@@ -67,6 +67,11 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     @Override
     protected void initData() {
         initGrandListData();
+    }
+
+    private ViewPager getViewPager()
+    {
+        return (ViewPager) rootView.findViewById(R.id.vp_grand_selection);
     }
     /**
      * 获取大师列表数据
@@ -102,7 +107,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
 
                         JSONObject jsonObject = new JSONObject();
 
-                        int currentItem = vp_grand_selection.getCurrentItem();
+                        int currentItem = getViewPager().getCurrentItem();
                         String nicke_name = "", member_id = "", hs_uid = "", login_member_id = "", login_hs_uid = "";
                         if (currentItem != 0) {
                             nicke_name = mMasterInfoList.get(currentItem - 1).getNick_name();
@@ -146,8 +151,8 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
             mMasterInfoList = grandMasterInfo.getDesigner_list();
         }
         mPagerAdapter = new MastersPagerAdapter(getActivity(), mMasterInfoList);
-        vp_grand_selection.setAdapter(mPagerAdapter);
-        vp_grand_selection.setOnPageChangeListener(this);
+        getViewPager().setAdapter(mPagerAdapter);
+        getViewPager().setOnPageChangeListener(this);
 
         addImageViewtips();
     }
@@ -300,7 +305,7 @@ public class GrandMasterFragment extends BaseFragment implements ViewPager.OnPag
     }
 
 
-    private ViewPager vp_grand_selection;
+    //private ViewPager vp_grand_selection;
     private ViewGroup ll_grand_selection;
     private ImageButton bt_grand_reservation;
     private boolean isLoginUserJust = false;

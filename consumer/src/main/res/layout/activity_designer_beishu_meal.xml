@@ -144,7 +144,7 @@
                     android:layout_marginLeft="@dimen/size_10"
                     android:background="@null"
                     android:ellipsize="end"
-                    android:hint="@string/please_enter_correct_address"
+                    android:hint="@string/please_enter_address_regular"
                     android:singleLine="true"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>

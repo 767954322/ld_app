@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,13 +27,14 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInf
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractDataBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPContractNoBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignContractBean;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
+import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppDataFormatValidator.MPDesignFormatValidator;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnDismissListener;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -159,7 +161,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             UpdateUIcontractContentWebView();
         }
         UpdateUIActionLayout();
-
     }
 
     private void UpdateUIlayoutContractContent() {
@@ -168,6 +169,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_designer_phone.setText(designer_mobile);
         tvc_designer_name.setText(designer_name);
         tvc_designer_email.setText(designer_mail);
+        /* 填充消费者个人信息 */
+        tvc_consumer_name.setText(requirement.getContacts_name());
+        tvc_consumer_phone.setText(requirement.getContacts_mobile());
 
         if (bShowModeContentWebView) {
             ll_contract_input_form_layout.setVisibility(View.GONE);
@@ -212,20 +216,25 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 }
             });
 
-            tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
-            tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
+            if (requirement.getDistrict_name().equals("none")) {
+                tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name());
+                tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name());
+            } else {
+                tvc_consumer_local_area.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
+                tvc_designer_decorate_address.setText(requirement.getProvince_name() + requirement.getCity_name() + requirement.getDistrict_name());
+            }
         } else {
 
             if (!bAllowUserInput) {
                 UpdateUIdisableFieldsInput();
             }
-            MPDesignContractBean designContractEntity = mBidders.get(0).getDesign_contract();
+            designContractEntity = mBidders.get(0).getDesign_contract();
             if (null == designContractEntity) {
                 return;
             }
-            String contractData = designContractEntity.getContract_data();
+            contractData = designContractEntity.getContract_data();
             String str = contractData.toString().replace("@jr@", "\"");
-            MPContractDataBean designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
+            designContractBean = GsonUtil.jsonToBean(str, MPContractDataBean.class);
 
             contract_no = designContractEntity.getContract_no();
             tvc_consumer_name.setText(designContractBean.getName());
@@ -449,8 +458,13 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             public void onJsonResponse(String jsonResponse) {
                 designer_detail_entity = GsonUtil.jsonToBean(jsonResponse, DesignerInfoDetails.class);
 
-                tvc_consumer_local_area.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
-                tvc_designer_decorate_address.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
+                if (designer_detail_entity.getDistrict_name().equals("none")) {
+                    tvc_consumer_local_area.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name());
+                    tvc_designer_decorate_address.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name());
+                } else {
+                    tvc_consumer_local_area.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
+                    tvc_designer_decorate_address.setText(designer_detail_entity.getProvince_name() + designer_detail_entity.getCity_name() + designer_detail_entity.getDistrict_name());
+                }
 
                 designer_name = designer_detail_entity.getReal_name().getReal_name();
                 designer_mobile = designer_detail_entity.getReal_name().getMobile_number().toString();
@@ -464,6 +478,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             }
         });
+
         UpdateUIlayoutContract();
     }
 
@@ -559,15 +574,19 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (Constant.UerInfoKey.DESIGNER_TYPE.equals(memberEntity.getMember_type())) {
+            return;
+        }
         if (resultCode == FirstForContract) {
             finish();
         }
         if (resultCode == ContractDetail || resultCode == ContractForFirst) {
 
-            if (data!=null)
-                isAgree = data.getBooleanExtra("CONSUMER_ACTION_AGREE",false);
+            if (data != null)
+                isAgree = data.getBooleanExtra("CONSUMER_ACTION_AGREE", false);
 
             UpdateUIlayoutContract();
+            MyToast.show(this, resultCode + "");
             fetchWorkFlowData();
         }
 
@@ -648,7 +667,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 Log.e("VolleyError body---->", new String(htmlBodyBytes), volleyError);
                 MPNetworkUtils.logError(TAG, volleyError);
                 CustomProgress.cancelDialog();
-                UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(FlowEstablishContractActivity.this);
+                UIAlert = new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.the_contract_sent_failure), null, null, new String[]{UIUtils.getString(R.string.sure)}, FlowEstablishContractActivity.this, AlertView.Style.Alert, FlowEstablishContractActivity.this).setOnDismissListener(new OnDismissListener() {
+                    @Override
+                    public void onDismiss(Object o) {
+                        finish();
+                    }
+                });
                 UIAlert.show();
             }
         };
@@ -686,7 +710,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             }
             //REFACTOR
             if (!consumerEmail.equals("")) { // 验证邮箱可以为空，不为空的时候用正则验证
-                if (!consumerEmail.matches(RegexUtil.EMAIL_REGEX)) {
+                if (!consumerEmail.matches(RegexUtil.EMAIL)) {
                     showAlertView(R.string.please_input_consumer_email_correctly);
                     bValid = false;
                     break;
@@ -716,7 +740,22 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 //                bValid = false;
 //                break;
 //            }
-            if (null != renderCount && renderCount.length() > 0) {
+//            if (null != renderCount && renderCount.length() > 0) {
+//                inputNum = Integer.parseInt(renderCount);
+//                if (inputNum < 0 || inputNum > 99) {
+//                    showAlertView(R.string.please_input_render_count_correctly);
+//                    bValid = false;
+//                    break;
+//                }
+//            } else {
+//                showAlertView(R.string.please_input_render_count_correctly);
+//            }
+
+            if (TextUtils.isEmpty(renderCount)) {
+                showAlertView(R.string.please_input_render_count_correctly);
+                bValid = false;
+                break;
+            } else if (null != renderCount && renderCount.length() > 0) {
                 inputNum = Integer.parseInt(renderCount);
                 if (inputNum < 0 || inputNum > 99) {
                     showAlertView(R.string.please_input_render_count_correctly);
@@ -777,13 +816,6 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 break;
             }
 
-//            if (firstCost <= Double.valueOf(meansurePrice)) {
-//                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_amount_measure_fee), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
-//                        AlertView.Style.Alert, null).show();
-//                bValid = false;
-//                break;
-//            }
-//            break;
             if (firstCost <= Double.valueOf(meansurePrice)) {
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.room_first_less_than_eighty_percent_of_the_total_measure_fee) + meansurePrice + UIUtils.getString(R.string.flow_monad_rmb), null, new String[]{UIUtils.getString(R.string.sure)}, null, FlowEstablishContractActivity.this,
                         AlertView.Style.Alert, null).show();
@@ -1078,4 +1110,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
     private boolean bDesignerContractCreated = false;
     private boolean bAllowUserInput = false;
     private boolean bShowModeContentWebView = false;
+    private MPDesignContractBean designContractEntity;
+    private String contractData;
+    private MPContractDataBean designContractBean;
 }

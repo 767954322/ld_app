@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="@dimen/size_265"
-        android:layout_height="@dimen/size_360"
+        android:minHeight="@dimen/size_360"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/size_50"
         android:background="@drawable/work_room_dialog_circle_bg">
@@ -35,13 +36,13 @@
                 android:id="@+id/work_room_name"
                 android:layout_width="@dimen/size_175"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_29"
                 android:layout_marginTop="@dimen/size_102"
                 android:layout_toRightOf="@id/work_room_name_text"
                 android:background="@android:color/transparent"
                 android:hint="@string/work_room_name"
                 android:maxEms="10"
-                android:maxLength="12"
-                android:paddingLeft="@dimen/size_29"
+                android:maxLength="20"
                 android:singleLine="true"
                 android:textSize="@dimen/font_15" />
 
@@ -96,11 +97,11 @@
                 android:id="@+id/work_room_phoneNumber"
                 android:layout_width="@dimen/size_175"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_29"
                 android:layout_toRightOf="@id/work_room_phone_text"
                 android:background="@android:color/transparent"
                 android:hint="@string/work_room_phone_number"
                 android:maxLength="11"
-                android:paddingLeft="@dimen/size_29"
                 android:phoneNumber="true"
                 android:textSize="@dimen/font_15" />
 
@@ -143,24 +144,21 @@
             android:text="提交"
             android:textColor="@color/bg_ff"
 
-            android:textSize="@dimen/font_16" />
+            android:textSize="@dimen/font_16"
 
-        <RelativeLayout
+            />
+
+        <ImageView
             android:id="@+id/work_room_dialog_close"
-            android:layout_width="@dimen/size_50"
-            android:layout_height="@dimen/size_50"
-            android:layout_alignParentRight="true">
+            android:layout_width="@dimen/size_15"
+            android:layout_height="@dimen/size_15"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_16"
+            android:background="@drawable/work_room_dialog_close"
+            android:padding="@dimen/font_7"
 
-            <ImageView
-                android:layout_width="@dimen/size_15"
-                android:layout_height="@dimen/size_15"
-                android:layout_centerInParent="true"
-                android:layout_marginRight="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_16"
-                android:background="@drawable/work_room_dialog_close"
-                android:padding="@dimen/font_7" />
-
-        </RelativeLayout>
+            />
 
 
     </RelativeLayout>
@@ -169,7 +167,7 @@
         android:id="@+id/dialog_title_picture"
         android:layout_width="@dimen/size_100"
         android:layout_height="@dimen/size_112"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

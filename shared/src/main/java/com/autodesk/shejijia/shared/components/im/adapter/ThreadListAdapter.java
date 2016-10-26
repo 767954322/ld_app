@@ -233,6 +233,7 @@ public class ThreadListAdapter extends BaseAdapter
             if (assetName != null && !assetName.isEmpty())
             {
                 assetName = trimAndAddEllipsis(assetName, kMaxAssetNameLength);
+                userName = trimAndAddEllipsis(userName, kMaxUserName);
                 displayName = userName + "/" + assetName;
             }
             else
@@ -264,12 +265,12 @@ public class ThreadListAdapter extends BaseAdapter
     }
 
     private static final int kMaxNameLength = 8;
-    private static final int kMaxAssetNameLength = 6;
-    private static final int kMaxTotalNameLength = 12;
+    private static final int kMaxAssetNameLength = 4;
+    private static final int kMaxUserName = 3;
+    private static final int kMaxTotalNameLength = 8;
 
     private boolean mIsFileBased;
     private Context mContext;
     private ThreadListAdapterInterface mThreadListInterface;
 
 }
-

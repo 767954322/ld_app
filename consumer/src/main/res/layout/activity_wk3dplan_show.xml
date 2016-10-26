@@ -6,16 +6,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".personalcenter.workflow.activity.Wk3DPlanShowActivity">
+
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
+        layout="@layout/view_navigation_header"/>
 
-    <com.autodesk.shejijia.shared.components.im.widget.MPFileHotspotView
-        android:id="@+id/iv_image_show"
+    <!--<com.autodesk.shejijia.shared.components.im.widget.MPFileHotspotView-->
+        <!--android:id="@+id/iv_image_show"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@drawable/common_case_icon"-->
+        <!--android:visibility="visible"/>-->
+
+    <com.autodesk.shejijia.shared.components.common.uielements.gallerywidget.GalleryViewPager
+        android:id="@+id/vp_show_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerInside"
-        android:src="@drawable/common_case_icon"
-        android:visibility="visible"/>
+        android:layout_height="match_parent">
 
+    </com.autodesk.shejijia.shared.components.common.uielements.gallerywidget.GalleryViewPager>
 </LinearLayout>

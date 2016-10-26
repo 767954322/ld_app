@@ -52,6 +52,7 @@ import com.autodesk.shejijia.consumer.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.uielements.SingleClickUtils;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.OptionsPickerView;
 import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -361,7 +362,10 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 break;
 
             case R.id.rl_consumer_qrcode: /// 生成二维码 .
-                showPopupWindow();
+                if (!SingleClickUtils.isFastDoubleClickShort()){
+
+                    showPopupWindow();
+                }
                 break;
 
             case R.id.rl_consume_essential_sex: /// 修改性别 .
@@ -564,6 +568,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         pvGenderOptions.setPicker(genderList);
         pvGenderOptions.setSelectOptions(0);
         pvGenderOptions.setCyclic(false);
+        pvGenderOptions.setTitle("性别");
         pvGenderOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {

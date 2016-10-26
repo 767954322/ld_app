@@ -3,6 +3,8 @@ package com.autodesk.shejijia.consumer.manager;
 import android.content.Context;
 import android.util.Log;
 
+import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.SubNodes;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkflowInfoBean;
@@ -10,6 +12,7 @@ import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.List;
@@ -49,7 +52,7 @@ public class MPWkFlowManager {
      * @param wk_cur_sub_node_id 节点模版
      * @return
      */
-    public static String getWkSubNodeName(Context context, String wk_template_id, String wk_cur_sub_node_id) {
+    public static String getWkSubNodeName(Context context, String wk_template_id, String wk_cur_sub_node_id,MPDeliveryBean mpDeliveryBean) {
         String wkSubNodeName = "未知状态";
         int wk_cur_sub_node_id_int;
         int wk_template_id_int;
@@ -80,6 +83,14 @@ public class MPWkFlowManager {
         }
 
         wk_cur_sub_node_id_int = Integer.parseInt(wk_cur_sub_node_id);
+
+        if((wk_cur_sub_node_id_int == 33 && mpDeliveryBean != null)
+                ||(wk_cur_sub_node_id_int == 24 && mpDeliveryBean != null)){
+            wkSubNodeName= UIUtils.getString(R.string.fish);
+            return wkSubNodeName;
+        }
+
+
         wk_template_id_int = Integer.parseInt(wk_template_id);
         wkFlowBeans = WkFlowStateMap.sWkFlowBeans;
 

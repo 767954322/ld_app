@@ -1,10 +1,18 @@
 package com.autodesk.shejijia.shared.framework.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.autodesk.shejijia.shared.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cn.jpush.android.api.JPushInterface;
 
 
 /**
@@ -17,7 +25,8 @@ import com.autodesk.shejijia.shared.R;
 public abstract class SplashActivity extends BaseActivity {
 
     @Override
-    protected int getLayoutResId() {
+    protected int getLayoutResId()
+    {
         return R.layout.activity_splash;
     }
 
@@ -28,7 +37,8 @@ public abstract class SplashActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run()
+            {
 
                 if (getNextActivityToLaunch() != null)
                     startActivityAndFinish(getNextActivityToLaunch());
@@ -41,10 +51,13 @@ public abstract class SplashActivity extends BaseActivity {
     @Override
     protected void initListener() {}
 
-    protected void startActivityAndFinish(final Class clazz) {
-        runOnUiThread(new Runnable() {
+    protected void startActivityAndFinish(final Class clazz)
+    {
+        runOnUiThread(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 startActivity(new Intent(SplashActivity.this, clazz));
                 finish();
             }

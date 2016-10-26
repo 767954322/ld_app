@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ll_consumer_demand"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_eef1f4"
-        android:orientation="vertical">
+                  android:id="@+id/ll_consumer_demand"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/bg_eef1f4"
+                  android:orientation="vertical">
 
         <include
             android:id="@+id/common_navbar"
-            layout="@layout/view_navigation_header" />
+            layout="@layout/view_navigation_header"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
-            android:visibility="gone"
-            android:background="@color/bg_d5" />
+            android:background="@color/bg_d5"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -36,7 +36,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name_space"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
 
             <EditText
                 android:id="@+id/et_issue_demand_name"
@@ -46,8 +47,9 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/reservation_please_enter_your_name"
+                android:textColor="@color/bg_33"
                 android:textColorHint="#999"
-                android:textSize="@dimen/font_14" />
+                android:textSize="@dimen/font_14"/>
         </LinearLayout>
 
         <LinearLayout
@@ -59,8 +61,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
-                android:background="@color/bg_ef" />
+                android:layout_marginLeft="@dimen/size_15"
+                android:background="@color/bg_ef"/>
         </LinearLayout>
 
         <LinearLayout
@@ -69,7 +71,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -77,7 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/consume_phone_number"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
 
             <EditText
                 android:id="@+id/et_issue_demand_mobile"
@@ -86,11 +89,12 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:ems="10"
-                android:hint="@string/work_room_phone_number"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_edit_input_mobile"
                 android:maxLength="11"
                 android:phoneNumber="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
         </LinearLayout>
 
 
@@ -103,8 +107,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
-                android:background="@color/bg_ef" />
+                android:layout_marginLeft="@dimen/size_15"
+                android:background="@color/bg_ef"/>
         </LinearLayout>
 
 
@@ -115,7 +119,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -123,7 +127,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/fitment_area_project"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
 
             <EditText
                 android:id="@+id/et_issue_demand_area"
@@ -132,17 +137,18 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:ems="10"
-                android:hint="@string/reservation_please_enter_your_area"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_edit_input_mianji"
                 android:inputType="numberDecimal"
-                android:textColor="@color/black"
+                android:textColor="@color/bg_33"
                 android:textColorHint="#999"
-                android:textSize="@dimen/font_14" />
+                android:textSize="@dimen/font_14"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/size_18"
-                android:text="㎡" />
+                android:text="㎡"/>
         </LinearLayout>
 
         <LinearLayout
@@ -154,8 +160,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
-                android:background="@color/bg_ef" />
+                android:layout_marginLeft="@dimen/size_15"
+                android:background="@color/bg_ef"/>
         </LinearLayout>
 
         <LinearLayout
@@ -164,7 +170,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -172,7 +178,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_project_budget"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
 
             <TextView
                 android:id="@+id/tv_issue_demand_budget"
@@ -184,11 +191,11 @@
                 android:ems="10"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:hint="@string/demand_budget_hint"
+                android:hint="@string/hint_edit_input_yusuan"
                 android:phoneNumber="true"
-                android:textColor="@color/black"
+                android:textColor="@color/bg_33"
                 android:textColorHint="#999"
-                android:textSize="@dimen/font_14" />
+                android:textSize="@dimen/font_14"/>
 
             <!-- <TextView
                  android:layout_width="wrap_content"
@@ -199,7 +206,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/icon_unfold_normal" />
+                android:background="@drawable/icon_unfold_normal"/>
         </LinearLayout>
 
         <LinearLayout
@@ -211,8 +218,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
-                android:background="@color/bg_ef" />
+                android:layout_marginLeft="@dimen/size_15"
+                android:background="@color/bg_ef"/>
         </LinearLayout>
 
         <LinearLayout
@@ -222,7 +229,7 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
 
@@ -230,7 +237,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_project_address"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
 
             <TextView
                 android:id="@+id/tv_issue_address"
@@ -240,15 +248,15 @@
                 android:background="@color/no_color"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:hint="@string/reservation_please_enter_your_address"
+                android:hint="@string/hint_edit_input_address"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/icon_unfold_normal" />
+                android:background="@drawable/icon_unfold_normal"/>
         </LinearLayout>
 
         <LinearLayout
@@ -260,8 +268,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_10"
-                android:background="@color/bg_ef" />
+                android:layout_marginLeft="@dimen/size_15"
+                android:background="@color/bg_ef"/>
         </LinearLayout>
 
         <LinearLayout
@@ -270,14 +278,15 @@
             android:background="@color/bg_ff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/size_10"
+            android:paddingLeft="@dimen/size_15"
             android:paddingRight="@dimen/size_10">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/demand_village_name"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
 
             <EditText
                 android:id="@+id/tv_issue_demand_detail_address"
@@ -286,11 +295,12 @@
                 android:layout_weight="1"
                 android:background="@color/no_color"
                 android:ellipsize="end"
-                android:hint="@string/reservation_please_enter_your_community_name"
+                android:gravity="center_vertical"
+                android:hint="@string/hint_edit_input_xiaoqu"
                 android:maxLength="32"
                 android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_14" />
+                android:textColor="@color/bg_33"
+                android:textSize="@dimen/font_14"/>
         </LinearLayout>
 
         <Button
@@ -303,7 +313,7 @@
             android:background="@drawable/bg_common_btn_blue"
             android:text="@string/autonym_submit"
             android:textColor="@color/bg_ff"
-            android:textSize="@dimen/font_20" />
+            android:textSize="@dimen/font_20"/>
 
     </LinearLayout>
 </ScrollView>

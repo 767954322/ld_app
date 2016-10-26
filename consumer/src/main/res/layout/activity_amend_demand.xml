@@ -157,11 +157,9 @@
 
             <EditText
                 android:id="@+id/et_ademand_area"
-                android:layout_width="@dimen/size_1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:background="@color/no_color"
-                android:ems="10"
                 android:hint="@string/demand_import_area"
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
@@ -281,6 +279,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_1"
             android:background="@color/bg_ff"
@@ -294,6 +293,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_house_type"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_40"
             android:background="@color/bg_ff"

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_piv"
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/size_60"
-    android:orientation="vertical"
-    android:visibility="visible">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/ll_piv"
+              android:layout_width="wrap_content"
+              android:layout_height="@dimen/size_60"
+              android:orientation="vertical"
+              android:visibility="visible">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="@dimen/size_60"
@@ -18,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="15dp"
             android:background="@drawable/icon_default_avator"
-            app:poly_vertices="0" />
+            app:poly_vertices="0"/>
 
         <RelativeLayout
             android:id="@+id/rl_item_decoration"
@@ -40,7 +41,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/bg_00"
-                android:textSize="@dimen/size_15" />
+                android:textSize="@dimen/size_15"/>
 
             <ImageButton
                 android:id="@+id/ib_flow_chart"
@@ -50,12 +51,15 @@
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/size_5"
-                android:background="@color/white"
+                android:background="@drawable/im_ico"
                 android:drawablePadding="@dimen/size_8"
-                android:enabled="false"
-                android:src="@drawable/im_ico" />
+                android:enabled="false"/>
         </RelativeLayout>
 
     </LinearLayout>
-    <include layout="@layout/view_parting_line"></include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#e3e3e3"/>
 </LinearLayout>

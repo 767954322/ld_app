@@ -9,19 +9,12 @@ import com.autodesk.shejijia.consumer.codecorationBase.coelite.fragment.CoEliteF
 import com.autodesk.shejijia.consumer.codecorationBase.grandmaster.fragment.GrandMasterFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.packages.fragment.PackagesFragment;
 import com.autodesk.shejijia.consumer.codecorationBase.studio.fragment.StudioFragment;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+
 /**
  * Created by luchongbin on 16-8-16.
  */
 public class SixProductsAdapter extends FragmentStatePagerAdapter {
-    private enum FragmentEnum {
-        FRAGMENT_GRANDMASTER,
-        FRAGMENT_STUDIO,
-        FRAGMENT_COELITE,
-        FRAGMENT_AVERAGE,
-        FRAGMENT_PACKAGES,
-        FRAGMENT_DIY
-    };
-
     private String[]tabItems;
     public SixProductsAdapter(FragmentManager fm) {
         super(fm);
@@ -35,23 +28,23 @@ public class SixProductsAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
-        switch(FragmentEnum.values()[position]) {
-            case FRAGMENT_GRANDMASTER:
+        switch(position) {
+            case Constant.FragmentEnum.ZERO:
                 fragment = new GrandMasterFragment();
                 break;
-            case FRAGMENT_STUDIO:
+            case Constant.FragmentEnum.ONE:
                 fragment = new StudioFragment();
                 break;
-            case FRAGMENT_COELITE:
+            case Constant.FragmentEnum.TWO:
                 fragment = new CoEliteFragment();
                 break;
-            case FRAGMENT_AVERAGE:
+            case Constant.FragmentEnum.THREE:
                 fragment = new AverageFragment();
                 break;
-            case FRAGMENT_PACKAGES:
+            case Constant.FragmentEnum.FOUR:
                 fragment = new PackagesFragment();
                 break;
-            case FRAGMENT_DIY:
+            case Constant.FragmentEnum.FIVE:
                 fragment = new DIYFragment();
                 break;
             default:
@@ -67,6 +60,6 @@ public class SixProductsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return FragmentEnum.values().length;
+        return tabItems.length;
     }
 }

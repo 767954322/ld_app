@@ -609,10 +609,10 @@ public class MPFileHotspotActivity extends NavigationBarActivity
     @Override
     protected void onDestroy()
     {
-        super.onDestroy();
-
         if (mBroadcastReceiver != null)
             unregisterReceiver(mBroadcastReceiver);
+
+        super.onDestroy();
     }
 
 

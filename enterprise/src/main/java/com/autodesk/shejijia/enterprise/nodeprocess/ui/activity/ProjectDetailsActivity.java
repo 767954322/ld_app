@@ -20,7 +20,6 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-
 import org.json.JSONObject;
 
 /**

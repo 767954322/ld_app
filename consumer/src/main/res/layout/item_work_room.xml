@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/size_18"
+            android:layout_marginLeft="@dimen/size_13"
             android:layout_toRightOf="@id/work_room_imageView"
             android:textSize="@dimen/font_17" />
 

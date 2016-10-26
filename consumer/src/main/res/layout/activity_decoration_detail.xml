@@ -40,16 +40,38 @@
                     android:layout_marginLeft="5dp"
                     android:src="@drawable/icon_position_normal"/>
 
-                <TextView
-                    android:id="@+id/tv_decoration_name"
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/size_10"
                     android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textColor="@color/bg_33"
-                    android:textSize="@dimen/font_16"/>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_decoration_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="3"
+                        android:singleLine="true"
+                        android:text="@string/no_data_nodata"
+                        android:textColor="@color/bg_33"
+                        android:textSize="@dimen/font_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_decoration_community_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxEms="4"
+                        android:singleLine="true"
+                        android:text="@string/consumer_decoration_name"
+                        android:textColor="@color/bg_33"
+                        android:textSize="@dimen/font_16"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_decoration_state"
@@ -86,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/no_color"
+                    android:text="@string/no_data"
                     android:textColor="@color/bg_9E"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
@@ -104,7 +127,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/name_space"
+                    android:text="@string/my_bid_name"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
 
@@ -116,6 +139,7 @@
                     android:background="@color/no_color"
                     android:singleLine="true"
                     android:textColor="@color/bg_33"
+                    android:text="@string/no_data"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
 
@@ -144,6 +168,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:singleLine="true"
+                    android:text="@string/no_data"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
@@ -171,6 +196,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:singleLine="true"
+                    android:text="@string/no_data"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
@@ -180,8 +206,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_26"
                 android:background="@color/bg_ff"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_15"
                 android:paddingRight="@dimen/size_10">
 
@@ -200,6 +226,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:textColor="@color/bg_33"
+                    android:text="@string/no_select"
                     android:textSize="@dimen/font_15"/>
 
                 <ImageView
@@ -239,6 +266,7 @@
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:inputType="numberDecimal"
+                    android:text="@string/no_select"
                     android:textColor="@color/bg_33"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_15"/>
@@ -274,6 +302,7 @@
                     android:gravity="center_vertical"
                     android:inputType="numberDecimal"
                     android:textColor="@color/bg_33"
+                    android:text="@string/no_select"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_15"/>
 
@@ -304,6 +333,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:gravity="center_vertical"
+                    android:text="@string/no_select"
                     android:textColor="@color/bg_33"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_15"/>
@@ -343,6 +373,7 @@
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:textColor="@color/bg_33"
+                        android:text="@string/no_select"
                         android:textSize="@dimen/font_15"/>
 
 
@@ -373,6 +404,7 @@
                     android:background="@color/no_color"
                     android:ems="10"
                     android:inputType="numberDecimal"
+                    android:text="@string/no_data"
                     android:textColor="@color/bg_33"
                     android:textColorHint="#999"
                     android:textSize="@dimen/font_15"/>
@@ -402,6 +434,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@color/no_color"
+                    android:text="@string/no_select"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
             </LinearLayout>
@@ -411,8 +444,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
                 android:background="@color/bg_ff"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -445,6 +478,7 @@
                     android:layout_weight="1"
                     android:background="@color/no_color"
                     android:textColor="@color/bg_33"
+                    android:text="@string/no_data"
                     android:textSize="@dimen/font_14"/>
             </LinearLayout>
 

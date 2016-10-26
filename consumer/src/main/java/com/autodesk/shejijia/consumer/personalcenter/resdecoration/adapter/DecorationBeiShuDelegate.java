@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.resdecoration.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
@@ -68,7 +67,8 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
         String district = decorationNeedsListBean.getDistrict();
         String district_name = decorationNeedsListBean.getDistrict_name();
 
-        holder.setText(R.id.tv_decoration_beishu_name, community_name);
+        holder.setText(R.id.tv_decoration_beishu_name, contacts_name);
+        holder.setText(R.id.tv_decoration_community_name, "/" + community_name);
         holder.setText(R.id.tv_decoration_beishu_needs_id, needs_id);
         holder.setText(R.id.tv_decoration_beishu_consumer_name, contacts_name);
         holder.setText(R.id.tv_decoration_beishu_phone, contacts_mobile);
@@ -77,10 +77,10 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
         holder.setText(R.id.tv_decoration_beishu_consumer_name, UIUtils.getNoDataIfEmpty(contacts_name));
         holder.setText(R.id.tv_decoration_beishu_phone, UIUtils.getNoDataIfEmpty(contacts_mobile));
 
-        district_name = TextUtils.isEmpty(district_name) || NONE.equals(district_name) || NONE.equals(district) || TextUtils.isEmpty(district) ? "" : district_name;
+        district_name = StringUtils.isEmpty(district_name)?"":district_name;
         String address = province_name + city_name + district_name;
-        if (TextUtils.isEmpty(city_name)) {
-            holder.setText(R.id.tv_decoration_beishu_address, UIUtils.getString(R.string.nodata));
+        if (StringUtils.isEmpty(province_name)) {
+            holder.setText(R.id.tv_decoration_beishu_address, UIUtils.getString(R.string.no_select));
         } else {
             holder.setText(R.id.tv_decoration_beishu_address, address);
         }
@@ -96,10 +96,13 @@ public class DecorationBeiShuDelegate implements ItemViewDelegate<DecorationNeed
             final String designer_id = decorationBiddersBean.getDesigner_id();
             final String beishu_thread_id = decorationNeedsListBean.getBeishu_thread_id();
 
+            holder.setTag(R.id.poly_designer_photo_beishu, avatar);
             PolygonImageView polygonImageView = holder.getView(R.id.poly_designer_photo_beishu);
-            ImageUtils.displayAvatarImage(avatar, polygonImageView);
-            holder.setText(R.id.tv_designer_name_beishu, user_name);
+            if (avatar.equalsIgnoreCase((String) polygonImageView.getTag())) {
+                ImageUtils.displayAvatarImage(avatar, polygonImageView);
+            }
 
+            holder.setText(R.id.tv_designer_name_beishu, user_name);
             holder.setOnClickListener(R.id.img_decoration_beishu_chat, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

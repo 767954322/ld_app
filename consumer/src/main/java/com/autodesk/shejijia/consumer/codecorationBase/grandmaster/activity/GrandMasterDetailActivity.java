@@ -144,8 +144,14 @@ public class GrandMasterDetailActivity extends BaseActivity implements View.OnCl
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
         if (verticalOffset >= 0) {
+            if(null != animationIn){
+                ib_grand_detail_ico.setVisibility(View.VISIBLE);
+                ib_grand_detail_ico.startAnimation(animationIn);
+            }
             rl_navr_header.setVisibility(View.VISIBLE);
         } else {
+            ib_grand_detail_ico.clearAnimation();
+            ib_grand_detail_ico.setVisibility(View.INVISIBLE);
             rl_navr_header.setVisibility(View.GONE);
         }
 

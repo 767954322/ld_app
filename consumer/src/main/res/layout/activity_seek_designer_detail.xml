@@ -113,7 +113,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/person_color_be_good_at"
-                                android:text="尚未填写" />
+                                android:text="@string/measure_fee_default" />
 
                         </LinearLayout>
 

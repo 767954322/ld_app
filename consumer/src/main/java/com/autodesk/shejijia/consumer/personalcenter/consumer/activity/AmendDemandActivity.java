@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -76,6 +77,8 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
         etIssueDemandDetailAddress = (TextViewContent) findViewById(R.id.et_issue_demand_detail_address);
         tvPublicTime = (TextView) findViewById(R.id.tv_public_time);
         btnFitmentAmendDemand = (Button) findViewById(R.id.btn_fitment_amend_demand);
+        ll_house_type = (LinearLayout) findViewById(R.id.ll_house_type);
+        ll_line = (LinearLayout) findViewById(R.id.ll_line);
     }
 
     @Override
@@ -131,6 +134,14 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(UIUtils.getString(R.string.please_input_correct_area));
                     return;
                 }
+
+                if (!house_type.equals("住宅空间")){
+
+                    mRoom = "other";
+                    mLivingRoom = null;
+                    mToilet = null;
+                }
+
                 if (TextUtils.isEmpty(detail_address) || !regex_address) {
                     showAlertView(UIUtils.getString(R.string.please_enter_correct_address));
                     return;
@@ -493,7 +504,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
      */
     private void setHouseType() {
         final ArrayList<String> houseTypeItems = new ArrayList<>();
-        String[] houseType = UIUtils.getResources().getStringArray(R.array.hType);
+        final String[] houseType = UIUtils.getResources().getStringArray(R.array.hType);
         pvHouseTypeOptions = new OptionsPickerView(this);
         for (String item : houseType) {
             houseTypeItems.add(item);
@@ -506,6 +517,18 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
             public void onOptionsSelect(int options1, int option2, int options3) {
                 house_type = houseTypeItems.get(options1);
                 tvAmendHouseType.setText(house_type);
+                if (house_type.equals("住宅空间")){
+
+                    ll_house_type.setVisibility(View.VISIBLE);
+                    ll_line.setVisibility(View.VISIBLE);
+
+                }else {
+
+                    ll_house_type.setVisibility(View.GONE);
+                    ll_line.setVisibility(View.GONE);
+
+                }
+
                 Map<String, String> space = AppJsonFileReader.getSpace(AmendDemandActivity.this);
                 house_type = ConvertUtils.getKeyByValue(space, house_type);
             }
@@ -640,6 +663,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
 
     /// 控件　.
     private TextView etAmendAmendName, tvAmendDesignBudget, tvAmendBudget, tvAmendHouseType;
+    private LinearLayout ll_house_type,ll_line;
     private EditText etIssueAmendMobile, etAmendArea;
     private TextView tvAmendRoomType, tvAmendStyle, tvIssueAddress, tvPublicTime;
     private Button btnFitmentAmendDemand;

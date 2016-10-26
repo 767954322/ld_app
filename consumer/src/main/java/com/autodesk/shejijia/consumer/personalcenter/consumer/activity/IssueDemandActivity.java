@@ -91,6 +91,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
         tv_issue_style = (TextView) findViewById(R.id.tv_issue_style);
         tv_issue_address = (TextView) findViewById(R.id.tv_issue_address);
         tv_issue_demand_detail_address = (EditText) findViewById(R.id.tv_issue_demand_detail_address);
+        ll_house_type_demand = (LinearLayout) findViewById(R.id.ll_house_type_demand);
+        ll_line = (LinearLayout) findViewById(R.id.ll_line);
 
 
         et_issue_demand_area.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -279,9 +281,18 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
                     showAlertView(R.string.please_select_decorate_budget);
                     return;
                 }
-                if (TextUtils.isEmpty(mRoom)) {
-                    showAlertView(R.string.please_select_form);
-                    return;
+
+                if (tv_issue_house_type.getText().toString().equals("住宅空间")){
+
+                    if (TextUtils.isEmpty(mRoom)) {
+                        showAlertView(R.string.please_select_form);
+                        return;
+                    }
+                }else {
+
+                    mLivingRoom = null;
+                    mRoom = "other";
+                    mToilet = null;
                 }
                 if (TextUtils.isEmpty(style)) {
                     showAlertView(R.string.please_select_style);
@@ -518,6 +529,17 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
             public void onOptionsSelect(int options1, int option2, int options3) {
                 house_type = houseTypeItems.get(options1);
                 tv_issue_house_type.setText(house_type);
+
+                if (house_type.equals("住宅空间")){
+
+                    ll_house_type_demand.setVisibility(View.VISIBLE);
+                    ll_line.setVisibility(View.VISIBLE);
+                    tv_issue_room.setHint("请选择户型");
+                }else {
+                    ll_house_type_demand.setVisibility(View.GONE);
+                    ll_line.setVisibility(View.GONE);
+                }
+
                 Map<String, String> space = AppJsonFileReader.getSpace(IssueDemandActivity.this);
                 house_type = ConvertUtils.getKeyByValue(space, house_type);
             }
@@ -626,6 +648,8 @@ public class IssueDemandActivity extends NavigationBarActivity implements View.O
     /// 控件.
     private LinearLayout ll_issue_house_type;
     private LinearLayout ll_issue_style;
+    private LinearLayout ll_house_type_demand;
+    private LinearLayout ll_line;
     private EditText et_issue_demand_name;
     private TextView tv_issue_demand_budget;
     private TextView tv_issue_demand_design_budget;

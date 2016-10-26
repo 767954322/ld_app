@@ -16,7 +16,17 @@ public class JumpBean implements Serializable {
     private String thread_id;        //当前用户的acs_member_id
     private String asset_id;        //当前用户的acs_member_id
 
+    private String mediaIdProject;        //未知
+
     public JumpBean() {
+    }
+
+    public String getMediaIdProject() {
+        return mediaIdProject;
+    }
+
+    public void setMediaIdProject(String mediaIdProject) {
+        this.mediaIdProject = mediaIdProject;
     }
 
     public String getThread_id() {
@@ -85,6 +95,7 @@ public class JumpBean implements Serializable {
                 ", acs_member_id='" + acs_member_id + '\'' +
                 ", thread_id='" + thread_id + '\'' +
                 ", asset_id='" + asset_id + '\'' +
+                ", mediaIdProject='" + mediaIdProject + '\'' +
                 '}';
     }
 }

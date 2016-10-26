@@ -184,7 +184,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
                 district_name = "";
             }
-            tvLocation.setText(province_name + city_name + district_name);
+            tvLocation.setText(province_name + " " + city_name + " " + district_name);
         }
 
         if (mConsumerEssentialInfoEntity.getMobile_number() == null || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 0 || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 2)
@@ -325,6 +325,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             projectCostItems.add(item);
         }
         optionsPickerView.setPicker(projectCostItems);
+        optionsPickerView.setTitle("设计预算");
         optionsPickerView.setSelectOptions(0);
         optionsPickerView.setCyclic(false);
         optionsPickerView.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
@@ -480,6 +481,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         pvGenderOptions.setPicker(genderList);
         pvGenderOptions.setSelectOptions(0);
         pvGenderOptions.setCyclic(false);
+        pvGenderOptions.setTitle("性别");
         pvGenderOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {

@@ -99,13 +99,13 @@ public abstract class AdskApplication extends Application {
             @Override
             public void onActivityResumed(Activity activity) {
                 //if (activity instanceof BaseChatRoomActivity)
-                    mIsChatRoomActivityInForeground = true;
+                mIsChatRoomActivityInForeground = true;
             }
 
             @Override
             public void onActivityPaused(Activity activity) {
                 //if (activity instanceof BaseChatRoomActivity)
-                    mIsChatRoomActivityInForeground = false;
+                mIsChatRoomActivityInForeground = false;
             }
 
             @Override
@@ -150,8 +150,7 @@ public abstract class AdskApplication extends Application {
     }
 
 
-    public Class<?> getSplashActivityClass()
-    {
+    public Class<?> getSplashActivityClass() {
         return null;
     }
 
@@ -293,7 +292,6 @@ public abstract class AdskApplication extends Application {
         }
     }
 
-
     private static AdskApplication sAdskApplication;
     private SignInNotificationReceiver mSignInNotificationReceiver;
 
@@ -301,4 +299,6 @@ public abstract class AdskApplication extends Application {
     private boolean mIsChatRoomActivityInForeground = false;
     protected static MemberEntity memberEntity;
     public RequestQueue queue;
+
+    public static final String JPUSH_STORE_KEY = "com.autodesk.easyhome.marketplace.JPUSHSTORE";
 }

@@ -49,10 +49,12 @@ public class BasePagerAdapter extends PagerAdapter {
         if (galleryContainer.mCurrentView != null) {
             galleryContainer.mCurrentView.resetScale();
         }
-        galleryContainer.setOnItemClickListener(new GalleryViewPager.OnItemClickListener(){
+        galleryContainer.setOnItemClickListener(new GalleryViewPager.OnItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {
-                mOnItemClickListener.onItemClick(position);
+                if (null != mOnItemChangeListener) {
+                    mOnItemClickListener.onItemClick(position);
+                }
             }
         });
         mCurrentPosition = position;

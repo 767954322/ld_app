@@ -9,7 +9,6 @@ import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.IssueListFragmen
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.TaskListFragment;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
-
 import java.util.List;
 
 /**

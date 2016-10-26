@@ -11,15 +11,17 @@ import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.Wk3DPlanShowActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDesignFileBean;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.Wk3DPlanShowActivity;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author he.liu .
@@ -29,6 +31,8 @@ import java.util.ArrayList;
  * @brief 3d设计方案适配器 .
  */
 public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
+
+    public Map<Integer, Boolean> mCBFlag = null;
 
     public interface OnItemCheckListener {
         void onItemCheck(ToggleButton view, int position,
@@ -50,6 +54,19 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
         this.context = context;
         this.designFileEntities_3DPlan = designFileEntities_3DPlan;
         this.selectedDataList = selectedDataList;
+        mCBFlag = new HashMap<Integer, Boolean>();
+        init();
+
+    }
+
+    //初始化CheckBox状态
+    void init() {
+        if (designFileEntities_3DPlan == null) {
+            return;
+        }
+        for (int i = designFileEntities_3DPlan.size() - 1; i >= 0; i--) {
+            mCBFlag.put(i, false);
+        }
     }
 
     @Override
@@ -83,7 +100,7 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
         final ImageButton mChooseBt = holder.getView(R.id.ibn_choosedbt);
         ToggleButton toggleButton = holder.getView(R.id.toggle_button);
 
-        int position = holder.getPosition();
+        final int position = holder.getPosition();
         if (designFileEntities_3DPlan == null || designFileEntities_3DPlan.size() < 1) {
             return;
         }
@@ -93,12 +110,14 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
         mImageVShow.setTag(holder.getPosition());
         toggleButton.setOnClickListener(new ToggleClickListener(mChooseBt));
 
+        Boolean aBoolean = mCBFlag.get(position);
+        mChooseBt.setImageResource(aBoolean == false ? R.drawable.icon_common_radio_off : R.drawable.icon_common_radio_on);
+
         if (selectedDataList != null && selectedDataList.size() > 0 && selectedDataList.contains(design_file_id)) {
             toggleButton.setChecked(true);
             mChooseBt.setImageResource(R.drawable.icon_common_radio_on);
         } else {
             toggleButton.setChecked(false);
-            mChooseBt.setImageResource(R.drawable.icon_common_radio_off);
         }
         if (isDocument(str)) {
             mImageVShow.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +137,8 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, Wk3DPlanShowActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, mpDesignFileBean);
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._IMAGE_BEAN, designFileEntities_3DPlan);
+                    bundle.putSerializable(Constant.DeliveryShowBundleKey._POSITION, position);
                     bundle.putString(Constant.DeliveryShowBundleKey._JAVA_BEAN, Constant.DeliveryShowBundleKey.DESIGN_DELIVERY_OTHERS);
                     bundle.putBoolean(Constant.DeliveryShowBundleKey._LEVEL_TAG, true);
                     intent.putExtra(Constant.DeliveryShowBundleKey._BUNDLE_INTENT, bundle);
@@ -153,6 +173,11 @@ public class Wk3DPlanAdapter extends CommonAdapter<MPDesignFileBean> {
                 int position = (Integer) toggleButton.getTag();
                 if (designFileEntities_3DPlan != null && mOnItemCheckListener != null
                         && position < designFileEntities_3DPlan.size()) {
+                    if (toggleButton.isChecked()) {
+                        mCBFlag.put(position, true);
+                    } else {
+                        mCBFlag.put(position, false);
+                    }
                     mOnItemCheckListener.onItemCheck(toggleButton, position, toggleButton.isChecked(), chooseBt);
                 }
             }

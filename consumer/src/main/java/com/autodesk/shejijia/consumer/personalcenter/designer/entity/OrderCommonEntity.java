@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.designer.entity;
 
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -397,7 +399,7 @@ public class OrderCommonEntity implements Serializable {
             private String measurement_fee;
             private String join_time;
             private String design_thread_id;
-            private Object delivery;
+            private MPDeliveryBean delivery;
 
             private List<?> wk_steps;
             private List<DesignContractBean> design_contract;
@@ -572,12 +574,16 @@ public class OrderCommonEntity implements Serializable {
                 this.design_thread_id = design_thread_id;
             }
 
-            public Object getDelivery() {
+            public MPDeliveryBean getDelivery() {
                 return delivery;
             }
 
-            public void setDelivery(Object delivery) {
+            public void setDelivery(MPDeliveryBean delivery) {
                 this.delivery = delivery;
+            }
+
+            public void setDesign_contract(List<DesignContractBean> design_contract) {
+                this.design_contract = design_contract;
             }
 
             public List<?> getWk_steps() {

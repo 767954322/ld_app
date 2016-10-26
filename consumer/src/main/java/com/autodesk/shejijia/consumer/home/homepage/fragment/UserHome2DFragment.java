@@ -637,12 +637,13 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
 
         if (mSignInNotificationReceiver != null) {
 
             getActivity().unregisterReceiver(mSignInNotificationReceiver);
         }
+
+        super.onDestroy();
     }
 
     private static final String REQUIREMENT_BUTTON_TAG = "requirement_button";

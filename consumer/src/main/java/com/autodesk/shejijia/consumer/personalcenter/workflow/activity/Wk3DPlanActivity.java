@@ -161,33 +161,32 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                 if (mDesignFileEntities != null) {
                     String design_file_id = mDesignFileEntities.get(position).getId();
                     if (isChecked) {
+
+                        sureSubmit();
                         chooseBt.setImageResource(R.drawable.icon_common_radio_on);
                         mDesignFileIdArrayList.add(design_file_id);
                     } else {
+
                         chooseBt.setImageResource(R.drawable.icon_common_radio_off);
                         mDesignFileIdArrayList.remove(design_file_id);
                         ArrayList<String> strings1 = DeliverySelector.select_design_file_id_map.get(mLevel);
-
-
                         if (strings1 != null) {
                             strings1.remove(design_file_id);
                         }
+
                         if (mLevel == 4) {
-                            ArrayList<String> strings = DeliverySelector.select_design_file_id_map.get(mLevel);
-                            if (strings != null && strings.size() > position) {
-                                strings.remove(position);
+                            if (strings1 != null && strings1.size() > position) {
+                                strings1.remove(position);
                             }
                         }
                     }
-                    sureSubmit();
                     setSubmit3DPlanOnClickListener(false);
-//                    DeliverySelector.select_design_file_id_map.put(mLevel, mDesignFileIdArrayList);
-
-//                    showSubmitBtnOthers();
+                    if (mDesignFileIdArrayList.size()<=0){
+                        cancelSubmit();
+                    }
                 }
             }
         });
-//        setSubmit3DPlanOnClickListener(false);
     }
 
     /**
@@ -196,10 +195,7 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
      * @param flag 是否提交
      */
     private void setSubmit3DPlanOnClickListener(final boolean flag) {
-//        if (!flag){
-//            DeliverySelector.select_design_file_id_map.put(mLevel, mDesignFileIdArrayList);
-//            showSubmitBtnOthers();
-//        }
+
         mBtnSubmit3DPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +223,6 @@ public class Wk3DPlanActivity extends NavigationBarActivity {
                 finish();
             }
         });
-        LogUtils.d("Wk3DPlanActivity", "here");
     }
 
     /**

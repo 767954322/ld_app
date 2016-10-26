@@ -168,10 +168,8 @@
                     android:id="@+id/tvc_measure_form_area"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:background="@color/no_color"
-                    android:ems="10"
-                    android:hint="@string/demand_import_limit"
+                    android:hint="@string/demand_room_area"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12" />
 
@@ -274,6 +272,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_line"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_1"
                 android:background="@color/bg_ff"
@@ -287,6 +286,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_house_type"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_40"
                 android:background="@color/bg_ff"
@@ -475,12 +475,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/demand_measure_house_time" />
 
-                <com.autodesk.shejijia.consumer.uielements.TextViewContent
+                <TextView
                     android:id="@+id/tvc_measure_form_time"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/no_color"
+                    android:gravity="center_vertical"
                     android:ems="10"
                     android:hint="请选择量房时间"
                     android:textSize="@dimen/font_12" />

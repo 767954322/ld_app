@@ -396,7 +396,7 @@ public class UIUtils {
     }
 
     public static String getNoStringIfEmpty(String some) {
-        return TextUtils.isEmpty(some)||"none".equals(some)||StringUtils.isEmpty(some) ? "" : some;
+        return TextUtils.isEmpty(some) || "none".equals(some) || StringUtils.isEmpty(some) ? "" : some;
     }
 
     public static ProgressDialog createDialog(Context context, int type, String message) {
@@ -432,5 +432,12 @@ public class UIUtils {
         }
 
         return false;
+    }
+
+    public static String substring(String original, int maxCharacters) {
+        if (original.length() > maxCharacters)
+            return original.substring(0, maxCharacters) + "…";
+        else
+            return original;
     }
 }

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -193,7 +194,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
         String mediaType = MPChatUtility.getMediaTypeFromThread(thread);
         intent.putExtra(ChatRoomActivity.MEDIA_TYPE, mediaType);
-
+        intent.putExtra(ChatRoomActivity.PROJECT_TITLE, MPChatUtility.getAssetNameFromThread(thread));
         if (mIsFileBase) {
             intent.putExtra(ImageChatRoomActivity.SERVERFILEURL, MPChatUtility.getFileUrlFromThread(thread));
 
@@ -211,12 +212,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         mActivity.startActivity(intent);
     }
 
-    private void onThreadsReceived(MPChatThreads threads) {
-        ArrayList<MPChatThread> threadArray = threads.threads;
-        insertThreads(threadArray);
 
-        mThreadsExhausted = threadArray.size() < LIMIT;
-    }
 
 
     private void onNewMessageReceived(Intent intent) {
@@ -268,6 +264,13 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         MPChatHttpManager.getInstance().retrieveMemberThreads(mMemberId, mIsFileBase, offset, limit, callback);
     }
 
+    private void onThreadsReceived(MPChatThreads threads) {
+        ArrayList<MPChatThread> threadArray = threads.threads;
+        insertThreads(threadArray);
+
+        mThreadsExhausted = threadArray.size() < LIMIT;
+    }
+
 
     private void insertThreads(ArrayList<MPChatThread> threads) {
         mThreadList.addAll(threads);
@@ -283,8 +286,10 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
     private void refresh() {
-        if (mMemberId != null)
-            getMemberThreadsForOffset(0, LIMIT);
+        if (mMemberId != null){
+
+                getMemberThreadsForOffset(0, LIMIT);
+        }
     }
 
 

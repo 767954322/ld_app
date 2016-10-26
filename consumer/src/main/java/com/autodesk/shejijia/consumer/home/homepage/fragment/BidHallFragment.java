@@ -118,7 +118,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     private void getShouldHallData(final int state, int offset, int limit,
                                    String custom_string_area, String custom_string_form, String custom_string_type, String custom_string_bedroom,
                                    String custom_string_style, String custom_string_restroom, String asset_taxonomy) {
-        CustomProgress.show(getActivity(),"",false,null);
+        CustomProgress.show(getActivity(), "", false, null);
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -145,13 +145,13 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                     if (list != null && list.getNeeds_list() != null) {
                         List<BidHallEntity.NeedsListBean> entitys = getNeedsListEntitys(list.getNeeds_list());
                         mNeedsListEntities.addAll(entitys);
-                        mBidHallAdapter.notifyDataSetChanged();
                     }
                     if (state == 0) {
                         mNeedsListEntityArrayList.addAll(mNeedsListEntities);
                         mFlag = false;
                     }
-                }finally {
+                    mBidHallAdapter.notifyDataSetChanged();
+                } finally {
                     hideFooterView(mNeedsListEntities);
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
                 }
@@ -163,7 +163,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
                 MPNetworkUtils.logError(TAG, volleyError);
                 mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.FAIL);
                 if (null != getActivity()) {
-                    ApiStatusUtil.getInstance().apiStatuError(volleyError,getActivity());
+                    ApiStatusUtil.getInstance().apiStatuError(volleyError, getActivity());
                 }
                 hideFooterView(mNeedsListEntities);
             }
@@ -239,6 +239,14 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
         Bundle bundle = data.getExtras();
         switch (resultCode) {
             case FiltrateActivity.CBF_RESULT_CODE:
+                //fix 筛选 不回到初始位置
+                mPullListView.clearFocus();
+                mPullListView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullListView.setSelection(0);
+                    }
+                });
                 FiltrateContentBean filtrateContentBean = (FiltrateContentBean) bundle.getSerializable(CONTENT_BEAN);
                 updateNotify(filtrateContentBean);
                 break;
@@ -247,8 +255,8 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         activity.unregisterReceiver(myBroadCastReceivr);
+        super.onDestroy();
     }
 
     public void onFragmentShown() {
@@ -268,7 +276,7 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
 
     public final static String ACTION_NAME = "REFRESH_BIDHALL";
     /**
-     *  01  广播接受者类
+     * 01  广播接受者类
      */
     private BroadcastReceiver myBroadCastReceivr = new BroadcastReceiver() {
         @Override
@@ -281,14 +289,14 @@ public class BidHallFragment extends BaseFragment implements PullToRefreshLayout
     };
 
     /**
-     *02  注册广播
+     * 02  注册广播
      */
-    public  void  registerBoradcastReceiver(){
+    public void registerBoradcastReceiver() {
         //注册广播的过滤器
-        IntentFilter IntentFilter=new IntentFilter();
+        IntentFilter IntentFilter = new IntentFilter();
         IntentFilter.addAction(ACTION_NAME);
         //注册广播
-        getActivity().registerReceiver(myBroadCastReceivr,IntentFilter);
+        getActivity().registerReceiver(myBroadCastReceivr, IntentFilter);
     }
 
 

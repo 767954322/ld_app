@@ -177,6 +177,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 return;
             }
             mTvLoginOrRegister.setText(mConsumerEssentialInfoEntity.getNick_name());
+
             if (!TextUtils.isEmpty(mConsumerEssentialInfoEntity.getAvatar()) && ConsumerPersonalCenterActivity.this != null) {
                 ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), mPolygonImageView);
             }

@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.BaseAdapter;
@@ -31,7 +32,8 @@ public class FiltrateAdapter extends BaseAdapter {
     @Override
     public Holder initHolder(View container) {
         viewHolder = new ViewHolder();
-        viewHolder.btn_filtrate = (Button) container.findViewById(R.id.btn_filtrate_style);
+        //fix button settext 小写变大写的问题
+        viewHolder.btn_filtrate = (TextView) container.findViewById(R.id.btn_filtrate_style);
         return viewHolder;
     }
 
@@ -46,7 +48,12 @@ public class FiltrateAdapter extends BaseAdapter {
                 ((ViewHolder) holder).btn_filtrate.setBackgroundResource(R.drawable.bg_btn_filtrate_normal);
             }
         }
-        ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).toString());
+        if (mDatas.get(position).toString().contains("㎡")) {
+            ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).toString().replace("㎡", "m²"));
+        } else {
+            ((ViewHolder) holder).btn_filtrate.setText(mDatas.get(position).toString());
+        }
+
     }
 
     /// 选中,并更新.
@@ -56,7 +63,7 @@ public class FiltrateAdapter extends BaseAdapter {
     }
 
     public class ViewHolder extends BaseAdapter.Holder {
-        Button btn_filtrate;
+        TextView btn_filtrate;
     }
 
     private int clickTemp = 0;

@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.consumer.manager;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -1570,8 +1572,8 @@ public class MPServerHttpManager {
     /**
      * 六大模块图片接口
      */
-    public void getSixProPictures( OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.MAIN_DESIGN+"/selection/pictures?version=2";
+    public void getSixProPictures(OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_DESIGN + "/selection/pictures?version=2";
 //        String url = UrlConstants.MAIN_MEMBER + "/designers/search/studio?limit=" + limit + "&offset=" + offset + "&type_code=" + type;//61
 //        String url = "http://192.168.120.217:8083/member-app/v1/api/designers/search/studio?limit=20&offset=0&type_code=61";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback);
@@ -1668,6 +1670,25 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
 
+    }
+
+    /**
+     * 消息中心删除一条消息
+     * http://alpha-api.gdfcx.net/member-app/v1/api/member/{acs_member_id}/messages/{message_id}
+     */
+    public void deleteMessage(String acs_member_id, String message_id, OkJsonRequest.OKResponseCallback callback) {
+
+        String url = UrlConstants.MAIN_MEMBER + "/member/" + acs_member_id + "/messages/" + message_id;
+        Log.d("test", "接口：    " + url);
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.PUT, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
     }
 
     /**

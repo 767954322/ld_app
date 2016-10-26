@@ -6,15 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.DesignerWorkTimeBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.FiltrateAdapter;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.consumer.uielements.NoScrollGridView;
 import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,23 +67,23 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
         Resources rs = this.getResources();
         setTextColorForRightNavButton(rs.getColor(R.color.bg_0084ff));
-        
-        mStyleData.addAll(filledData(getResources().getStringArray(R.array.all)));
-        mStyleData.addAll(filledData(getResources().getStringArray(R.array.style)));
+
+        // mStyleData.addAll(filledData(getResources().getStringArray(R.array.all)));
+        //mStyleData.addAll(filledData(getResources().getStringArray(R.array.style)));
         mHouseData.addAll(filledData(getResources().getStringArray(R.array.all)));
         mHouseData.addAll(filledData(getResources().getStringArray(R.array.mlivingroom)));
         mAreaData.addAll(filledData(getResources().getStringArray(R.array.all)));
         mAreaData.addAll(filledData(getResources().getStringArray(R.array.area)));
 
-        mSAdapter = new FiltrateAdapter(this, mStyleData);
-        mHAdapter = new FiltrateAdapter(this, mHouseData);
-        mAAdapter = new FiltrateAdapter(this, mAreaData);
-        sGridView.setAdapter(mSAdapter);
+        mHAdapter = new FiltrateAdapter(FiltrateActivity.this, mHouseData);
+        mAAdapter = new FiltrateAdapter(FiltrateActivity.this, mAreaData);
         hGridView.setAdapter(mHAdapter);
         aGridView.setAdapter(mAAdapter);
-        setSelection(mSAdapter, mStyleIndex);
         setSelection(mHAdapter, mHouseIndex);
         setSelection(mAAdapter, mAreaIndex);
+
+        getDesignerStyles();
+
     }
 
     @Override
@@ -115,24 +124,27 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
         Map<String, String> area = AppJsonFileReader.getArea(this);
         Map<String, String> style = AppJsonFileReader.getStyle(this);
 
-
+        if (mHouseData.size() == 0 || mStyleData.size() == 0 || mAreaData.size() == 0) {
+            return;
+        }
         String all = UIUtils.getString(R.string.my_bid_all);
         mLivingRoom = mHouseData.get(mHouseIndex);
         mLivingRoom = ConvertUtils.getKeyByValue(room, mLivingRoom);
         mLivingRoom = mLivingRoom.equals(all) ? BLANK : mLivingRoom;
 
         mArea = mAreaData.get(mAreaIndex);
-        mArea = ConvertUtils.getKeyByValue(area, mArea);
-        mArea = mArea.equals(all) ? BLANK : mArea;
+        String mmmArea = ConvertUtils.getNewKeyByValue(area, mArea);
+        mArea = mArea.equals(all) ? BLANK : mmmArea;
 
         mStyle = mStyleData.get(mStyleIndex);
         mStyle = ConvertUtils.getKeyByValue(style, mStyle);
         mStyle = mStyle.equals(all) ? BLANK : mStyle;
 
+
         FiltrateContentBean filtrateContentBean = new FiltrateContentBean();
-        if (mLivingRoom.equals("其它")){
+        if (mLivingRoom.equals("其它")) {
             filtrateContentBean.setHousingType("other");
-        }else {
+        } else {
             filtrateContentBean.setHousingType(mLivingRoom);
         }
 
@@ -159,6 +171,44 @@ public class FiltrateActivity extends NavigationBarActivity implements AdapterVi
                 break;
         }
         this.finish();
+    }
+
+    private List<DesignerWorkTimeBean.RelateInformationListBean> mStyleList = new ArrayList<>();
+    private DesignerWorkTimeBean.RelateInformationListBean allListBean;
+
+    /**
+     * 获取设计师设计风格.
+     */
+    public void getDesignerStyles() {
+        OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                String jsonToString = GsonUtil.jsonToString(jsonObject);
+                DesignerWorkTimeBean designerWorkTimeBean = GsonUtil.jsonToBean(jsonToString, DesignerWorkTimeBean.class);
+                allListBean = new DesignerWorkTimeBean.RelateInformationListBean();
+                allListBean.setName("全部");
+                allListBean.setCode("");
+                allListBean.setDescription("");
+                allListBean.setExtension("");
+                mStyleList.addAll(designerWorkTimeBean.getRelate_information_list());
+                mStyleList.add(0, allListBean);
+                for (int i = 0; i < mStyleList.size(); i++) {
+                    mStyleData.add(mStyleList.get(i).getName());
+                }
+
+                mSAdapter = new FiltrateAdapter(FiltrateActivity.this, mStyleData);
+                sGridView.setAdapter(mSAdapter);
+                setSelection(mSAdapter, mStyleIndex);
+
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+                ApiStatusUtil.getInstance().apiStatuError(volleyError, FiltrateActivity.this);
+            }
+        };
+        MPServerHttpManager.getInstance().getDesignerStyles(okResponseCallback);
     }
 
     /**

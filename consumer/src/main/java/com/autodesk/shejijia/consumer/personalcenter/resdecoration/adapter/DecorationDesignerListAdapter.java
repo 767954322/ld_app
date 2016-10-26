@@ -12,6 +12,7 @@ import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.Decora
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowUploadDeliveryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPBidderBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.MPDeliveryBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -54,10 +55,11 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         final String user_name = bidder.getUser_name();
         final String avatarUrl = bidder.getAvatar();
         final String mThread_id = bidder.getDesign_thread_id();
+        MPDeliveryBean mpDeliveryBean = bidder.getDelivery();
 
         String wk_cur_sub_node_id = bidder.getWk_cur_sub_node_id();
 
-        String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, wk_template_id, wk_cur_sub_node_id);
+        String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(mActivity, wk_template_id, wk_cur_sub_node_id, mpDeliveryBean);
         holder.setText(R.id.tv_decoration_mesure, wkSubNodeName);
 
         boolean falg = StringUtils.isNumeric(wk_cur_sub_node_id) && Integer.valueOf(wk_cur_sub_node_id) == 63;
@@ -71,8 +73,17 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
 
 
         holder.setText(R.id.tv_designer_name, user_name);
+
+        holder.setTag(R.id.piv_consumer_order_photo, avatarUrl);
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_order_photo);
-        ImageUtils.displayAvatarImage(avatarUrl, polygonImageView);
+
+        if (avatarUrl.equalsIgnoreCase((String) polygonImageView.getTag())) {
+            if (StringUtils.isEmpty(avatarUrl)) {
+                polygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
+            } else {
+                ImageUtils.loadUserAvatar1(polygonImageView, avatarUrl);
+            }
+        }
 
         /**
          * 判断进入全流程逻辑还是进入评价页面
@@ -103,7 +114,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 @Override
                 public void onClick(View v) {
                     int template_id = Integer.parseInt(wk_template_id);
-                    startWkFlowStateActivity(mNeedsId, designerId, template_id,mThread_id);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id, mThread_id);
                 }
             });
         } else {
@@ -114,7 +125,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
                 @Override
                 public void onClick(View view) {
                     int template_id = Integer.parseInt(wk_template_id);
-                    startWkFlowStateActivity(mNeedsId, designerId, template_id,mThread_id);
+                    startWkFlowStateActivity(mNeedsId, designerId, template_id, mThread_id);
                 }
             });
         }
@@ -134,7 +145,7 @@ public class DecorationDesignerListAdapter extends CommonAdapter<DecorationBidde
         });
     }
 
-    private void startWkFlowStateActivity(String needsId, String designerId, int template_id,String thread_id) {
+    private void startWkFlowStateActivity(String needsId, String designerId, int template_id, String thread_id) {
         Intent intent = new Intent();
         intent.setClass(mActivity, WkFlowStateActivity.class);
         intent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needsId);

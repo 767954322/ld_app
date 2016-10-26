@@ -64,10 +64,11 @@ public class SelectDesignerActivity extends NavigationBarActivity implements Sel
     //选TA量房
 
     @Override
-    public void measureForm(String designer_id) {
+    public void measureForm(String designer_id,boolean falg) {
         Intent intent =  new Intent(this,SolicitationDesignerActivity.class);
         intent.putExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN,decorationNeedsListBean);
         intent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID,designer_id);
+        intent.putExtra(Constant.SeekDesignerDetailKey.ORDERS,falg);
         this.startActivityForResult(intent,1010);
 
     }

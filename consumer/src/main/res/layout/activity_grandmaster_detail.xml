@@ -112,23 +112,7 @@
 
                 </RelativeLayout>-->
 
-                <ImageButton
-                    android:id="@+id/bt_grand_reservation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/ib_grand_detail_ico"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/boutton" />
 
-                <ImageButton
-                    android:id="@+id/ib_grand_detail_ico"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/font_13"
-                    android:layout_marginTop="@dimen/font_12"
-                    android:background="@drawable/drop_down" />
 
             </RelativeLayout>
 
@@ -208,6 +192,24 @@
 
 
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/bt_grand_reservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ib_grand_detail_ico"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/boutton" />
+
+    <ImageButton
+        android:id="@+id/ib_grand_detail_ico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/font_13"
+        android:layout_marginTop="@dimen/font_12"
+        android:background="@drawable/drop_down" />
 
 </RelativeLayout>
 

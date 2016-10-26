@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eef1f4"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/decoration_ref"
+        layout="@layout/view_navigation_header" />
+
+    <RelativeLayout
+        android:id="@+id/item_relayout_left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/font_20"
+        android:layout_below="@+id/decoration_ref"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/ll_msg_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/item_msg_checkout">
+
+            <TextView
+                android:id="@+id/tv_msg_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/font_15"
+                android:layout_marginRight="@dimen/font_35"
+                android:layout_marginTop="@dimen/font_10"
+                android:text="清单编号："
+                android:textSize="@dimen/size_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_msg_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/size_16"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/size_20"
+                android:layout_marginTop="@dimen/font_10"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_msg_tag"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:layout_below="@id/ll_msg_tag"
+            android:layout_marginLeft="@dimen/font_15"
+            android:layout_marginRight="@dimen/size_20"
+            android:layout_marginTop="@dimen/size_2"
+            android:background="@color/bg_d7" />
+
+        <TextView
+            android:id="@+id/tv_msg_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_msg_tag"
+            android:layout_marginBottom="@dimen/font_15"
+            android:layout_marginLeft="@dimen/font_15"
+            android:layout_marginRight="@dimen/font_35"
+            android:layout_marginTop="@dimen/font_10"
+            android:text="内容"
+            android:textSize="@dimen/size_16"
+            android:layout_toRightOf="@+id/item_msg_checkout"/>
+
+
+    </RelativeLayout>
+</RelativeLayout>

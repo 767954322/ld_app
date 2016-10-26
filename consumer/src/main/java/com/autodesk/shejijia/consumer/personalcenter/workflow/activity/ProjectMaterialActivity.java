@@ -8,6 +8,9 @@ import android.widget.LinearLayout;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 /**
  * @author Malidong .
@@ -86,6 +89,7 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
         CustomProgress.cancelDialog();
 
         wk_cur_sub_node_idi = Integer.valueOf(wk_cur_sub_node_id);
+        isShowAlertView(wk_cur_sub_node_idi);
         if (wk_cur_sub_node_idi >= 11) {
             ll_project_material_measure_house.setVisibility(View.VISIBLE);
         }
@@ -97,6 +101,20 @@ public class ProjectMaterialActivity extends BaseWorkFlowActivity implements Vie
         }
         if (wk_cur_sub_node_idi >= 51) {
             ll_project_material_project.setVisibility(View.VISIBLE);
+        }
+    }
+    private void isShowAlertView(int sub_node_id){
+        if (isElite(wk_cur_template_id)) {
+            if (sub_node_id < 11) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer__quantity_room), null,
+                        new String[]{UIUtils.getString(R.string.sure)}, null, this, AlertView.Style.Alert, new OnItemClickListener(){
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        setResult(RESULT_OK, null);
+                        finish();
+                    }
+                }).show();
+            }
         }
     }
 

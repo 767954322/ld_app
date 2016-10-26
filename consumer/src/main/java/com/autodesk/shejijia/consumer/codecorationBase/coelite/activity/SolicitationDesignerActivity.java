@@ -24,6 +24,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
 import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -50,7 +51,7 @@ import java.util.Map;
 public class SolicitationDesignerActivity extends NavigationBarActivity implements View.OnClickListener {
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_measure_form;
+        return R.layout.activity_measure_form2;
     }
 
     @Override
@@ -66,7 +67,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcFitmentBudget = (TextView) findViewById(R.id.tvc_measure_fitment_budget);
         tvcArea = (TextViewContent) findViewById(R.id.tvc_measure_form_area);
         tvcHouseType = (TextView) findViewById(R.id.tvc_measure_form_house_type);
-        tvcTime = (TextViewContent) findViewById(R.id.tvc_measure_form_time);
+        tvcTime = (TextView) findViewById(R.id.tvc_measure_form_time);
         tvcAddress = (TextView) findViewById(R.id.tvc_measure_form_address);
         tvcEstate = (TextViewContent) findViewById(R.id.tvc_measure_form_estate);
         tvMeasureFee = (TextView) findViewById(R.id.tv_measure_form_liangfangfei);
@@ -74,6 +75,14 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcMeasureFormType = (TextView) findViewById(R.id.tvc_measure_form_type);
         tvcMeasureFormStyle = (TextView) findViewById(R.id.tvc_measure_form_style);
         tvIllustrate = (TextView) findViewById(R.id.tvIllustrate);
+
+        tvcName.setEnabled(false);
+        tvcPhone.setEnabled(false);
+        tvcArea.setEnabled(false);
+
+        tvcName.setTextColor(getResources().getColor(R.color.bg_66));
+        tvcPhone.setTextColor(getResources().getColor(R.color.bg_66));
+        tvcArea.setTextColor(getResources().getColor(R.color.bg_66));
     }
 
     @Override
@@ -121,14 +130,23 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcHouseType.setText(tvHouseType);//设置室 厅 卫
         String style = styleMap.get(decorationNeedsListBean.getDecoration_style());
         tvcMeasureFormStyle.setText(UIUtils.getNoSelectIfEmpty(style));//风格
-        tvcAddress.setText(province_name + city_name + district_name);
-        chageButtonValue();
+
+        if (district_name.equals("none")) {
+            tvcAddress.setText(province_name + city_name);
+        } else {
+            if (district_name.equals("none")) {
+                tvcAddress.setText(province_name + city_name);
+            } else {
+                tvcAddress.setText(province_name + city_name + district_name);
+            }
+            chageButtonValue();
 //        for (DecorationBiddersBean decorationBiddersBean : list) {
 //            if (decorationBiddersBean.getDesigner_id().equals(designerId)) {
 //                tvcName.setText(decorationBiddersBean.getUser_name());
 //            }
 //        }
-        setMeasureTime();
+            setMeasureTime();
+        }
     }
 
     @Override
@@ -265,11 +283,15 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                     pay(solicitationSelection.getElite().getMeasurement().getOrder_line_id(),
                             solicitationSelection.getElite().getMeasurement().getOrder_id());
                 } else {
-                    setResult(10058, new Intent());
-                    finish();
+                    new AlertView(UIUtils.getString(R.string.tip), "选TA量房成功", null, null, new String[]{UIUtils.getString(R.string.chatroom_audio_recording_erroralert_ok)}, SolicitationDesignerActivity.this,
+                            AlertView.Style.Alert, new OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Object object, int position) {
+                            setResult(10058, new Intent());
+                            finish();
+                        }
+                    }).show();
                 }
-
-
             }
 
             @Override
@@ -294,7 +316,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         Intent intent = getIntent();
         decorationNeedsListBean = (DecorationNeedsListBean) intent.getSerializableExtra(Constant.ConsumerDecorationFragment.DECORATIONbIDDERBEAN);
         designerId = intent.getStringExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-
+        falg = intent.getBooleanExtra(Constant.SeekDesignerDetailKey.ORDERS, false);
     }
 
     //设置量房时间
@@ -312,32 +334,6 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
                 tvcTime.setText(DateUtil.dateFormat(currentData, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点"));
             }
         });
-    }
-
-    /**
-     * 获取省市区地址
-     */
-    private void getPCDAddress() {
-        mChangeAddressDialog = new AddressDialog();
-        mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
-        mChangeAddressDialog
-                .setAddressListener(new AddressDialog.OnAddressCListener() {
-                    @Override
-                    public void onClick(String province, String proviceCode, String city, String cityCode, String district, String areaCode) {
-                        mCurrentProvince = province;
-                        mCurrentProvinceCode = proviceCode;
-                        mCurrentCity = city;
-                        mCurrentCityCode = cityCode;
-                        mCurrentDistrict = district;
-                        mCurrentDistrictCode = areaCode;
-
-                        district = UIUtils.getNoStringIfEmpty(district);
-
-                        tvcAddress.setText(province + city + district);
-                        mChangeAddressDialog.dismiss();
-                    }
-
-                });
     }
 
     /**
@@ -367,7 +363,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     private TextView tvcFitmentBudget;
     private TextViewContent tvcArea;
     private TextView tvcHouseType;
-    private TextViewContent tvcTime;
+    private TextView tvcTime;
     private TextView tvcAddress;
     private TextViewContent tvcEstate;
     private TextView tvMeasureFee;
@@ -389,6 +385,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private boolean isPay = false;
+    private boolean falg;
 
     ///　集合，类.
 

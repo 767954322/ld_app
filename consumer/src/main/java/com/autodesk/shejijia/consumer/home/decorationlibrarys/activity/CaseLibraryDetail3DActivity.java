@@ -6,11 +6,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -29,6 +30,8 @@ import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetai
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.Case3DDetailImageListBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.WkTemplateConstants;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.consumer.utils.AnimationUtil;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
@@ -41,11 +44,9 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.WXSharedPopWin;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.LoginUtils;
@@ -71,7 +72,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private String case_id;
     private Case3DDetailBean case3DDetailBean;
     private ArrayList<Case3DDetailBean> case3DDetailList;
-
     private List3DLibraryAdapter mCase3DLibraryAdapter;
     private RelativeLayout rlCaseLibraryHead;
     private View viewHead;
@@ -114,6 +114,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     private String mHs_uid;
     private String mNickName;
     private ImageView mIvCertification;
+    private boolean isfromGuanZhu=false;
 
 
     @Override
@@ -201,6 +202,54 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState){
+            case SCROLL_STATE_IDLE:
+                TranslateAnimation moveToViewLocationAnimation = AnimationUtil.moveToViewLocation();
+                rlCaseLibraryBottom.startAnimation(moveToViewLocationAnimation);
+                moveToViewLocationAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                break;
+            case SCROLL_STATE_TOUCH_SCROLL:
+                TranslateAnimation moveToViewBottomAnimation = AnimationUtil.moveToViewBottom();
+                rlCaseLibraryBottom.startAnimation(moveToViewBottomAnimation);
+                moveToViewBottomAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        rlCaseLibraryBottom.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                //正在滚动时调用
+                break;
+            case SCROLL_STATE_FLING:
+                //手指快速滑动时,在离开ListView由于惯性滑动
+                break;
+        }
     }
 
     @Override
@@ -237,6 +286,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             case R.id.iv_follow_designer://关注
 
                 if (null != memberEntity) {
+                    member_id = memberEntity.getAcs_member_id();
                     if (null != case3DDetailBean && null != case3DDetailBean.getDesigner_info()) {
                         Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
                         boolean is_following = designer_info.is_following;
@@ -251,6 +301,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                         }
                     }
                 } else {
+                    isfromGuanZhu=true;
                     LoginUtils.doLogin(this);
                 }
                 break;
@@ -373,8 +424,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 ToastUtil.showCustomToast(CaseLibraryDetail3DActivity.this, getString(R.string.dianzhangchenggong));
                 ivThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
                 ivHeadThumbUp.setBackgroundResource(R.mipmap.yidianzan_ico);
-                tvThumbUp.setText("点赞" + (case3DDetailBean.getFavorite_count() + 1) + "");
-                tvheadThumbUp.setText("点赞" + (case3DDetailBean.getFavorite_count() + 1) + "");
+                tvThumbUp.setText(getString(R.string.thumbUp) + (case3DDetailBean.getFavorite_count() + 1) + "");
+                tvheadThumbUp.setText(getString(R.string.thumbUp) + (case3DDetailBean.getFavorite_count() + 1) + "");
             }
 
             @Override
@@ -400,7 +451,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Log.d("yxw", jsonObject.toString());
                 try {
                     isMemberLike = jsonObject.getBoolean("is_member_like");
                     if (isMemberLike) {
@@ -442,8 +492,8 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
                 //set tital
                 String str_tital = case3DDetailBean.getDesign_name();
-                boolean isTitalToLong = str_tital.length() > 6;
-                str_tital = isTitalToLong ? str_tital.substring(0, 6) + "..." : str_tital;
+                boolean isTitalToLong = str_tital.length() > 8;
+                str_tital = isTitalToLong ? str_tital.substring(0, 8) + "..." : str_tital;
                 setTitleForNavbar(str_tital);
 
                 updateViewFromCaseDetailData();
@@ -519,15 +569,6 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         if (thumbnailMainPath != null) {
             ImageUtils.displayIconImage(thumbnailMainPath, mdesignerAvater);
         }
-//
-//        //查找是否是封面图片  若是就添加到头部
-//        for (int i = 0; i < images.size(); i++) {
-//            if (images.get(i).isIs_primary()) {
-//                firstCaseLibraryImageUrl = images.get(i).getLink() + Constant.CaseLibraryDetail.JPG;
-//                ImageUtils.displayIconImage(images.get(i).getLink() + Constant.CaseLibraryDetail.JPG, mdesignerAvater);
-//                // ImageUtils.loadImageIcon(mdesignerAvater, images.get(i).getLink() + Constant.CaseLibraryDetail.JPG);
-//            }
-//        }
 
         List<Case3DDetailImageListBean> imageListBeanList = getImageLists(images);
         imageListBean = imageListBeanList;
@@ -538,9 +579,9 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
         //设置简介
         String introduction = case3DDetailBean.getConception();
         if (introduction != null) {
-            mCaseLibraryText.setText("          " + introduction);
+            mCaseLibraryText.setText("\u3000\u3000" + introduction);
         } else {
-            mCaseLibraryText.setText(R.string.nodata);
+            mCaseLibraryText.setText("\u3000\u3000"+getString(R.string.noinfo));
         }
 
         tvCustomerHomeArea.setText(case3DDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
@@ -558,30 +599,16 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             tvCustomerHomeStyle.setText(R.string.other_qita);
         }
 
-        tvThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
-        tvheadThumbUp.setText("点赞" + case3DDetailBean.getFavorite_count() + "");
-        //ivConsumeHomeDesigner.setText(case3DDetailBean.getDesigner_info().getFirst_name());
+        tvThumbUp.setText(getString(R.string.thumbUp) + case3DDetailBean.getFavorite_count() + "");
+        tvheadThumbUp.setText(getString(R.string.thumbUp)+ case3DDetailBean.getFavorite_count() + "");
 
         Case3DDetailBean.DesignerInfoBean designer_info = case3DDetailBean.getDesigner_info();
         if (designer_info.getNick_name() != null) {
-            if (designer_info.getNick_name().length() > 8) {
-                String nickName = designer_info.getNick_name().substring(0, 8);
-                String nickNameNow = nickName + "…";
-                ivConsumeHomeDesigner.setText(nickNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getNick_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getNick_name());
         } else {
-            if (designer_info.getFirst_name().length() > 8) {
-                String firstName = designer_info.getFirst_name().substring(0, 8);
-                String firstNameNow = firstName + "…";
-                ivConsumeHomeDesigner.setText(firstNameNow);
-            } else {
-                ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
-            }
+            ivConsumeHomeDesigner.setText(designer_info.getFirst_name());
         }
 
-//        ImageUtils.displayIconImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
         ImageUtils.displayAvatarImage(case3DDetailBean.getDesigner_info().getAvatar(), pivImgCustomerHomeHeader);
 
         Case3DDetailBean.DesignerInfoBean.DesignerBean designer = mDesignerInfo.getDesigner();
@@ -615,7 +642,16 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
             if (type.equalsIgnoreCase("0")) {
                 imageListsXuanRan.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             } else if (type.equalsIgnoreCase("4")) {
-                imageListsManYou.add(imageBeanLists.get(i).getLink());
+                String cover = imageBeanLists.get(i).getCover();
+                String coverAndLink;
+                if (cover!=null){
+                     coverAndLink = cover+"HD.jpg"+"COVERANDLINK"+imageBeanLists.get(i).getLink();
+
+                }else {
+                    coverAndLink ="HD.jpg"+"COVERANDLINK"+imageBeanLists.get(i).getLink();
+                }
+                imageListsManYou.add(coverAndLink);
+
             } else if (type.equalsIgnoreCase("9")) {
                 imageListsHuXing.add(imageBeanLists.get(i).getLink() + "HD.jpg");
             }
@@ -737,6 +773,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
     protected void onRestart() {
         super.onRestart();
         memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (isfromGuanZhu&&null!=memberEntity){
+            getCase3DDetailData(case_id);
+        }else {
+            isfromGuanZhu=false;
+        }
+
+
         if (null != memberEntity) {
             getThumbUp(case3DDetailBean.getDesign_asset_id());
         }
@@ -752,11 +795,13 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
                 break;
             case MotionEvent.ACTION_MOVE:
                 mCurPosY = event.getY();
-                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
-                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
-                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
-                }
+            //    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                if (mCurPosY - mPosY > 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewLocation());
+//                } else if (mCurPosY - mPosY < 0 && (Math.abs(mCurPosY - mPosY) > 18)) {
+//                    rlCaseLibraryBottom.setAnimation(AnimationUtil.moveToViewBottom());
+//                }
                 break;
             case MotionEvent.ACTION_UP:
                 break;

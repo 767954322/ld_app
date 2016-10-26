@@ -17,22 +17,25 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity;
+import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.WkFlowStateAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
+import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
+import com.autodesk.shejijia.consumer.uielements.MyToast;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.consumer.utils.WkFlowStateMap;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpBean;
 import com.autodesk.shejijia.shared.components.common.tools.chatroom.JumpToChatRoom;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -86,21 +89,22 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        if(footerView == null){
+        if (footerView == null) {
             footerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_footer, null);
             mListView.addFooterView(footerView);
-            tvCreateDate = (TextView)footerView.findViewById(R.id.tv_create_date);
-            btnStopDemand = (Button)footerView.findViewById(R.id.btn_stop_demand);
+            tvCreateDate = (TextView) footerView.findViewById(R.id.tv_create_date);
+            btnStopDemand = (Button) footerView.findViewById(R.id.btn_stop_demand);
         }
 
-        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && headerView== null) {
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && headerView == null) {
             headerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_header, null);
             mListView.addHeaderView(headerView);
-            polygonImageView = (PolygonImageView)headerView.findViewById(R.id.piv_consumer_order_photo_01);
+            polygonImageView = (PolygonImageView) headerView.findViewById(R.id.piv_consumer_order_photo_01);
             ibFlowChart = (ImageButton) headerView.findViewById(R.id.ib_flow_chart);
             ll_piv = (LinearLayout) headerView.findViewById(R.id.ll_piv);
-            tvDesignerName = (TextView)headerView.findViewById(R.id.tv_designer_name);
+            tvDesignerName = (TextView) headerView.findViewById(R.id.tv_designer_name);
             ibFlowChart.setOnClickListener(this);
+            polygonImageView.setOnClickListener(this);
         }
     }
 
@@ -147,6 +151,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     public void onClick(View v) {
 
         switch (v.getId()) {
+            case R.id.piv_consumer_order_photo_01:
+                Intent mintent = new Intent(context, SeekDesignerDetailActivity.class);
+                mintent.putExtra(Constant.ConsumerDecorationFragment.designer_id, designer_id);
+                mintent.putExtra(Constant.ConsumerDecorationFragment.hs_uid, hs_uid);
+                context.startActivity(mintent);
+                break;
             case R.id.ib_flow_chart:
 
                 MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
@@ -160,9 +170,9 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
 
                 jumpBean.setThread_id(mThreead_id);
                 jumpBean.setAsset_id(needs_id);
-
                 jumpBean.setAcs_member_id(mMemberEntity.getAcs_member_id());
                 jumpBean.setMember_type(mMemberEntity.getMember_type());
+                jumpBean.setMediaIdProject(UrlMessagesContants.mediaIdProject);
                 JumpToChatRoom.getChatRoom(this, jumpBean);
 
                 break;
@@ -193,7 +203,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
                 maIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
                 maIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                startActivity(maIntent);
+                startActivityForResult(maIntent, 10001);
 
                 break;
 
@@ -273,6 +283,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     }
 
     private void onEliteItemClick(int position, int wk_cur_sub_node_idi, View view) {
+        position = getPosition(position);
         switch (position) {
             case 0://量房
 //                showNewActivity(FlowMeasureFormActivity.class,-1);
@@ -295,6 +306,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     }
 
     private void onOrdinaryItemClick(int position, int wk_cur_sub_node_idi, View view) {
+        position = getPosition(position);
         switch (position) {
             case 0://量房
                 if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType) && wk_cur_sub_node_idi == 11) {
@@ -319,6 +331,13 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
             default:
                 break;
         }
+    }
+
+    private int getPosition(int position) {
+        if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
+            position = position - 1;
+        }
+        return position;
     }
 
     /**
@@ -354,7 +373,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void eliteEstablishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 31 || wk_cur_sub_node_idi == 32) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 11 || wk_cur_sub_node_idi == 31) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
             } else if (wk_cur_sub_node_idi == 24 || wk_cur_sub_node_idi == 33) {
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
@@ -386,7 +405,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void establishContract(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 31 || wk_cur_sub_node_idi == 32) { /// 设计合同 .
+            if (wk_cur_sub_node_idi == 21 || wk_cur_sub_node_idi == 31) { /// 设计合同 .
                 showNewActivity(FlowEstablishContractActivity.class, -1);
             } else if (wk_cur_sub_node_idi == 33) { /// 量房交付物 .
                 showNewActivity(FlowUploadDeliveryActivity.class, -1);
@@ -419,7 +438,12 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
      */
     private void firstPay(int wk_cur_sub_node_idi, View view) {
         if (Constant.UerInfoKey.DESIGNER_TYPE.equals(strMemberType)) {
-            view.setClickable(false);
+            if (wk_cur_sub_node_idi == 32) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer_send_design_first), null, new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this, AlertView.Style.Alert, null).show();
+            } else {
+                view.setClickable(false);
+            }
+
             return;
         }
         if (wk_cur_sub_node_idi == 32) {
@@ -498,9 +522,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         tvCreateDate.setText(UIUtils.getString(R.string.create_date) + requirement.getPublish_time());
         mPtrLayout.onRefreshComplete();
 
-
+        int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type()) && WorkFlowTemplateStep() == 4) {
-            int sub_node_id = wk_cur_sub_node_id != null ? Integer.parseInt(wk_cur_sub_node_id) : -1;
 
             if (isElite(wk_cur_template_id)) {
                 if (sub_node_id >= 11 && sub_node_id < 41 && sub_node_id != 24 && sub_node_id != 33) {
@@ -523,9 +546,31 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mAdapter = new WkFlowStateAdapter(context, memberEntity.getMember_type(), mBiddersEntity, tipWorkFlowTemplateBean, WorkFlowTemplateStep());
         mListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+        String avatar = mBiddersEntity.getAvatar();
         if (Constant.UerInfoKey.CONSUMER_TYPE.equals(memberEntity.getMember_type())) {
-            ImageUtils.displayAvatarImage(mBiddersEntity.getAvatar(), polygonImageView);
-            tvDesignerName.setText(mBiddersEntity.getUser_name());
+            if (StringUtils.isEmpty(avatar)) {
+                polygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
+            } else {
+                ImageUtils.loadUserAvatar(polygonImageView, avatar);
+            }
+            if (!TextUtils.isEmpty(mBiddersEntity.getUser_name())) {
+                tvDesignerName.setText(UIUtils.substring(mBiddersEntity.getUser_name(), 8));
+            }
+        }
+        isShowAlertView(sub_node_id);
+    }
+
+    private void isShowAlertView(int sub_node_id) {
+        if (isElite(wk_cur_template_id)) {
+            if (sub_node_id < 11) {
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.please_wait_consumer__quantity_room), null,
+                        new String[]{UIUtils.getString(R.string.sure)}, null, WkFlowStateActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(Object object, int position) {
+                        finish();
+                    }
+                }).show();
+            }
         }
     }
 
@@ -533,6 +578,16 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     protected void onResume() {
         super.onResume();
         mPtrLayout.autoRefresh();
+
+        clearSelectPosition();
+    }
+
+    /**
+     * 清空选择的交付物
+     */
+    private void clearSelectPosition() {
+        DeliverySelector.select_design_asset_id = "";
+        DeliverySelector.select_design_file_id_map.clear();
     }
 
     private void refreshWkFlowState() {
@@ -553,7 +608,17 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         super.onBackPressed();
         refreshWkFlowState();
     }
-    private View footerView,headerView;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            finish();
+        }
+
+    }
+
+    private View footerView, headerView;
     private TextView navTitleTextView;
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
@@ -563,7 +628,7 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private ImageView projectInformation;
     private ImageButton ibFlowChart;
     private LinearLayout ll_piv;
-//    private RelativeLayout rlStopContract;
+    //    private RelativeLayout rlStopContract;
     private PolygonImageView polygonImageView;
     private Button btnStopDemand;
     private TextView tvDesignerName, tvCreateDate;

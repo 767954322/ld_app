@@ -8,22 +8,22 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
+import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.consumer.manager.MPWkFlowManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.OrderCommonEntity;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.activity.DecorationDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.WkFlowStateActivity;
+import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
-import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
-import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
-import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
             return;
         }
         final String needs_id = orderListEntity.getNeeds_id();
-        String community_name = orderListEntity.getCommunity_name();
+        final String community_name = orderListEntity.getCommunity_name();
         String province_name = orderListEntity.getProvince_name();
         String city_name = orderListEntity.getCity_name();
         String district_name = orderListEntity.getDistrict_name();
@@ -67,10 +67,10 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
 
         final String wk_template_id = orderListEntity.getWk_template_id();
         final List<OrderCommonEntity.OrderListEntity.BiddersBean> bidders = orderListEntity.getBidders();
-
         if (bidders != null && bidders.size() > 0) {
+            OrderCommonEntity.OrderListEntity.BiddersBean bidder = bidders.get(0);
             String wk_cur_sub_node_id = bidders.get(0).getWk_cur_sub_node_id();
-            holder.setText(R.id.tv_decoration_state, MPWkFlowManager.getWkSubNodeName(context, wk_template_id, wk_cur_sub_node_id));
+            holder.setText(R.id.tv_decoration_state, MPWkFlowManager.getWkSubNodeName(context, wk_template_id, wk_cur_sub_node_id,bidder.getDelivery()));
         } else {
             holder.setText(R.id.tv_decoration_state, UIUtils.getString(R.string.str_others));
         }
@@ -85,7 +85,9 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
         holder.setText(R.id.tv_decoration_style, decoration_style_convert != null && decoration_style_convert.length() > 0?
                 decoration_style_convert:UIUtils.getString(R.string.no_select));
 
-        holder.setText(R.id.tv_decoration_name, contacts_name+"/"+community_name);
+        holder.setText(R.id.tv_decoration_name, contacts_name);
+        holder.setText(R.id.tv_decoration_community_name, "/"+community_name);
+
         holder.setText(R.id.tv_decoration_mobile, orderListEntity.getContacts_mobile());
 
         PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_slite_photo);
@@ -156,8 +158,9 @@ public class EliteAdapter extends CommonAdapter<OrderCommonEntity.OrderListEntit
 
                 Intent intent = new Intent(context, ChatRoomActivity.class);
                 intent.putExtra(ChatRoomActivity.THREAD_ID, designer_thread_id);
+                intent.putExtra(ChatRoomActivity.PROJECT_TITLE, community_name);
                 intent.putExtra(ChatRoomActivity.RECIEVER_USER_ID, designer_id);
-                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, userName);
+                intent.putExtra(ChatRoomActivity.RECIEVER_USER_NAME, contacts_name);
                 intent.putExtra(ChatRoomActivity.ASSET_ID, needs_id);
                 intent.putExtra(ChatRoomActivity.ACS_MEMBER_ID, member_id);
                 intent.putExtra(ChatRoomActivity.MEMBER_TYPE, memType);

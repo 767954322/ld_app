@@ -60,7 +60,7 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         int  sub_node_id =Integer.parseInt(wk_cur_sub_node_id!=null?wk_cur_sub_node_id:"-1");
 
         if(sub_node_id != MPWkFlowManager.START_NODE){
-            String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(context, MPWkFlowManager.PAYMENT_OF_FIRST_FEE, wk_cur_sub_node_id);
+            String wkSubNodeName = MPWkFlowManager.getWkSubNodeName(context, MPWkFlowManager.PAYMENT_OF_FIRST_FEE, wk_cur_sub_node_id,biddersBean.getDelivery());
             holder.setText(R.id.tv_measure_invite,wkSubNodeName);
         }else{
             holder.setText(R.id.tv_measure_invite,UIUtils.getString(R.string.optional_measure));
@@ -93,7 +93,8 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         holder.setOnClickListener(R.id.bt_select_ta_measure_form, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                measureFormCallBack.measureForm( biddersBean.getDesigner_id());
+
+                measureFormCallBack.measureForm( biddersBean.getDesigner_id(),biddersBean.getOrders().size() > 0?true:false);
             }
         });
     }
@@ -111,9 +112,11 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
         jumpBean.setReciever_hs_uid(biddersBean.getUid());
         jumpBean.setReciever_user_id(designer_id);
         jumpBean.setReciever_user_name(userName);
+        jumpBean.setThread_id(biddersBean.getDesign_thread_id());
         jumpBean.setAcs_member_id(memberEntity.getAcs_member_id());
         jumpBean.setMember_type(memberEntity.getMember_type());
         JumpToChatRoom.getChatRoom(context,jumpBean);
+
     }
     private void verification(int key,Button button,TextView textView){
         if(falg){
@@ -137,6 +140,6 @@ public class SelectDesignAdapter extends CommonAdapter<DecorationBiddersBean> {
 
     }
     public interface MeasureFormCallBack {
-        void measureForm(String designer_id);
+        void measureForm(String designer_id,boolean falg);
     }
 }

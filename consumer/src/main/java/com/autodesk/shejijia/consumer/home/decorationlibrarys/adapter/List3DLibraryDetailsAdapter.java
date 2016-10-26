@@ -55,7 +55,17 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
                     ImageUtils.loadFileImage(viewVH.m3DDetailsImage, "drawable://" + R.drawable.default_3d_details);
                     // ImageUtils.loadFileImage(viewVH.m3DetailsImage,"drawable://"+R.drawable.roaming_figure);
                     viewVH.m3DetailsImage.setVisibility(View.GONE);
-                } else {
+                }else if (maYouUrl.contains("COVERANDLINK")){
+                    String  cover=maYouUrl.substring(0,maYouUrl.indexOf("COVERANDLINK"));
+                    String  link=maYouUrl.substring(maYouUrl.indexOf("COVERANDLINK")+12);
+                    if (!cover.equals("HD.jpg")){
+                        ImageUtils.loadFileImage(viewVH.m3DDetailsImage, cover);
+                    }else {
+                        ImageUtils.loadFileImage(viewVH.m3DDetailsImage, "drawable://" + R.drawable.images_3d);
+                    }
+                    ImageUtils.loadFileImage(viewVH.m3DetailsImage, "drawable://" + R.drawable.roaming_figure);
+                    viewVH.m3DetailsImage.setVisibility(View.VISIBLE);
+                }else {
                     ImageUtils.loadFileImage(viewVH.m3DDetailsImage, "drawable://" + R.drawable.images_3d);
                     ImageUtils.loadFileImage(viewVH.m3DetailsImage, "drawable://" + R.drawable.roaming_figure);
                     viewVH.m3DetailsImage.setVisibility(View.VISIBLE);
@@ -73,8 +83,9 @@ public class List3DLibraryDetailsAdapter extends RecyclerView.Adapter<RecyclerVi
                 if (mType.equals("4")) {
                     String webUrl = imageLists.get(position);
                     if (!webUrl.equals("drawable")) {
+                        String  link=webUrl.substring(webUrl.indexOf("COVERANDLINK")+12);
                         Intent intent = new Intent(mContext, CaseLibraryRoamingWebView.class);
-                        intent.putExtra("roaming", webUrl);
+                        intent.putExtra("roaming", link);
                         mContext.startActivity(intent);
                     }
                     // Toast.makeText(mContext, "漫游图", Toast.LENGTH_SHORT).show();

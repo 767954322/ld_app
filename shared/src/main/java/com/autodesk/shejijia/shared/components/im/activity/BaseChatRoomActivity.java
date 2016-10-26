@@ -129,9 +129,13 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
         if (mRecieverUserName != null) {
 
             if (!TextUtils.isEmpty(mProjectTtile)){
-                setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName + "/" + mProjectTtile));
+
+                setTitleForNavbar(trimAndAddEllipsis(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName),3)+"/"+ trimAndAddEllipsis(mProjectTtile,4));
+
             }else {
-                setTitleForNavbar(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName ));
+
+                setTitleForNavbar(trimAndAddEllipsis(MPChatUtility.getUserDisplayNameFromUser(mRecieverUserName),8));
+
             }
 
         }
@@ -646,6 +650,14 @@ public class BaseChatRoomActivity extends NavigationBarActivity implements ChatR
             mViewHeader.setVisibility(View.GONE);
             mLoadmoreContent.setVisibility(View.GONE);
         }
+    }
+
+    private String trimAndAddEllipsis(String original, int maxCharacters)
+    {
+        if (original.length() > maxCharacters)
+            return original.substring(0, maxCharacters) + "…";
+        else
+            return original;
     }
 
     public void upDataTheUI(String userInfo, MPChatProjectInfo mProjectInfo) {

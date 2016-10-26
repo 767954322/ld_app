@@ -53,8 +53,9 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
         mViewPager = (HackyViewPager) findViewById(R.id.case_librafy_detail_activity_vp);
     }
 
-   // List<Case3DDetailImageListBean> imageListBean;
+    // List<Case3DDetailImageListBean> imageListBean;
     private List<String> imageLists;
+
     @Override
     protected void initExtraBundle() {
         super.initExtraBundle();
@@ -80,12 +81,12 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
 
     /**
      * 获取所有图片的url地址
-     *
+     * <p>
      * TODO  BUG
      */
     private void updateViewFromData() {
         if (a == 1) {
-            if (imageLists!= null) {
+            if (imageLists != null) {
 //                for (int i = 0; i < imageListBean.size(); i++) {
 //                    List<String> imageList = imageListBean.get(i).getImageList();
 //                    int imageItemSize = imageList.size();
@@ -224,7 +225,7 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
             }
 
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                File appDir = new File(Environment.getExternalStorageDirectory(), "Boohee");
+                File appDir = new File(Environment.getExternalStorageDirectory(), "shejijia");
                 if (!appDir.exists()) {
                     appDir.mkdir();
                 }
@@ -240,9 +241,12 @@ public class CaseLibraryDetailActivity extends NavigationBarActivity {
                     // 最后通知图库更新
                     try {
                         MediaStore.Images.Media.insertImage(CaseLibraryDetailActivity.this.getContentResolver(), file.getAbsolutePath(), fileName, null);
-                        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                        Uri uri = Uri.fromFile(new File("/sdcard/image.jpg"));
-                        intent.setData(uri);
+//                        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//                        Uri uri = Uri.fromFile(new File("/sdcard/image.jpg"));
+//                        intent.setData(uri);
+//                        CaseLibraryDetailActivity.this.sendBroadcast(intent);
+                        Uri localUri = Uri.fromFile(file);
+                        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
                         CaseLibraryDetailActivity.this.sendBroadcast(intent);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
@@ -105,6 +106,7 @@ public class JumpToChatRoom {
         intent.putExtra(ChatRoomActivity.THREAD_ID, map.get(ChatRoomActivity.THREAD_ID));
         intent.putExtra(ChatRoomActivity.ASSET_ID, map.get(ChatRoomActivity.ASSET_ID));
         intent.putExtra(ChatRoomActivity.RECIEVER_HS_UID, jumpBean.getReciever_hs_uid());
+        intent.putExtra(ChatRoomActivity.MEDIA_TYPE, jumpBean.getMediaIdProject());
         context.startActivity(intent);
     }
 }

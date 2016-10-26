@@ -40,6 +40,21 @@ public class Constant {
     }
 
     /**
+     * 登录用户数据用到的key
+     */
+    public static class FragmentEnum {
+
+        public static final int ZERO = 0;
+        public static final int ONE = 1;
+        public static final int TWO = 2;
+        public static final int THREE = 3;
+        public static final int FOUR = 4;
+        public static final int FIVE = 5;
+
+    }
+
+
+    /**
      * Flow pass parameter .
      */
     public static class ProjectMaterialKey {
@@ -177,6 +192,7 @@ public class Constant {
         public static String HS_UID = "HS_UID";
         public static String FLOW_STATE = "FLOW_STATE";
         public static String DESIGNER_STYLE_ALL = "DESIGNERSTYLEALL";
+        public static String ORDERS = "ORSERSIZE";
 
         public static String ORDER_ID = "order_id";
         public static String ORDER_LINE_ID = "order_line_id";
@@ -340,6 +356,7 @@ public class Constant {
 
         public static final String DESIGN_DELIVERY_LEVEL_ZERO = "DESIGN_DELIVERY";
         public static final String DESIGN_DELIVERY_OTHERS = "MEASURE_DELIVERY";
+        public static final String _POSITION = "item_position";
     }
 
     /**

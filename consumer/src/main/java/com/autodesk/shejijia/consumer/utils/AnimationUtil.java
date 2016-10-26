@@ -24,15 +24,11 @@ public class AnimationUtil {
      */
     public static TranslateAnimation moveToViewBottom() {
         TranslateAnimation mHiddenAction = new TranslateAnimation(
-                Animation.RELATIVE_TO_SELF,
-                0.0f,
-                Animation.RELATIVE_TO_SELF,
-                0.0f,
-                Animation.RELATIVE_TO_SELF,
-                0.0f,
-                Animation.RELATIVE_TO_SELF,
-                1.0f);
-        mHiddenAction.setDuration(700);
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 1.0f);
+        mHiddenAction.setDuration(900);
         mHiddenAction.setFillBefore(false);
         return mHiddenAction;
     }
@@ -52,8 +48,8 @@ public class AnimationUtil {
                 1.0f,
                 Animation.RELATIVE_TO_SELF,
                 0.0f);
-        mHiddenAction.setDuration(700);
-        mHiddenAction.setFillBefore(false);
+        mHiddenAction.setDuration(900);
+        mHiddenAction.setFillBefore(true);
         return mHiddenAction;
     }
 }

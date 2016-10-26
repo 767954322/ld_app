@@ -6,7 +6,7 @@ import android.util.Log;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 /**
- * Created by t_xuz on 2015/8/28.
+ * Created by jasonxu on 2015/8/28.
  */
 public final class LogUtils {
 

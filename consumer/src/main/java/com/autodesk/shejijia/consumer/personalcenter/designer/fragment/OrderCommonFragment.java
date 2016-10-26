@@ -113,7 +113,8 @@ public class OrderCommonFragment extends BaseFragment {
         super.onResume();
 
     }
-//
+
+    //
     // fixme 这个方法当check到我的项目时候进行回调．
     @Override
     public void onFragmentShown() {
@@ -228,14 +229,15 @@ public class OrderCommonFragment extends BaseFragment {
             if (bidders != null && bidders.size() > 0) {
                 biddersBean = bidders.get(0);
 
+
                 String wk_cur_sub_node_id = biddersBean.getWk_cur_sub_node_id();
                 String avatar = orderListEntity.getAvatar();
                 avatar = TextUtils.isEmpty(avatar) ? "" : avatar;
                 PolygonImageView polygonImageView = holder.getView(R.id.piv_consumer_slite_photo);
                 ImageUtils.displayAvatarImage(avatar, polygonImageView);
 
-                holder.setText(R.id.tv_designer_order_state,
-                        MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id));
+                holder.setText (R.id.tv_designer_order_state,
+                        MPWkFlowManager.getWkSubNodeName(getActivity(), wk_template_id, wk_cur_sub_node_id, biddersBean.getDelivery()));
 
             } else {
                 holder.setText(R.id.tv_designer_order_state, UIUtils.getString(R.string.no_data));
@@ -244,7 +246,8 @@ public class OrderCommonFragment extends BaseFragment {
             holder.setText(R.id.tv_decoration_phone, consumer_mobile);
             holder.setText(R.id.tv_designer_order_house_type, house_type_convert);
             holder.setText(R.id.tv_designer_order_house_style, decoration_style_convert);
-            holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(consumer_name) + "/" + community_name);
+            holder.setText(R.id.tv_designer_order_address, UIUtils.getNoStringIfEmpty(consumer_name));
+            holder.setText(R.id.tv_designer_order_community, "/" + UIUtils.getNoStringIfEmpty(community_name));
             holder.setText(R.id.tv_address, address);
             holder.setText(R.id.tv_customer_name, UIUtils.getNoStringIfEmpty(consumer_name));
 

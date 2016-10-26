@@ -111,12 +111,13 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
     protected void onWorkFlowData() {
         super.onWorkFlowData();
         CustomProgress.cancelDialog();
-        if (!isElite(wk_cur_template_id)) {
-            setTitleForNavbar(getResources().getString(R.string.is_average_measure_house_form)); /// 竞优 .
-        } else {
-            setTitleForNavbar(getResources().getString(R.string.is_elite_measure_house_form)); ///  精选.
-        }
-
+//        if (!isElite(wk_cur_template_id)) {
+//            setTitleForNavbar(getResources().getString(R.string.is_average_measure_house_form)); /// 竞优 .
+//        } else {
+//            setTitleForNavbar(getResources().getString(R.string.is_elite_measure_house_form)); ///  精选.
+//        }
+        //fix bug DP-6395
+        setTitleForNavbar(getResources().getString(R.string.measure_house_form));
         updateDisplayData();
         updateRoomData();
         updateCityData();
@@ -249,7 +250,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
                 if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
                     tvc_measure_form_time.setText("");
                 } else {
-                    tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
+                    tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm")); /// 量房时间 .
                 }
             } else {
                 ll_consumer_send.setVisibility(View.VISIBLE);
@@ -314,10 +315,11 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         final AnimationSet animationSetHide = new AnimationSet(true);
         AlphaAnimation alphaAnimationShow = new AlphaAnimation(0, 1);
         AlphaAnimation alphaAnimationHide = new AlphaAnimation(1, 0);
-        alphaAnimationShow.setDuration(3000);
-        alphaAnimationHide.setDuration(3000);
+        alphaAnimationShow.setDuration(1500);
+        alphaAnimationHide.setDuration(1500);
         animationSetShow.addAnimation(alphaAnimationShow);
         animationSetHide.addAnimation(alphaAnimationHide);
+        animationSetHide.setStartOffset(4000);
 
         viewAnimation.setAnimation(animationSetShow);
         //动画显现监听
@@ -444,7 +446,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             house_type_content = requirement.getHouse_type();
         }
         String rlt = room_convert + " " + living_room_convert + " " + toilet_convert;
-        rlt = (rlt.equals("null" + " " + "null" + " " + "null")) ? UIUtils.getString(R.string.no_select) : rlt;
+        rlt = (rlt.equals("null" + " " + " " + " " + " ")) ? UIUtils.getString(R.string.str_others) : rlt;
         tvc_measure_form_house_type_model.setText(rlt);
 
         tvc_measure_form_type.setText(house_type_content != null ? house_type_content : UIUtils.getString(R.string.no_select));
@@ -546,6 +548,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         pvTime = new TimePickerView(this, TimePickerView.Type.ALL);
         /// Control the time range .
         pvTime.setRange(2016, 2018);
+        pvTime.setTitle("量房时间");
         pvTime.setTime(new Date());
         pvTime.setCyclic(false);
         pvTime.setCancelable(true);
