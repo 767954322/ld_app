@@ -58,11 +58,6 @@ public interface ProjectListContract {
         void loadMoreProjectList();
 
         /*
-        * 加载所有任务列表
-        * */
-        void loadProjectListData(Bundle params);
-
-        /*
        * 跳转项目详情页
        * */
         void navigateToProjectDetail(List<ProjectInfo> projectList, int position);

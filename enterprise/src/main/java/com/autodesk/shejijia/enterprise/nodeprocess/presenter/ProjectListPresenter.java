@@ -95,8 +95,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
         loadProjectListData(requestParamsBundle);
     }
 
-    @Override
-    public void loadProjectListData(Bundle requestParams) {
+    private void loadProjectListData(Bundle requestParams) {
 
         mNodeProcessRepository.getProjectList(requestParams, Constants.REQUEST_TAG_LOAD_PROJECTS, new LoadDataCallback<ProjectList>() {
             @Override
