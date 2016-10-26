@@ -17,12 +17,10 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.Recommend
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendListDetailBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -91,12 +89,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      */
     private void getRecommendDraftDetail() {
         CustomProgress.showDefaultProgress(mActivity);
-
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (memberEntity == null) {
-            return;
-        }
-        String designer_id = memberEntity.getAcs_member_id();
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
@@ -113,7 +105,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };
-        MPServerHttpManager.getInstance().getRecommendDraftDetail(designer_id, mAsset_id, callback);
+        MPServerHttpManager.getInstance().getRecommendDraftDetail(mAsset_id, callback);
     }
 
     private void updateUI(RecommendListDetailBean recommendListDetailBean) {
@@ -130,6 +122,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 }.getType());
 
         Log.d("RecommendListDetailActi", scfd);
+//        if (recommendSCFDList)
         RecommendListEditAdapter recommendListEditAdapter = new RecommendListEditAdapter(this, recommendSCFDList);
         mRecyclerViewList.setAdapter(recommendListEditAdapter);
     }

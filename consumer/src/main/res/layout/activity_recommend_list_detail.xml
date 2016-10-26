@@ -15,6 +15,9 @@
 
     <include layout="@layout/activity_recommend_list_content"></include>
 
+    <include layout="@layout/layout_empty_view"/>
+
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_list_send"
         android:layout_width="match_parent"

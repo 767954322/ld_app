@@ -52,9 +52,9 @@ public class MPServerHttpManager {
     /**
      * 从推荐草稿中获取推荐清单信息
      */
-    public void getRecommendDraftDetail(String designer_id, String asset_id, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.MAIN_RECOMMEND + "/designers/%s/recommends/%s";
-        String formatUrl = String.format(url, designer_id, asset_id);
+    public void getRecommendDraftDetail(String asset_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_RECOMMEND + "/recommends/%s";
+        String formatUrl = String.format(url, asset_id);
         LogUtils.d(TAG, formatUrl);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, formatUrl, null, callback) {
             @Override
@@ -93,13 +93,14 @@ public class MPServerHttpManager {
         };
         queue.add(okRequest);
     }
+
     /**
      * 新建清单
+     *
      * @param designer_id
-     * @param callback
-     * /designers/{designer_id}/recommends
+     * @param callback    /designers/{designer_id}/recommends
      */
-    public void getNewInventoryList(JSONObject jsonObject,String designer_id, OkJsonRequest.OKResponseCallback callback) {
+    public void getNewInventoryList(JSONObject jsonObject, String designer_id, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + designer_id + "/recommends";
         Log.d("NewInventoryActivity", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, jsonObject, callback) {
