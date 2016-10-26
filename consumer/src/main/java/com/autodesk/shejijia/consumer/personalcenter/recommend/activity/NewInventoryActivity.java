@@ -43,6 +43,13 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+/**
+ * @author DongXueQiu .
+ * @version 1.0 .
+ * @date 16-10-23
+ * @file NewInventoryActivity.java  .
+ * @brief 新建清单.
+ */
 
 public class NewInventoryActivity extends NavigationBarActivity implements View.OnClickListener, TextWatcher, OnItemClickListener {
 
@@ -90,6 +97,11 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
     }
 
+    /**
+     * 重写返回键
+     *
+     * @param view
+     */
     protected void leftNavButtonClicked(View view) {
         String mProjectName = mTvProjectName.getText().toString();
         String mMemberAccount = mEtMemberAccount.getText().toString();
@@ -122,6 +134,14 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         mEtDetailAddress.addTextChangedListener(this);
     }
 
+    /**
+     * EditText 变化监听
+     *
+     * @param charSequence
+     * @param i
+     * @param i1
+     * @param i2
+     */
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -139,7 +159,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             mBtnNextPager.setBackgroundResource(R.drawable.bg_common_btn_blue);
             mBtnNextPager.setTextColor(UIUtils.getColor(R.color.bg_ff));
         }
-
 
     }
 
@@ -227,29 +246,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 JSONObject jsonObject = new JSONObject();
                 try {
 
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGN_PROJECT_ID, "");
-//
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ID, "20736491");
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "");
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ZID, "123456789");//会员帐号
-//
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
-//
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_MOBILE, mPhoneNumber);
-//
-//
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE, mCurrentProvinceCode);
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE_NAME, mCurrentProvince);
-//
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_CODE, mCurrentCityCode);
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
-//
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_CODE, mCurrentDistrictCode);
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_NAME, mCurrentDistrict);
-//
-//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
-
                     jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
                     jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
                     jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_ADDRESS, mDetailAddress);
@@ -278,6 +274,11 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
     }
 
+    /**
+     * EditText判空
+     *
+     * @return
+     */
     private Boolean inputInfo() {
 
         String mMemberAccount = mEtMemberAccount.getText().toString();
@@ -315,7 +316,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
 
 
     /**
-     * 发布需求
+     * 保存项目
      *
      * @param jsonObject
      */
@@ -341,6 +342,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
             }
         });
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

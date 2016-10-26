@@ -33,6 +33,14 @@ import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author DongXueQiu .
+ * @version 1.0 .
+ * @date 16-10-24
+ * @file SelectProjectActivity.java  .
+ * @brief 选择项目.
+ */
+
 public class SelectProjectActivity extends NavigationBarActivity implements View.OnClickListener {
 
     private SelectProjectAdapter mAdapter;
@@ -73,10 +81,9 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
 //        if (is_loho != 0 && !list.contains(entity)) {
         list.add(0, entity);
 //            mAdapter.notifyDataSetChanged();
-//    }
+//        }
 
         mAdapter = new SelectProjectAdapter(SelectProjectActivity.this, list, R.layout.item_lv_select_project);
-
         mListView.setAdapter(mAdapter);
 
     }
