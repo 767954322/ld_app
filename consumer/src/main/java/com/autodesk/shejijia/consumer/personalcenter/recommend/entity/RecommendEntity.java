@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecommendEntity {
+public class RecommendEntity implements Serializable{
 
     private int total;
     private int offset;
@@ -47,7 +48,7 @@ public class RecommendEntity {
         this.items = items;
     }
 
-    public static class ItemsBean {
+    public static class ItemsBean implements Serializable{
         private String province;
         private String city;
         private String district;

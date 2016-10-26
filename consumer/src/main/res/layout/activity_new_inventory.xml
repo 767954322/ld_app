@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_select_project"
-                android:textColor="@color/bg_99"
+                android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
 
             <ImageView
@@ -81,7 +81,7 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_member_account"
-                android:textColor="@color/bg_99"
+                android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
         </LinearLayout>
 
@@ -114,7 +114,7 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_name"
-                android:textColor="@color/bg_99"
+                android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
         </LinearLayout>
 
@@ -149,7 +149,7 @@
                 android:maxLength="11"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_phone_number"
-                android:textColor="@color/bg_99"
+                android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
         </LinearLayout>
 
@@ -183,7 +183,7 @@
                 android:gravity="center_vertical"
                 android:editable="false"
                 android:hint="@string/new_inventory_please_input_project_address"
-                android:textColor="@color/bg_99"
+                android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
 
             <ImageView
@@ -222,7 +222,7 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_community_name"
-                android:textColor="@color/bg_99"
+                android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
         </LinearLayout>
 
@@ -255,7 +255,7 @@
                 android:background="@color/no_color"
                 android:gravity="center_vertical"
                 android:hint="@string/new_inventory_please_input_detailed_address"
-                android:textColor="@color/bg_99"
+                android:textColor="@color/text_item_name"
                 android:textSize="@dimen/font_13" />
         </LinearLayout>
 

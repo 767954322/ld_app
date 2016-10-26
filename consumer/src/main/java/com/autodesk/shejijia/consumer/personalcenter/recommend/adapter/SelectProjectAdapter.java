@@ -27,7 +27,7 @@ public class SelectProjectAdapter extends CommonAdapter<RecommendEntity.ItemsBea
     @Override
     public void convert(CommonViewHolder holder, RecommendEntity.ItemsBean itemsBean) {
 
-        holder.setText(R.id.tv_project_name, itemsBean.getCity_name());
+        holder.setText(R.id.tv_project_name, itemsBean.getCommunity_name());
 
     }
 }
