@@ -68,7 +68,6 @@ public class MPServerHttpManager {
     }
 
     /**
->>>>>>> 21c775dc138a0377a35427b0bdbf31477eb1a11b
      * 我的推荐列表
      */
     public void getRecommendList(String design_id, final int offset, final int limit, int status, OkJsonRequest.OKResponseCallback callback) {
@@ -79,6 +78,25 @@ public class MPServerHttpManager {
                 "&asset_name=" + design_id;
         Log.d("RecommendFragment", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+    /**
+     * 新建清单
+     * @param designer_id
+     * @param callback
+     * /designers/{designer_id}/recommends
+     */
+    public void getNewInventoryList(JSONObject jsonObject,String designer_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + designer_id + "/recommends";
+        Log.d("NewInventoryActivity", url);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.POST, url, jsonObject, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();
