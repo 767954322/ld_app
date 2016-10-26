@@ -4,35 +4,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
+
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
-import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowEstablishContractActivity;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.squareup.okhttp.internal.Util;
 
-import java.io.Serializable;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import static com.autodesk.shejijia.consumer.R.array.all;
 
 public class NewInventoryActivity extends NavigationBarActivity implements View.OnClickListener, TextWatcher {
 
@@ -46,6 +45,10 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private Button mBtnNextPager;
 
     private AddressDialog mChangeAddressDialog;
+    private String designer_id;
+    private String designer_uid;
+    private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
+    private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
 
     @Override
     protected int getLayoutResId() {
@@ -69,6 +72,9 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        designer_id = memberEntity.getAcs_member_id();
+        designer_uid = memberEntity.getHs_uid();
 
     }
 
@@ -169,7 +175,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 /**
                  * 小区名称
                  */
-                boolean mMatchesCommunityName = mCommunityName.matches(RegexUtil.COMMUNITY_NAME_REGEX);
+                boolean mMatchesCommunityName = mCommunityName.matches(RegexUtil.ADDRESS_REGEX);
                 if (!mMatchesCommunityName) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_community_name),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
@@ -179,13 +185,64 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 /**
                  * 详细地址
                  */
-                boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.COMMUNITY_NAME_REGEX);
+                boolean mMatchesDetailAddress = mDetailAddress.matches(RegexUtil.ADDRESS_REGEX);
                 if (!mMatchesDetailAddress) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
                     return;
                 }
 
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGN_PROJECT_ID, "");
+//
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ID, "20736491");
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "");
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ZID, "123456789");//会员帐号
+//
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
+//
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_MOBILE, mPhoneNumber);
+//
+//
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE, mCurrentProvinceCode);
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE_NAME, mCurrentProvince);
+//
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_CODE, mCurrentCityCode);
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
+//
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_CODE, mCurrentDistrictCode);
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_NAME, mCurrentDistrict);
+//
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
+
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_ADDRESS, mProjectAddress);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ID, "20736491");
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_MOBILE, mPhoneNumber);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
+
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "123456789");
+
+//                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_ID, designer_id);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT, mCurrentDistrictCode);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_NAME, mCurrentDistrict);
+
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE, mCurrentProvinceCode);
+                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE_NAME, mCurrentProvince);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
+                getNewInventoryList(jsonObject, designer_id);
                 break;
         }
 
@@ -226,6 +283,33 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
         return false;
     }
 
+
+    /**
+     * 发布需求
+     *
+     * @param jsonObject
+     */
+    private void getNewInventoryList(JSONObject jsonObject, String designer_id) {
+
+        MPServerHttpManager.getInstance().getNewInventoryList(jsonObject, designer_id, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+                Log.d("NewInventoryActivity", "成功啦");
+                
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                Log.d("NewInventoryActivity", "失败啦");
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_save_project_fail),
+                        null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+            }
+        });
+    }
+
+
     /**
      * @brief 获取省市区地址
      */
@@ -236,15 +320,15 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override
                     public void onClick(String province, String provinceCode, String city, String cityCode, String area, String areaCode) {
-//                        mCurrentProvince = province;
-//                        mCurrentProvinceCode = provinceCode;
-//                        mCurrentCity = city;
-//                        mCurrentCityCode = cityCode;
-//                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
-//                        mCurrentDistrict = area;
-//                        mCurrentDistrictCode = areaCode;
-//
-//                        area = UIUtils.getNoStringIfEmpty(area);
+                        mCurrentProvince = province;
+                        mCurrentProvinceCode = provinceCode;
+                        mCurrentCity = city;
+                        mCurrentCityCode = cityCode;
+                        // 由于有些地区没有区这个字段，将含有区域得字段name改为none，code改为0
+                        mCurrentDistrict = area;
+                        mCurrentDistrictCode = areaCode;
+
+                        area = UIUtils.getNoStringIfEmpty(area);
 
                         mEtProjectAddress.setText(province + " " + city + " " + area);
                         mChangeAddressDialog.dismiss();

@@ -68,6 +68,7 @@ public class MPServerHttpManager {
     }
 
     /**
+>>>>>>> 21c775dc138a0377a35427b0bdbf31477eb1a11b
      * 我的推荐列表
      */
     public void getRecommendList(String design_id, final int offset, final int limit, int status, OkJsonRequest.OKResponseCallback callback) {

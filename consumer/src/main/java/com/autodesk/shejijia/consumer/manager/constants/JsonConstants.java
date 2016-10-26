@@ -209,4 +209,41 @@ public class JsonConstants {
     public static final String JSON_MASTER_NAME = "name";
     public static final String JSON_MASTER_MEMBER_ID = "member_id";
     public static final String JSON_MASTER_HS_UID = "hs_uid";
+
+    //新建清单
+//
+//    public static final String JSON_NEW_INVENTORY_DESIGN_PROJECT_ID = "design_project_id";
+//    public static final String JSON_NEW_INVENTORY_CONSUMER_ID = "consumer_id";
+//    public static final String JSON_NEW_INVENTORY_CONSUMER_UID = "consumer_uid";
+//    public static final String JSON_NEW_INVENTORY_CONSUMER_ZID = "consumer_zid";
+//    public static final String JSON_NEW_INVENTORY_DESIGNER_UID = "designer_uid";
+//    public static final String JSON_NEW_INVENTORY_CUSTOMER_NAME = "consumer_name";
+//    public static final String JSON_NEW_INVENTORY_CONSUMER_MOBILE = "consumer_mobile";
+//    public static final String JSON_NEW_INVENTORY_PROVINCE = "province";
+//    public static final String JSON_NEW_INVENTORY_PROVINCE_NAME = "province_name";
+//    public static final String JSON_NEW_INVENTORY_CITY_CODE = "city";
+//    public static final String JSON_NEW_INVENTORY_CITY_NAME = "city_name";
+//    public static final String JSON_NEW_INVENTORY_DISTRICT_CODE = "district";
+//    public static final String JSON_NEW_INVENTORY_DISTRICT_NAME = "district_name";
+//    public static final String JSON_NEW_INVENTORY_COMMUNITY_NAME = "community_name";
+
+
+    public static final String JSON_NEW_INVENTORY_CITY = "city";
+    public static final String JSON_NEW_INVENTORY_CITY_NAME = "city_name";
+    public static final String JSON_NEW_INVENTORY_COMMUNITY_ADDRESS = "community_address";
+    public static final String JSON_NEW_INVENTORY_COMMUNITY_NAME = "community_name";
+    public static final String JSON_NEW_INVENTORY_CONSUMER_ID = "consumer_id";
+    public static final String JSON_NEW_INVENTORY_CONSUMER_MOBILE = "consumer_mobile";
+    public static final String JSON_NEW_INVENTORY_CUSTOMER_NAME = "consumer_name";
+    public static final String JSON_NEW_INVENTORY_CONSUMER_UID = "consumer_uid";
+    public static final String JSON_NEW_INVENTORY_DESIGNER_ID = "designer_id";
+    public static final String JSON_NEW_INVENTORY_DESIGNER_UID = "designer_uid";
+    public static final String JSON_NEW_INVENTORY_DISTRICT = "district";
+    public static final String JSON_NEW_INVENTORY_DISTRICT_NAME = "district_name";
+    public static final String JSON_NEW_INVENTORY_PROVINCE = "province";
+    public static final String JSON_NEW_INVENTORY_PROVINCE_NAME = "province_name";
+
+
+
+
 }
