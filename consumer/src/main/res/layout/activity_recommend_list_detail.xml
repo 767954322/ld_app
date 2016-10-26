@@ -12,21 +12,18 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"/>
 
-    <RelativeLayout
+
+    <include layout="@layout/activity_recommend_list_content"></include>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_list_send"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/activity_recommend_list_content"></include>
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_list_send"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/bg_0084ff"
-            android:text="@string/send"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_20"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/size_15"
+        android:background="@color/bg_0084ff"
+        android:text="@string/send"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_20"/>
 
 </LinearLayout>

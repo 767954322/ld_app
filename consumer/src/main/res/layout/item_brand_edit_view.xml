@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_brand_name"
+            style="@style/item_text_style"
+            android:layout_gravity="left"
+            android:paddingTop="14dp"
+            android:text="品牌名称"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/tv_brand_change"
+            style="@style/item_text_style"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="left"
+            android:paddingTop="14dp"
+            android:text="品牌变更"
+            android:textColor="@color/search_text_color"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:text="数量："/>
+
+        <EditText
+            android:id="@+id/tv_brand_num"
+            style="@style/style_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请填写数量（单位）"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:text="规格："/>
+
+        <EditText
+            android:id="@+id/tv_brand_dimension"
+            style="@style/style_edit_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请填写规格"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:text="空间："/>
+
+        <ExpandableListView
+            android:id="@+id/tv_brand_apartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卫生间"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:text="备注："/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_brand_remarks"
+            style="@style/style_edit_text"
+            android:hint="请填写备注"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:layout_height="match_parent"
+            android:text="店铺："/>
+
+        <TextView
+            android:id="@+id/tv_brand_mall_name"
+            style="@style/item_text_style"
+            android:lineSpacingMultiplier="1.2"
+            android:text="质地细腻与澳洲国石优博瑰丽质地细腻与澳洲国石优博瑰丽"/>
+    </LinearLayout>
+
+    <include
+        layout="@layout/line_view"/>
+</LinearLayout>
+

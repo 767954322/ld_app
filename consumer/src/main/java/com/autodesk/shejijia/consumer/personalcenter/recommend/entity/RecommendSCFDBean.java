@@ -11,7 +11,7 @@ import java.util.List;
 public class RecommendSCFDBean {
 
     private String sub_category_3d_id;
-    private String category_3d_name;
+    private String category_3d_name; // 3d工具一级品类名称．
     private String source;
     private String sub_category_3d_name;
     private String category_3d_id;

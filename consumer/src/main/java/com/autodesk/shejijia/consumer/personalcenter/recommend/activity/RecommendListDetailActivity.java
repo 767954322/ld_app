@@ -6,28 +6,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendListEditAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendListDetailBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
 
@@ -39,7 +41,7 @@ import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.js
  */
 public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener {
 
-    private RecyclerView mRecyclerViewList;
+    private ListView mRecyclerViewList;
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
     private String mAsset_id;
@@ -58,7 +60,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     @Override
     protected void initView() {
         super.initView();
-        mRecyclerViewList = (RecyclerView) findViewById(R.id.rcy_recommend_detail);
+        mRecyclerViewList = (ListView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
     }
 
@@ -73,7 +75,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mActivity = this;
-        initRecycleView();
+//        initRecycleView();
 
         getRecommendDraftDetail();
     }
@@ -123,8 +125,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     private void updateItemView(String scfd) {
         // 更新适配器
-        RecommendSCFDBean recommendSCFDBean = GsonUtil.jsonToBean(scfd, RecommendSCFDBean.class);
+        List<RecommendSCFDBean> recommendSCFDList = new Gson()
+                .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
+                }.getType());
+
         Log.d("RecommendListDetailActi", scfd);
+        RecommendListEditAdapter recommendListEditAdapter = new RecommendListEditAdapter(this, recommendSCFDList);
+        mRecyclerViewList.setAdapter(recommendListEditAdapter);
     }
 
     @Override
@@ -165,10 +172,10 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
-    private void initRecycleView() {
-        //init recyclerView
-        mRecyclerViewList.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerViewList.setHasFixedSize(true);
-        mRecyclerViewList.setItemAnimator(new DefaultItemAnimator());
-    }
+//    private void initRecycleView() {
+//        //init recyclerView
+//        mRecyclerViewList.setLayoutManager(new LinearLayoutManager(this));
+//        mRecyclerViewList.setHasFixedSize(true);
+//        mRecyclerViewList.setItemAnimator(new DefaultItemAnimator());
+//    }
 }
