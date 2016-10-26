@@ -499,7 +499,7 @@
     <string name="demand_room_area">请输入房屋面积</string>
     <string name="issue_room">请选择户型</string>
 
-    <string name="issue_room_select">请选择户型：室 厅 卫(选填)</string>
+    <string name="issue_room_select">请选择户型(选填)</string>
     <string name="demand_please_style">请选择风格</string>
     <string name="demand_please_style_title">风格</string>
     <string name="demand_please_style_select">请选择风格(选填)</string>
