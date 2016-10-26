@@ -9,18 +9,24 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_12"
         android:orientation="vertical">
+
         <RadioButton
             android:id="@+id/rb_serviced"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/size_5"
+            android:button="@null"
+            android:drawableLeft="@drawable/radiobutton_drawable"
             android:checked="true"
             android:text="@string/serviced"
             />
+
         <RadioButton
             android:id="@+id/rb_serviceding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableLeft="@drawable/radiobutton_drawable"
             android:text="@string/serviceding"
             android:layout_marginBottom="@dimen/size_10"
             />
