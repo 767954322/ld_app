@@ -1,0 +1,12 @@
+{
+    "id": "inspection_basic_level",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "inspection",
+    "title": "基层检查记录",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {},
+    "check_items": []
+}

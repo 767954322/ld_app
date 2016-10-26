@@ -1,0 +1,130 @@
+{
+    "id": "material_tile",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材瓷砖",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 核对送货产品型号、规格、数量与送货单是否相符。",
+            "standard": "1-1 核对送货产品型号、规格、数量与送货单是否相符。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_scattered_tile",
+            "category": "送货验收",
+            "title": "1-2 检查零散片瓷砖是否有磕角、划伤等表面瑕疵，花砖腰线是否有磕碰。",
+            "standard": "1-2 检查零散片瓷砖是否有磕角、划伤等表面瑕疵，花砖腰线是否有磕碰。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_full_tile",
+            "category": "送货验收",
+            "title": "1-3 检查整箱瓷砖是否有破损，用手摇一下包装箱，有“嘎吱”响声的说明瓷砖可能有破损，一定要开箱检查！",
+            "standard": "1-3 检查整箱瓷砖是否有破损，用手摇一下包装箱，有“嘎吱”响声的说明瓷砖可能有破损，一定要开箱检查！",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_file_flatness",
+            "category": "送货验收",
+            "title": "1-4 检查瓷砖的平整度，四片或者六片相同型号的瓷砖按照相同的纹路拼铺在平面上，用手在砖面上来回的滑动，如果经过瓷砖的接缝部位有明显的高低感，说明瓷砖的平整度较差，会影响瓷砖铺贴的整体效果。",
+            "standard": "1-4 检查瓷砖的平整度，四片或者六片相同型号的瓷砖按照相同的纹路拼铺在平面上，用手在砖面上来回的滑动，如果经过瓷砖的接缝部位有明显的高低感，说明瓷砖的平整度较差，会影响瓷砖铺贴的整体效果。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_tile_squareness",
+            "category": "送货验收",
+            "title": "1-5 检查瓷砖的直角度：取四片相同型号的砖，进行拼接，检查四片砖是否接缝紧密。",
+            "standard": "1-5 检查瓷砖的直角度：取四片相同型号的砖，进行拼接，检查四片砖是否接缝紧密。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_tile_chromatism",
+            "category": "送货验收",
+            "title": "1-5 检查瓷砖的色差：将不同包装箱中的几块瓷砖拼放在一起，在光线下仔细察看，检查瓷砖是否存在明显色差。",
+            "standard": "1-5 检查瓷砖的色差：将不同包装箱中的几块瓷砖拼放在一起，在光线下仔细察看，检查瓷砖是否存在明显色差。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "assume_responsibility",
+            "category": "送货验收",
+            "title": "1-6 瓷砖为抽检，如在铺贴过程中发现瓷砖的整箱破损、平整度、直角度、色差问题，反馈给商家，则商家承担责任。如铺完后发现的此类问题，则工队承担相应的责任。",
+            "standard": "1-6 瓷砖为抽检，如在铺贴过程中发现瓷砖的整箱破损、平整度、直角度、色差问题，反馈给商家，则商家承担责任。如铺完后发现的此类问题，则工队承担相应的责任。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "acceptance_standard",
+            "category": "安装验收",
+            "title": "2-1 参照第三方监理验收标准",
+            "standard": "2-1 参照第三方监理验收标准",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

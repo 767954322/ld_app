@@ -1,0 +1,116 @@
+{
+    "id": "material_stairs",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材楼梯",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 检查楼梯安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查楼梯安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "packaging_surface",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "step_plate",
+            "category": "安装验收",
+            "title": "2-1 踏步板、立板安装后应水平、垂直，每个梯段踏板、立板应等宽、等长，且成一条直线，不得长短不均；踏步板/立板漆面应用纸板或者薄膜予以保护，不得有漆面损坏。",
+            "standard": "2-1 踏步板、立板安装后应水平、垂直，每个梯段踏板、立板应等宽、等长，且成一条直线，不得长短不均；踏步板/立板漆面应用纸板或者薄膜予以保护，不得有漆面损坏。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "upright_handrail",
+            "category": "安装验收",
+            "title": "2-2 立柱/扶手表面无枪钉眼，立柱安装牢固，不得有摇晃，且垂直于踏板面/地面，不得倾斜，立柱下端如需现场切割，切口应平整，无毛刺或掉漆。",
+            "standard": "2-2 立柱/扶手表面无枪钉眼，立柱安装牢固，不得有摇晃，且垂直于踏板面/地面，不得倾斜，立柱下端如需现场切割，切口应平整，无毛刺或掉漆。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "flat_pallet",
+            "category": "安装验收",
+            "title": "2-3 平台板/收口板/收口线条安装时相邻2块板面或与地面材料连接处应无高低差。",
+            "standard": "2-3 平台板/收口板/收口线条安装时相邻2块板面或与地面材料连接处应无高低差。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "skirting_board",
+            "category": "安装验收",
+            "title": "2-4 地脚线、三角块沿踏步板/立板表面安装，离缝不得大于3MM。",
+            "standard": "2-4 地脚线、三角块沿踏步板/立板表面安装，离缝不得大于3MM。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_window_frame",
+            "category": "安装验收",
+            "title": "2-5 门窗框与墙体之间的缝隙应填嵌饱满，金属门窗应采用西卡品牌密封胶密封。密封胶表面应光滑、顺直，无裂纹。门窗扇的橡胶密封条或毛毡密封条应安装完好，不得脱槽。旋转窗间隙应基本均匀。 ",
+            "standard": "2-5 门窗框与墙体之间的缝隙应填嵌饱满，金属门窗应采用西卡品牌密封胶密封。密封胶表面应光滑、顺直，无裂纹。门窗扇的橡胶密封条或毛毡密封条应安装完好，不得脱槽。旋转窗间隙应基本均匀。 ",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

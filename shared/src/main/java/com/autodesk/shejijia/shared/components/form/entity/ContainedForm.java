@@ -5,8 +5,15 @@ import com.autodesk.shejijia.shared.components.form.entity.microBean.FeedBack;
 import com.autodesk.shejijia.shared.components.form.entity.microBean.TypeDict;
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
+
+import cn.jpush.android.api.PushNotificationBuilder;
 
 /**
  * Created by t_panya on 16/10/24.
@@ -19,6 +26,9 @@ public class ContainedForm implements Serializable {
     private Integer version;
     private String formInstanceId;
     private String category;
+    private String title;
+    @SerializedName("doc_type")
+    private String docType;
     @SerializedName("form_template_id")
     private String formTemplateId;
     @SerializedName("form_template_version")
@@ -38,7 +48,47 @@ public class ContainedForm implements Serializable {
     @SerializedName("type_dict")
     private TypeDict typeDict;
     @SerializedName("check_items")
-    private List<CheckItem> checkItems;
+    private ArrayList<CheckItem> checkItems;
+
+    public String getDocType() {
+        return docType;
+    }
+
+    public void setDocType(String docType) {
+        this.docType = docType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSchemaVersion() {
+        return schemaVersion;
+    }
+
+    public void setSchemaVersion(String schemaVersion) {
+        this.schemaVersion = schemaVersion;
+    }
+
+    public Boolean getCheckItemsVariability() {
+        return checkItemsVariability;
+    }
+
+    public void setCheckItemsVariability(Boolean checkItemsVariability) {
+        this.checkItemsVariability = checkItemsVariability;
+    }
+
+    public TypeDict getTypeDict() {
+        return typeDict;
+    }
+
+    public void setTypeDict(TypeDict typeDict) {
+        this.typeDict = typeDict;
+    }
 
     public String getId() {
         return id;
@@ -128,11 +178,37 @@ public class ContainedForm implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
-    public List<CheckItem> getCheckItems() {
+    public ArrayList<CheckItem> getCheckItems() {
         return checkItems;
     }
 
-    public void setCheckItems(List<CheckItem> checkItems) {
+    public void setCheckItems(ArrayList<CheckItem> checkItems) {
         this.checkItems = checkItems;
     }
+
+    public void applyFormData(ContainedForm form){
+        this.formTemplateId = form.getFormTemplateId();
+        this.formInstanceId = form.getFormInstanceId();
+        this.projectId = form.getProjectId();
+        this.taskId = form.getTaskId();
+        this.status = form.getStatus();
+        this.version = form.getVersion();
+        ArrayList<CheckItem> items = form.getCheckItems();
+        for(int i = 0; i < items.size(); i++){
+            CheckItem item = getItemWithId(items.get(i).getItemId());
+            if(item != null){
+                item.setValue(items.get(i).getValue());
+            }
+        }
+    }
+
+    private CheckItem getItemWithId(String itemId){
+        for(CheckItem item : checkItems){
+            if((item.getItemId()).equals(itemId)){
+                return item;
+            }
+        }
+        return null;
+    }
+
 }

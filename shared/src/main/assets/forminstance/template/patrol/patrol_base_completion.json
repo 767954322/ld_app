@@ -1,0 +1,413 @@
+{
+    "id": "patrol_base_completion",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "patrol",
+    "title": "基础完工验收巡检表",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "不合格",
+                "合格"
+            ],
+            "acceptance_options": [
+                "是",
+                "否"
+            ],
+            "review_options": []
+        },
+    "check_items": [
+        {
+            "item_id": "present_dressing",
+            "category": "",
+            "title": "工长、班长、第三方监理是否按时到场并齐全；工长、班长、客户经理着装是否符合公司要求。",
+            "standard": "工长、班长、第三方监理是否按时到场并齐全；工长、班长、客户经理着装是否符合公司要求。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "marketing_protection",
+            "category": "",
+            "title": "营销保护是否保持完好，安全施工是否合格。",
+            "standard": "营销保护是否保持完好，安全施工是否合格。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "materialman_plan",
+            "category": "",
+            "title": "材料员是否制定出各项主材送货安装计划。",
+            "standard": "材料员是否制定出各项主材送货安装计划。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "construction_regulation",
+            "category": "",
+            "title": "现场是否按图施工，是否存在增减项。",
+            "standard": "现场是否按图施工，是否存在增减项。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "material_inspection",
+            "category": "",
+            "title": "部分主材（浴缸、吊顶、塑钢窗、石材、硅藻泥、热水器）是否验收合格。",
+            "standard": "部分主材（浴缸、吊顶、塑钢窗、石材、硅藻泥、热水器）是否验收合格。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "take_photos_scene",
+            "category": "",
+            "title": "是否按要求拍摄现场照片并发至客户服务群。",
+            "standard": "是否按要求拍摄现场照片并发至客户服务群。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "take_photos_scene",
+            "category": "",
+            "title": "是否按要求拍摄现场照片并发至客户服务群。",
+            "standard": "是否按要求拍摄现场照片并发至客户服务群。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "take_photos_receipts",
+            "category": "",
+            "title": "是否将第三方监理《基础完工验收单据》拍照发至客户服务群。",
+            "standard": "是否将第三方监理《基础完工验收单据》拍照发至客户服务群。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "conclusion",
+            "category": "",
+            "title": "是否将总结话术发至客户服务群。",
+            "standard": "是否将总结话术发至客户服务群。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "thirdparty_supervisor",
+            "category": "",
+            "title": "第三方监理的验收过程是否公正、无营私舞弊现象。",
+            "standard": "第三方监理的验收过程是否公正、无营私舞弊现象。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

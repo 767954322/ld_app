@@ -1,0 +1,384 @@
+{
+    "id": "patrol_project_completion",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "patrol",
+    "title": "工程竣工验收记录表",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "不合格",
+                "合格"
+            ],
+            "acceptance_options": [
+                "优良",
+                "合格"
+            ],
+            "experiment_result_options": [
+                "正常",
+                "不正常"
+            ],
+            "review_options": []
+        },
+    "check_items": [
+        {
+            "item_id": "water",
+            "category": "",
+            "title": "水工",
+            "standard": "水工",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                2
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "electrician",
+            "category": "",
+            "title": "电工",
+            "standard": "电工",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                2
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "brick_layer",
+            "category": "",
+            "title": "瓦工",
+            "standard": "瓦工",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                2
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "woodworking",
+            "category": "",
+            "title": "木工",
+            "standard": "木工",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                2
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "painter",
+            "category": "",
+            "title": "油漆工",
+            "standard": "油漆工",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                2
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "material",
+            "category": "",
+            "title": "材料及成品安装",
+            "standard": "材料及成品安装",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                2
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "electric_test",
+            "category": "",
+            "title": "通电试验",
+            "standard": "通电试验",
+            "check_type": "experiment_result_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_test",
+            "category": "",
+            "title": "通水试验",
+            "standard": "通水试验",
+            "check_type": "experiment_result_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "equipment",
+            "category": "",
+            "title": "设备运转试验",
+            "standard": "设备运转试验",
+            "check_type": "experiment_result_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

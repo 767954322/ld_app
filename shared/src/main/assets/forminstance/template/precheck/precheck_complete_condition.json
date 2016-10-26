@@ -1,0 +1,167 @@
+{
+    "id": "precheck_complete_condition",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "precheck",
+    "title": "竣工阶段验收条件检查",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ],
+        "is_checked": [
+            "是",
+            "否"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "input_content",
+            "category": "",
+            "title": "",
+            "standard": "",
+            "check_type": "status",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "hidden",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "acceptance_whether_check",
+            "category": "必要条件",
+            "title": "客户是否同意验收",
+            "standard": "客户是否同意验收",
+            "check_type": "is_checked",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "item_id": "monitor_whether_presence",
+            "category": "必要条件",
+            "title": "班长是否在场",
+            "standard": "班长是否在场",
+            "check_type": "is_checked",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "item_id": "interface_wether_standard",
+            "category": "必要条件",
+            "title": "施工界面是否符合验收标准",
+            "standard": "施工界面是否符合验收标准",
+            "check_type": "is_checked",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "item_id": "whether_presence",
+            "category": "辅助条件",
+            "title": "客户是否在场",
+            "standard": "客户是否在场",
+            "check_type": "is_checked",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "item_id": "telephone_consultation",
+            "category": "辅助条件",
+            "title": "客户不在场时电话咨询",
+            "standard": "客户不在场时电话咨询",
+            "check_type": "is_checked",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                }
+            ]
+        },
+        {
+            "item_id": "identify_status",
+            "category": "辅助条件",
+            "title": "确认委托人身份",
+            "standard": "确认委托人身份",
+            "check_type": "is_checked",
+            "action_visibility": false,
+            "action_changeability": false,
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "check_items": [],
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "0"
+                }
+            ]
+        }
+    ]
+}

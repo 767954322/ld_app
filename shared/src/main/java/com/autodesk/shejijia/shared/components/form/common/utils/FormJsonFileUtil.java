@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
 
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,6 +102,7 @@ public class FormJsonFileUtil {
             e.printStackTrace();
         }
         return jsonObject;
+
     }
 
     /**
@@ -163,4 +166,27 @@ public class FormJsonFileUtil {
         }
         return result;
     }
+
+    public static List jsonArray2ModelList(JSONArray jsonArray,Class clazz){
+        if(jsonArray == null){
+            return null;
+        }
+        List result = new ArrayList();
+        for(int i=0; i<jsonArray.length(); i++){
+            try{
+                if(jsonArray.get(i) instanceof JSONObject){
+                    result.add(json2Bean((jsonArray.get(i).toString()),clazz));
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+
+    public static <T> T json2Bean(String jsonString,Class<T> clazz){
+        return GsonUtil.jsonToBean(jsonString,clazz);
+    }
+
 }

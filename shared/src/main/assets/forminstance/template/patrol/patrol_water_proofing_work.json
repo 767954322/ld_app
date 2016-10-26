@@ -1,0 +1,296 @@
+{
+    "id": "patrol_water_proofing_work",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "patrol",
+    "title": "防水工程验收巡检表",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "不合格",
+                "合格"
+            ],
+            "acceptance_options": [
+                "是",
+                "否"
+            ],
+            "review_options": []
+        },
+    "check_items": [
+        {
+            "item_id": "present_dressing",
+            "category": "",
+            "title": "班长是否到场；班长、客户经理着装是否符合公司要求。",
+            "standard": "班长是否到场；班长、客户经理着装是否符合公司要求。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "marketing_protection",
+            "category": "",
+            "title": "营销保护是否保持完好，安全施工是否合格。",
+            "standard": "营销保护是否保持完好，安全施工是否合格。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_proofing",
+            "category": "",
+            "title": "防水施工是否符合规范。",
+            "standard": "防水施工是否符合规范。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "construction_regulation",
+            "category": "",
+            "title": "现场是否按图施工，是否存在增减项。",
+            "standard": "现场是否按图施工，是否存在增减项。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "material_measurement",
+            "category": "",
+            "title": "主材是否已测量完毕并下单。",
+            "standard": "主材是否已测量完毕并下单。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "construction_progress",
+            "category": "",
+            "title": "施工进度是否按照进度表的计划正常进行。",
+            "standard": "施工进度是否按照进度表的计划正常进行。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "take_photos_scene",
+            "category": "",
+            "title": "是否按要求拍摄现场照片并发至客户服务群。",
+            "standard": "是否按要求拍摄现场照片并发至客户服务群。",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

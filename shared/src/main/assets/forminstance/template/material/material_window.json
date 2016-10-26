@@ -1,0 +1,176 @@
+{
+    "id": "material_window",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材塑钢窗",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 检查塑钢窗安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查塑钢窗安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "packaging_surface",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_window_surface",
+            "category": "安装验收",
+            "title": "2-1 门窗表面应洁净、平整、光滑、色泽一致，无锈蚀。大面应无划痕、碰伤。漆膜或保护层应连续。",
+            "standard": "2-1 门窗表面应洁净、平整、光滑、色泽一致，无锈蚀。大面应无划痕、碰伤。漆膜或保护层应连续。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_window_bevel",
+            "category": "安装验收",
+            "title": "2-2 门窗的割角、拼缝应严密平整。门窗框、扇裁口应顺直，切割面应平整。",
+            "standard": "2-2 门窗的割角、拼缝应严密平整。门窗框、扇裁口应顺直，切割面应平整。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_window_slot",
+            "category": "安装验收",
+            "title": "2-3 门窗上的槽、孔应边缘整齐，无毛刺。",
+            "standard": "2-3 门窗上的槽、孔应边缘整齐，无毛刺。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_window_flap",
+            "category": "安装验收",
+            "title": "2-4 门窗盖口条、压缝条、密封条的安装应顺直，与门窗结合应牢固、严密。",
+            "standard": "2-4 门窗盖口条、压缝条、密封条的安装应顺直，与门窗结合应牢固、严密。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_window_frame",
+            "category": "安装验收",
+            "title": "2-5 门窗框与墙体之间的缝隙应填嵌饱满，金属门窗应采用西卡品牌密封胶密封。密封胶表面应光滑、顺直，无裂纹。门窗扇的橡胶密封条或毛毡密封条应安装完好，不得脱槽。旋转窗间隙应基本均匀。",
+            "standard": "2-5 门窗框与墙体之间的缝隙应填嵌饱满，金属门窗应采用西卡品牌密封胶密封。密封胶表面应光滑、顺直，无裂纹。门窗扇的橡胶密封条或毛毡密封条应安装完好，不得脱槽。旋转窗间隙应基本均匀。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "drain_hole",
+            "category": "安装验收",
+            "title": "2-6 有排水孔的金属门窗，排水孔应畅通。",
+            "standard": "2-6 有排水孔的金属门窗，排水孔应畅通。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "glass_seal",
+            "category": "安装验收",
+            "title": "2-7 玻璃密封条与玻璃及玻璃槽口的接缝应平整，不得卷边、脱槽。 ",
+            "standard": "2-7 玻璃密封条与玻璃及玻璃槽口的接缝应平整，不得卷边、脱槽。 ",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "glass_surface",
+            "category": "安装验收",
+            "title": "2-8 玻璃表面应洁净，不得有密封胶等污渍。中空玻璃内外表面均应洁净，玻璃中空层内不得有灰尘和水蒸气。",
+            "standard": "2-8 玻璃表面应洁净，不得有密封胶等污渍。中空玻璃内外表面均应洁净，玻璃中空层内不得有灰尘和水蒸气。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_window_glass",
+            "category": "安装验收",
+            "title": "2-9 门窗玻璃不应直接接触型材。单面镀膜玻璃的镀膜层及磨砂玻璃的磨砂面应朝向室内。中空玻璃的单面镀膜玻璃应在最外层，镀膜层应朝向室内。",
+            "standard": "2-9 门窗玻璃不应直接接触型材。单面镀膜玻璃的镀膜层及磨砂玻璃的磨砂面应朝向室内。中空玻璃的单面镀膜玻璃应在最外层，镀膜层应朝向室内。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

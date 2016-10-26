@@ -1,0 +1,637 @@
+{
+    "id": "inspection_water_concealed_work",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "inspection",
+    "title": "给排水隐蔽工程施工质量验收",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "强制复验",
+                "验收通过"
+            ],
+            "action_options": [
+                "监督整改",
+                "强制复验"
+            ],
+            "review_options": [
+                "强制复验"
+            ],
+            "supervisor_notification_options": [
+                "监理告知"
+            ],
+            "acceptance_options": [
+                "合格",
+                "不合格",
+                "无此项"
+            ],
+            "notification_options": [
+                "告知",
+                "不告知"
+            ]
+        },
+    "check_items": [
+        {
+            "item_id": "water_pipe_space",
+            "category": "给水管敷设",
+            "title": "1．水管敷设固定间距",
+            "standard": "热熔点两侧100mm内必须设置固定点，中间直管段间距不大于600mm",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_pipe_wall",
+            "category": "给水管敷设",
+            "title": "2．水管穿基础墙时",
+            "standard": "须设置金属套管，且套管固定牢固、外抹灰美观",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "pipeline_nest_wall",
+            "category": "给水管敷设",
+            "title": "3．管道嵌墙暗敷",
+            "standard": "深度大于DN+(20～30)mm,宽度大于DN+(40～60)mm.埋墙内管道不允许有接头，非承重墙用切割机开槽，禁止横向开槽（现场条件无法实现时，允许短距离开横槽）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_pipe_cross",
+            "category": "给水管敷设",
+            "title": "4．水管交叉敷设（同水平）",
+            "standard": "加过桥弯，不得轴向扭曲",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "pipeline_through_wall",
+            "category": "给水管敷设",
+            "title": "5．管道穿墙敷设",
+            "standard": "不得轴向扭曲,强制校正",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_pipe_installation",
+            "category": "给水管敷设",
+            "title": "6．水管固定安装",
+            "standard": "支、吊架埋设应平整,牢固；U型卡固定时，禁止开口朝下",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "metal_pipe",
+            "category": "给水管敷设",
+            "title": "7．金属管卡与管道",
+            "standard": "采用塑料带或橡胶等隔垫",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "cold_hot_water_pipe",
+            "category": "给水管敷设",
+            "title": "8．冷热水管平行敷设",
+            "standard": "横平竖直，左热右冷，间距不得小于20mm",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "riser_pipe",
+            "category": "给水管敷设",
+            "title": "9．立管垂直度",
+            "standard": "每米允许偏差2mm,5米以上允许偏差不大于8mm",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_supply_check",
+            "category": "给水管敷设",
+            "title": "10．冷热水给水点检查",
+            "standard": "给水点熔接端正、对称、朝向一致；间距符合客户使用要求，阀门预安装位置满足使用要求，无阻挡",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_pipe_keep_warm",
+            "category": "给水管敷设",
+            "title": "11．水管保温（存在此分项施工时）",
+            "standard": "客户要求水管保温时，保温必须严密，绑扎美观",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "downcomer_installation",
+            "category": "排水管道安装",
+            "title": "12．下水管安装",
+            "standard": "采用DN50管道时，管壁厚度不小于2.0mm，DN70管道时，不小于2.3mm；连接严密",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "downcomer_drainage",
+            "category": "排水管道安装",
+            "title": "13．下水管排水",
+            "standard": "废水排水系统，如遇洗衣机、浴缸等排水管道，因排水量较大，建议采用独立排水",
+            "check_type": "notification_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "supervisor_notification_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_supply_system",
+            "category": "试验",
+            "title": "14．给水系统打压",
+            "standard": "试验压力为1.0 MPa，压力降不得大于0.02Mp（老房断点改造试验压力0.8MPa）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_drainage_test",
+            "category": "试验",
+            "title": "15．通排试验",
+            "standard": "验收时进行试水，应保证排水通畅，无存水现象",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

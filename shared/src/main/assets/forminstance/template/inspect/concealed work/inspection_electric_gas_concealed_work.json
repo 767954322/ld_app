@@ -1,0 +1,1406 @@
+{
+    "id": "inspection_electric_gas_concealed_work",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "inspection",
+    "title": "电气隐蔽工程施工质量验收",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "强制复验",
+                "验收通过"
+            ],
+            "action_options": [
+                "监督整改",
+                "强制复验"
+            ],
+            "review_options": [
+                "强制复验"
+            ],
+            "supervisor_inquiry_options": [
+                "监理询问"
+            ],
+            "supervisor_notification_options": [
+                "监理告知"
+            ],
+            "customer_options": [
+                "客户意见",
+                "强制复验"
+            ],
+            "acceptance_options": [
+                "合格",
+                "不合格",
+                "无此项"
+            ],
+            "notification_options": [
+                "告知",
+                "未告知"
+            ],
+            "level_options": [
+                "找平",
+                "不找平"
+            ]
+        },
+    "check_items": [
+        {
+            "item_id": "spool_firm_1",
+            "category": "线管敷设",
+            "title": "1.线管固定(一)",
+            "standard": "管卡的固定点与盒、箱边缘的距离为100mm，中间直线管段的最大距离不超过600mm",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "spool_firm_2",
+            "category": "线管敷设",
+            "title": "2.线管固定(二)",
+            "standard": "水平敷设转为立管敷设，立管距转角200mm处增设固定点、中间直管段间距不超过600mm",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "spool_firm_3",
+            "category": "线管敷设",
+            "title": "3.线管固定(三)",
+            "standard": "顶面或墙面固定必须使用吊卡或专用卡件；如剔槽墙内，需用铜丝绑扎到位（轻体墙除外）",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "spool_connection_1",
+            "category": "线管敷设",
+            "title": "4.线管连接(一)",
+            "standard": "PVC线管必须涂粘胶剂",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "spool_connection_2",
+            "category": "线管敷设",
+            "title": "5.线管连接(二)",
+            "standard": "JDG紧定螺丝拧紧、拧断，连接牢固，不得缺少",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "toilet_kitchen_spool",
+            "category": "线管敷设",
+            "title": "6.卫生间、厨房线管敷设",
+            "standard": "不允许沿地面敷设（现场条件无法满足时，沿地敷设不允许有接头）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "spool_incoming_line_1",
+            "category": "线管敷设",
+            "title": "7.线管进线盒、箱(一)",
+            "standard": "管口露出盒、箱不应大于5mm",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "spool_incoming_line_2",
+            "category": "线管敷设",
+            "title": "8.线管进线盒、箱(二)",
+            "standard": "加装配套锁母，与其敲落孔一孔一套（非一孔一套时，线盒用开孔器开孔，禁止开长孔）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "spool_incoming_line_3",
+            "category": "线管敷设",
+            "title": "9.线管进线盒、箱(三)",
+            "standard": "JDG管非一孔一套需做跨接地线，且采用不低于4mm2铜芯软导线",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "lighting_distribution_box_1",
+            "category": "线管敷设",
+            "title": "10.照明配电箱（盘）安装(一)",
+            "standard": "箱体安装高度不低于1.8m（原配电箱不做变动或设计特殊要求除外）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "lighting_distribution_box_2",
+            "category": "线管敷设",
+            "title": "11.照明配电箱（盘）安装(二)",
+            "standard": "安装端正、牢固",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "lighting_distribution_box_3",
+            "category": "线管敷设",
+            "title": "12.照明配电箱（盘）安装(三)",
+            "standard": "部件（地排、箱体跨接地线）齐全",
+            "check_type": "notification_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "supervisor_notification_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "slotting_pipeline",
+            "category": "线管敷设",
+            "title": "13.开槽布管",
+            "standard": "埋设深度与墙表面距离大于15mm，非承重墙必须用切割机开槽，禁止横向开槽（现场实际条件不能实现时，允许短距离开横槽）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "conduit_connection",
+            "category": "线管敷设",
+            "title": "14.柔性导管与设备、器具连接",
+            "standard": "加装配套锁母，且导管长度不应大于1.2m，吊顶内不允许存在明露塑铜线",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_electricity_cowell",
+            "category": "线管敷设",
+            "title": "15.水电共井",
+            "standard": "电线管不得安装于给排水管道井内或间隔处理",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "hot_water_pipe",
+            "category": "线管敷设",
+            "title": "16.室内配线管与其它管道最小间距(暖、热水管)",
+            "standard": "上平行，0.3m；下平行，0.2m；交叉，0.1m；不能满足时，外包隔热层",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "gas_pipe",
+            "category": "线管敷设",
+            "title": "17.室内配线管与其它管道最小间距(燃气管道)",
+            "standard": "禁止平行敷设；交叉敷设时，间距不小于0.5m；不能满足时，外包隔热层",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "up_down_water_pipe",
+            "category": "线管敷设",
+            "title": "18.室内配线管与其它管道最小间距(上、下水管)",
+            "standard": "平行敷设时，0.1m；交叉敷设时,0.05m",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "strong_weak_wires_space",
+            "category": "线盒安装",
+            "title": "19.强弱电线盒间距",
+            "standard": "必须大于300mm",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "customer_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "wires_installation",
+            "category": "线盒安装",
+            "title": "20.线盒安装",
+            "standard": "同一房间或同一墙面标高一致，安装牢固；隔断处线盒必须固定于同材质龙骨上，不可混用",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "branch_wires_setting",
+            "category": "线盒安装",
+            "title": "21.分线盒设置",
+            "standard": "无弯，30m一线盒；一弯，20m一线盒；二弯，15m一线盒；三弯，8m一线盒",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "customer_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "ceiling_branch_wires_setting",
+            "category": "线盒安装",
+            "title": "22.吊顶内分线盒设置",
+            "standard": "吊顶内存在一盒多路分线，必须重新设置分线盒，采用相应锁母、波纹管有效连接敷设（明装吊顶除外）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "wires_colour_separation",
+            "category": "电线敷设",
+            "title": "23.电线分色穿管要求",
+            "standard": "电线分色应按标准执行（红-L，蓝-N，双色-PE，控制线-白/黑）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "wires_threading",
+            "category": "电线敷设",
+            "title": "24.线管穿线",
+            "standard": "管内导线包括绝缘层在内的总截面积不应大于管内空截面积的40%",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "wires_size_1",
+            "category": "电线敷设",
+            "title": "25.线径大小(一)",
+            "standard": "所有配线必须与原配线一致(断点改造时)",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "wires_size_2",
+            "category": "电线敷设",
+            "title": "26.线径大小(二)",
+            "standard": "新做空调及厨房配线不低于4mm2",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "wires_size_3",
+            "category": "电线敷设",
+            "title": "27.线径大小(三)",
+            "standard": "低于16 mm2线，相、零、地线线径必须一致",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "pipe_laying_wires",
+            "category": "电线敷设",
+            "title": "28.埋管穿线与线管进线盒，现场条件无法实现时",
+            "standard": "必须采用护套线，但无电线分色要求；对于线管进线盒，不能预埋管情况，穿线为塑铜线时，软管导管必须采用绝缘、阻燃材料",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "alternating_current",
+            "category": "电线敷设",
+            "title": "29.三相或单相的交流单芯电缆",
+            "standard": "不得单独穿于导管内（现场条件无法实现时，允许地线穿单管）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "illumination_socket",
+            "category": "电线敷设",
+            "title": "30.照明与插座串线",
+            "standard": "禁止照明与插座直接或间接串线（浴霸引线除外）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "insulation_test",
+            "category": "电线敷设",
+            "title": "31.绝缘摇测",
+            "standard": "相对地间绝缘阻值大于0.5MΩ（摇测回路：强电箱全部布线、分路抽取5个点位）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "weak_electric_test",
+            "category": "电线敷设",
+            "title": "32.弱电导通检测",
+            "standard": "满足检测要求；检测导通正常",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "pendant_lamp",
+            "category": "其他",
+            "title": "33.吊灯挂件预埋（含挂链）",
+            "standard": "询问客户吊灯位置，查看是否固定预埋件、预埋挂链及胀栓，并视情况做拉拽试验",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "large_pendant_lamp",
+            "category": "其他",
+            "title": "34.大型吊灯挂件预埋",
+            "standard": "大型吊灯必须由厂家负责安装预埋件或配合工队安装，由灯具厂家负责验收",
+            "check_type": "notification_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "supervisor_notification_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

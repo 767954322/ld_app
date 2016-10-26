@@ -1,0 +1,88 @@
+{
+    "id": "material_painted_diatom_mud_wall",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材墙体彩绘、硅藻泥",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "verify_the_delivery_order",
+            "category": "送货验收",
+            "title": "1-1 核实涂饰所用材料的品种、型号是否与送货单一致。",
+            "standard": "1-1 核实涂饰所用材料的品种、型号是否与送货单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_the_finishing_engineering",
+            "category": "安装验收",
+            "title": "2-1 检查涂饰工程应涂饰均匀、粘结牢固，不得有漏涂、透底、起皮、掉粉和反锈。",
+            "standard": "2-1 检查涂饰工程应涂饰均匀、粘结牢固，不得有漏涂、透底、起皮、掉粉和反锈。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_the_color",
+            "category": "安装验收",
+            "title": "2-2 检查涂饰的套色、花纹和图案与现场施工图纸一致。",
+            "standard": "2-2 检查涂饰的套色、花纹和图案与现场施工图纸一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "clean_surface_finishing",
+            "category": "安装验收",
+            "title": "2-3 涂饰表面应洁净，不得有流坠现象",
+            "standard": "2-3 涂饰表面应洁净，不得有流坠现象",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "clear_pattern",
+            "category": "安装验收",
+            "title": "2-4 套色涂饰的图案不得移位，纹理和轮廓应清晰。",
+            "standard": "2-4 套色涂饰的图案不得移位，纹理和轮廓应清晰。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

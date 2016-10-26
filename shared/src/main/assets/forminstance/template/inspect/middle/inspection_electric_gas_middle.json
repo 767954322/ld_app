@@ -1,0 +1,310 @@
+{
+    "id": "inspection_electric_gas_middle",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "inspection",
+    "title": "电气中期工程施工质量验收",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "强制复验",
+                "验收通过"
+            ],
+            "action_options": [
+                "监督整改",
+                "强制复验"
+            ],
+            "review_options": [
+                "强制复验"
+            ],
+            "acceptance_options": [
+                "合格",
+                "不合格",
+                "无此项"
+            ]
+        },
+    "check_items": [
+        {
+            "item_id": "electric_box_1",
+            "category": "安装",
+            "title": "1．配电箱(一)",
+            "standard": "配线整齐，导线连接紧密；同一端子上导线连接不多于2根（配电箱空间不满足要求时，多芯线应涮锡并压铜鼻）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "electric_box_2",
+            "category": "安装",
+            "title": "2．配电箱(二)",
+            "standard": "部件（地排、跨接地线）齐全",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "electric_box_3",
+            "category": "安装",
+            "title": "3．配电箱(三)",
+            "standard": "新做插座空气开关须带漏电保护",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "direct_burial_spool",
+            "category": "安装",
+            "title": "4．直埋线管封闭",
+            "standard": "抹灰平整，观感质量良好",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "creative_wire_clean",
+            "category": "安装",
+            "title": "5．线盒干净卫生",
+            "standard": "线盒内必须清扫干净",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "creative_wire_immobilization_1",
+            "category": "安装",
+            "title": "6．线盒固定(一)",
+            "standard": "线盒安装牢固，找正、找方",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "creative_wire_immobilization_2",
+            "category": "安装",
+            "title": "7．线盒固定(二)",
+            "standard": "线盒内螺丝固定点齐全",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}
