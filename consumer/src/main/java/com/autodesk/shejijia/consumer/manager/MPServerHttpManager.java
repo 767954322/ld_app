@@ -70,14 +70,20 @@ public class MPServerHttpManager {
     /**
      * 我的推荐列表
      */
-    public void getRecommendList(String design_id, final int offset, final int limit, int status, OkJsonRequest.OKResponseCallback callback) {
-        String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + design_id + "/recommends?" +
+    public void getRecommendList(boolean isDesign, String design_id, final int offset, final int limit, int status, OkJsonRequest.OKResponseCallback callback) {
+        String designers_url = UrlConstants.MAIN_RECOMMEND + "/designers/" + design_id + "/recommends?" +
                 "&offset=" + offset +
                 "&limit=" + limit +
                 "&status=" + status +
                 "&asset_name=" + design_id;
-        Log.d("RecommendFragment", url);
-        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+
+        String member_url = UrlConstants.MAIN_RECOMMEND + "/members/" + design_id + "/recommends?" +
+                "&offset=" + offset +
+                "&limit=" + limit +
+                "&status=" + status +
+                "&asset_name=" + design_id;
+        Log.d("racofix", isDesign ? designers_url : member_url);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, isDesign ? designers_url : member_url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> header = new HashMap<>();

@@ -7,12 +7,18 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.FragmentTabAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.fragment.RecommendFragment;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
+import com.autodesk.shejijia.consumer.uielements.CustomDialog;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
@@ -26,20 +32,20 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class MyRecommendActivity extends NavigationBarActivity implements View.OnClickListener {
+public class MyRecommendActivity extends NavigationBarActivity implements RecommendView, View.OnClickListener {
 
-    public static int CONSUMER = 0;
-    public static int DESIGNER = 1;
     private TextView mRightTextView;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private List<Fragment> mFragments = new ArrayList<>();
     private List<String> tabs = Arrays.asList("全部", "已发送", "未发送");
-    private int mType;
+    private boolean isDesign;
+    private LinearLayout mEmptyView;
+    private RelativeLayout mTabVisibility;
 
-    public static void jumpTo(Context context, int type) {
+    public static void jumpTo(Context context, boolean isDesign) {
         Intent intent = new Intent(context, MyRecommendActivity.class);
-        intent.putExtra("type", type);
+        intent.putExtra("isDesign", isDesign);
         context.startActivity(intent);
     }
 
@@ -51,14 +57,16 @@ public class MyRecommendActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initView() {
         super.initView();
-        mType = getIntent().getIntExtra("type", 0);
+        isDesign = getIntent().getBooleanExtra("isDesign", false);
         setTitleBarView();
         mTabLayout = (TabLayout) findViewById(R.id.tab_recommend_title);
         mViewPager = (ViewPager) findViewById(R.id.vpr_recommend_view);
+        mEmptyView = (LinearLayout) findViewById(R.id.empty_view);
+        mTabVisibility = (RelativeLayout) findViewById(R.id.rlt_tab_view);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
 
         for (int i = 0; i < 3; i++) {
-            mFragments.add(RecommendFragment.newInstance(mType, i));
+            mFragments.add(RecommendFragment.newInstance(isDesign, i));
         }
         FragmentTabAdapter adapter = new FragmentTabAdapter(getSupportFragmentManager(), mFragments, tabs);
         mViewPager.setAdapter(adapter);
@@ -68,8 +76,8 @@ public class MyRecommendActivity extends NavigationBarActivity implements View.O
     private void setTitleBarView() {
         mRightTextView = (TextView) findViewById(R.id.nav_right_textView);
         //区分消费者和设计师
-        mRightTextView.setVisibility(mType == 0 ? View.INVISIBLE : View.VISIBLE);
-        setTitleForNavbar(UIUtils.getString(mType == 0 ? R.string.recommend_listing : R.string.personal_recommend));
+        mRightTextView.setVisibility(isDesign ? View.VISIBLE : View.INVISIBLE);
+        setTitleForNavbar(UIUtils.getString(isDesign ? R.string.personal_recommend : R.string.recommend_listing));
         mRightTextView.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
         mRightTextView.setText("新建清单");
     }
@@ -77,7 +85,9 @@ public class MyRecommendActivity extends NavigationBarActivity implements View.O
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
+        CustomProgress.show(this, "", false, null);
+        RecommendLogicImpl recommendLogic = new RecommendLogicImpl(this);
+        recommendLogic.onLoadRecommendListData(isDesign, 0, 20, 0);
     }
 
     @Override
@@ -91,9 +101,27 @@ public class MyRecommendActivity extends NavigationBarActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav_right_textView:
-                Intent intent = new Intent(MyRecommendActivity.this,NewInventoryActivity.class);
+                Intent intent = new Intent(MyRecommendActivity.this, NewInventoryActivity.class);
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onLoadDataSuccess(int offset, RecommendEntity entity) {
+        CustomProgress.cancelDialog();
+        if (entity.getItems() != null && entity.getItems().size() > 0) {
+            mEmptyView.setVisibility(View.GONE);
+            mTabVisibility.setVisibility(View.VISIBLE);
+            mTabVisibility.setBackgroundColor(UIUtils.getColor(R.color.white));
+        } else {
+            mTabVisibility.setVisibility(View.INVISIBLE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onLoadFailer() {
+        CustomProgress.cancelDialog();
     }
 }

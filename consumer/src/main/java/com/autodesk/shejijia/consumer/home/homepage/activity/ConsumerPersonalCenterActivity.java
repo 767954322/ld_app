@@ -130,7 +130,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.rl_personal_recommend: /// 我的关注 .
-                MyRecommendActivity.jumpTo(this, MyRecommendActivity.CONSUMER);
+                MyRecommendActivity.jumpTo(this, false);
                 break;
         }
     }

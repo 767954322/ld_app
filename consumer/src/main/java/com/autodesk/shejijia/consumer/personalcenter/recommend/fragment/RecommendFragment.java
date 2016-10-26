@@ -4,13 +4,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DesignRecomDetailsActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendLogicImpl;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -34,12 +37,15 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreListener, AdapterView.OnItemClickListener {
+public class RecommendFragment extends CustomBaseFragment implements RecommendView, OnLoadMoreListener, AdapterView.OnItemClickListener {
 
-    public static RecommendFragment newInstance(int type, int status) {
+    private LinearLayout mEmptyView;
+    private RecommendLogicImpl mRecommendLogic;
+
+    public static RecommendFragment newInstance(boolean isDesign, int status) {
         RecommendFragment fragment = new RecommendFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
+        bundle.putBoolean("isDesign", isDesign);
         bundle.putInt("status", status);
         fragment.setArguments(bundle);
         return fragment;
@@ -50,7 +56,7 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
     private RecommendAdapter mAdapter;
     private PtrClassicFrameLayout mFrameLayout;
     private int mStatus;
-    private int mType;
+    private boolean isDesign;
     private static int OFFSET = 0;
     private static final int LIMIT = 10;
 
@@ -62,7 +68,7 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendEntity.ItemsBean item = (RecommendEntity.ItemsBean) parent.getAdapter().getItem(position);
-        if (mType == 1)
+        if (isDesign)
             DesignRecomDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "");
     }
 
@@ -74,7 +80,7 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
         mFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getRecommendList(0, LIMIT, mStatus);
+                mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
                 mFrameLayout.onRefreshComplete();
             }
         });
@@ -84,41 +90,18 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
     protected void initView() {
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_recommend);
         mFrameLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
-        mAdapter = new RecommendAdapter(getActivity(), mRecommends, R.layout.item_recommend, mType == 1);
+        mEmptyView = (LinearLayout) rootView.findViewById(R.id.empty_view);
+        mAdapter = new RecommendAdapter(getActivity(), mRecommends, R.layout.item_recommend, isDesign);
         mListView.setAdapter(mAdapter);
     }
 
     @Override
-    protected void initData() {
-
-    }
+    protected void initData() {}
 
     @Override
     public void loadMore() {
         OFFSET += mRecommends.size();
-        getRecommendList(OFFSET, LIMIT, mStatus);
-    }
-
-    public void getRecommendList(final int offset, int limit, int status) {
-        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        if (memberEntity == null) {
-            return;
-        }
-        String member_id = memberEntity.getAcs_member_id();
-        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                Log.d("RecommendFragment", jsonObject.toString());
-                RecommendEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendEntity.class);
-                updateViewFromApi(offset, entity.getItems());
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                MPNetworkUtils.logError(TAG, volleyError);
-            }
-        };
-        MPServerHttpManager.getInstance().getRecommendList(member_id, offset, limit, status, callback);
+        mRecommendLogic.onLoadRecommendListData(isDesign, OFFSET, LIMIT, mStatus);
     }
 
     private void updateViewFromApi(int offset, List<RecommendEntity.ItemsBean> items) {
@@ -128,15 +111,31 @@ public class RecommendFragment extends CustomBaseFragment implements OnLoadMoreL
                 mFrameLayout.onRefreshComplete();
             } else
                 mListView.onLoadMoreComplete();
+            mEmptyView.setVisibility(View.GONE);
             mRecommends.addAll(items);
             mAdapter.notifyDataSetChanged();
+        } else {
+            if (offset == 0)
+                mEmptyView.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     protected void loadData2Remote() {
-        mType = getArguments().getInt("type");
+        isDesign = getArguments().getBoolean("isDesign", false);
         mStatus = getArguments().getInt("status");
-        getRecommendList(0, LIMIT, mStatus);
+        mRecommendLogic = new RecommendLogicImpl(this);
+        mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
+    }
+
+    @Override
+    public void onLoadDataSuccess(int offset, RecommendEntity entity) {
+        updateViewFromApi(offset, entity.getItems());
+    }
+
+    @Override
+    public void onLoadFailer() {
+        mFrameLayout.onRefreshComplete();
+        mListView.onLoadMoreComplete();
     }
 }

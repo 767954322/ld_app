@@ -52,6 +52,7 @@ public class DesignRecomDetailsActivity extends NavigationBarActivity {
     private ListView mListview;
     private RecoDetailsAdapter mAdapter;
     private List<ScfdEntity> brands = new ArrayList<>();
+    private RecommendDetailsEntity mEntity;
 
     public static void jumpTo(Context context, String asset_id) {
         Intent intent = new Intent(context, DesignRecomDetailsActivity.class);
@@ -89,6 +90,12 @@ public class DesignRecomDetailsActivity extends NavigationBarActivity {
         mRightTextView.setVisibility(View.VISIBLE);
         mRightTextView.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
         mRightTextView.setText("编辑");
+        mRightTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecommendListDetailActivity.actionStartActivity(DesignRecomDetailsActivity.this, mEntity.getMain_project_id() + "");
+            }
+        });
     }
 
     @Override
@@ -118,8 +125,8 @@ public class DesignRecomDetailsActivity extends NavigationBarActivity {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 Log.d("RecommendFragment", jsonObject.toString());
-                RecommendDetailsEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
-                updateView2Api(entity);
+                mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
+                updateView2Api(mEntity);
             }
 
             @Override
