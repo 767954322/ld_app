@@ -8,18 +8,12 @@ import android.widget.ListView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.homepage.activity.MPConsumerHomeActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.SelectProjectAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.InteriorDesignerEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
-import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.photoview.log.LogManager;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -28,8 +22,6 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
 
-import java.io.Serializable;
-import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.List;
 
