@@ -18,7 +18,7 @@
     <Button
         android:id="@+id/btn_select_project_sure"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_40"
+        android:layout_height="@dimen/size_42"
         android:layout_gravity="bottom"
         android:background="@color/bg_0084ff"
         android:text="确定"

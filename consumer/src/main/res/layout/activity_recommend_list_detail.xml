@@ -18,15 +18,16 @@
         android:layout_weight="1">
 
         <include layout="@layout/activity_recommend_list_content"></include>
+
         <include layout="@layout/layout_empty_recommend_view"/>
     </RelativeLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_list_send"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_42"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_5"
         android:background="@color/bg_0084ff"
         android:text="@string/send"
         android:textColor="@color/white"
