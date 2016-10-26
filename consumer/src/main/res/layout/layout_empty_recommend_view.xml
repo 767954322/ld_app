@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="当前推荐列表为空"
+        android:text="当前材料为空"
         android:textColor="@color/mybid_text_color_light"
         android:textSize="16sp"/>
 
@@ -40,7 +40,7 @@
             android:id="@+id/tv_empty_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="＂新建清单＂"
+            android:text="＂添加主材＂"
             android:textColor="@color/color_blue_0084ff"
             android:textSize="18sp"/>
 

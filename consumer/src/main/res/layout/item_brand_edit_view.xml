@@ -45,9 +45,10 @@
         <EditText
             android:id="@+id/et_brand_num"
             style="@style/style_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_160"
+            android:layout_height="@dimen/size_30"
             android:hint="请填写数量（单位）"
+            android:maxLines="1"
             />
     </LinearLayout>
 
@@ -63,9 +64,10 @@
         <EditText
             android:id="@+id/et_brand_dimension"
             style="@style/style_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="请填写规格"/>
+            android:layout_width="@dimen/size_160"
+            android:layout_height="@dimen/size_30"
+            android:hint="请填写规格"
+            android:maxLines="1"/>
     </LinearLayout>
 
     <LinearLayout
@@ -94,10 +96,10 @@
             android:text="备注："/>
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/et_brand_remarks"
             style="@style/style_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="请填写备注"/>
     </LinearLayout>
 

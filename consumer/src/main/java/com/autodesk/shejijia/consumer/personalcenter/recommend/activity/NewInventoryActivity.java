@@ -13,13 +13,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.NewInventoryEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
@@ -31,7 +29,6 @@ import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.RegexUtil;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -330,6 +327,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 NewInventoryEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), NewInventoryEntity.class);
                 String asset_id = entity.getAsset_id();
                 RecommendListDetailActivity.actionStartActivity(NewInventoryActivity.this, asset_id);
+                finish();
 
             }
 

@@ -12,11 +12,14 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <include layout="@layout/activity_recommend_list_content"></include>
-
-    <include layout="@layout/layout_empty_view"/>
-
+        <include layout="@layout/activity_recommend_list_content"></include>
+        <include layout="@layout/layout_empty_recommend_view"/>
+    </RelativeLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_list_send"

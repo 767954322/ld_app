@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -19,6 +21,8 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendS
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -43,6 +47,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
     private String mAsset_id;
+    private LinearLayout mLlEmptyContentView;
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -60,6 +65,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         super.initView();
         mRecyclerViewList = (ListView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
+        mLlEmptyContentView = (LinearLayout) findViewById(R.id.empty_view);
     }
 
     @Override
@@ -73,8 +79,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mActivity = this;
-//        initRecycleView();
-
         getRecommendDraftDetail();
     }
 
@@ -121,8 +125,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
 
-        Log.d("RecommendListDetailActi", scfd);
-//        if (recommendSCFDList)
+        if (null == recommendSCFDList) {
+            mLlEmptyContentView.setVisibility(View.VISIBLE);
+        } else {
+            mLlEmptyContentView.setVisibility(View.GONE);
+        }
         RecommendListEditAdapter recommendListEditAdapter = new RecommendListEditAdapter(this, recommendSCFDList);
         mRecyclerViewList.setAdapter(recommendListEditAdapter);
     }
@@ -145,17 +152,26 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     protected void leftNavButtonClicked(View view) {
-        MyToast.show(mActivity, "当前订单还未发送，是否保存？");
-        // 取消　finish．
-        /** 确定　P11 主材推荐清单、品类、品牌保存到草稿箱　PUT
-         /materials-recommend-app/v1/api/designers/{designer_id}/recommends
+        new AlertView(UIUtils.getString(R.string.tip), "当前订单还未发送，是否保存？",
+                null, null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                if (position != AlertView.CANCELPOSITION) {
+                    /** 确定　P11 主材推荐清单、品类、品牌保存到草稿箱　PUT
+                     /materials-recommend-app/v1/api/designers/{designer_id}/recommends
 
-         request:
-         {
-         "asset_id":""
-         "scfd":""
-         }
-         */
+                     request:
+                     {
+                     "asset_id":""
+                     "scfd":""
+                     }
+                     */
+                    Toast.makeText(mActivity, "保存", Toast.LENGTH_SHORT).show();
+                } else {
+                    finish();
+                }
+            }
+        }).show();
         super.leftNavButtonClicked(view);
     }
 
@@ -165,10 +181,4 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
-//    private void initRecycleView() {
-//        //init recyclerView
-//        mRecyclerViewList.setLayoutManager(new LinearLayoutManager(this));
-//        mRecyclerViewList.setHasFixedSize(true);
-//        mRecyclerViewList.setItemAnimator(new DefaultItemAnimator());
-//    }
 }
