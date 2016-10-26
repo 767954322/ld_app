@@ -14,7 +14,7 @@ public class RecommendBrandsBean {
     private String dimension;       // 规格．
     private String remarks;         // 备注（最大不超过150个中文字符）．
     private String code;
-    private String source;
+    private String source;          // 来源, 是否来自3d  0：空白方案 1：3d．
     private String apartment;       // 空间．
     private String logo_url;
     private String amountAndUnit;   // 数量（单位）．
