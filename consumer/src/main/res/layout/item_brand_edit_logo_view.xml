@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:layout_marginTop="14dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/shouping"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/tv_brand_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="马可波罗"
+                android:textColor="@color/mybid_text_color_normal"
+                android:textSize="@dimen/text_size_15"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="店面地址"
+                android:textColor="@color/color_blue_0084ff"
+                android:textSize="@dimen/text_size_15"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="型号："
+                        android:textColor="@color/bg_66"
+                        android:textSize="@dimen/text_size_12"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LFH88955"
+                        android:textColor="@color/bg_66"
+                        android:textSize="@dimen/text_size_12"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="规格："
+                        android:textColor="@color/bg_66"
+                        android:textSize="@dimen/text_size_12"/>
+
+                    <TextView
+                        android:id="@+id/tv_brand_dimension"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="L900*W800*H12"
+                        android:textColor="@color/bg_66"
+                        android:textSize="@dimen/text_size_12"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥36000"
+                    android:textColor="@color/color_blue_0084ff"
+                    android:textSize="@dimen/text_size_15"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" x5片"
+                    android:textColor="@color/mybid_text_color_normal"
+                    android:textSize="@dimen/text_size_15"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:text="空间："/>
+
+        <TextView
+            android:id="@+id/tv_brand_apartment"
+            style="@style/item_text_style"
+            android:text="卫生间"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:text="备注："/>
+
+        <TextView
+            android:id="@+id/tv_brand_remarks"
+            style="@style/item_text_style"
+            android:text="质地细腻与澳洲国石优博瑰丽"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/item_text_style"
+            android:layout_height="match_parent"
+            android:text="店面："/>
+
+        <TextView
+            android:id="@+id/tv_brand_mall_name"
+            style="@style/item_text_style"
+            android:lineSpacingMultiplier="1.2"
+            android:text="质地细腻与澳洲国石优博瑰丽质地细腻与澳洲国石优博瑰丽"/>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/line_view"/>
+</LinearLayout>
+
