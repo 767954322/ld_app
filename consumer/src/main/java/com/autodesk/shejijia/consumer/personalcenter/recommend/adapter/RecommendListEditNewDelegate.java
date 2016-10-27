@@ -62,8 +62,8 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
         spinnerApartment.setAdapter(apartmentArrayAdapter);
         String apartment = recommendBrandsBean.getApartment();
         for (int i = 0; i < apartmentList.size(); i++) {
-            if (!StringUtils.isEmpty(apartment) && apartment.equalsIgnoreCase(apartmentList.get(position))) {
-                spinnerApartment.setSelection(position, true);
+            if (!StringUtils.isEmpty(apartment) && apartment.equalsIgnoreCase(apartmentList.get(i))) {
+                spinnerApartment.setSelection(i, true);
             }
         }
         spinnerApartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
