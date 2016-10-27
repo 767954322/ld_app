@@ -5,9 +5,9 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.form.common.utils.UrlHelper;
-import com.autodesk.shejijia.shared.components.form.common.utils.UserInfoUtil;
-import com.autodesk.shejijia.shared.components.form.entity.ContainedForm;
+import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
+import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.HashMap;
@@ -33,13 +33,13 @@ public class FormServerHttpManager {
     }
 
     public void getFormItemDetails(final String[] fid, final OkJsonArrayRequest.OKResponseCallback callback){
-        String url = UrlHelper.bindFormGetUrl(fid);
+        String url = UrlUtils.bindFormGetUrl(fid);
         OkJsonArrayRequest okRequest = new OkJsonArrayRequest(url,callback){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", UserInfoUtil.getToken(AdskApplication.getInstance()));
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
             }
         };
@@ -47,13 +47,13 @@ public class FormServerHttpManager {
     }
 
     public void getFormWithIds(final String[] fids, final OkJsonRequest.OKResponseCallback callback){
-        String url = UrlHelper.bindFormGetUrl(fids);
+        String url = UrlUtils.bindFormGetUrl(fids);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET,url,null,callback){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", UserInfoUtil.getToken(AdskApplication.getInstance()));
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
             }
         };
@@ -61,7 +61,7 @@ public class FormServerHttpManager {
     }
 
     public void updateForms(String projectId, String taskId, String userId, List<ContainedForm> formList){
-        String url = UrlHelper.bindFormPutUrl();
+//        String url = UrlUtils.bindFormPutUrl();
     }
 
 }

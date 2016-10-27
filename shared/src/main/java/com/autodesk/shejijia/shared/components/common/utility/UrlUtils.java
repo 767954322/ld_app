@@ -32,4 +32,26 @@ public final class UrlUtils {
         return urlBuilder.toString();
     }
 
+    public static String transArray2String(String[] formIds){
+        StringBuilder sbFormat = new StringBuilder();
+        for(int i = 0 ; i < formIds.length ; i++){
+            sbFormat.append(formIds[i] + ",");
+        }
+        if(',' == sbFormat.charAt(sbFormat.length() - 1)){
+            sbFormat.deleteCharAt(sbFormat.length() - 1);
+        }
+        return sbFormat.toString();
+    }
+
+    public static String bindFormGetUrl(String[] formIds){
+        StringBuilder sbFormUrl = new StringBuilder(Constants.BASE_URL);
+        sbFormUrl.append("/forms")
+                .append("/")
+                .append("id")
+                .append("\\?")
+                .append("ids=")
+                .append(transArray2String(formIds))
+                .append("&meta_data=false");
+        return sbFormUrl.toString();
+    }
 }

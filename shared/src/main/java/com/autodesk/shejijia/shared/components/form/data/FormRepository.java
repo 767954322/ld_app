@@ -7,6 +7,7 @@ import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
 import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
 import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.form.data.source.FormRemoteDataSource;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
@@ -20,25 +21,24 @@ public class FormRepository implements FormDataSource {
 
     private static FormRepository INSTANCE = null;
 
-    private FormDataSource mFormRemoteDataSource;
     private List<ContainedForm> mFormList;
 
 
     private FormRepository(){
     }
 
-    private static class FormRepostoryHolder{
+    private static class FormRepositoryHolder{
         private static final FormRepository INSTANCE = new FormRepository();
     }
     public static FormRepository getInstance(){
-        return FormRepostoryHolder.INSTANCE;
+        return FormRepositoryHolder.INSTANCE;
     }
 
     @Override
     public void getRemoteFormItemDetails(@NonNull final LoadDataCallback<List> callBack, final String[] fIds) {
         if(mFormList == null || mFormList.size() == 0){
             mFormList = new ArrayList<>();
-            mFormRemoteDataSource.getRemoteFormItemDetails(new LoadDataCallback<List>() {
+            FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new LoadDataCallback<List>() {
                 @Override
                 public void onLoadSuccess(List data){
                     for(int i = 0 ; i < data.size() ; i++){
