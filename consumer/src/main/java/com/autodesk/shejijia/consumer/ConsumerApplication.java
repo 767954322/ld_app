@@ -12,14 +12,13 @@ import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 import com.autodesk.shejijia.shared.components.im.IWorkflowDelegate;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.qy.appframe.common.AppFrame;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import org.json.JSONObject;
 
 import java.io.InputStream;
-
-import cn.jpush.android.api.JPushInterface;
 
 public class ConsumerApplication extends AdskApplication{
     @Override
@@ -29,7 +28,7 @@ public class ConsumerApplication extends AdskApplication{
         mMainThreadId = android.os.Process.myTid();
 
         reqisterWXAppId();
-
+        AppFrame.initDebug(true);
 
     }
 

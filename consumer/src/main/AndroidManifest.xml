@@ -606,6 +606,11 @@
         <activity android:name=".personalcenter.recommend.activity.SelectProjectActivity"/>
         <activity android:name=".personalcenter.recommend.activity.RecommendListDetailActivity">
         </activity>
+        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
+        <meta-data
+            android:name="com.autodesk.shejijia.consumer.frame.image.CustomCachingGlideModule"
+            android:value="GlideModule" />
+        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
     </application>
 
 </manifest>
