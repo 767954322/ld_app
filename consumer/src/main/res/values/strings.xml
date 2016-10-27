@@ -184,7 +184,7 @@
     <string name="tip_withdrawal_record">您目前还没有进行提现</string>
     <string name="tip_transaction_record">您目前还没有进行交易</string>
 
-    <string name="tip_stop">你确定要与设计师终止合作？</string>
+    <string name="tip_stop">你确定要与设计师终止合作吗？</string>
     <string name="serviced">设计师已做过量房服务</string>
     <string name="serviceding">设计师未提供量房服务</string>
     <string name="tip_success">保存成功</string>
