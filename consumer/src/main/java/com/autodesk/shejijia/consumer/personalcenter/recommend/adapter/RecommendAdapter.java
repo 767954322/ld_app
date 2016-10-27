@@ -38,7 +38,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
         }
         holder.setText(R.id.tv_edit_btn, (isDesiner ? "编辑" : "删除"));
         holder.setText(R.id.tv_recommend_name, item.getCommunity_name());
-        holder.setText(R.id.tv_asset_id, "清单编号：" + item.getAsset_id() + "");
+        holder.setText(R.id.tv_asset_id, "清单编号：" + item.getProject_code() + "");
         holder.setText(R.id.tv_reco_consumer_name, item.getConsumer_name());
         holder.setText(R.id.tv_reco_consumer_mobile, item.getConsumer_mobile());
         holder.setText(R.id.tv_reco_item_address, item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
@@ -48,7 +48,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
             @Override
             public void onClick(View v) {
                 if (isDesiner) {
-                    RecommendListDetailActivity.actionStartActivity(mContext, item.getAsset_id() + "");
+                    RecommendListDetailActivity.actionStartActivity(mContext, item.getDesign_project_id() + "");
                 }
             }
         });

@@ -119,7 +119,7 @@ public class MPServerHttpManager {
      */
     public void getRecommendDetails(String design_id, String assetId, OkJsonRequest.OKResponseCallback callback) {
         //materials-recommend-app/v1/api/designers/{designer_id}/recommends/{asset_id}
-        String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + design_id + "/recommends/" + assetId;
+        String url = UrlConstants.MAIN_RECOMMEND + "/recommends/" + assetId;
         Log.d("RecommendFragment", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override

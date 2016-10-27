@@ -22,10 +22,10 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecoDetailsAdapter extends CommonAdapter<ScfdEntity> {
+public class DcRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> {
     private LayoutInflater mInflater;
 
-    public RecoDetailsAdapter(Context context, List<ScfdEntity> datas, int layoutId) {
+    public DcRecommendDetailsAdapter(Context context, List<ScfdEntity> datas, int layoutId) {
         super(context, datas, layoutId);
         mInflater = LayoutInflater.from(context);
     }
@@ -37,21 +37,28 @@ public class RecoDetailsAdapter extends CommonAdapter<ScfdEntity> {
         List<ScfdEntity.BrandsBean> brands = item.getBrands();
         for (int i = 0; i < brands.size(); i++) {
             ScfdEntity.BrandsBean bean = brands.get(i);
-            View mItemView = mInflater.inflate(R.layout.item_brand_view, null);
-            updateView2ItemData(mItemView, bean);
+            View mItemView;
+            if (item.getSource().equals("1")) {
+                mItemView = mInflater.inflate(R.layout.item_brand_logo_view, null);
+            } else {
+                mItemView = mInflater.inflate(R.layout.item_brand_view, null);
+            }
+            updateView2ItemData(item.getSource().equals("1"), mItemView, bean);
             llBrandView.addView(mItemView);
         }
     }
 
-    private void updateView2ItemData(View mItemView, ScfdEntity.BrandsBean bean) {
+    private void updateView2ItemData(boolean hasFrom3D, View mItemView, ScfdEntity.BrandsBean bean) {
         TextView tvBrandName = (TextView) mItemView.findViewById(R.id.tv_brand_name);
-        TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
+        if (!hasFrom3D) {
+            TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
+            tvBrandNum.setText(bean.getAmountAndUnit() + "个");
+        }
         TextView tvBrandDimension = (TextView) mItemView.findViewById(R.id.tv_brand_dimension);
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);
         TextView tvBrandMallName = (TextView) mItemView.findViewById(R.id.tv_brand_mall_name);
         tvBrandName.setText(bean.getBrand_name());
-        tvBrandNum.setText(bean.getAmountAndUnit() + "个");
         tvBrandDimension.setText(bean.getDimension());
         tvBrandApartment.setText(bean.getApartment());
         tvBrandRemarks.setText(bean.getRemarks());

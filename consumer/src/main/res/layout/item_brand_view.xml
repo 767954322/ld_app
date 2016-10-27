@@ -13,8 +13,8 @@
         style="@style/item_text_style"
         android:layout_gravity="left"
         android:paddingTop="14dp"
-        android:textStyle="bold"
-        android:text="弗拉克"/>
+        android:text="弗拉克"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,6 +73,7 @@
         <TextView
             android:id="@+id/tv_brand_remarks"
             style="@style/item_text_style"
+            android:singleLine="true"
             android:text="质地细腻与澳洲国石优博瑰丽"/>
     </LinearLayout>
 
@@ -85,7 +86,7 @@
         <TextView
             style="@style/item_text_style"
             android:layout_height="match_parent"
-            android:text="店铺："/>
+            android:text="店面："/>
 
         <TextView
             android:id="@+id/tv_brand_mall_name"

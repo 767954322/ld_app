@@ -198,7 +198,13 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".personalcenter.recommend.activity.DesignRecomDetailsActivity"
+            android:name=".personalcenter.recommend.activity.DcRecommendDetailsActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".personalcenter.recommend.activity.CsRecommendDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>

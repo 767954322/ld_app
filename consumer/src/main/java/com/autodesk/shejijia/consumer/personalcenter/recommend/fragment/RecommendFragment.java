@@ -1,26 +1,17 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DesignRecomDetailsActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.CsRecommendDetailsActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DcRecommendDetailsActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendLogicImpl;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +60,9 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendEntity.ItemsBean item = (RecommendEntity.ItemsBean) parent.getAdapter().getItem(position);
         if (isDesign)
-            DesignRecomDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "");
+            DcRecommendDetailsActivity.jumpTo(getActivity(), item.getDesign_project_id() + "");
+        else
+            CsRecommendDetailsActivity.jumpTo(getActivity(), item.getDesign_project_id() + "", item.getCommunity_name());
     }
 
     @Override
@@ -96,7 +89,8 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     }
 
     @Override
-    protected void initData() {}
+    protected void initData() {
+    }
 
     @Override
     public void loadMore() {
