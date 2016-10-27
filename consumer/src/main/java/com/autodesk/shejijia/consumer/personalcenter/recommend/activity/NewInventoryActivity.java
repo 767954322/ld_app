@@ -3,7 +3,6 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CancellationSignal;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,13 +14,11 @@ import android.widget.EditText;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.home.decorationdesigners.entity.FindDesignerBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MemberAccountEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.NewInventoryEntity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
-import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
@@ -37,8 +34,6 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.Serializable;
 
 /**
  * @author DongXueQiu .
@@ -65,6 +60,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private AlertView mBackAlertView;
+    private boolean check_flag;
+    private String acs_member_id;
 
     @Override
     protected int getLayoutResId() {
@@ -194,6 +191,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 if (!(mMatchesPhone || mMatchesMail || mMatchesAccountNumber)) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_account_number),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
                     return;
                 }
 
@@ -204,6 +202,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 if (!mMatchesName) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_name),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
                     return;
                 }
 
@@ -215,6 +214,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 if (!mMatchesPhoneNumber) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_phone_number),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
                     return;
                 }
 
@@ -226,6 +226,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 if (!mMatchesCommunityName) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_community_name),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
                     return;
                 }
 
@@ -236,39 +237,52 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 if (!mMatchesDetailAddress) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_input_right_detail_address),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+
                     return;
                 }
 
+                /**
+                 * 判断是否为会员帐号
+                 */
+                getMemberAccountList(mMemberAccount);
 
-                JSONObject jsonObject = new JSONObject();
-                try {
-
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_ADDRESS, mDetailAddress);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ID, "20736491");
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_MOBILE, mPhoneNumber);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
-
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "123456789");
-
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT, mCurrentDistrictCode);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_NAME, mCurrentDistrict);
-
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE, mCurrentProvinceCode);
-                    jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE_NAME, mCurrentProvince);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
-                getNewInventoryList(jsonObject, designer_id);
                 break;
         }
 
+    }
+
+    private void newInvertoryList(String acs_member_id) {
+
+        String mDetailAddress = mEtDetailAddress.getText().toString();
+        String mCustomerName = mEtCustomerName.getText().toString();
+        String mCommunityName = mEtCommunityName.getText().toString();
+        String mPhoneNumber = mEtPhoneNumber.getText().toString();
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY, mCurrentCityCode);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CITY_NAME, mCurrentCity);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_ADDRESS, mDetailAddress);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_COMMUNITY_NAME, mCommunityName);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_ID, acs_member_id);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_MOBILE, mPhoneNumber);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CUSTOMER_NAME, mCustomerName);
+
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_CONSUMER_UID, "123456789");
+
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DESIGNER_UID, designer_uid);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT, mCurrentDistrictCode);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_DISTRICT_NAME, mCurrentDistrict);
+
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE, mCurrentProvinceCode);
+            jsonObject.put(JsonConstants.JSON_NEW_INVENTORY_PROVINCE_NAME, mCurrentProvince);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        CustomProgress.show(this, UIUtils.getString(R.string.data_submission), false, null);
+        getNewInventoryList(jsonObject, designer_id);
     }
 
     /**
@@ -336,6 +350,33 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 CustomProgress.cancelDialog();
                 Log.d("NewInventoryActivity", "失败啦");
                 new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_save_project_fail),
+                        null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+            }
+        });
+    }
+
+    private void getMemberAccountList(String member_account) {
+
+        MPServerHttpManager.getInstance().getMemberAccountList(member_account, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+                Log.d("NewInventoryActivity", jsonObject.toString());
+                MemberAccountEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MemberAccountEntity.class);
+                check_flag = entity.isCheck_flag();
+                if (!check_flag) {
+                    new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_member_account_not_exit),
+                            null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
+                    return;
+                }
+                acs_member_id = entity.getAcs_member_id();
+                newInvertoryList(acs_member_id);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.network_error),
                         null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
             }
         });
