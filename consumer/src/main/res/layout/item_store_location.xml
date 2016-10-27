@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_category_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#eef1f4"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="丽泽店"
+        android:textColor="@color/mybid_text_color_normal"/>
+
+    <include layout="@layout/line_view"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="营业时间："/>
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="10:00 -19:00"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="店面地址："/>
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="北京的丰台区西三环南路甲27号"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="摊位地址："/>
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="2层A区东北角A210"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/item_text_style"
+                android:layout_gravity="top"
+                android:text="乘车路线："/>
+
+            <TextView
+                style="@style/item_text_style"
+                android:lineSpacingMultiplier="1.2"
+                android:text="60,300到西局下车,地铁10号线西局站下车"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="摊位电话："/>
+
+            <TextView
+                style="@style/item_text_style"
+                android:text="010-5577885654"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/line_view"/>
+</LinearLayout>

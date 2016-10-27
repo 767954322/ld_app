@@ -2,14 +2,21 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +40,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
         holder.setVisible(R.id.tv_cancel_btn, isDesiner);
         String status = item.getStatus();
         if (!TextUtils.isEmpty(status)) {
-            boolean unsent = status.equals("unsent") || status.equals("unsent-modified");
+            boolean unsent = status.equals("unsent") || status.equals("unsent-modified") || status.equals("sent-modified");
             holder.setVisible(R.id.iv_reco_wfsico, unsent);
         }
         holder.setText(R.id.tv_edit_btn, (isDesiner ? "编辑" : "删除"));
@@ -49,8 +56,19 @@ public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
             public void onClick(View v) {
                 if (isDesiner) {
                     RecommendListDetailActivity.actionStartActivity(mContext, item.getDesign_project_id() + "");
+                } else {
+                    onItemDeteleClick(item);
                 }
             }
         });
+    }
+
+    private void onItemDeteleClick(RecommendEntity.ItemsBean item) {
+        new AlertView(null, "您确定要删除吗?", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
+                Log.d("recommend", "确定");
+            }
+        }).show();
     }
 }

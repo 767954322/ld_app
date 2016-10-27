@@ -5,14 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.adapter.UserHome3DCaseAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -53,7 +57,12 @@ public class DcRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> {
         if (!hasFrom3D) {
             TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
             tvBrandNum.setText(bean.getAmountAndUnit() + "个");
+        } else {
+            ImageView mBrandLogo = (ImageView) mItemView.findViewById(R.id.iv_brand_logo);
+            ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
         }
+        TextView storeLocation = (TextView) mItemView.findViewById(R.id.tv_store_location);
+        storeLocation.setVisibility(View.VISIBLE);
         TextView tvBrandDimension = (TextView) mItemView.findViewById(R.id.tv_brand_dimension);
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);

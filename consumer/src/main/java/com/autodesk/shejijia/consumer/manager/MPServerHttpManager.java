@@ -82,7 +82,7 @@ public class MPServerHttpManager {
                 "&limit=" + limit +
                 "&status=" + status +
                 "&asset_name=" + design_id;
-        Log.d("racofix", isDesign ? designers_url : member_url);
+        Log.d("recommend", isDesign ? designers_url : member_url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, isDesign ? designers_url : member_url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -140,7 +140,7 @@ public class MPServerHttpManager {
     public void getRecommendDetails(String design_id, String assetId, OkJsonRequest.OKResponseCallback callback) {
         //materials-recommend-app/v1/api/designers/{designer_id}/recommends/{asset_id}
         String url = UrlConstants.MAIN_RECOMMEND + "/recommends/" + assetId;
-        Log.d("RecommendFragment", url);
+        Log.d("recommend", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

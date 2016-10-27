@@ -38,7 +38,7 @@ public class RecommendLogicImpl {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Log.d("racofix", jsonObject.toString());
+                Log.d("recommend", jsonObject.toString());
                 if (!TextUtils.isEmpty(jsonObject.toString())) {
                     RecommendEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendEntity.class);
                     mRecommendView.onLoadDataSuccess(offset, entity);

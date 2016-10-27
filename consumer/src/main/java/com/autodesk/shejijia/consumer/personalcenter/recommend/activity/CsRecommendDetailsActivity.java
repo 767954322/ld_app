@@ -98,14 +98,14 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                Log.d("racofix", "CsRecommendDetailsActivity:" + jsonObject.toString());
+                Log.d("recommend", "CsRecommendDetailsActivity:" + jsonObject.toString());
                 mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
                 updateView2Api(mEntity);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.d("racofix", volleyError.toString());
+                Log.d("recommend", volleyError.toString());
                 MPNetworkUtils.logError(TAG, volleyError);
             }
         };

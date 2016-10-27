@@ -3,13 +3,16 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.StoreLocationActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;
 
@@ -19,7 +22,7 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> {
+public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> implements View.OnClickListener {
     private LayoutInflater mInflater;
 
     public CsRecommendDetailsAdapter(Context context, List<ScfdEntity> datas, int layoutId) {
@@ -50,7 +53,13 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> {
         if (!isFrom3D) {
             TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
             tvBrandNum.setText(bean.getAmountAndUnit() + "个");
+        } else {
+            ImageView mBrandLogo = (ImageView) mItemView.findViewById(R.id.iv_brand_logo);
+            ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
         }
+        TextView storeLocation = (TextView) mItemView.findViewById(R.id.tv_store_location);
+        storeLocation.setVisibility(View.VISIBLE);
+        storeLocation.setOnClickListener(this);
         TextView tvBrandDimension = (TextView) mItemView.findViewById(R.id.tv_brand_dimension);
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);
@@ -64,5 +73,14 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> {
             mallName.append(mallsBean.getMall_name() + "、");
         }
         tvBrandMallName.setText(mallName.substring(0, mallName.length() - 1));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_store_location:
+                StoreLocationActivity.jumpTo(mContext);
+                break;
+        }
     }
 }
