@@ -32,6 +32,12 @@ public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDB
     @Override
     public void convert(CommonViewHolder holder, final RecommendSCFDBean recommendSCFDBean) {
         holder.setText(R.id.tv_category_name, recommendSCFDBean.getSub_category_3d_name());
+        holder.setOnClickListener(R.id.tv_category_name, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(mContext, "快速定位", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         holder.setOnClickListener(R.id.tv_create_brand, new View.OnClickListener() {
             @Override

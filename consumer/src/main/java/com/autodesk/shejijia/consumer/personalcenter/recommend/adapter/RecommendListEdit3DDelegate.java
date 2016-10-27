@@ -1,12 +1,16 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
+import android.widget.ImageView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 /**
  * 基于BOM单的推荐清单详情
@@ -32,6 +36,13 @@ public class RecommendListEdit3DDelegate implements ItemViewDelegate<RecommendBr
     @Override
     public void convert(MultiItemViewHolder holder, RecommendBrandsBean recommendBrandsBean, int position) {
         holder.setText(R.id.tv_brand_name, recommendBrandsBean.getBrand_name());
+
+        ImageView mBrandLogo = holder.getView((R.id.iv_brand_logo));
+        if (StringUtils.isEmpty(mBrandLogo)){
+            mBrandLogo.setImageDrawable(UIUtils.getDrawable(R.drawable.shejjijiaicon_ico));
+        }else {
+            ImageUtils.loadImageIcon(mBrandLogo, recommendBrandsBean.getLogo_url());
+        }
 
         holder.setText(R.id.tv_brand_num, recommendBrandsBean.getAmountAndUnit() + "个");
         holder.setText(R.id.tv_brand_dimension, recommendBrandsBean.getDimension());

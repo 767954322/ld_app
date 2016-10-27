@@ -56,14 +56,20 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
 
         final Spinner spinnerApartment = holder.getView((R.id.spinner_brand_apartment));
         String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
-        List<String> apartmentList = Arrays.asList(apartmentArray);
+        final List<String> apartmentList = Arrays.asList(apartmentArray);
         final ArrayAdapter<String> apartmentArrayAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, apartmentList);
         apartmentArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerApartment.setAdapter(apartmentArrayAdapter);
-//        spinnerApartment.setSpinner
+        String apartment = recommendBrandsBean.getApartment();
+        for (int i = 0; i < apartmentList.size(); i++) {
+            if (!StringUtils.isEmpty(apartment) && apartment.equalsIgnoreCase(apartmentList.get(position))) {
+                spinnerApartment.setSelection(position, true);
+            }
+        }
         spinnerApartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 String currentApartmentName = apartmentArrayAdapter.getItem(position);
             }
 
