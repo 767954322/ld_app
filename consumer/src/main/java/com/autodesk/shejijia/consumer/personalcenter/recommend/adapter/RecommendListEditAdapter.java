@@ -3,8 +3,10 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,12 +60,22 @@ public class RecommendListEditAdapter extends CommonAdapter<RecommendSCFDBean> {
         TextView tvBrandMallName = (TextView) itemBrandView.findViewById(R.id.tv_brand_mall_name);
         EditText etBrandNum = (EditText) itemBrandView.findViewById(R.id.et_brand_num);
         EditText etBrandDimension = (EditText) itemBrandView.findViewById(R.id.et_brand_dimension);
-//        TextView tvBrandApartment = (TextView) itemBrandView.findViewById(R.id.tv_brand_apartment);
+        Spinner spinnerApartment = (Spinner) itemBrandView.findViewById(R.id.tv_brand_apartment);
         EditText etBrandRemarks = (EditText) itemBrandView.findViewById(R.id.et_brand_remarks);
         tvBrandName.setText(recommendBrandsBean.getBrand_name());
-        etBrandNum.setText(recommendBrandsBean.getAmountAndUnit() + "个");
+        etBrandNum.setText(recommendBrandsBean.getAmountAndUnit());
         etBrandDimension.setText(recommendBrandsBean.getDimension());
-//        tvBrandApartment.setText(recommendBrandsBean.getApartment());
+        spinnerApartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         etBrandRemarks.setText(recommendBrandsBean.getRemarks());
         StringBuffer mallName = new StringBuffer();
         for (RecommendMallsBean mallsBean : recommendBrandsBean.getMalls()) {

@@ -79,10 +79,11 @@
             style="@style/item_text_style"
             android:text="空间："/>
 
-        <TextView
-            android:id="@+id/elv_brand_apartment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/spinner_brand_apartment"
+            android:layout_width="@dimen/size_160"
+            android:layout_height="@dimen/size_30"
+            android:spinnerMode="dropdown"
             android:text="卫生间"/>
     </LinearLayout>
 
