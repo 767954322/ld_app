@@ -27,6 +27,11 @@ android {
         }
     }
 
+    //TODO start lint check
+    lintOptions {
+        abortOnError false
+    }
+
     publishNonDefault true
     productFlavors {
         alpha {}

@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.utility;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 /**
@@ -15,7 +16,7 @@ public final class LogUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static boolean isDebug = AdskApplication.getInstance().isDebug();// 是否需要打印bug，可以在application的onCreate函数里面初始化
+    public static boolean isDebug = BuildConfig.DEBUG;
     private static final String TAG = "AutoDesk--Log--";
 
     // 下面四个是默认tag的函数

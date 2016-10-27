@@ -13,6 +13,7 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.autodesk.shejijia.shared.BuildConfig;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 import com.autodesk.shejijia.shared.Config;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -55,7 +56,7 @@ public abstract class AdskApplication extends Application {
 
         initData();
         initListener();
-        Log.i("Wenhui", "Sourceset=" + Config.API_VERSION_NAME);
+        LogUtils.i("SourceSet=" + Config.API_VERSION_NAME + ", Debug=" + BuildConfig.DEBUG);
     }
 
     @Override
@@ -129,8 +130,6 @@ public abstract class AdskApplication extends Application {
     public static synchronized AdskApplication getInstance() {
         return sAdskApplication;
     }
-
-    public abstract boolean isDebug();
 
     public void setWebSocketStatus(boolean result) {
         IsWebSocketConnecting = result;

@@ -27,11 +27,6 @@ public class EnterpriseApplication extends AdskApplication {
 
     }
 
-    @Override
-    public boolean isDebug() {
-        return BuildConfig.DEBUG;
-    }
-
     public static synchronized EnterpriseApplication getInstance() {
         return application;
     }

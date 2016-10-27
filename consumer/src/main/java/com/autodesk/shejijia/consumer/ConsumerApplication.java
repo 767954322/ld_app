@@ -70,11 +70,6 @@ public class ConsumerApplication extends AdskApplication{
         return MPSplashActivity.class;
     }
 
-    @Override
-    public boolean isDebug() {
-        return BuildConfig.DEBUG;
-    }
-
     private void getLoginThreadId(String designer_id) {
         OkJsonRequest.OKResponseCallback okResponseCallback = new OkJsonRequest.OKResponseCallback() {
             @Override

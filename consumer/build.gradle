@@ -22,6 +22,7 @@ android {
 //            keyPassword "juranzhijia"
 //        }
 //    }
+
     buildTypes {
         debug {
 //            signingConfig signingConfigs.release
@@ -48,6 +49,16 @@ android {
     }
 }
 
+
+configurations {
+    alphaDebugCompile
+    uatDebugCompile
+    productionDebugCompile
+    alphaReleaseCompile
+    uatReleaseCompile
+    productionReleaseCompile
+}
+
 dependencies {
     ext.supportLibraryVersion = rootProject.ext.androidSupportLibVersion
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -59,7 +70,10 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
     compile "com.android.support:design:$supportLibraryVersion"
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
-    alphaCompile project(path: ':shared', configuration: 'alphaDebug')
-    uatCompile project(path: ':shared', configuration: 'uatDebug')
-    productionCompile project(path: ':shared', configuration: 'productionRelease')
+    alphaDebugCompile project(path: ':shared', configuration: 'alphaDebug')
+    alphaReleaseCompile project(path: ':shared', configuration: 'alphaRelease')
+    uatDebugCompile project(path: ':shared', configuration: 'uatDebug')
+    uatReleaseCompile project(path: ':shared', configuration: 'uatRelease')
+    productionDebugCompile project(path: ':shared', configuration: 'productionDebug')
+    productionReleaseCompile project(path: ':shared', configuration: 'productionRelease')
 }
