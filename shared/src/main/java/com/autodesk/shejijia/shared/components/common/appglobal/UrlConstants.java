@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.appglobal;
 
+import com.autodesk.shejijia.shared.Config;
+
 /**
  * @author yangxuewu .
  * @version v1.0 .
@@ -12,26 +14,26 @@ public final class UrlConstants {
     }
 
 
-    public static String LOGIN_PATH = ApiManagerV2.LOGIN_PATH;
+    public static String LOGIN_PATH = Config.LOGIN_PATH;
 
     /**
      * design-app的url公共部分 .
      */
-    public static String MAIN_DESIGN = ApiManagerV2.DESIGN_PATH;
+    public static String MAIN_DESIGN = Config.DESIGN_PATH;
 
     /**
      * member-app 的url的公共部分 .
      */
-    public static String MAIN_MEMBER = ApiManagerV2.MEMBER_PATH;
+    public static String MAIN_MEMBER = Config.MEMBER_PATH;
 
     /**
      * 我的资产相关数据的url的公共部分 .
      */
-    private static String MAIN_TRANSACTION = ApiManagerV2.TRANSACTION_PATH;
+    private static String MAIN_TRANSACTION = Config.TRANSACTION_PATH;
 
     //分享界面的url
-    public static final String MP_MAIN_SHARE = ApiManagerV2.SHARE_PATH;
-    public static final String MP_MAIN3_SHARE = ApiManagerV2.SHARE3_PATH;
+    public static final String MP_MAIN_SHARE = Config.SHARE_PATH;
+    public static final String MP_MAIN3_SHARE = Config.SHARE3_PATH;
 
     /**
      * 搜索.

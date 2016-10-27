@@ -3,6 +3,7 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
     buildToolsVersion rootProject.ext.androidBuildToolsVersion
+    defaultPublishConfig "productionRelease"
 
     defaultConfig {
         minSdkVersion rootProject.ext.androidMinSdkVersion
@@ -25,6 +26,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    publishNonDefault true
+    productFlavors {
+        alpha {}
+        uat {}
+        production {}
+    }
+
 }
 
 dependencies {

@@ -1,8 +1,7 @@
 package com.autodesk.shejijia.consumer.codecorationBase.packages.view;
 
-import com.autodesk.shejijia.shared.components.common.appglobal.ApiManagerV2;
-import com.autodesk.shejijia.shared.components.common.utility.PropUtil;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.BuildConfig;
+import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
 
 /**
  * Created by allengu on 16-9-5.
@@ -14,7 +13,7 @@ public class ImageUrlUtils {
      * 新版本接口
      */
     public static String getEvUrl() {
-        String urlPath = (String) PropUtil.loadAssetsProperties(AdskApplication.getInstance(), ApiManagerV2.PROPERTY_PATH).get("versionName");
+        String urlPath = ApiManager.getApiEvnVersionName();
         switch (urlPath) {
             case "A":
                 return "http://static.gdfcx.net/leedian-static/alpha/images/app/ios/";

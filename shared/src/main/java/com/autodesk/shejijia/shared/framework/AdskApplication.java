@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.autodesk.shejijia.shared.components.common.appglobal.ApiManager;
+import com.autodesk.shejijia.shared.Config;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
@@ -53,6 +55,7 @@ public abstract class AdskApplication extends Application {
 
         initData();
         initListener();
+        Log.i("Wenhui", "Sourceset=" + Config.API_VERSION_NAME);
     }
 
     @Override

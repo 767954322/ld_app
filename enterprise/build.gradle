@@ -27,6 +27,12 @@ android {
         abortOnError false
 
     }
+
+    productFlavors {
+        alpha {}
+        uat {}
+        production {}
+    }
 }
 
 dependencies {
@@ -39,5 +45,7 @@ dependencies {
     compile 'com.android.support:design:'+rootProject.ext.androidSupportLibVersion
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support:support-annotations:'+rootProject.ext.androidSupportLibVersion
-    compile project(':shared')
+    alphaCompile project(path: ':shared', configuration: 'alphaDebug')
+    uatCompile project(path: ':shared', configuration: 'uatDebug')
+    productionCompile project(path: ':shared', configuration: 'productionRelease')
 }

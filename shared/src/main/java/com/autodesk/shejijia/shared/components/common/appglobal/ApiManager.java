@@ -1,5 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.appglobal;
 
+import com.autodesk.shejijia.shared.Config;
+
 /**
  * @author he.liu
  * @version v1.0 .
@@ -33,9 +35,7 @@ public class ApiManager {
      * @return false 正式环境  ;  true 测试环境
      */
     public static boolean isRunningDevelopment(String runningDevelopment) {
-        String productionDevelopmentTag = ApiManagerV2.PRODUCTION_DEVELOPMENT_TAG;
-
-        return !IS_PRODUCTION.equals(productionDevelopmentTag);
+        return Config.IS_PRODUCTION;
     }
 
     /**
@@ -50,10 +50,9 @@ public class ApiManager {
     private static final int UAT_ADMIN_USER_ID = 20730165;
 
     public static int getAdmin_User_Id() {
-        String productionDevelopmentTag = ApiManagerV2.PRODUCTION_DEVELOPMENT_TAG;
         int admin_user_id;
 
-        if (IS_PRODUCTION.equals(productionDevelopmentTag)) {
+        if (Config.IS_PRODUCTION) {
             /**
              * 生产环境：20742718
              * JuranAdmin@163.com
@@ -76,8 +75,8 @@ public class ApiManager {
      *
      * @return 版本标识
      */
-    public static String getVersionNumber() {
-        return ApiManagerV2.VERSION_NAME_PREFIX;
+    public static String getApiEvnVersionName() {
+        return Config.API_VERSION_NAME;
     }
 
     /**
