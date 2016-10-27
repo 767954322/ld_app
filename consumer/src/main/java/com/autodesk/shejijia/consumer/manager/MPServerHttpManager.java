@@ -116,12 +116,27 @@ public class MPServerHttpManager {
 
     /**
      * 会员卡号
+     *
      * @param member_account
      * @param callback
      */
 
     public void getMemberAccountList(String member_account, OkJsonRequest.OKResponseCallback callback) {
         String url = UrlConstants.MAIN_RECOMMEND + "/members/" + member_account + "/check";
+        Log.d("NewInventoryActivity", url);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    public void getSelectProjectList(String designer_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_RECOMMEND + "/designers/" + designer_id + "/designs";
         Log.d("NewInventoryActivity", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override

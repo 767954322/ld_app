@@ -13,7 +13,8 @@
         android:id="@+id/lv_select_project"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_0"
-        android:layout_weight="1"></ListView>
+        android:layout_weight="1"
+        android:choiceMode="singleChoice"></ListView>
 
     <Button
         android:id="@+id/btn_select_project_sure"

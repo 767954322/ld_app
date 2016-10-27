@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -12,6 +13,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.SelectProjectAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.SelectProjectEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -24,6 +26,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.id.list;
 
 /**
  * @author DongXueQiu .
@@ -40,6 +44,10 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
     private DesignerInfoDetails designerInfoDetails;
     private int is_loho;
     private Button mSure;
+    private String designer_id;
+    private String designer_uid;
+    private List<SelectProjectEntity.DesignerProjectsBean> designerProjects = new ArrayList<>();
+    private SelectProjectEntity.DesignerProjectsBean interiorProject;
     List<RecommendEntity.ItemsBean> list = new ArrayList<>();
     private RecommendEntity.ItemsBean entity;
 
@@ -62,10 +70,11 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
         super.initData(savedInstanceState);
 
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-        String designer_id = memberEntity.getAcs_member_id();
-        String designer_uid = memberEntity.getHs_uid();
-        getDesignerInfoData(designer_id, designer_uid);
+        designer_id = memberEntity.getAcs_member_id();
+        designer_uid = memberEntity.getHs_uid();
 
+
+//        getSelectProjectList(designer_id);
         ///选择项目接口链接 目前假数据
 
         entity = new RecommendEntity.ItemsBean();
@@ -75,8 +84,9 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
 //            mAdapter.notifyDataSetChanged();
 //        }
 
-        mAdapter = new SelectProjectAdapter(SelectProjectActivity.this, list, R.layout.item_lv_select_project);
+        mAdapter = new SelectProjectAdapter(SelectProjectActivity.this, list);
         mListView.setAdapter(mAdapter);
+        mListView.setItemChecked(0, true);
 
     }
 
@@ -99,6 +109,36 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 designerInfoDetails = GsonUtil.jsonToBean(jsonString, DesignerInfoDetails.class);
                 is_loho = designerInfoDetails.getDesigner().getIs_loho();
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        });
+    }
+
+
+    /**
+     * 选择项目
+     *
+     * @param designer_id
+     */
+    public void getSelectProjectList(final String designer_id) {
+        MPServerHttpManager.getInstance().getSelectProjectList(designer_id, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Log.d("SelectProjectActivity", jsonObject.toString());
+                SelectProjectEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), SelectProjectEntity.class);
+                interiorProject = new SelectProjectEntity.DesignerProjectsBean();
+                designerProjects.addAll(entity.getDesignerProjects());
+                getDesignerInfoData(designer_id, designer_uid);
+                if (is_loho != 0 && designerProjects.contains(interiorProject)) {
+                    interiorProject.setCommunity_name("创建新项目");
+                    designerProjects.add(0, interiorProject);
+                    mAdapter.notifyDataSetChanged();
+                }
+
             }
 
             @Override
