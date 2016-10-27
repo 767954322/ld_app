@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/common_navbar"
+        layout="@layout/view_navigation_header" />
+
+
+    <!--<HorizontalScrollView-->
+    <!--android:id="@+id/one_level_category"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/size_60"-->
+    <!--android:scrollbars="none"-->
+    <!--&gt;-->
+
+
+    <!--</HorizontalScrollView>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_50"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="硬装"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_20" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="主材"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_20" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="家居装饰"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_20" />
+
+    </LinearLayout>
+    <!--line-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_ef" />
+    </LinearLayout>
+    <!--二级品类-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40">
+
+        <HorizontalScrollView
+            android:id="@+id/two_level_category"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/rl_btn"
+            android:background="@color/white"
+            android:scrollbars="none">
+
+
+        </HorizontalScrollView>
+
+        <RelativeLayout
+            android:id="@+id/rl_btn"
+            android:layout_width="@dimen/size_100"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/white"
+
+            >
+
+            <Button
+                android:id="@+id/all_material_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="6dp"
+                android:background="#f1f2f7"
+                android:text="全部" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <!--line-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:background="@color/bg_ff"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_ef" />
+    </LinearLayout>
+
+    <!--展示品牌-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0"
+            android:layout_weight="1">
+
+            <ListView
+                android:id="@+id/show_brand_listView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <!--底部添加品牌-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:text="还可添加5个品牌"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:background="#0084FF">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size_20"
+                    android:text="添加至清单"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_18"
+
+                    />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

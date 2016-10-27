@@ -298,6 +298,17 @@ public final class UrlConstants {
     /**
      * 获取店面信息
      * */
+    public static final String GET_STORES_INFORMATION = MAIN_RECOMMEND + "/malls";
+
+    /**
+     *获取一级二级品类信息
+     * */
+    public static final String GET_MATERIAL_CATEGORY_INFORMATION = MAIN_RECOMMEND + "/categories";
+
+    /**
+     * 根据一级二级品类获取品牌信息
+     * */
+    public static final String GET_BRANDS_INFORMATION = MAIN_RECOMMEND +"/brands";
 
 
 }

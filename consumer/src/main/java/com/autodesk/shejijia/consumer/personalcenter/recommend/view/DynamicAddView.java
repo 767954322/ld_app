@@ -1,0 +1,160 @@
+package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
+
+import android.content.Context;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
+import java.util.List;
+
+
+/**
+ * @author yaoxuehua .
+ * @version v1.0 .
+ * @date 16-10-25 .
+ * @file DynamicAddView.java .
+ * @brief 动态添加按钮.
+ */
+
+public class DynamicAddView extends LinearLayout {
+    private Context context;
+    private OnButtonClickedListener onButtonClickedListener;
+    private int singleClickOrDoubleBtnCount = 1;//选btn状态
+    private String[] arrStringTotal;
+    private TextView[] textViews;
+
+    private class T {
+    }
+
+    public DynamicAddView(Context context) {
+        super(context);
+        this.context = context;
+        setOrientation(HORIZONTAL);
+    }
+
+    /**
+     * 动态添加数据
+     *
+     * @param arr
+     */
+    public void dynamicAddData(List<MaterialCategoryBean.Categories3dBean.SubCategoryBean> arr) {
+
+        MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean;
+        arrStringTotal = new String[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+
+            arrStringTotal[i] = arr.get(i).getSub_category_3d_name();
+
+        }
+        dynamicAddView(arrStringTotal.length);
+    }
+
+    /**
+     * 动态添加控件（BUTTON / TEXTVIEW）
+     */
+    public void dynamicAddView(int count) {
+
+        TextView textView;
+        BtnStatusBean btnStatusBean;
+        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParamsButton.leftMargin = 26;
+        layoutParamsButton.rightMargin = 26;
+        layoutParamsButton.topMargin = 22;
+        layoutParamsButton.bottomMargin = 22;
+
+        textViews = new TextView[count];
+        for (int i = 0; i < count; i++) {
+            textView = new TextView(context);
+            btnStatusBean = new BtnStatusBean();
+            textViews[i] = textView;
+            btnStatusBean.setCountOffset(i);
+            btnStatusBean.setSingleClickOrDoubleBtnCount(1);
+            textView.setTag(btnStatusBean);
+            textView.setText(arrStringTotal[i]);
+            textView.setTextColor(UIUtils.getColor(R.color.text_item_name));
+            textView.setGravity(Gravity.CENTER);
+            textView.setMinWidth(200);
+            textView.setPadding(40, 0, 40, 0);
+            textView.setBackgroundResource(R.drawable.material_add_bg);
+            textView.setLayoutParams(layoutParamsButton);
+            textViews[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BtnStatusBean btnStatusBean = (BtnStatusBean) v.getTag();
+                    onButtonClickedListener.onButtonClicked(btnStatusBean);
+                    changeTextViewBackgroudAndText(btnStatusBean, textViews[btnStatusBean.getCountOffset()]);
+                    for (int i = 0; i < textViews.length; i++) {
+
+                        if (i != btnStatusBean.getCountOffset()) {
+                            changeTextViewBackgroudAndTextUnChecked(btnStatusBean, textViews[i]);
+                        }
+
+                    }
+                }
+            });
+            addView(textView);
+        }
+
+
+        invalidate();
+
+    }
+
+    /**
+     * 外界动态改变按钮选中状态
+     * */
+    public void setButtonCheckedStatus(BtnStatusBean btnStatusBean){
+
+        changeTextViewBackgroudAndText(btnStatusBean, textViews[btnStatusBean.getCountOffset()]);
+        for (int i = 0; i < textViews.length; i++) {
+
+            if (i != btnStatusBean.getCountOffset()) {
+                changeTextViewBackgroudAndTextUnChecked(btnStatusBean, textViews[i]);
+            }
+
+        }
+        invalidate();
+
+    }
+
+    /**
+     * 改变按钮背景，字体颜色
+     */
+    public void changeTextViewBackgroudAndText(BtnStatusBean btnStatusBean, TextView textView) {
+
+
+        textView.setTextColor(UIUtils.getColor(R.color.bg_0084ff));
+        textView.setBackgroundResource(R.drawable.store_bg_btn_checked);
+
+
+    }
+
+    public void changeTextViewBackgroudAndTextUnChecked(BtnStatusBean btnStatusBean, TextView textView) {
+
+        textView.setTextColor(UIUtils.getColor(R.color.text_item_name));
+        textView.setBackgroundResource(R.drawable.material_add_bg);
+        invalidate();
+    }
+
+    public interface OnButtonClickedListener {
+        /**
+         * 接口回调，方便调用数据；
+         * Callback method to be invoked when current item clicked
+         *
+         *  BtnStatusBean the index of clicked button tag
+         */
+        void onButtonClicked(BtnStatusBean btnStatusBean);
+    }
+
+    public void setListener(OnButtonClickedListener onButtonClickedListener) {
+
+        this.onButtonClickedListener = onButtonClickedListener;
+    }
+}

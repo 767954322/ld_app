@@ -511,6 +511,19 @@ public class Constant {
 
     }
 
+    /**
+     * 添加主材页面bady参数
+     * */
+    public static class AddMaterialActivityKey{
+
+        public static final String  CATEGORY_3D_ID= "category_3d_id";
+        public static final String  CATEGORY_3D_NAME= "category_3d_name";
+        public static final String  SUB_CATEGORY_3D_ID= "sub_category_3d_id";
+        public static final String  SUB_CATEGORY_3D_NAME= "sub_category_3d_name";
+        public static final String  MALL_NUMBER= "mall_number";
+        public static final String  DECORATION_COMPANY_NUMBER= "decoration_company_number";
+
+    }
 
     private Constant() {
     }

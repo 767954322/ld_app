@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/size_58"
+    >
+
+    <TextView
+        android:id="@+id/brand_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="周大声珠宝"
+        android:textSize="@dimen/font_20"
+        android:textColor="@color/black"
+        android:layout_marginLeft="@dimen/size_25"
+        android:layout_marginTop="@dimen/size_25"
+        />
+    <TextView
+        android:id="@+id/store_dreass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="霍营店"
+        android:layout_below="@id/brand_name"
+        android:textSize="@dimen/font_15"
+        android:layout_marginLeft="@dimen/size_25"
+        android:layout_marginBottom="@dimen/size_25"
+        />
+
+    <ImageView
+        android:id="@+id/checked_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/brand_checked"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/size_20"
+        />
+
+
+</RelativeLayout>

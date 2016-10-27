@@ -18,6 +18,7 @@
     <string name="tab_hall">应标大厅</string>
     <string name="tab_home">案例</string>
     <string name="tab_six_products">我要装修</string>
+    <string name="add_material">添加主材</string>
 
     <!--Common string-->
     <string name="save">保存</string>
