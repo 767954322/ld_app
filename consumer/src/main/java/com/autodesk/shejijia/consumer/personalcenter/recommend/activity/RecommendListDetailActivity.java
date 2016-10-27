@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendListEditAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendListEditParentAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendListDetailBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
@@ -130,7 +130,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         } else {
             mLlEmptyContentView.setVisibility(View.GONE);
         }
-        RecommendListEditAdapter recommendListEditAdapter = new RecommendListEditAdapter(this, recommendSCFDList);
+        RecommendListEditParentAdapter recommendListEditAdapter = new RecommendListEditParentAdapter(this, recommendSCFDList);
         mRecyclerViewList.setAdapter(recommendListEditAdapter);
     }
 

@@ -23,15 +23,15 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 编辑清单页面
+ * 编辑清单页面第一级
  *
  * @author liuhea
  *         created at 16-10-25
  */
-public class RecommendListEditAdapter extends CommonAdapter<RecommendSCFDBean> {
+public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDBean> {
     private LayoutInflater mInflater;
 
-    public RecommendListEditAdapter(Context context, List<RecommendSCFDBean> datas) {
+    public RecommendListEditParentAdapter(Context context, List<RecommendSCFDBean> datas) {
         super(context, datas, R.layout.item_recommend_details_brand);
         mInflater = LayoutInflater.from(context);
     }

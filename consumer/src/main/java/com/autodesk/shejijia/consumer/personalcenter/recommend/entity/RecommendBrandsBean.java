@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class RecommendBrandsBean {
     private String brand_name;      // 品牌名称．
-    private String dimension;       // 规格．
+    private String dimension;       // 规格．o
     private String remarks;         // 备注（最大不超过150个中文字符）．
     private String code;
     private String source;          // 来源, 是否来自3d  0：空白方案 1：3d．
