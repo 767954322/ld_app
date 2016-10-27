@@ -1,0 +1,130 @@
+{
+    "id": "material_floor",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材地板",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 检查地板安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查地板安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "packaging_surface",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "floor_voice",
+            "category": "安装验收",
+            "title": "2-1 看地板是否有声响，在地板上来回走动，特别是靠墙部位和门洞部位。",
+            "standard": "2-1 看地板是否有声响，在地板上来回走动，特别是靠墙部位和门洞部位。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "floor_transformation",
+            "category": "安装验收",
+            "title": "2-2 验收地板是否变形、翘曲，验收的方法是用2米长的直尺，靠在地板上，平整度不应大于3毫米。",
+            "standard": "2-2 验收地板是否变形、翘曲，验收的方法是用2米长的直尺，靠在地板上，平整度不应大于3毫米。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "skirting_line",
+            "category": "安装验收",
+            "title": "2-3 踢脚线的验收，踢脚线与门框间隙≤2毫米；踢脚线拼缝之间间距≤1毫米；踢脚线与地板表面的间隙应该在5毫米范围内；踢脚线高度均匀平整，阴角与阳角处接缝平稳均匀",
+            "standard": "2-3 踢脚线的验收，踢脚线与门框间隙≤2毫米；踢脚线拼缝之间间距≤1毫米；踢脚线与地板表面的间隙应该在5毫米范围内；踢脚线高度均匀平整，阴角与阳角处接缝平稳均匀",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "door_holder",
+            "category": "安装验收",
+            "title": "2-4 门扣条的验收，门扣条应装在门的正下方，关闭门后里外都不留边为宜，门能开闭自如。扣条的安装要牢固、稳定，可以用脚踢一下扣条的中间部位，检查扣条两边是否翘起或松动，有无异响",
+            "standard": "2-4 门扣条的验收，门扣条应装在门的正下方，关闭门后里外都不留边为宜，门能开闭自如。扣条的安装要牢固、稳定，可以用脚踢一下扣条的中间部位，检查扣条两边是否翘起或松动，有无异响",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "floor_surface",
+            "category": "安装验收",
+            "title": "2-5 地板的表面是否有胶迹、污斑、掉角、起泡、龟裂、蛀眼、缝隙、划痕。  ",
+            "standard": "2-5 地板的表面是否有胶迹、污斑、掉角、起泡、龟裂、蛀眼、缝隙、划痕。  ",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "floor_pipeline",
+            "category": "安装验收",
+            "title": "2-6 地板与管道及墙壁等交接处应预留8-12mm伸缩缝隙。",
+            "standard": "2-6 地板与管道及墙壁等交接处应预留8-12mm伸缩缝隙。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

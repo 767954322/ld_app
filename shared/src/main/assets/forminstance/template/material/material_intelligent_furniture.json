@@ -1,0 +1,74 @@
+{
+    "id": "material_intelligent_furniture",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材智能家具",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "verify_material",
+            "category": "送货验收",
+            "title": "1-1 核实工程使用材料是否与智能家居系统料单中所列材料一致",
+            "standard": "1-1 核实工程使用材料是否与智能家居系统料单中所列材料一致",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_packing_box",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "equipment_required_to_install",
+            "category": "安装验收",
+            "title": "2-1 各项设备按照指定的位置进行安装",
+            "standard": "2-1 各项设备按照指定的位置进行安装",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "function_runs_normally",
+            "category": "安装验收",
+            "title": "2-2 各项智能功能运行正常。",
+            "standard": "2-2 各项智能功能运行正常。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

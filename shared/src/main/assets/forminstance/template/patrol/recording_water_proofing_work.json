@@ -1,0 +1,259 @@
+{
+    "id": "recording_water_proofing_work",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "patrol",
+    "title": "防水工程验收记录单",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "不通过",
+                "通过"
+            ],
+            "acceptance_options": [
+                "是",
+                "否"
+            ],
+            "check_options": [
+                "描述"
+            ]
+        },
+    "check_items": [
+        {
+            "item_id": "wall_space_shower",
+            "category": "",
+            "title": "墙面淋浴区不低于1800mm，水盆区不低于1500mm",
+            "standard": "",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "floor_water_proof",
+            "category": "",
+            "title": "地面涂刷防水上返不低于300mm并延伸至门洞口两侧",
+            "standard": "",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                
+            ],
+            "comment_conditions": [
+                
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_proofing_balance",
+            "category": "",
+            "title": "防水涂刷均匀，无漏刷，厚度均匀，无空鼓",
+            "standard": "",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "closed_water_test",
+            "category": "",
+            "title": "闭水试验水深不低于20mm，时长不低于24小时，无渗漏",
+            "standard": "",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0
+            ],
+            "comment_conditions": [
+                
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+                    "item_id": "closed_water_before_test",
+                    "category": "",
+                    "title": "闭水试验前现场查看",
+                    "standard": "",
+                    "check_type": "check_options",
+                    "action_visibility": false,
+                    "action_changeability": false,
+                    "action_type": "review_options",
+                    "acceptance_criteria": [
+                                            0
+                                            ],
+                    "comment_conditions": [
+                                           0
+                                           ],
+                    "item_type": "check",
+                    "value": [
+                              {
+                              "type": "check_result",
+                              "value": "-1"
+                              },
+                              {
+                              "type": "action_result",
+                              "value": "-1"
+                              },
+                              {
+                              "type": "text",
+                              "value": ""
+                              },
+                              {
+                              "type": "image",
+                              "value": ""
+                              },
+                              {
+                              "type": "audio",
+                              "value": ""
+                              }
+                              ]
+        },
+                    {
+                    "item_id": "closed_water_before_test",
+                    "category": "",
+                    "title": "闭水试验后现场查看",
+                    "standard": "",
+                    "check_type": "check_options",
+                    "action_visibility": false,
+                    "action_changeability": false,
+                    "action_type": "review_options",
+                    "acceptance_criteria": [
+                                            0
+                                            ],
+                    "comment_conditions": [
+                                           0
+                                           ],
+                    "item_type": "check",
+                    "value": [
+                              {
+                              "type": "check_result",
+                              "value": "-1"
+                              },
+                              {
+                              "type": "action_result",
+                              "value": "-1"
+                              },
+                              {
+                              "type": "text",
+                              "value": ""
+                              },
+                              {
+                              "type": "image",
+                              "value": ""
+                              },
+                              {
+                              "type": "audio",
+                              "value": ""
+                              }
+                              ]
+                    },
+    ]
+}

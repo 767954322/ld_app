@@ -41,7 +41,8 @@
                 android:gravity="center"
                 android:textColor="@color/gray"
                 android:textSize="15sp"
-                tools:text="取消" />
+                tools:text="取消"
+                tools:ignore="NestedWeights" />
 
             <TextView
                 android:layout_width="0dp"

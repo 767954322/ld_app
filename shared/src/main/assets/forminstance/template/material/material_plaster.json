@@ -1,0 +1,88 @@
+{
+    "id": "material_plaster",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材石膏线",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 检查石膏线安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查石膏线安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "packaging_surface",
+            "category": "送货验收",
+            "title": "1-2 检查产品是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "installation_firm",
+            "category": "安装验收",
+            "title": "2-1 石材铺装牢固无松动，水平无高低差。",
+            "standard": "2-1 石材铺装牢固无松动，水平无高低差。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "stone_surface",
+            "category": "安装验收",
+            "title": "2-2 石材表面洁净、平整、无磨痕 。",
+            "standard": "2-2 石材表面洁净、平整、无磨痕 。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "stone_pattern",
+            "category": "安装验收",
+            "title": "2-3 石材图案清晰、色泽一致、接缝均匀、周边顺直、镶嵌正确、板块无裂纹、掉角、缺楞等缺陷。",
+            "standard": "2-3 石材图案清晰、色泽一致、接缝均匀、周边顺直、镶嵌正确、板块无裂纹、掉角、缺楞等缺陷。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

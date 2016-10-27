@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/back_ico" />
+            android:src="@drawable/back_ico"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_personal_title"
@@ -36,7 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/back_ico" />
+            android:src="@drawable/back_ico"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

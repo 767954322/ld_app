@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/home_toolbar_search"
+        android:title="@string/menu_search"
+        android:icon="@mipmap/sort"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/home_toolbar_screen"
+        android:title="@string/menu_screen"
+        android:icon="@mipmap/sort"
+        app:showAsAction="ifRoom"/>
+</menu>

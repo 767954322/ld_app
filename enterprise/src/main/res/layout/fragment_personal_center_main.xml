@@ -20,7 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@drawable/back_ico" />
+            android:src="@drawable/back_ico"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
 
     <TextView
@@ -40,7 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:src="@mipmap/default_head"/>
+            android:src="@mipmap/default_head"
+            tools:ignore="ContentDescription" />
     </RelativeLayout>
 
     <TextView

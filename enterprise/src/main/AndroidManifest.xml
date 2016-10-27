@@ -47,7 +47,7 @@
         android:smallScreens="true" />
 
     <application
-        android:name="com.autodesk.shejijia.enterprise.base.EnterpriseApplication"
+        android:name=".EnterpriseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -55,7 +55,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.autodesk.shejijia.enterprise.projectlists.activitys.MPSplashActivity"
+            android:name=".MPSplashActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:label="@string/app_name"
@@ -69,21 +69,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".projectlists.activitys.ProjectListsActivity"
+            android:name=".EnterpriseHomeActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".projectdetails.activitys.ProjectDetailsActivity"
+            android:name=".nodeprocess.ui.activity.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".nodedetails.activity.NodeDetailsActivity"
+            android:name=".nodeprocess.ui.activity.TaskDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustPan"
@@ -91,7 +91,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".personalcenter.activitys.PersonalCenterActivity"
+            android:name=".personalcenter.activity.PersonalCenterActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
@@ -151,14 +151,11 @@
             </intent-filter>
         </activity>
 
-        <!-- 蒲公英反馈所需-->
-        <!-- Optional -->
-        <activity android:name="com.pgyersdk.activity.FeedbackActivity"/>
 
         <service
             android:name="com.autodesk.shejijia.shared.components.im.service.webSocketService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <service
             android:name="cn.jpush.android.service.DownloadService"
@@ -209,6 +206,7 @@
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
         <receiver
             android:name="com.autodesk.shejijia.shared.framework.receiver.JPushMessageReceiver"
+            android:exported="false"
             android:enabled="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
@@ -222,7 +220,7 @@
         </receiver>
 
         <!--登陆登出等广播接收器-->
-        <receiver android:name=".base.common.receiver.LoginNotificationReceiver"
+        <receiver android:name=".common.receiver.LoginNotificationReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.easyhome.enterprise.logout"/>
@@ -245,11 +243,6 @@
             android:name="UMENG_CHANNEL"
             android:value="AnZhuoShiChang" />
 
-        <!-- 蒲公英required -->
-        <meta-data
-            android:name="PGYER_APPID"
-            android:value="48385e1a59f4a38d3d7efeae666d8898" >
-        </meta-data>
 
     </application>
 

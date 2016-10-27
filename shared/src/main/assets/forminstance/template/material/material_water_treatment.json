@@ -1,0 +1,102 @@
+{
+    "id": "material_water_treatment",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材水处理",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 检查水处理安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查水处理安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "packaging_surface",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "pipeline_leak",
+            "category": "安装验收",
+            "title": "2-1  检查各管路连接密封性能是否良好，是否存在漏水情况。",
+            "standard": "2-1  检查各管路连接密封性能是否良好，是否存在漏水情况。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "device_power_supply",
+            "category": "安装验收",
+            "title": "2-2 设备电源是否能够正常连接。",
+            "standard": "2-2 设备电源是否能够正常连接。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "pipeline_connection",
+            "category": "安装验收",
+            "title": "2-3 排水管是否与排水管道连接到位。",
+            "standard": "2-3 排水管是否与排水管道连接到位。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "prefilter",
+            "category": "安装验收",
+            "title": "2-4 前置过滤器是否能正常操作。",
+            "standard": "2-4 前置过滤器是否能正常操作。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

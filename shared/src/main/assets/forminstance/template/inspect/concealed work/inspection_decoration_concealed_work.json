@@ -1,0 +1,1194 @@
+{
+    "id": "inspection_decoration_concealed_work",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "inspection",
+    "title": "装饰隐蔽工程施工质量验收",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "强制复验",
+                "验收通过"
+            ],
+            "action_options": [
+                "监督整改",
+                "强制复验"
+            ],
+            "review_options": [
+                "强制复验"
+            ],
+            "supervisor_notification_options": [
+                "监理告知"
+            ],
+            "supervisor_inquiry_options": [
+                "监理询问"
+            ],
+            "acceptance_options": [
+                "合格",
+                "不合格",
+                "无此项"
+            ],
+            "level_options": [
+                "找平",
+                "不找平"
+            ],
+            "notification_options": [
+                "告知",
+                "未告知"
+            ]
+        },
+    "check_items": [
+        {
+            "item_id": "fireproof_treatmen",
+            "category": "吊杆安装",
+            "title": "1.木制构件(一)",
+            "standard": "必须进行防火处理，且涂刷到位（粘接饰面除外）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "no_fold",
+            "category": "吊杆安装",
+            "title": "2.木制构件(二)",
+            "standard": "无皱折、起皮、死节、树皮、霉变",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "main_keel_back_support",
+            "category": "吊杆安装",
+            "title": "3.吊杆(一)",
+            "standard": "主龙骨悬臂≤300㎜，长度＞1.5m，做反支撑",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "appropriate_spacing",
+            "category": "吊杆安装",
+            "title": "4.吊杆(四)",
+            "standard": "固定间距为900～1000㎜，如遇梁、管道等时，固定点大于规定要求，应增设吊杆固定点",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "solid_ceiling",
+            "category": "吊杆安装",
+            "title": "5.吊顶牢固性",
+            "standard": "安装牢固，每层抽检3个自然间，手拽检查",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "main_keel_spacing",
+            "category": "龙骨安装",
+            "title": "6.主龙骨间距（吊顶）",
+            "standard": "沿房间长向布置，间距<1000㎜；对于大于600mm且小于1m的过道、直线或环形吊顶宽度大于600mm，应增设主龙骨或适当增设吊杆",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "secondary_keel_spacing",
+            "category": "龙骨安装",
+            "title": "7.次龙骨间距（吊顶）",
+            "standard": "水平或垂直安装的次龙骨，间距300～600㎜",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "fixed_edge_keel",
+            "category": "龙骨安装",
+            "title": "8.沿边龙骨固定（吊顶）",
+            "standard": "水平或垂直安装的次龙骨，间距300～600㎜",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "fixed_partition_wall",
+            "category": "龙骨安装",
+            "title": "9.天地龙骨固定（隔墙）",
+            "standard": "用≥Φ6金属螺栓，间距≤600㎜",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "vertical_keel_installation",
+            "category": "龙骨安装",
+            "title": "10.竖龙骨安装（沿墙）",
+            "standard": "用≥Φ6金属螺栓，间距≤600㎜",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "vertical_keel_partition_wall",
+            "category": "龙骨安装",
+            "title": "11.竖龙骨分档（隔墙）",
+            "standard": "宽度1200㎜时，分档402㎜",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "keel_lap",
+            "category": "龙骨安装",
+            "title": "12.龙骨搭接",
+            "standard": "主次龙骨上下搭接牢固，并使用专用配件",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "light_steel_keel_connection",
+            "category": "龙骨安装",
+            "title": "13.轻钢龙骨连接",
+            "standard": "龙骨连接须采用铆钉固定",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "door_frame_production",
+            "category": "龙骨安装",
+            "title": "14.轻钢龙骨隔断门框制作",
+            "standard": "门框立柱为双层（U-C）对抱；门框间龙骨连接牢固，安装垂直；门框方正",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "ceiling_flatness",
+            "category": "龙骨安装",
+            "title": "15.吊顶平整度",
+            "standard": "允许偏差3㎜",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "verticality",
+            "category": "龙骨安装",
+            "title": "16.垂直度（轻钢龙骨/轻体墙）",
+            "standard": "允许偏差3㎜",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "Wall_top_repair",
+            "category": "龙骨安装",
+            "title": "17.墙、顶面修补",
+            "standard": "墙、顶面内存在缺损时，如孔洞破损，隐蔽前应进行补平",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "full_of_mortar",
+            "category": "龙骨安装",
+            "title": "18.砌体墙（现场存在此分项施工时）(砌筑)(一)",
+            "standard": "灰浆饱满，搭接整齐，上下错缝，棱角齐整",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "pull_and_tie_bar",
+            "category": "龙骨安装",
+            "title": "19.砌体墙（现场存在此分项施工时）(砌筑)(二)",
+            "standard": "拉结筋植入原墙，垂直间距≤500mm，水平长度≥1000mm（对于小于1m的墙体，以墙宽为准）",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "body_wall_opening_hole",
+            "category": "龙骨安装",
+            "title": "20.砌体墙（现场存在此分项施工时）(开门洞)(一)",
+            "standard": "新砌砌体墙或原砌体墙开门洞，需加方钢、槽钢或预制混凝土过梁",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "open_the_door",
+            "category": "龙骨安装",
+            "title": "21.砌体墙（现场存在此分项施工时）(开门洞)(二)",
+            "standard": "两侧进墙不低于200mm，现场实际条件不能满足时，以最大限度进深要求",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "putty_eradicate_completely",
+            "category": "龙骨安装",
+            "title": "22.原墙基层铲除（报价单包含此项施工时）(一)",
+            "standard": "原墙面腻子层需铲除彻底",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "leveling_treatment",
+            "category": "龙骨安装",
+            "title": "23.原墙基层铲除（报价单包含此项施工时）(二)",
+            "standard": "与客户和施工确认是否需要找平处理",
+            "check_type": "level_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "supervisor_inquiry_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "the_use_of_gypsum_leveling",
+            "category": "龙骨安装",
+            "title": "24.原墙基层铲除（报价单包含此项施工时）(三)",
+            "standard": "5mm＜平整度误差≤10mm时，须使用石膏找平（顺平）",
+            "check_type": "notification_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "supervisor_notification_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "top_surface_eradication",
+            "category": "龙骨安装",
+            "title": "25.原顶基层铲除（报价单包含此项施工时）(一)",
+            "standard": "原顶面腻子层需铲除彻底",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "plaster_leveling",
+            "category": "龙骨安装",
+            "title": "26.原墙基层铲除（报价单包含此项施工时）(二)",
+            "standard": "5mm＜平整度误差≤10mm时，须使用石膏找平；平整度误差＞10mm，用石膏板找平",
+            "check_type": "notification_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "supervisor_notification_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "construction_of_next_working_procedure",
+            "category": "龙骨安装",
+            "title": "27.原墙基层铲除（报价单包含此项施工时）(三)",
+            "standard": "告知施工方待找平层干透后方可进行下道工序施工",
+            "check_type": "notification_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "supervisor_notification_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "lightweight_wall",
+            "category": "其他",
+            "title": "28.轻质墙体壁挂电视或重型设备",
+            "standard": "询问客户是否存在此用途，告知客户找厂家确认是否可以安装，否则严禁挂墙",
+            "check_type": "notification_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "supervisor_notification_options",
+            "acceptance_criteria": [
+                0,
+                1
+            ],
+            "comment_conditions": [],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "brush_anti_rust_paint",
+            "category": "其他",
+            "title": "29.钢制结构",
+            "standard": "须刷防锈涂料",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

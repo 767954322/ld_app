@@ -1,0 +1,310 @@
+{
+    "id": "inspection_water_middle",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "inspection",
+    "title": "给排水中期工程施工质量验收",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+            "status": [
+                "强制复验",
+                "验收通过"
+            ],
+            "action_options": [
+                "监督整改",
+                "强制复验"
+            ],
+            "review_options": [
+                "强制复验"
+            ],
+            "acceptance_options": [
+                "合格",
+                "不合格",
+                "无此项"
+            ]
+        },
+    "check_items": [
+        {
+            "item_id": "direct_burial_conduit",
+            "category": "安装",
+            "title": "1．直埋水管封闭",
+            "standard": "抹灰平整，观感质量良好",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "bare_conduit",
+            "category": "安装",
+            "title": "2．明露水管保温",
+            "standard": "保温严密,观感质量良好",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_supply_point_1",
+            "category": "安装",
+            "title": "3．给水点（水丝）出墙距离(一)",
+            "standard": "出墙适中（出2mm，进3mm），与墙面结合严密,同一标高或按设计要求安装",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_supply_point_2",
+            "category": "安装",
+            "title": "4．给水点（水丝）出墙距离(二)",
+            "standard": "如安装混水龙头，必须同一标高，给水点间距为150mm",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "exhaust_duct",
+            "category": "安装",
+            "title": "5．排风管道安装",
+            "standard": "安装牢固，必须采用专用底座",
+            "check_type": "acceptance_options",
+            "action_visibility": true,
+            "action_changeability": true,
+            "action_type": "action_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "water_drainage_test",
+            "category": "试验",
+            "title": "6．通排试验",
+            "standard": "排水顺畅，无存水现象",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        },
+        {
+            "item_id": "flashing_test",
+            "category": "试验",
+            "title": "7．泛水试验",
+            "standard": "有排水要求的房间需进行泛水试验，地面无积水现象",
+            "check_type": "acceptance_options",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "review_options",
+            "acceptance_criteria": [
+                0,
+                2
+            ],
+            "comment_conditions": [
+                1
+            ],
+            "item_type": "check",
+            "value": [
+                {
+                    "type": "check_result",
+                    "value": "-1"
+                },
+                {
+                    "type": "action_result",
+                    "value": "0"
+                },
+                {
+                    "type": "text",
+                    "value": ""
+                },
+                {
+                    "type": "image",
+                    "value": ""
+                },
+                {
+                    "type": "audio",
+                    "value": ""
+                }
+            ]
+        }
+    ]
+}

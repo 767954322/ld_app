@@ -1,0 +1,130 @@
+{
+    "id": "material_lamps_and_home_theater",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材灯具及家庭影院",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "check_the_shipping_list",
+            "category": "送货验收",
+            "title": "1-1 检查灯具及家庭影院安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查灯具及家庭影院安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "check_packing_damage",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "cracking_and_deformation",
+            "category": "安装验收",
+            "title": "2-1-1 检查外观：货物是否严重开裂、变形，有明显锐边和毛刺",
+            "standard": "2-1-1 检查外观：货物是否严重开裂、变形，有明显锐边和毛刺",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "wiring_incompatibility",
+            "category": "安装验收",
+            "title": "2-1-2 检查外观：接线是否有明显不合或高低不平",
+            "standard": "2-1-2 检查外观：接线是否有明显不合或高低不平",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "minor_damage_to_the_surface",
+            "category": "安装验收",
+            "title": "2-1-3 检查外观：表面是否轻微损伤，表面脏污",
+            "standard": "2-1-3 检查外观：表面是否轻微损伤，表面脏污",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "complete_product_parts",
+            "category": "安装验收",
+            "title": "2-1-4 检查外观：产品零部件是否齐全，装配是否松动或缺少紧固件",
+            "standard": "2-1-4 检查外观：产品零部件是否齐全，装配是否松动或缺少紧固件",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "hydrocarbon_reservoir",
+            "category": "安装验收",
+            "title": "2-1-5 检查外观：油气层或电镀层是否不均匀或颜色不符",
+            "standard": "2-1-5 检查外观：油气层或电镀层是否不均匀或颜色不符",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "power_on_inspection",
+            "category": "安装验收",
+            "title": "2-2 通电检查：施加额定电压，是否正常工作",
+            "standard": "2-2 通电检查：施加额定电压，是否正常工作",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

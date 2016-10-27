@@ -1,0 +1,116 @@
+{
+    "id": "material_floor_heating",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材地暖",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 检查地暖安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查地暖安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "packaging_surface",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "temperature_controller",
+            "category": "安装验收",
+            "title": "2-1  系统中的温控器安装在附近无散热器、避光、周围无遮挡物、不受风吹，能正确反应室内温度的位置，温控器外观完好，通电正常，安装在距地面1.4米（或与开关面板持平）的墙上。",
+            "standard": "2-1  系统中的温控器安装在附近无散热器、避光、周围无遮挡物、不受风吹，能正确反应室内温度的位置，温控器外观完好，通电正常，安装在距地面1.4米（或与开关面板持平）的墙上。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "water_knockout_drum",
+            "category": "安装验收",
+            "title": "2-2 水地暖分水器设置在系统的最高点，分、集水器水平安装，集水器中心距地面不小于300mm。",
+            "standard": "2-2 水地暖分水器设置在系统的最高点，分、集水器水平安装，集水器中心距地面不小于300mm。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "heating_tube",
+            "category": "安装验收",
+            "title": "2-3 水地暖加热管与分水器、集水器的连接处应无渗漏。",
+            "standard": "2-3 水地暖加热管与分水器、集水器的连接处应无渗漏。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "merchant_test",
+            "category": "安装验收",
+            "title": "2-4 商家是否进行打压试验。",
+            "standard": "2-4 商家是否进行打压试验。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "electricity_floor_heating",
+            "category": "安装验收",
+            "title": "2-5 电地暖商家是否进行发热电缆的标称电阻和绝缘电阻检测。 ",
+            "standard": "2-5 电地暖商家是否进行发热电缆的标称电阻和绝缘电阻检测。 ",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}

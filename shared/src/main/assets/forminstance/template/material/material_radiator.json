@@ -1,0 +1,102 @@
+{
+    "id": "material_radiator",
+    "version": 1,
+    "status": -1,
+    "schema_version": 1,
+    "category": "material",
+    "title": "主材散热器",
+    "doc_type": "form_template",
+    "check_items_variability": "false",
+    "type_dict": {
+        "status": [
+            "不合格",
+            "合格"
+        ]
+    },
+    "check_items": [
+        {
+            "item_id": "model_specification_color",
+            "category": "送货验收",
+            "title": "1-1 检查散热器安装产品型号、数量、规格是否与送货清单一致。",
+            "standard": "1-1 检查散热器安装产品型号、数量、规格是否与送货清单一致。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "packaging_surface",
+            "category": "送货验收",
+            "title": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "standard": "1-2 检查产品的包装箱是否有破损。产品表面是否有划痕、脏污、破损。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "water_supply_pipe",
+            "category": "安装验收",
+            "title": "2-1  散热器供水管装温控阀或控制阀，回水管装控制阀，回水管侧散热器的最高点安装放气旋塞，其它出口处用丝堵堵塞。",
+            "standard": "2-1  散热器供水管装温控阀或控制阀，回水管装控制阀，回水管侧散热器的最高点安装放气旋塞，其它出口处用丝堵堵塞。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "floor_standing ",
+            "category": "安装验收",
+            "title": "2-2 落地式散热器底部支架安装牢固且与散热器接口吻合。 ",
+            "standard": "2-2 落地式散热器底部支架安装牢固且与散热器接口吻合。 ",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "installation",
+            "category": "安装验收",
+            "title": "2-3 散热器及管路安装需横平竖直。",
+            "standard": "2-3 散热器及管路安装需横平竖直。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        },
+        {
+            "item_id": "merchant_test",
+            "category": "安装验收",
+            "title": "2-4 商家是否进行打压试验。",
+            "standard": "2-4 商家是否进行打压试验。",
+            "check_type": "",
+            "action_visibility": false,
+            "action_changeability": false,
+            "action_type": "",
+            "acceptance_criteria": [],
+            "comment_conditions": [],
+            "item_type": "",
+            "value": []
+        }
+    ]
+}
