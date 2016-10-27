@@ -83,6 +83,7 @@
             android:id="@+id/spinner_brand_apartment"
             android:layout_width="@dimen/size_160"
             android:layout_height="@dimen/size_30"
+            android:entries="@array/recommend_apartments"
             android:spinnerMode="dropdown"
             android:text="卫生间"/>
     </LinearLayout>

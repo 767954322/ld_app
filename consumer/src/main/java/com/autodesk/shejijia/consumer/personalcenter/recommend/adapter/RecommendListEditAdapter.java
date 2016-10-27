@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -16,7 +17,9 @@ import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -60,15 +63,22 @@ public class RecommendListEditAdapter extends CommonAdapter<RecommendSCFDBean> {
         TextView tvBrandMallName = (TextView) itemBrandView.findViewById(R.id.tv_brand_mall_name);
         EditText etBrandNum = (EditText) itemBrandView.findViewById(R.id.et_brand_num);
         EditText etBrandDimension = (EditText) itemBrandView.findViewById(R.id.et_brand_dimension);
-        Spinner spinnerApartment = (Spinner) itemBrandView.findViewById(R.id.tv_brand_apartment);
+        final Spinner spinnerApartment = (Spinner) itemBrandView.findViewById(R.id.spinner_brand_apartment);
         EditText etBrandRemarks = (EditText) itemBrandView.findViewById(R.id.et_brand_remarks);
         tvBrandName.setText(recommendBrandsBean.getBrand_name());
         etBrandNum.setText(recommendBrandsBean.getAmountAndUnit());
         etBrandDimension.setText(recommendBrandsBean.getDimension());
+
+
+        String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
+        List<String> apartmentList = Arrays.asList(apartmentArray);
+        final ArrayAdapter<String> apartmentArrayAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, apartmentList);
+        apartmentArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerApartment.setAdapter(apartmentArrayAdapter);
         spinnerApartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                
+                String currentApartmentName = apartmentArrayAdapter.getItem(position);
             }
 
             @Override
@@ -89,7 +99,6 @@ public class RecommendListEditAdapter extends CommonAdapter<RecommendSCFDBean> {
                 Toast.makeText(mContext, "品牌变更", Toast.LENGTH_SHORT).show();
             }
         });
-
 
     }
 }
