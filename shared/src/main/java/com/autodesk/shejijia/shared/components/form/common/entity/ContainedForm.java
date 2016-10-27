@@ -1,19 +1,11 @@
-package com.autodesk.shejijia.shared.components.form.entity;
+package com.autodesk.shejijia.shared.components.form.common.entity;
 
-import com.autodesk.shejijia.shared.components.form.entity.microBean.CheckItem;
-import com.autodesk.shejijia.shared.components.form.entity.microBean.FeedBack;
-import com.autodesk.shejijia.shared.components.form.entity.microBean.TypeDict;
+import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
+import com.autodesk.shejijia.shared.components.form.common.entity.microBean.TypeDict;
 import com.google.gson.annotations.SerializedName;
-
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-
-import cn.jpush.android.api.PushNotificationBuilder;
 
 /**
  * Created by t_panya on 16/10/24.

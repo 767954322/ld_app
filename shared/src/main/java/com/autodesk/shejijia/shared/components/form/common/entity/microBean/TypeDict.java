@@ -1,10 +1,9 @@
-package com.autodesk.shejijia.shared.components.form.entity.microBean;
+package com.autodesk.shejijia.shared.components.form.common.entity.microBean;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by t_panya on 16/10/24.

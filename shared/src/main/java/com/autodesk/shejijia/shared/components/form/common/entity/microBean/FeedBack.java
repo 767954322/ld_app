@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.form.entity.microBean;
+package com.autodesk.shejijia.shared.components.form.common.entity.microBean;
 
 import java.io.Serializable;
 

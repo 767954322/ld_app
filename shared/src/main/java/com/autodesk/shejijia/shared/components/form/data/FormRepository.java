@@ -3,44 +3,42 @@ package com.autodesk.shejijia.shared.components.form.data;
 import android.support.annotation.NonNull;
 
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.form.common.utils.FormJsonFileUtil;
+import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
 import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
-import com.autodesk.shejijia.shared.components.form.entity.ContainedForm;
-import com.autodesk.shejijia.shared.components.form.listener.LoadDataCallBack;
+import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
+import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by t_panya on 16/10/20.
  */
 
-public class FormRepostory implements FormDataSource {
+public class FormRepository implements FormDataSource {
 
-    private static FormRepostory INSTANCE = null;
+    private static FormRepository INSTANCE = null;
 
     private FormDataSource mFormRemoteDataSource;
     private List<ContainedForm> mFormList;
 
 
-    private FormRepostory(@NonNull  FormDataSource formRemoteDataSource){
-        mFormRemoteDataSource = formRemoteDataSource;
+    private FormRepository(){
     }
 
-    public static FormRepostory getInstance(@NonNull  FormDataSource formRemoteDataSource){
-        if (INSTANCE == null) {
-            INSTANCE = new FormRepostory(formRemoteDataSource);
-        }
-        return INSTANCE;
+    private static class FormRepostoryHolder{
+        private static final FormRepository INSTANCE = new FormRepository();
+    }
+    public static FormRepository getInstance(){
+        return FormRepostoryHolder.INSTANCE;
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final LoadDataCallBack<List> callBack, final String[] fIds) {
+    public void getRemoteFormItemDetails(@NonNull final LoadDataCallback<List> callBack, final String[] fIds) {
         if(mFormList == null || mFormList.size() == 0){
             mFormList = new ArrayList<>();
-            mFormRemoteDataSource.getRemoteFormItemDetails(new LoadDataCallBack<List>() {
+            mFormRemoteDataSource.getRemoteFormItemDetails(new LoadDataCallback<List>() {
                 @Override
                 public void onLoadSuccess(List data){
                     for(int i = 0 ; i < data.size() ; i++){
@@ -61,7 +59,7 @@ public class FormRepostory implements FormDataSource {
     }
 
     @Override
-    public void updateRemoteFormItems(@NonNull LoadDataCallBack callBack, String projectId, String taskId, List<ContainedForm> forms) {
+    public void updateRemoteFormItems(@NonNull LoadDataCallback callBack, String projectId, String taskId, List<ContainedForm> forms) {
 
     }
 

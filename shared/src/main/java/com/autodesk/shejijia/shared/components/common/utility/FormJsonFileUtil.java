@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.form.common.utils;
+package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.app.Activity;
 import android.content.Context;
