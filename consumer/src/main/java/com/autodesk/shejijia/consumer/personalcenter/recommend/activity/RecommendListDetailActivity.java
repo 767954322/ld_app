@@ -147,7 +147,9 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
         //TODO @xuehua.yao
-        MyToast.show(mActivity, "添加主材");
+        Intent intent = new Intent(RecommendListDetailActivity.this,AddMaterialActivity.class);
+        startActivity(intent);
+
     }
 
     @Override
