@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -18,6 +19,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -50,6 +52,7 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
     private SelectProjectEntity.DesignerProjectsBean interiorProject;
     List<RecommendEntity.ItemsBean> list = new ArrayList<>();
     private RecommendEntity.ItemsBean entity;
+    private SelectProjectEntity.DesignerProjectsBean designerProjectsBean;
 
     @Override
     protected int getLayoutResId() {
@@ -72,19 +75,12 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         designer_id = memberEntity.getAcs_member_id();
         designer_uid = memberEntity.getHs_uid();
+        interiorProject = new SelectProjectEntity.DesignerProjectsBean();
+        interiorProject.setCommunity_name("创建新的项目");
 
+        getSelectProjectList(designer_id);
 
-//        getSelectProjectList(designer_id);
-        ///选择项目接口链接 目前假数据
-
-        entity = new RecommendEntity.ItemsBean();
-        entity.setCommunity_name("创建新的项目");
-//        if (is_loho != 0 && !list.contains(entity)) {
-        list.add(0, entity);
-//            mAdapter.notifyDataSetChanged();
-//        }
-
-        mAdapter = new SelectProjectAdapter(SelectProjectActivity.this, list);
+        mAdapter = new SelectProjectAdapter(SelectProjectActivity.this, designerProjects);
         mListView.setAdapter(mAdapter);
         mListView.setItemChecked(0, true);
 
@@ -94,6 +90,17 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
     protected void initListener() {
         super.initListener();
         mSure.setOnClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if (position != 0) {
+                    designerProjectsBean = designerProjects.get(position);
+                } else {
+                    designerProjectsBean = null;
+                }
+
+            }
+        });
     }
 
     /**
@@ -128,13 +135,13 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
         MPServerHttpManager.getInstance().getSelectProjectList(designer_id, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                //                getDesignerInfoData(designer_id, designer_uid);
+//                if (is_loho != 0 && designerProjects.contains(interiorProject))
                 Log.d("SelectProjectActivity", jsonObject.toString());
                 SelectProjectEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), SelectProjectEntity.class);
-                interiorProject = new SelectProjectEntity.DesignerProjectsBean();
+
                 designerProjects.addAll(entity.getDesignerProjects());
-                getDesignerInfoData(designer_id, designer_uid);
-                if (is_loho != 0 && designerProjects.contains(interiorProject)) {
-                    interiorProject.setCommunity_name("创建新项目");
+                if (!designerProjects.contains(interiorProject)) {
                     designerProjects.add(0, interiorProject);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -153,7 +160,7 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
         switch (view.getId()) {
             case R.id.btn_select_project_sure:
                 Intent intent = new Intent();
-                intent.putExtra("mSelectList", entity);
+                intent.putExtra("mSelectList", designerProjectsBean);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;

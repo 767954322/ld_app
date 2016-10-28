@@ -18,7 +18,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MemberAccountEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.NewInventoryEntity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.SelectProjectEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
@@ -62,6 +62,7 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private AlertView mBackAlertView;
     private boolean check_flag;
     private String acs_member_id;
+
 
     @Override
     protected int getLayoutResId() {
@@ -387,14 +388,33 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
-            RecommendEntity.ItemsBean entity = (RecommendEntity.ItemsBean) data.getSerializableExtra("mSelectList");
-            updateNotify(entity);
-
+            SelectProjectEntity.DesignerProjectsBean designerProjectsBean = (SelectProjectEntity.DesignerProjectsBean) data.getSerializableExtra("mSelectList");
+            updateNotify(designerProjectsBean);
         }
     }
 
-    private void updateNotify(RecommendEntity.ItemsBean entity) {
-        mTvProjectName.setText(entity.getCommunity_name());
+    private void updateNotify(SelectProjectEntity.DesignerProjectsBean designerProjectsBean) {
+
+
+        if (!StringUtils.isEmpty(designerProjectsBean)) {
+            mTvProjectName.setText(designerProjectsBean.getCommunity_name());
+            mEtMemberAccount.setText(designerProjectsBean.getConsumer_zid());
+            mEtCustomerName.setText(designerProjectsBean.getConsumer_name());
+            mEtPhoneNumber.setText(designerProjectsBean.getConsumer_mobile());
+            mEtProjectAddress.setText(designerProjectsBean.getProvince_name() + designerProjectsBean.getCity_name() + designerProjectsBean.getDistrict_name());
+            mEtCommunityName.setText(designerProjectsBean.getCommunity_name());
+            mEtDetailAddress.setText(designerProjectsBean.getCommunity_address());
+        }else {
+            mTvProjectName.setText("创建新的项目");
+            mTvProjectName.setText("创建新的项目");
+            mEtMemberAccount.setText("");
+            mEtCustomerName.setText("");
+            mEtPhoneNumber.setText("");
+            mEtProjectAddress.setText("");
+            mEtCommunityName.setText("");
+            mEtDetailAddress.setText("");
+        }
+
     }
 
     /**
