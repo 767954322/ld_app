@@ -188,6 +188,10 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
     private void handleMeasureDelivery() {
         Wk3DPlanDelivery delivery = new Wk3DPlanDelivery();
         mIv3DPlan.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_measure_unselect));
+        if (isRoleCustomer()) {
+            mBtnUploadSubmit3DPlan.setVisibility(View.GONE);
+        }
+
         if (mDeliveryBean == null) {
             if (isRoleCustomer()) {
                 alertMeasureOrDesign();
@@ -198,6 +202,15 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
             mFiles = mDeliveryBean.getFiles();
             if (null == mFiles) {
                 return;
+            }else {
+                if (mFiles.size()<1){
+                    if (isRoleCustomer()) {
+                        alertMeasureOrDesign();
+                    }else {
+                        get3DPlan(needs_id, designer_id);
+                        return;
+                    }
+                }
             }
 
             delivery.setDeliveryFiles(mFiles);
@@ -610,7 +623,7 @@ public class FlowUploadDeliveryActivity extends BaseWorkFlowActivity implements 
                     return;
                 }
                 String s = stringBuilder.toString();
-                s=s.replace(s.charAt(s.length()-1)+"","");
+                s = s.replace(s.charAt(s.length() - 1) + "", "");
                 postDelivery(design_asset_id_measure, needs_id, designer_id, s, type);
                 break;
         }
