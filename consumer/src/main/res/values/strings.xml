@@ -757,7 +757,7 @@
     <string name="project_address">项目地址：</string>
     <string name="bidding_should_standard">我要应标</string>
     <string name="bidding_detail">应标案件详情</string>
-    <string name="shall_visible_bid_after">设计师中标后可见</string>
+    <string name="shall_visible_bid_after">设计师应标后可见</string>
     <string name="my_bid_demand_particulars">需求详情</string>
     <string name="bided">已应标 </string>
     <string name="designer_bid_detail_realy_no_finish">你还尚未完成实名认证!</string>
