@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SheJiJia-Enterprise</string>
+    <string name="app_name">设计家服务端</string>
 
     <!--projectList bottom tab-->
     <string name="main_tab_task">任务</string>
