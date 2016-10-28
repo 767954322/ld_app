@@ -2,7 +2,6 @@ package com.autodesk.shejijia.enterprise;
 
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
-import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by t_xuz on 8/15/16.
@@ -16,15 +15,13 @@ public class EnterpriseApplication extends AdskApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        //内存检测工具初始化
+        LibUtils.installLeakCanary(this);
 
         application = this;
 
         //初始化网络请求队列
         NetRequestManager.getInstance().init(this);
-
-        //内存检测工具初始化
-        LeakCanary.install(this);
-
     }
 
     public static synchronized EnterpriseApplication getInstance() {
