@@ -1,8 +1,8 @@
 package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 
 /**
  * Created by t_xuz on 10/13/16.
@@ -44,7 +44,7 @@ public final class UrlUtils {
     }
 
     public static String bindFormGetUrl(String[] formIds){
-        StringBuilder sbFormUrl = new StringBuilder(Constants.BASE_URL);
+        StringBuilder sbFormUrl = new StringBuilder(ConstructionConstants.BASE_URL);
         sbFormUrl.append("/forms")
                 .append("/")
                 .append("id")

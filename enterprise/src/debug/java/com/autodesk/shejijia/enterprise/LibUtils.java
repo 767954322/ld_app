@@ -9,7 +9,7 @@ import com.squareup.leakcanary.LeakCanary;
  */
 
 public class LibUtils {
-    public final static void installLeakCanary(Application application) {
+    public static void installLeakCanary(Application application) {
         if (LeakCanary.isInAnalyzerProcess(application)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.

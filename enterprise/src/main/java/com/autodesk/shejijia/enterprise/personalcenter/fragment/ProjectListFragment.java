@@ -10,8 +10,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
-import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
@@ -55,7 +54,7 @@ public class ProjectListFragment extends BaseEnterpriseFragment implements View.
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(mContext, this);
-        mProjectListPresenter.initRequestOptions("2016-10-20",null,Constants.PROJECT_STATUS_COMPLETE);
+        mProjectListPresenter.initRequestOptions("2016-10-20",null, ConstructionConstants.PROJECT_STATUS_COMPLETE);
         mProjectListPresenter.refreshProjectList();
     }
 

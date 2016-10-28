@@ -14,4 +14,8 @@ public class Config {
     public final static String SHARE_PATH = "http://uat-api.gdfcx.net:8080/share/2dcase.html?caseid=";
     public final static String SHARE3_PATH = "http://uat-api.gdfcx.net:8080/share/3dcase.html?caseid=";
     public final static String API_DOMAIN = "http://uat-api.gdfcx.net:8080";
+
+    //Construction urls
+    public static final String CONSTRUCTION_MAIN_URL = "";
+    public static final String CONSTRUCTION_ISSUE_URL = "";
 }

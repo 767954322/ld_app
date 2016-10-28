@@ -18,7 +18,7 @@ import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterAc
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
 public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener {
@@ -83,14 +83,14 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
 
         switch (checkId) {
             case R.id.rdoBtn_project_task:
-                changeFragment(Constants.TASK_LIST_FRAGMENT, 0);
+                changeFragment(ConstructionConstants.TASK_LIST_FRAGMENT, 0);
                 toolbarTitle.setText(R.string.toolbar_task_title);
                 toolbarTitle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         // TODO: 10/25/16  get date from calendar and set data to taskListFragment
                         ToastUtils.showShort(EnterpriseHomeActivity.this, "title");
-                        TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(Constants.TASK_LIST_FRAGMENT);
+                        TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(ConstructionConstants.TASK_LIST_FRAGMENT);
                         if (taskListFragment != null){
                             taskListFragment.refreshProjectListByDate("2016-10-25");
                         }
@@ -98,12 +98,12 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
                 });
                 break;
             case R.id.rdoBtn_project_issue:
-                changeFragment(Constants.ISSUE_LIST_FRAGMENT, 1);
+                changeFragment(ConstructionConstants.ISSUE_LIST_FRAGMENT, 1);
                 toolbarTitle.setText(R.string.toolbar_question_title);
                 toolbarTitle.setOnClickListener(null);
                 break;
             case R.id.rdoBtn_project_session:
-                changeFragment(Constants.GROUP_CHAT_FRAGMENT, 2);
+                changeFragment(ConstructionConstants.GROUP_CHAT_FRAGMENT, 2);
                 toolbarTitle.setText(R.string.toolbar_groupChat_title);
                 toolbarTitle.setOnClickListener(null);
                 break;

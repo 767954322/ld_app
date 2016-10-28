@@ -7,7 +7,7 @@ import android.app.Application;
  */
 
 public class LibUtils {
-    public final static void installLeakCanary(Application application) {
+    public static void installLeakCanary(Application application) {
         // do nothing
     }
 }

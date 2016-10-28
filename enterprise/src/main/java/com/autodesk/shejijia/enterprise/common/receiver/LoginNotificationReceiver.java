@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -22,7 +22,7 @@ public class LoginNotificationReceiver extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
 
         String action = intent.getAction();
-        if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(Constants.LOGIN_OUT_ACTION)){
+        if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(ConstructionConstants.LOGIN_OUT_ACTION)){
             LoginUtils.doLogout(context);
         }else if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)){
             String strToken = intent.getStringExtra(BroadCastInfo.LOGIN_TOKEN);

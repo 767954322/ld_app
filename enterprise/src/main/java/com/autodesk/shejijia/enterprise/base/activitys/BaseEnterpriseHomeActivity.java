@@ -3,7 +3,7 @@ package com.autodesk.shejijia.enterprise.base.activitys;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.TaskListFragment;
@@ -51,9 +51,9 @@ public abstract class BaseEnterpriseHomeActivity extends BaseActivity {
             mGroupChatFragment = new GroupChatFragment();
 
             getSupportFragmentManager().beginTransaction()
-                    .add(getFragmentContentId(), mTaskListFragment,Constants.TASK_LIST_FRAGMENT)
-                    .add(getFragmentContentId(), mIssueListFragment,Constants.ISSUE_LIST_FRAGMENT)
-                    .add(getFragmentContentId(), mGroupChatFragment,Constants.GROUP_CHAT_FRAGMENT)
+                    .add(getFragmentContentId(), mTaskListFragment, ConstructionConstants.TASK_LIST_FRAGMENT)
+                    .add(getFragmentContentId(), mIssueListFragment, ConstructionConstants.ISSUE_LIST_FRAGMENT)
+                    .add(getFragmentContentId(), mGroupChatFragment, ConstructionConstants.GROUP_CHAT_FRAGMENT)
                     .show(mTaskListFragment)
                     .hide(mIssueListFragment)
                     .hide(mGroupChatFragment)

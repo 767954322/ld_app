@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
@@ -74,9 +74,9 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 projectVh.mProjectStatus.setText("开工交底");
             } else if (status.equalsIgnoreCase("ready")) {
                 projectVh.mProjectStatus.setText("排期完毕");
-            } else if (status.equalsIgnoreCase(Constants.PROJECT_STATUS_INPROGRESS)) {
+            } else if (status.equalsIgnoreCase(ConstructionConstants.PROJECT_STATUS_INPROGRESS)) {
                 projectVh.mProjectStatus.setText("施工阶段");
-            } else if (status.equalsIgnoreCase(Constants.PROJECT_STATUS_COMPLETE)) {
+            } else if (status.equalsIgnoreCase(ConstructionConstants.PROJECT_STATUS_COMPLETE)) {
                 projectVh.mProjectStatus.setText("完成");
             } else {
                 projectVh.mProjectStatus.setText(status);

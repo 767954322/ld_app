@@ -1,10 +1,12 @@
-package com.autodesk.shejijia.shared.components.common.utility;
+package com.autodesk.shejijia.shared.components.common.appglobal;
+
+import com.autodesk.shejijia.shared.Config;
 
 /**
  * Created by t_xuz on 8/15/16.
  * 一些公用的常量字段
  */
-public class Constants {
+public class ConstructionConstants {
 
     //登陆登出广播接收器的action
     public static final String LOGIN_IN_ACTION = "com.easyhome.enterprise.login";
@@ -14,9 +16,11 @@ public class Constants {
     //用户登陆成功后存在sp中的key
     public static final String USER_INFO = "user_info";
 
-    //服务器端url地址:
-    public static final String BASE_URL = "http://cp-alpha-plan.homestyler.com/api/v1";
-//    public static final String BASE_URL = "http://ec2-54-223-58-121.cn-north-1.compute.amazonaws.com.cn:8080/api/v1";
+    //服务器端url地址(主线和电子表格):
+    public static final String BASE_URL = Config.CONSTRUCTION_MAIN_URL;
+
+    //服务器端url地址(问题列表):
+    public static final String ISSUE_URL = Config.CONSTRUCTION_ISSUE_URL;
 
     //项目列表页同级fragment的tag
     public static final String TASK_LIST_FRAGMENT = "TaskListFragment";

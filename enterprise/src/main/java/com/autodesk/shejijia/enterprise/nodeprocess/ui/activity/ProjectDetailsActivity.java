@@ -13,7 +13,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -70,7 +70,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        entity = (MemberEntity) SharedPreferencesUtils.getObject(this, Constants.USER_INFO);
+        entity = (MemberEntity) SharedPreferencesUtils.getObject(this, ConstructionConstants.USER_INFO);
         if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
             //get ProjectTaskLists
             LogUtils.e("projectId",getIntent().getLongExtra("projectId",0)+"");

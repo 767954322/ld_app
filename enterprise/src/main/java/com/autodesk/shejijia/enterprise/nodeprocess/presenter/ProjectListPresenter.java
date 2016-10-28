@@ -15,7 +15,7 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 
 import java.util.List;
 
@@ -97,7 +97,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     private void loadProjectListData(Bundle requestParams) {
 
-        mNodeProcessRepository.getProjectList(requestParams, Constants.REQUEST_TAG_LOAD_PROJECTS, new LoadDataCallback<ProjectList>() {
+        mNodeProcessRepository.getProjectList(requestParams, ConstructionConstants.REQUEST_TAG_LOAD_PROJECTS, new LoadDataCallback<ProjectList>() {
             @Override
             public void onLoadSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();

@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.utility.Constants;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -39,7 +39,7 @@ public class ConstructionHttpManager {
                                 final String token,
                                 OkJsonRequest.OKResponseCallback callback) {
 
-        String url = Constants.BASE_URL + "/projects?"
+        String url = ConstructionConstants.BASE_URL + "/projects?"
                 + "like=0"
                 + "&limit=" + limit
                 + "&offset=" + offset;
@@ -65,7 +65,7 @@ public class ConstructionHttpManager {
                                final String token,
                                OkJsonRequest.OKResponseCallback callback) {
 
-        String url = Constants.BASE_URL + "/projects"
+        String url = ConstructionConstants.BASE_URL + "/projects"
                 + "/" + pid
                 + "/tasks/" + tid;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
@@ -89,7 +89,7 @@ public class ConstructionHttpManager {
     * */
     public void getUserProjectLists(@NonNull Bundle requestParams, @Nullable String requestTag,
                                     OkJsonRequest.OKResponseCallback callback) {
-        String requestUrl = UrlUtils.buildUrl(Constants.BASE_URL + "/users/projects?", requestParams);
+        String requestUrl = UrlUtils.buildUrl(ConstructionConstants.BASE_URL + "/users/projects?", requestParams);
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -109,7 +109,7 @@ public class ConstructionHttpManager {
     public void getPlanDetails(final long pid,
                                final String token,
                                OkJsonRequest.OKResponseCallback callback) {
-        String url = Constants.BASE_URL + "/projects"
+        String url = ConstructionConstants.BASE_URL + "/projects"
                 + "/" + pid
                 + "/plan";
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
@@ -132,7 +132,7 @@ public class ConstructionHttpManager {
                                   final String token,
                                   final boolean isTaskDetail,
                                   OkJsonRequest.OKResponseCallback callback) {
-        String url = Constants.BASE_URL + "/projects"
+        String url = ConstructionConstants.BASE_URL + "/projects"
                 + "/" + pid
                 + "?task_data=" + isTaskDetail;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
