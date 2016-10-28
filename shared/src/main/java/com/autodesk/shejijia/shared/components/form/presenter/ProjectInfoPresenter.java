@@ -52,6 +52,7 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
 
     @Override
     public void confirm() {
+        // TODO: 16/10/28 根据项目信息的状态,选择进入不同的表格
         mView.selectConfirm();
     }
 

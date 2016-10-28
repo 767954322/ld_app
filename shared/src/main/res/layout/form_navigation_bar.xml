@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/form_navigationbar_height"
                 android:orientation="vertical"
-
+                android:background="@color/form_background_write"
 >
 
     <ImageView android:id="@+id/iv_left"

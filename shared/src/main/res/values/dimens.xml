@@ -318,9 +318,11 @@
     <dimen name="form_navigationbar_height">50dp</dimen>
     <dimen name="marginleft_parent">16dp</dimen>
     <dimen name="marginright_parent">16dp</dimen>
+    <dimen name="button_radius_6">6dp</dimen>
     <dimen name="textsize_18">18sp</dimen>
     <dimen name="textsize_15">15sp</dimen>
     <dimen name="textsize_14">14sp</dimen>
+
 
 
 </resources>

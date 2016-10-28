@@ -236,5 +236,8 @@
     <string name="form_telephone">联系电话:&#160;</string>
     <string name="form_address">项目地址:&#160;</string>
     <string name="form_communite">小区名称:&#160;</string>
+    <string name="inspect_precheck">验收前条件检查</string>
+    <string name="buhege">不合格</string>
+    <string name="hege">合格</string>
 
 </resources>

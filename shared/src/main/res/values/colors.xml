@@ -228,7 +228,7 @@
     <!--form表格-->
     <color name="form_background_write">#ffffff</color>
     <color name="form_background_grey">#f0f0f0</color>
-    <color name="form_line_grey">#f0f0f0</color>
+    <color name="form_line_grey">#d0d0d0</color>
     <color name="form_btn_bg_blue">#2B77c1</color>
     <color name="form_bar_bg_blue">#2B77c1</color>
     <color name="form_btn_bg_grey">#bbc1c6</color>

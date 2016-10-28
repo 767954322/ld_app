@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
@@ -95,9 +94,9 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     public void selectConfirm() {
-        // TODO: 16/10/21 进入表格
-        Toast.makeText(this, "进入表格吧", Toast.LENGTH_SHORT).show();
-//        startActivity(new Intent(this,PrecheckActivity.class));
+        // TODO: 16/10/21 判断状态,选择进入的表格?
+//        Toast.makeText(this, "进入表格吧", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this,PrecheckActivity.class));
     }
 
 

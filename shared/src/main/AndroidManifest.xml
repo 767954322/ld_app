@@ -13,6 +13,7 @@
         <activity android:name=".components.form.ui.activity.ProjectIdCodeActivity"/>
         <activity android:name=".components.form.ui.activity.QRCodeActivity"/>
         <activity android:name=".components.form.ui.activity.ProjectInfoActivity"/>
+        <activity android:name=".components.form.ui.activity.PrecheckActivity"/>
 
     </application>
 
