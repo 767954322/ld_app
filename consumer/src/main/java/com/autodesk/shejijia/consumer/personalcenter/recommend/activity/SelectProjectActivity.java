@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
@@ -39,8 +40,7 @@ import static android.R.id.list;
  * @brief 选择项目.
  */
 
-public class SelectProjectActivity extends NavigationBarActivity implements View.OnClickListener {
-
+public class SelectProjectActivity extends NavigationBarActivity implements View.OnClickListener,AdapterView.OnItemClickListener {
     private SelectProjectAdapter mAdapter;
     private ListView mListView;
     private DesignerInfoDetails designerInfoDetails;
@@ -90,17 +90,24 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
     protected void initListener() {
         super.initListener();
         mSure.setOnClickListener(this);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if (position != 0) {
-                    designerProjectsBean = designerProjects.get(position);
-                } else {
-                    designerProjectsBean = null;
-                }
+        mListView.setOnItemClickListener(this);
+    }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            if(view instanceof  CheckedTextView){
+//                CheckedTextView checkedTextView = (CheckedTextView)view;
+//                if(checkedTextView.isChecked()){
+//                    checkedTextView.setCheckMarkDrawable(R.drawable.select_project_check_press);
+//                }else{
+//                    checkedTextView.setCheckMarkDrawable(R.drawable.select_project_check_normal);
+//                }
+//            }
 
-            }
-        });
+        if (position != 0) {
+            designerProjectsBean = designerProjects.get(position);
+        } else {
+            designerProjectsBean = null;
+        }
     }
 
     /**

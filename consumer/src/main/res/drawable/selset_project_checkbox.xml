@@ -2,11 +2,9 @@
 <!-- This is the rating bar drawable that is used to a show a filled star. -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_checked="false"
-        android:state_enabled="true"
-        android:drawable="@drawable/select_project_check_normal" />
-    <item android:state_checked="true"
-        android:state_enabled="true"
-        android:drawable="@drawable/select_project_check_press" />
+    <item android:drawable="@drawable/select_project_check_press" android:state_checked="true"></item>
+    <item android:drawable="@drawable/select_project_check_press" android:state_selected="true"></item>
+    <item android:drawable="@drawable/select_project_check_press" android:state_pressed="true"></item>
+    <item android:drawable="@drawable/select_project_check_normal"></item>
 
 </selector>
