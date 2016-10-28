@@ -8,7 +8,7 @@ import com.qy.appframe.model.IModel;
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecommendDetailsEntity implements IModel{
+public class RecommendDetailsEntity implements IModel {
 
     /**
      * province : 370000
@@ -59,10 +59,28 @@ public class RecommendDetailsEntity implements IModel{
     private String city_name;
     private String district_name;
     private String community_name;
+    private String project_code;
     private int effective_time;
     private int expiration_time;
     private int modified_count;
     private String community_address;
+    private String date_submitted;
+
+    public String getProject_code() {
+        return project_code;
+    }
+
+    public void setProject_code(String project_code) {
+        this.project_code = project_code;
+    }
+
+    public String getDate_submitted() {
+        return date_submitted;
+    }
+
+    public void setDate_submitted(String date_submitted) {
+        this.date_submitted = date_submitted;
+    }
 
     public String getProvince() {
         return province;

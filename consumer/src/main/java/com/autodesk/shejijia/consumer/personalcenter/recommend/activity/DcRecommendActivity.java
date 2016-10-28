@@ -16,8 +16,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.FragmentT
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.fragment.RecommendFragment;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
-import com.autodesk.shejijia.consumer.uielements.CustomDialog;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -32,7 +30,7 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class MyRecommendActivity extends NavigationBarActivity implements RecommendView, View.OnClickListener {
+public class DcRecommendActivity extends NavigationBarActivity implements RecommendView, View.OnClickListener {
 
     private TextView mRightTextView;
     private TabLayout mTabLayout;
@@ -44,7 +42,7 @@ public class MyRecommendActivity extends NavigationBarActivity implements Recomm
     private RelativeLayout mTabVisibility;
 
     public static void jumpTo(Context context, boolean isDesign) {
-        Intent intent = new Intent(context, MyRecommendActivity.class);
+        Intent intent = new Intent(context, DcRecommendActivity.class);
         intent.putExtra("isDesign", isDesign);
         context.startActivity(intent);
     }
@@ -101,7 +99,7 @@ public class MyRecommendActivity extends NavigationBarActivity implements Recomm
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav_right_textView:
-                Intent intent = new Intent(MyRecommendActivity.this, NewInventoryActivity.class);
+                Intent intent = new Intent(DcRecommendActivity.this, NewInventoryActivity.class);
                 startActivity(intent);
                 break;
         }

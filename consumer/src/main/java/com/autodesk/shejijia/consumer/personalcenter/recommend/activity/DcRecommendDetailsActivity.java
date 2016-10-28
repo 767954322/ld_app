@@ -10,19 +10,30 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.frame.http.common.HttpRequest;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.DcRecommendDetailsAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.qy.appframe.common.ResultSubscriber;
 import com.qy.appframe.model.IModel;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -110,46 +121,44 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
     }
 
     private void getRecommendDetails() {
-//        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
-//        if (memberEntity == null) {
-//            return;
-//        }
-//        String design_id = memberEntity.getAcs_member_id();
-//        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
-//            @Override
-//            public void onResponse(JSONObject jsonObject) {
-//                Log.d("RecommendFragment", jsonObject.toString());
-//                mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
-//                updateView2Api(mEntity);
-//            }
-//
-//            @Override
-//            public void onErrorResponse(VolleyError volleyError) {
-//                Log.d("RecommendFragment", volleyError.toString());
-//                MPNetworkUtils.logError(TAG, volleyError);
-//            }
-//        };
-//        MPServerHttpManager.getInstance().getRecommendDetails(design_id, mAsset_id, callback);
-//        HttpRequest.getInstance().getRecommendDetails(mAsset_id, 0, this);
-        HttpRequest.getInstance().getRecommendDetails("1623406", 0, this);
-//        HttpRequest.getInstance().getWeather("101010300.html", 1, this);
+        MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
+        if (memberEntity == null) {
+            return;
+        }
+        String design_id = memberEntity.getAcs_member_id();
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                Log.d("CsRecommendActivity", jsonObject.toString());
+                mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
+                updateView2Api(mEntity);
+            }
 
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d("CsRecommendActivity", volleyError.toString());
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        };
+        MPServerHttpManager.getInstance().getRecommendDetails(design_id, mAsset_id, callback);
+//        HttpRequest.getInstance().getRecommendDetails(mAsset_id, 0, this);
+//        HttpRequest.getInstance().getRecommendDetails(mAsset_id, 0, this);
     }
 
     private void updateView2Api(RecommendDetailsEntity item) {
         tvRecommendName.setText(item.getCommunity_name());
-        tvAssetId.setText("清单编号：" + item.getMain_project_id());
+        tvAssetId.setText("清单编号：" + item.getProject_code() + "");
         tvRecoConsumerName.setText(item.getConsumer_name());
         tvRecoConsumerMobile.setText(item.getConsumer_mobile());
         tvRecoItemAddress.setText(item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
         tvRecoItemDetailsAddress.setText(item.getCommunity_address());
-        // FIXME: 16-10-25  缺少日期字段
-//        tvCreateDate.setText(DateUtil.getStringDateByFormat(new Date(item.getDate_submitted()), "yyyy-MM-dd HH:mm"));
+        tvCreateDate.setText(DateUtil.getStringDateByFormat(new Date(item.getDate_submitted()), "yyyy-MM-dd HH:mm"));
         String scfd = item.getScfd();
         List<ScfdEntity> brand_lst = new Gson()
                 .fromJson(scfd, new TypeToken<List<ScfdEntity>>() {
                 }.getType());
         if (brand_lst != null && brand_lst.size() > 0) {
+            brands.clear();
             brands.addAll(brand_lst);
             mAdapter.notifyDataSetChanged();
         }
@@ -158,17 +167,20 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
 
     @Override
     public void onStart(int i) {
-        Log.i("RecommendFragment", "onStart");
+        CustomProgress.show(this, "", false, null);
+        Log.i("CsRecommendActivity", "onStart");
     }
 
     @Override
     public void onError(int i, Throwable throwable) {
-        Log.i("RecommendFragment", "onError");
+        CustomProgress.cancelDialog();
+        Log.i("CsRecommendActivity", "onError");
     }
 
     @Override
     public void onResult(IModel iModel, int i) {
-        Log.i("RecommendFragment", "onResult");
+        CustomProgress.cancelDialog();
+        Log.i("CsRecommendActivity", "onResult");
         if (i == 0) {
             mEntity = ((RecommendDetailsEntity) iModel);
             updateView2Api(mEntity);

@@ -10,6 +10,7 @@
         android:id="@+id/common_navbar"
         layout="@layout/view_navigation_header"/>
 
+
     <include layout="@layout/layout_empty_view"/>
 
     <RelativeLayout
@@ -29,6 +30,7 @@
             app:tabSelectedTextColor="@color/color_blue_0084ff"
             app:tabTextColor="@color/bg_66"/>
 
+        <include layout="@layout/line_view"/>
     </RelativeLayout>
 
     <android.support.v4.view.ViewPager

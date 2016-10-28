@@ -134,8 +134,7 @@
 
             <TextView
                 android:id="@+id/tv_create_date"
-                style="@style/item_text_style"
-                android:text="2016-05-06 10:20"/>
+                style="@style/item_text_style"/>
         </LinearLayout>
 
         <include layout="@layout/line_view"/>

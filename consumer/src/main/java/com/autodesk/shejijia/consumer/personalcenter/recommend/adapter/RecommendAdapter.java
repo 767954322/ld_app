@@ -5,18 +5,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.Date;
 import java.util.List;
@@ -38,9 +35,9 @@ public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
     @Override
     public void convert(CommonViewHolder holder, final RecommendEntity.ItemsBean item) {
         holder.setVisible(R.id.tv_cancel_btn, isDesiner);
-        String status = item.getStatus();
+        String status = item.getSent_status();
         if (!TextUtils.isEmpty(status)) {
-            boolean unsent = status.equals("unsent") || status.equals("unsent-modified") || status.equals("sent-modified");
+            boolean unsent = status.equals("unsent");
             holder.setVisible(R.id.iv_reco_wfsico, unsent);
         }
         holder.setText(R.id.tv_edit_btn, (isDesiner ? "编辑" : "删除"));

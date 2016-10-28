@@ -192,7 +192,13 @@
 
         <!-- 我的推荐下内容 -->
         <activity
-            android:name=".personalcenter.recommend.activity.MyRecommendActivity"
+            android:name=".personalcenter.recommend.activity.DcRecommendActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".personalcenter.recommend.activity.CsRecommendActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
@@ -202,19 +208,16 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".personalcenter.recommend.activity.CsRecommendDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".personalcenter.recommend.activity.StoreLocationActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".personalcenter.recommend.activity.NewInventoryActivity"
             android:alwaysRetainTaskState="true"
@@ -617,11 +620,11 @@
         <activity android:name=".personalcenter.recommend.activity.SelectProjectActivity"/>
         <activity android:name=".personalcenter.recommend.activity.RecommendListDetailActivity">
         </activity>
-        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
+        <!-- 配置glide图片框架的内存缓存和磁盘缓存规则 -->
         <meta-data
             android:name="com.autodesk.shejijia.consumer.frame.image.CustomCachingGlideModule"
-            android:value="GlideModule" />
-        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
+            android:value="GlideModule"/>
+        <!-- 配置glide图片框架的内存缓存和磁盘缓存规则 -->
     </application>
 
 </manifest>

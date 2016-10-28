@@ -11,11 +11,11 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.CsRecommendDetailsAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.DcRecommendDetailsAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -90,6 +90,7 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     }
 
     private void getRecommendDetails() {
+        CustomProgress.show(this, "", false, null);
         MemberEntity memberEntity = AdskApplication.getInstance().getMemberEntity();
         if (memberEntity == null) {
             return;
@@ -98,6 +99,7 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
         OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
                 Log.d("recommend", "CsRecommendDetailsActivity:" + jsonObject.toString());
                 mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
                 updateView2Api(mEntity);
@@ -105,6 +107,7 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
                 Log.d("recommend", volleyError.toString());
                 MPNetworkUtils.logError(TAG, volleyError);
             }

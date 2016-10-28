@@ -17,7 +17,7 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.ConsumerE
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.IssueDemandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.MyRecommendActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.CsRecommendActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
@@ -130,7 +130,7 @@ public class ConsumerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.rl_personal_recommend: /// 我的关注 .
-                MyRecommendActivity.jumpTo(this, false);
+                CsRecommendActivity.jumpTo(this, 0);
                 break;
         }
     }
