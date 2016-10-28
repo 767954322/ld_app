@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_confirm_project_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/form_background_grey"
+    tools:context=".components.form.ui.activity.ProjectIdCodeActivity"
+>
+
+   <include android:layout_width="match_parent"
+            android:layout_height="@dimen/form_navigationbar_height"
+            layout="@layout/form_navigation_bar"
+
+   />
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/size_15"
+                  android:orientation="horizontal"
+                  android:background="@color/form_background_write"
+                  android:padding="@dimen/size_16"
+    >
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="项目编码:"
+                  android:textSize="@dimen/font_normal"
+                  android:textColor="@color/project_id_title"
+        />
+
+        <EditText android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="@dimen/size_11"
+                  android:hint="请输入项目编号"
+                  android:textColor="@color/project_id_write"
+                  android:textSize="@dimen/font_normal"
+                  android:inputType="number"
+                  android:background="@null"
+                  android:id="@+id/et_project_id"
+
+        />
+
+    </LinearLayout>
+
+    <Button android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45"
+            android:layout_marginLeft="@dimen/marginleft_parent"
+            android:layout_marginRight="@dimen/marginright_parent"
+            android:layout_marginTop="@dimen/size_60"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize_18"
+            android:background="@mipmap/big_button"
+            android:id="@+id/btn_confirm"
+
+    />
+
+
+</LinearLayout>

@@ -231,4 +231,10 @@
     <string name="errcode_unknown">发送返回</string>
     <string name="my_attention">我的关注</string>
 
+    <!--form表单-->
+    <string name="form_username">姓&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;名:&#160;</string>
+    <string name="form_telephone">联系电话:&#160;</string>
+    <string name="form_address">项目地址:&#160;</string>
+    <string name="form_communite">小区名称:&#160;</string>
+
 </resources>

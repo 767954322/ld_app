@@ -9,6 +9,11 @@
         android:supportsRtl="true">
 
         <activity android:name="com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity"/>
+
+        <activity android:name=".components.form.ui.activity.ProjectIdCodeActivity"/>
+        <activity android:name=".components.form.ui.activity.QRCodeActivity"/>
+        <activity android:name=".components.form.ui.activity.ProjectInfoActivity"/>
+
     </application>
 
 </manifest>

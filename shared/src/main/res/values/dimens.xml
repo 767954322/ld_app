@@ -313,4 +313,14 @@
     <dimen name="home_bottombar_circularbutton_side">50dp</dimen>
     <dimen name="home_bottombar_radiogroup_margintop">15dp</dimen>
     <dimen name="home_bottombar_radiogroup_height">55dp</dimen>
+
+    <!--form表单中常用的大小-->
+    <dimen name="form_navigationbar_height">50dp</dimen>
+    <dimen name="marginleft_parent">16dp</dimen>
+    <dimen name="marginright_parent">16dp</dimen>
+    <dimen name="textsize_18">18sp</dimen>
+    <dimen name="textsize_15">15sp</dimen>
+    <dimen name="textsize_14">14sp</dimen>
+
+
 </resources>

@@ -225,5 +225,19 @@
     <color name="bg_color_diy_easy">#55adff</color>
     <color name="person_color">#666666</color>
     <color name="person_color_be_good_at">#333333</color>
+    <!--form表格-->
+    <color name="form_background_write">#ffffff</color>
+    <color name="form_background_grey">#f0f0f0</color>
+    <color name="form_line_grey">#f0f0f0</color>
+    <color name="form_btn_bg_blue">#2B77c1</color>
+    <color name="form_bar_bg_blue">#2B77c1</color>
+    <color name="form_btn_bg_grey">#bbc1c6</color>
+
+    <color name="form_text_title">#464b4e</color>
+    <color name="form_text_content">#7c8489</color>
+    <color name="form_text_bar_black">#000000</color>
+    <color name="form_text_bar_write">#ffffff</color>
+    <color name="project_id_title">#333333</color>
+    <color name="project_id_write">#999999</color>
 
 </resources>
