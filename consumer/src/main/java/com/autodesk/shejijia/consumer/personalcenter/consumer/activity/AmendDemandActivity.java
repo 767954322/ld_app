@@ -121,7 +121,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                 area = etAmendArea.getText().toString();
                 mobile = etIssueAmendMobile.getText().toString();
                 detail_address = etIssueDemandDetailAddress.getText().toString();
+
                 style = tvAmendStyle.getText().toString();
+
+                style  =  ConvertUtils.getKeyByValue(styleJson, style);
+
                 boolean regex_area_right = area.matches(RegexUtil.AREA_REGEX);
                 boolean regex_address = String.valueOf(detail_address).matches(RegexUtil.ADDRESS_REGEX);
                 boolean regex_phoneRight = mobile.matches(RegexUtil.PHONE_REGEX);
@@ -135,12 +139,11 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                     return;
                 }
 
-                if (!house_type.equals("住宅空间")){
-
-                    mRoom = "other";
-                    mLivingRoom = null;
-                    mToilet = null;
-                }
+//                if (!house_type.equals("house")){
+//                    mRoom = "other";
+//                    mLivingRoom = null;
+//                    mToilet = null;
+//                }
 
                 if (TextUtils.isEmpty(detail_address) || !regex_address) {
                     showAlertView(UIUtils.getString(R.string.please_enter_correct_address));
@@ -149,7 +152,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
 
                 JSONObject amendJson = new JSONObject();
                 try {
-                    amendJson.put(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, needs_id);
+//                    amendJson.put(JsonConstants.JSON_FLOW_MEASURE_FORM_NEEDS_ID, needs_id);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY, city);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CITY_NAME, city_name);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CLICK_NUMBER, click_number);
@@ -158,7 +161,6 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONSUMER_NAME, consumer_name);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONTACTS_MOBILE, mobile);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_CONTACTS_NAME, contacts_name);
-
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_STYLE, style);
                     amendJson.put(JsonConstants.JSON_SEND_DESIGN_REQUIREMENTS_DECORATION_BUDGET, decoration_budget);
                     amendJson.put(JsonConstants.JSON_MEASURE_FORM_DESIGN_BUDGET, design_budget);
@@ -595,6 +597,7 @@ public class AmendDemandActivity extends NavigationBarActivity implements View.O
      */
     private void convertEn2Cn() {
         decoration_style_convert = ConvertUtils.getConvert2CN(styleJson, demandDetailBean.getDecoration_style());
+
         house_type_convert = ConvertUtils.getConvert2CN(spaceJson, house_type);
         living_room_convert = ConvertUtils.getConvert2CN(livingRoomJson, mLivingRoom);
         room_convert = ConvertUtils.getConvert2CN(roomJson, mRoom);
