@@ -273,12 +273,28 @@
         <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->
         <item name="android:windowFullscreen">true</item><!--是否全屏幕-->
     </style>
+
     <!--form表单扫码确认时的dialog的style-->
     <style name="ScanQrDialogStyle" parent="@style/Theme.AppCompat.Dialog">
         <item name="android:windowFrame">@null</item><!-- 边框 -->
         <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+    <style name="TextAppearance.MaterialCalendarWidget.Header"
+        parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.MaterialCalendarWidget.Date"
+        parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/mcv_text_date_light</item>
+    </style>
+
+    <style name="TextAppearance.MaterialCalendarWidget.WeekDay"
+        parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textSize">12sp</item>
     </style>
 
 </resources>

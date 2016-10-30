@@ -241,4 +241,8 @@
     <string name="hege">合格</string>
     <string name="qrcode_error_tip">二维码格式错误,无法获取到项目信息</string>
 
+    <string name="previous">Go to previous</string>
+    <string name="next">Go to next</string>
+    <string name="calendar">Calendar</string>
+
 </resources>
