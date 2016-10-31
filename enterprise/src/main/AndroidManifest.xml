@@ -227,11 +227,12 @@
             </intent-filter>
         </receiver>
 
-        <!--登陆成功后的广播-->
+        <!--登陆登出等广播接收器-->
         <receiver android:name=".common.receiver.LoginNotificationReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.easyhome.login"/>
+                <action android:name="com.easyhome.enterprise.logout"/>
+                <action android:name="com.easyhome.login.activity.finished"/>
             </intent-filter>
         </receiver>
 
