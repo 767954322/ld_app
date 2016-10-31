@@ -14,6 +14,9 @@ public class Config {
     public final static String SHARE_PATH = "http://www.shejijia.com/share/2dcase.html?caseid=";
     public final static String SHARE3_PATH = "http://www.shejijia.com/share/3dcase.html?caseid=";
     public final static String API_DOMAIN = "http://api.shejijia.com";
+    // TODO  后期替换Production正式环境.
+    public final static String RECOMMEND_PATH = "http://192.168.71.86:8080/materials-recommend-app/v1/api";
+
 
     //Construction urls
     public static final String CONSTRUCTION_MAIN_URL = "";
