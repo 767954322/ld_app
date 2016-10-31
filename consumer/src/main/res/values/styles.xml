@@ -55,5 +55,14 @@
         <item name="android:background">@drawable/edit_text_selector</item>
 
     </style>
+    <!--自定义popwindow风格-->
+    <style name="Transparent_Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 
 </resources>

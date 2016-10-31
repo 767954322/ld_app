@@ -4,6 +4,7 @@
     <string name="item_messagecenter_tital">消息中心</string>
     <string name="nodata">暂无数据</string>
     <string name="noinfo">暂无介绍</string>
+    <string name="add_material">添加主材</string>
 
 
     <string name="send_single_number">派单人数： </string>
