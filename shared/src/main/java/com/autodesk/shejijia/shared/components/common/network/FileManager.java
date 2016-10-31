@@ -6,8 +6,12 @@ import android.os.Message;
 
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.autodesk.shejijia.shared.components.common.appglobal.UrlMessagesContants;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -21,6 +25,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by t_panya on 16/10/28.
@@ -32,6 +37,7 @@ public class FileManager {
     private String file_url;
     private String file_name;
     private Handler handler;
+    private FileUploadType fileType = FileUploadType.Image;
     private FileManager(){
 
     }
@@ -44,6 +50,30 @@ public class FileManager {
         return FileManagerHolder.INSTANCE;
     }
 
+    public enum FileUploadType{
+        Audio("Audio"),
+        Image("Image"),
+        OrdinaryFile("OrdinaryFile");
+
+        private String fileType;
+
+        FileUploadType(String fileType){
+            this.fileType = fileType;
+        }
+        public void setFileType(String fileType){
+            this.fileType = fileType;
+        }
+
+        public String getFileType(){
+            return fileType;
+        }
+    }
+
+    /**
+     * 获取服务器地址
+     * @param file
+     * @param handlerState
+     */
     public void getUploadServer(final File file, int handlerState){
         JSONObject jsonObject = new JSONObject();
         this.handlerState = handlerState;
@@ -68,7 +98,11 @@ public class FileManager {
     }
 
 
-
+    /**
+     * 上传文件
+     * @param file
+     * @param server
+     */
     private void uploadFile(final File file,final String server){
         final String url = "http://" + server + "/api/v2/files/upload";
         Callback callback = new Callback() {
@@ -104,14 +138,48 @@ public class FileManager {
                 }
             }
         };
+        sendFileByPost(server,file,callback,FileUploadType.Image);
+    }
+
+    /**
+     * 上传单张图片
+     * @param server
+     * @param saveFile
+     * @param callback
+     * @param type
+     */
+    public void sendFileByPost(String server, File saveFile, Callback callback, FileUploadType type){
+        String BOUNDARY = UUID.randomUUID().toString();
+        String CONTENT_TYPE = "multipart/form-data";
+        RequestBody fileBody = null;
+        if("Image".equals(type)){
+            fileBody = RequestBody.create(MediaType.parse("image/*"), saveFile);
+        } else if ("Audio".equals(type)) {
+            fileBody = RequestBody.create(MediaType.parse("audio/x-m4a"), saveFile);
+        }
+
+        RequestBody requestBody = null;
+        com.squareup.okhttp.Request request = null;
+        requestBody = new MultipartBuilder().type(MultipartBuilder.FORM)
+                .addPart(Headers.of("Content-Disposition", "form-data; name=\"file\"; filename=\"" + saveFile.getName() + "\""), fileBody)
+                .addFormDataPart("type", "image/png")
+                .addFormDataPart("software", "96")
+                .addFormDataPart("public", "true")
+                .build();
+        request = new com.squareup.okhttp.Request.Builder().url(server)
+                .post(requestBody)
+                .addHeader("X-Session", AdskApplication.getInstance().getMemberEntity().getAcs_x_session() )
+                .addHeader("X-AFC", UrlMessagesContants.initializeMarketplaceWithAFC)
+                .addHeader("Content-Type", CONTENT_TYPE + ";boundary=" + BOUNDARY)
+                .build();
+
+        OkHttpClient okHttpClient1 = new OkHttpClient();
+        Call call = okHttpClient1.newCall(request);
+        call.enqueue(callback);
 
     }
 
-    public void sendFileByPost(String server, File saveFile, Callback callback, String tag){
-
-    }
-
-    public void sendMultiFiles(String server, Map<String,Object> map,Callback callback){
+    public void sendMultiImageFiles(String server, Map<String,Object> map,Callback callback){
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
         if(null != map){
             for(Map.Entry<String,Object> entry : map.entrySet()){
