@@ -46,7 +46,7 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
         Intent intent = getIntent();
         mProjectBean = (Project) intent.getSerializableExtra("projectBean");
 
-        mPresenter = new ProjectInfoPresenter(this,this);//参数1:该activity的上下文;参数2:继承view的子类
+        mPresenter = new ProjectInfoPresenter(this);
         mPresenter.setNavigation();
         mPresenter.setCustomer(mProjectBean);
     }
@@ -110,7 +110,7 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btn_confirm) {
-            mPresenter.confirm(mProjectBean);
+            mPresenter.confirm();
 
         } else if (i == R.id.btn_cancel) {
             mPresenter.cancel();

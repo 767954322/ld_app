@@ -1,11 +1,8 @@
 package com.autodesk.shejijia.shared.components.form.presenter;
 
-import android.content.Context;
-
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Building;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Member;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Profile;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectInfoContract;
 
@@ -18,10 +15,8 @@ import java.util.List;
 
 public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
     private ProjectInfoContract.View mView;
-    private Context mContext;
 
-    public ProjectInfoPresenter(Context context,ProjectInfoContract.View view) {
-        mContext = context;
+    public ProjectInfoPresenter(ProjectInfoContract.View view) {
         mView = view;
     }
 
@@ -56,14 +51,9 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
     }
 
     @Override
-    public void confirm(Project project) {
-        // TODO: 16/10/28 根据项目信息的状态和负责人,选择进入不同的表格
-//        mView.selectConfirm();
-        Plan plan = project.getPlan();
-        String milestone = plan.getMilestone();
-        // TODO: 16/10/31 getTask 然后判断负责人来决定是否含有表格
-        // TODO: 16/10/31 task 通过状态来判断是否进入的表格
-
+    public void confirm() {
+        // TODO: 16/10/28 根据项目信息的状态,选择进入不同的表格
+        mView.selectConfirm();
     }
 
     @Override

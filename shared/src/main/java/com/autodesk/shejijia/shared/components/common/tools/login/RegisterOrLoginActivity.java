@@ -143,7 +143,7 @@ public class RegisterOrLoginActivity extends BaseActivity implements View.OnClic
                 LogUtils.e("memberEntity22",entity+"");
                 String member_type = entity.getMember_type();
                 if (!TextUtils.isEmpty(member_type) && ( member_type.equals("designer") || member_type.equals("member")
-                        || member_type.equals("clientmanager") || member_type.equals("materialstaff") || member_type.equals("foreman") || member_type.equals("inspector"))){//登陆账号为消费者或者设计师
+                        || member_type.equals("clientmanager") || member_type.equals("materialstaff") || member_type.equals("foreman"))){//登陆账号为消费者或者设计师
                     AdskApplication.getInstance().saveSignInInfo(entity);
                     // 解决切换帐号的时候 我的项目Fragment 不刷新问题
                     SharedPreferencesUtils.writeBoolean("islogin", true);

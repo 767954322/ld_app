@@ -1,7 +1,5 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -76,26 +74,6 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(Activity.RESULT_OK == resultCode) {
-            switch (requestCode) {
-                case Activity.RESULT_OK:
-                    // TODO: 16/10/31  二维码扫码之后返回的数据处理,处理之后直接进入ProjectInfoActivity,项目信息的页面
-
-
-                    break;
-                default:
-                    break;
-            }
-        }
-
-
-
-    }
-
-    @Override
     public void setNavigationBar() {
         mNavigationBar.setBackgroundResource(R.color.form_bar_bg_blue);
         mCenter.setText("输入编码");
@@ -118,7 +96,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void showNetError(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
