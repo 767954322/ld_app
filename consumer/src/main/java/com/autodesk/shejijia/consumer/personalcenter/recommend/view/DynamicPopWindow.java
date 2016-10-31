@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Printer;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import java.util.List;
@@ -35,6 +37,8 @@ public class DynamicPopWindow extends PopupWindow {
     private TextView[] textViews;
     private int height;//该控件宽度
     private int width;//该控件高度
+    private static double NO_CHANGE_HEIGHT = 1187.00d;
+    private static double ADAPTER_COUNT = 1.00d;
 
     public DynamicPopWindow(Activity context) {
         super(context);
@@ -57,7 +61,7 @@ public class DynamicPopWindow extends PopupWindow {
         linearLayout.getBackground().setAlpha(150);
         height = context.getWindowManager().getDefaultDisplay().getHeight();
         width = context.getWindowManager().getDefaultDisplay().getWidth();
-
+        ADAPTER_COUNT = (double) height / NO_CHANGE_HEIGHT;
         this.setContentView(view);
         this.setWidth(width);
         this.setHeight(height);
@@ -97,7 +101,7 @@ public class DynamicPopWindow extends PopupWindow {
         for (int i = 0; i < totalLine; i++) {
 
             LinearLayout linearLayout = new LinearLayout(context);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height/15);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (80 * ADAPTER_COUNT));
             linearLayout.setLayoutParams(layoutParams);
             dynamicAddViewAndData(linearLayout, countSize, arr);
             containView.addView(linearLayout);
@@ -112,12 +116,10 @@ public class DynamicPopWindow extends PopupWindow {
 
         TextView textView;
         BtnStatusBean btnStatusBean;
-        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(width/2, height/15);
+        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(width/2, (int) (80 * ADAPTER_COUNT));
         layoutParamsButton.weight = 1;
-        layoutParamsButton.leftMargin = 32;
-//        layoutParamsButton.topMargin = 15;
-//        layoutParamsButton.bottomMargin = 15;
-        layoutParamsButton.rightMargin = 32;
+        layoutParamsButton.leftMargin = (int) (32 * ADAPTER_COUNT);
+        layoutParamsButton.rightMargin = (int) (32 * ADAPTER_COUNT);
 
         for (int i = 0; i < 2; i++) {
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.tools.wheel.WheelView;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
@@ -23,7 +24,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
  * @version v1.0 .
  * @date 16-10-21 .
  * @file StoreActivity.java .
- * @brief 动态添加view, 封装后可多页面复用 .
+ * @brief 动态添加view, 封装后可多页面复用  店铺 .
  */
 
 public class DynamicAddViewControls extends LinearLayout {
@@ -37,6 +38,8 @@ public class DynamicAddViewControls extends LinearLayout {
     private boolean justAll = false;
     private int height;//该控件宽度
     private int width;//该控件高度
+    private static double NO_CHANGE_HEIGHT = 1187.00d;
+    private static double ADAPTER_COUNT = 1.00d;
 
 
     public DynamicAddViewControls(Activity context) {
@@ -45,6 +48,7 @@ public class DynamicAddViewControls extends LinearLayout {
         setOrientation(VERTICAL);
         height = context.getWindowManager().getDefaultDisplay().getHeight();
         width = context.getWindowManager().getDefaultDisplay().getWidth();
+        ADAPTER_COUNT = (double) height / NO_CHANGE_HEIGHT;
     }
 
 
@@ -73,8 +77,8 @@ public class DynamicAddViewControls extends LinearLayout {
         for (int i = 0; i < totalLine; i++) {
 
             LinearLayout linearLayout = new LinearLayout(context);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, width / 7);
-            layoutParams.topMargin = 17;
+            LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (70 * ADAPTER_COUNT));
+            layoutParams.topMargin = (int) (38 * ADAPTER_COUNT);
             linearLayout.setLayoutParams(layoutParams);
             dynamicAddStoreButton(linearLayout, countSize, arr);
             addView(linearLayout);
@@ -89,10 +93,11 @@ public class DynamicAddViewControls extends LinearLayout {
 
         TextView textView;
         BtnStatusBean btnStatusBean;
-        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(width / 8, width / 8);
+        LayoutParams layoutParamsButton = new LayoutParams((int) (186 * ADAPTER_COUNT), (int) (68 * ADAPTER_COUNT));
+        ToastUtil.showCustomToast(context,""+ width / 8);
         layoutParamsButton.weight = 1;
-        layoutParamsButton.leftMargin = 32;
-        layoutParamsButton.rightMargin = 32;
+        layoutParamsButton.leftMargin = (int) (32 * ADAPTER_COUNT);
+        layoutParamsButton.rightMargin = (int) (32 * ADAPTER_COUNT);
 
         for (int i = 0; i < 3; i++) {
 
@@ -116,7 +121,7 @@ public class DynamicAddViewControls extends LinearLayout {
 
                     countOffset++;
                 }
-                textView.setOnClickListener(new View.OnClickListener() {
+                textView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         BtnStatusBean btnStatusBean = (BtnStatusBean) v.getTag();
