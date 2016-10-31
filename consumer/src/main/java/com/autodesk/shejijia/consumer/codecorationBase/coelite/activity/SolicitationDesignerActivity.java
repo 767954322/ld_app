@@ -9,24 +9,23 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SelectionBean;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SolicitationSelection;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
-import com.autodesk.shejijia.consumer.personalcenter.resdecoration.entity.DecorationBiddersBean;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.activity.FlowMeasureCostActivity;
+import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.utils.MPStatusMachine;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.consumer.uielements.TextViewContent;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.uielements.reusewheel.utils.TimePickerView;
-import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -37,7 +36,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,7 +95,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         setTitleForNavbar(UIUtils.getString(R.string.demand_elite_measure_house_form));
         tvcTime.setFocusable(false);
         tvcEstate.setEnabled(false);
-        List<DecorationBiddersBean> list = decorationNeedsListBean.getBidders();
+//        List<DecorationBiddersBean> list = decorationNeedsListBean.getBidders();
 
         String province_name = decorationNeedsListBean.getProvince_name();
         String city_name = decorationNeedsListBean.getCity_name();
@@ -130,23 +128,15 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         tvcHouseType.setText(tvHouseType);//设置室 厅 卫
         String style = styleMap.get(decorationNeedsListBean.getDecoration_style());
         tvcMeasureFormStyle.setText(UIUtils.getNoSelectIfEmpty(style));//风格
+        chageButtonValue();
+        setMeasureTime();
 
         if (district_name.equals("none")) {
             tvcAddress.setText(province_name + city_name);
-        } else {
-            if (district_name.equals("none")) {
-                tvcAddress.setText(province_name + city_name);
-            } else {
-                tvcAddress.setText(province_name + city_name + district_name);
-            }
-            chageButtonValue();
-//        for (DecorationBiddersBean decorationBiddersBean : list) {
-//            if (decorationBiddersBean.getDesigner_id().equals(designerId)) {
-//                tvcName.setText(decorationBiddersBean.getUser_name());
-//            }
-//        }
-            setMeasureTime();
+            return;
         }
+        tvcAddress.setText(province_name + city_name + district_name);
+
     }
 
     @Override

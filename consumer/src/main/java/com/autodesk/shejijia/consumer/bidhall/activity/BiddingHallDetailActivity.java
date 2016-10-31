@@ -143,7 +143,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
      * @param needs_id
      * @param designer_id
      */
-    public void sendBidDemand(String declaration, String user_name, String needs_id, String designer_id) {
+    public void sendBidDemand(String declaration, String user_name, final String needs_id, String designer_id) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(JsonConstants.JSON_BID_DETAIL_DECLARATION, declaration);
@@ -165,6 +165,7 @@ public class BiddingHallDetailActivity extends NavigationBarActivity implements 
                 mBtnSendBid.setBackgroundResource(R.drawable.abc_gray_button_style);
                 mBtnSendBid.setTextColor(UIUtils.getColor(R.color.bg_80));
                 mBtnSendBid.setText(UIUtils.getString(R.string.bided));
+                getBidHallDetailData(needs_id);
             }
 
             @Override
