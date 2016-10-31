@@ -7,7 +7,7 @@ package com.autodesk.shejijia.shared;
 public class Config {
     public final static String API_VERSION_NAME = "P";
     public final static boolean IS_PRODUCTION = true;
-    public final static String LOGIN_PATH = "http://www.shejijia.com/sso/SSO_login.html?caller";
+    public final static String LOGIN_PATH = "http://www.shejijia.com/sso/SSO_login.html?caller=shejijia&browser_type=android";
     public final static String MEMBER_PATH = "http://api.shejijia.com/member-app/v1/api";
     public final static String DESIGN_PATH = "http://api.shejijia.com/design-app/v1/api";
     public final static String TRANSACTION_PATH = "http://api.shejijia.com/transaction-app/v1/api";
