@@ -2,6 +2,8 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -49,6 +51,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private ListView show_brand_listView;
     private MaterialCategoryBean materialCategoryBean;
     private Button all_material_btn;
+    private Handler getAdapterDataHandler;//获取返回数据handler
+    private List<ShowBrandsBean.BrandsBean> getAdapterResultList;
 
     @Override
     public void onClick(View v) {
@@ -92,6 +96,16 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
         getCategoryInformation();
         getMaterialCategoryBrandsInformation("","","","","","",0,20);
+        getAdapterResultList = new ArrayList<>();
+        getAdapterDataHandler = new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+
+            }
+        };
 
     }
 
@@ -204,7 +218,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
      * */
     public void showAllTwoCategory(List<MaterialCategoryBean.Categories3dBean.SubCategoryBean> list){
 
-        dynamicPopwindow = new DynamicPopWindow(this);
+        dynamicPopwindow = new DynamicPopWindow(this,null,R.style.Transparent_Dialog);
         dynamicPopwindow.addDataForView(list);
         dynamicPopwindow.setListener(new DynamicPopWindow.onButtonPopWindowClickedListener() {
             @Override

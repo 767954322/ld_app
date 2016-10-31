@@ -160,9 +160,28 @@ public class StoreActivity extends NavigationBarActivity implements View.OnClick
 
                 forResultStoreList.clear();
             }
-            forResultStoreList.add(storeInformationBean.getStore_list().get(btnStatusBean.getCountOffset()));
+
+            if (btnStatusBean.getSingleClickOrDoubleBtnCount() == 2) {
+                String TestForResultStoreList;
+                String TestStoreInformationBean;
+                for (int i = 0; i < forResultStoreList.size(); i++) {
+                    //将取消的店铺移除
+                    TestForResultStoreList = forResultStoreList.get(i).getMall_name();
+                    TestStoreInformationBean = storeInformationBean.getStore_list().get(btnStatusBean.getCountOffset() - 1).getMall_name();
+                    if (TestForResultStoreList.equals(TestStoreInformationBean)) {
+
+                        forResultStoreList.remove(i);
+                    }
+
+                }
+
+            } else {
+
+
+                forResultStoreList.add(storeInformationBean.getStore_list().get(btnStatusBean.getCountOffset() - 1));
+
+            }
         }
-        ToastUtil.showCustomToast(StoreActivity.this, "" + forResultStoreList.size());
     }
 
 }

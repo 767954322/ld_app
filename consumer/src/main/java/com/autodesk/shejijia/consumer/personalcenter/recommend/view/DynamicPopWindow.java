@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
 
 import android.app.Activity;
+import android.content.Context;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,8 @@ public class DynamicPopWindow extends PopupWindow {
     private LinearLayout containView;
     private String[] arrStringTotal;
     private TextView[] textViews;
+    private int height;//该控件宽度
+    private int width;//该控件高度
 
     public DynamicPopWindow(Activity context) {
         super(context);
@@ -38,16 +42,26 @@ public class DynamicPopWindow extends PopupWindow {
         init();
     }
 
+    public DynamicPopWindow(Activity context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        this.context = context;
+        init();
+    }
+
     public void init() {
 
         View view = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.popwindow_layout, null);
+        view.setBackground(null);
         containView = (LinearLayout) view.findViewById(R.id.containView);
-        int height = context.getWindowManager().getDefaultDisplay().getHeight();
-        int width = context.getWindowManager().getDefaultDisplay().getWidth();
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.gray_bg);
+        linearLayout.getBackground().setAlpha(150);
+        height = context.getWindowManager().getDefaultDisplay().getHeight();
+        width = context.getWindowManager().getDefaultDisplay().getWidth();
 
         this.setContentView(view);
         this.setWidth(width);
-        this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        this.setHeight(height);
+//        this.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     /**
@@ -83,8 +97,7 @@ public class DynamicPopWindow extends PopupWindow {
         for (int i = 0; i < totalLine; i++) {
 
             LinearLayout linearLayout = new LinearLayout(context);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
-            layoutParams.topMargin = 17;
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height/15);
             linearLayout.setLayoutParams(layoutParams);
             dynamicAddViewAndData(linearLayout, countSize, arr);
             containView.addView(linearLayout);
@@ -99,11 +112,11 @@ public class DynamicPopWindow extends PopupWindow {
 
         TextView textView;
         BtnStatusBean btnStatusBean;
-        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(186, 160);
+        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(width/2, height/15);
         layoutParamsButton.weight = 1;
         layoutParamsButton.leftMargin = 32;
-        layoutParamsButton.topMargin = 20;
-        layoutParamsButton.bottomMargin = 28;
+//        layoutParamsButton.topMargin = 15;
+//        layoutParamsButton.bottomMargin = 15;
         layoutParamsButton.rightMargin = 32;
 
         for (int i = 0; i < 2; i++) {
@@ -140,6 +153,7 @@ public class DynamicPopWindow extends PopupWindow {
                         }
 
                         dismiss();
+//                        backgroundAlpha(1.0F);
                     }
                 });
             } else {
@@ -206,9 +220,22 @@ public class DynamicPopWindow extends PopupWindow {
      */
     public void showPopupWindow(View parent) {
         if (!this.isShowing()) {
-            this.showAsDropDown(parent, parent.getLayoutParams().width / 2, 18);
+            this.showAsDropDown(parent, parent.getLayoutParams().width / 2, width /50);
+//            backgroundAlpha(0.5F);
         } else {
             this.dismiss();
+//            backgroundAlpha(1.0F);
         }
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     * @param bgAlpha
+     */
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = context.getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        context.getWindow().setAttributes(lp);
     }
 }

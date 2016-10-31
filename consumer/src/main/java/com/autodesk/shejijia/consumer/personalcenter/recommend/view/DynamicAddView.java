@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -20,23 +21,27 @@ import java.util.List;
  * @version v1.0 .
  * @date 16-10-25 .
  * @file DynamicAddView.java .
- * @brief 动态添加按钮.
+ * @brief 动态添加按钮.====二级品类展示
  */
 
 public class DynamicAddView extends LinearLayout {
-    private Context context;
+    private Activity context;
     private OnButtonClickedListener onButtonClickedListener;
     private int singleClickOrDoubleBtnCount = 1;//选btn状态
     private String[] arrStringTotal;
     private TextView[] textViews;
+    private int height;//该控件宽度
+    private int width;//该控件高度
 
     private class T {
     }
 
-    public DynamicAddView(Context context) {
+    public DynamicAddView(Activity context) {
         super(context);
         this.context = context;
         setOrientation(HORIZONTAL);
+        height = context.getWindowManager().getDefaultDisplay().getHeight();
+        width = context.getWindowManager().getDefaultDisplay().getWidth();
     }
 
     /**
@@ -64,10 +69,10 @@ public class DynamicAddView extends LinearLayout {
         TextView textView;
         BtnStatusBean btnStatusBean;
         LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParamsButton.leftMargin = 26;
-        layoutParamsButton.rightMargin = 26;
-        layoutParamsButton.topMargin = 22;
-        layoutParamsButton.bottomMargin = 22;
+        layoutParamsButton.leftMargin = width /50;
+        layoutParamsButton.rightMargin = width /50;
+        layoutParamsButton.topMargin = width /50;
+        layoutParamsButton.bottomMargin = width /50;
 
         textViews = new TextView[count];
         for (int i = 0; i < count; i++) {
@@ -80,8 +85,8 @@ public class DynamicAddView extends LinearLayout {
             textView.setText(arrStringTotal[i]);
             textView.setTextColor(UIUtils.getColor(R.color.text_item_name));
             textView.setGravity(Gravity.CENTER);
-            textView.setMinWidth(200);
-            textView.setPadding(40, 0, 40, 0);
+            textView.setMinWidth(width /6);
+            textView.setPadding(width /25, 0, width /25, 0);
             textView.setBackgroundResource(R.drawable.material_add_bg);
             textView.setLayoutParams(layoutParamsButton);
             textViews[i].setOnClickListener(new View.OnClickListener() {

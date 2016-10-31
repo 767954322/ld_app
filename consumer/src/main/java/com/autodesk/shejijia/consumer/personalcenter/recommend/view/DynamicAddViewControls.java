@@ -1,7 +1,9 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,19 +28,23 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 public class DynamicAddViewControls extends LinearLayout {
 
-    private Context context;
+    private Activity context;
     private int countOffset = 0;
     private String[] arr;
     private OnButtonClickedListener onButtonClickedListener;
     private int singleClickOrDoubleBtnCount = 1;
     private TextView[] textViews;
     private boolean justAll = false;
+    private int height;//该控件宽度
+    private int width;//该控件高度
 
 
-    public DynamicAddViewControls(Context context) {
+    public DynamicAddViewControls(Activity context) {
         super(context);
         this.context = context;
         setOrientation(VERTICAL);
+        height = context.getWindowManager().getDefaultDisplay().getHeight();
+        width = context.getWindowManager().getDefaultDisplay().getWidth();
     }
 
 
@@ -67,7 +73,7 @@ public class DynamicAddViewControls extends LinearLayout {
         for (int i = 0; i < totalLine; i++) {
 
             LinearLayout linearLayout = new LinearLayout(context);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, width / 7);
             layoutParams.topMargin = 17;
             linearLayout.setLayoutParams(layoutParams);
             dynamicAddStoreButton(linearLayout, countSize, arr);
@@ -83,7 +89,7 @@ public class DynamicAddViewControls extends LinearLayout {
 
         TextView textView;
         BtnStatusBean btnStatusBean;
-        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(186, 160);
+        LinearLayout.LayoutParams layoutParamsButton = new LinearLayout.LayoutParams(width / 8, width / 8);
         layoutParamsButton.weight = 1;
         layoutParamsButton.leftMargin = 32;
         layoutParamsButton.rightMargin = 32;
@@ -93,6 +99,9 @@ public class DynamicAddViewControls extends LinearLayout {
             textView = new TextView(context);
             btnStatusBean = new BtnStatusBean();
             textView.setGravity(Gravity.CENTER);
+            textView.setMaxEms(6);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
+            textView.setSingleLine(true);
             textView.setLayoutParams(layoutParamsButton);
 
             if (countSize + countOffset <= arr.length) {
@@ -117,6 +126,12 @@ public class DynamicAddViewControls extends LinearLayout {
 
                             changeBtnStatus(btnStatusBean);
                             justAll = true;
+                            for (int i = 1;i < textViews.length;i++){
+
+                                BtnStatusBean btnStatusBeenOne = (BtnStatusBean) textViews[i].getTag();
+                                btnStatusBeenOne.setSingleClickOrDoubleBtnCount(2);
+                                changeBtnStatus(btnStatusBeenOne);//将‘全部’之外的按钮选中取消
+                            }
                         } else {
 
                             changeBtnStatus(btnStatusBean);
@@ -124,7 +139,8 @@ public class DynamicAddViewControls extends LinearLayout {
 
                                 BtnStatusBean btnStatusBeenOne = (BtnStatusBean) textViews[0].getTag();
                                 btnStatusBeenOne.setSingleClickOrDoubleBtnCount(2);
-                                changeBtnStatus(btnStatusBeenOne);//将全部取消
+                                changeBtnStatus(btnStatusBeenOne);//将‘全部’按钮取消
+                                justAll = false;
                             }
                         }
                     }
@@ -170,7 +186,7 @@ public class DynamicAddViewControls extends LinearLayout {
 
     public void changeTextViewBackgroudAndTextUnChecked(BtnStatusBean btnStatusBean, TextView textView) {
 
-        textView.setTextColor(Color.BLACK);
+        textView.setTextColor(UIUtils.getColor(R.color.sbc_header_text));
         textView.setBackgroundResource(R.drawable.store_bg_btn);
         invalidate();
     }

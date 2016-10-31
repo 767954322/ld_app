@@ -12,7 +12,7 @@
         android:text="周大声珠宝"
         android:textSize="@dimen/font_20"
         android:textColor="@color/black"
-        android:layout_marginLeft="@dimen/size_25"
+        android:layout_marginLeft="@dimen/size_16"
         android:layout_marginTop="@dimen/size_25"
         />
     <TextView
@@ -22,7 +22,7 @@
         android:text="霍营店"
         android:layout_below="@id/brand_name"
         android:textSize="@dimen/font_15"
-        android:layout_marginLeft="@dimen/size_25"
+        android:layout_marginLeft="@dimen/size_16"
         android:layout_marginBottom="@dimen/size_25"
         />
 
