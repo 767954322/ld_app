@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.data.source;
+package com.autodesk.shejijia.shared.components.common.datamodel;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

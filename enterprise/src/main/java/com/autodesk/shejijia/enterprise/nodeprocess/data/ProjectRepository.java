@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.source.ProjectDataSource;
-import com.autodesk.shejijia.enterprise.nodeprocess.data.source.ProjectRemoteDataSource;
+import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
+import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
 
 /**
  * Created by t_xuz on 10/17/16.
