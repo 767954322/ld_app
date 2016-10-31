@@ -51,7 +51,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
      /*   ConstructionHttpManager.getInstance().getProjectDetails(id, mToken, false,new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                mView.showError(volleyError.toString());
+                mView.showNetError(volleyError.toString());
             }
 
             @Override
