@@ -3,44 +3,37 @@ package com.autodesk.shejijia.enterprise.common.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 
-import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
+import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
+import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
+import com.autodesk.shejijia.shared.components.form.ui.activity.QRCodeActivity;
 
 /**
  * Created by t_xuz on 8/15/16.
- * 登陆及登出广播接收器
+ * 登陆成功后的广播接受者
  */
 public class LoginNotificationReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String action = intent.getAction();
-        if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(ConstructionConstants.LOGIN_OUT_ACTION)){
-            LoginUtils.doLogout(context);
-        }else if (!TextUtils.isEmpty(action) && action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)){
-            String strToken = intent.getStringExtra(BroadCastInfo.LOGIN_TOKEN);
-            LogUtils.e("login-result",strToken);
-            MemberEntity entity = GsonUtil.jsonToBean(strToken, MemberEntity.class);
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
 
-            String ZERO = "0";
+        if("inspector".equals(entity.getMember_type())) {
+            // TODO: 16/10/31 监理进入的界面
+            Intent inspectIntent = new Intent(context, QRCodeActivity.class);
+            inspectIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(inspectIntent);
 
-            /// 为不符合规则的acs_member_id 补足位数 .
-            String acs_member_id = entity.getAcs_member_id();
-            if (acs_member_id.length() < 8) {
-                acs_member_id += ZERO;
-                entity.setAcs_member_id(acs_member_id);
-            }
-            LogUtils.d("APPLICATION", "memberEntity:" + entity);
-            LogUtils.e("login-success",entity.toString());
+        } else /*if("clientmanager".equals(entity.getMember_type()))*/{
+            // TODO: 16/10/31 其他人进入的界面
+            Intent homeIntent = new Intent(context, EnterpriseHomeActivity.class);
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(homeIntent);
 
-            LoginUtils.onLoginSuccess(entity,context);
         }
+
     }
 }
