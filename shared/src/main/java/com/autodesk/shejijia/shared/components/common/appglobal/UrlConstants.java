@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.common.appglobal;
 
 import com.autodesk.shejijia.shared.Config;
-import static com.autodesk.shejijia.shared.components.common.appglobal.ApiManagerV2.RECOMMEND_PATH;
 
 /**
  * @author yangxuewu .
@@ -25,7 +24,7 @@ public final class UrlConstants {
     /**
      * recommend-app的url公共部分 .
      */
-    public static String MAIN_RECOMMEND = RECOMMEND_PATH;
+    public static String MAIN_RECOMMEND =  Config.RECOMMEND_PATH;
 
     /**
      * member-app 的url的公共部分 .

@@ -14,8 +14,11 @@ public class Config {
     public final static String SHARE_PATH = "http://alpha-api.gdfcx.net/share/2dcase.html?caseid=";
     public final static String SHARE3_PATH = null;
     public final static String API_DOMAIN = "http://alpha-api.gdfcx.net";
+    public final static String RECOMMEND_PATH = "http://192.168.71.86:8080/materials-recommend-app/v1/api";
+
 
     //Construction urls
     public static final String CONSTRUCTION_MAIN_URL = "http://cp-alpha-plan.homestyler.com/api/v1";
     public static final String CONSTRUCTION_ISSUE_URL = "http://cp-alpha-issue.homestyler.com/v1";
+
 }
