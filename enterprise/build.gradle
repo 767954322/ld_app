@@ -17,6 +17,7 @@ android {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             minifyEnabled false
+            versionNameSuffix "_debug"
         }
         release {
             minifyEnabled false
@@ -29,8 +30,12 @@ android {
     }
 
     productFlavors {
-        alpha {}
-        uat {}
+        alpha {
+            versionNameSuffix "_A"
+        }
+        uat {
+            versionNameSuffix "_U"
+        }
         production {}
     }
 }
