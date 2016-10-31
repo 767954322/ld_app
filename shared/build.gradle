@@ -39,6 +39,12 @@ android {
         production {}
     }
 
+    sourceSets {
+        alpha.setRoot('src/buildVariant/alpha')
+        uat.setRoot('src/buildVariant/uat')
+        production.setRoot('src/buildVariant/production')
+    }
+
 }
 
 dependencies {

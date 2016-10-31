@@ -38,6 +38,11 @@ android {
         }
         production {}
     }
+
+    sourceSets {
+        debug.setRoot('src/buildVariant/debug')
+        release.setRoot('src/buildVariant/release')
+    }
 }
 
 configurations {
