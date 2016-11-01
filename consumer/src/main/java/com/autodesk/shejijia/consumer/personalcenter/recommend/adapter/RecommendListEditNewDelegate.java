@@ -1,10 +1,12 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.UpdataBrandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
@@ -73,8 +75,12 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
         holder.setOnClickListener(R.id.tv_brand_change, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String brand_name = recommendBrandsBean.getBrand_name();
-                Toast.makeText(mActivity, "品牌变更：" + brand_name, Toast.LENGTH_SHORT).show();
+
+                mActivity.startActivity(new Intent(mActivity, UpdataBrandActivity.class));
+
+
+//                String brand_name = recommendBrandsBean.getBrand_name();
+//                Toast.makeText(mActivity, "品牌变更0001：" + brand_name, Toast.LENGTH_SHORT).show();
             }
         });
     }
