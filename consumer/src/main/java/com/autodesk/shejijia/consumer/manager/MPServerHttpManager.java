@@ -95,6 +95,24 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 获取店面地址
+     * malls/{brand_id}/address
+     */
+    public void getMallsLocation(String brand_id, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_RECOMMEND + "/malls/" + brand_id + "/address";
+        Log.d("recommend", url);
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 新建清单
      *
      * @param designer_id
@@ -1811,11 +1829,11 @@ public class MPServerHttpManager {
 
     /**
      * 店面获取
-     * */
-    public void getStores(OkJsonRequest.OKResponseCallback callback){
+     */
+    public void getStores(OkJsonRequest.OKResponseCallback callback) {
 
         String url = UrlConstants.GET_STORES_INFORMATION;
-        Log.i("yaoxuehuaurl",url);
+        Log.i("yaoxuehuaurl", url);
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1827,10 +1845,11 @@ public class MPServerHttpManager {
         queue.add(okRequest);
 
     }
+
     /**
      * 获取一级二级品类信息
-     * */
-    public void getMaterialCategoryInformation(OkJsonRequest.OKResponseCallback callback){
+     */
+    public void getMaterialCategoryInformation(OkJsonRequest.OKResponseCallback callback) {
 
         String url = UrlConstants.GET_MATERIAL_CATEGORY_INFORMATION;
 //        String url ="http://192.168.71.86:8080/materials-recommend-app/v1/api/categories";
@@ -1846,17 +1865,18 @@ public class MPServerHttpManager {
 
 
     }
+
     /**
      * 根据二级品类获取品牌
-     * */
+     */
     public void getCategoryBrandsInformation(final String category_3d_id, final String category_3d_name, final String sub_category_3d_id,
                                              final String sub_category_3d_name, final String mall_number, final String decoration_company_number,
-                                             final Integer offset, Integer limit ,OkJsonRequest.OKResponseCallback callback ){
+                                             final Integer offset, Integer limit, OkJsonRequest.OKResponseCallback callback) {
 
-        String url = UrlConstants.GET_BRANDS_INFORMATION+"?category_3d_id="+category_3d_id+"&category_3d_name="+category_3d_name+"&sub_category_3d_id="+
+        String url = UrlConstants.GET_BRANDS_INFORMATION + "?category_3d_id=" + category_3d_id + "&category_3d_name=" + category_3d_name + "&sub_category_3d_id=" +
 
-                sub_category_3d_id+"&sub_category_3d_name="+sub_category_3d_name+"&mall_number="+mall_number+"&decoration_company_number="+decoration_company_number+
-                "&offset="+offset+"&limit="+limit;
+                sub_category_3d_id + "&sub_category_3d_name=" + sub_category_3d_name + "&mall_number=" + mall_number + "&decoration_company_number=" + decoration_company_number +
+                "&offset=" + offset + "&limit=" + limit;
         OkJsonRequest okRequest = new OkJsonRequest(Request.Method.GET, url, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

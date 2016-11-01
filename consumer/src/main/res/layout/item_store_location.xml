@@ -11,7 +11,6 @@
         android:background="#eef1f4"
         android:gravity="center_vertical"
         android:paddingLeft="16dp"
-        android:text="丽泽店"
         android:textColor="@color/mybid_text_color_normal"/>
 
     <include layout="@layout/line_view"/>
@@ -35,8 +34,8 @@
                 android:text="营业时间："/>
 
             <TextView
-                style="@style/item_text_style"
-                android:text="10:00 -19:00"/>
+                android:id="@+id/tv_office_hours"
+                style="@style/item_text_style"/>
         </LinearLayout>
 
         <LinearLayout
@@ -49,8 +48,8 @@
                 android:text="店面地址："/>
 
             <TextView
-                style="@style/item_text_style"
-                android:text="北京的丰台区西三环南路甲27号"/>
+                android:id="@+id/tv_mall_address"
+                style="@style/item_text_style"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,8 +62,8 @@
                 android:text="摊位地址："/>
 
             <TextView
-                style="@style/item_text_style"
-                android:text="2层A区东北角A210"/>
+                android:id="@+id/tv_booth_address"
+                style="@style/item_text_style"/>
         </LinearLayout>
 
         <LinearLayout
@@ -78,9 +77,9 @@
                 android:text="乘车路线："/>
 
             <TextView
+                android:id="@+id/tv_route_line"
                 style="@style/item_text_style"
-                android:lineSpacingMultiplier="1.2"
-                android:text="60,300到西局下车,地铁10号线西局站下车"/>
+                android:lineSpacingMultiplier="1.2"/>
         </LinearLayout>
 
         <LinearLayout
@@ -93,8 +92,8 @@
                 android:text="摊位电话："/>
 
             <TextView
-                style="@style/item_text_style"
-                android:text="010-5577885654"/>
+                android:id="@+id/tv_mall_mobile"
+                style="@style/item_text_style"/>
         </LinearLayout>
     </LinearLayout>
 

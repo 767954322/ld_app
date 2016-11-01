@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <cn.finalteam.loadingviewfinal.ListViewFinal
-            android:id="@+id/lv_recommend"
+            android:id="@+id/lv_mall_location"
             app:loadMoreMode="scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -62,7 +62,7 @@ public class DcRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> {
             ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
         }
         TextView storeLocation = (TextView) mItemView.findViewById(R.id.tv_store_location);
-        storeLocation.setVisibility(View.VISIBLE);
+        storeLocation.setVisibility(View.INVISIBLE);
         TextView tvBrandDimension = (TextView) mItemView.findViewById(R.id.tv_brand_dimension);
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);
