@@ -11,29 +11,28 @@ import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDat
 
 /**
  * Created by t_xuz on 10/17/16.
- *
  */
 public final class ProjectRepository implements ProjectDataSource {
 
     private ProjectList mProjectList;
 
-    private ProjectRepository(){
+    private ProjectRepository() {
     }
 
-    private static final class NodeProcessRepositoryHolder{
+    private static final class NodeProcessRepositoryHolder {
         private static final ProjectRepository INSTANCE = new ProjectRepository();
     }
 
-    public static ProjectRepository getInstance(){
+    public static ProjectRepository getInstance() {
         return NodeProcessRepositoryHolder.INSTANCE;
     }
 
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
 
-        if (mProjectList != null){
+        if (mProjectList != null) {
             callback.onLoadSuccess(mProjectList);
-        }else {
+        } else {
 
             ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, new LoadDataCallback<ProjectList>() {
                 @Override
@@ -51,7 +50,7 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectDetails(@NonNull LoadDataCallback<ProjectInfo> callback) {
-        ProjectRemoteDataSource.getInstance().getProjectDetails(callback);
+    public void getProjectDetails(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectInfo> callback) {
+        ProjectRemoteDataSource.getInstance().getProjectDetails(requestParams, requestTag, callback);
     }
 }

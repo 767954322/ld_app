@@ -48,7 +48,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
             return;
         }
         Long id = Long.valueOf(projectId);
-        ConstructionHttpManager.getInstance().getProjectDetails(id, mToken, false,new OkJsonRequest.OKResponseCallback() {
+     /*   ConstructionHttpManager.getInstance().getProjectDetails(id, mToken, false,new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 mView.showError(volleyError.toString());
@@ -62,7 +62,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
                 mContext.startActivity(intent);
                 mView.dismiss();  //自身界面的消失
             }
-        });
+        });*/
 
 //        FormRepository.getInstance().getProjectDetails(id, new LoadDataCallback<ProjectBean>() {
 //            @Override

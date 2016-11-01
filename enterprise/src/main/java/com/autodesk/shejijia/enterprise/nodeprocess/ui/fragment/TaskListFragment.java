@@ -44,7 +44,7 @@ public class TaskListFragment extends BaseEnterpriseFragment implements ProjectL
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(getActivity(), this);
         //refresh ProjectLists
-        mProjectListPresenter.initRequestOptions("2016-10-08", null, null);
+        mProjectListPresenter.initRequestParams("2016-10-08", null, null);
         mProjectListPresenter.refreshProjectList();
     }
 

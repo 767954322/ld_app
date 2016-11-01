@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Created by t_xuz on 10/13/16.
- * 施工主线mvp中的vp对应的接口
+ * 施工主线mvp中的vp对应的接口--项目列表页面
  */
 public interface ProjectListContract {
 
@@ -30,7 +30,7 @@ public interface ProjectListContract {
         /*
         * 初始化请求参数
         * */
-        void initRequestOptions(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus);
+        void initRequestParams(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus);
 
         /*
         * 日期变化，项目列表变更

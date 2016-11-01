@@ -28,7 +28,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     private static final int PAGE_LIMIT = 30;
     private Context mContext;
     private ProjectListContract.View mProjectListView;
-    private ProjectRepository mNodeProcessRepository;
+    private ProjectRepository mProjectRepository;
     private int mOffset = 0;
     private String mSelectedDate;
     private String mFilterLike; //null or true or false
@@ -38,11 +38,11 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     public ProjectListPresenter(Context context, ProjectListContract.View projectListsView) {
         this.mContext = context;
         this.mProjectListView = projectListsView;
-        mNodeProcessRepository = ProjectRepository.getInstance();
+        mProjectRepository = ProjectRepository.getInstance();
     }
 
     @Override
-    public void initRequestOptions(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus) {
+    public void initRequestParams(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus) {
         this.mSelectedDate = date;
         this.mFilterLike = filterLike;
         this.mFilterStatus = filterStatus;
@@ -97,7 +97,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     private void loadProjectListData(Bundle requestParams) {
 
-        mNodeProcessRepository.getProjectList(requestParams, ConstructionConstants.REQUEST_TAG_LOAD_PROJECTS, new LoadDataCallback<ProjectList>() {
+        mProjectRepository.getProjectList(requestParams, ConstructionConstants.REQUEST_TAG_LOAD_PROJECTS, new LoadDataCallback<ProjectList>() {
             @Override
             public void onLoadSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
@@ -123,8 +123,10 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     @Override
     public void navigateToProjectDetail(List<ProjectInfo> projectList, int position) {
         long projectId = projectList.get(position).getProjectId();
+        String projectName = projectList.get(position).getName();
         Intent intent = new Intent(mContext, ProjectDetailsActivity.class);
         intent.putExtra("projectId", projectId);
+        intent.putExtra("projectName", projectName);
         mContext.startActivity(intent);
     }
 

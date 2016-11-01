@@ -21,6 +21,6 @@ public interface ProjectDataSource {
     /*
     * 获取项目详情
     * */
-    void getProjectDetails(@NonNull LoadDataCallback<ProjectInfo> callback);
+    void getProjectDetails(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectInfo> callback);
 
 }
