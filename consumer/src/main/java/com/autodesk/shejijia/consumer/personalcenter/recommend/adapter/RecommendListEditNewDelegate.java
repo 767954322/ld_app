@@ -2,14 +2,12 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
@@ -54,28 +52,21 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
         holder.setText(R.id.et_brand_remarks, recommendBrandsBean.getRemarks());
         holder.setText(R.id.tv_brand_mall_name, mallName.substring(0, mallName.length() - 1));
 
-        final Spinner spinnerApartment = holder.getView((R.id.spinner_brand_apartment));
+        final MaterialSpinner spinnerApartment = holder.getView((R.id.spinner_brand_apartment));
         String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
         final List<String> apartmentList = Arrays.asList(apartmentArray);
-        final ArrayAdapter<String> apartmentArrayAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, apartmentList);
-        apartmentArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerApartment.setAdapter(apartmentArrayAdapter);
+        spinnerApartment.setItems(apartmentList);
         String apartment = recommendBrandsBean.getApartment();
         for (int i = 0; i < apartmentList.size(); i++) {
             if (!StringUtils.isEmpty(apartment) && apartment.equalsIgnoreCase(apartmentList.get(i))) {
-                spinnerApartment.setSelection(i, true);
+                spinnerApartment.setText(apartment);
             }
         }
-        spinnerApartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                String currentApartmentName = apartmentArrayAdapter.getItem(position);
-            }
+        spinnerApartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                String currentApartmentName = apartmentList.get(position);
             }
         });
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -79,13 +80,14 @@
             style="@style/item_text_style"
             android:text="空间："/>
 
-        <android.support.v7.widget.AppCompatSpinner
+        <com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner
             android:id="@+id/spinner_brand_apartment"
             android:layout_width="@dimen/size_160"
+            android:textSize="@dimen/font_15"
             android:layout_height="@dimen/size_30"
-            android:overlapAnchor="false"
-            android:spinnerMode="dropdown"
-            />
+            android:layout_gravity="start|center_vertical"
+            app:ms_dropdown_height="wrap_content"
+            app:ms_dropdown_max_height="@dimen/size_200"/>
     </LinearLayout>
 
     <LinearLayout
