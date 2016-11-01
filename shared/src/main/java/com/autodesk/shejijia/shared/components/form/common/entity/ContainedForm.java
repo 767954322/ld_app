@@ -1,11 +1,15 @@
 package com.autodesk.shejijia.shared.components.form.common.entity;
 
+import com.autodesk.shejijia.shared.components.common.utility.CastUtils;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.CheckItem;
 import com.autodesk.shejijia.shared.components.form.common.entity.microBean.TypeDict;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_panya on 16/10/24.
@@ -26,7 +30,7 @@ public class ContainedForm implements Serializable {
     @SerializedName("form_template_version")
     private Integer formTemplateVersion;
     @SerializedName("project_id")
-    private Integer projectId;
+    private String projectId;
     @SerializedName("task_id")
     private String taskId;
     @SerializedName("created_at")
@@ -37,10 +41,26 @@ public class ContainedForm implements Serializable {
     private String schemaVersion;
     @SerializedName("check_items_variability")
     private Boolean checkItemsVariability;
-    @SerializedName("type_dict")
-    private TypeDict typeDict;
     @SerializedName("check_items")
     private ArrayList<CheckItem> checkItems;
+    private HashMap typeDict;
+    private List<String> statusOptions;
+
+    public HashMap getTypeDict() {
+        return typeDict;
+    }
+
+    public void setTypeDict(HashMap typeDict) {
+        this.typeDict = typeDict;
+    }
+
+    public List<String> getStatusOptions() {
+        return statusOptions;
+    }
+
+    public void setStatusOptions(List<String> statusOptions) {
+        this.statusOptions = statusOptions;
+    }
 
     public String getDocType() {
         return docType;
@@ -72,14 +92,6 @@ public class ContainedForm implements Serializable {
 
     public void setCheckItemsVariability(Boolean checkItemsVariability) {
         this.checkItemsVariability = checkItemsVariability;
-    }
-
-    public TypeDict getTypeDict() {
-        return typeDict;
-    }
-
-    public void setTypeDict(TypeDict typeDict) {
-        this.typeDict = typeDict;
     }
 
     public String getId() {
@@ -130,11 +142,11 @@ public class ContainedForm implements Serializable {
         this.formTemplateVersion = formTemplateVersion;
     }
 
-    public Integer getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 
@@ -178,25 +190,60 @@ public class ContainedForm implements Serializable {
         this.checkItems = checkItems;
     }
 
-    public void applyFormData(ContainedForm form){
-        this.formTemplateId = form.getFormTemplateId();
-        this.formInstanceId = form.getFormInstanceId();
-        this.projectId = form.getProjectId();
-        this.taskId = form.getTaskId();
-        this.status = form.getStatus();
-        this.version = form.getVersion();
-        ArrayList<CheckItem> items = form.getCheckItems();
-        for(int i = 0; i < items.size(); i++){
-            CheckItem item = getItemWithId(items.get(i).getItemId());
-            if(item != null){
-                item.setValue(items.get(i).getValue());
+    public ContainedForm(HashMap map){
+        init(map);
+    }
+
+    private void init(HashMap map){
+        this.formInstanceId = (String) map.get("id");
+        this.formTemplateId = (String) map.get("id");
+        this.title = (String) map.get("title");
+        this.version = (Integer) map.get("version");
+        this.category = (String) map.get("category");
+        this.status = (Integer) map.get("status");
+        this.checkItemsVariability = (Boolean) map.get("check_items_variability");
+        this.typeDict = (HashMap) map.get("type_dict");
+        this.statusOptions = CastUtils.cast(typeDict.get("status")) ;
+        this.checkItems = new ArrayList<>();
+
+        List<Map> tempItems = CastUtils.cast(map.get("check_items"));
+        if(tempItems != null){
+            for(Map itemMap : tempItems){
+                if(itemMap instanceof HashMap) {
+                    itemMap.put("type_dict", this.typeDict);
+                    CheckItem checkItem = new CheckItem((HashMap) itemMap);
+                    checkItems.add(checkItem);
+                }
             }
         }
     }
 
-    private CheckItem getItemWithId(String itemId){
+    public void applyFormData(HashMap map){
+        this.projectId = String.valueOf(map.get("project_id"));
+        this.taskId = (String) map.get("task_id");
+        this.formInstanceId = (String) map.get("formInstanceId");
+        this.formTemplateId = (String) map.get("form_template_id");
+        this.status = (Integer) map.get("status");
+        this.version = (Integer) map.get("version");
+
+        List<Map> tempItems = CastUtils.cast(map.get("check_items"));
+        if(tempItems != null){
+            for(Map itemMap : tempItems){
+                CheckItem item = getFormItemWithItemID((String) itemMap.get("item_id"));
+                if(item != null ){
+                    List<Map> values = CastUtils.cast(itemMap.get("value"));
+                    item.applyItemValue(values);
+                }
+            }
+        }
+    }
+
+    private CheckItem getFormItemWithItemID(String itemID){
+        if(checkItems == null || itemID == null){
+            return null;
+        }
         for(CheckItem item : checkItems){
-            if((item.getItemId()).equals(itemId)){
+            if(item.getItemId().equals(itemID)){
                 return item;
             }
         }

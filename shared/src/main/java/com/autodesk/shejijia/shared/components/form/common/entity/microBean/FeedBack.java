@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.form.common.entity.microBean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by t_panya on 16/10/24.
@@ -79,5 +80,4 @@ public class FeedBack implements Serializable {
     public void setAudioValue(String audioValue) {
         this.audioValue = audioValue;
     }
-
 }

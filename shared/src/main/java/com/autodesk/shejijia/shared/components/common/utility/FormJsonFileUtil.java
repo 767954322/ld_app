@@ -63,6 +63,28 @@ public class FormJsonFileUtil {
 
     }
 
+    public static JSONObject loadJSONDataFromAsset(Context context, String fileName) {
+        JSONObject jsonObject = null;
+        try {
+            if (null != context) {
+
+                InputStream is = context.getAssets().open(fileName);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                String json = new String(buffer, "UTF-8");
+                jsonObject = new JSONObject(json);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return jsonObject;
+    }
 
     public static String getJson(Context context, String fileName) {
 

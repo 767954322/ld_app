@@ -11,6 +11,7 @@ import com.autodesk.shejijia.shared.components.form.data.source.FormRemoteDataSo
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -42,11 +43,12 @@ public class FormRepository implements FormDataSource {
                 @Override
                 public void onLoadSuccess(List data){
                     for(int i = 0 ; i < data.size() ; i++){
-                        ContainedForm remoteForm = (ContainedForm) data.get(i);
-                        String fileName = String.format("%s.json",remoteForm.getFormTemplateId());
-                        ContainedForm localForm = GsonUtil.jsonToBean(FormJsonFileUtil.loadJSONFromAsset(AdskApplication.getInstance(),fileName),ContainedForm.class);
-                        localForm.applyFormData(remoteForm);
-                        mFormList.add(localForm);
+                        HashMap remoteMap = (HashMap) data.get(i);
+                        String fileName = String.format("%s.json",remoteMap.get("form_template_id"));
+                        HashMap templateMap = (HashMap) FormJsonFileUtil.jsonObj2Map(FormJsonFileUtil.loadJSONDataFromAsset(AdskApplication.getInstance(),fileName));
+                        ContainedForm form = new ContainedForm(templateMap);
+                        form.applyFormData(remoteMap);
+                        mFormList.add(form);
                     }
                     callBack.onLoadSuccess(mFormList);
                 }
@@ -60,6 +62,7 @@ public class FormRepository implements FormDataSource {
 
     @Override
     public void updateRemoteFormItems(@NonNull LoadDataCallback callBack, String projectId, String taskId, List<ContainedForm> forms) {
+
 
     }
 

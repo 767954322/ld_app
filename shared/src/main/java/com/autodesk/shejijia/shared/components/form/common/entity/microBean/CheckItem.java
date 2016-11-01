@@ -1,10 +1,13 @@
 package com.autodesk.shejijia.shared.components.form.common.entity.microBean;
 
+import com.autodesk.shejijia.shared.components.common.utility.CastUtils;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by t_panya on 16/10/24.
@@ -14,14 +17,13 @@ public class CheckItem implements Serializable {
     private String category;
     private String title;
     private String standard;
+
     @SerializedName("item_id")
     private String itemId;
     @SerializedName("check_type")
     private String checkType;
-    private ArrayList<String> checkOptions;
     @SerializedName("action_type")
     private String actionType;
-    private ArrayList<String> actionOptions;
     @SerializedName("action_visibility")
     private Boolean actionVisibility;
     @SerializedName("action_changeability")
@@ -29,18 +31,14 @@ public class CheckItem implements Serializable {
     @SerializedName("item_type")
     private String itemType;
     @SerializedName("acceptance_criteria")
-    private ArrayList<Integer> acceptanceCriteria;
+    private List<Integer> acceptanceCriteria;
     @SerializedName("comment_conditions")
-    private ArrayList<Integer> commentConditions;
-    private ArrayList<FeedBack> value;
 
-    public ArrayList<FeedBack> getValue() {
-        return value;
-    }
-
-    public void setValue(ArrayList<FeedBack> value) {
-        this.value = value;
-    }
+    private List<Integer> commentConditions;
+    private FormFeedBack formFeedBack;
+    private HashMap itemTypeDict;
+    private List<String> checkOptions;
+    private List<String> actionOptions;
 
     public String getCategory() {
         return category;
@@ -130,7 +128,32 @@ public class CheckItem implements Serializable {
         this.commentConditions = commentConditions;
     }
 
-    public void exChangeLocal(){
+    public CheckItem(HashMap map){
+        this.itemTypeDict = (HashMap) map.get("type_dict");
+        this.itemId = (String) map.get("item_id");
+        this.title = (String) map.get("title");
+        this.category = (String) map.get("category");
+        this.standard = (String) map.get("standard");
+        this.checkType = (String) map.get("check_type");
+        this.actionType = (String) map.get("action_type");
+        this.itemType = (String) map.get("item_type");
+        this.checkOptions = CastUtils.cast(itemTypeDict.get(checkType));
+        this.actionOptions = CastUtils.cast(itemTypeDict.get(actionType));
+        this.commentConditions = CastUtils.cast(map.get("comment_conditions"));
+        this.acceptanceCriteria = CastUtils.cast(map.get("acceptance_criteria"));
+        this.actionVisibility = (Boolean) map.get("action_visibility");
+        this.actionChangeability = (Boolean) map.get("action_changeability");
+        List<Map> values = CastUtils.cast(map.get("values"));
+
+        if("hollowness".equals(itemType)){
+            // TODO: 16/11/1
+        }else {
+            formFeedBack = new FormFeedBack(values);
+        }
+    }
+
+    public void applyItemValue(List<Map> values){
+        formFeedBack.applyInitData(values);
 
     }
 

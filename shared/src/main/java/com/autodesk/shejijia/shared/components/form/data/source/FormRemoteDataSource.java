@@ -40,8 +40,8 @@ public class FormRemoteDataSource implements FormDataSource {
             }
             @Override
             public void onResponse(JSONArray jsonArray) {
-                List modelList = FormJsonFileUtil.jsonArray2ModelList(jsonArray, ContainedForm.class);
-                callBack.onLoadSuccess(modelList);
+                List jsonMapList = FormJsonFileUtil.jsonArray2List(jsonArray);
+                callBack.onLoadSuccess(jsonMapList);
             }
         });
     }
