@@ -2,18 +2,15 @@ package com.autodesk.shejijia.shared.components.form.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
-import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
-import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
+import com.autodesk.shejijia.shared.components.form.data.OtherRepository;
 import com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity;
 import com.autodesk.shejijia.shared.components.form.ui.activity.QRCodeActivity;
-
-import org.json.JSONObject;
 
 
 /**
@@ -44,40 +41,29 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
     public void ConfirmProject() {
         String projectId = mView.getProjectId();
         if (TextUtils.isEmpty(projectId)) {
-            mView.showError(null);
+            mView.showError("项目编码不能为空,请重新输入");
             return;
         }
         Long id = Long.valueOf(projectId);
-     /*   ConstructionHttpManager.getInstance().getProjectDetails(id, mToken, false,new OkJsonRequest.OKResponseCallback() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                mView.showError(volleyError.toString());
-            }
 
+        Bundle params = new Bundle();
+        params.putLong("pid",id);
+        params.putString("token",mToken);
+        OtherRepository.getInstance().getProjectDetail(new LoadDataCallback<Project>() {
             @Override
-            public void onResponse(JSONObject jsonObject) {
-                Project projectBean = GsonUtil.jsonToBean(jsonObject.toString(), Project.class);
+            public void onLoadSuccess(Project data) {
                 Intent intent = new Intent(mContext,ProjectInfoActivity.class);
-                intent.putExtra("projectBean",projectBean);
+                intent.putExtra("projectBean",data);
                 mContext.startActivity(intent);
-                mView.dismiss();  //自身界面的消失
+                mView.dismiss();
             }
-        });*/
 
-//        FormRepository.getInstance().getProjectDetails(id, new LoadDataCallback<ProjectBean>() {
-//            @Override
-//            public void onLoadSuccess(ProjectBean data) {
-//                Intent intent = new Intent(mContext,ProjectInfoActivity.class);
-//                intent.putExtra("projectBean",data);
-//                mContext.startActivity(intent);
-//                mView.dismiss();  //自身界面的消失
-//            }
-//
-//            @Override
-//            public void onLoadFailed(String errorMsg) {
-//                mView.showError(errorMsg);
-//            }
-//        });
+            @Override
+            public void onLoadFailed(String errorMsg) {
+                mView.showNetError(errorMsg);
+            }
+        },params);
+
     }
 
     @Override

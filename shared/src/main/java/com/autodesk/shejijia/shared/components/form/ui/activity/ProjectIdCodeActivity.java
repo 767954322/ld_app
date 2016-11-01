@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -95,17 +94,13 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
 
 
     @Override
-    public void showNetError(String msg) {
-
+ public void showNetError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showError(String msg) {
-        if(TextUtils.isEmpty(msg)) {
-            Toast.makeText(this,"项目编码不能为空,请重新输入",Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "项目编码不正确,请重新输入", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override

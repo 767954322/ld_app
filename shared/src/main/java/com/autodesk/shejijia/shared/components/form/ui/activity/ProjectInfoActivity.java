@@ -9,6 +9,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectInfoContract;
+import com.autodesk.shejijia.shared.components.form.data.OtherRepository;
 import com.autodesk.shejijia.shared.components.form.presenter.ProjectInfoPresenter;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -102,6 +103,7 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     public void selectCancel() {
+        OtherRepository.getInstance().clearProject();
         startActivity(new Intent(this,ProjectIdCodeActivity.class));
         finish();
     }
