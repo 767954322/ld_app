@@ -3,6 +3,7 @@ package com.autodesk.shejijia.enterprise.nodeprocess.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
         toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
         toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_ico);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -86,4 +88,18 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
         }
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

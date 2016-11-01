@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/project_toolbar_info"
+        android:title="@string/menu_project_info"
+        android:icon="@mipmap/sort"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/project_toolbar_message"
+        android:title="@string/menu_project_message"
+        android:icon="@mipmap/sort"
+        app:showAsAction="ifRoom"/>
+</menu>
