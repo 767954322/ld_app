@@ -54,21 +54,33 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectDetails(final Bundle requestParams, final String requestTag, @NonNull final LoadDataCallback callback) {
+    public void getProjectTaskData(final Bundle requestParams, final String requestTag, @NonNull final LoadDataCallback<ProjectInfo> callback) {
         ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                LogUtils.d("ProjectDetails--", jsonObject + "");
+                LogUtils.d("ProjectDetails--taskDetailsList", jsonObject + "");
                 String result = jsonObject.toString();
-                boolean isHasTaskData = requestParams.getBoolean("task_data");
+                ProjectInfo projectInfo = GsonUtil.jsonToBean(result, ProjectInfo.class);
+                callback.onLoadSuccess(projectInfo);
+            }
 
-                if (isHasTaskData) {//含有任务详情的
-                    ProjectInfo projectInfo = GsonUtil.jsonToBean(result, ProjectInfo.class);
-                    callback.onLoadSuccess(projectInfo);
-                } else {//不含任务详情的
-                    Project project = GsonUtil.jsonToBean(result, Project.class);
-                    callback.onLoadSuccess(project);
-                }
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onLoadFailed(volleyError.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<Project> callback) {
+        ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("ProjectDetails--taskIdList", jsonObject + "");
+                String result = jsonObject.toString();
+                Project project = GsonUtil.jsonToBean(result, Project.class);
+                callback.onLoadSuccess(project);
             }
 
             @Override

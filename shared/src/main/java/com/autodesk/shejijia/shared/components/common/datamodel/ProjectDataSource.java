@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.datamodel;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
@@ -19,8 +20,13 @@ public interface ProjectDataSource {
     void getProjectList(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectList> callback);
 
     /*
-    * 获取项目详情
+    * 获取项目详情－－含任务详情列表
     * */
-    void getProjectDetails(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectInfo> callback);
+    void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectInfo> callback);
+
+    /*
+    * 获取项目详情－－含任务id列表
+    * */
+    void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<Project> callback);
 
 }

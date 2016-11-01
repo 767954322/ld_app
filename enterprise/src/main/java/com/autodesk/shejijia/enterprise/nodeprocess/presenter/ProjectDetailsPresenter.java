@@ -48,7 +48,7 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     private void getProjectDetailsData(Bundle requestParams) {
-        mProjectRepository.getProjectDetails(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new LoadDataCallback<ProjectInfo>() {
+        mProjectRepository.getProjectTaskData(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new LoadDataCallback<ProjectInfo>() {
             @Override
             public void onLoadSuccess(ProjectInfo data) {
                 mProjectDetailsView.hideLoading();
