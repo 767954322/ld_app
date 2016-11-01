@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
-import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.tools.zxing.camera.CameraManager;
 import com.autodesk.shejijia.shared.components.common.tools.zxing.decoding.CaptureActivityHandler;
 import com.autodesk.shejijia.shared.components.common.tools.zxing.decoding.InactivityTimer;
 import com.autodesk.shejijia.shared.components.common.tools.zxing.view.ViewfinderView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
+import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
@@ -179,7 +179,7 @@ public class CaptureQrActivity extends NavigationBarActivity implements Callback
         }
     }
 
-    private void playBeepSoundAndVibrate() {
+    protected void playBeepSoundAndVibrate() {
         if (playBeep && mediaPlayer != null) {
             mediaPlayer.start();
         }
@@ -251,13 +251,13 @@ public class CaptureQrActivity extends NavigationBarActivity implements Callback
 
     private ViewfinderView viewfinderView;
     private AlertView mAlertViewExt;//窗口拓展例子
-    private InactivityTimer inactivityTimer;
+    protected InactivityTimer inactivityTimer;
     private MediaPlayer mediaPlayer;
 
     private boolean playBeep;
     private boolean hasSurface;
     private boolean vibrate;
     private String characterSet;
-    private CaptureActivityHandler handler;
+    protected CaptureActivityHandler handler;
     private Vector<BarcodeFormat> decodeFormats;
 }

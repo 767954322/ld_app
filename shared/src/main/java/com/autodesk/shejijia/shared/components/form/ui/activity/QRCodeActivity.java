@@ -1,12 +1,16 @@
 package com.autodesk.shejijia.shared.components.form.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
+import com.google.zxing.Result;
 
 /**
  * Created by t_aij on 16/10/25.
@@ -30,10 +34,27 @@ public class QRCodeActivity extends CaptureQrActivity {
         rightText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QRCodeActivity.this,ProjectIdCodeActivity.class));
+                startActivity(new Intent(QRCodeActivity.this, ProjectIdCodeActivity.class));
                 finish();
             }
         });
 
     }
+
+    @Override
+    public void handleDecode(Result result, Bitmap barcode) {
+        // TODO: 16/11/1 处理返回的数据 以及对应的弹框显示
+        inactivityTimer.onActivity();
+        playBeepSoundAndVibrate();
+        String projectId = result.getText();
+        if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
+            Log.d("asdf", projectId);
+        } else {
+            startActivity(new Intent(this,ThemeDialogActivity.class));
+            return;
+        }
+        finish();
+
+    }
+
 }
