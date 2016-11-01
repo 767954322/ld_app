@@ -105,6 +105,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private static final int CROP_SMALL_PICTURE_1 = 6;//截图
 
     private int is_validated_by_mobile;
+    private int is_validated_by_email;
 
     @Override
     protected int getLayoutResId() {
@@ -157,14 +158,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
         showState();
 
-        /**
-         * 邮箱为空时需要单独判断
-         */
-        if (TextUtils.isEmpty(email)) {
-            mTvEmail.setText(getResources().getString(R.string.no_email));
-        } else {
-            mTvEmail.setText(email);
-        }
+
         setGender();
     }
 
@@ -241,6 +235,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             return;
         }
         is_validated_by_mobile = mConsumerEssentialInfoEntity.getIs_validated_by_mobile();
+        is_validated_by_email = mConsumerEssentialInfoEntity.getIs_email_binding();
         avatar = mConsumerEssentialInfoEntity.getAvatar();
         user_name = mConsumerEssentialInfoEntity.getHitachi_account();
         mobile_number = mConsumerEssentialInfoEntity.getMobile_number();
@@ -285,6 +280,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 mTvConsumerPhone.setText(mobile_number);
             }
         }
+
+        if (0==is_validated_by_email||2==is_validated_by_email){
+            mTvEmail.setText(getResources().getString(R.string.no_email));
+        }else {
+            mTvEmail.setText(email);
+        }
+
 
         /**
          * 所在地
