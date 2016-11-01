@@ -79,7 +79,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_store_location:
-                StoreLocationActivity.jumpTo(mContext);
+                StoreLocationActivity.jumpTo(mContext,"0");
                 break;
         }
     }
