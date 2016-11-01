@@ -51,13 +51,13 @@ public class ProjectDetailsFragment extends BaseEnterpriseFragment implements Pr
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.project_details_menu,menu);
+        inflater.inflate(R.menu.project_details_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        
-        switch (item.getItemId()){
+
+        switch (item.getItemId()) {
             case R.id.project_toolbar_info:
                 ToastUtils.showShort(mContext, "projectInfo");
                 // TODO: 11/1/16  跳转到项目信息页面
@@ -67,7 +67,7 @@ public class ProjectDetailsFragment extends BaseEnterpriseFragment implements Pr
                 // TODO: 11/1/16  跳转到消息中心页面 
                 break;
         }
-        
+
         return super.onOptionsItemSelected(item);
     }
 }

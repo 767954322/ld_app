@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@android:color/transparent"
-        android:src="@mipmap/close"
+        android:src="@drawable/close"
         tools:ignore="ContentDescription" />
 </RelativeLayout>

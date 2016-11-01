@@ -59,12 +59,12 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         mSessionBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_session);
         mBottomGroup = (RadioGroup) this.findViewById(R.id.rdoGrp_project_list);
         //toolBar
-        toolbar = (Toolbar)this.findViewById(R.id.toolbar_topBar);
+        toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
         //self define toolbar title
-        toolbarTitle = (TextView)toolbar.findViewById(R.id.tv_toolbar_title);
+        toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
         setSupportActionBar(toolbar);
         // 显示导航按钮
-        toolbar.setNavigationIcon(R.mipmap.default_head);
+        toolbar.setNavigationIcon(R.drawable.default_head);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -91,7 +91,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
                         // TODO: 10/25/16  get date from calendar and set data to taskListFragment
                         ToastUtils.showShort(EnterpriseHomeActivity.this, "title");
                         TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(ConstructionConstants.TASK_LIST_FRAGMENT);
-                        if (taskListFragment != null){
+                        if (taskListFragment != null) {
                             taskListFragment.refreshProjectListByDate("2016-10-25");
                         }
                     }
@@ -119,13 +119,13 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
                 if (mMemberEntity != null) {
                     intent = new Intent(this, PersonalCenterActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     intent = new Intent(this, RegisterOrLoginActivity.class);
                     startActivity(intent);
                 }
                 break;
             default:
-               break;
+                break;
         }
 
         return super.onOptionsItemSelected(item);

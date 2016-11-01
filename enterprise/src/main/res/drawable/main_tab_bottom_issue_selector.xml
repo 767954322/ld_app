@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@mipmap/question_a" android:state_pressed="true"/>
-    <item android:drawable="@mipmap/question_b" android:state_checked="true"/>
-    <item android:drawable="@mipmap/question_a" />
+    <item android:drawable="@drawable/question_a" android:state_pressed="true"/>
+    <item android:drawable="@drawable/question_b" android:state_checked="true"/>
+    <item android:drawable="@drawable/question_a" />
 </selector>
