@@ -5,7 +5,7 @@
     <string name="main_tab_task">任务</string>
     <string name="main_tab_issue">问题</string>
     <string name="main_tab_session">群聊</string>
-    
+
     <!-- projectDetails bottom tab-->
     <string name="project_details_tab_patrol">巡查</string>
     <string name="project_details_tab_issue">问题</string>
@@ -38,7 +38,28 @@
     <string name="toolbar_question_title">问题列表</string>
     <string name="toolbar_groupChat_title">群聊列表</string>
 
-
+    <!--有问题有更新 text-->
     <string name="has_question">有问题</string>
     <string name="has_update">有更新</string>
+
+    <!--项目列表adapter里对应的施工状态-->
+    <string name="project_open">开工交底</string>
+    <string name="project_ready">排期完毕</string>
+    <string name="project_inProgress">施工阶段</string>
+    <string name="project_completion">完成</string>
+
+    <!--任务列表adapter里对应的施工状态-->
+    <string name="task_open">未开始</string>
+    <string name="task_reserving">待预约</string>
+    <string name="task_inProgress">进行中</string>
+    <string name="task_delayed">已延期</string>
+    <string name="task_qualified">合格</string>
+    <string name="task_unqualified">不合格</string>
+    <string name="task_resolved">验收通过</string>
+    <string name="task_rejected">验收拒绝</string>
+    <string name="task_reinspection">强制复验</string>
+    <string name="task_rectification">监督整改</string>
+    <string name="task_reinspecting">复验中</string>
+
+
 </resources>
