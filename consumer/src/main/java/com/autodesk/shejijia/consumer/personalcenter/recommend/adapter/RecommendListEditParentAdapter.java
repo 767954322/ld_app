@@ -54,7 +54,15 @@ public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDB
         });
 
         ListViewForScrollView childListView = holder.getView(R.id.lv_child_brand_view);
+
         List<RecommendBrandsBean> brands = recommendSCFDBean.getBrands();
+
+        for (RecommendBrandsBean currentBrand : brands) {
+            currentBrand.setCategory_3d_id(recommendSCFDBean.getCategory_3d_id());
+            currentBrand.setCategory_3d_name(recommendSCFDBean.getCategory_3d_name());
+            currentBrand.setSub_category_3d_id(recommendSCFDBean.getSub_category_3d_id());
+            currentBrand.setSub_category_3d_name(recommendSCFDBean.getSub_category_3d_name());
+        }
         RecommendListEditChildAdapter recommendListEditChildAdapter = new RecommendListEditChildAdapter((Activity) mContext, brands);
         childListView.setAdapter(recommendListEditChildAdapter);
     }

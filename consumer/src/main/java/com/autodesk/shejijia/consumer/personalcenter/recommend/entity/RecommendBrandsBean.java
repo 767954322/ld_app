@@ -21,6 +21,43 @@ public class RecommendBrandsBean {
     private List<RecommendMallsBean> malls;
     private List<?> commoditys;      // sku列表．
 
+    private String sub_category_3d_id;
+    private String category_3d_name; // 3d工具一级品类名称．
+    private String sub_category_3d_name;
+    private String category_3d_id;
+
+    public String getSub_category_3d_id() {
+        return sub_category_3d_id;
+    }
+
+    public void setSub_category_3d_id(String sub_category_3d_id) {
+        this.sub_category_3d_id = sub_category_3d_id;
+    }
+
+    public String getCategory_3d_name() {
+        return category_3d_name;
+    }
+
+    public void setCategory_3d_name(String category_3d_name) {
+        this.category_3d_name = category_3d_name;
+    }
+
+    public String getSub_category_3d_name() {
+        return sub_category_3d_name;
+    }
+
+    public void setSub_category_3d_name(String sub_category_3d_name) {
+        this.sub_category_3d_name = sub_category_3d_name;
+    }
+
+    public String getCategory_3d_id() {
+        return category_3d_id;
+    }
+
+    public void setCategory_3d_id(String category_3d_id) {
+        this.category_3d_id = category_3d_id;
+    }
+
     public String getBrand_name() {
         return brand_name;
     }
