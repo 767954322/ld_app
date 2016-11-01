@@ -203,6 +203,7 @@ public class JsonConstants {
     public static final String JSON_PACKAGES_EXPENSE_BUDGET = "expense_budget";
     public static final String JSON_PACKAGES_PKG = "pkg";
     public static final String JSON_PACKAGES_PKG_NAME = "pkg_name";
+    public static final String JSON_PACKAGES_PKG_CUSTOMER_ID = "customer_id";
 
     //大师预约表单
     public static final String JSON_MASTER_CONSUMER_NAME = "consumer_name";

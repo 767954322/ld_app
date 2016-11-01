@@ -232,6 +232,7 @@ public class ReservationFormActivity extends NavigationBarActivity implements Vi
             jsonObject.put(JsonConstants.JSON_PACKAGES_EXPENSE_BUDGET, mDecorationBudget);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PKG, item_num);///mCurrentProvince
             jsonObject.put(JsonConstants.JSON_PACKAGES_PKG_NAME, item_name);///mCurrentProvince
+            jsonObject.put(JsonConstants.JSON_PACKAGES_PKG_CUSTOMER_ID, acs_member_id);//customer_id
         } catch (JSONException e) {
             e.printStackTrace();
         }
