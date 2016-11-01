@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/home_toolbar_search"
-        android:title="@string/menu_search"
+    <item android:id="@+id/project_toolbar_info"
+        android:title="@string/menu_project_info"
         android:icon="@drawable/sort"
         app:showAsAction="always"/>
 
-    <item android:id="@+id/home_toolbar_screen"
-        android:title="@string/menu_screen"
+    <item android:id="@+id/project_toolbar_message"
+        android:title="@string/menu_project_message"
         android:icon="@drawable/sort"
         app:showAsAction="ifRoom"/>
 </menu>

@@ -36,7 +36,7 @@ public class ConstructionConstants {
     public static final String LOAD_MORE_EVENT = "loadMore";
 
     //项目列表请求tag
-    public final static String REQUEST_TAG_LOAD_PROJECTS = "project_list"; //项目列表请求接口的requestTag
+    public  static final String REQUEST_TAG_LOAD_PROJECTS = "project_list"; //项目列表请求接口的requestTag
     public static final String PROJECT_LIST_BY_DATE = "projectLists_by_date"; //根据日期查询列表的标记
     public static final String PROJECT_LIST_BY_STATUS = "projectLists_by_status"; //根据状态查询列表的标记
     public static final String PROJECT_LIST_BY_LIKE = "projectLists_by_like"; //根据是否星标查询列表的标记
@@ -45,4 +45,7 @@ public class ConstructionConstants {
     public static final String PROJECT_STATUS_COMPLETE = "COMPLETED";//已完成
     public static final String PROJECT_STATUS_UNCOMPLETE = "UNCOMPLETED";//未完成
     public static final String PROJECT_STATUS_INPROGRESS = "INPROGRESS";//进行中
+
+    //项目详情请求tag
+    public static final String REQUEST_TAG_GET_PROJECT_DETAILS = "project_details";
 }

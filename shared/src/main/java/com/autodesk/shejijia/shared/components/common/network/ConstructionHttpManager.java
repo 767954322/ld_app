@@ -82,7 +82,7 @@ public class ConstructionHttpManager {
 
 
     /*
-    * 按日期查询任务列表
+    * 获取项目列表的接口
     * requestUrl 查询的请求url
     * token 当前登陆用户的access token
     * callback 请求回调接口
@@ -105,6 +105,9 @@ public class ConstructionHttpManager {
 
     /*
     * 获取 plan 详情的接口,里面包括项目列表里的任务列表
+    * requestUrl 查询的请求url
+    * token 当前登陆用户的access token
+    * callback 请求回调接口
     * */
     public void getPlanDetails(final long pid,
                                final String token,
@@ -126,24 +129,23 @@ public class ConstructionHttpManager {
     }
 
     /*
-    * 获取 project 详情的接口,含 task 详情的
+    * 获取项目详情的接口
+    * requestUrl 查询的请求url
+    * token 当前登陆用户的access token
+    * callback 请求回调接口
     * */
-    public void getProjectDetails(final long pid,
-                                  final String token,
-                                  final boolean isTaskDetail,
+    public void getProjectDetails(@NonNull Bundle requestParams, @Nullable String requestTag,
                                   OkJsonRequest.OKResponseCallback callback) {
-        String url = ConstructionConstants.BASE_URL + "/projects"
-                + "/" + pid
-                + "?task_data=" + isTaskDetail;
-        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+        String requestUrl = UrlUtils.buildUrl(ConstructionConstants.BASE_URL + "/users/projects?", requestParams);
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", token);
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
             }
         };
-        NetRequestManager.getInstance().addRequest(okRequest);
+        NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 }

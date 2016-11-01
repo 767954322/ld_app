@@ -51,7 +51,7 @@
 
             <TextView
                 android:layout_margin="@dimen/spacing_margin_micro"
-                android:drawableStart="@mipmap/date"
+                android:drawableStart="@drawable/date"
                 android:gravity="center_vertical"
                 android:drawablePadding="@dimen/spacing_padding_normal"
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
 
             <TextView
                 android:layout_margin="@dimen/spacing_margin_micro"
-                android:drawableStart="@mipmap/location"
+                android:drawableStart="@drawable/location"
                 android:gravity="center_vertical"
                 android:drawablePadding="@dimen/spacing_padding_normal"
                 android:layout_width="match_parent"
@@ -75,7 +75,7 @@
 
             <TextView
                 android:layout_margin="@dimen/spacing_margin_micro"
-                android:drawableStart="@mipmap/company"
+                android:drawableStart="@drawable/company"
                 android:gravity="center_vertical"
                 android:drawablePadding="@dimen/spacing_padding_normal"
                 android:layout_width="match_parent"
