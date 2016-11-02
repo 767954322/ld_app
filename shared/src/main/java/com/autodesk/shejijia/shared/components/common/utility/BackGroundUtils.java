@@ -10,7 +10,7 @@ import android.view.WindowManager;
  * 对 window 窗体变暗变亮动画设置工具类
  */
 
-public class BackgroundUtils {
+public class BackGroundUtils {
 
     /*
     * 窗口背景变暗

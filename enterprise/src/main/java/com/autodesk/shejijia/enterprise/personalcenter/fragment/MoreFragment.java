@@ -16,7 +16,7 @@ import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
 import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
-import com.autodesk.shejijia.shared.components.common.utility.BackgroundUtils;
+import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 
 /**
  * Created by t_xuz on 8/30/16.
@@ -132,12 +132,12 @@ public class MoreFragment extends BaseEnterpriseFragment implements View.OnClick
         bottomPopUp.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                BackgroundUtils.dimBackground(mContext, 0.7f, 1.0f);
+                BackGroundUtils.dimBackground(mContext, 0.7f, 1.0f);
             }
         });
         View view = (((Activity) mContext).findViewById(android.R.id.content)).getRootView();
         bottomPopUp.setAnimationStyle(R.style.pop_bottom_animation);
-        BackgroundUtils.dimBackground(mContext, 1.0f, 0.7f);
+        BackGroundUtils.dimBackground(mContext, 1.0f, 0.7f);
         bottomPopUp.showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 
