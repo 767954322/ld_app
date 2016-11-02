@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -9,6 +10,9 @@ import android.widget.Toast;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.AddBrandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.ChangeBrandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.ListViewForScrollView;
@@ -25,9 +29,10 @@ import java.util.List;
 public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDBean> {
     private LayoutInflater mInflater;
 
+    private Activity activity;
     public RecommendListEditParentAdapter(Context context, List<RecommendSCFDBean> datas) {
         super(context, datas, R.layout.item_recommend_list_parent_brand);
-
+        this.activity =(Activity)context;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -44,7 +49,11 @@ public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDB
         holder.setOnClickListener(R.id.tv_create_brand, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "添加品牌", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity, AddBrandActivity.class);
+                intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN,recommendSCFDBean);
+                activity.startActivityForResult(intent,22);
+
+//                Toast.makeText(mContext, "添加品牌", Toast.LENGTH_SHORT).show();
             }
         });
 

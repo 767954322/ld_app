@@ -17,10 +17,10 @@ import java.util.List;
  * Created by luchongbin on 16-11-1.
  */
 
-public class UpdataBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
+public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
     private Context context;
 
-    public UpdataBrandAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId) {
+    public ChanageBrandAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId) {
         super(context, datas, layoutId);
         this.context = context;
     }

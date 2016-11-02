@@ -616,11 +616,9 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
         <activity android:name=".personalcenter.recommend.activity.SelectProjectActivity" />
-   
         <activity
             android:name=".personalcenter.recommend.activity.RecommendListDetailActivity"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+            android:windowSoftInputMode="adjustPan"/>
         <!-- 配置glide图片框架的内存缓存和磁盘缓存规则 -->
         <meta-data
             android:name="com.autodesk.shejijia.consumer.frame.image.CustomCachingGlideModule"
@@ -628,6 +626,11 @@
         <!-- 配置glide图片框架的内存缓存和磁盘缓存规则 -->
         <activity
             android:name=".personalcenter.recommend.activity.ChangeBrandActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".personalcenter.recommend.activity.AddBrandActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />

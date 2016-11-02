@@ -985,6 +985,7 @@
     <!--店面展示-->
     <string name="store_show_title">店面</string>
     <string name="title_activity_updata_brand">UpdataBrandActivity</string>
+    <string name="title_activity_add_brand">AddBrandActivity</string>
 
 
 </resources>

@@ -4,46 +4,46 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ChanageBrandAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.AddBrandAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by luchongbin on 16-11-1.
- */
-public class ChangeBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
-            OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener{
-    private ListView updataBrandListview;
+public class AddBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
+        OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener{
+    private PullListView addBrandListview;
     private PullToRefreshLayout mPullToRefreshLayout;
     private List<RecommendBrandsBean> brandsBeanList;
-    private ChanageBrandAdapter updataBrandAdapter;
-    private Boolean isRefresh = true;
-    private Boolean isFinish = false;
     private RecommendSCFDBean transmissionBean;
-    private RecommendBrandsBean selectRecommendBrandsBean;
+    private AddBrandAdapter addBrandAdapter;
+    private Boolean isRefresh = true;
+
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_updata_brand;
+        return R.layout.activity_add_brand;
     }
+
     @Override
     protected void initView() {
         super.initView();
-        updataBrandListview = (ListView)findViewById(R.id.updata_brand_listview);
-        mPullToRefreshLayout = ((PullToRefreshLayout)findViewById(R.id.refresh_view));
+        addBrandListview = (PullListView)findViewById(R.id.add_brand_listview);
+        mPullToRefreshLayout = ((PullToRefreshLayout)findViewById(R.id.refresh_addbrand_view));
     }
     @Override
     protected void initExtraBundle() {
@@ -51,74 +51,49 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         Intent intent = getIntent();
         transmissionBean = (RecommendSCFDBean)intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
     }
+
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         brandsBeanList = new ArrayList<>();
-        updataBrandAdapter = new ChanageBrandAdapter(this,brandsBeanList,R.layout.select_check_textview);
-        updataBrandListview.setAdapter(updataBrandAdapter);
         setNavigationBar();
+        addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,R.layout.add_check_textview);
+        addBrandListview.setAdapter(addBrandAdapter);
+//        getBrands(0,10);
         mPullToRefreshLayout.autoRefresh();
     }
-
 
     @Override
     protected void initListener() {
         super.initListener();
         mPullToRefreshLayout.setOnRefreshListener(this);
-        updataBrandListview.setOnItemClickListener(this);
-    }
-    private  void getBrands(int offset, int limit){
-        MPServerHttpManager.getInstance().getCategoryBrandsInformation("","","","","","",offset,limit,this);
+        addBrandListview.setOnItemClickListener(this);
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
-        selectRecommendBrandsBean = brandsBeanList.get(position);
-        isFinish = true;
+        long[] ss = addBrandListview.getCheckedItemIds();
+        ToastUtil.showCustomToast(this,ss.length+"");
+    }
+    private void setNavigationBar() {
+        setTitleForNavbar(transmissionBean.getSub_category_3d_name());
+//        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
+//        setTextColorForRightNavButton(UIUtils.getColor(R.color.actionsheet_gray));
     }
 
-    @Override
-    protected void rightNavButtonClicked(View view) {
-        if(isFinish){
-            Intent intent = new Intent();
-            intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,selectRecommendBrandsBean);
-            setResult(RESULT_OK,intent);
-            finish();
-        }
-    }
 
     @Override
     public void onResponse(JSONObject jsonObject) {
         String jsonString = jsonObject.toString();
         RecommendSCFDBean recommendSCFDBean =  GsonUtil.jsonToBean(jsonString,RecommendSCFDBean.class);
-        brandsBeanList.clear();//接口有问题，待修改
+        brandsBeanList.clear();
 //        if(isRefresh){
 //            brandsBeanList.clear();
 //        }
         filterBrand(recommendSCFDBean.getBrands());
-
     }
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         MPNetworkUtils.logError(TAG, volleyError);
-    }
-    private void filterBrand(List<RecommendBrandsBean> brandsBeans){
-        for(RecommendBrandsBean brandsBean:brandsBeans){
-            for(RecommendBrandsBean tb:transmissionBean.getBrands()){
-                if(brandsBean.getCode().equals(tb.getCode())){
-                    continue;
-                }
-                brandsBeanList.add(brandsBean);
-            }
-        }
-        updataBrandAdapter.notifyDataSetChanged();
-        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-    }
-    private void setNavigationBar() {
-        setTitleForNavbar(transmissionBean.getSub_category_3d_name());
-        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.actionsheet_gray));
     }
 
     @Override
@@ -130,6 +105,21 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
         isRefresh = false;
-        getBrands(updataBrandListview.getCount(),30);
+        getBrands(addBrandListview.getCount(),30);
+    }
+    private  void getBrands(int offset, int limit){
+        MPServerHttpManager.getInstance().getCategoryBrandsInformation("","","","","","",offset,limit,this);
+    }
+    private void filterBrand(List<RecommendBrandsBean> brandsBeans){
+        for(RecommendBrandsBean brandsBean:brandsBeans){
+            for(RecommendBrandsBean tb:transmissionBean.getBrands()){
+                if(brandsBean.getCode().equals(tb.getCode())){
+                    continue;
+                }
+                brandsBeanList.add(brandsBean);
+            }
+        }
+        addBrandAdapter.notifyDataSetChanged();
+        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 }
