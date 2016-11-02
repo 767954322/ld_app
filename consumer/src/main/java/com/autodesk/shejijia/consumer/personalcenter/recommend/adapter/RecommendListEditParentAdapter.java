@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDBean> {
     private LayoutInflater mInflater;
-    private List<String> mAllBrandsName = new ArrayList<>();
 
     public RecommendListEditParentAdapter(Context context, List<RecommendSCFDBean> datas) {
         super(context, datas, R.layout.item_recommend_list_parent_brand);
@@ -59,15 +58,6 @@ public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDB
         ListViewForScrollView childListView = holder.getView(R.id.lv_child_brand_view);
 
         List<RecommendBrandsBean> brands = recommendSCFDBean.getBrands();
-
-        for (RecommendBrandsBean currentBrand : brands) {
-            currentBrand.setCategory_3d_id(recommendSCFDBean.getCategory_3d_id());
-            currentBrand.setCategory_3d_name(recommendSCFDBean.getCategory_3d_name());
-            currentBrand.setSub_category_3d_id(recommendSCFDBean.getSub_category_3d_id());
-            currentBrand.setSub_category_3d_name(recommendSCFDBean.getSub_category_3d_name());
-            String brand_name = currentBrand.getBrand_name();
-            mAllBrandsName.add(brand_name);
-        }
         RecommendListEditChildAdapter recommendListEditChildAdapter = new RecommendListEditChildAdapter((Activity) mContext, brands,recommendSCFDBean);
         childListView.setAdapter(recommendListEditChildAdapter);
     }

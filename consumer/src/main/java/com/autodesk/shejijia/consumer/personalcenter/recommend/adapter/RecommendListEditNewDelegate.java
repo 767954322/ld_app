@@ -51,7 +51,10 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
         for (RecommendMallsBean mallsBean : recommendBrandsBean.getMalls()) {
             mallName.append(mallsBean.getMall_name() + "、");
         }
+        holder.setTag(R.id.et_brand_num, 111);
+
         holder.setText(R.id.tv_brand_name, recommendBrandsBean.getBrand_name());
+
         holder.setText(R.id.et_brand_num, recommendBrandsBean.getAmountAndUnit());
         holder.setText(R.id.et_brand_dimension, recommendBrandsBean.getDimension());
         holder.setText(R.id.et_brand_remarks, recommendBrandsBean.getRemarks());
