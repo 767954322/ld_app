@@ -97,7 +97,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         tvc_designer_name.setEnabled(false);
         tvc_designer_phone.setEnabled(false);
         tvc_designer_email.setEnabled(false);
-        tvc_designer_decorate_address.setEnabled(false);
+//        tvc_designer_decorate_address.setEnabled(false);
 
         /* To prevent the pop-up keyboard */
         TextView textView = (TextView) findViewById(R.id.tv_prevent_edit_text);
@@ -242,7 +242,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
             tvc_total_cost.setText(designContractEntity.getContract_charge());
             tvc_first_cost.setText(designContractEntity.getContract_first_charge());
             tvc_consumer_local_area.setText(designContractBean.getAddr());
-            tvc_designer_decorate_address.setText(designContractBean.getAddr());
+            tvc_designer_decorate_address.setText(designContractBean.getAddrDe());
 
             if (designContractBean.getEmail().equals("null") || designContractBean == null) {
                 tvc_consumer_email.setText("");
@@ -337,7 +337,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 String consumer_addr = contract_detail.getAddr();
                 String consumer_mail = contract_detail.getEmail();
                 String tree_d_renderimage = contract_detail.getRender_map();
-                String designer_addr = contract_detail.getAddr();
+                String designer_addr = contract_detail.getAddrDe();
 
                 text = text.replace("#val(contract_number)", Validator.getStringWithNullDefaultString(contract_number, ""));
                 text = text.replace("#val(contract_date)", Validator.getStringWithNullDefaultString(contract_date, UIUtils.getString(R.string.data_null)));
@@ -541,7 +541,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         super.initListener();
         llbtn_see_contract_detail.setOnClickListener(this);
         btn_designer_submit_button.setOnClickListener(this);
-        tvc_consumer_local_area.setOnClickListener(this);
+//        tvc_consumer_local_area.setOnClickListener(this);
         btn_consumer_submit_button.setOnClickListener(this);
         tvc_first_cost.addTextChangedListener(new EditTextWatcher(tvc_first_cost));
         tvc_total_cost.addTextChangedListener(new EditTextWatcher(tvc_total_cost));
@@ -694,6 +694,7 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         String consumerEmail = tvc_consumer_email.getText().toString();
         String renderCount = tvc_treeD_render_count.getText().toString();
         String location_area = tvc_consumer_local_area.getText().toString();
+        String service_area = tvc_designer_decorate_address.getText().toString();
         boolean bValid = true;
 
         while (true) {
@@ -719,6 +720,12 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
 
             if (!Validator.isAddressValid(location_area)) { // 项目地址，服务地址长度为２－３２个字符长度
                 showAlertView(R.string.demand_please_project_address);
+                bValid = false;
+                break;
+            }
+
+            if (!Validator.isAddressValid(service_area)) { // 服务地址，服务地址长度为２－３２个字符长度
+                showAlertView(R.string.demand_please_service_address);
                 bValid = false;
                 break;
             }
@@ -840,12 +847,14 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
         String consumerPhone = tvc_consumer_phone.getText().toString();
         String consumerEmail = tvc_consumer_email.getText().toString();
 //        String renderCount = tvc_treeD_render_count.getText().toString();
-        String location_area = tvc_consumer_local_area.getText().toString();
+        String cusumer_location_area = tvc_consumer_local_area.getText().toString();
+        String desiner_location_area = tvc_designer_decorate_address.getText().toString();
 
         try {
             JSONObject jsonObj = new JSONObject();
             jsonObj.put(Constant.EstablishContractKey.NAME, consumerName);
-            jsonObj.put(Constant.EstablishContractKey.ADDR, location_area);
+            jsonObj.put(Constant.EstablishContractKey.ADDR, cusumer_location_area);
+            jsonObj.put(Constant.EstablishContractKey.ADDRDE, desiner_location_area);
             jsonObj.put(Constant.EstablishContractKey.MOBILE, consumerPhone);
             jsonObj.put(Constant.EstablishContractKey.EMAIL, consumerEmail);
             jsonObj.put(Constant.EstablishContractKey.RENDER_MAP, inputNum);
@@ -994,9 +1003,9 @@ public class FlowEstablishContractActivity extends BaseWorkFlowActivity implemen
                 tvc_last_cost.setText(df.format((dTotalCost - Double.parseDouble(firstCost))));
             }
 
-            if (view == tvc_consumer_local_area) { /// 监听项目地址，服务地址跟项目地址同步 .
-                tvc_designer_decorate_address.setText(s.toString());
-            }
+//            if (view == tvc_consumer_local_area) { /// 监听项目地址，服务地址跟项目地址同步 .
+//                tvc_designer_decorate_address.setText(s.toString());
+//            }
         }
 
         @Override
