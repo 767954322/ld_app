@@ -12,7 +12,7 @@
                android:layout_height="match_parent"
                android:layout_centerVertical="true"
                android:layout_marginLeft="@dimen/marginleft_parent"
-               android:src="@mipmap/back_gray"
+               android:src="@drawable/back_gray"
     />
 
     <TextView android:id="@+id/tv_center"

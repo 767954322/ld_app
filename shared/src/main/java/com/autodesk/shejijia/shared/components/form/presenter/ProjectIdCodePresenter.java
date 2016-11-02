@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
-import com.autodesk.shejijia.shared.components.form.data.OtherRepository;
+import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity;
 import com.autodesk.shejijia.shared.components.form.ui.activity.QRCodeActivity;
 
@@ -20,18 +20,10 @@ import com.autodesk.shejijia.shared.components.form.ui.activity.QRCodeActivity;
 public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
     private ProjectIdCodeContract.View mView;
     private Context mContext;
-    private String mToken;
 
     public ProjectIdCodePresenter(Context context, ProjectIdCodeContract.View view) {
         mView = view;
         mContext = context;
-
-        mToken = "587e1e6bd9c26875535868dec8e3045c";
-        //获取token
-//        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(mContext, Constants.USER_INFO);
-//        if (entity != null && !TextUtils.isEmpty(entity.getHs_accesstoken())) {
-//            XToken = "587e1e6bd9c26875535868dec8e3045c";
-//            XToken = entity.getHs_accesstoken();
         mView.setNavigationBar();
     }
 
@@ -44,12 +36,12 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
             mView.showError("项目编码不能为空,请重新输入");
             return;
         }
-        Long id = Long.valueOf(projectId);
+        Long pid = Long.valueOf(projectId);
 
         Bundle params = new Bundle();
-        params.putLong("pid",id);
-        params.putString("token",mToken);
-        OtherRepository.getInstance().getProjectDetail(new LoadDataCallback<Project>() {
+        params.putLong("pid",pid);
+
+        FormRepository.getInstance().getProjectTaskId(params, "", new LoadDataCallback<Project>() {
             @Override
             public void onLoadSuccess(Project data) {
                 Intent intent = new Intent(mContext,ProjectInfoActivity.class);
@@ -62,7 +54,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
             public void onLoadFailed(String errorMsg) {
                 mView.showNetError(errorMsg);
             }
-        },params);
+        });
 
     }
 

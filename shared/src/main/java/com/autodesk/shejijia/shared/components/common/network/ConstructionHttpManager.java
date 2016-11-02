@@ -136,7 +136,9 @@ public class ConstructionHttpManager {
     * */
     public void getProjectDetails(@NonNull Bundle requestParams, @Nullable String requestTag,
                                   OkJsonRequest.OKResponseCallback callback) {
-        String requestUrl = UrlUtils.buildUrl(ConstructionConstants.BASE_URL + "/users/projects?", requestParams);
+        long pid = requestParams.getLong("pid");
+        boolean task_data = requestParams.getBoolean("task_data", false);
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "?task_data=" + task_data;
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

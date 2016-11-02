@@ -1,12 +1,16 @@
 package com.autodesk.shejijia.shared.components.form.data;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
-import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
-import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
+import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
+import com.autodesk.shejijia.shared.components.common.entity.Project;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
+import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
+import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
+import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
 import com.autodesk.shejijia.shared.components.form.data.source.FormRemoteDataSource;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -19,8 +23,8 @@ import java.util.List;
  */
 
 public class FormRepository implements FormDataSource {
-
-    private static FormRepository INSTANCE = null;
+    private Project mProject;
+    private Task mTask;
 
     private List<ContainedForm> mFormList;
 
@@ -83,5 +87,33 @@ public class FormRepository implements FormDataSource {
 //            },fIds);
 //        }
 //    }
+
+    /**
+     * 获取到项目的详情(不包含具体的task)
+     * @param requestParams
+     * @param requestTag
+     * @param callback
+     */
+    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<Project> callback) {
+        if(null == mProject) {
+            ProjectRemoteDataSource.getInstance().getProjectTaskId(requestParams, requestTag, new LoadDataCallback<Project>() {
+                @Override
+                public void onLoadSuccess(Project data) {
+                    callback.onLoadSuccess(data);
+                }
+
+                @Override
+                public void onLoadFailed(String errorMsg) {
+                    callback.onLoadFailed(errorMsg);
+                }
+            });
+
+        } else {
+            callback.onLoadSuccess(mProject);
+        }
+    }
+
+
+
 
 }
