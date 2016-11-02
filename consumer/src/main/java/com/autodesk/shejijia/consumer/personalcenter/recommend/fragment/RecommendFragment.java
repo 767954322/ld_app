@@ -84,7 +84,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
         mListView = (ListViewFinal) rootView.findViewById(R.id.lv_recommend);
         mFrameLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
         mEmptyView = (LinearLayout) rootView.findViewById(R.id.empty_view);
-        mAdapter = new RecommendAdapter(getActivity(), mRecommends, R.layout.item_recommend, isDesign);
+        mAdapter = new RecommendAdapter(getActivity(), mRecommends, R.layout.item_recommend, true);
         mListView.setAdapter(mAdapter);
     }
 

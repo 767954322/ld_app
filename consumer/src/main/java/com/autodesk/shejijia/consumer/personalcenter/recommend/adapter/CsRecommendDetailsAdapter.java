@@ -35,6 +35,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> impleme
         holder.setText(R.id.tv_category_name, item.getSub_category_3d_name());
         LinearLayout llBrandView = holder.getView(R.id.ll_brand_view);
         List<ScfdEntity.BrandsBean> brands = item.getBrands();
+        llBrandView.removeAllViews();
         for (int i = 0; i < brands.size(); i++) {
             ScfdEntity.BrandsBean bean = brands.get(i);
             View mItemView;
@@ -79,7 +80,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> impleme
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_store_location:
-                StoreLocationActivity.jumpTo(mContext,"0");
+                StoreLocationActivity.jumpTo(mContext, "0");
                 break;
         }
     }

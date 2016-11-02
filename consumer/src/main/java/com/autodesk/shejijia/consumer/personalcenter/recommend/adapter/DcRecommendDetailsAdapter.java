@@ -39,6 +39,7 @@ public class DcRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> {
         holder.setText(R.id.tv_category_name, item.getSub_category_3d_name());
         LinearLayout llBrandView = holder.getView(R.id.ll_brand_view);
         List<ScfdEntity.BrandsBean> brands = item.getBrands();
+        llBrandView.removeAllViews();
         for (int i = 0; i < brands.size(); i++) {
             ScfdEntity.BrandsBean bean = brands.get(i);
             View mItemView;
