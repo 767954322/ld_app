@@ -1,6 +1,9 @@
 package com.autodesk.shejijia.consumer.personalcenter.resdecoration.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -8,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationListBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationNeedsListBean;
@@ -26,6 +30,7 @@ import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -58,7 +63,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     private RelativeLayout mRlEmpty;
     private ImageView mIvEmptyShow;
     private TextView mTvEmptyShow;
-
+    private RebuildFragmentReceiver mRebuildFragmentReceiver;
     private DecorationConsumerAdapter mDecorationConsumerAdapter;
     private List<DecorationNeedsListBean> mDecorationNeedsList = new ArrayList<>();
 
@@ -80,6 +85,9 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     protected void initData() {
         if (null == mDecorationConsumerAdapter) {
             mDecorationConsumerAdapter = new DecorationConsumerAdapter(getActivity(), mDecorationNeedsList);
+        }
+        if (null == mRebuildFragmentReceiver) {
+            registerBroadCast();
         }
         CustomProgress.show(getActivity(), "", false, null);
 
@@ -119,6 +127,7 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                         return;
                     } else {
                         mRlEmpty.setVisibility(View.GONE);
+                        mPlvConsumerDecoration.setSelection(0);
                     }
                 }
 
@@ -141,6 +150,9 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
     public void onDestroy() {
         super.onDestroy();
         CustomProgress.cancelDialog();
+        if (mRebuildFragmentReceiver != null) {
+            getActivity().unregisterReceiver(mRebuildFragmentReceiver);
+        }
     }
 
     private void updateViewFromData(DecorationListBean mDecorationListBean) {
@@ -199,5 +211,31 @@ public class DecorationConsumerFragment extends BaseFragment implements PullToRe
                 WkFlowStateMap.sWkFlowBeans = tip_work_flow_template;
             }
         });
+    }
+
+    public void rebuildFragment() {
+        LIMIT = 10;
+        OFFSET = 0;
+        onRefresh(mPullToRefreshLayout);
+    }
+
+    private void registerBroadCast() {
+        mRebuildFragmentReceiver = new RebuildFragmentReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
+        activity.registerReceiver(mRebuildFragmentReceiver, filter);
+    }
+
+    class RebuildFragmentReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equalsIgnoreCase(BroadCastInfo.LOGIN_ACTIVITY_FINISHED)) {
+                MemberEntity mMemberEntity = AdskApplication.getInstance().getMemberEntity();
+                if (mMemberEntity != null && Constant.UerInfoKey.CONSUMER_TYPE.equals(mMemberEntity.getMember_type())) {
+                    rebuildFragment();
+                }
+            }
+        }
     }
 }
