@@ -316,6 +316,7 @@ public class SolicitationDesignerActivity extends NavigationBarActivity implemen
         pvTime.setTime(new Date());
         pvTime.setCyclic(false);
         pvTime.setCancelable(false);
+        pvTime.setTitle(UIUtils.getString(R.string.demand_measure_house_time_title));
         pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
 
             @Override
