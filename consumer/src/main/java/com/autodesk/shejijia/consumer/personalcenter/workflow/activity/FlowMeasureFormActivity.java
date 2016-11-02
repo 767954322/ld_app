@@ -271,7 +271,7 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
             if (TextUtils.isEmpty(timerStr) || timerStr.equals("null")) {
                 tvc_measure_form_time.setText("");
             } else {
-                tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy年MM月dd日 HH点")); /// 量房时间 .
+                tvc_measure_form_time.setText(DateUtil.dateFormat(timerStr, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm")); /// 量房时间 .
             }
 
             boolean elite = isElite(wk_cur_template_id);
