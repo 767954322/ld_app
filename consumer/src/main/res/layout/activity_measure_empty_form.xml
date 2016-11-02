@@ -27,6 +27,7 @@
 
 
     <ScrollView
+        android:id="@+id/measure_empty_form_activity_sl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/line">

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -52,6 +54,8 @@ import java.util.Map;
  */
 public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnItemClickListener, View.OnClickListener, TextWatcher {
 
+    private ScrollView mScrollView;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_measure_empty_form;
@@ -63,6 +67,8 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         /* To prevent the pop-up keyboard */
         tvName = (TextView) findViewById(R.id.tvc_measure_form_name);
         tvPhone = (TextView) findViewById(R.id.tvc_measure_form_phone);
+
+        mScrollView = (ScrollView) findViewById(R.id.measure_empty_form_activity_sl);
 
         rl_house_charge_show = (RelativeLayout) findViewById(R.id.rl_house_charge_show);
         consumer_house_charge_show = (LinearLayout) findViewById(R.id.consumer_house_charge_show);
@@ -158,6 +164,22 @@ public class FlowMeasureFormActivity extends BaseWorkFlowActivity implements OnI
         tvIllustrate.setOnClickListener(this);
 
         tv_measure_form_designer_liangfangfeit.addTextChangedListener(this);
+        mScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                tv_measure_form_designer_liangfangfeit.clearFocus();
+                return false;
+            }
+        });
+        tv_measure_form_designer_liangfangfeit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                String free = tv_measure_form_designer_liangfangfeit.getText().toString().trim();
+                if (!hasFocus && TextUtils.isEmpty(free)){
+                    tv_measure_form_designer_liangfangfeit.setText("0.00");
+                }
+            }
+        });
     }
 
     @Override
