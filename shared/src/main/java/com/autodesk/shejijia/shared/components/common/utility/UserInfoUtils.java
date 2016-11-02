@@ -26,4 +26,28 @@ public final class UserInfoUtils {
         }
         return null;
     }
+
+    public static String getNikeName(@NonNull Context context){
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
+        if (entity != null && !TextUtils.isEmpty(entity.getNick_name())) {
+            return entity.getNick_name();
+        }
+        return null;
+    }
+
+    public static String getMemberType(@NonNull Context context){
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
+        if (entity != null && !TextUtils.isEmpty(entity.getMember_type())) {
+            return entity.getMember_type();
+        }
+        return null;
+    }
+
+    public static String getMemberId(@NonNull Context context){
+        MemberEntity entity = (MemberEntity) SharedPreferencesUtils.getObject(context, Constant.UerInfoKey.USER_INFO);
+        if (entity != null && !TextUtils.isEmpty(entity.getMember_id())) {
+            return entity.getMember_id();
+        }
+        return null;
+    }
 }
