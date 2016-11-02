@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="@dimen/size_58"
-    >
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/brand_name"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="周大声珠宝"
-        android:textSize="@dimen/font_20"
-        android:textColor="@color/black"
-        android:layout_marginLeft="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_25"
-        />
-    <TextView
-        android:id="@+id/store_dreass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="霍营店"
-        android:layout_below="@id/brand_name"
-        android:textSize="@dimen/font_15"
-        android:layout_marginLeft="@dimen/size_16"
-        android:layout_marginBottom="@dimen/size_25"
-        />
+        android:minHeight="@dimen/size_58">
 
-    <ImageView
-        android:id="@+id/checked_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/brand_checked"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/size_20"
-        />
+        <TextView
+            android:id="@+id/brand_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_25"
+            android:text="周大声珠宝"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:id="@+id/store_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/brand_name"
+            android:layout_marginBottom="@dimen/size_25"
+            android:layout_marginLeft="@dimen/size_16"
+            android:text="霍营店"
+            android:textSize="@dimen/font_12" />
+
+        <ImageView
+            android:id="@+id/checked_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_20"
+            android:background="@drawable/brand_checked" />
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
