@@ -169,17 +169,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@color/no_color"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
                     android:hint="@string/demand_room_area"
                     android:inputType="numberDecimal"
                     android:textSize="@dimen/font_12" />
 
 
                 <TextView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/size_20"
-                    android:text="m²" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="m²" />
             </LinearLayout>
 
             <LinearLayout
