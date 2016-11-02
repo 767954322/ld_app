@@ -65,12 +65,14 @@ public class CaseLibraryAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (!items.get(position).is_primary()) {
-            final String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
-            ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
-        } else {
-            holder.mCaseLibraryLImage.setVisibility(View.GONE);
-        }
+        String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
+        ImageUtils.loadImageIcon(holder.mCaseLibraryLImage,imageUrl);
+//        if (!items.get(position).is_primary()) {
+//            final String imageUrl = items.get(position).getFile_url() + Constant.CaseLibraryDetail.JPG;
+//            ImageUtils.displayIconImage(imageUrl, holder.mCaseLibraryLImage);
+//        } else {
+//            holder.mCaseLibraryLImage.setVisibility(View.GONE);
+//        }
 
         convertView.setTag(items.get(position));
         return convertView;
