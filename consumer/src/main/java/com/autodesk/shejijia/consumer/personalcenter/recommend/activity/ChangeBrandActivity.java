@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by luchongbin on 16-11-1.
  */
-public class UpdataBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
+public class ChangeBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
             OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener{
     private ListView updataBrandListview;
     private PullToRefreshLayout mPullToRefreshLayout;
@@ -33,8 +33,7 @@ public class UpdataBrandActivity extends NavigationBarActivity implements PullTo
     private UpdataBrandAdapter updataBrandAdapter;
     private Boolean isRefresh = true;
     private Boolean isFinish = false;
-    private RecommendSCFDBean recommendSCFDBean;
-    private RecommendBrandsBean recommendBrandsBean;
+    private RecommendSCFDBean transmissionBean;
     private RecommendBrandsBean selectRecommendBrandsBean;
     @Override
     protected int getLayoutResId() {
@@ -50,7 +49,7 @@ public class UpdataBrandActivity extends NavigationBarActivity implements PullTo
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         Intent intent = getIntent();
-        recommendBrandsBean = (RecommendBrandsBean)intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDBEAN);
+        transmissionBean = (RecommendSCFDBean)intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
         brandsBeanList = new ArrayList<>();
         updataBrandAdapter = new UpdataBrandAdapter(this,brandsBeanList,R.layout.select_check_textview);
         updataBrandListview.setAdapter(updataBrandAdapter);
@@ -80,7 +79,7 @@ public class UpdataBrandActivity extends NavigationBarActivity implements PullTo
         if(isFinish){
             Intent intent = new Intent();
             intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,selectRecommendBrandsBean);
-            setResult(1000111,intent);
+            setResult(RESULT_OK,intent);
             finish();
         }
     }
@@ -88,17 +87,28 @@ public class UpdataBrandActivity extends NavigationBarActivity implements PullTo
     @Override
     public void onResponse(JSONObject jsonObject) {
         String jsonString = jsonObject.toString();
-        recommendSCFDBean =  GsonUtil.jsonToBean(jsonString,RecommendSCFDBean.class);
+        RecommendSCFDBean recommendSCFDBean =  GsonUtil.jsonToBean(jsonString,RecommendSCFDBean.class);
         brandsBeanList.clear();//接口有问题，待修改
 //        if(isRefresh){
 //            brandsBeanList.clear();
 //        }
-        brandsBeanList.addAll(recommendSCFDBean.getBrands());
+        filterBrand(recommendSCFDBean.getBrands());
+
+    }
+    private void filterBrand(List<RecommendBrandsBean> brandsBeans){
+        for(RecommendBrandsBean brandsBean:brandsBeans){
+            for(RecommendBrandsBean tb:transmissionBean.getBrands()){
+                if(brandsBean.getCode().equals(tb.getCode())){
+                    continue;
+                }
+                brandsBeanList.add(brandsBean);
+            }
+        }
         updataBrandAdapter.notifyDataSetChanged();
         mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
     private void setNavigationBar() {
-        setTitleForNavbar(recommendBrandsBean.getSub_category_3d_name());
+        setTitleForNavbar(transmissionBean.getSub_category_3d_name());
         setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
         setTextColorForRightNavButton(UIUtils.getColor(R.color.actionsheet_gray));
     }

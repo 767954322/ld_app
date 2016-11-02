@@ -3,11 +3,10 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.UpdataBrandActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.ChangeBrandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -80,8 +79,8 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
             @Override
             public void onClick(View v) {
 //                recommendBrandsBean.getCategory_3d_name();
-                Intent intent = new Intent(mActivity, UpdataBrandActivity.class);
-                intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,recommendBrandsBean);
+                Intent intent = new Intent(mActivity, ChangeBrandActivity.class);
+                intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN,mRecommendSCFDBean);
                 mActivity.startActivityForResult(intent,21);
 
 

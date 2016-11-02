@@ -627,7 +627,7 @@
             android:value="GlideModule" />
         <!-- 配置glide图片框架的内存缓存和磁盘缓存规则 -->
         <activity
-            android:name=".personalcenter.recommend.activity.UpdataBrandActivity"
+            android:name=".personalcenter.recommend.activity.ChangeBrandActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" />
