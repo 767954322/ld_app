@@ -27,6 +27,16 @@ public class RecommendBrandsBean implements Serializable {
     private String category_3d_name; // 3d工具一级品类名称．
     private String sub_category_3d_name;
     private String category_3d_id;
+    private List<String> mAllBrandsName;
+
+    public List<String> getAllBrandsName() {
+        return mAllBrandsName;
+    }
+
+    public void setAllBrandsName(List<String> allBrandsName) {
+        mAllBrandsName = allBrandsName;
+    }
+
 
     public String getSub_category_3d_id() {
         return sub_category_3d_id;

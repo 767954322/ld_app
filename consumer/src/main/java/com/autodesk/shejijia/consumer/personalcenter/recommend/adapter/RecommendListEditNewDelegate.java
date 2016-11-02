@@ -10,6 +10,7 @@ import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.UpdataBrandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
@@ -28,9 +29,11 @@ import java.util.List;
 
 public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendBrandsBean> {
     private Activity mActivity;
+    private RecommendSCFDBean mRecommendSCFDBean;
 
-    public RecommendListEditNewDelegate(Activity activity) {
+    public RecommendListEditNewDelegate(Activity activity, RecommendSCFDBean recommendSCFDBean) {
         mActivity = activity;
+        mRecommendSCFDBean = recommendSCFDBean;
     }
 
     @Override

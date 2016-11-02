@@ -34,27 +34,41 @@ public class CommonViewHolder {
     private Context mContext;
     private int mLayoutId;
 
-    public CommonViewHolder(Context context, ViewGroup parent, int layoutId,
-                            int position) {
+//    public CommonViewHolder(Context context, ViewGroup parent, int layoutId,
+//                            int position) {
+//        mContext = context;
+//        mLayoutId = layoutId;
+//        this.mPosition = position;
+//        this.mViews = new SparseArray<View>();
+//        mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
+//                false);
+//        mConvertView.setTag(this);
+//    }
+
+    public CommonViewHolder(Context context, View itemView, ViewGroup parent, int position)
+    {
         mContext = context;
-        mLayoutId = layoutId;
-        this.mPosition = position;
-        this.mViews = new SparseArray<View>();
-        mConvertView = LayoutInflater.from(context).inflate(layoutId, parent,
-                false);
+        mConvertView = itemView;
+        mPosition = position;
+        mViews = new SparseArray<View>();
         mConvertView.setTag(this);
     }
 
     public static CommonViewHolder get(Context context, View convertView,
                                        ViewGroup parent, int layoutId, int position) {
         if (convertView == null) {
-            return new CommonViewHolder(context, parent, layoutId, position);
+            View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
+            CommonViewHolder holder = new CommonViewHolder(context, itemView, parent, position);
+            holder.mLayoutId = layoutId;
+            return holder;
         } else {
             CommonViewHolder holder = (CommonViewHolder) convertView.getTag();
             holder.mPosition = position;
             return holder;
         }
     }
+
+
 
     public int getPosition() {
         return mPosition;
@@ -95,6 +109,7 @@ public class CommonViewHolder {
         tv.setText(text);
         return this;
     }
+
     public CommonViewHolder setTextHtml(int viewId, String text) {
         TextView tv = getView(viewId);
         tv.setText(Html.fromHtml(text));

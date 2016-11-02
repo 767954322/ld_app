@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.ItemViewDelegate;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemViewHolder;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
@@ -20,7 +21,7 @@ import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
  */
 
 public class RecommendListEdit3DDelegate implements ItemViewDelegate<RecommendBrandsBean> {
-    public RecommendListEdit3DDelegate(Activity activity) {
+    public RecommendListEdit3DDelegate(Activity activity, RecommendSCFDBean recommendSCFDBean) {
     }
 
     @Override

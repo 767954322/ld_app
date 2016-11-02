@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 import android.app.Activity;
 
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.resdecoration.listviewdelegate.MultiItemTypeAdapter;
 
 import java.util.List;
@@ -16,16 +17,16 @@ import java.util.List;
  */
 public class RecommendListEditChildAdapter extends MultiItemTypeAdapter<RecommendBrandsBean> {
 
-    public RecommendListEditChildAdapter(Activity activity, List<RecommendBrandsBean> datas) {
+    public RecommendListEditChildAdapter(Activity activity, List<RecommendBrandsBean> datas, RecommendSCFDBean recommendSCFDBean) {
         super(activity, datas);
         /**
          * 基于BOM单的推荐清单详情
          */
-        addItemViewDelegate(new RecommendListEdit3DDelegate(activity));
+        addItemViewDelegate(new RecommendListEdit3DDelegate(activity,recommendSCFDBean));
 
         /**
          * 新建推荐清单详情
          */
-        addItemViewDelegate(new RecommendListEditNewDelegate(activity));
+        addItemViewDelegate(new RecommendListEditNewDelegate(activity,recommendSCFDBean));
     }
 }

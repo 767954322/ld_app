@@ -5,6 +5,7 @@
     android:id="@+id/activity_recommend_list_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
     android:orientation="vertical"
     tools:context="com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity">
 

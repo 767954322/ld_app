@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendB
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.ListViewForScrollView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +24,11 @@ import java.util.List;
  */
 public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDBean> {
     private LayoutInflater mInflater;
+    private List<String> mAllBrandsName = new ArrayList<>();
 
     public RecommendListEditParentAdapter(Context context, List<RecommendSCFDBean> datas) {
         super(context, datas, R.layout.item_recommend_list_parent_brand);
+
         mInflater = LayoutInflater.from(context);
     }
 
@@ -62,8 +65,10 @@ public class RecommendListEditParentAdapter extends CommonAdapter<RecommendSCFDB
             currentBrand.setCategory_3d_name(recommendSCFDBean.getCategory_3d_name());
             currentBrand.setSub_category_3d_id(recommendSCFDBean.getSub_category_3d_id());
             currentBrand.setSub_category_3d_name(recommendSCFDBean.getSub_category_3d_name());
+            String brand_name = currentBrand.getBrand_name();
+            mAllBrandsName.add(brand_name);
         }
-        RecommendListEditChildAdapter recommendListEditChildAdapter = new RecommendListEditChildAdapter((Activity) mContext, brands);
+        RecommendListEditChildAdapter recommendListEditChildAdapter = new RecommendListEditChildAdapter((Activity) mContext, brands,recommendSCFDBean);
         childListView.setAdapter(recommendListEditChildAdapter);
     }
 }
