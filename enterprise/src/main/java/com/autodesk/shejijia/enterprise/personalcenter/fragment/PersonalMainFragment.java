@@ -5,13 +5,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 /**
  * Created by t_xuz on 8/31/16.
  * 个人中心主fragment
  */
-public class PersonalMainFragment extends BaseEnterpriseFragment implements View.OnClickListener {
+public class PersonalMainFragment extends BaseConstructionFragment implements View.OnClickListener {
 
     private ImageButton mHeadPicBtn;
     private TextView mPersonalProject;

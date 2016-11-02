@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.enterprise.nodeprocess.ui.activity.ProjectDetailsActivity;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.util.List;

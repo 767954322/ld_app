@@ -5,14 +5,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 /**
  * Created by t_xuz on 9/2/16.
  * 我页--关于app页面
  */
 @SuppressWarnings("ALL")
-public class AboutFragment extends BaseEnterpriseFragment {
+public class AboutFragment extends BaseConstructionFragment {
     private ImageButton mBackBtn;
     @SuppressWarnings("FieldCanBeLocal")
     private TextView mTopBarTitle;

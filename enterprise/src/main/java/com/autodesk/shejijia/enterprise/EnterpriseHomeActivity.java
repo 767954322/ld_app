@@ -11,9 +11,9 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.autodesk.shejijia.enterprise.base.activitys.BaseEnterpriseHomeActivity;
-import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
-import com.autodesk.shejijia.enterprise.nodeprocess.ui.fragment.TaskListFragment;
+import com.autodesk.shejijia.enterprise.base.BaseEnterpriseHomeActivity;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskListFragment;
 import com.autodesk.shejijia.enterprise.personalcenter.activity.PersonalCenterActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;

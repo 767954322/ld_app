@@ -8,11 +8,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectListContract;
-import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectListPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
  * Created by t_xuz on 8/30/16.
  * 我页--全部项目列表页面
  */
-public class ProjectListFragment extends BaseEnterpriseFragment implements View.OnClickListener, ProjectListContract.View {
+public class ProjectListFragment extends BaseConstructionFragment implements View.OnClickListener, ProjectListContract.View {
     private TextView mTopBarTitle;
     private ImageButton mScreenBtn;
     private ImageButton mBackBtn;

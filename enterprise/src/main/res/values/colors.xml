@@ -4,40 +4,4 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="main_bottom_textView_normal">#999999</color>
-    <color name="main_bottom_textView_pressed">#5AB5EE</color>
-    
-    <color name="rectangle_gray">#999999</color>
-    <color name="ripple_material_dark">#c8c8c8</color>
-
-    <!--popUpWindow 半透明背景-->
-    <color name="popUpWindow_bg">#b0000000</color>
-
-    <!-- activity 半透明背景 -->
-    <color name="activity_bg">#63000000</color>
-
-    <!-- grayscale -->
-    <color name="white"     >#FFFFFF</color>
-    <color name="gray_light">#DBDBDB</color>
-    <color name="gray"      >#939393</color>
-    <color name="gray_dark" >#5F5F5F</color>
-    <color name="black"     >#323232</color>
-
-    <!-- basic colors -->
-    <color name="green">#27D34D</color>
-    <color name="blue">#2B77C1</color>
-    <color name="yellow">#FFB22F</color>
-    <color name="orange">#EA6339</color>
-    <color name="red">#FF432F</color>
-
-    <!-- font colors-->
-    <color name="font_gray">#939393</color>
-    <color name="font_black">#323232</color>
-
-    <!-- project status colors-->
-    <color name="task_status_orange">#EA6339</color>
-    <color name="task_status_blue">#2B77C1</color>
-    <color name="task_status_light_blue">#AAB9C3</color>
-    <color name="task_status_yellow">#FFB22F</color>
-
 </resources>

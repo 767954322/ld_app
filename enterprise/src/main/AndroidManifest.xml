@@ -84,14 +84,14 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".nodeprocess.ui.activity.ProjectDetailsActivity"
+            android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".nodeprocess.ui.activity.TaskDetailsActivity"
+            android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.TaskDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustPan"

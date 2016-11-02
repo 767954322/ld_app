@@ -1,6 +1,0 @@
-# construction-platform-android
-Shared component for Home's construction platform of decoration. This shared component is used by both consumer side and enterprise side.
-
-
-* [Coding Guildline](https://wiki.autodesk.com/display/Dragonfly/Coding+Guideline+of+Construction+Platform)
-* [Branch Management](https://wiki.autodesk.com/display/Dragonfly/Branch+Management)

@@ -12,9 +12,9 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
+import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
-import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
 
@@ -22,7 +22,7 @@ import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
  * Created by t_xuz on 8/30/16.
  * 我页--更多页面
  */
-public class MoreFragment extends BaseEnterpriseFragment implements View.OnClickListener {
+public class MoreFragment extends BaseConstructionFragment implements View.OnClickListener {
 
     private TextView mMoreTitle;
     private TextView mClearCache;
