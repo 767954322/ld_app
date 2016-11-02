@@ -309,6 +309,7 @@ public class ExistMeasureOrderActivity extends NavigationBarActivity implements 
         pvTime.setTime(new Date());
         pvTime.setCyclic(false);
         pvTime.setCancelable(true);
+        pvTime.setTitle(UIUtils.getString(R.string.demand_measure_house_time_title));
         ///  The callback after the time to choose  .
         pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
 

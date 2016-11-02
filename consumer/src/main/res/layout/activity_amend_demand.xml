@@ -161,6 +161,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/no_color"
                 android:hint="@string/demand_import_area"
+                android:layout_weight="1"
                 android:inputType="numberDecimal"
                 android:textColor="@color/black"
                 android:textColorHint="#999"
@@ -169,7 +170,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/size_18"
                 android:text="㎡" />
         </LinearLayout>
 
