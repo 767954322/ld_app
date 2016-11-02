@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -294,6 +295,7 @@ public class CaseLibraryNewActivity2 extends NavigationBarActivity implements Vi
                         if (takePhotoPopWin == null) {
                             takePhotoPopWin = new WXSharedPopWin(this, onClickListener);
                         }
+                        takePhotoPopWin.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                         takePhotoPopWin.showAtLocation(findViewById(R.id.main_library), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     } else {
                         ToastUtil.showCustomToast(CaseLibraryNewActivity2.this, getString(R.string.anzhuangweixin));
