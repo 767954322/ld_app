@@ -617,7 +617,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".personalcenter.recommend.activity.SelectProjectActivity" />
    
-        <activity android:name=".personalcenter.recommend.activity.SelectProjectActivity"/>
         <activity
             android:name=".personalcenter.recommend.activity.RecommendListDetailActivity"
             android:windowSoftInputMode="adjustPan">
