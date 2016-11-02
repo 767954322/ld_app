@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,13 +9,17 @@ import java.util.List;
  * @author liuhea
  *         created at 16-10-25
  */
-public class RecommendSCFDBean {
+public class RecommendSCFDBean implements Serializable {
+
+    private Object count;
+
 
     private String sub_category_3d_id;
     private String category_3d_name; // 3d工具一级品类名称．
     private String source;
     private String sub_category_3d_name;
     private String category_3d_id;
+
     private List<RecommendBrandsBean> brands; // 推荐品牌．
 
     public String getSub_category_3d_id() {

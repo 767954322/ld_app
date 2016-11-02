@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.UpdataBrandActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
@@ -75,8 +76,10 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
         holder.setOnClickListener(R.id.tv_brand_change, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mActivity.startActivity(new Intent(mActivity, UpdataBrandActivity.class));
+//                recommendBrandsBean.getCategory_3d_name();
+                Intent intent = new Intent(mActivity, UpdataBrandActivity.class);
+                intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,recommendBrandsBean);
+                mActivity.startActivityForResult(intent,21);
 
 
 //                String brand_name = recommendBrandsBean.getBrand_name();

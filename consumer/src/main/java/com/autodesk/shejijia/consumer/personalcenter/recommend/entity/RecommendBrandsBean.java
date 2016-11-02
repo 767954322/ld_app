@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -9,7 +10,8 @@ import java.util.List;
  * @author liuhea
  *         created at 16-10-25
  */
-public class RecommendBrandsBean {
+public class RecommendBrandsBean implements Serializable {
+
     private String brand_name;      // 品牌名称．
     private String dimension;       // 规格．o
     private String remarks;         // 备注（最大不超过150个中文字符）．

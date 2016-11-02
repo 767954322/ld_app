@@ -1,14 +1,18 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
+import java.io.Serializable;
+
 /**
  * {门店列表:[{门店编码:11;门店名称:'丽泽店'},{门店编码:11;门店名称:'丽泽店'}]}
  *
  * @author liuhea
  *         created at 16-10-25
  */
-public class RecommendMallsBean {
+public class RecommendMallsBean implements Serializable {
     private String mall_number;
     private String mall_name;
+    private Object booth_number;
+    private Object booth_name;
 
     public String getMall_number() {
         return mall_number;

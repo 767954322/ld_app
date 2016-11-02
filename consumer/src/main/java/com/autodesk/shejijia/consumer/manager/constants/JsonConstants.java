@@ -31,6 +31,8 @@ public class JsonConstants {
     public static final String JSON_EMSG = "emsg";
     public static final String JSON_DATA = "data";
 
+    public static final String RECOMMENDBRANDBEAN = "recommendBrandsBean";
+
 
     /// M1.4  To test whether mobile phones has been registered
     public static final String JSON_MOBILENUMBER = "mobileNumber";
