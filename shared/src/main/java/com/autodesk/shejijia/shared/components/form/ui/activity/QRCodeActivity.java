@@ -48,12 +48,13 @@ public class QRCodeActivity extends CaptureQrActivity {
         playBeepSoundAndVibrate();
         String projectId = result.getText();
         if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
+            // TODO: 16/11/3 扫码得到projectId ,判断是否得到项目详情,如果得到然后再将项目详情传递过去,没有的话显示网络错误,错误信息
             Log.d("asdf", projectId);
         } else {
             startActivity(new Intent(this,ThemeDialogActivity.class));
             return;
         }
-        finish();
+//        finish();
 
     }
 

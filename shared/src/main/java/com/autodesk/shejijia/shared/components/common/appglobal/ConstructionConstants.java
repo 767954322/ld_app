@@ -48,4 +48,8 @@ public class ConstructionConstants {
 
     //项目详情请求tag
     public static final String REQUEST_TAG_GET_PROJECT_DETAILS = "project_details";
+
+    //登入用户的类型:member_type
+    public static final String  INSPECTOR_TYPE = "inspector"; //监理
+    public static final String CLIENTMANAGER_TYPE = "clientmanager"; //客户经理
 }

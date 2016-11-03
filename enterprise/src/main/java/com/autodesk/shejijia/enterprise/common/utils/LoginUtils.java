@@ -5,10 +5,12 @@ import android.content.Intent;
 
 import com.autodesk.shejijia.enterprise.EnterpriseHomeActivity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
+import com.autodesk.shejijia.shared.components.form.ui.activity.QRCodeActivity;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 
 /**
@@ -44,9 +46,20 @@ public class LoginUtils {
 //        sendBroadcast(loginIntent);
 
         LogUtils.e("login--entity",entity+"");
-        // 跳转到项目列表页
-        Intent intent = new Intent(mContext, EnterpriseHomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
+        String memberType = entity.getMember_type();
+        switch (memberType) {
+            case ConstructionConstants.INSPECTOR_TYPE:
+                //跳到监理界面
+                Intent inspectorIntent = new Intent(mContext, QRCodeActivity.class);
+                inspectorIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(inspectorIntent);
+                break;
+            default:
+                // 跳转到项目列表页
+                Intent intent = new Intent(mContext, EnterpriseHomeActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+                break;
+        }
     }
 }
