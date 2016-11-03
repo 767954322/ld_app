@@ -31,8 +31,6 @@ import java.util.List;
 
 public class AddBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
         OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener,View.OnClickListener{
-
-
     private PullListView addBrandListview;
     private PullToRefreshLayout mPullToRefreshLayout;
     private List<RecommendBrandsBean> brandsBeanList;
@@ -41,7 +39,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     private Boolean isRefresh = true;
     private TextView tvNumber;
     private AppCompatButton btFinsh;
-    private long[] itemIds;
+    private List<Integer> itemIds = new ArrayList<>();
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_add_brand;
@@ -67,7 +65,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
         super.initData(savedInstanceState);
         brandsBeanList = new ArrayList<>();
         setNavigationBar();
-        addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,R.layout.add_check_textview);
+        addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,itemIds,R.layout.add_check_textview);
         addBrandListview.setAdapter(addBrandAdapter);
 //        getBrands(0,10);
         mPullToRefreshLayout.autoRefresh();
@@ -82,9 +80,16 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        itemIds = addBrandListview.getCheckedItemIds();
-        int number = Constant.FragmentEnum.FIVE - itemIds.length;
+        long[] items = addBrandListview.getCheckedItemIds();
+        int number = Constant.FragmentEnum.FIVE - items.length;
         tvNumber.setText(number+"");
+        btFinsh.setEnabled(items.length > 0?true:false);
+        btFinsh.setBackground(this.getResources().getDrawable(items.length > 0?R.color.bg_0084ff:R.color.gray));
+        itemIds.clear();
+        for(long pt:items){
+            itemIds.add((int)pt);
+        }
+        addBrandAdapter.notifyDataSetChanged();
     }
     @Override
     public void onClick(View v) {

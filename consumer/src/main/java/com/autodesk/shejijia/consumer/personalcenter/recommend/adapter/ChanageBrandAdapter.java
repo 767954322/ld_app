@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
@@ -29,7 +30,8 @@ public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
     public void convert(CommonViewHolder holder, RecommendBrandsBean recommendBrandsBean) {
         List<RecommendMallsBean> mallsBeans = recommendBrandsBean.getMalls();
         StringBuffer sb = new StringBuffer();
-        sb.append(recommendBrandsBean.getName()+"\n");
+        String brandName = recommendBrandsBean.getName();
+        sb.append(TextUtils.isEmpty(brandName)?"\n":brandName+"\n");
         for(RecommendMallsBean mallsBean:mallsBeans){
             if(TextUtils.isEmpty(mallsBean.getMall_name())){
                 continue;
@@ -41,10 +43,14 @@ public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
         }
         sb = sb.delete(sb.length()-1,sb.length());
         SpannableStringBuilder builder = new SpannableStringBuilder(sb);
-        builder.setSpan(new AbsoluteSizeSpan(48), 0, recommendBrandsBean.getName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
-        builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), recommendBrandsBean.getName().length(), sb.length(),
+        int index = 0;
+        if(brandName != null && brandName.length() > 0){
+            index = brandName.length();
+        }
+        builder.setSpan(new AbsoluteSizeSpan(48), 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
+        builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), index, sb.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//字体的颜色
-        TextView textView = holder.getView(R.id.ctv_select);
+        CheckedTextView textView = holder.getView(R.id.ctv_select);
         textView.setText(builder);
     }
 }

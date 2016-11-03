@@ -24,23 +24,37 @@ import java.util.List;
 
 public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
    private Context context;
+   private List<Integer> itemIds;
 
-
-    public AddBrandAdapter(Context context, List<RecommendBrandsBean> brandsBeens, int layoutId) {
+    public AddBrandAdapter(Context context, List<RecommendBrandsBean> brandsBeens, List<Integer> itemIds,int layoutId) {
         super(context, brandsBeens, layoutId);
         this.context = context;
+        this.itemIds = itemIds;
     }
     @Override
     public boolean hasStableIds() {
         //getCheckedItemIds()方法要求此处返回为真
         return true;
     }
+    @Override
+    public boolean isEnabled(int position) {
+        if(itemIds == null || itemIds.size() < 5){
+            return true;
+        }
+        for(int id :itemIds){
+            if(id==position){
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public void convert(final CommonViewHolder holder, RecommendBrandsBean recommendBrandsBean) {
         List<RecommendMallsBean> mallsBeans = recommendBrandsBean.getMalls();
         StringBuffer sb = new StringBuffer();
-        sb.append(recommendBrandsBean.getName()+"\n");
+        String brandName = recommendBrandsBean.getBrand_name();
+        sb.append(TextUtils.isEmpty(brandName)?"\n":brandName+"\n");
         for(RecommendMallsBean mallsBean:mallsBeans){
             if(TextUtils.isEmpty(mallsBean.getMall_name())){
                 continue;
@@ -52,11 +66,14 @@ public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
         }
         sb = sb.delete(sb.length()-1,sb.length());
         SpannableStringBuilder builder = new SpannableStringBuilder(sb);
-        builder.setSpan(new AbsoluteSizeSpan(48), 0, recommendBrandsBean.getName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
-        builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), recommendBrandsBean.getName().length(), sb.length(),
+        int index = 0;
+        if(brandName != null && brandName.length() > 0){
+            index = brandName.length();
+        }
+        builder.setSpan(new AbsoluteSizeSpan(48), 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
+        builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), index, sb.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//字体的颜色
         CheckedTextView textView = holder.getView(R.id.ctv_select);
-        textView.setChecked(true);
         textView.setText(builder);
 
 
