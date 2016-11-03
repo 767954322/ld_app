@@ -123,7 +123,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_5"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/size_10"
                 android:paddingRight="@dimen/size_10">
@@ -142,7 +141,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/no_color"
                     android:ellipsize="end"
-                    android:singleLine="true"
                     android:text="张三"
                     android:textColor="@color/bg_33"
                     android:textSize="@dimen/font_15"/>
