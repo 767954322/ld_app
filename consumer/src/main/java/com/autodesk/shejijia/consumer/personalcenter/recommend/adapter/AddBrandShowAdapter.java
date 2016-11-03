@@ -10,29 +10,27 @@ import android.view.ViewGroup;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ShowBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by yaoxuehua on 16-10-26.
  */
 
-public class AddBrandShowAdapter extends CommonAdapter<ShowBrandsBean.BrandsBean> {
+public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
 
     private Context context;
-    private List<ShowBrandsBean.BrandsBean> datas;
+    private List<RecommendBrandsBean> datas;
     private int layoutId;
     private Handler handler;
     private List<BtnStatusBean> list;
     private int countNumber = 0;
 
-    public AddBrandShowAdapter(Context context, List<ShowBrandsBean.BrandsBean> datas, int layoutId, Handler handler) {
+    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId, Handler handler) {
         super(context, datas, layoutId);
         this.handler = handler;
         this.context = context;
@@ -42,7 +40,7 @@ public class AddBrandShowAdapter extends CommonAdapter<ShowBrandsBean.BrandsBean
     }
 
     @Override
-    public void convert(final CommonViewHolder holder, final ShowBrandsBean.BrandsBean brandsBean) {
+    public void convert(final CommonViewHolder holder, final RecommendBrandsBean brandsBean) {
 
         BtnStatusBean btnStatusBean;
 
@@ -55,7 +53,7 @@ public class AddBrandShowAdapter extends CommonAdapter<ShowBrandsBean.BrandsBean
         }
 
 
-        holder.setText(R.id.brand_name, brandsBean.getBrand_name());
+        holder.setText(R.id.brand_name, brandsBean.getName());
         String storeName = "";
         for (int i = 0; i < brandsBean.getMalls().size(); i++) {
 
@@ -80,10 +78,10 @@ public class AddBrandShowAdapter extends CommonAdapter<ShowBrandsBean.BrandsBean
         private int position;
         private View convertView;
         private CommonViewHolder holder;
-        private ShowBrandsBean.BrandsBean brandsBean;
+        private RecommendBrandsBean brandsBean;
 
 
-        public ItemImgListener(final CommonViewHolder holder, final ShowBrandsBean.BrandsBean brandsBean) {
+        public ItemImgListener(final CommonViewHolder holder, final RecommendBrandsBean brandsBean) {
 
             this.holder = holder;
             this.brandsBean = brandsBean;

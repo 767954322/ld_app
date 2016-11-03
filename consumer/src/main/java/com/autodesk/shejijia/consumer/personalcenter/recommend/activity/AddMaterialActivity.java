@@ -17,7 +17,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.AddBrandShowAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ShowBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
@@ -61,15 +62,15 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private MaterialCategoryBean materialCategoryBean;
     private Button all_material_btn;
     private Handler getAdapterDataHandler;//获取返回数据handler
-    private List<ShowBrandsBean.BrandsBean> getAdapterResultList;
+    private List<RecommendBrandsBean> getAdapterResultList;
     private DynamicAddViewContainer dynamicAddViewContainer;
-    private List<ShowBrandsBean.BrandsBean> listChecked = new ArrayList<>();;//选中品牌的集合
+    private List<RecommendBrandsBean> listChecked = new ArrayList<>();;//选中品牌的集合
     private int brandCount = 0;//可添加品牌的数量
     private TextView remain_brand_count;
     private PullToRefreshLayout mPullToRefreshLayout;
     private AddBrandShowAdapter addBrandShowAdapter;
     private int justRefreshOrLoadMore = 1;//判断是第一次获取，2,刷新，3 加载更多
-    private List<ShowBrandsBean.BrandsBean> listBrands = new ArrayList<>();//复用的品牌集合
+    private List<RecommendBrandsBean> listBrands = new ArrayList<>();//复用的品牌集合
 
     @Override
     public void onClick(View v) {
@@ -125,32 +126,32 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                ShowBrandsBean.BrandsBean brandsBean;
+                RecommendBrandsBean brandsBean;
                 switch (msg.what){
                     //选中的品牌
                     case 1:
 
-                        brandsBean = (ShowBrandsBean.BrandsBean) msg.obj;
+                        brandsBean = (RecommendBrandsBean) msg.obj;
                         listChecked.add(brandsBean);
                         for (int i=0;i < listChecked.size();i++){
 
-                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getBrand_name());
+                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getName());
                         }
                         break;
                     //取消选中的品牌
                     case 2:
-                        brandsBean = (ShowBrandsBean.BrandsBean) msg.obj;
+                        brandsBean = (RecommendBrandsBean) msg.obj;
                         for (int i=0;i<listChecked.size();i++){
 
-                            String brandName = listChecked.get(i).getBrand_name();
-                            if (brandName.equals(brandsBean.getBrand_name())){
+                            String brandName = listChecked.get(i).getName();
+                            if (brandName.equals(brandsBean.getName())){
 
                                 listChecked.remove(i);
                             }
                         }
                         for (int i= 0;i<listChecked.size();i++){
 
-                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getBrand_name());
+                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getName());
                         }
                         break;
 
@@ -233,19 +234,19 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                ShowBrandsBean getShowBrandsBean =  GsonUtil.jsonToBean(jsonObject.toString(),ShowBrandsBean.class);
+                RecommendSCFDBean getRecommendBrandsBean =  GsonUtil.jsonToBean(jsonObject.toString(),RecommendSCFDBean.class);
 
                 if (justRefreshOrLoadMore == 1) {
-                    addDatas(getShowBrandsBean.getBrands());
+                    addDatas(getRecommendBrandsBean.getBrands());
                     showBrandsList(listBrands);
                 }
                 if (justRefreshOrLoadMore == 2) {
                     mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    changeCategoryBrandsDatas(getShowBrandsBean.getBrands());
+                    changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
                 }
                 if (justRefreshOrLoadMore == 3){
                     mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                    changeCategoryBrandsDatas(getShowBrandsBean.getBrands());
+                    changeCategoryBrandsDatas(getRecommendBrandsBean.getBrands());
                 }
 
             }
@@ -338,7 +339,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     /**
      * 展示品牌数据
      * */
-    public void showBrandsList(List<ShowBrandsBean.BrandsBean> list){
+    public void showBrandsList(List<RecommendBrandsBean> list){
         addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this,list,R.layout.add_brand_item,getAdapterDataHandler);
         show_brand_listView.setAdapter(addBrandShowAdapter);
 
@@ -348,7 +349,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
      * 改变不同品类下的数据
      * */
 
-    public void changeCategoryBrandsDatas(List<ShowBrandsBean.BrandsBean> list){
+    public void changeCategoryBrandsDatas(List<RecommendBrandsBean> list){
 
         if (justRefreshOrLoadMore == 2){
             listBrands.clear();
@@ -372,7 +373,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     /**
      * 将数据添加进入集合复用
      * */
-    public void addDatas(List<ShowBrandsBean.BrandsBean> list){
+    public void addDatas(List<RecommendBrandsBean> list){
 
         for (int i=0;i<list.size();i++){
 
