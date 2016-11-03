@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -47,6 +48,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
 import com.autodesk.shejijia.shared.components.common.tools.zxing.encoding.EncodingHandler;
 import com.autodesk.shejijia.consumer.uielements.ActionSheetDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
@@ -106,6 +108,8 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
 
     private int is_validated_by_mobile;
     private int is_validated_by_email;
+    private CityDataHelper mCityDataHelper;
+    private SQLiteDatabase mDb;
 
     @Override
     protected int getLayoutResId() {
@@ -243,12 +247,24 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
         gender = mConsumerEssentialInfoEntity.getGender();
         email = mConsumerEssentialInfoEntity.getEmail();
 
+//        province_name = mConsumerEssentialInfoEntity.getProvince_name();
+//        city_name = mConsumerEssentialInfoEntity.getCity_name();
+//        district_name = mConsumerEssentialInfoEntity.getDistrict_name();
         province = mConsumerEssentialInfoEntity.getProvince();
-        province_name = mConsumerEssentialInfoEntity.getProvince_name();
         city = mConsumerEssentialInfoEntity.getCity();
-        city_name = mConsumerEssentialInfoEntity.getCity_name();
         district = mConsumerEssentialInfoEntity.getDistrict();
-        district_name = mConsumerEssentialInfoEntity.getDistrict_name();
+
+        mCityDataHelper = CityDataHelper.getInstance(this);
+        mDb = mCityDataHelper.openDataBase();
+        province_name = mCityDataHelper.getProvinceName(mDb, province);
+        city_name = mCityDataHelper.getCityName(mDb, city);
+        if (!TextUtils.isEmpty(district.trim())) {
+            district_name = mCityDataHelper.getDistrictName(mDb, district);
+        } else {
+            district_name = "";
+        }
+        mDb.close();
+
         if (!TextUtils.isEmpty(avatar)) {
             ImageUtils.displayAvatarImage(avatar, mConsumeHeadIcon);
         } else {

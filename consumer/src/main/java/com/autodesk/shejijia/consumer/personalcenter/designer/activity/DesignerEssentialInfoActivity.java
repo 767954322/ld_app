@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.UrlConstants;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.consumer.uielements.ActionSheetDialog;
+import com.autodesk.shejijia.shared.components.common.tools.wheel.CityDataHelper;
+import com.autodesk.shejijia.shared.components.common.tools.wheel.model.CityModel;
 import com.autodesk.shejijia.shared.components.common.uielements.AddressDialog;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
@@ -76,11 +80,7 @@ import de.greenrobot.event.EventBus;
  * @brief 设计师个人中心修改个人信息界面 .
  */
 public class DesignerEssentialInfoActivity extends NavigationBarActivity implements View.OnClickListener {
-    private Bitmap headPicBitmap;
 
-    private Uri uritempFile;
-    private static final int CROP_SMALL_PICTURE = 5;//截图
-    private static final int CROP_SMALL_PICTURE_1 = 6;//截图
 
     @Override
     protected int getLayoutResId() {
@@ -150,12 +150,25 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         if (mDesignerInfoDetails == null) {
             return;
         }
-        strCurrentProvince = mConsumerEssentialInfoEntity.getProvince_name();
+
+//      strCurrentProvince = mConsumerEssentialInfoEntity.getProvince_name();
+//      mCurrentCity = mConsumerEssentialInfoEntity.getCity_name();
+//      mCurrentDistrict = mConsumerEssentialInfoEntity.getDistrict_name();
+
         strCurrentProvinceCode = mConsumerEssentialInfoEntity.getProvince();
-        mCurrentCity = mConsumerEssentialInfoEntity.getCity_name();
         mCurrentCityCode = mConsumerEssentialInfoEntity.getCity();
-        mCurrentDistrict = mConsumerEssentialInfoEntity.getDistrict_name();
         mCurrentDistrictCode = mConsumerEssentialInfoEntity.getDistrict();
+
+        mCityDataHelper = CityDataHelper.getInstance(this);
+        mDb = mCityDataHelper.openDataBase();
+        strCurrentProvince = mCityDataHelper.getProvinceName(mDb, strCurrentProvinceCode);
+        mCurrentCity = mCityDataHelper.getCityName(mDb, mCurrentCityCode);
+        if (!TextUtils.isEmpty(mCurrentDistrictCode.trim())) {
+            mCurrentDistrict = mCityDataHelper.getDistrictName(mDb, mCurrentDistrictCode);
+        } else {
+            mCurrentDistrict = "";
+        }
+        mDb.close();
         if (mConsumerEssentialInfoEntity.getAvatar().isEmpty()) {
 //            piv_essential_photo.setImageDrawable(getResources().getDrawable(R.drawable.icon_default_avator));
             headPicBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_default_avator);
@@ -175,16 +188,16 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
         } else {
             tvNickName.setText(mConsumerEssentialInfoEntity.getNick_name() + "");
         }
-        String province_name = mConsumerEssentialInfoEntity.getProvince_name();
-        String city_name = mConsumerEssentialInfoEntity.getCity_name();
-        String district_name = mConsumerEssentialInfoEntity.getDistrict_name();
-        if (TextUtils.isEmpty(province_name) || TextUtils.isEmpty(city_name) || "<null>".equals(province_name)) {
+//        String province_name = mConsumerEssentialInfoEntity.getProvince_name();
+//        String city_name = mConsumerEssentialInfoEntity.getCity_name();
+//        String district_name = mConsumerEssentialInfoEntity.getDistrict_name();
+        if (TextUtils.isEmpty(strCurrentProvince) || TextUtils.isEmpty(mCurrentCity) || "<null>".equals(strCurrentProvince)) {
             tvLocation.setText(getResources().getString(R.string.temporarily_no_data));
         } else {
-            if (TextUtils.isEmpty(district_name) || "none".equals(district_name) || "null".equals(district_name)) {
-                district_name = "";
+            if (TextUtils.isEmpty(mCurrentDistrict) || "none".equals(mCurrentDistrict) || "null".equals(mCurrentDistrict)) {
+                mCurrentDistrict = "";
             }
-            tvLocation.setText(province_name + " " + city_name + " " + district_name);
+            tvLocation.setText(strCurrentProvince + " " + mCurrentCity + " " + mCurrentDistrict);
         }
 
         if (mConsumerEssentialInfoEntity.getMobile_number() == null || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 0 || mConsumerEssentialInfoEntity.getIs_validated_by_mobile() == 2)
@@ -197,8 +210,7 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
             tvTel.setText(mConsumerEssentialInfoEntity.getMobile_number() + "");
         }
 
-        if (mConsumerEssentialInfoEntity.getEmail() == null||mConsumerEssentialInfoEntity.getIs_email_binding()==0||mConsumerEssentialInfoEntity.getIs_email_binding()==2)
-        {
+        if (mConsumerEssentialInfoEntity.getEmail() == null || mConsumerEssentialInfoEntity.getIs_email_binding() == 0 || mConsumerEssentialInfoEntity.getIs_email_binding() == 2) {
             tvEmail.setText(getResources().getString(R.string.not_filled));
         } else
 
@@ -1000,6 +1012,8 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
 
     private static final int SYS_INTENT_REQUEST = 0XFF01;
     private static final int CAMERA_INTENT_REQUEST = 0XFF02;
+    private static final int CROP_SMALL_PICTURE = 5;//截图
+    private static final int CROP_SMALL_PICTURE_1 = 6;//截图
 
     private TextView tvLocation;
     private TextView tvMeasureHouse;
@@ -1015,30 +1029,37 @@ public class DesignerEssentialInfoActivity extends NavigationBarActivity impleme
     private RelativeLayout rlLocation;
     private RelativeLayout rlEssentialSex;
     private RelativeLayout rlNickName;
-    private PolygonImageView piv_essential_photo;
-    private OptionsPickerView optionsPickerView;
-    private OptionsPickerView pvGenderOptions;
-    private AddressDialog mChangeAddressDialog;
+
 
     private String strDesignerId;
     private String strHsUid;
     private String strCameraFilePath;
     private String strProjectCost;
+    private String address;
     private String strCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String strCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private String pTag;
     private String[] genderString = {"保密", "女", "男"};
-    //private String[] projectCosts = {"30-60", "61-120", "121-200", "201-600", "601-1000"};
     private String[] projectCosts;
+
     private ArrayList<String> projectCostItems = new ArrayList<>();
     private ArrayList<String> genderList = new ArrayList<>();
-
-    private DesignerInfoDetails mDesignerInfoDetails;
-    private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
     private List<DesignerDesignCostBean.RelateInformationListBean> relate_information_list;
 
-    private String address;
+
+    private ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity;
     private PictureProcessingUtil mPictureProcessingUtil;
     private ImageProcessingUtil mImageProcessingUtil;
+    private PolygonImageView piv_essential_photo;
+    private OptionsPickerView optionsPickerView;
+    private OptionsPickerView pvGenderOptions;
+    private DesignerInfoDetails mDesignerInfoDetails;
+    private AddressDialog mChangeAddressDialog;
+    private CityDataHelper mCityDataHelper;
+    private SQLiteDatabase mDb;
+    private Bitmap headPicBitmap;
+    private Uri uritempFile;
+
+    //private String[] projectCosts = {"30-60", "61-120", "121-200", "201-600", "601-1000"};
 }
 

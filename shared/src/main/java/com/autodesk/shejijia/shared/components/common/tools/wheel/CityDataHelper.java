@@ -156,6 +156,66 @@ public class CityDataHelper {
         return list;
     }
 
+    /**
+     * 根据省code查询省名称
+     *
+     * @param db   数据库
+     * @param code 字段编码
+     * @return 省的name
+     */
+    public String getProvinceName(SQLiteDatabase db, String code) {
+        String sql = "select * from t_address_province  where code = " + code;
+        Cursor cursor = db.rawQuery(sql, null);
+        String name = "";
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                name = cursor.getString(cursor.getColumnIndex("region_name"));
+            }
+        }
+        cursor.close();
+        return name;
+    }
+
+    /**
+     * 根据市code查询市
+     *
+     * @param db   数据库
+     * @param code 字段编码
+     * @return 市的name
+     */
+    public String getCityName(SQLiteDatabase db, String code) {
+        String sql = "select * from t_address_city  where code = " + code;
+        Cursor cursor = db.rawQuery(sql, null);
+        String name = "";
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                name = cursor.getString(cursor.getColumnIndex("region_name"));
+            }
+        }
+        cursor.close();
+        return name;
+    }
+
+    /**
+     * 根据省code查询区
+     *
+     * @param db   数据库
+     * @param code 字段编码
+     * @return 区的name
+     */
+    public String getDistrictName(SQLiteDatabase db, String code) {
+        String sql = "select * from t_address_town  where code = " + code;
+        Cursor cursor = db.rawQuery(sql, null);
+        String name = "";
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                name = cursor.getString(cursor.getColumnIndex("region_name"));
+            }
+        }
+        cursor.close();
+        return name;
+    }
+
     public static String DATABASES_DIR;//数据库目录路径
     public static String DATABASE_NAME = "province.db";//要复制的数据库名
     private static CityDataHelper dataHelper;
