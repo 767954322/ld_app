@@ -2,6 +2,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,15 +27,15 @@ import java.util.List;
  * Created by luchongbin on 16-11-1.
  */
 public class ChangeBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
-            OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener{
+            OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener,View.OnClickListener{
     private ListView updataBrandListview;
     private PullToRefreshLayout mPullToRefreshLayout;
     private List<RecommendBrandsBean> brandsBeanList;
     private ChanageBrandAdapter updataBrandAdapter;
     private Boolean isRefresh = true;
-    private Boolean isFinish = false;
     private RecommendSCFDBean transmissionBean;
     private RecommendBrandsBean selectRecommendBrandsBean;
+    private AppCompatButton changeFinsh;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_updata_brand;
@@ -44,6 +45,8 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         super.initView();
         updataBrandListview = (ListView)findViewById(R.id.updata_brand_listview);
         mPullToRefreshLayout = ((PullToRefreshLayout)findViewById(R.id.refresh_view));
+        changeFinsh = (AppCompatButton)findViewById(R.id.change_finsh);
+
     }
     @Override
     protected void initExtraBundle() {
@@ -67,6 +70,7 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         super.initListener();
         mPullToRefreshLayout.setOnRefreshListener(this);
         updataBrandListview.setOnItemClickListener(this);
+        changeFinsh.setOnClickListener(this);
     }
     private  void getBrands(int offset, int limit){
         MPServerHttpManager.getInstance().getCategoryBrandsInformation("","","","","","",offset,limit,this);
@@ -75,19 +79,23 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
         selectRecommendBrandsBean = brandsBeanList.get(position);
-        isFinish = true;
+        changeFinsh.setEnabled(true);
+        changeFinsh.setBackground(this.getResources().getDrawable(R.color.bg_0084ff));
     }
-
     @Override
-    protected void rightNavButtonClicked(View view) {
-        if(isFinish){
-            Intent intent = new Intent();
-            intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,selectRecommendBrandsBean);
-            setResult(RESULT_OK,intent);
-            finish();
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.change_finsh:
+                Intent intent = new Intent();
+                intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,selectRecommendBrandsBean);
+                setResult(RESULT_OK,intent);
+                finish();
+                break;
+            default:
+                break;
         }
-    }
 
+    }
     @Override
     public void onResponse(JSONObject jsonObject) {
         String jsonString = jsonObject.toString();
@@ -117,8 +125,6 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     }
     private void setNavigationBar() {
         setTitleForNavbar(transmissionBean.getSub_category_3d_name());
-        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
-        setTextColorForRightNavButton(UIUtils.getColor(R.color.actionsheet_gray));
     }
 
     @Override

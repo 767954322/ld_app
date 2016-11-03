@@ -11,10 +11,9 @@
     <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout
         android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <include layout="@layout/view_refresh_head" />
-
         <com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView
             android:id="@+id/updata_brand_listview"
             android:layout_width="match_parent"
@@ -23,4 +22,16 @@
             android:scrollbars="none" />
         <include layout="@layout/view_load_more" />
     </com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/change_finsh"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_42"
+        android:layout_centerVertical ="true"
+        android:layout_alignParentRight="true"
+        android:background="@color/gray"
+        android:enabled="false"
+        android:text="@string/determine"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_20"/>
 </LinearLayout>
