@@ -240,6 +240,8 @@
     <string name="buhege">不合格</string>
     <string name="hege">合格</string>
     <string name="qrcode_error_tip">二维码格式错误,无法获取到项目信息</string>
+    <string name="form_submit">确定</string>
+    <string name="form_cancel">取消</string>
 
     <string name="previous">Go to previous</string>
     <string name="next">Go to next</string>
