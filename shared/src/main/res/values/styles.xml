@@ -274,7 +274,7 @@
         <item name="android:windowFullscreen">true</item><!--是否全屏幕-->
     </style>
     <!--form表单扫码确认时的dialog的style-->
-    <style name="FromConfirmStyle" parent="@style/Theme.AppCompat.Dialog">
+    <style name="ScanQrDialogStyle" parent="@style/Theme.AppCompat.Dialog">
         <item name="android:windowFrame">@null</item><!-- 边框 -->
         <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
         <item name="windowActionBar">false</item>

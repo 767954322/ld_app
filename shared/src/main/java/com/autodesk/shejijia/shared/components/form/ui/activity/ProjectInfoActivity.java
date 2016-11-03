@@ -96,13 +96,13 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     public void selectConfirm() {
         // TODO: 16/10/21 判断状态,选择进入的表格?
 //        Toast.makeText(this, "进入表格吧", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this,PrecheckActivity.class));
+        Intent intent = new Intent(this,PrecheckActivity.class);
+        startActivity(intent);
     }
 
 
     @Override
     public void selectCancel() {
-
         startActivity(new Intent(this,ProjectIdCodeActivity.class));
         finish();
     }

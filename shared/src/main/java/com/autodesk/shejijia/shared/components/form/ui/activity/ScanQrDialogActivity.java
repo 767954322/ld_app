@@ -11,11 +11,11 @@ import com.autodesk.shejijia.shared.R;
  * Created by t_aij on 16/11/1.
  */
 
-public class ThemeDialogActivity extends AppCompatActivity {
+public class ScanQrDialogActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_theme_dialog);
+        setContentView(R.layout.activity_scanqr_dialog);
         findViewById(R.id.btn_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

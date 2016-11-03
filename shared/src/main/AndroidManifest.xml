@@ -12,10 +12,13 @@
 
         <activity android:name=".components.form.ui.activity.ProjectIdCodeActivity"/>
         <activity android:name=".components.form.ui.activity.ScanQrCodeActivity"/>
-        <activity android:name=".components.form.ui.activity.ProjectInfoActivity"/>
+        <activity android:name=".components.form.ui.activity.ProjectInfoActivity"
+                android:launchMode="singleTask">
+
+        </activity>
         <activity android:name=".components.form.ui.activity.PrecheckActivity"/>
-        <activity android:name=".components.form.ui.activity.ThemeDialogActivity"
-            android:theme="@style/FromConfirmStyle">
+        <activity android:name=".components.form.ui.activity.ScanQrDialogActivity"
+            android:theme="@style/ScanQrDialogStyle">
 
         </activity>
 

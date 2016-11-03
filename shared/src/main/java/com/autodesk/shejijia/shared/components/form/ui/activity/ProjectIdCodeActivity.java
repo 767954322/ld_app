@@ -20,7 +20,6 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
     private TextView mCenter;
     private EditText mProjectId;
     private ProjectIdCodePresenter mPresenter;
-    private final int QRCODE_REQEUST = 0;
     private TextView mRight;
     private ImageView mLeft;
     private Button mConfirm;
