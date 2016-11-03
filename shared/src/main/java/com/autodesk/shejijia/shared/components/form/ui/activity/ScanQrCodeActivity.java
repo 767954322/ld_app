@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -53,7 +52,6 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
         String projectId = result.getText();
         if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
             // TODO: 16/11/3 扫码得到projectId ,判断是否得到项目详情,如果得到然后再将项目详情传递过去,没有的话显示网络错误,错误信息
-            Log.d("asdf", projectId);
             Bundle params = new Bundle();
             params.putLong("pid", Long.valueOf(projectId));
 
@@ -69,16 +67,25 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
                 @Override
                 public void onError(String errorMsg) {
                     Log.d("asdf", "错误信息了");
-                    startActivity(new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class));
+                    Intent intent = new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class);
+                    intent.putExtra("error",errorMsg);
+                    startActivity(intent);
                 }
             });
 
 
         } else {
-            startActivity(new Intent(this, ScanQrDialogActivity.class));
+            Intent intent = new Intent(this,ScanQrDialogActivity.class);
+            intent.putExtra("format","二维码格式不正确,是否跳到输入编码?");
+            startActivity(intent);
         }
 
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }
