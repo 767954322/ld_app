@@ -2,6 +2,7 @@ package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -19,10 +20,10 @@ public class BackGroundUtils {
     * 窗口背景变亮
     * dimBackground(0.5f,1.0f);
     * */
-    public static void dimBackground(Activity context, final float from, final float to) {
+    public static void dimWindowBackground(Activity context, final float from, final float to) {
         final Window window = context.getWindow();
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(from, to);
-        valueAnimator.setDuration(500);
+        valueAnimator.setDuration(300);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -34,4 +35,5 @@ public class BackGroundUtils {
 
         valueAnimator.start();
     }
+
 }

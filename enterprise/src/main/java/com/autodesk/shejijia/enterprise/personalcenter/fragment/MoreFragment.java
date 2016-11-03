@@ -132,12 +132,12 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
         bottomPopUp.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                BackGroundUtils.dimBackground(mContext, 0.7f, 1.0f);
+                BackGroundUtils.dimWindowBackground(mContext, 0.7f, 1.0f);
             }
         });
         View view = (((Activity) mContext).findViewById(android.R.id.content)).getRootView();
         bottomPopUp.setAnimationStyle(R.style.pop_bottom_animation);
-        BackGroundUtils.dimBackground(mContext, 1.0f, 0.7f);
+        BackGroundUtils.dimWindowBackground(mContext, 1.0f, 0.7f);
         bottomPopUp.showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 

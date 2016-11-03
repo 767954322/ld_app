@@ -1,16 +1,30 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+
 import android.content.Intent;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectListPresenter;
@@ -31,6 +45,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     private RecyclerView mProjectListView;
     private ProjectListAdapter mProjectListAdapter;
     private ProjectListContract.Presenter mProjectListPresenter;
+    private PopupWindow mScreenPopup;
 
     @Override
     protected int getLayoutResId() {
@@ -80,6 +95,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     * toolbar 日期变更点击回调方法（EnterpriseHomeActivity调用）
     * */
     public void refreshProjectListByDate(String date) {
+        ToastUtils.showShort(mContext, "refreshProjectDate--" + date);
         mProjectListPresenter.onFilterDateChange(date);
         mProjectListPresenter.refreshProjectList();
     }
@@ -122,8 +138,8 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
             // TODO: 10/25/16 跳转到搜索页面
 
         } else if (itemId == R.id.home_toolbar_screen) {
-            ToastUtils.showShort(mContext, "screen");
             // TODO: 10/25/16 筛选－－ 条件修改
+            initScreenPopupWin();
             mProjectListPresenter.onFilterLikeChange(null);
             mProjectListPresenter.refreshProjectList();
 
@@ -133,4 +149,47 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     }
 
 
+    private void initScreenPopupWin() {
+        final View contentView = LayoutInflater.from(mContext).inflate(R.layout.popup_screen_dialog, null);
+        final TextView mScreenAll = (TextView) contentView.findViewById(R.id.tv_screen_all);
+        final TextView mScreenLike = (TextView) contentView.findViewById(R.id.tv_screen_like);
+        mScreenAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
+                mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+            }
+        });
+        mScreenLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
+                mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+            }
+        });
+        contentView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    mScreenPopup.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        contentView.setFocusableInTouchMode(true);
+        mScreenPopup = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mScreenPopup.setFocusable(true);
+        mScreenPopup.setOutsideTouchable(true);
+        mScreenPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                BackGroundUtils.dimWindowBackground(mContext, 0.7f, 1.0f);
+            }
+        });
+        View view = (((Activity) mContext).findViewById(android.R.id.content)).getRootView();
+        mScreenPopup.setAnimationStyle(R.style.pop_top_animation);
+        BackGroundUtils.dimWindowBackground(mContext, 1.0f, 0.7f);
+        mScreenPopup.showAtLocation(view, Gravity.TOP, 0, ScreenUtil.dip2px(80));
+    }
 }

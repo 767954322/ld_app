@@ -60,6 +60,7 @@
     <string name="task_rectification">监督整改</string>
     <string name="task_reinspecting">复验中</string>
 
+
     <!--Customer Calendar view-->
     <string name="calendar_sunday">日</string>
     <string name="calendar_monday">一</string>
@@ -68,6 +69,10 @@
     <string name="calendar_thursday">四</string>
     <string name="calendar_friday">五</string>
     <string name="calendar_saturday">六</string>
+
+    <!--项目列表筛选条件-->
+    <string name="screen_all">全部项目</string>
+    <string name="screen_like">只看星标项目</string>
 
     <!--create or edit plan-->
     <string name="create_plan">创建施工进度表</string>

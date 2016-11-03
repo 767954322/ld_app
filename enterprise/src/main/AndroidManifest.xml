@@ -80,7 +80,6 @@
             android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -88,7 +87,6 @@
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity"/>
 
@@ -96,7 +94,6 @@
             android:name=".personalcenter.activity.PersonalCenterActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity

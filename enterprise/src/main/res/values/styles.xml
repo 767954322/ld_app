@@ -11,8 +11,10 @@
         <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
 
+
     <style name="pop_bottom_animation">
         <item name="android:windowEnterAnimation">@anim/popup_bottom_enter_in</item>
         <item name="android:windowExitAnimation">@anim/popup_bottom_exit</item>
     </style>
+
 </resources>

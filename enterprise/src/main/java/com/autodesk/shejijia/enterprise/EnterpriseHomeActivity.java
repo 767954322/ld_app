@@ -64,7 +64,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
         setSupportActionBar(toolbar);
         // 显示导航按钮
-        toolbar.setNavigationIcon(R.drawable.default_head);
+        toolbar.setNavigationIcon(R.drawable.ic_navigation);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -131,6 +131,13 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         return super.onOptionsItemSelected(item);
     }
 
-
+    private void setArguments(){
+        TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(ConstructionConstants.TASK_LIST_FRAGMENT);
+        if (taskListFragment != null){
+            Bundle bundle = new Bundle();
+            bundle.putInt("toolbarHeight",toolbar.getHeight());
+            taskListFragment.setArguments(bundle);
+        }
+    }
 }
 

@@ -4,12 +4,12 @@
     <item>
         <selector>
             <item
-                android:drawable="@drawable/question_a"
+                android:drawable="@drawable/ic_tab_issue_selected"
                 android:state_pressed="true" />
             <item
-                android:drawable="@drawable/question_b"
+                android:drawable="@drawable/ic_tab_issue_selected"
                 android:state_checked="true" />
-            <item android:drawable="@drawable/question_a" />
+            <item android:drawable="@drawable/ic_tab_issue" />
         </selector>
     </item>
 </ripple>
