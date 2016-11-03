@@ -141,14 +141,14 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     //取消选中的品牌
                     case 2:
                         brandsBean = (RecommendBrandsBean) msg.obj;
-                        for (int i=0;i<listChecked.size();i++){
-
-                            String brandName = listChecked.get(i).getName();
-                            if (brandName.equals(brandsBean.getName())){
-
-                                listChecked.remove(i);
-                            }
-                        }
+//                        for (int i=0;i<listChecked.size();i++){
+//
+//                            String brandName = listChecked.get(i).getName();
+//                            if (brandName.equals(brandsBean.getName())){
+//
+//                                listChecked.remove(i);
+//                            }
+//                        }
                         for (int i= 0;i<listChecked.size();i++){
 
                             ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getName());
