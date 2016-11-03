@@ -11,7 +11,7 @@
         <activity android:name="com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity"/>
 
         <activity android:name=".components.form.ui.activity.ProjectIdCodeActivity"/>
-        <activity android:name=".components.form.ui.activity.QRCodeActivity"/>
+        <activity android:name=".components.form.ui.activity.ScanQrCodeActivity"/>
         <activity android:name=".components.form.ui.activity.ProjectInfoActivity"/>
         <activity android:name=".components.form.ui.activity.PrecheckActivity"/>
         <activity android:name=".components.form.ui.activity.ThemeDialogActivity"

@@ -16,7 +16,7 @@ import com.google.zxing.Result;
  * Created by t_aij on 16/10/25.
  */
 
-public class QRCodeActivity extends CaptureQrActivity {
+public class ScanQrCodeActivity extends CaptureQrActivity {
 
     @Override
     protected void initListener() {
@@ -34,7 +34,7 @@ public class QRCodeActivity extends CaptureQrActivity {
         rightText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QRCodeActivity.this, ProjectIdCodeActivity.class));
+                startActivity(new Intent(ScanQrCodeActivity.this, ProjectIdCodeActivity.class));
                 finish();
             }
         });

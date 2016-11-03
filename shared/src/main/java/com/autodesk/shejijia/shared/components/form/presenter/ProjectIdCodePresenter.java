@@ -10,7 +10,7 @@ import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity;
-import com.autodesk.shejijia.shared.components.form.ui.activity.QRCodeActivity;
+import com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity;
 
 
 /**
@@ -61,7 +61,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
     @Override
     public void enterCode() {
         // TODO: 16/10/25 进入扫码页面
-        Intent intent = new Intent(mContext, QRCodeActivity.class);
+        Intent intent = new Intent(mContext, ScanQrCodeActivity.class);
         //这个方式必须是activity才可以调用,因为这是有返回值的
         mContext.startActivity(intent);
         mView.dismiss();

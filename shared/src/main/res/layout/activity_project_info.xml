@@ -5,13 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/form_background_grey"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/form_navigation_bar"
              android:layout_width="match_parent"
-             android:layout_height="@dimen/form_navigationbar_height"
-    />
+             android:layout_height="@dimen/form_navigationbar_height"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="@dimen/size_42"
@@ -19,23 +17,19 @@
               android:textSize="@dimen/textsize_14"
               android:gravity="center_vertical"
               android:textColor="@color/form_text_title"
-              android:layout_marginLeft="@dimen/marginleft_parent"
-    />
+              android:layout_marginLeft="@dimen/marginleft_parent"/>
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:background="@color/white"
                   android:orientation="vertical"
                   android:paddingLeft="@dimen/marginleft_parent"
-                  android:paddingRight="@dimen/marginright_parent"
-    >
+                  android:paddingRight="@dimen/marginright_parent">
         <TextView android:layout_width="wrap_content"
                   android:layout_height="@dimen/size_56"
                   android:gravity="center_vertical"
                   android:text="@string/form_username"
                   android:textColor="@color/form_text_content"
-                  android:id="@+id/tv_username"
-
-        />
+                  android:id="@+id/tv_username"/>
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
               android:background="@color/form_line_grey"/>
@@ -44,8 +38,7 @@
                   android:textColor="@color/form_text_content"
                   android:text="@string/form_telephone"
                   android:id="@+id/tv_telephone"
-                  android:gravity="center_vertical"
-        />
+                  android:gravity="center_vertical"/>
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
               android:background="@color/form_line_grey"/>
@@ -54,8 +47,7 @@
                   android:textColor="@color/form_text_content"
                   android:text="@string/form_address"
                   android:id="@+id/tv_address"
-                  android:gravity="center_vertical"
-        />
+                  android:gravity="center_vertical"/>
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
               android:background="@color/form_line_grey"/>
@@ -64,8 +56,7 @@
                   android:gravity="center_vertical"
                   android:text="@string/form_communite"
                   android:id="@+id/tv_communite"
-                  android:textColor="@color/form_text_content"
-        />
+                  android:textColor="@color/form_text_content"/>
 
     </LinearLayout>
 
@@ -74,8 +65,7 @@
                   android:orientation="horizontal"
                   android:layout_marginLeft="@dimen/marginleft_parent"
                   android:layout_marginRight="@dimen/marginright_parent"
-                  android:layout_marginTop="38dp"
-    >
+                  android:layout_marginTop="38dp">
         <Button android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_weight="1"
@@ -84,8 +74,7 @@
                 android:textColor="@color/white"
                 android:background="@drawable/small_button_grey"
                 android:layout_marginRight="@dimen/size_12"
-                android:id="@+id/btn_cancel"
-        />
+                android:id="@+id/btn_cancel"/>
         <Button android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_weight="1"
@@ -94,8 +83,7 @@
                 android:typeface="sans"
                 android:background="@drawable/small_button_blue"
                 android:layout_marginLeft="@dimen/size_12"
-                android:id="@+id/btn_confirm"
-        />
+                android:id="@+id/btn_confirm"/>
 
 
     </LinearLayout>

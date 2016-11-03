@@ -10,7 +10,7 @@ import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
-import com.autodesk.shejijia.shared.components.form.ui.activity.QRCodeActivity;
+import com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity;
 import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 
 /**
@@ -50,7 +50,7 @@ public class LoginUtils {
         switch (memberType) {
             case ConstructionConstants.INSPECTOR_TYPE:
                 //跳到监理界面
-                Intent inspectorIntent = new Intent(mContext, QRCodeActivity.class);
+                Intent inspectorIntent = new Intent(mContext, ScanQrCodeActivity.class);
                 inspectorIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(inspectorIntent);
                 break;
