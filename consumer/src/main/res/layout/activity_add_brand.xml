@@ -28,7 +28,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/mybid_item_header_height"
-        android:layout_marginLeft="@dimen/bid_list_divider_height"
+        android:layout_marginLeft="@dimen/mybid_item_margin_horizontal"
         android:gravity="center_vertical"
         android:orientation="horizontal">
         <TextView
@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical ="true"
-            android:text="还可添加"/>
+            android:textSize="@dimen/font_18"
+            android:text="@string/add"/>
         <TextView
             android:id="@+id/tv_two"
             android:layout_width="wrap_content"
@@ -45,14 +46,16 @@
             android:layout_centerVertical ="true"
             android:layout_toRightOf = "@+id/tv_one"
             android:textColor="@color/bg_0084ff"
-            android:text="5"/>
+            android:textSize="@dimen/font_18"
+            android:text="@string/five"/>
         <TextView
             android:id="@+id/tv_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical ="true"
             android:layout_toRightOf = "@+id/tv_two"
-            android:text="个品牌"/>
+            android:textSize="@dimen/font_18"
+            android:text="@string/brand"/>
 
 
         <android.support.v7.widget.AppCompatButton
@@ -62,7 +65,6 @@
             android:layout_centerVertical ="true"
             android:layout_alignParentRight="true"
             android:background="@color/bg_0084ff"
-            android:layout_marginRight="@dimen/bid_list_divider_height"
             android:text="@string/determine"
             android:textColor="@color/white"
             android:textSize="@dimen/font_20"/>

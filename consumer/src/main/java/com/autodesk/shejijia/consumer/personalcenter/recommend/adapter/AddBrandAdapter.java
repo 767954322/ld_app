@@ -6,6 +6,8 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
@@ -53,9 +55,8 @@ public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
         builder.setSpan(new AbsoluteSizeSpan(48), 0, recommendBrandsBean.getName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
         builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), recommendBrandsBean.getName().length(), sb.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//字体的颜色
-//        holder.getView(R.id.ctv_select).setSelected(true);
-        TextView textView = holder.getView(R.id.ctv_select);
-        textView.setSelected(true);
+        CheckedTextView textView = holder.getView(R.id.ctv_select);
+        textView.setChecked(true);
         textView.setText(builder);
 
 

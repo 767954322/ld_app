@@ -2,8 +2,10 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -15,6 +17,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendS
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
@@ -22,18 +25,23 @@ import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddBrandActivity extends NavigationBarActivity implements PullToRefreshLayout.OnRefreshListener,
-        OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener{
+        OkJsonRequest.OKResponseCallback,AdapterView.OnItemClickListener,View.OnClickListener{
+
+
     private PullListView addBrandListview;
     private PullToRefreshLayout mPullToRefreshLayout;
     private List<RecommendBrandsBean> brandsBeanList;
     private RecommendSCFDBean transmissionBean;
     private AddBrandAdapter addBrandAdapter;
     private Boolean isRefresh = true;
-
+    private TextView tvNumber;
+    private AppCompatButton btFinsh;
+    private long[] itemIds;
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_add_brand;
@@ -42,6 +50,8 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     @Override
     protected void initView() {
         super.initView();
+        tvNumber = (TextView)findViewById(R.id.tv_two);
+        btFinsh = (AppCompatButton)findViewById(R.id.bt_finsh);
         addBrandListview = (PullListView)findViewById(R.id.add_brand_listview);
         mPullToRefreshLayout = ((PullToRefreshLayout)findViewById(R.id.refresh_addbrand_view));
     }
@@ -68,16 +78,41 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
         super.initListener();
         mPullToRefreshLayout.setOnRefreshListener(this);
         addBrandListview.setOnItemClickListener(this);
+        btFinsh.setOnClickListener(this);
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        long[] ss = addBrandListview.getCheckedItemIds();
-        ToastUtil.showCustomToast(this,ss.length+"");
+        itemIds = addBrandListview.getCheckedItemIds();
+        int number = Constant.FragmentEnum.FIVE - itemIds.length;
+        tvNumber.setText(number+"");
     }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_finsh:
+                callBack();
+                break;
+            default:
+                break;
+        }
+
+    }
+    private void callBack(){
+        List<RecommendBrandsBean> list = new ArrayList<>();
+        for (long i:itemIds){
+            RecommendBrandsBean rbb =  brandsBeanList.get((int)i);
+            list.add(rbb);
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,(Serializable)list);//List<>list = (List<…<…>>)getIndent.getIntent().getSerializableExtra(key);//接
+        setResult(RESULT_OK,intent);
+        finish();
+    }
+
+
     private void setNavigationBar() {
         setTitleForNavbar(transmissionBean.getSub_category_3d_name());
-//        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
-//        setTextColorForRightNavButton(UIUtils.getColor(R.color.actionsheet_gray));
     }
 
 
