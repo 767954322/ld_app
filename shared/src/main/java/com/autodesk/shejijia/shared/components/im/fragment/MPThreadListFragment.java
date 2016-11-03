@@ -11,27 +11,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
-import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkStringRequest;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
+import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
+import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.activity.ChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.activity.ImageChatRoomActivity;
 import com.autodesk.shejijia.shared.components.im.activity.MPFileThreadListActivity;
 import com.autodesk.shejijia.shared.components.im.adapter.ThreadListAdapter;
-import com.autodesk.shejijia.shared.components.im.constants.BroadCastInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatEntityInfo;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThread;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatThreads;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUser;
 import com.autodesk.shejijia.shared.components.im.datamodel.MPChatUtility;
 import com.autodesk.shejijia.shared.components.im.manager.MPChatHttpManager;
-import com.autodesk.shejijia.shared.framework.AdskApplication;
+import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 
 import java.util.ArrayList;
 
@@ -45,6 +47,7 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
 
 public class MPThreadListFragment extends Fragment implements View.OnClickListener,
         ThreadListAdapter.ThreadListAdapterInterface,
+        AbsListView.OnScrollListener,
         AdapterView.OnItemClickListener {
     public static final String ISFILEBASE = "IsFileBase";
     public static final String MEMBERID = "Memeber_Id";
@@ -101,15 +104,13 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
     private void initView(View rootView) {
-        mPtrLayout = (PtrClassicFrameLayout) rootView.findViewById(R.id.ptr_layout);
-        mThreadListView = (ListViewFinal) rootView.findViewById(R.id.thread_list);
+        mThreadListView = (ListView) rootView.findViewById(R.id.thread_list);
         mProgressbar = (ProgressBar) rootView.findViewById(R.id.threadlist_progressbar);
-        //  mThreadListView.setOnScrollListener(this);
+        mThreadListView.setOnScrollListener(this);
         mThreadListView.setOnItemClickListener(this);
 
         mThreadListAdapter = new ThreadListAdapter(mActivity, this, mIsFileBase);
         mThreadListView.setAdapter(mThreadListAdapter);
-        setSwipeRefreshInfo();
     }
 
 
@@ -160,23 +161,23 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         return Integer.parseInt(mMemberId);
     }
 
-//
-//    //OnScrollListener
-//    @Override
-//    public void onScrollStateChanged(AbsListView view, int scrollState) {
-//        switch (scrollState) {
-//            case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
-//
-//                // if no more threads are to be fetched, let's not make another request for same
-//                if (view.getLastVisiblePosition() == (mThreadList.size() - 1) && !mThreadsExhausted)
-//                  //  getMemberThreadsForOffset(mThreadList.size(), LIMIT);
-//                break;
-//        }
-//    }
 
-//    @Override
-//    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//    }
+    //OnScrollListener
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState) {
+            case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+
+                // if no more threads are to be fetched, let's not make another request for same
+                if (view.getLastVisiblePosition() == (mThreadList.size() - 1) && !mThreadsExhausted)
+                    getMemberThreadsForOffset(mThreadList.size(), LIMIT);
+                break;
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    }
 
     //AdapterView.OnItemClickListener
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -222,6 +223,8 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
 
+
+
     private void onNewMessageReceived(Intent intent) {
         refresh();
     }
@@ -245,8 +248,6 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         OkStringRequest.OKResponseCallback callback = new OkStringRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mPtrLayout.onRefreshComplete();
-                mThreadListView.onLoadMoreComplete();
                 MPNetworkUtils.logError("MPThreadListFragment", error);
                 mIsNextPageRequestRunning = false;
                 mProgressbar.setVisibility(View.GONE);
@@ -254,8 +255,6 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onResponse(String response) {
-                mPtrLayout.onRefreshComplete();
-                mThreadListView.onLoadMoreComplete();
                 mIsNextPageRequestRunning = false;
                 if (offset == 0) {
                     mThreadList.clear();
@@ -297,7 +296,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     }
 
     private void refresh() {
-        if (mMemberId != null) {
+        if (mMemberId != null){
 
             getMemberThreadsForOffset(0, LIMIT);
         }
@@ -312,34 +311,6 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    /**
-     * 刷新,加载,自动刷新.
-     */
-    private void setSwipeRefreshInfo() {
-        mPtrLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-//                mPtrLayout.onRefreshComplete();
-//                mThreadListView.onLoadMoreComplete();
-                Log.d("loadMore", "onRefreshBegin");
-                refresh();
-
-            }
-        });
-        mPtrLayout.setLastUpdateTimeRelateObject(this);
-        mThreadListView.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void loadMore() {
-                mThreadListView.setHasLoadMore(true);
-                Log.d("loadMore", "loadMore");
-                getMemberThreadsForOffset(mThreadList.size(), LIMIT);
-            }
-        });
-        mPtrLayout.autoRefresh();
-
-    }
-
-    private PtrClassicFrameLayout mPtrLayout;
     private static final int LIMIT = 20;
 
     private String mMemberId;
@@ -353,7 +324,7 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
     private boolean mIsNextPageRequestRunning = false;
 
     private ThreadListAdapter mThreadListAdapter;
-    private ListViewFinal mThreadListView;
+    private ListView mThreadListView;
     private ProgressBar mProgressbar;
 
     private MemberEntity mMemberEntity;
