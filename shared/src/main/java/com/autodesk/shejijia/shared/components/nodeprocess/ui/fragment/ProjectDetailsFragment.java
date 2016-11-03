@@ -1,14 +1,19 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.content.Intent;
+import android.os.HandlerThread;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-
-import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
-import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
+import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
+import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
+import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectDetailsContract;
+import com.autodesk.shejijia.enterprise.nodeprocess.plan.CreateOrEditPlanActivity;
+import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
@@ -29,13 +34,20 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.fragment_project_details_view;
+        return R.layout.layout_project_not_start_pm;
+//        return R.layout.fragment_project_details_view;
     }
 
     @Override
     protected void initView() {
-
         setHasOptionsMenu(true);
+        Button createBtn = (Button) rootView.findViewById(R.id.button_create_plan);
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), CreateOrEditPlanActivity.class));
+            }
+        });
     }
 
     @Override
@@ -48,7 +60,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
             LogUtils.e("GetProjectDetails", "you should input right projectId");
         }
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -66,7 +77,6 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         } else if (itemId == R.id.project_toolbar_message) {
             ToastUtils.showShort(mContext, "projectMessage");
             // TODO: 11/1/16  跳转到消息中心页面
-
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +16,10 @@ import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListC
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -44,7 +47,8 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(getActivity(), this);
         //refresh ProjectLists
-        mProjectListPresenter.initRequestParams("2016-10-08", null, null);
+        String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
+        mProjectListPresenter.initRequestParams(defaultSelectedDate, null, null);
         mProjectListPresenter.refreshProjectList();
     }
 

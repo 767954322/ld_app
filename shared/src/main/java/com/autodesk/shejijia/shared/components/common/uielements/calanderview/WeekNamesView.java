@@ -35,6 +35,8 @@ public class WeekNamesView extends ViewGroup {
         }
     }
 
+    // TODO add set weekday formater
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int count = getChildCount();

@@ -36,6 +36,7 @@ android {
         uat {
             versionNameSuffix "_U"
         }
+        //noinspection GroovyMissingReturnStatement
         production {}
     }
 

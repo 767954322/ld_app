@@ -82,6 +82,8 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
         monthView.setDayViewDecorators(mAdapterHelper.getDecoratorResult());
         monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
         monthView.setShowWeekDays(false);
+        monthView.setDateTextAppearance(mAdapterHelper.getDateTextAppearance());
+        monthView.setWeekDayFormatter(mAdapterHelper.getWeekDayFormatter());
 
         return monthContainer;
     }
@@ -93,7 +95,7 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
 
     @Override
     public void setDateTextAppearance(int taId) {
-
+        mAdapterHelper.setDateTextAppearance(taId);
     }
 
     @Override
@@ -151,7 +153,7 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
 
     @Override
     public void setWeekDayFormatter(WeekDayFormatter formatter) {
-
+        mAdapterHelper.setWeekDayFormatter(formatter);
     }
 
     public void setSelectionEnabled(boolean enabled) {

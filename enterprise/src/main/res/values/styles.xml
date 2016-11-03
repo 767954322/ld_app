@@ -5,15 +5,21 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/con_blue</item>
         <item name="colorPrimaryDark">@color/con_blue</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="buttonStyle">@style/Construction.Button</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
     </style>
-
-
 
     <style name="pop_bottom_animation">
         <item name="android:windowEnterAnimation">@anim/popup_bottom_enter_in</item>
         <item name="android:windowExitAnimation">@anim/popup_bottom_exit</item>
     </style>
 
-
+    <style name="Construction.Button" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

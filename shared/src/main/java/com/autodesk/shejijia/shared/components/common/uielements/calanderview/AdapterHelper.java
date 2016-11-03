@@ -153,6 +153,10 @@ public class AdapterHelper<V extends CalendarPagerView> {
         }
     }
 
+    public WeekDayFormatter getWeekDayFormatter() {
+        return this.weekDayFormatter;
+    }
+
     public void setDayFormatter(DayFormatter formatter) {
         this.dayFormatter = formatter;
         for (V pagerView : currentViews) {
