@@ -35,6 +35,7 @@ import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import java.util.ArrayList;
 
+import cn.finalteam.loadingviewfinal.DefaultLoadMoreView;
 import cn.finalteam.loadingviewfinal.ListViewFinal;
 import cn.finalteam.loadingviewfinal.OnDefaultRefreshListener;
 import cn.finalteam.loadingviewfinal.OnLoadMoreListener;
@@ -179,6 +180,9 @@ public class MPThreadListFragment extends Fragment implements View.OnClickListen
 
     //AdapterView.OnItemClickListener
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (view.getClass().toString().equalsIgnoreCase(DefaultLoadMoreView.class.toString()))
+            return;
+
         Intent intent;
         if (mIsFileBase)
             intent = new Intent(mActivity, ImageChatRoomActivity.class);

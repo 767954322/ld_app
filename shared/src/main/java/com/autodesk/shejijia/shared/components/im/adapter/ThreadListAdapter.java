@@ -156,6 +156,10 @@ public class ThreadListAdapter extends BaseAdapter
                 if (thread.latest_message.command.equalsIgnoreCase("command"))
                 {
                     MPChatCommandInfo info = MPChatMessage.getCommandInfoFromMessage(thread.latest_message);
+
+                    if (info == null || (info.for_consumer == null && info.for_designer == null))
+                        break;
+
                     if (isUserConsumer())
                         (holder).description.setText(info.for_consumer);
                     else
