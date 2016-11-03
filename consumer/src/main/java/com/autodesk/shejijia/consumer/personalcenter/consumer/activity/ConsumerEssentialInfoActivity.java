@@ -297,9 +297,9 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
             }
         }
 
-        if (0==is_validated_by_email||2==is_validated_by_email){
+        if (0 == is_validated_by_email || 2 == is_validated_by_email) {
             mTvEmail.setText(getResources().getString(R.string.no_email));
-        }else {
+        } else {
             mTvEmail.setText(email);
         }
 
@@ -380,7 +380,7 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
                 break;
 
             case R.id.rl_consumer_qrcode: /// 生成二维码 .
-                if (!SingleClickUtils.isFastDoubleClickShort()){
+                if (!SingleClickUtils.isFastDoubleClickShort()) {
 
                     showPopupWindow();
                 }
@@ -412,11 +412,13 @@ public class ConsumerEssentialInfoActivity extends NavigationBarActivity impleme
     private void getPCDAddress() {
         if (!TextUtils.isEmpty(province_name)
                 || !TextUtils.isEmpty(city_name)) {
-            mChangeAddressDialog = AddressDialog.getInstance(province_name + " " + city_name + " " + district_name);
+            mChangeAddressDialog = AddressDialog.getInstance(province_name + " " + city_name + " " + district_name,UIUtils.getString(R.string.please_select_addresses));
         } else {
             mChangeAddressDialog = AddressDialog.getInstance("尚未填写");
         }
+
         mChangeAddressDialog.show(getFragmentManager(), "mChangeAddressDialog");
+
         mChangeAddressDialog
                 .setAddressListener(new AddressDialog.OnAddressCListener() {
                     @Override

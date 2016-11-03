@@ -43,6 +43,17 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
     }
 
     public static AddressDialog getInstance(String locationData) {
+
+        AddressDialog dialog = new AddressDialog();
+        Bundle data = new Bundle();
+        data.putString("location", locationData);
+        dialog.setArguments(data);
+        return dialog;
+    }
+
+
+    public static AddressDialog getInstance(String locationData,String title) {
+        mtitle = title;
         AddressDialog dialog = new AddressDialog();
         Bundle data = new Bundle();
         data.putString("location", locationData);
@@ -56,7 +67,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         View view = inflater.inflate(R.layout.view_dialog_myinfo_changeaddress, null);
         mTvSure = (TextView) view.findViewById(R.id.btn_select_sure);
         mTvCancel = (TextView) view.findViewById(R.id.btn_select_cancel);
-
+        tvTiTle = (TextView) view.findViewById(R.id.tvTiTle);
         mTvSure.setOnClickListener(this);
         mTvCancel.setOnClickListener(this);
 
@@ -81,6 +92,11 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         } else {
             initData(null);
         }
+
+        if (mtitle!=null){
+            tvTiTle.setText(mtitle);
+        }
+
         return view;
     }
 
@@ -291,8 +307,13 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
         }
     }
 
+
+
+
+
     private static final String DEFAULT_DISTRICT_CDOE = "0";/*区的默认code值*/
     private static final String DEFAULT_DISTRICT_NAME = "none";/*区的名字默认值*/
+    private static String mtitle;
 
     private static final int TEXT_SIZE = 7;//选择器的字体大小
     private WheelView mProvinceWheelView;
@@ -300,6 +321,7 @@ public class AddressDialog extends DialogFragment implements OnWheelChangedListe
     private WheelView mDistrictWheelView;
     private TextView mTvSure;//确定按钮
     private TextView mTvCancel;//取消按钮
+    private TextView tvTiTle;//标题
 
     private String province, province_name;
     private String city, city_name;
