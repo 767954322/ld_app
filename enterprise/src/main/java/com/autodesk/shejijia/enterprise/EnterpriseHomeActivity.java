@@ -2,7 +2,9 @@ package com.autodesk.shejijia.enterprise;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +70,8 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);//控制左上角返回按钮是否显示
+        // getSupportActionBar().setHomeButtonEnabled(true);//左上角返回按钮是否可以点击
     }
 
     @Override
@@ -85,6 +89,7 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
             case R.id.rdoBtn_project_task:
                 changeFragment(ConstructionConstants.TASK_LIST_FRAGMENT, 0);
                 toolbarTitle.setText(R.string.toolbar_task_title);
+                // toolbarTitle.setCompoundDrawables(null, null, ContextCompat.getDrawable(this, R.drawable.ic_pull_down), null);
                 toolbarTitle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -100,10 +105,12 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
             case R.id.rdoBtn_project_issue:
                 changeFragment(ConstructionConstants.ISSUE_LIST_FRAGMENT, 1);
                 toolbarTitle.setText(R.string.toolbar_question_title);
+                toolbarTitle.setCompoundDrawables(null, null, null, null);
                 toolbarTitle.setOnClickListener(null);
                 break;
             case R.id.rdoBtn_project_session:
                 changeFragment(ConstructionConstants.GROUP_CHAT_FRAGMENT, 2);
+                toolbarTitle.setCompoundDrawables(null, null, null, null);
                 toolbarTitle.setText(R.string.toolbar_groupChat_title);
                 toolbarTitle.setOnClickListener(null);
                 break;
@@ -129,15 +136,6 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setArguments(){
-        TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(ConstructionConstants.TASK_LIST_FRAGMENT);
-        if (taskListFragment != null){
-            Bundle bundle = new Bundle();
-            bundle.putInt("toolbarHeight",toolbar.getHeight());
-            taskListFragment.setArguments(bundle);
-        }
     }
 }
 

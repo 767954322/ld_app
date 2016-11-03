@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class ProjectListPresenter implements ProjectListContract.Presenter {
 
-    private static final int PAGE_LIMIT = 30;
+    private static final int PAGE_LIMIT = 10;
     private Context mContext;
     private ProjectListContract.View mProjectListView;
     private ProjectRepository mProjectRepository;
@@ -64,6 +64,11 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     public void onFilterLikeChange(String newLike) {
         this.mFilterLike = newLike;
         refreshProjectList();
+    }
+
+    @Override
+    public String getScreenPopupState() {
+        return mFilterLike;
     }
 
     @Override
@@ -132,9 +137,13 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     @Override
     public void navigateToTaskDetail(List<Task> taskIdLists, int position) {
-        ToastUtils.showShort((Activity) mContext, "node-details22" + position);
         Intent intent = new Intent(mContext, TaskDetailsActivity.class);
         intent.putExtra("taskId", taskIdLists.get(position).getTaskId());
         mContext.startActivity(intent);
+    }
+
+    @Override
+    public void onStarLabelProject(List<ProjectInfo> projectList, int position) {
+
     }
 }

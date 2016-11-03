@@ -4,30 +4,31 @@
     android:id="@+id/ll_task_details"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/spacing_padding_double"
-    android:paddingEnd="@dimen/spacing_padding_double"
-    android:paddingTop="@dimen/spacing_padding_normal2"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/spacing_padding_normal2"
-    android:orientation="horizontal">
+    android:paddingEnd="@dimen/spacing_padding_double"
+    android:paddingStart="@dimen/spacing_padding_double"
+    android:paddingTop="@dimen/spacing_padding_normal2">
 
     <TextView
         android:id="@+id/tv_task_name"
-        android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/spacing_padding_normal"
         android:gravity="center_vertical"
         android:textColor="@color/font_black"
         android:textSize="@dimen/font_normal"
-        android:drawablePadding="@dimen/spacing_padding_normal"
-        tools:text="隐秘工程验收"/>
+        tools:text="隐秘工程验收" />
 
     <TextView
         android:id="@+id/tv_task_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="强制复检"
-        android:textSize="@dimen/font_small"
         android:background="@drawable/project_list_tv_orange_shape"
+        android:gravity="center"
         android:textColor="@color/white"
-        android:gravity="center"/>
+        android:textSize="@dimen/font_small"
+        tools:text="强制复检" />
 </LinearLayout>

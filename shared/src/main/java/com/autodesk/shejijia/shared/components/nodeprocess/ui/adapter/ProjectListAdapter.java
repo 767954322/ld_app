@@ -111,6 +111,13 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 mProjectListItemListener.onProjectClick(projectLists, position);
             }
         });
+
+        projectVh.mStarLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProjectListItemListener.onStarLabelClick(projectLists, position);
+            }
+        });
     }
 
 
@@ -120,5 +127,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         //节点详情
         void onTaskClick(List<Task> taskList, int position);
+
+        //星标按钮监听
+        void onStarLabelClick(List<ProjectInfo> projectList, int position);
     }
 }

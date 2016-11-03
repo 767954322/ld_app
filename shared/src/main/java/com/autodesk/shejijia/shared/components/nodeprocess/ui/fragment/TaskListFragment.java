@@ -4,11 +4,11 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 import android.content.Intent;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -95,7 +95,6 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     * toolbar 日期变更点击回调方法（EnterpriseHomeActivity调用）
     * */
     public void refreshProjectListByDate(String date) {
-        ToastUtils.showShort(mContext, "refreshProjectDate--" + date);
         mProjectListPresenter.onFilterDateChange(date);
         mProjectListPresenter.refreshProjectList();
     }
@@ -125,6 +124,11 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     }
 
     @Override
+    public void onStarLabelClick(List<ProjectInfo> projectList, int position) {
+        mProjectListPresenter.onStarLabelProject(projectList, position);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.home_task_menu, menu);
     }
@@ -138,11 +142,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
             // TODO: 10/25/16 跳转到搜索页面
 
         } else if (itemId == R.id.home_toolbar_screen) {
-            // TODO: 10/25/16 筛选－－ 条件修改
             initScreenPopupWin();
-            mProjectListPresenter.onFilterLikeChange(null);
-            mProjectListPresenter.refreshProjectList();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -153,11 +153,24 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
         final View contentView = LayoutInflater.from(mContext).inflate(R.layout.popup_screen_dialog, null);
         final TextView mScreenAll = (TextView) contentView.findViewById(R.id.tv_screen_all);
         final TextView mScreenLike = (TextView) contentView.findViewById(R.id.tv_screen_like);
+        //set popup state
+        if (!TextUtils.isEmpty(mProjectListPresenter.getScreenPopupState())
+                && mProjectListPresenter.getScreenPopupState().equals("true")) {
+            mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+            mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
+        } else {
+            mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
+            mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+        }
+        //listener
         mScreenAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
                 mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+                mProjectListPresenter.initRequestParams(null, null, null);
+                mProjectListPresenter.onFilterLikeChange(null);
+                mScreenPopup.dismiss();
             }
         });
         mScreenLike.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +178,9 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
             public void onClick(View v) {
                 mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
                 mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
+                mProjectListPresenter.initRequestParams(null, null, null);
+                mProjectListPresenter.onFilterLikeChange("true");
+                mScreenPopup.dismiss();
             }
         });
         contentView.setOnKeyListener(new View.OnKeyListener() {
@@ -178,7 +194,9 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
             }
         });
         contentView.setFocusableInTouchMode(true);
-        mScreenPopup = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (mScreenPopup == null) {
+            mScreenPopup = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
         mScreenPopup.setFocusable(true);
         mScreenPopup.setOutsideTouchable(true);
         mScreenPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -191,5 +209,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
         mScreenPopup.setAnimationStyle(R.style.pop_top_animation);
         BackGroundUtils.dimWindowBackground(mContext, 1.0f, 0.7f);
         mScreenPopup.showAtLocation(view, Gravity.TOP, 0, ScreenUtil.dip2px(80));
+
     }
+
 }

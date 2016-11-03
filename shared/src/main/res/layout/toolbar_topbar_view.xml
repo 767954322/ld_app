@@ -9,6 +9,7 @@
     android:elevation="@dimen/spacing_padding_micro"
     app:navigationIcon="@drawable/ic_navigation"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:theme="@style/ToolbarColoredBackArrow"
     tools:targetApi="lollipop">
 
     <TextView
@@ -18,14 +19,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="?attr/selectableItemBackground"
+        android:drawableEnd="@drawable/ic_pull_down"
         android:ellipsize="end"
         android:gravity="center"
         android:lines="1"
         android:textColor="@color/white"
         tools:text="2016-08-08" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </android.support.v7.widget.Toolbar>

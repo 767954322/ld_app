@@ -46,6 +46,11 @@ public interface ProjectListContract {
         void onFilterLikeChange(String newLike);
 
         /*
+        *  根据筛选条件设置筛选popup状态
+        * */
+        String getScreenPopupState();
+
+        /*
         * 上拉刷新项目列表
         * */
         void refreshProjectList();
@@ -64,5 +69,10 @@ public interface ProjectListContract {
         * 每个item中每个任务条目点击跳转到节点详情
         * */
         void navigateToTaskDetail(List<Task> taskLists, int position);
+
+        /*
+        * 星标项目
+        * */
+        void onStarLabelProject(List<ProjectInfo> projectList, int position);
     }
 }

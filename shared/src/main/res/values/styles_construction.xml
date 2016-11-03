@@ -9,4 +9,9 @@
         <item name="android:windowEnterAnimation">@anim/popup_top_enter_in</item>
         <item name="android:windowExitAnimation">@anim/popup_top_exit</item>
     </style>
+
+    <!-- toolbar home button style-->
+    <style name="ToolbarColoredBackArrow" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
 </resources>
