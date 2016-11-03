@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/tools/sjj"
     android:id="@+id/fragment_thread_list_rootlayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-    <ListView
-        android:id="@+id/thread_list"
+    <!--<ListView-->
+    <!--android:id="@+id/thread_list"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@id/in_top"/>-->
+
+    <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
+        android:id="@+id/ptr_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/in_top"/>
+        android:layout_below="@id/in_top">
+
+        <cn.finalteam.loadingviewfinal.ListViewFinal
+            android:id="@+id/thread_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:scrollbars="none"
+            app:loadMoreMode="scroll" />
+
+    </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
 
     <ProgressBar
+        android:id="@+id/threadlist_progressbar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/threadlist_progressbar"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>
