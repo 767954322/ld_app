@@ -3,6 +3,7 @@ package com.autodesk.shejijia.shared.components.common.uielements.reusewheel.uti
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -157,6 +158,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
      * @param date
      */
     public void setTime(Date date) {
+
         Calendar calendar = Calendar.getInstance();
         if (date == null) {
             calendar.setTimeInMillis(System.currentTimeMillis());
@@ -169,9 +171,32 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hours = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        wheelTime.setPicker(year, month, day, hours + 2, minute);
+        wheelTime.setPicker(year, month, day, hours + getAddTime(), minute);
+
+    }
 
 
+    public int getAddTime() {
+        int minute = getMinute();
+        if (minute > 0) {
+            return 3;
+        } else {
+            return 2;
+        }
+
+
+    }
+
+    /**
+     * 功能描述：返回分
+     *
+     * @return 返回分钟
+     */
+    public static int getMinute() {
+        Date date = new Date(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MINUTE);
     }
 
     /**
@@ -192,8 +217,8 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
 
             }
             endTime = date.getTime();
-            Log.i("yaoxuehua--currentTime",""+currentTime);
-            Log.i("yaoxuehua--endTime",""+endTime);
+            Log.i("yaoxuehua--currentTime", "" + currentTime);
+            Log.i("yaoxuehua--endTime", "" + endTime);
             if (endTime >= currentTime) {
 
                 btnSubmit.setTextColor(UIUtils.getColor(R.color.pickerview_timebtn_nor));
