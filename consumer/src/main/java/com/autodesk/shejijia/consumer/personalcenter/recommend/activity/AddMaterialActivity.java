@@ -13,7 +13,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.AddBrandShowAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ShowBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInformationBean;
@@ -52,7 +53,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private MaterialCategoryBean materialCategoryBean;
     private Button all_material_btn;
     private Handler getAdapterDataHandler;//获取返回数据handler
-    private List<ShowBrandsBean.BrandsBean> getAdapterResultList;
+    private List<RecommendBrandsBean> getAdapterResultList;
 
     @Override
     public void onClick(View v) {
@@ -177,7 +178,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                ShowBrandsBean showBrandsBean =  GsonUtil.jsonToBean(jsonObject.toString(),ShowBrandsBean.class);
+                RecommendSCFDBean showBrandsBean =  GsonUtil.jsonToBean(jsonObject.toString(),RecommendSCFDBean.class);
                 showBrandsList(showBrandsBean.getBrands());
             }
         });
@@ -232,7 +233,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     /**
      * 展示品牌数据
      * */
-    public void showBrandsList(List<ShowBrandsBean.BrandsBean> list){
+    public void showBrandsList(List<RecommendBrandsBean> list){
 
         AddBrandShowAdapter addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this,list,R.layout.add_brand_item);
         show_brand_listView.setAdapter(addBrandShowAdapter);

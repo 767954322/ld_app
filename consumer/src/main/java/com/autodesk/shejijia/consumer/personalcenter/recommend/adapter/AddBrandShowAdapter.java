@@ -6,7 +6,7 @@ import android.view.View;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ShowBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 
 import java.util.List;
 
@@ -14,18 +14,18 @@ import java.util.List;
  * Created by yaoxuehua on 16-10-26.
  */
 
-public class AddBrandShowAdapter extends CommonAdapter<ShowBrandsBean.BrandsBean> {
+public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
 
 
 
-    public AddBrandShowAdapter(Context context, List<ShowBrandsBean.BrandsBean> datas, int layoutId) {
+    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId) {
         super(context, datas, layoutId);
     }
 
     @Override
-    public void convert(final CommonViewHolder holder, ShowBrandsBean.BrandsBean brandsBean) {
+    public void convert(final CommonViewHolder holder, RecommendBrandsBean brandsBean) {
 
-        holder.setText(R.id.brand_name,brandsBean.getBrand_name());
+        holder.setText(R.id.brand_name,brandsBean.getName());
         String storeName = "";
         for (int i=0;i<brandsBean.getMalls().size();i++){
 

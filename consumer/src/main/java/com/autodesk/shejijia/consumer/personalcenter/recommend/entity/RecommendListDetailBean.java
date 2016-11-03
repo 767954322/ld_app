@@ -6,6 +6,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
  * @author liuhea
  *         created at 16-10-25
  */
+@Deprecated
 public class RecommendListDetailBean {
 
     private String province;

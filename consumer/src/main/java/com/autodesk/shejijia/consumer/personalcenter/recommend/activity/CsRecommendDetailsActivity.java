@@ -11,8 +11,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.CsRecommendDetailsAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -40,8 +40,8 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     private String mAsset_id;
     private ListView mListview;
     private CsRecommendDetailsAdapter mAdapter;
-    private List<ScfdEntity> brands = new ArrayList<>();
-    private RecommendDetailsEntity mEntity;
+    private List<RecommendSCFDBean> brands = new ArrayList<>();
+    private RecommendDetailsBean mEntity;
 
     public static void jumpTo(Context context, String asset_id, String community_name) {
         Intent intent = new Intent(context, CsRecommendDetailsActivity.class);
@@ -101,7 +101,7 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
             public void onResponse(JSONObject jsonObject) {
                 CustomProgress.cancelDialog();
                 Log.d("recommend", "CsRecommendDetailsActivity:" + jsonObject.toString());
-                mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
+                mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsBean.class);
                 updateView2Api(mEntity);
             }
 
@@ -115,10 +115,10 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
         MPServerHttpManager.getInstance().getRecommendDetails(design_id, mAsset_id, callback);
     }
 
-    private void updateView2Api(RecommendDetailsEntity item) {
+    private void updateView2Api(RecommendDetailsBean item) {
         String scfd = item.getScfd();
-        List<ScfdEntity> brand_lst = new Gson()
-                .fromJson(scfd, new TypeToken<List<ScfdEntity>>() {
+        List<RecommendSCFDBean> brand_lst = new Gson()
+                .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
         if (brand_lst != null && brand_lst.size() > 0) {
             brands.addAll(brand_lst);

@@ -9,7 +9,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
@@ -24,16 +24,16 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
+public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
     private boolean isDesiner = false;
 
-    public RecommendAdapter(Context context, List<RecommendEntity.ItemsBean> datas, int layoutId, boolean isDesiner) {
+    public RecommendAdapter(Context context, List<RecommendDetailsBean> datas, int layoutId, boolean isDesiner) {
         super(context, datas, layoutId);
         this.isDesiner = isDesiner;
     }
 
     @Override
-    public void convert(CommonViewHolder holder, final RecommendEntity.ItemsBean item) {
+    public void convert(CommonViewHolder holder, final RecommendDetailsBean item) {
         holder.setVisible(R.id.tv_cancel_btn, isDesiner);
         String status = item.getSent_status();
         if (!TextUtils.isEmpty(status)) {
@@ -60,7 +60,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendEntity.ItemsBean> {
         });
     }
 
-    private void onItemDeteleClick(RecommendEntity.ItemsBean item) {
+    private void onItemDeteleClick(RecommendDetailsBean item) {
         new AlertView(null, "您确定要删除吗?", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {

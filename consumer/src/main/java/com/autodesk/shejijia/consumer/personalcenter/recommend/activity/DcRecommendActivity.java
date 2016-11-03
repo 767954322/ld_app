@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.FragmentTabAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.fragment.RecommendFragment;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -106,7 +106,7 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
     }
 
     @Override
-    public void onLoadDataSuccess(int offset, RecommendEntity entity) {
+    public void onLoadDataSuccess(int offset, RecommendBean entity) {
         CustomProgress.cancelDialog();
         if (entity.getItems() != null && entity.getItems().size() > 0) {
             mEmptyView.setVisibility(View.GONE);

@@ -1,6 +1,6 @@
 package com.autodesk.shejijia.consumer.frame.http.interfaces;
 
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -38,5 +38,5 @@ public interface INetInterface {
      * @return
      */
     @GET("recommends/{assetId}")
-    Observable<RecommendDetailsEntity> getRecommendDetails(@Path("assetId") String assetId);
+    Observable<RecommendDetailsBean> getRecommendDetails(@Path("assetId") String assetId);
 }

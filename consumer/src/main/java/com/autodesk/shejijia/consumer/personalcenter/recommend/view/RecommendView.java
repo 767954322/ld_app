@@ -1,6 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.view;
 
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 
 /**
  * @User: 蜡笔小新
@@ -9,7 +9,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendE
  */
 
 public interface RecommendView {
-    void onLoadDataSuccess(int offset, RecommendEntity entity);
+    void onLoadDataSuccess(int offset, RecommendBean entity);
 
     void onLoadFailer();
 }

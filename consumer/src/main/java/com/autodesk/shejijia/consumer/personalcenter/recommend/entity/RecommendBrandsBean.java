@@ -11,8 +11,8 @@ import java.util.List;
  *         created at 16-10-25
  */
 public class RecommendBrandsBean implements Serializable {
-
-    private String brand_name;      // 品牌名称．
+//    private String brand_name;      // 品牌名称．
+    private String name;
     private String dimension;       // 规格．o
     private String remarks;         // 备注（最大不超过150个中文字符）．
     private String code;
@@ -23,14 +23,20 @@ public class RecommendBrandsBean implements Serializable {
     private List<RecommendMallsBean> malls;
     private List<?> commoditys;      // sku列表．
 
-
-    public String getBrand_name() {
-        return brand_name;
+//    public String getName() {
+//        return name;
+//    }
+//
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public void setBrand_name(String brand_name) {
-        this.brand_name = brand_name;
+    public String getName() {
+        return name;
     }
+//
+//    public void setBrand_name(String brand_name) {
+//        this.brand_name = brand_name;
+//    }
 
     public String getDimension() {
         return dimension;

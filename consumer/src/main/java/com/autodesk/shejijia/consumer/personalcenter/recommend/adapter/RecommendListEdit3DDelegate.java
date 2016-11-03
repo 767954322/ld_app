@@ -36,7 +36,7 @@ public class RecommendListEdit3DDelegate implements ItemViewDelegate<RecommendBr
 
     @Override
     public void convert(MultiItemViewHolder holder, RecommendBrandsBean recommendBrandsBean, int position) {
-        holder.setText(R.id.tv_brand_name, recommendBrandsBean.getBrand_name());
+        holder.setText(R.id.tv_brand_name, recommendBrandsBean.getName());
 
         ImageView mBrandLogo = holder.getView((R.id.iv_brand_logo));
         if (StringUtils.isEmpty(mBrandLogo)){

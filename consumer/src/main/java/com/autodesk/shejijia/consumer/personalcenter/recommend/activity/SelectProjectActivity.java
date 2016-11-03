@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
@@ -14,13 +13,12 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.SelectProjectAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.SelectProjectEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
@@ -29,8 +27,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.id.list;
 
 /**
  * @author DongXueQiu .
@@ -50,8 +46,8 @@ public class SelectProjectActivity extends NavigationBarActivity implements View
     private String designer_uid;
     private List<SelectProjectEntity.DesignerProjectsBean> designerProjects = new ArrayList<>();
     private SelectProjectEntity.DesignerProjectsBean interiorProject;
-    List<RecommendEntity.ItemsBean> list = new ArrayList<>();
-    private RecommendEntity.ItemsBean entity;
+    List<RecommendDetailsBean> list = new ArrayList<>();
+    private RecommendDetailsBean entity;
     private SelectProjectEntity.DesignerProjectsBean designerProjectsBean;
 
     @Override

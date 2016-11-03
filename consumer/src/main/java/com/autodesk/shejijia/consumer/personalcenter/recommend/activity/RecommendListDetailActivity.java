@@ -16,7 +16,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendListEditParentAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendListDetailBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
@@ -99,7 +99,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 CustomProgress.cancelDialog();
                 String jsonString = jsonObject.toString();
                 Log.d("RecommendListDetailAc", jsonString);
-                RecommendListDetailBean recommendListDetailBean = jsonToBean(jsonString, RecommendListDetailBean.class);
+                RecommendDetailsBean recommendListDetailBean = jsonToBean(jsonString, RecommendDetailsBean.class);
                 updateUI(recommendListDetailBean);
             }
 
@@ -112,7 +112,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         MPServerHttpManager.getInstance().getRecommendDraftDetail(mAsset_id, callback);
     }
 
-    private void updateUI(RecommendListDetailBean recommendListDetailBean) {
+    private void updateUI(RecommendDetailsBean recommendListDetailBean) {
         setTitle(recommendListDetailBean);
 
         String scfd = recommendListDetailBean.getScfd();
@@ -177,7 +177,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         super.leftNavButtonClicked(view);
     }
 
-    private void setTitle(RecommendListDetailBean recommendListDetailBean) {
+    private void setTitle(RecommendDetailsBean recommendListDetailBean) {
         setTitleForNavbar(recommendListDetailBean.getCommunity_name());
         setTitleForNavButton(ButtonType.RIGHT, "添加主材");
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));

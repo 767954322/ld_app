@@ -5,12 +5,11 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
 import org.json.JSONObject;
@@ -40,7 +39,7 @@ public class RecommendLogicImpl {
             public void onResponse(JSONObject jsonObject) {
                 Log.d("recommend", jsonObject.toString());
                 if (!TextUtils.isEmpty(jsonObject.toString())) {
-                    RecommendEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendEntity.class);
+                    RecommendBean entity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendBean.class);
                     mRecommendView.onLoadDataSuccess(offset, entity);
                 }
             }

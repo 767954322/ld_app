@@ -29,7 +29,7 @@ public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
     public void convert(CommonViewHolder holder, RecommendBrandsBean recommendBrandsBean) {
         List<RecommendMallsBean> mallsBeans = recommendBrandsBean.getMalls();
         StringBuffer sb = new StringBuffer();
-        sb.append(recommendBrandsBean.getBrand_name()+"\n");
+        sb.append(recommendBrandsBean.getName()+"\n");
         for(RecommendMallsBean mallsBean:mallsBeans){
             if(TextUtils.isEmpty(mallsBean.getMall_name())){
                 continue;
@@ -41,8 +41,8 @@ public class ChanageBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
         }
         sb = sb.delete(sb.length()-1,sb.length());
         SpannableStringBuilder builder = new SpannableStringBuilder(sb);
-        builder.setSpan(new AbsoluteSizeSpan(48), 0, recommendBrandsBean.getBrand_name().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
-        builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), recommendBrandsBean.getBrand_name().length(), sb.length(),
+        builder.setSpan(new AbsoluteSizeSpan(48), 0, recommendBrandsBean.getName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
+        builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), recommendBrandsBean.getName().length(), sb.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//字体的颜色
         TextView textView = holder.getView(R.id.ctv_select);
         textView.setText(builder);

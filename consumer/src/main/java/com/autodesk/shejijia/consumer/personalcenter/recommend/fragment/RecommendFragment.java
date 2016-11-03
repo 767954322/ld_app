@@ -10,7 +10,8 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.CsRecomm
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DcRecommendDetailsActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendLogicImpl;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
         return fragment;
     }
 
-    private List<RecommendEntity.ItemsBean> mRecommends = new ArrayList<>();
+    private List<RecommendDetailsBean> mRecommends = new ArrayList<>();
     private ListViewFinal mListView;
     private RecommendAdapter mAdapter;
     private PtrClassicFrameLayout mFrameLayout;
@@ -58,7 +59,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        RecommendEntity.ItemsBean item = (RecommendEntity.ItemsBean) parent.getAdapter().getItem(position);
+        RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
         if (isDesign)
             DcRecommendDetailsActivity.jumpTo(getActivity(), item.getDesign_project_id() + "");
         else
@@ -98,7 +99,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
         mRecommendLogic.onLoadRecommendListData(isDesign, OFFSET, LIMIT, mStatus);
     }
 
-    private void updateViewFromApi(int offset, List<RecommendEntity.ItemsBean> items) {
+    private void updateViewFromApi(int offset, List<RecommendDetailsBean> items) {
         if (items != null && items.size() > 0) {
             if (offset == 0) {
                 mRecommends.clear();
@@ -123,7 +124,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     }
 
     @Override
-    public void onLoadDataSuccess(int offset, RecommendEntity entity) {
+    public void onLoadDataSuccess(int offset, RecommendBean entity) {
         updateViewFromApi(offset, entity.getItems());
     }
 

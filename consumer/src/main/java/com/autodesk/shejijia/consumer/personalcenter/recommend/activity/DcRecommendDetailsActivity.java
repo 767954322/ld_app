@@ -14,8 +14,8 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.DcRecommendDetailsAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -56,8 +56,8 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
     private TextView tvCreateDate;
     private ListView mListview;
     private DcRecommendDetailsAdapter mAdapter;
-    private List<ScfdEntity> brands = new ArrayList<>();
-    private RecommendDetailsEntity mEntity;
+    private List<RecommendSCFDBean> brands = new ArrayList<>();
+    private RecommendDetailsBean mEntity;
 
     public static void jumpTo(Context context, String asset_id) {
         Intent intent = new Intent(context, DcRecommendDetailsActivity.class);
@@ -130,7 +130,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
             @Override
             public void onResponse(JSONObject jsonObject) {
                 Log.d("CsRecommendActivity", jsonObject.toString());
-                mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsEntity.class);
+                mEntity = GsonUtil.jsonToBean(jsonObject.toString(), RecommendDetailsBean.class);
                 updateView2Api(mEntity);
             }
 
@@ -145,7 +145,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
 //        HttpRequest.getInstance().getRecommendDetails(mAsset_id, 0, this);
     }
 
-    private void updateView2Api(RecommendDetailsEntity item) {
+    private void updateView2Api(RecommendDetailsBean item) {
         tvRecommendName.setText(item.getCommunity_name());
         tvAssetId.setText("清单编号：" + item.getProject_code() + "");
         tvRecoConsumerName.setText(item.getConsumer_name());
@@ -154,8 +154,8 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
         tvRecoItemDetailsAddress.setText(item.getCommunity_address());
         tvCreateDate.setText(DateUtil.getStringDateByFormat(new Date(item.getDate_submitted()), "yyyy-MM-dd HH:mm"));
         String scfd = item.getScfd();
-        List<ScfdEntity> brand_lst = new Gson()
-                .fromJson(scfd, new TypeToken<List<ScfdEntity>>() {
+        List<RecommendSCFDBean> brand_lst = new Gson()
+                .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
         if (brand_lst != null && brand_lst.size() > 0) {
             brands.clear();
@@ -182,7 +182,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
         CustomProgress.cancelDialog();
         Log.i("CsRecommendActivity", "onResult");
         if (i == 0) {
-            mEntity = ((RecommendDetailsEntity) iModel);
+            mEntity = ((RecommendDetailsBean) iModel);
             updateView2Api(mEntity);
         }
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 
 import com.android.volley.VolleyError;
@@ -13,9 +12,7 @@ import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.StoreLocationAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MallAddressEntity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
-import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;

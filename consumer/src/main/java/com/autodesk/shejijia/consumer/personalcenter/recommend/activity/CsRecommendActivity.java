@@ -8,7 +8,8 @@ import android.widget.LinearLayout;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -39,7 +40,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
         context.startActivity(intent);
     }
 
-    private List<RecommendEntity.ItemsBean> mRecommends = new ArrayList<>();
+    private List<RecommendDetailsBean> mRecommends = new ArrayList<>();
     private ListViewFinal mListView;
     private RecommendAdapter mAdapter;
     private PtrClassicFrameLayout mFrameLayout;
@@ -53,7 +54,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        RecommendEntity.ItemsBean item = (RecommendEntity.ItemsBean) parent.getAdapter().getItem(position);
+        RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
         CsRecommendDetailsActivity.jumpTo(this, item.getDesign_project_id() + "", item.getCommunity_name());
     }
 
@@ -90,7 +91,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
         mRecommendLogic.onLoadRecommendListData(false, OFFSET, LIMIT, 0);
     }
 
-    private void updateViewFromApi(int offset, List<RecommendEntity.ItemsBean> items) {
+    private void updateViewFromApi(int offset, List<RecommendDetailsBean> items) {
         if (items != null && items.size() > 0) {
             if (offset == 0) {
                 mRecommends.clear();
@@ -107,7 +108,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
     }
 
     @Override
-    public void onLoadDataSuccess(int offset, RecommendEntity entity) {
+    public void onLoadDataSuccess(int offset, RecommendBean entity) {
         CustomProgress.cancelDialog();
         updateViewFromApi(offset, entity.getItems());
     }

@@ -11,7 +11,9 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.StoreLocationActivity;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ScfdEntity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 
 import java.util.List;
@@ -22,24 +24,24 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> implements View.OnClickListener {
+public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> implements View.OnClickListener {
     private LayoutInflater mInflater;
 
-    public CsRecommendDetailsAdapter(Context context, List<ScfdEntity> datas, int layoutId) {
+    public CsRecommendDetailsAdapter(Context context, List<RecommendSCFDBean> datas, int layoutId) {
         super(context, datas, layoutId);
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public void convert(CommonViewHolder holder, ScfdEntity item) {
+    public void convert(CommonViewHolder holder, RecommendSCFDBean item) {
         holder.setText(R.id.tv_category_name, item.getSub_category_3d_name());
         LinearLayout llBrandView = holder.getView(R.id.ll_brand_view);
-        List<ScfdEntity.BrandsBean> brands = item.getBrands();
+        List<RecommendBrandsBean> brands = item.getBrands();
         llBrandView.removeAllViews();
         for (int i = 0; i < brands.size(); i++) {
-            ScfdEntity.BrandsBean bean = brands.get(i);
+            RecommendBrandsBean bean = brands.get(i);
             View mItemView;
-            if (item.getSource().equals("1")) {
+            if (bean.getSource().equals("1")) {
                 mItemView = mInflater.inflate(R.layout.item_brand_logo_view, null);
             } else {
                 mItemView = mInflater.inflate(R.layout.item_brand_view, null);
@@ -49,7 +51,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> impleme
         }
     }
 
-    private void updateView2ItemData(boolean isFrom3D, View mItemView, ScfdEntity.BrandsBean bean) {
+    private void updateView2ItemData(boolean isFrom3D, View mItemView, RecommendBrandsBean bean) {
         TextView tvBrandName = (TextView) mItemView.findViewById(R.id.tv_brand_name);
         if (!isFrom3D) {
             TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
@@ -65,12 +67,12 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<ScfdEntity> impleme
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);
         TextView tvBrandMallName = (TextView) mItemView.findViewById(R.id.tv_brand_mall_name);
-        tvBrandName.setText(bean.getBrand_name());
+        tvBrandName.setText(bean.getName());
         tvBrandDimension.setText(bean.getDimension());
         tvBrandApartment.setText(bean.getApartment());
         tvBrandRemarks.setText(bean.getRemarks());
         StringBuffer mallName = new StringBuffer();
-        for (ScfdEntity.BrandsBean.MallsBean mallsBean : bean.getMalls()) {
+        for (RecommendMallsBean mallsBean : bean.getMalls()) {
             mallName.append(mallsBean.getMall_name() + "、");
         }
         tvBrandMallName.setText(mallName.substring(0, mallName.length() - 1));

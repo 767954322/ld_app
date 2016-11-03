@@ -8,7 +8,7 @@ import com.qy.appframe.model.IModel;
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecommendDetailsEntity implements IModel {
+public class RecommendDetailsBean implements IModel {
 
     /**
      * province : 370000
@@ -44,7 +44,7 @@ public class RecommendDetailsEntity implements IModel {
     private String scfd;
     private String scfc;
     private String status;
-    private Object type;
+    private String type;
     private String source;
     private int main_project_id;
     private int design_project_id;
@@ -65,6 +65,15 @@ public class RecommendDetailsEntity implements IModel {
     private int modified_count;
     private String community_address;
     private String date_submitted;
+    private String sent_status;
+
+    public String getSent_status() {
+        return sent_status;
+    }
+
+    public void setSent_status(String send_status) {
+        this.sent_status = send_status;
+    }
 
     public String getProject_code() {
         return project_code;
@@ -130,11 +139,11 @@ public class RecommendDetailsEntity implements IModel {
         this.status = status;
     }
 
-    public Object getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(Object type) {
+    public void setType(String type) {
         this.type = type;
     }
 
