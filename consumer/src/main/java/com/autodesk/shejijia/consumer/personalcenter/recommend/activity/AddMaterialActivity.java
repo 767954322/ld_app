@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.AddBrandShowAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.ShowBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
@@ -25,6 +25,8 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInfor
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewContainer;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicPopWindow;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
+import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
 import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest.OKResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -44,7 +46,7 @@ import java.util.List;
  * @brief 添加主材页面 .
  */
 
-public class AddMaterialActivity extends NavigationBarActivity implements View.OnClickListener {
+public class AddMaterialActivity extends NavigationBarActivity implements View.OnClickListener , PullToRefreshLayout.OnRefreshListener{
 
 
     private DynamicAddView[] dynamicAddViews;//二级控件集合
@@ -55,15 +57,19 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private int countArrItem = 0;//对应不同二级品类和窗口
     private HorizontalScrollView one_level_category;
     private HorizontalScrollView two_level_category;
-    private ListView show_brand_listView;
+    private PullListView show_brand_listView;
     private MaterialCategoryBean materialCategoryBean;
     private Button all_material_btn;
     private Handler getAdapterDataHandler;//获取返回数据handler
     private List<ShowBrandsBean.BrandsBean> getAdapterResultList;
     private DynamicAddViewContainer dynamicAddViewContainer;
-    private List<ShowBrandsBean.BrandsBean> listChecked;//选中品牌的集合
+    private List<ShowBrandsBean.BrandsBean> listChecked = new ArrayList<>();;//选中品牌的集合
     private int brandCount = 0;//可添加品牌的数量
     private TextView remain_brand_count;
+    private PullToRefreshLayout mPullToRefreshLayout;
+    private AddBrandShowAdapter addBrandShowAdapter;
+    private int justRefreshOrLoadMore = 1;//判断是第一次获取，2,刷新，3 加载更多
+    private List<ShowBrandsBean.BrandsBean> listBrands = new ArrayList<>();//复用的品牌集合
 
     @Override
     public void onClick(View v) {
@@ -95,15 +101,17 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         setTextColorForRightNavButton(UIUtils.getColor(R.color.tx_ef));
         two_level_category = (HorizontalScrollView) findViewById(R.id.two_level_category);
         one_level_category = (HorizontalScrollView) findViewById(R.id.one_level_category);
-        show_brand_listView = (ListView) findViewById(R.id.show_brand_listView);
+        show_brand_listView = (PullListView) findViewById(R.id.show_brand_listView);
         all_material_btn = (Button) findViewById(R.id.all_material_btn);
         remain_brand_count = (TextView) findViewById(R.id.remain_brand_count);
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.pull_to_refresh_layout);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
         all_material_btn.setOnClickListener(this);
+        mPullToRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -126,7 +134,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         listChecked.add(brandsBean);
                         for (int i=0;i < listChecked.size();i++){
 
-
                             ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getBrand_name());
                         }
                         break;
@@ -140,7 +147,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                                 listChecked.remove(i);
                             }
-
                         }
                         for (int i= 0;i<listChecked.size();i++){
 
@@ -227,8 +233,21 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onResponse(JSONObject jsonObject) {
 
-                RecommendSCFDBean showBrandsBean =  GsonUtil.jsonToBean(jsonObject.toString(),RecommendSCFDBean.class);
-                showBrandsList(showBrandsBean.getBrands());
+                ShowBrandsBean getShowBrandsBean =  GsonUtil.jsonToBean(jsonObject.toString(),ShowBrandsBean.class);
+
+                if (justRefreshOrLoadMore == 1) {
+                    addDatas(getShowBrandsBean.getBrands());
+                    showBrandsList(listBrands);
+                }
+                if (justRefreshOrLoadMore == 2) {
+                    mPullToRefreshLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    changeCategoryBrandsDatas(getShowBrandsBean.getBrands());
+                }
+                if (justRefreshOrLoadMore == 3){
+                    mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    changeCategoryBrandsDatas(getShowBrandsBean.getBrands());
+                }
+
             }
         });
     }
@@ -287,6 +306,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 public void onButtonClicked(BtnStatusBean btnStatusBean) {
                     if (dynamicPopWindows[countArrItem] != null){
                         dynamicPopWindows[countArrItem].setButtonCheckedStatus(btnStatusBean);
+
+                        getMaterialCategoryBrandsInformation("","","","","","",0,20);
                     }
                 }
             });
@@ -309,6 +330,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             @Override
             public void onButtonOnClick(BtnStatusBean btnStatusBean) {
                 dynamicAddViews[countArrItem].setButtonCheckedStatus(btnStatusBean);
+                getMaterialCategoryBrandsInformation("","","","","","",0,20);
             }
         });
     }
@@ -317,12 +339,26 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
      * 展示品牌数据
      * */
     public void showBrandsList(List<ShowBrandsBean.BrandsBean> list){
-        listChecked = new ArrayList<>();
-        AddBrandShowAdapter addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this,list,R.layout.add_brand_item,getAdapterDataHandler);
+        addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this,list,R.layout.add_brand_item,getAdapterDataHandler);
         show_brand_listView.setAdapter(addBrandShowAdapter);
 
     }
 
+    /**
+     * 改变不同品类下的数据
+     * */
+
+    public void changeCategoryBrandsDatas(List<ShowBrandsBean.BrandsBean> list){
+
+        if (justRefreshOrLoadMore == 2){
+            listBrands.clear();
+            addDatas(list);
+        }else if (justRefreshOrLoadMore == 3){
+            addDatas(list);
+        }
+        addBrandShowAdapter.notifyDataSetChanged();
+
+    }
     /**
      * 展示剩余品牌添加数
      * */
@@ -331,10 +367,34 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         String remainBrandCount = "还可添加"+ (6 - listChecked.size())  +"个品牌";
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(remainBrandCount);
         spannableStringBuilder.setSpan(new ForegroundColorSpan(Color.BLUE),4,5,spannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
         remain_brand_count.setText(spannableStringBuilder);
+    }
+    /**
+     * 将数据添加进入集合复用
+     * */
+    public void addDatas(List<ShowBrandsBean.BrandsBean> list){
+
+        for (int i=0;i<list.size();i++){
+
+            listBrands.add(i,list.get(i));
+        }
     }
 
 
+    /**
+     * 刷新,加载
+     * */
+    @Override
+    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+
+        justRefreshOrLoadMore = 2;
+        getMaterialCategoryBrandsInformation("","","","","","",0,20);
+    }
+
+    @Override
+    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+
+        justRefreshOrLoadMore = 3;
+        getMaterialCategoryBrandsInformation("","","","","","",0,20);
+    }
 }
