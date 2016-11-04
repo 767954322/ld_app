@@ -82,6 +82,15 @@
                 android:textColor="@color/bg_66"
                 android:textSize="@dimen/font_13" />
 
+            <TextView
+                android:id="@+id/tv_customer_home_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/size_4"
+                android:textColor="@color/bg_66"
+                android:textSize="@dimen/font_13" />
+
 
         </LinearLayout>
 

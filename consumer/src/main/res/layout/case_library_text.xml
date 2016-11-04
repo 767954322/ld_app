@@ -4,21 +4,65 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
-    <TextView
-
-        android:padding="15dp"
-        android:id="@+id/case_library_text"
+    <LinearLayout
+        android:id="@+id/ll_case"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/bg_66"
-        android:textSize="15sp"
-        android:layout_marginLeft="@dimen/size_10"
-        android:layout_marginRight="@dimen/size_10"
-        android:textStyle="normal" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_13"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/size_13"
+        android:paddingLeft="@dimen/size_15"
+        android:paddingRight="@dimen/size_15"
+        android:paddingTop="@dimen/size_13">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/size_10"
+            android:text="@string/community_name"
+            android:textColor="@color/bg_99"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:id="@+id/tv_case_community_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="@dimen/size_7"
+            android:textColor="@color/search_title"
+            android:textSize="@dimen/font_14" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0.5"
+            android:layout_marginBottom="@dimen/size_13"
+            android:layout_marginTop="@dimen/size_13"
+            android:background="@color/bg_ea"></View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/size_10"
+            android:text="@string/plan_introduce"
+            android:textColor="@color/bg_99"
+            android:textSize="@dimen/font_14" />
+
+        <TextView
+            android:id="@+id/case_library_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="@dimen/size_7"
+            android:textColor="@color/bg_33"
+            android:textSize="@dimen/font_14" />
+
+
+    </LinearLayout>
+
     <ImageView
-        android:layout_below="@id/case_library_text"
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:background="@color/bg_d7"/>
+        android:layout_below="@id/ll_case"
+        android:background="@color/bg_d7" />
+
 
 </RelativeLayout>

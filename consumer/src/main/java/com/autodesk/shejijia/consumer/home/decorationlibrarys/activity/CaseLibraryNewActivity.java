@@ -75,6 +75,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
 
     private ImageView mIvCertification;
+    private TextView mCaseCommunityName;
+    private TextView tvCustomerHomePrice;
 
     @Override
     protected int getLayoutResId() {
@@ -101,6 +103,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
+
+        tvCustomerHomePrice = (TextView) findViewById(R.id.tv_customer_home_price);
+
         tvThumbUp = (TextView) findViewById(R.id.tv_thumb_up);
         mIvFollowedDesigner = (ImageView) findViewById(R.id.iv_follow_designer);
 
@@ -120,6 +125,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
         mCaseLibraryText = (TextView) viewText.findViewById(R.id.case_library_text);
+        mCaseCommunityName = (TextView) viewText.findViewById(R.id.tv_case_community_name);
         caseLibraryNew.addHeaderView(view);
         caseLibraryNew.addHeaderView(viewHead);
         caseLibraryNew.addHeaderView(viewText);
@@ -165,7 +171,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        switch (scrollState){
+        switch (scrollState) {
             case SCROLL_STATE_IDLE:
                 TranslateAnimation moveToViewLocationAnimation = AnimationUtil.moveToViewLocation();
                 rlCaseLibraryBottom.startAnimation(moveToViewLocationAnimation);
@@ -260,7 +266,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
                         }
                     }
                 } else {
-                    isfromGuanZhu=true;
+                    isfromGuanZhu = true;
                     LoginUtils.doLogin(this);
 
                 }
@@ -533,10 +539,29 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         //设置简介
         String introduction = caseDetailBean.getDescription();
         if (introduction == null || introduction.equals("")) {
-            mCaseLibraryText.setText("\u3000\u3000" +getString( R.string.nodescription));
+            mCaseLibraryText.setText(getString(R.string.nodescription));
         } else {
-            mCaseLibraryText.setText("\u3000\u3000" + introduction);
+            mCaseLibraryText.setText(introduction);
         }
+        String community_name = caseDetailBean.getCommunity_name();
+
+        //小区名称
+        if (community_name == null || community_name.equals("")) {
+            mCaseCommunityName.setText(getString(R.string.nodescription));
+        } else {
+            mCaseCommunityName.setText(community_name);
+        }
+
+        //造价
+
+        String prj_price = caseDetailBean.getPrj_price();
+
+        if (prj_price == null || prj_price.equals("")) {
+            tvCustomerHomePrice.setText("造价:"+getString(R.string.nodescription_price));
+        } else {
+            tvCustomerHomePrice.setText("造价:" + prj_price+"万元");
+        }
+
 
         tvCustomerHomeArea.setText(caseDetailBean.getRoom_area() + UIUtils.getString(R.string.m2));
         String room_type = caseDetailBean.getRoom_type();
