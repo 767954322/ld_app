@@ -6,7 +6,7 @@
              android:layout_weight="1"
              android:orientation="vertical">
 
-    <ListView
+    <com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView
         android:id="@+id/rcy_recommend_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,6 +16,6 @@
         android:fadingEdge="none"
         android:listSelector="@android:color/transparent"
         android:scrollingCache="false">
-    </ListView>
+    </com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView>
 
 </FrameLayout>

@@ -9,15 +9,16 @@ import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendListEditParentAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -31,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
@@ -43,11 +45,13 @@ import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.js
  */
 public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener {
 
-    private ListView mRecyclerViewList;
+    private CustomHeaderExpandableListView mRecyclerViewList;
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
     private String mAsset_id;
     private LinearLayout mLlEmptyContentView;
+    private RecommendExpandableAdapter mRecommendExpandableAdapter;
+
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -63,7 +67,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     @Override
     protected void initView() {
         super.initView();
-        mRecyclerViewList = (ListView) findViewById(R.id.rcy_recommend_detail);
+        mRecyclerViewList = (CustomHeaderExpandableListView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
         mLlEmptyContentView = (LinearLayout) findViewById(R.id.empty_view);
     }
@@ -79,7 +83,16 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mActivity = this;
-        getRecommendDraftDetail();
+
+        mRecyclerViewList.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
+                mRecyclerViewList, false));
+        mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, getTestData(), mRecyclerViewList);
+        mRecyclerViewList.setAdapter(mRecommendExpandableAdapter);
+        for (int i = 0; i < getTestData().size(); i++) {
+            mRecyclerViewList.expandGroup(i);
+        }
+
+//        getRecommendDraftDetail();
     }
 
     @Override
@@ -129,9 +142,20 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             mLlEmptyContentView.setVisibility(View.VISIBLE);
         } else {
             mLlEmptyContentView.setVisibility(View.GONE);
+            //设置悬浮头部VIEW
+            mRecyclerViewList.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
+                    mRecyclerViewList, false));
+
+            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, getTestData(), mRecyclerViewList);
+            mRecyclerViewList.setAdapter(mRecommendExpandableAdapter);
+//        for (int i = 0; i<groupData.length;i++){
+//            explistview.expandGroup(i);
+//        }
+
+//        adapter = new PinnedHeaderExpandableAdapter(childrenData, groupData, getApplicationContext(), explistview);
+//         RecommendListEditParentAdapter recommendListEditAdapter = new RecommendListEditParentAdapter(this, recommendSCFDList);
         }
-        RecommendListEditParentAdapter recommendListEditAdapter = new RecommendListEditParentAdapter(this, recommendSCFDList);
-        mRecyclerViewList.setAdapter(recommendListEditAdapter);
+
     }
 
     @Override
@@ -147,7 +171,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
         //TODO @xuehua.yao
-        Intent intent = new Intent(RecommendListDetailActivity.this,AddMaterialActivity.class);
+        Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
         startActivity(intent);
 
     }
@@ -183,4 +207,21 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
+    ArrayList getTestData() {
+        ArrayList list = new ArrayList<RecommendSCFDBean>();
+        for (int i = 0; i < 3; i++) {
+            RecommendSCFDBean recommendSCFDBean = new RecommendSCFDBean();
+            recommendSCFDBean.setSub_category_3d_name("分组" + i);
+            List<RecommendBrandsBean> brands = new ArrayList<RecommendBrandsBean>();
+            for (int j = 0; j < 5; j++) {
+                RecommendBrandsBean recommendBrandsBean = new RecommendBrandsBean();
+                recommendBrandsBean.setBrand_name("好友" + i + "-" + j);
+                brands.add(recommendBrandsBean);
+            }
+            recommendSCFDBean.setBrands(brands);
+            list.add(recommendSCFDBean);
+        }
+        return list;
+
+    }
 }
