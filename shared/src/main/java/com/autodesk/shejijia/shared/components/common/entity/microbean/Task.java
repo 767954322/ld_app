@@ -30,7 +30,7 @@ public class Task implements Serializable{
     @SerializedName("task_template_id")
     private String taskTemplateId;
     @SerializedName("project_id")
-    private long projectId;
+    private String projectId;
     @SerializedName("plan_id")
     private String planId;
     @SerializedName("is_milestone")
@@ -152,11 +152,11 @@ public class Task implements Serializable{
         this.taskTemplateId = taskTemplateId;
     }
 
-    public long getProjectId() {
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 

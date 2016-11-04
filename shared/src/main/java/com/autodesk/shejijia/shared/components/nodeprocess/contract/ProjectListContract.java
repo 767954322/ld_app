@@ -28,7 +28,7 @@ public interface ProjectListContract {
         /*
         * 初始化请求参数
         * */
-        void initRequestParams(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus);
+        void initFilterRequestParams(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus);
 
         /*
         * 日期变化，项目列表变更
@@ -73,6 +73,6 @@ public interface ProjectListContract {
         /*
         * 星标项目
         * */
-        void onStarLabelProject(List<ProjectInfo> projectList, int position);
+        void onStarLabelProject(List<ProjectInfo> projectList, boolean like, int position);
     }
 }

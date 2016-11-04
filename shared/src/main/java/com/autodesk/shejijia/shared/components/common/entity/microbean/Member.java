@@ -16,7 +16,7 @@ public class Member implements Serializable{
     private boolean group;
     private Profile profile;
     @SerializedName("acs_member_id")
-    private int acsMemberId;
+    private long acsMemberId;
     @SerializedName("thread_id")
     private String threadId;
     @SerializedName("is_group")
@@ -74,11 +74,11 @@ public class Member implements Serializable{
         this.profile = profile;
     }
 
-    public int getAcsMemberId() {
+    public long getAcsMemberId() {
         return acsMemberId;
     }
 
-    public void setAcsMemberId(int acsMemberId) {
+    public void setAcsMemberId(long acsMemberId) {
         this.acsMemberId = acsMemberId;
     }
 

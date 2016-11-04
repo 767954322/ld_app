@@ -5,6 +5,12 @@ import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
+
+import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
+import com.autodesk.shejijia.shared.components.common.listener.UpdateDataCallback;
+import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
+
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
@@ -112,6 +118,27 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             public void onErrorResponse(VolleyError volleyError) {
                 callback.onLoadFailed(volleyError.getMessage());
             }
+        });
+    }
+    
+    public void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final UpdateDataCallback<Like> callback) {
+        ConstructionHttpManager.getInstance().putStarProject(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("Project--star", jsonObject + "");
+                String result = jsonObject.toString();
+                Like like = GsonUtil.jsonToBean(result, Like.class);
+                callback.onUpdateSuccess(like);
+
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                callback.onUpdateFailed(volleyError.getMessage());
+            }
+
         });
     }
 }

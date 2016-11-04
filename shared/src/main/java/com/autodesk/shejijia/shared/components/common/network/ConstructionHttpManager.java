@@ -5,13 +5,23 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+
 import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -153,7 +163,7 @@ public class ConstructionHttpManager {
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
 
-    public void getPlanByProjectId(@NonNull String pid, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+ 	public void getPlanByProjectId(@NonNull String pid, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
         String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/plan";
         getData(requestTag, requestUrl, callback);
     }
@@ -170,4 +180,27 @@ public class ConstructionHttpManager {
         };
         NetRequestManager.getInstance().addRequest(requestTag, okRequest);
     }
+    
+    /*
+    * 星标项目接口 (put请求类型)
+    * callback 更新回调接口
+    * */
+    public void putStarProject(@NonNull Bundle requestParams, @Nullable String requestTag,
+                               @NonNull JSONObject jsonRequest, OkJsonRequest.OKResponseCallback callback) {
+        LogUtils.e("like_body", jsonRequest.toString());
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + requestParams.getLong("pid") + "/likes";
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, requestUrl, jsonRequest, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put("Accept", Constant.NetBundleKey.APPLICATON_JSON);
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                return header;
+            }
+        };
+
+        NetRequestManager.getInstance().addRequest(requestTag, okRequest);
+    }
+
 }

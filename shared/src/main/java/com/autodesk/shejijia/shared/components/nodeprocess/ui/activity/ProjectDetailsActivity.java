@@ -37,10 +37,11 @@ public class ProjectDetailsActivity extends BaseActivity implements View.OnClick
         toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
         toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.back_ico);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//控制左上角返回按钮是否显示
+        getSupportActionBar().setHomeButtonEnabled(true);//左上角返回按钮是否可以点击
         //bottom bar
         mPatrolBtn = (TextView) this.findViewById(R.id.tv_project_patrol);
         mIssueBtn = (TextView) this.findViewById(R.id.tv_project_issue);

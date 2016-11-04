@@ -37,6 +37,7 @@ public class ConstructionConstants {
 
     //项目列表请求tag
     public  static final String REQUEST_TAG_LOAD_PROJECTS = "project_list"; //项目列表请求接口的requestTag
+    public  static final String REQUEST_TAG_STAR_PROJECTS = "star_project"; //星标项目 接口的requestTag
     public static final String PROJECT_LIST_BY_DATE = "projectLists_by_date"; //根据日期查询列表的标记
     public static final String PROJECT_LIST_BY_STATUS = "projectLists_by_status"; //根据状态查询列表的标记
     public static final String PROJECT_LIST_BY_LIKE = "projectLists_by_like"; //根据是否星标查询列表的标记

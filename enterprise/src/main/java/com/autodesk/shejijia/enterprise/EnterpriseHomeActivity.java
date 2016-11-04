@@ -70,8 +70,6 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);//控制左上角返回按钮是否显示
-        // getSupportActionBar().setHomeButtonEnabled(true);//左上角返回按钮是否可以点击
     }
 
     @Override

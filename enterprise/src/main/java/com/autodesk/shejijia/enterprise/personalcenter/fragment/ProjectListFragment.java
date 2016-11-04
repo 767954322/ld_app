@@ -54,7 +54,7 @@ public class ProjectListFragment extends BaseConstructionFragment implements Vie
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(mContext, this);
-        mProjectListPresenter.initRequestParams("2016-10-20",null, ConstructionConstants.PROJECT_STATUS_COMPLETE);
+        mProjectListPresenter.initFilterRequestParams("2016-10-20",null, ConstructionConstants.PROJECT_STATUS_COMPLETE);
         mProjectListPresenter.refreshProjectList();
     }
 

@@ -4,18 +4,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.UpdateDataCallback;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.TaskDetailsActivity;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -25,7 +31,7 @@ import java.util.List;
  */
 public class ProjectListPresenter implements ProjectListContract.Presenter {
 
-    private static final int PAGE_LIMIT = 10;
+    private static final int PAGE_LIMIT = 30;
     private Context mContext;
     private ProjectListContract.View mProjectListView;
     private ProjectRepository mProjectRepository;
@@ -42,7 +48,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     }
 
     @Override
-    public void initRequestParams(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus) {
+    public void initFilterRequestParams(@Nullable String date, @Nullable String filterLike, @Nullable String filterStatus) {
         this.mSelectedDate = date;
         this.mFilterLike = filterLike;
         this.mFilterStatus = filterStatus;
@@ -143,7 +149,34 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     }
 
     @Override
-    public void onStarLabelProject(List<ProjectInfo> projectList, int position) {
+    public void onStarLabelProject(List<ProjectInfo> projectList, final boolean like, int position) {
+        //init requestParams
+        Bundle requestParamsBundle = new Bundle();
+        requestParamsBundle.putLong("pid", projectList.get(position).getProjectId());
+        LogUtils.e("projectId", projectList.get(position).getProjectId() + "");
+        JSONObject requestJson = new JSONObject();
+        try {
+            requestJson.put("like", like);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        mProjectRepository.onStarProject(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, requestJson, new UpdateDataCallback<Like>() {
+            @Override
+            public void onUpdateSuccess(Like data) {
+                mProjectListView.hideLoading();
+                LogUtils.e("like", data.getLike() + "---" + data.getUid());
+                if (data != null) {
+                    // TODO: 11/4/16 更新ui 
+                }
+            }
+
+            @Override
+            public void onUpdateFailed(String errorMsg) {
+                mProjectListView.hideLoading();
+                // TODO: 11/4/16 用ui提示错误 
+            }
+        });
     }
+
 }

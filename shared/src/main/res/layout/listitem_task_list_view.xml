@@ -107,6 +107,7 @@
         android:layout_width="40dp"
         android:layout_height="45dp"
         android:layout_marginStart="28dp"
+        android:selectAllOnFocus="true"
         android:background="@drawable/ic_project_normal"
         android:layout_marginTop="2dp" />
 </RelativeLayout>

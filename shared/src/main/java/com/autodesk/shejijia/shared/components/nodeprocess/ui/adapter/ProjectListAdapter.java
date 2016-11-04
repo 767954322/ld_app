@@ -115,7 +115,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         projectVh.mStarLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProjectListItemListener.onStarLabelClick(projectLists, position);
+                mProjectListItemListener.onStarLabelClick(projectLists, true, position);
             }
         });
     }
@@ -129,6 +129,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void onTaskClick(List<Task> taskList, int position);
 
         //星标按钮监听
-        void onStarLabelClick(List<ProjectInfo> projectList, int position);
+        void onStarLabelClick(List<ProjectInfo> projectList, boolean like, int position);
     }
 }

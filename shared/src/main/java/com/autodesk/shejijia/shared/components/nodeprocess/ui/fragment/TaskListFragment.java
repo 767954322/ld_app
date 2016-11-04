@@ -124,8 +124,8 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     }
 
     @Override
-    public void onStarLabelClick(List<ProjectInfo> projectList, int position) {
-        mProjectListPresenter.onStarLabelProject(projectList, position);
+    public void onStarLabelClick(List<ProjectInfo> projectList, boolean like, int position) {
+        mProjectListPresenter.onStarLabelProject(projectList, like, position);
     }
 
     @Override
@@ -168,7 +168,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
             public void onClick(View v) {
                 mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
                 mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
-                mProjectListPresenter.initRequestParams(null, null, null);
+                mProjectListPresenter.initFilterRequestParams(null, null, null);
                 mProjectListPresenter.onFilterLikeChange(null);
                 mScreenPopup.dismiss();
             }
@@ -178,7 +178,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
             public void onClick(View v) {
                 mScreenLike.setTextColor(ContextCompat.getColor(mContext, R.color.con_blue));
                 mScreenAll.setTextColor(ContextCompat.getColor(mContext, R.color.font_gray));
-                mProjectListPresenter.initRequestParams(null, null, null);
+                mProjectListPresenter.initFilterRequestParams(null, null, null);
                 mProjectListPresenter.onFilterLikeChange("true");
                 mScreenPopup.dismiss();
             }
