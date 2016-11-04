@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.plan;
+package com.autodesk.shejijia.shared.components.nodeprocess.plan;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.framework.BasePresenter;

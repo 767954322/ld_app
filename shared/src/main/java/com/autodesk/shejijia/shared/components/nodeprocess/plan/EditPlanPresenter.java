@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.plan;
+package com.autodesk.shejijia.shared.components.nodeprocess.plan;
 
 /**
  * Created by wenhulin on 11/3/16.

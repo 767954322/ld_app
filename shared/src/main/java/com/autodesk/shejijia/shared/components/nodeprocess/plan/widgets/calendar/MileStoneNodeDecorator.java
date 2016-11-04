@@ -1,15 +1,15 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.plan.widgets.calendar;
+package com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.style.ForegroundColorSpan;
 
+import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
-import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,13 +19,14 @@ import java.util.List;
  * Created by wenhulin on 10/20/16.
  */
 
-public class TaskNodeDecorator implements DayViewDecorator {
+public class MileStoneNodeDecorator implements DayViewDecorator {
+    private final Drawable drawable;
     private List<CalendarDay> dates;
-    private Context mContext;
 
-    public TaskNodeDecorator(Context context) {
+    public MileStoneNodeDecorator(Activity context) {
+        //noinspection deprecation
+        drawable = context.getResources().getDrawable(R.drawable.demo_milestone_selector);
         dates = new ArrayList<>();
-        mContext = context;
     }
 
     @Override
@@ -40,24 +41,19 @@ public class TaskNodeDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new ForegroundColorSpan(Color.WHITE));
-        //noinspection deprecation
-        view.setBackgroundDrawable(new ColorDrawable(mContext.getResources().getColor(android.R.color.holo_blue_light)));
+        view.addSpan(new ForegroundColorSpan(Color.BLACK));
+        view.setSelectionDrawable(drawable);
     }
 
-    public void setDates(List<CalendarDay> dates) {
+    public void setDates(List<Date> dates) {
         this.dates.clear();
-        for(CalendarDay date: dates) {
-            this.dates.add(date);
+        for(Date date: dates) {
+            this.dates.add(CalendarDay.from(date));
         }
     }
 
     public void addDate(@NonNull Date date) {
         this.dates.add(CalendarDay.from(date));
-    }
-
-    public void addDate(@NonNull CalendarDay date) {
-        this.dates.add(date);
     }
 
     public void clearDates() {

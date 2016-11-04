@@ -1,9 +1,8 @@
-package com.autodesk.shejijia.enterprise.nodeprocess.plan.widgets.calendar;
+package com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.autodesk.shejijia.enterprise.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
