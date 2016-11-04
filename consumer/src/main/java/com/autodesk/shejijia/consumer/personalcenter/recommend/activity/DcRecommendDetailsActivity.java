@@ -91,16 +91,14 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
 
     private void setTitleBarView() {
         setTitleForNavbar("清单详情");
-        TextView mRightTextView = (TextView) findViewById(R.id.nav_right_textView);
-        mRightTextView.setVisibility(View.VISIBLE);
-        mRightTextView.setTextColor(UIUtils.getColor(R.color.color_blue_0084ff));
-        mRightTextView.setText("编辑");
-        mRightTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RecommendListDetailActivity.actionStartActivity(DcRecommendDetailsActivity.this, mEntity.getMain_project_id() + "");
-            }
-        });
+        setTitleForNavButton(ButtonType.RIGHT, "编辑");
+        setTextColorForRightNavButton(UIUtils.getColor(R.color.color_blue_0084ff));
+    }
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+        RecommendListDetailActivity.actionStartActivity(DcRecommendDetailsActivity.this, mEntity.getDesign_project_id() + "");
     }
 
     @Override

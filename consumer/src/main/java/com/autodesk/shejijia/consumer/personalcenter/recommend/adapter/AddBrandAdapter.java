@@ -23,26 +23,28 @@ import java.util.List;
  */
 
 public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
-   private Context context;
-   private List<Integer> itemIds;
+    private Context context;
+    private List<Integer> itemIds;
 
-    public AddBrandAdapter(Context context, List<RecommendBrandsBean> brandsBeens, List<Integer> itemIds,int layoutId) {
+    public AddBrandAdapter(Context context, List<RecommendBrandsBean> brandsBeens, List<Integer> itemIds, int layoutId) {
         super(context, brandsBeens, layoutId);
         this.context = context;
         this.itemIds = itemIds;
     }
+
     @Override
     public boolean hasStableIds() {
         //getCheckedItemIds()方法要求此处返回为真
         return true;
     }
+
     @Override
     public boolean isEnabled(int position) {
-        if(itemIds == null || itemIds.size() < 5){
+        if (itemIds == null || itemIds.size() < 5) {
             return true;
         }
-        for(int id :itemIds){
-            if(id==position){
+        for (int id : itemIds) {
+            if (id == position) {
                 return true;
             }
         }
@@ -54,20 +56,20 @@ public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
         List<RecommendMallsBean> mallsBeans = recommendBrandsBean.getMalls();
         StringBuffer sb = new StringBuffer();
         String brandName = recommendBrandsBean.getBrand_name();
-        sb.append(TextUtils.isEmpty(brandName)?"\n":brandName+"\n");
-        for(RecommendMallsBean mallsBean:mallsBeans){
-            if(TextUtils.isEmpty(mallsBean.getMall_name())){
+        sb.append(TextUtils.isEmpty(brandName) ? "\n" : brandName + "\n");
+        for (RecommendMallsBean mallsBean : mallsBeans) {
+            if (TextUtils.isEmpty(mallsBean.getMall_name())) {
                 continue;
             }
-            sb.append(mallsBean.getMall_name()+"、");
+            sb.append(mallsBean.getMall_name() + "、");
         }
-        if(sb.length() <= 0){
+        if (sb.length() <= 0) {
             return;
         }
-        sb = sb.delete(sb.length()-1,sb.length());
+        sb = sb.delete(sb.length() - 1, sb.length());
         SpannableStringBuilder builder = new SpannableStringBuilder(sb);
         int index = 0;
-        if(brandName != null && brandName.length() > 0){
+        if (brandName != null && brandName.length() > 0) {
             index = brandName.length();
         }
         builder.setSpan(new AbsoluteSizeSpan(48), 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
@@ -77,5 +79,7 @@ public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
         textView.setText(builder);
 
 
-    };
+    }
+
+    ;
 }
