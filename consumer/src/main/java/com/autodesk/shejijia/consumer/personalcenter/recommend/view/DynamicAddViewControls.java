@@ -94,7 +94,7 @@ public class DynamicAddViewControls extends LinearLayout {
         TextView textView;
         BtnStatusBean btnStatusBean;
         LayoutParams layoutParamsButton = new LayoutParams((int) (186 * ADAPTER_COUNT), (int) (68 * ADAPTER_COUNT));
-        ToastUtil.showCustomToast(context,""+ width / 8);
+        ToastUtil.showCustomToast(context, "" + width / 8);
         layoutParamsButton.weight = 1;
         layoutParamsButton.leftMargin = (int) (32 * ADAPTER_COUNT);
         layoutParamsButton.rightMargin = (int) (32 * ADAPTER_COUNT);
@@ -105,6 +105,7 @@ public class DynamicAddViewControls extends LinearLayout {
             btnStatusBean = new BtnStatusBean();
             textView.setGravity(Gravity.CENTER);
             textView.setMaxEms(6);
+            textView.setTextColor(UIUtils.getColor(R.color.bg_33));
             textView.setEllipsize(TextUtils.TruncateAt.END);
             textView.setSingleLine(true);
             textView.setLayoutParams(layoutParamsButton);
@@ -131,7 +132,7 @@ public class DynamicAddViewControls extends LinearLayout {
 
                             changeBtnStatus(btnStatusBean);
                             justAll = true;
-                            for (int i = 1;i < textViews.length;i++){
+                            for (int i = 1; i < textViews.length; i++) {
 
                                 BtnStatusBean btnStatusBeenOne = (BtnStatusBean) textViews[i].getTag();
                                 btnStatusBeenOne.setSingleClickOrDoubleBtnCount(2);
@@ -191,7 +192,7 @@ public class DynamicAddViewControls extends LinearLayout {
 
     public void changeTextViewBackgroudAndTextUnChecked(BtnStatusBean btnStatusBean, TextView textView) {
 
-        textView.setTextColor(UIUtils.getColor(R.color.sbc_header_text));
+        textView.setTextColor(UIUtils.getColor(R.color.bg_33));
         textView.setBackgroundResource(R.drawable.store_bg_btn);
         invalidate();
     }

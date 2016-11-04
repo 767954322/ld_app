@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <include
         android:id="@+id/common_navbar"
-        layout="@layout/view_navigation_header" />
+        layout="@layout/view_navigation_header"/>
 
     <LinearLayout
         android:id="@+id/ll_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
-
-
     </LinearLayout>
 
     <Button
         android:id="@+id/store_sure_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_40"
-        android:layout_marginTop="@dimen/size_60"
-        android:background="@drawable/store_sure_btn_bg"
-        android:textColor="@color/white"
         android:layout_marginLeft="@dimen/size_15"
         android:layout_marginRight="@dimen/size_15"
+        android:layout_marginTop="@dimen/size_60"
+        android:background="@drawable/store_sure_btn_bg"
         android:text="确定"
+        android:textColor="@color/white"
         />
 
 </LinearLayout>
