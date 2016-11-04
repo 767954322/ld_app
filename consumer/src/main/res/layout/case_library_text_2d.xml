@@ -13,13 +13,13 @@
         android:paddingBottom="@dimen/size_13"
         android:paddingLeft="@dimen/size_15"
         android:paddingRight="@dimen/size_15"
-        android:paddingTop="@dimen/size_13">
+     >
 
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_10"
             android:text="@string/community_name"
             android:textColor="@color/bg_99"
             android:textSize="@dimen/font_14" />
@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_10"
             android:text="@string/plan_introduce"
             android:textColor="@color/bg_99"
             android:textSize="@dimen/font_14" />
