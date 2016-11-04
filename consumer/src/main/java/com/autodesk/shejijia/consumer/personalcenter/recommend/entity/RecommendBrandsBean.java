@@ -25,13 +25,13 @@ public class RecommendBrandsBean implements Serializable {
     private List<RecommendMallsBean> malls;
     private List<?> commoditys;      // sku列表．
 
-    //    public String getName() {
+    //    public String getBrand_name() {
 //        return name;
 //    }
 //
-    public String getBrand_name() {
-        return brand_name;
-    }
+//    public String getBrand_name() {
+//        return brand_name;
+//    }
 
     public void setBrand_name(String brand_name) {
         this.brand_name = brand_name;
@@ -41,7 +41,7 @@ public class RecommendBrandsBean implements Serializable {
         this.name = name;
     }
 
-    public String getName() {
+    public String getBrand_name() {
         return name;
     }
 //

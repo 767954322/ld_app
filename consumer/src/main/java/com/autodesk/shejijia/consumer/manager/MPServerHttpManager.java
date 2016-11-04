@@ -113,6 +113,23 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 设计师撤销/消费者删除
+     * /recommends/{recommend_id}
+     */
+    public void revokeRecommend(int recommendId, JSONObject jsonObject, OkJsonRequest.OKResponseCallback callback) {
+        String url = UrlConstants.MAIN_RECOMMEND + "/recommends/" + recommendId;
+        OkJsonRequest okRequest = new OkJsonRequest(Request.Method.PUT, url, jsonObject, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 新建清单
      *
      * @param designer_id

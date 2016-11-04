@@ -3,16 +3,13 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +50,7 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
         }
 
 
-        holder.setText(R.id.brand_name, brandsBean.getName());
+        holder.setText(R.id.brand_name, brandsBean.getBrand_name());
         String storeName = "";
         for (int i = 0; i < brandsBean.getMalls().size(); i++) {
 

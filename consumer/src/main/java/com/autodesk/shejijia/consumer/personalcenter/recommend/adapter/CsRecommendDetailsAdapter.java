@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -58,7 +59,8 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
             tvBrandNum.setText(bean.getAmountAndUnit() + "个");
         } else {
             ImageView mBrandLogo = (ImageView) mItemView.findViewById(R.id.iv_brand_logo);
-            ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
+            if (mBrandLogo != null && !TextUtils.isEmpty(bean.getLogo_url()))
+                ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
         }
         TextView storeLocation = (TextView) mItemView.findViewById(R.id.tv_store_location);
         storeLocation.setVisibility(View.INVISIBLE);
@@ -67,7 +69,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);
         TextView tvBrandRemarks = (TextView) mItemView.findViewById(R.id.tv_brand_remarks);
         TextView tvBrandMallName = (TextView) mItemView.findViewById(R.id.tv_brand_mall_name);
-        tvBrandName.setText(bean.getName());
+        tvBrandName.setText(bean.getBrand_name());
         tvBrandDimension.setText(bean.getDimension());
         tvBrandApartment.setText(bean.getApartment());
         tvBrandRemarks.setText(bean.getRemarks());

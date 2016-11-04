@@ -10,14 +10,12 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.AddBrandShowAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
@@ -135,7 +133,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         listChecked.add(brandsBean);
                         for (int i=0;i < listChecked.size();i++){
 
-                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getName());
+                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getBrand_name());
                         }
                         break;
                     //取消选中的品牌
@@ -143,15 +141,15 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         brandsBean = (RecommendBrandsBean) msg.obj;
 //                        for (int i=0;i<listChecked.size();i++){
 //
-//                            String brandName = listChecked.get(i).getName();
-//                            if (brandName.equals(brandsBean.getName())){
+//                            String brandName = listChecked.get(i).getBrand_name();
+//                            if (brandName.equals(brandsBean.getBrand_name())){
 //
 //                                listChecked.remove(i);
 //                            }
 //                        }
                         for (int i= 0;i<listChecked.size();i++){
 
-                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getName());
+                            ToastUtil.showCustomToast(AddMaterialActivity.this,""+listChecked.get(i).getBrand_name());
                         }
                         break;
 

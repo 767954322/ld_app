@@ -53,7 +53,7 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
         }
         holder.setTag(R.id.et_brand_num, 111);
 
-        holder.setText(R.id.tv_brand_name, recommendBrandsBean.getName());
+        holder.setText(R.id.tv_brand_name, recommendBrandsBean.getBrand_name());
 
         holder.setText(R.id.et_brand_num, recommendBrandsBean.getAmountAndUnit());
         holder.setText(R.id.et_brand_dimension, recommendBrandsBean.getDimension());
@@ -87,7 +87,7 @@ public class RecommendListEditNewDelegate implements ItemViewDelegate<RecommendB
                 mActivity.startActivityForResult(intent,21);
 
 
-//                String brand_name = recommendBrandsBean.getName();
+//                String brand_name = recommendBrandsBean.getBrand_name();
 //                Toast.makeText(mActivity, "品牌变更0001：" + brand_name, Toast.LENGTH_SHORT).show();
             }
         });

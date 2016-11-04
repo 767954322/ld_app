@@ -5,15 +5,22 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
+import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.List;
@@ -41,7 +48,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
             holder.setVisible(R.id.iv_reco_wfsico, unsent);
         }
         holder.setText(R.id.tv_edit_btn, (isDesiner ? "编辑" : "删除"));
-        holder.setText(R.id.tv_recommend_name, item.getCommunity_name());
+        holder.setText(R.id.tv_recommend_name, UIUtils.substring(item.getCommunity_name(), 8));
         holder.setText(R.id.tv_asset_id, "清单编号：" + item.getProject_code() + "");
         holder.setText(R.id.tv_reco_consumer_name, item.getConsumer_name());
         holder.setText(R.id.tv_reco_consumer_mobile, item.getConsumer_mobile());
@@ -54,17 +61,52 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
                 if (isDesiner) {
                     RecommendListDetailActivity.actionStartActivity(mContext, item.getDesign_project_id() + "");
                 } else {
-                    onItemDeteleClick(item);
+                    onItemDeteleClick(item, "您确定要删除吗?");
                 }
+            }
+        });
+
+        holder.setOnClickListener(R.id.tv_cancel_btn, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemDeteleClick(item, "您确定要撤销吗?");
             }
         });
     }
 
-    private void onItemDeteleClick(RecommendDetailsBean item) {
-        new AlertView(null, "您确定要删除吗?", "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
+    private void onItemDeteleClick(final RecommendDetailsBean item, String content) {
+        final JSONObject object1 = new JSONObject();
+        try {
+            object1.put("remark", "原因");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        new AlertView(null, content, "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
-                Log.d("recommend", "确定");
+                revokeRecommend(item.getDesign_project_id(), object1);
+            }
+        }).show();
+    }
+
+    private void revokeRecommend(int id, JSONObject object1) {
+        MPServerHttpManager.getInstance().revokeRecommend(id, object1, new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                showLoadSuccessView("失败");
+            }
+
+            @Override
+            public void onResponse(JSONObject object) {
+                showLoadSuccessView("操作成功");
+            }
+        });
+    }
+
+    private void showLoadSuccessView(String content) {
+        new AlertView(null, content, null, null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object object, int position) {
             }
         }).show();
     }
