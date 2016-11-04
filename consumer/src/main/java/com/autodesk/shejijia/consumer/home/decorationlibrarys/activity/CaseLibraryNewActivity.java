@@ -77,6 +77,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private ImageView mIvCertification;
     private TextView mCaseCommunityName;
     private TextView tvCustomerHomePrice;
+    private TextView tvCustomerHomeLivingRoom;
+    private TextView tvCustomerHomeToilet;
 
     @Override
     protected int getLayoutResId() {
@@ -102,6 +104,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         ivConsumeHomeDesigner = (TextView) findViewById(R.id.iv_consume_home_designer);
         tvCustomerHomeStyle = (TextView) findViewById(R.id.tv_customer_home_style);
         tvCustomerHomeRoom = (TextView) findViewById(R.id.tv_customer_home_room);
+        tvCustomerHomeLivingRoom = (TextView) findViewById(R.id.tv_customer_home_living_room);
+        tvCustomerHomeToilet = (TextView) findViewById(R.id.tv_customer_home_toilet);
         tvCustomerHomeArea = (TextView) findViewById(R.id.tv_customer_home_area);
 
         tvCustomerHomePrice = (TextView) findViewById(R.id.tv_customer_home_price);
@@ -143,8 +147,13 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        tvCustomerHomeLivingRoom.setVisibility(View.VISIBLE);
+        tvCustomerHomeToilet.setVisibility(View.VISIBLE);
+        tvCustomerHomePrice.setVisibility(View.VISIBLE);
 
         roomHall = AppJsonFileReader.getRoomHall(this);
+        livingRoom = AppJsonFileReader.getLivingRoom(this);
+        toilet = AppJsonFileReader.getToilet(this);
         style = AppJsonFileReader.getStyle(this);
         CustomProgress.show(this, "", false, null);
         getCaseDetailData(case_id);
@@ -557,9 +566,9 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         String prj_price = caseDetailBean.getPrj_price();
 
         if (prj_price == null || prj_price.equals("")) {
-            tvCustomerHomePrice.setText("造价:"+getString(R.string.nodescription_price));
+            tvCustomerHomePrice.setText(getString(R.string.nodescription_price));
         } else {
-            tvCustomerHomePrice.setText("造价:" + prj_price+"万元");
+            tvCustomerHomePrice.setText(prj_price+"万元");
         }
 
 
@@ -568,6 +577,21 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         if (roomHall.containsKey(room_type)) {
             tvCustomerHomeRoom.setText(roomHall.get(room_type));
         }
+
+        String bedroom = caseDetailBean.getBedroom();
+        if (livingRoom.containsKey(bedroom)) {
+            tvCustomerHomeLivingRoom.setText(livingRoom.get(room_type));
+        }else {
+            tvCustomerHomeLivingRoom.setText(bedroom);
+        }
+        String restroom = caseDetailBean.getRestroom();
+        if (toilet.containsKey(room_type)) {
+            tvCustomerHomeToilet.setText(toilet.get(restroom));
+        }else {
+            tvCustomerHomeToilet.setText(restroom);
+        }
+
+
 
         String project_style = caseDetailBean.getProject_style();
         if (style.containsKey(project_style)) {
@@ -773,6 +797,8 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
     private TextView tvCustomerHomeArea;
     private TextView tvThumbUp;
     private Map<String, String> roomHall;
+    private Map<String, String> livingRoom;
+    private Map<String, String> toilet;
     private Map<String, String> style;
     private LinearLayout ll_fenxiang_up;
     private LinearLayout rlThumbUp;
