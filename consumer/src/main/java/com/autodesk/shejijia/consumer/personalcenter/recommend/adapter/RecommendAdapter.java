@@ -2,7 +2,6 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.android.volley.VolleyError;
@@ -12,7 +11,6 @@ import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.RecommendListDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
@@ -49,7 +47,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
         }
         holder.setText(R.id.tv_edit_btn, (isDesiner ? "编辑" : "删除"));
         holder.setText(R.id.tv_recommend_name, UIUtils.substring(item.getCommunity_name(), 8));
-        holder.setText(R.id.tv_asset_id, "清单编号：" + item.getProject_code() + "");
+        holder.setText(R.id.tv_asset_id, "清单编号：" + item.getProject_number() + "");
         holder.setText(R.id.tv_reco_consumer_name, item.getConsumer_name());
         holder.setText(R.id.tv_reco_consumer_mobile, item.getConsumer_mobile());
         holder.setText(R.id.tv_reco_item_address, item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
@@ -59,7 +57,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
             @Override
             public void onClick(View v) {
                 if (isDesiner) {
-                    RecommendListDetailActivity.actionStartActivity(mContext, item.getDesign_project_id() + "");
+                    RecommendListDetailActivity.actionStartActivity(mContext, item.getAsset_id() + "");
                 } else {
                     onItemDeteleClick(item, "您确定要删除吗?");
                 }
@@ -84,7 +82,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
         new AlertView(null, content, "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
-                revokeRecommend(item.getDesign_project_id(), object1);
+                revokeRecommend(item.getAsset_id(), object1);
             }
         }).show();
     }

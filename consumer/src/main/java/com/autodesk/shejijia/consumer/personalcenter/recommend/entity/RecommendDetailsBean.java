@@ -20,7 +20,7 @@ public class RecommendDetailsBean implements IModel {
      * type : null
      * source : 0
      * main_project_id : 1622572
-     * design_project_id : 0
+     * asset_id : 0
      * consumer_id : 20739039
      * consumer_zid : 0
      * consumer_uid : 20739039
@@ -47,7 +47,7 @@ public class RecommendDetailsBean implements IModel {
     private String type;
     private String source;
     private int main_project_id;
-    private int design_project_id;
+    private int asset_id;
     private int consumer_id;
     private int consumer_zid;
     private String consumer_uid;
@@ -59,7 +59,7 @@ public class RecommendDetailsBean implements IModel {
     private String city_name;
     private String district_name;
     private String community_name;
-    private String project_code;
+    private String project_number;
     private int effective_time;
     private int expiration_time;
     private int modified_count;
@@ -75,12 +75,12 @@ public class RecommendDetailsBean implements IModel {
         this.sent_status = send_status;
     }
 
-    public String getProject_code() {
-        return project_code;
+    public String getProject_number() {
+        return project_number;
     }
 
-    public void setProject_code(String project_code) {
-        this.project_code = project_code;
+    public void setProject_number(String project_number) {
+        this.project_number = project_number;
     }
 
     public String getDate_submitted() {
@@ -163,12 +163,12 @@ public class RecommendDetailsBean implements IModel {
         this.main_project_id = main_project_id;
     }
 
-    public int getDesign_project_id() {
-        return design_project_id;
+    public int getAsset_id() {
+        return asset_id;
     }
 
-    public void setDesign_project_id(int design_project_id) {
-        this.design_project_id = design_project_id;
+    public void setAsset_id(int asset_id) {
+        this.asset_id = asset_id;
     }
 
     public int getConsumer_id() {

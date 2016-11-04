@@ -61,9 +61,9 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
         if (isDesign)
-            DcRecommendDetailsActivity.jumpTo(getActivity(), item.getDesign_project_id() + "");
+            DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "");
         else
-            CsRecommendDetailsActivity.jumpTo(getActivity(), item.getDesign_project_id() + "", item.getCommunity_name());
+            CsRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "", item.getCommunity_name());
     }
 
     @Override

@@ -98,7 +98,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
     @Override
     protected void rightNavButtonClicked(View view) {
         super.rightNavButtonClicked(view);
-        RecommendListDetailActivity.actionStartActivity(DcRecommendDetailsActivity.this, mEntity.getDesign_project_id() + "");
+        RecommendListDetailActivity.actionStartActivity(DcRecommendDetailsActivity.this, mEntity.getAsset_id() + "");
     }
 
     @Override
@@ -145,7 +145,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
 
     private void updateView2Api(RecommendDetailsBean item) {
         tvRecommendName.setText(item.getCommunity_name());
-        tvAssetId.setText("清单编号：" + item.getProject_code() + "");
+        tvAssetId.setText("清单编号：" + item.getProject_number() + "");
         tvRecoConsumerName.setText(item.getConsumer_name());
         tvRecoConsumerMobile.setText(item.getConsumer_mobile());
         tvRecoItemAddress.setText(item.getProvince_name() + item.getCity_name() + item.getDistrict_name());

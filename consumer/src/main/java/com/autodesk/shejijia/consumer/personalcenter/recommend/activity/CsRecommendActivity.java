@@ -55,7 +55,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
-        CsRecommendDetailsActivity.jumpTo(this, item.getDesign_project_id() + "", item.getCommunity_name());
+        CsRecommendDetailsActivity.jumpTo(this, item.getAsset_id() + "", item.getCommunity_name());
     }
 
     @Override
