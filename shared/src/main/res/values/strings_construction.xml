@@ -60,5 +60,12 @@
     <string name="task_rectification">监督整改</string>
     <string name="task_reinspecting">复验中</string>
 
-
+    <!--Customer Calendar view-->
+    <string name="calendar_sunday">日</string>
+    <string name="calendar_monday">一</string>
+    <string name="calendar_tuesday">二</string>
+    <string name="calendar_wednesday">三</string>
+    <string name="calendar_thursday">四</string>
+    <string name="calendar_friday">五</string>
+    <string name="calendar_saturday">六</string>
 </resources>

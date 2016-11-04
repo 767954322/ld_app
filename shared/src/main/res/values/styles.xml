@@ -280,6 +280,7 @@
         <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="TextAppearance.MaterialCalendarWidget.Header"
         parent="android:TextAppearance.DeviceDefault.Small">
@@ -295,6 +296,11 @@
     <style name="TextAppearance.MaterialCalendarWidget.WeekDay"
         parent="android:TextAppearance.DeviceDefault.Small">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Construction.Button" parent="Widget.AppCompat.Button">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

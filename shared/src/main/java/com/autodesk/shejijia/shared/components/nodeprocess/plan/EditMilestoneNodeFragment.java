@@ -5,7 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 
-import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar.DateSelectorDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar.MileStoneActiveDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar.MileStoneNodeDecorator;

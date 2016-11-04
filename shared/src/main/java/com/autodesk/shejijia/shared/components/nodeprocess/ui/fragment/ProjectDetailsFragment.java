@@ -8,13 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.autodesk.shejijia.enterprise.R;
-import com.autodesk.shejijia.enterprise.base.fragments.BaseEnterpriseFragment;
-import com.autodesk.shejijia.enterprise.common.utils.ToastUtils;
-import com.autodesk.shejijia.enterprise.nodeprocess.contract.ProjectDetailsContract;
-import com.autodesk.shejijia.enterprise.nodeprocess.plan.CreateOrEditPlanActivity;
-import com.autodesk.shejijia.enterprise.nodeprocess.presenter.ProjectDetailsPresenter;
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.plan.CreateOrEditPlanActivity;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
 /**

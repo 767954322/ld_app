@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
-import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
@@ -24,9 +24,9 @@ public class DateSelectorDecorator implements DayViewDecorator {
     @SuppressWarnings("deprecation")
     public DateSelectorDecorator(Activity context, boolean isMileStone) {
         if (isMileStone) {
-            drawable = context.getResources().getDrawable(R.drawable.demo_milestone_selector);
+            drawable = context.getResources().getDrawable(R.drawable.calander_milestone_selector);
         } else  {
-            drawable = context.getResources().getDrawable(R.drawable.demo_selector);
+            drawable = context.getResources().getDrawable(R.drawable.calander_default_selector);
         }
 
     }

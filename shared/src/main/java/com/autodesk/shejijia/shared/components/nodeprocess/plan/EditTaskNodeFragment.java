@@ -3,7 +3,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.plan;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
-import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 

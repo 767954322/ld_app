@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.text.style.ForegroundColorSpan;
 
-import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
@@ -25,7 +25,7 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
 
     public MileStoneNodeDecorator(Activity context) {
         //noinspection deprecation
-        drawable = context.getResources().getDrawable(R.drawable.demo_milestone_selector);
+        drawable = context.getResources().getDrawable(R.drawable.calander_milestone_selector);
         dates = new ArrayList<>();
     }
 

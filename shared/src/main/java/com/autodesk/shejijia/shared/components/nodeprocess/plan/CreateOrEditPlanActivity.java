@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
@@ -45,7 +45,7 @@ public class CreateOrEditPlanActivity extends BaseActivity {
             public void onClick(View v) {
                 switch (mPresenter.getEditState()) {
                     case EDIT_MILESTONE:
-                        updateEditState(EditState.EDIT_TASK_NODE);
+                        updateEditState(EditPlanPresenter.EditState.EDIT_TASK_NODE);
                         break;
                     case EDIT_TASK_NODE:
                         mPresenter.commitPlan();
@@ -61,10 +61,10 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         mPresenter = new EditPlanPresenter();
         if (savedInstanceState == null) {
-            updateEditState(EditState.EDIT_MILESTONE);
+            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
         } else {
             // TODO save and restore data when activity is destroyed in background
-            mPresenter.updateEditState(EditState.values()[savedInstanceState.getInt("state")]);
+            mPresenter.updateEditState(EditPlanPresenter.EditState.values()[savedInstanceState.getInt("state")]);
         }
     }
 
@@ -89,17 +89,17 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mPresenter.getEditState().equals(EditState.EDIT_TASK_NODE)) {
-            updateEditState(EditState.EDIT_MILESTONE);
+        if (mPresenter.getEditState().equals(EditPlanPresenter.EditState.EDIT_TASK_NODE)) {
+            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
         } else {
             // TODO popup hint
             finish();
         }
     }
 
-    private void updateEditState(EditState newState) {
+    private void updateEditState(EditPlanPresenter.EditState newState) {
         mPresenter.updateEditState(newState);
-        if (newState.equals(EditState.EDIT_MILESTONE)) {
+        if (newState.equals(EditPlanPresenter.EditState.EDIT_MILESTONE)) {
             mProgressBar.setProgress(50);
             mActionBtn.setText("下一步"); // TODO
             switchToFragment(FRAGMENT_TAG_EDIT_MILESTONE);

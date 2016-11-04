@@ -33,7 +33,7 @@ public interface EditPlanContract {
          */
         void commitPlan();
 
-        void updateEditState(EditState newState);
-        EditState getEditState();
+        void updateEditState(EditPlanPresenter.EditState newState);
+        EditPlanPresenter.EditState getEditState();
     }
 }

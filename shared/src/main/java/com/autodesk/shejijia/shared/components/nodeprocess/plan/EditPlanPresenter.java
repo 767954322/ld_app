@@ -38,4 +38,12 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     public void updatePlan() {
 
     }
+
+    /**
+     * Created by wenhulin on 11/3/16.
+     */
+    static enum EditState {
+        EDIT_MILESTONE,
+        EDIT_TASK_NODE,
+    }
 }
