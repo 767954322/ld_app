@@ -83,16 +83,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mActivity = this;
-
-        mRecyclerViewList.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
-                mRecyclerViewList, false));
-        mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, getTestData(), mRecyclerViewList);
-        mRecyclerViewList.setAdapter(mRecommendExpandableAdapter);
-        for (int i = 0; i < getTestData().size(); i++) {
-            mRecyclerViewList.expandGroup(i);
-        }
-
-//        getRecommendDraftDetail();
+        getRecommendDraftDetail();
     }
 
     @Override
@@ -142,15 +133,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             mLlEmptyContentView.setVisibility(View.VISIBLE);
         } else {
             mLlEmptyContentView.setVisibility(View.GONE);
-            //设置悬浮头部VIEW
             mRecyclerViewList.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
                     mRecyclerViewList, false));
-
             mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, getTestData(), mRecyclerViewList);
             mRecyclerViewList.setAdapter(mRecommendExpandableAdapter);
-//        for (int i = 0; i<groupData.length;i++){
-//            explistview.expandGroup(i);
-//        }
+            for (int i = 0; i < getTestData().size(); i++) {
+                mRecyclerViewList.expandGroup(i);
+            }
 
 //        adapter = new PinnedHeaderExpandableAdapter(childrenData, groupData, getApplicationContext(), explistview);
 //         RecommendListEditParentAdapter recommendListEditAdapter = new RecommendListEditParentAdapter(this, recommendSCFDList);
