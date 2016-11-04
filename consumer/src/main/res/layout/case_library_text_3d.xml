@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
 
-</LinearLayout>
+    <TextView
+
+        android:padding="15dp"
+        android:id="@+id/case_library_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/bg_66"
+        android:textSize="15sp"
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginRight="@dimen/size_10"
+        android:textStyle="normal" />
+    <ImageView
+        android:layout_below="@id/case_library_text"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/bg_d7"/>
+
+</RelativeLayout>

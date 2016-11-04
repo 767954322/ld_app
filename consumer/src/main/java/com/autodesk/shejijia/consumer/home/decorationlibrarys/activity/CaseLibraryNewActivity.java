@@ -121,7 +121,7 @@ public class CaseLibraryNewActivity extends NavigationBarActivity implements Abs
         tvheadThumbUp = (TextView) viewHead.findViewById(R.id.tv_thumb_up);
         ivHeadThumbUp = (ImageView) viewHead.findViewById(R.id.iv_thumb_up);
         //描述文字的head
-        View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
+        View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text_2d, null);
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
         mCaseLibraryText = (TextView) viewText.findViewById(R.id.case_library_text);

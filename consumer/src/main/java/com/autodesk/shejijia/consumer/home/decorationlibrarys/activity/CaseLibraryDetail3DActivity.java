@@ -156,7 +156,7 @@ public class CaseLibraryDetail3DActivity extends NavigationBarActivity implement
 
         rlCaseLibraryHead = (RelativeLayout) viewHead.findViewById(R.id.rl_case_library_head);
         rlCaseLibraryHead.setVisibility(View.VISIBLE);
-        View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text, null);
+        View viewText = LayoutInflater.from(this).inflate(R.layout.case_library_text_3d, null);
         mCaseLibraryText = (TextView) viewText.findViewById(R.id.case_library_text);
         caseLibraryNew.addHeaderView(view);
         caseLibraryNew.addHeaderView(viewHead, null, false);
