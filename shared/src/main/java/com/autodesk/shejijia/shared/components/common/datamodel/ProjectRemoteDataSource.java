@@ -94,24 +94,24 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     @Override
     public void getPlanByProjectId(String pid, String requestTag, @NonNull final LoadDataCallback<PlanInfo> callback) {
         ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag, new OkJsonRequest.OKResponseCallback() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        LogUtils.d(LOG_TAG, jsonObject.toString());
-                        try {
-                            JSONObject planJsonObject = jsonObject.getJSONObject("plan");
-                            String result = planJsonObject.toString();
-                            PlanInfo plan = GsonUtil.jsonToBean(result, PlanInfo.class);
-                            callback.onLoadSuccess(plan);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            callback.onLoadFailed("Data format error");
-                        }
-                    }
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d(LOG_TAG, jsonObject.toString());
+                try {
+                    JSONObject planJsonObject = jsonObject.getJSONObject("plan");
+                    String result = planJsonObject.toString();
+                    PlanInfo plan = GsonUtil.jsonToBean(result, PlanInfo.class);
+                    callback.onLoadSuccess(plan);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callback.onLoadFailed("Data format error");
+                }
+            }
 
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        callback.onLoadFailed(volleyError.getMessage());
-                    }
-                });
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onLoadFailed(volleyError.getMessage());
+            }
+        });
     }
 }
