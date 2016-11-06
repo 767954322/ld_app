@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,8 +114,9 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
         @Override
         public void onBindViewHolder(TaskNodeViewHolder holder, int position) {
-            holder.mTvNodeName.setText(mTasks.get(position).getName());
-            holder.mTvNodeTime.setText("11.5"); // TODO get time string
+            Task task = mTasks.get(position);
+            holder.mTvNodeName.setText(task.getName());
+            holder.mTvNodeTime.setText(getDateString(task));
         }
 
         @Override
@@ -134,6 +138,27 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         public long getItemId(int position) {
             return super.getItemId(position);
         }
+
+        private String getDateString(Task task) {
+           Time time = task.getPlanningTime();
+            Date startDate = DateUtil.isoStringToDate(time.getStart());
+            Date endDate = DateUtil.isoStringToDate(time.getCompletion());
+            if (startDate != null  && endDate != null && DateUtil.getDurationDays(startDate, endDate) <= 1) {
+                return DateUtil.getStringDateByFormat(startDate, "M.d");
+            } else {
+                StringBuilder dateSting = new StringBuilder("");
+                if (startDate != null) {
+                    dateSting.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
+                    dateSting.append("-");
+                }
+
+                if (endDate != null) {
+                    dateSting.append(DateUtil.getStringDateByFormat(endDate, "M.d"));
+                }
+                return dateSting.toString();
+            }
+        }
+
     }
 
     static class TaskNodeViewHolder extends RecyclerView.ViewHolder {

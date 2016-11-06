@@ -30,8 +30,7 @@
         android:gravity="end"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/font_large"
-        android:textColor="@color/font_black"
+        android:textSize="@dimen/font_normal"
         tools:text="10.21"/>
 
 </LinearLayout>

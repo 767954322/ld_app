@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author  yangxuewu .
@@ -311,5 +313,9 @@ public class DateUtil {
         cal2.setTime(date2);
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
+    public static long getDurationDays(@NonNull Date date1, @NonNull Date date2) {
+        return TimeUnit.MILLISECONDS.toDays(date2.getTime() - date1.getTime());
     }
 }
