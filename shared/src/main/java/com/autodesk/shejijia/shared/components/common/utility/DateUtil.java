@@ -289,13 +289,18 @@ public class DateUtil {
         return sdf2.format(d);// 将日期变为新的格式
     }
 
-    public static Date isoStringToDate(String acsDate) {
+    /**
+     *  Convert iso 8601 time string to Date object
+     * @param isoTimeString ISO 8601 Time format, e.g. "2016-06-15T10:45:00Z"
+     * @return Date object
+     */
+    public static Date isoStringToDate(String isoTimeString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         Date date = null;
         try {
-            date = dateFormat.parse(acsDate);
+            date = dateFormat.parse(isoTimeString);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -303,6 +308,12 @@ public class DateUtil {
         return date;
     }
 
+    /**
+     * Check if is same day
+     * @param date1
+     * @param date2
+     * @return
+     */
     public static boolean isSameDay(@Nullable Date date1, @Nullable Date date2) {
         if (date1 == null || date2 == null) {
             return false;
@@ -315,6 +326,12 @@ public class DateUtil {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
+    /**
+     * Get days account between two dates
+     * @param date1
+     * @param date2
+     * @return days account
+     */
     public static long getDurationDays(@NonNull Date date1, @NonNull Date date2) {
         return TimeUnit.MILLISECONDS.toDays(date2.getTime() - date1.getTime());
     }
