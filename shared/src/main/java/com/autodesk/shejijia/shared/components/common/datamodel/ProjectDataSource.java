@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 
 /**
@@ -28,5 +30,7 @@ public interface ProjectDataSource {
     * 获取项目详情－－含任务id列表
     * */
     void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<Project> callback);
+
+    void getPlanByProjectId(String pid, String requestTag, @NonNull LoadDataCallback<PlanInfo> callback);
 
 }

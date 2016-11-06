@@ -68,4 +68,10 @@
     <string name="calendar_thursday">四</string>
     <string name="calendar_friday">五</string>
     <string name="calendar_saturday">六</string>
+
+    <!--create or edit plan-->
+    <string name="edit_plan_next_step">下一步</string>
+    <string name="edit_plan_complete">完成</string>
+    <string name="edit_plan_title_first_step">第一步: 调整验收节点时间</string>
+    <string name="edit_plan_title_second_step">第二步: 调整子节点时间</string>
 </resources>

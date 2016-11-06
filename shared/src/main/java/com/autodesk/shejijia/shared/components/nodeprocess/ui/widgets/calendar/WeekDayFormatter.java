@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar;
+package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
 import android.content.Context;
 

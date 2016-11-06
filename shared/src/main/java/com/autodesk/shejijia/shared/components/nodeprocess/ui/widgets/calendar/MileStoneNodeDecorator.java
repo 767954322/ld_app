@@ -1,15 +1,16 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar;
+package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.text.style.ForegroundColorSpan;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,21 +22,23 @@ import java.util.List;
 
 public class MileStoneNodeDecorator implements DayViewDecorator {
     private final Drawable drawable;
-    private List<CalendarDay> dates;
+    private List<Task> tasks;
 
     public MileStoneNodeDecorator(Activity context) {
         //noinspection deprecation
         drawable = context.getResources().getDrawable(R.drawable.calander_milestone_selector);
-        dates = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        for(CalendarDay date: dates) {
-            if (day.equals(date)) {
+        for(Task task : tasks) {
+            Date date = DateUtil.isoStringToDate(task.getPlanningTime().getStart());
+            if (DateUtil.isSameDay(date, day.getDate())) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -45,18 +48,7 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
         view.setSelectionDrawable(drawable);
     }
 
-    public void setDates(List<Date> dates) {
-        this.dates.clear();
-        for(Date date: dates) {
-            this.dates.add(CalendarDay.from(date));
-        }
-    }
-
-    public void addDate(@NonNull Date date) {
-        this.dates.add(CalendarDay.from(date));
-    }
-
-    public void clearDates() {
-        this.dates.clear();
+    public void setData(List<Task> tasks) {
+        this.tasks = tasks;
     }
 }

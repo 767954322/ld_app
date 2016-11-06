@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.shared.components.common.utility;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.autodesk.shejijia.shared.R;
@@ -284,5 +285,31 @@ public class DateUtil {
             e.printStackTrace() ; // 打印异常信息
         }
         return sdf2.format(d);// 将日期变为新的格式
+    }
+
+    public static Date isoStringToDate(String acsDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        Date date = null;
+        try {
+            date = dateFormat.parse(acsDate);
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+
+        return date;
+    }
+
+    public static boolean isSameDay(@Nullable Date date1, @Nullable Date date2) {
+        if (date1 == null || date2 == null) {
+            return false;
+        }
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(date1);
+        cal2.setTime(date2);
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 }

@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import com.android.volley.AuthFailureError;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
+import com.autodesk.shejijia.shared.components.common.entity.Project;
+import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
@@ -139,6 +141,24 @@ public class ConstructionHttpManager {
         long pid = requestParams.getLong("pid");
         boolean task_data = requestParams.getBoolean("task_data", false);
         String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "?task_data=" + task_data;
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
+                return header;
+            }
+        };
+        NetRequestManager.getInstance().addRequest(requestTag, okRequest);
+    }
+
+    public void getPlanByProjectId(@NonNull String pid, String requestTag, @NonNull OkJsonRequest.OKResponseCallback callback) {
+        String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + pid + "/plan";
+        getData(requestTag, requestUrl, callback);
+    }
+
+    private void getData(String requestTag, String requestUrl, @NonNull OkJsonRequest.OKResponseCallback callback) {
         OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, requestUrl, null, callback) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

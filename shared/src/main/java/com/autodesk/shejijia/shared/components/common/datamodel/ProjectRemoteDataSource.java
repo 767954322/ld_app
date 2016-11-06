@@ -2,11 +2,12 @@ package com.autodesk.shejijia.shared.components.common.datamodel;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
@@ -14,6 +15,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -35,7 +37,6 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
 
     @Override
     public void getProjectList(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
-
         ConstructionHttpManager.getInstance().getUserProjectLists(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -89,4 +90,36 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
             }
         });
     }
+
+    @Override
+    public void getPlanByProjectId(String pid, String requestTag, @NonNull LoadDataCallback<PlanInfo> callback) {
+        ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag,
+                buildOkhttpCallback(callback, PlanInfo.class));
+    }
+
+    private <T> OkJsonRequest.OKResponseCallback buildOkhttpCallback(final LoadDataCallback<T> callback, final Class<T> clazz) {
+        return new OkJsonRequest.OKResponseCallback() {
+
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                LogUtils.d("getPlanByProjectId", jsonObject.toString());
+                try {
+                    JSONObject planJsonObject = jsonObject.getJSONObject("plan");
+                    String result = planJsonObject.toString();
+                    T project = GsonUtil.jsonToBean(result, clazz);
+                    callback.onLoadSuccess(project);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callback.onLoadFailed("Data format error");
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                callback.onLoadFailed(volleyError.getMessage());
+            }
+        };
+    }
+
+
 }

@@ -33,5 +33,5 @@
         android:id="@+id/actionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="下一步"/>
+        android:text="@string/edit_plan_next_step"/>
 </LinearLayout>

@@ -88,6 +88,10 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
         return monthContainer;
     }
 
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
 
     public void setSelectionColor(int color) {
         mAdapterHelper.setSelectionColor(color);

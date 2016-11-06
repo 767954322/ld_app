@@ -1,4 +1,4 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.plan;
+package com.autodesk.shejijia.shared.components.nodeprocess.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +11,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.autodesk.shejijia.shared.R;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditMilestoneNodeFragment;
+import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
 /**
@@ -21,7 +25,6 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     private final static String FRAGMENT_TAG_EDIT_MILESTONE = "edit_milestone";
     private final static String FRAGMENT_TAG_EDIT_TASKNODE = "edit_task_node";
 
-    //TODO move this state to presenter
     private EditPlanContract.Presenter mPresenter;
 
     private ProgressBar mProgressBar;
@@ -59,7 +62,7 @@ public class CreateOrEditPlanActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        mPresenter = new EditPlanPresenter();
+        mPresenter = new EditPlanPresenter(getIntent().getStringExtra("pid"));
         if (savedInstanceState == null) {
             updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
         } else {
@@ -101,11 +104,11 @@ public class CreateOrEditPlanActivity extends BaseActivity {
         mPresenter.updateEditState(newState);
         if (newState.equals(EditPlanPresenter.EditState.EDIT_MILESTONE)) {
             mProgressBar.setProgress(50);
-            mActionBtn.setText("下一步"); // TODO
+            mActionBtn.setText(R.string.edit_plan_next_step);
             switchToFragment(FRAGMENT_TAG_EDIT_MILESTONE);
         } else {
             mProgressBar.setProgress(100);
-            mActionBtn.setText("完成"); // TODO
+            mActionBtn.setText(R.string.edit_plan_complete);
             switchToFragment(FRAGMENT_TAG_EDIT_TASKNODE);
         }
     }
@@ -117,13 +120,13 @@ public class CreateOrEditPlanActivity extends BaseActivity {
         if (fragment == null) {
             if (FRAGMENT_TAG_EDIT_MILESTONE.equals(tag)) {
                 fragment = new EditMilestoneNodeFragment();
-                mPresenter.bindView((EditMilestoneNodeFragment)fragment);
             } else {
                 fragment = new EditTaskNodeFragment();
-                mPresenter.bindView((EditTaskNodeFragment)fragment);
                 fragmentTransaction.addToBackStack(null);
             }
+            ((EditPlanContract.View)fragment).bindPresenter(mPresenter);
         }
+        mPresenter.bindView((EditPlanContract.View)fragment);
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
     }

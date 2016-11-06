@@ -1,7 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.content.Intent;
-import android.os.HandlerThread;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.plan.CreateOrEditPlanActivity;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectDetailsPresenter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 
@@ -44,7 +43,9 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CreateOrEditPlanActivity.class));
+                Intent intent = new Intent(getActivity(), CreateOrEditPlanActivity.class);
+                intent.putExtra("pid", String.valueOf(getArguments().getLong("projectId")));
+                startActivity(intent);
             }
         });
     }

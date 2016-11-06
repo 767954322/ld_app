@@ -1,10 +1,11 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar;
+package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
-import android.app.Activity;
-import android.graphics.drawable.Drawable;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.text.style.ForegroundColorSpan;
 
-import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
@@ -17,36 +18,33 @@ import java.util.List;
  * Created by wenhulin on 10/20/16.
  */
 
-public class DateSelectorDecorator implements DayViewDecorator {
-    private final Drawable drawable;
-    private List<CalendarDay> dates = new ArrayList<>();
+public class TaskNodeDecorator implements DayViewDecorator {
+    private List<CalendarDay> dates;
+    private Context mContext;
 
-    @SuppressWarnings("deprecation")
-    public DateSelectorDecorator(Activity context, boolean isMileStone) {
-        if (isMileStone) {
-            drawable = context.getResources().getDrawable(R.drawable.calander_milestone_selector);
-        } else  {
-            drawable = context.getResources().getDrawable(R.drawable.calander_default_selector);
-        }
-
+    public TaskNodeDecorator(Context context) {
+        dates = new ArrayList<>();
+        mContext = context;
     }
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
         for(CalendarDay date: dates) {
             if (day.equals(date)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.setSelectionDrawable(drawable);
+        view.addSpan(new ForegroundColorSpan(Color.WHITE));
+        //noinspection deprecation
+        view.setBackgroundDrawable(new ColorDrawable(mContext.getResources().getColor(android.R.color.holo_blue_light)));
     }
 
-    public void setExcludeDates(List<CalendarDay> dates) {
+    public void setDates(List<CalendarDay> dates) {
         this.dates.clear();
         for(CalendarDay date: dates) {
             this.dates.add(date);
@@ -55,6 +53,10 @@ public class DateSelectorDecorator implements DayViewDecorator {
 
     public void addDate(@NonNull Date date) {
         this.dates.add(CalendarDay.from(date));
+    }
+
+    public void addDate(@NonNull CalendarDay date) {
+        this.dates.add(date);
     }
 
     public void clearDates() {

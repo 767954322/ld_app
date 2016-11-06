@@ -1,13 +1,15 @@
-package com.autodesk.shejijia.shared.components.nodeprocess.plan.widgets.calendar;
+package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 
+import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.Date;
 
@@ -15,18 +17,23 @@ import java.util.Date;
  * Created by wenhulin on 10/21/16.
  */
 
-public class MileStoneActiveDecorator implements DayViewDecorator {
-    private CalendarDay date;
+public class ActiveMileStoneDecorator implements DayViewDecorator {
+    private Task mTask;
     private Context mContext;
 
 
-    public MileStoneActiveDecorator(Activity context) {
+    public ActiveMileStoneDecorator(Activity context) {
         mContext = context;
     }
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        return date != null && day.equals(date);
+        if (mTask == null) {
+            return false;
+        }
+
+        Date date = DateUtil.isoStringToDate(mTask.getPlanningTime().getStart());
+        return DateUtil.isSameDay(date, day.getDate());
     }
 
     @Override
@@ -38,7 +45,7 @@ public class MileStoneActiveDecorator implements DayViewDecorator {
     /**
      * We're changing the internals, so make sure to call {@linkplain MaterialCalendarView#invalidateDecorators()}
      */
-    public void setDate(Date date) {
-        this.date = CalendarDay.from(date);
+    public void setActiveTask(Task task) {
+        this.mTask = task;
     }
 }
