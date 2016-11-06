@@ -53,6 +53,37 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mPresenter.fetchPlan();
     }
 
+    @Override
+    public void showTasks(List<Task> tasks) {
+        mMileStoneDecorator.setData(tasks);
+        mMileStoneDayFormator.setData(tasks);
+        widget.invalidateDecorators();
+    }
+
+    @Override
+    public void bindPresenter(EditPlanContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showNetError(String msg) {
+    }
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
     private void setUpCalendarView() {
         mMileStoneDayFormator = new MileStoneDayFormator();
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
@@ -77,37 +108,5 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
                 .setMinimumDate(instance1.getTime())
                 .setMaximumDate(instance2.getTime())
                 .commit();
-    }
-
-    @Override
-    public void showTasks(List<Task> tasks) {
-        mMileStoneDecorator.setData(tasks);
-        mMileStoneDayFormator.setData(tasks);
-        widget.invalidateDecorators();
-    }
-
-    @Override
-    public void bindPresenter(EditPlanContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void showNetError(String msg) {
-        AppCompatButton a;
-    }
-
-    @Override
-    public void showError(String msg) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
     }
 }

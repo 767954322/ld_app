@@ -1,5 +1,9 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.contract;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.util.AttributeSet;
+
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
 import com.autodesk.shejijia.shared.framework.BasePresenter;
@@ -25,16 +29,25 @@ public interface EditPlanContract {
         void fetchPlan();
 
         /**
-         * update edit plan data, the data will save in memory or local
+         * update task planning time, the data will save in memory or local
          */
-        void updatePlan();
+        void updateTask();
 
         /**
          * commit edited plan
          */
         void commitPlan();
 
+        /**
+         * Update edit state
+         * @param newState
+         */
         void updateEditState(EditPlanPresenter.EditState newState);
+
+        /**
+         * Get current edit state
+         * @return
+         */
         EditPlanPresenter.EditState getEditState();
     }
 }

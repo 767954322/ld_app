@@ -88,7 +88,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     }
 
     @Override
-    public void updatePlan() {
+    public void updateTask() {
         //TODO
     }
 

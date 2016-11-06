@@ -56,6 +56,7 @@ public class VerticalCalendarView extends MaterialCalendarView {
         topbar.setClipChildren(false);
         topbar.setClipToPadding(false);
 
+        // TODO setup weekday formatter
         WeekNamesView weekNamesView = new WeekNamesView(getContext(), getFirstDayOfWeek());
         container.addView(weekNamesView, new LayoutParams(60));
 
