@@ -79,24 +79,21 @@ public class CreateOrEditPlanActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    public boolean onSupportNavigateUp() {
+        if (getSupportFragmentManager().popBackStackImmediate()) {
+            updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
+        } else {
+            supportFinishAfterTransition();
         }
+        return true;
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (mPresenter.getEditState().equals(EditPlanPresenter.EditState.EDIT_TASK_NODE)) {
+        if (getSupportFragmentManager().popBackStackImmediate()) {
             updateEditState(EditPlanPresenter.EditState.EDIT_MILESTONE);
         } else {
-            // TODO popup hint
-            finish();
+            supportFinishAfterTransition();
         }
     }
 
