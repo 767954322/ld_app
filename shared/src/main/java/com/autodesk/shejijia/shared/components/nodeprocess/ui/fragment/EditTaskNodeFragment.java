@@ -1,13 +1,22 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,19 +24,17 @@ import java.util.List;
  */
 
 public class EditTaskNodeFragment extends BaseFragment implements EditPlanContract.View {
-
-    public void setPresenter(EditPlanContract.Presenter presenter) {
-        // TODO
-    }
+    private EditPlanContract.Presenter mPresenter;
+    private TaskNodeAdapter mAdapter;
 
     @Override
     public void showTasks(List<Task> tasks) {
-        // TODO show plan on calendar view
+        mAdapter.setData(tasks);
     }
 
     @Override
     public void bindPresenter(EditPlanContract.Presenter presenter) {
-
+        mPresenter = presenter;
     }
 
     @Override
@@ -61,10 +68,84 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         if (actionBar != null) {
             actionBar.setTitle(R.string.edit_plan_title_second_step);
         }
+
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAdapter = new TaskNodeAdapter(getActivity());
+        recyclerView.setAdapter(mAdapter);
+
     }
 
     @Override
     protected void initData() {
+        mPresenter.fetchPlan();
+    }
+
+    static class TaskNodeAdapter extends RecyclerView.Adapter<TaskNodeViewHolder> {
+        private final static int VIEW_TYPE_MILESTONE_NODE = 0;
+        private final static int VIEW_TYPE_TASK_NODE = 1;
+        private Activity mActivity;
+        private List<Task> mTasks = new ArrayList<>();
+
+        TaskNodeAdapter(Activity activity) {
+            mActivity = activity;
+        }
+
+        void setData(List<Task> tasks) {
+            mTasks.clear();
+            mTasks.addAll(tasks);
+            notifyItemRangeChanged(0, mTasks.size());
+        }
+
+        @Override
+        public TaskNodeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view;
+            if (viewType == VIEW_TYPE_MILESTONE_NODE) {
+                view =  LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_milestone_node, parent, false);
+            } else {
+                view =  LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_task_node, parent, false);
+            }
+
+            return new TaskNodeViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(TaskNodeViewHolder holder, int position) {
+            holder.mTvNodeName.setText(mTasks.get(position).getName());
+            holder.mTvNodeTime.setText("11.5"); // TODO get time string
+        }
+
+        @Override
+        public int getItemCount() {
+            return mTasks.size();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            Task task = mTasks.get(position);
+            if (task.isMilestone()) {
+                return VIEW_TYPE_MILESTONE_NODE;
+            } else {
+                return VIEW_TYPE_TASK_NODE;
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return super.getItemId(position);
+        }
+    }
+
+    static class TaskNodeViewHolder extends RecyclerView.ViewHolder {
+        public final TextView mTvNodeName;
+        public final TextView mTvNodeTime;
+        public TaskNodeViewHolder(View itemView) {
+            super(itemView);
+
+            mTvNodeName = (TextView) itemView.findViewById(R.id.tv_node_name);
+            mTvNodeTime = (TextView) itemView.findViewById(R.id.tv_node_time);
+        }
 
     }
+
 }

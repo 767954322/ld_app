@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/spacing_padding_normal"
+    android:paddingRight="@dimen/spacing_padding_normal"
+    android:minHeight="48dp">
+
+    <TextView
+        android:id="@+id/tv_node_name"
+        android:layout_width="0dp"
+        android:layout_weight="7"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_normal"
+        android:layout_gravity="center_vertical"
+        tools:text="开工交底"/>
+
+    <TextView
+        android:id="@+id/tv_node_time"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:gravity="end"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textSize="@dimen/font_normal"
+        tools:text="10.21"/>
+
+</LinearLayout>

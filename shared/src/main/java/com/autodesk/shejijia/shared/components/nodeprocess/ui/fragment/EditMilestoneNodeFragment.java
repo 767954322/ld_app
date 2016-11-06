@@ -33,18 +33,6 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     private EditPlanContract.Presenter mPresenter;
 
-    //TODO will remove this test data later
-    private static final class MockupTask {
-        Date date;
-        String name;
-
-        MockupTask(Date date, String name) {
-            this.date = date;
-            this.name = name;
-        }
-    }
-
-
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_edit_milestone;

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="60dp"
+    android:layout_marginTop="@dimen/spacing_margin_micro"
+    android:layout_marginBottom="@dimen/spacing_margin_micro"
+    android:layout_marginLeft="@dimen/spacing_margin_double"
+    android:layout_marginRight="@dimen/spacing_margin_double"
+    android:paddingLeft="@dimen/spacing_padding_normal"
+    android:paddingRight="@dimen/spacing_padding_normal"
+    android:background="@color/gray_light">
+
+    <TextView
+        android:id="@+id/tv_node_name"
+        android:layout_width="0dp"
+        android:layout_weight="7"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/font_black"
+        android:textSize="@dimen/font_large"
+        tools:text="塑窗测量"/>
+
+    <TextView
+        android:id="@+id/tv_node_time"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:gravity="end"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_large"
+        android:textColor="@color/font_black"
+        tools:text="10.21"/>
+
+</LinearLayout>
