@@ -22,6 +22,7 @@ import org.json.JSONObject;
  * 与 project 相关的api对应的dataModel
  */
 public final class ProjectRemoteDataSource implements ProjectDataSource {
+    private final static String LOG_TAG = "ProjectRemoteDataSource";
 
     private ProjectRemoteDataSource() {
     }
@@ -91,34 +92,26 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getPlanByProjectId(String pid, String requestTag, @NonNull LoadDataCallback<PlanInfo> callback) {
-        ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag,
-                buildOkhttpCallback(callback, PlanInfo.class));
+    public void getPlanByProjectId(String pid, String requestTag, @NonNull final LoadDataCallback<PlanInfo> callback) {
+        ConstructionHttpManager.getInstance().getPlanByProjectId(pid, requestTag, new OkJsonRequest.OKResponseCallback() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        LogUtils.d(LOG_TAG, jsonObject.toString());
+                        try {
+                            JSONObject planJsonObject = jsonObject.getJSONObject("plan");
+                            String result = planJsonObject.toString();
+                            PlanInfo plan = GsonUtil.jsonToBean(result, PlanInfo.class);
+                            callback.onLoadSuccess(plan);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            callback.onLoadFailed("Data format error");
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        callback.onLoadFailed(volleyError.getMessage());
+                    }
+                });
     }
-
-    private <T> OkJsonRequest.OKResponseCallback buildOkhttpCallback(final LoadDataCallback<T> callback, final Class<T> clazz) {
-        return new OkJsonRequest.OKResponseCallback() {
-
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                LogUtils.d("getPlanByProjectId", jsonObject.toString());
-                try {
-                    JSONObject planJsonObject = jsonObject.getJSONObject("plan");
-                    String result = planJsonObject.toString();
-                    T project = GsonUtil.jsonToBean(result, clazz);
-                    callback.onLoadSuccess(project);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callback.onLoadFailed("Data format error");
-                }
-            }
-
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                callback.onLoadFailed(volleyError.getMessage());
-            }
-        };
-    }
-
-
 }
