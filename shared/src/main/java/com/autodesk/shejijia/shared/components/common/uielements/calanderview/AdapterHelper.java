@@ -259,7 +259,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
         }
 
         rangeIndex = createRangeIndex(min, max);
-        Log.i("Wenhui", "rangeIndex=" + rangeIndex.getCount());
     }
 
     protected DateRangeIndex createRangeIndex(CalendarDay min, CalendarDay max) {

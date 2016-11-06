@@ -2,7 +2,6 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar;
 
 import android.content.Context;
 
-
 import com.autodesk.shejijia.shared.R;
 
 import java.util.Calendar;

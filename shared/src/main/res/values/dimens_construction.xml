@@ -47,4 +47,6 @@
     <!-- all topBar height -->
     <dimen name="app_topBar_height">55dp</dimen>
 
+    <!--Normal button min height-->
+    <dimen name="button_min_height">48dp</dimen>
 </resources>

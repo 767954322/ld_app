@@ -16,7 +16,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.fo
 
 public class VerticalCalendarView extends MaterialCalendarView {
 
-    private ListViewAdapter mListAdapter;
+    private VerticalCalendarViewAdapter mListAdapter;
     private ListView mListView;
 
     public VerticalCalendarView(Context context) {
@@ -35,7 +35,7 @@ public class VerticalCalendarView extends MaterialCalendarView {
     @Override
     protected IAdapter createAdapter() {
         if (mListAdapter == null) {
-            mListAdapter = new ListViewAdapter(this);
+            mListAdapter = new VerticalCalendarViewAdapter(this);
         }
         return mListAdapter;
     }
@@ -154,7 +154,6 @@ public class VerticalCalendarView extends MaterialCalendarView {
             );
 
             int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(
-//                    p.height * measureTileHeight,
                     specHeightSize,
                     MeasureSpec.EXACTLY
             );

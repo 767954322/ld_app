@@ -19,11 +19,11 @@ import java.util.List;
  * Created by wenhulin on 10/24/16.
  */
 
-public class ListViewAdapter extends BaseAdapter implements IAdapter{
+public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter{
     private AdapterHelper mAdapterHelper;
     private MaterialCalendarView mcv;
 
-    ListViewAdapter(MaterialCalendarView mcv) {
+    VerticalCalendarViewAdapter(MaterialCalendarView mcv) {
         this.mcv = mcv;
         mAdapterHelper = new AdapterHelper<MonthView>(mcv);
     }
@@ -31,13 +31,11 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
     public void setRangeDates(CalendarDay min, CalendarDay max) {
         mAdapterHelper.setRangeDates(min, max);
         notifyDataSetChanged();
-        Log.i("Wenhui", this + " notifyDataSetChanged");
         mAdapterHelper.invalidateSelectedDates();
     }
 
     @Override
     public int getCount() {
-        Log.i("Wenhui", this + "mAdapterHelper.getCount()=" + mAdapterHelper.getCount());
         return mAdapterHelper.getCount();
     }
 
@@ -55,6 +53,7 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewGroup monthContainer;
         MonthView monthView;
+        //TODO Do optimize
 //        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
             monthContainer = (ViewGroup) inflater.inflate(R.layout.item_month, null);
@@ -70,7 +69,7 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
 //        }
 
         TextView textView = (TextView) monthContainer.findViewById(R.id.item_title);
-        textView.setText("2016年" + (10 + position) + "月");
+        textView.setText("2016年" + (10 + position) + "月");  // TODO Get month title
 
 //        monthView.setData(getItem(position), mcv.getFirstDayOfWeek()); //TODO Do more optimize
         monthView.setContentDescription(mcv.getCalendarContentDescription());
@@ -114,7 +113,7 @@ public class ListViewAdapter extends BaseAdapter implements IAdapter{
      * @param smoothScroll True to smoothly scroll to the new item, false to transition immediately
      */
     public void setCurrentItem(int item, boolean smoothScroll) {
-//        setCurrentItemInternal(item, smoothScroll, false);
+        // TODO scroll to current month
     }
 
     public void setDecorators(List<DayViewDecorator> decorators) {

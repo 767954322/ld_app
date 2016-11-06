@@ -5,18 +5,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
+import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormator;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -82,10 +81,9 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void showTasks(List<Task> tasks) {
-        // TODO show plan on calendar view
         mMileStoneDecorator.setData(tasks);
         mMileStoneDayFormator.setData(tasks);
-        widget.invalidateDecorators(); // TODO
+        widget.invalidateDecorators();
     }
 
     @Override

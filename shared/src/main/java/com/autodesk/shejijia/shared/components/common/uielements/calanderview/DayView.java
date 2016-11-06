@@ -178,7 +178,6 @@ class DayView extends CheckedTextView {
 
     private void regenerateBackground() {
         if (selectionDrawable != null) {
-//            Log.i("Wenhui", selectionDrawable.toString());
             setBackgroundDrawable(selectionDrawable);
         } else {
             mCircleDrawable = generateBackground(selectionColor, fadeTime, tempRect);

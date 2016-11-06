@@ -32,6 +32,7 @@ public class ProjectDetailsFragment extends BaseConstructionFragment implements 
 
     @Override
     protected int getLayoutResId() {
+        // TODO This is for test, revert this later
         return R.layout.layout_project_not_start_pm;
 //        return R.layout.fragment_project_details_view;
     }

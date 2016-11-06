@@ -299,8 +299,9 @@
     </style>
 
     <style name="Construction.Button" parent="Widget.AppCompat.Button">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/font_normal</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:minHeight">@dimen/button_min_height</item>
     </style>
 
 </resources>

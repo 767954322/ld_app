@@ -5,12 +5,11 @@ import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
-import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
-import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;

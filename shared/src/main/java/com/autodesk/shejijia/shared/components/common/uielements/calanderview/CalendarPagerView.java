@@ -41,14 +41,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
                              int firstDayOfWeek) {
         super(view.getContext());
         this.mcv = view;
-//        this.firstViewDay = firstViewDay;
-//        this.firstDayOfWeek = firstDayOfWeek;
-//
-//        setClipChildren(false);
-//        setClipToPadding(false);
-//
-//        buildWeekDays(resetAndGetWorkingCalendar());
-//        buildDayViews(dayViews, resetAndGetWo2rkingCalendar());
+
         setData(firstViewDay, firstDayOfWeek);
     }
 
@@ -57,15 +50,8 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
                              int firstDayOfWeek, boolean showWeekDates) {
         super(view.getContext());
         this.mcv = view;
-//        this.firstViewDay = firstViewDay;
-//        this.firstDayOfWeek = firstDayOfWeek;
         this.showWeekDates = showWeekDates;
-//
-//        setClipChildren(false);
-//        setClipToPadding(false);
-//
-//        buildWeekDays(resetAndGetWorkingCalendar());
-//        buildDayViews(dayViews, resetAndGetWo2rkingCalendar());
+
         setData(firstViewDay, firstDayOfWeek);
     }
 
@@ -215,14 +201,11 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         final DayViewFacade facadeAccumulator = new DayViewFacade();
         for (DayView dayView : dayViews) {
             facadeAccumulator.reset();
-//            Log.i("Wenhui", "dayView isChecked=" + dayView.isChecked());
             for (DecoratorResult result : decoratorResults) {
                 if (result.decorator.shouldDecorate(dayView.getDate())) {
-//                    Log.i("Wenhui", "" + result.decorator.getClass().getSimpleName() + "=" + dayView.getLabel());
                     result.result.applyTo(facadeAccumulator);
                 }
             }
-//            dayView.setActivated(true);
             dayView.applyFacade(facadeAccumulator);
         }
     }
@@ -264,7 +247,7 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
 
         //The spec width should be a correct multiple
         final int measureTileWidth = specWidthSize / DEFAULT_DAYS_IN_WEEK;
-        final int measureTileHeight = measureTileWidth;//specHeightSize / getRows();
+        final int measureTileHeight = measureTileWidth;// TODO need optimize with specHeightSize / getRows();
 
         //Just use the spec sizes
         setMeasuredDimension(specWidthSize, specWidthSize);

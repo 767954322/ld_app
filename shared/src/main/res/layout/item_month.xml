@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/item_title"
-        android:layout_height="20dp"
         android:layout_width="match_parent"
-        android:text="2016年10月"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:layout_height="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        >
-    </TextView>
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="2016年10月"/>
 
-    <!--<com.autodesk.shejijia.shared.components.common.uielements.MonthView-->
-        <!--android:id="@+id/month_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--&gt;-->
-    <!--</com.autodesk.shejijia.shared.components.common.uielements.MonthView>-->
 </LinearLayout>

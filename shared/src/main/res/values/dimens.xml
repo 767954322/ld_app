@@ -323,6 +323,6 @@
     <dimen name="textsize_15">15sp</dimen>
     <dimen name="textsize_14">14sp</dimen>
 
+    <!--Calendar view-->
     <dimen name="month_view_height">240dp</dimen>
-
 </resources>

@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.autodesk.shejijia.shared.R;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditMilestoneNodeFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditMilestoneNodeFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment;
 import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
 
@@ -124,9 +124,9 @@ public class CreateOrEditPlanActivity extends BaseActivity {
                 fragment = new EditTaskNodeFragment();
                 fragmentTransaction.addToBackStack(null);
             }
-            ((EditPlanContract.View)fragment).bindPresenter(mPresenter);
+            ((EditPlanContract.View) fragment).bindPresenter(mPresenter);
         }
-        mPresenter.bindView((EditPlanContract.View)fragment);
+        mPresenter.bindView((EditPlanContract.View) fragment);
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
     }

@@ -5,11 +5,10 @@
 
     <Button
         android:id="@+id/button_create_plan"
-        style="@style/Construction.Button"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="创建施工进度表"
+        android:text="@string/create_plan"
         >
     </Button>
 

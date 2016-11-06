@@ -34,6 +34,7 @@ public class MileStoneDayFormator implements DayFormatter {
     }
 
     public void setData(List<Task> tasks) {
-        this.tasks = tasks;
+        this.tasks.clear();
+        this.tasks.addAll(tasks);
     }
 }

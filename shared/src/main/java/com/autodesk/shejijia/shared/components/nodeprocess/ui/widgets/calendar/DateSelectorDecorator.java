@@ -25,7 +25,7 @@ public class DateSelectorDecorator implements DayViewDecorator {
     public DateSelectorDecorator(Activity context, boolean isMileStone) {
         if (isMileStone) {
             drawable = context.getResources().getDrawable(R.drawable.calander_milestone_selector);
-        } else  {
+        } else {
             drawable = context.getResources().getDrawable(R.drawable.calander_default_selector);
         }
 
@@ -33,7 +33,7 @@ public class DateSelectorDecorator implements DayViewDecorator {
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        for(CalendarDay date: dates) {
+        for (CalendarDay date : dates) {
             if (day.equals(date)) {
                 return false;
             }
@@ -48,7 +48,7 @@ public class DateSelectorDecorator implements DayViewDecorator {
 
     public void setExcludeDates(List<CalendarDay> dates) {
         this.dates.clear();
-        for(CalendarDay date: dates) {
+        for (CalendarDay date : dates) {
             this.dates.add(date);
         }
     }

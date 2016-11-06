@@ -71,7 +71,7 @@ public class MaterialCalendarView extends ViewGroup {
      * @see #setSelectionMode(int)
      * @see #getSelectionMode()
      */
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({SELECTION_MODE_NONE, SELECTION_MODE_SINGLE, SELECTION_MODE_MULTIPLE, SELECTION_MODE_RANGE})
     public @interface SelectionMode {
     }
@@ -106,7 +106,7 @@ public class MaterialCalendarView extends ViewGroup {
      * @see #getShowOtherDates()
      */
     @SuppressLint("UniqueConstants")
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef(flag = true, value = {
             SHOW_NONE, SHOW_ALL, SHOW_DEFAULTS,
             SHOW_OUT_OF_RANGE, SHOW_OTHER_MONTHS, SHOW_DECORATED_DISABLED
@@ -178,9 +178,6 @@ public class MaterialCalendarView extends ViewGroup {
 
     CharSequence calendarContentDescription;
     private int accentColor = 0;
-//    private int arrowColor = Color.BLACK;
-//    private Drawable leftArrowMask;
-//    private Drawable rightArrowMask;
     protected int tileHeight = -1;
     protected int tileWidth = -1;
     @SelectionMode
@@ -473,36 +470,6 @@ public class MaterialCalendarView extends ViewGroup {
                 TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics()
         );
     }
-
-//    /**
-//     * TODO should this be public?
-//     *
-//     * @return true if there is a future month that can be shown
-//     */
-//    public boolean canGoForward() {
-//        return pager.getCurrentItem() < (adapter.getCount() - 1);
-//    }
-//
-//    /**
-//     * Pass all touch events to the pager so scrolling works on the edges of the calendar view.
-//     *
-//     * @param event
-//     * @return
-//     */
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        return super.onTouchEvent(event);
-////        return pager.dispatchTouchEvent(event);
-//    }
-//
-//    /**
-//     * TODO should this be public?
-//     *
-//     * @return true if there is a previous month that can be shown
-//     */
-//    public boolean canGoBack() {
-//        return pager.getCurrentItem() > 0;
-//    }
 
     /**
      * @return the color used for the selection

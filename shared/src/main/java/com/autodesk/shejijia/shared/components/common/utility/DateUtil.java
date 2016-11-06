@@ -302,7 +302,7 @@ public class DateUtil {
         try {
             date = dateFormat.parse(isoTimeString);
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            LogUtils.e(TAG, "e=" + e);
         }
 
         return date;

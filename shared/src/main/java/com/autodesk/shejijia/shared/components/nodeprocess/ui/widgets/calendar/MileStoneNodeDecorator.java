@@ -32,7 +32,7 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        for(Task task : tasks) {
+        for (Task task : tasks) {
             Date date = DateUtil.isoStringToDate(task.getPlanningTime().getStart());
             if (DateUtil.isSameDay(date, day.getDate())) {
                 return true;
@@ -49,6 +49,7 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
     }
 
     public void setData(List<Task> tasks) {
-        this.tasks = tasks;
+        this.tasks.clear();
+        this.tasks.addAll(tasks);
     }
 }

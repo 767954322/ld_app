@@ -29,7 +29,7 @@ public class TaskNodeDecorator implements DayViewDecorator {
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        for(CalendarDay date: dates) {
+        for (CalendarDay date : dates) {
             if (day.equals(date)) {
                 return true;
             }
@@ -46,7 +46,7 @@ public class TaskNodeDecorator implements DayViewDecorator {
 
     public void setDates(List<CalendarDay> dates) {
         this.dates.clear();
-        for(CalendarDay date: dates) {
+        for (CalendarDay date : dates) {
             this.dates.add(date);
         }
     }

@@ -14,7 +14,6 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Time;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
@@ -84,7 +83,7 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         mPresenter.fetchPlan();
     }
 
-    static class TaskNodeAdapter extends RecyclerView.Adapter<TaskNodeViewHolder> {
+    private static class TaskNodeAdapter extends RecyclerView.Adapter<TaskNodeViewHolder> {
         private final static int VIEW_TYPE_MILESTONE_NODE = 0;
         private final static int VIEW_TYPE_TASK_NODE = 1;
         private Activity mActivity;
@@ -104,9 +103,9 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         public TaskNodeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view;
             if (viewType == VIEW_TYPE_MILESTONE_NODE) {
-                view =  LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_milestone_node, parent, false);
+                view = LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_milestone_node, parent, false);
             } else {
-                view =  LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_task_node, parent, false);
+                view = LayoutInflater.from(mActivity).inflate(R.layout.item_edit_plan_task_node, parent, false);
             }
 
             return new TaskNodeViewHolder(view);
@@ -140,33 +139,28 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
         }
 
         private String getDateString(Task task) {
-           Time time = task.getPlanningTime();
+            Time time = task.getPlanningTime();
             Date startDate = DateUtil.isoStringToDate(time.getStart());
             Date endDate = DateUtil.isoStringToDate(time.getCompletion());
-            if (startDate != null  && endDate != null && DateUtil.getDurationDays(startDate, endDate) <= 1) {
-                return DateUtil.getStringDateByFormat(startDate, "M.d");
+            StringBuilder dateSting = new StringBuilder("");
+            if (startDate != null && endDate != null && DateUtil.getDurationDays(startDate, endDate) <= 1) {
+                dateSting.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
             } else {
-                StringBuilder dateSting = new StringBuilder("");
-                if (startDate != null) {
-                    dateSting.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
-                    dateSting.append("-");
-                }
-
-                if (endDate != null) {
-                    dateSting.append(DateUtil.getStringDateByFormat(endDate, "M.d"));
-                }
-                return dateSting.toString();
+                dateSting.append(startDate == null ? "NA" : DateUtil.getStringDateByFormat(startDate, "M.d"))
+                        .append("-")
+                        .append(endDate == null ? "NA" : DateUtil.getStringDateByFormat(endDate, "M.d"));
             }
+            return dateSting.toString();
         }
 
     }
 
-    static class TaskNodeViewHolder extends RecyclerView.ViewHolder {
+    private static class TaskNodeViewHolder extends RecyclerView.ViewHolder {
         public final TextView mTvNodeName;
         public final TextView mTvNodeTime;
+
         public TaskNodeViewHolder(View itemView) {
             super(itemView);
-
             mTvNodeName = (TextView) itemView.findViewById(R.id.tv_node_name);
             mTvNodeTime = (TextView) itemView.findViewById(R.id.tv_node_time);
         }
