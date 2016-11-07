@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -66,6 +67,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initView() {
         super.initView();
         mRecyclerViewList = (CustomHeaderExpandableListView) findViewById(R.id.rcy_recommend_detail);
+
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
         mLlEmptyContentView = (LinearLayout) findViewById(R.id.empty_view);
     }
@@ -88,6 +90,16 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initListener() {
         super.initListener();
         mBtnListSend.setOnClickListener(this);
+        mRecyclerViewList.setGroupIndicator(null); //去掉箭头
+        //点击不可收缩
+        mRecyclerViewList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                return true;
+            }
+        });
     }
 
     /**
