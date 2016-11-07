@@ -20,7 +20,19 @@ public interface EditPlanContract {
     interface View extends BaseView {
         void showTasks(List<Task> tasks);
         void bindPresenter(Presenter presenter);
+
+        /**
+         * Show active task
+         * @param task
+         */
         void showActiveTask(Task task);
+
+        /**
+         * Task date change
+         * @param task
+         * @param oldDate
+         * @param newDate
+         */
         void onTaskDateChange(Task task, Date oldDate, Date newDate);
     }
 
@@ -32,9 +44,10 @@ public interface EditPlanContract {
         void fetchPlan();
 
         /**
-         * update task planning time, the data will save in memory or local
+         * Update active task to the selected date
+         * @param selectedDate  selected date
          */
-        void updateTask(Task task, Date newDate);
+        void updateTask(Date selectedDate);
 
         /**
          * commit edited plan
@@ -52,7 +65,5 @@ public interface EditPlanContract {
          * @return
          */
         EditPlanPresenter.EditState getEditState();
-
-        void onDateSelected(Date date, boolean selected);
     }
 }

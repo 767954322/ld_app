@@ -58,16 +58,16 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         });
     }
 
-    public void onDateSelected(Date date, boolean selected) {
+    public void updateTask(Date selectedDate) {
         switch (mEditState) {
             case EDIT_MILESTONE:
-                Task newActiveTask = getMileStoneNode(date);
+                Task newActiveTask = getMileStoneNode(selectedDate);
                 if (newActiveTask == null) {
                     if (mActiveTask != null) {
                         // Update active task date
                         Date oldDate = DateUtil.isoStringToDate(mActiveTask.getPlanningTime().getStart());
-                        updateTaskDate(mActiveTask, date);
-                        mView.onTaskDateChange(mActiveTask, oldDate, date);
+                        updateTaskDate(mActiveTask, selectedDate);
+                        mView.onTaskDateChange(mActiveTask, oldDate, selectedDate);
                     }
                 } else {
                     if (mActiveTask ==null || newActiveTask.getTaskId() != mActiveTask.getTaskId()) {
@@ -82,8 +82,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         }
     }
 
-    @Override
-    public void updateTask(Task task, Date newDate) {
+    private void updateTask(Task task, Date newDate) {
         String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
         task.getPlanningTime().setStart(dateString);
     }

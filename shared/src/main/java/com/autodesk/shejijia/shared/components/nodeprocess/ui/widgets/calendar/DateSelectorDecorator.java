@@ -19,44 +19,19 @@ import java.util.List;
 
 public class DateSelectorDecorator implements DayViewDecorator {
     private final Drawable drawable;
-    private List<CalendarDay> dates = new ArrayList<>();
 
     @SuppressWarnings("deprecation")
-    public DateSelectorDecorator(Activity context, boolean isMileStone) {
-        if (isMileStone) {
-            drawable = context.getResources().getDrawable(R.drawable.calander_milestone_selector);
-        } else {
-            drawable = context.getResources().getDrawable(R.drawable.calander_default_selector);
-        }
+    public DateSelectorDecorator(Activity context) {
+        drawable = context.getResources().getDrawable(R.drawable.calander_default_selector);
     }
 
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        for (CalendarDay date : dates) {
-            if (day.equals(date)) {
-                return false;
-            }
-        }
         return true;
     }
 
     @Override
     public void decorate(DayViewFacade view) {
         view.setSelectionDrawable(drawable);
-    }
-
-    public void setExcludeDates(List<CalendarDay> dates) {
-        this.dates.clear();
-        for (CalendarDay date : dates) {
-            this.dates.add(date);
-        }
-    }
-
-    public void addDate(@NonNull Date date) {
-        this.dates.add(CalendarDay.from(date));
-    }
-
-    public void clearDates() {
-        this.dates.clear();
     }
 }

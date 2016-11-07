@@ -107,7 +107,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-        mPresenter.onDateSelected(date.getDate(), selected);
+        mPresenter.updateTask(date.getDate());
     }
 
     @Override
@@ -133,7 +133,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mCalendarWidget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
         mMileStoneDayFormator = new MileStoneDayFormatter();
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
-        mSelectorDecorator = new DateSelectorDecorator(getActivity(), false);
+        mSelectorDecorator = new DateSelectorDecorator(getActivity());
         mMileStoneActiveDecorator = new ActiveMileStoneDecorator(getActivity());
         mCalendarWidget.addDecorators(mSelectorDecorator,
                 mMileStoneActiveDecorator,
