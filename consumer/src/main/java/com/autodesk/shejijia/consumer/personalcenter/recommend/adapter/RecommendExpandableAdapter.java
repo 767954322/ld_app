@@ -13,13 +13,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
+import java.util.Arrays;
 import java.util.List;
-
-//import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
 
 public class RecommendExpandableAdapter extends BaseExpandableListAdapter implements ExpandListHeaderInterface {
 
@@ -39,6 +43,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         inflater = LayoutInflater.from(this.mActivity);
     }
 
+
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
@@ -50,7 +55,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     @Override
-    public View getChildView(int groupPosition,  int childPosition,
+    public View getChildView(int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         View view = null;
         if (convertView != null) {
@@ -61,33 +66,89 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         } else {
             view = createChildrenView();
             mViewHolder = new ViewHolder();
-            mViewHolder.mEditText = (EditText) view.findViewById(R.id.et_brand_num);
-            mViewHolder.mBrandName = (TextView) view.findViewById(R.id.tv_brand_name);
-            setOnTouchListenerForEditText(mViewHolder.mEditText);
-            // 让ViewHolder持有一个TextWathcer，动态更新position来防治数据错乱；不能将position定义成final直接使用，必须动态更新
-            mViewHolder.mTextWatcher = new ExpandListTextWatcher();
-            mViewHolder.mEditText.addTextChangedListener(mViewHolder.mTextWatcher);
+            mViewHolder.etBrandNum = (EditText) view.findViewById(R.id.et_brand_num);
+            mViewHolder.etBranDimension = (EditText) view.findViewById(R.id.et_brand_dimension);    // 规格．
+            mViewHolder.etBranRemarks = (EditText) view.findViewById(R.id.et_brand_remarks);
+            mViewHolder.tvBrandName = (TextView) view.findViewById(R.id.tv_brand_name);
+            mViewHolder.tvBrandMallName = (TextView) view.findViewById(R.id.tv_brand_mall_name);
+            mViewHolder.spinnerApartment = (MaterialSpinner) view.findViewById(R.id.spinner_brand_apartment);
+
+            setOnTouchListenerForEditText(mViewHolder.etBrandNum,R.id.et_brand_num);
+            setOnTouchListenerForEditText(mViewHolder.etBranDimension,R.id.et_brand_dimension);
+            setOnTouchListenerForEditText(mViewHolder.etBranRemarks,R.id.et_brand_remarks);
+
+            mViewHolder.mTextWatcherNum = new ExpandListTextWatcher(0);
+            mViewHolder.mTextWatcherDimension = new ExpandListTextWatcher(1);
+            mViewHolder.mTextWatcherRemarks = new ExpandListTextWatcher(2);
+
+            mViewHolder.etBrandNum.addTextChangedListener(mViewHolder.mTextWatcherNum);
+            mViewHolder.etBranDimension.addTextChangedListener(mViewHolder.mTextWatcherDimension);
+            mViewHolder.etBranRemarks.addTextChangedListener(mViewHolder.mTextWatcherRemarks);
+
             mViewHolder.updatePosition(groupPosition, childPosition);
-            // 让ViewHolder持有一个TextWathcer，动态更新position来防治数据错乱；不能将position定义成final直接使用，必须动态更新
 
             view.setTag(mViewHolder);
         }
-        String amountAndUnit = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).getAmountAndUnit();
-        String brandName = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).getBrand_name();
-        mViewHolder.mEditText.setText(amountAndUnit);
-        mViewHolder.mBrandName.setText(brandName);
-        mViewHolder.mEditText.setTag(groupPosition * 10 + childPosition);
 
-        if ((mTouchItemPosition / 10 == groupPosition) && (mTouchItemPosition % 10 == childPosition)) {
-            mViewHolder.mEditText.requestFocus();
-            mViewHolder.mEditText.setSelection(mViewHolder.mEditText.getText().length());
-        } else {
-            mViewHolder.mEditText.clearFocus();
+        RecommendBrandsBean recommendBrandsBean = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
+
+        // 数量,规格,备注．
+        String amountAndUnit = recommendBrandsBean.getAmountAndUnit();
+        String dimension = recommendBrandsBean.getDimension();
+        String remarks = recommendBrandsBean.getRemarks();
+
+        mViewHolder.etBrandNum.setText(amountAndUnit);
+        mViewHolder.etBrandNum.setTag(groupPosition * 100 + childPosition*10+1);
+
+        mViewHolder.etBranDimension.setText(dimension);
+        mViewHolder.etBranDimension.setTag(groupPosition * 100 + childPosition*10+2);
+
+        mViewHolder.etBranRemarks.setText(remarks);
+        mViewHolder.etBranRemarks.setTag(groupPosition * 100 + childPosition*10+3);
+
+        if ((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 1)) {
+            mViewHolder.etBrandNum.requestFocus();
+            mViewHolder.etBrandNum.setSelection(mViewHolder.etBrandNum.getText().length());
+        } else  if ((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 2)) {
+            mViewHolder.etBranDimension.requestFocus();
+            mViewHolder.etBranDimension.setSelection(mViewHolder.etBranDimension.getText().length());
+        } else  if((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 3)) {
+            mViewHolder.etBranRemarks.requestFocus();
+            mViewHolder.etBranRemarks.setSelection(mViewHolder.etBranRemarks.getText().length());
+        }else{
+
+            mViewHolder.etBrandNum.clearFocus();
+            mViewHolder.etBranDimension.clearFocus();
+            mViewHolder.etBranRemarks.clearFocus();
         }
 
+        // 店铺地址．
+        StringBuffer mallName = new StringBuffer();
+        for (RecommendMallsBean mallsBean : recommendBrandsBean.getMalls()) {
+            mallName.append(mallsBean.getMall_name() + "、");
+        }
+        mViewHolder.tvBrandMallName.setText(mallName.substring(0, mallName.length() - 1));
+        // 品牌名称．
+        mViewHolder.tvBrandName.setText(recommendBrandsBean.getBrand_name());
+        // 空间．
+        String[] apartmentArray = UIUtils.getStringArray(R.array.recommend_apartments);
+        final List<String> apartmentList = Arrays.asList(apartmentArray);
+        mViewHolder.spinnerApartment.setItems(apartmentList);
+        String apartment = recommendBrandsBean.getApartment();
+        for (int i = 0; i < apartmentList.size(); i++) {
+            if (!StringUtils.isEmpty(apartment) && apartment.equalsIgnoreCase(apartmentList.get(i))) {
+                mViewHolder.spinnerApartment.setText(apartment);
+            }
+        }
+        mViewHolder.spinnerApartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                String currentApartmentName = apartmentList.get(position);
+            }
+        });
         return view;
     }
-    private   boolean canVerticalScroll(EditText editText) {
+    private boolean canVerticalScroll(EditText editText) {
         //滚动的距离
         int scrollY = editText.getScrollY();
         //控件内容的总高度
@@ -104,14 +165,24 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
 
-    static  class ViewHolder {
-        EditText mEditText;
-        TextView mBrandName;
-        ExpandListTextWatcher mTextWatcher;
+    static class ViewHolder {
+        EditText etBrandNum;
+        EditText etBranDimension;
+        EditText etBranRemarks;
+        TextView tvBrandName;
+        TextView tvBrandMallName;
+        MaterialSpinner spinnerApartment;
+
+
+        ExpandListTextWatcher mTextWatcherNum;
+        ExpandListTextWatcher mTextWatcherDimension;
+        ExpandListTextWatcher mTextWatcherRemarks;
 
         //动态更新TextWathcer的position
         public void updatePosition(int groupPosition, int position) {
-            mTextWatcher.updatePosition(groupPosition, position);
+            mTextWatcherNum.updatePosition(groupPosition, position);
+            mTextWatcherDimension.updatePosition(groupPosition, position);
+            mTextWatcherRemarks.updatePosition(groupPosition, position);
         }
     }
 
@@ -209,15 +280,14 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         }
     }
 
-
-    public  void  setOnTouchListenerForEditText(EditText editText) {
+    public void setOnTouchListenerForEditText(EditText editText,final int id) {
         editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
                 //注意，此处必须使用getTag的方式，不能将position定义为final，写成mTouchItemPosition = position
                 mTouchItemPosition = (Integer) view.getTag();
                 //触摸的是EditText并且当前EditText可以滚动则将事件交给EditText处理；否则将事件交由其父类处理
-                if ((view.getId() == R.id.et_brand_num && canVerticalScroll((EditText) view))) {
+                if ((view.getId() == id && canVerticalScroll((EditText) view))) {
                     view.getParent().requestDisallowInterceptTouchEvent(true);
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         view.getParent().requestDisallowInterceptTouchEvent(false);
@@ -229,11 +299,16 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
 
-      class ExpandListTextWatcher implements TextWatcher {
+    class ExpandListTextWatcher implements TextWatcher {
 
         //由于TextWatcher的afterTextChanged中拿不到对应的position值，所以自己创建一个子类
         private int ChildPosition;
         private int parentPosition;
+        private int type;
+
+        public ExpandListTextWatcher(int type) {
+            this.type = type;
+        }
 
         public void updatePosition(int groupPosition, int position) {
             this.ChildPosition = position;
@@ -250,7 +325,16 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         @Override
         public void afterTextChanged(Editable s) {
-            mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
+            if(type == 0){
+                mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
+            }else if(type == 1){
+                mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setDimension(s.toString());
+            }else  if(type == 2){
+                mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setRemarks(s.toString());
+            }else{
+            }
+
+
         }
     }
 }
