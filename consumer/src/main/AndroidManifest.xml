@@ -77,11 +77,6 @@
             android:name=".home.homepage.activity.WelcomeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".home.decorationlibrarys.activity.CaseLibraryActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".home.decorationlibrarys.activity.SearchActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
@@ -453,11 +448,6 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".home.decorationlibrarys.activity.CaseLibraryNewActivity2"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>

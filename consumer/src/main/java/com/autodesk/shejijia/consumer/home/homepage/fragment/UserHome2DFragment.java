@@ -22,7 +22,6 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerActivity;
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
-import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.CaseLibraryNewActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.CaseLibraryBean;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.entity.FiltrateContentBean;
@@ -243,7 +242,7 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
                 break;
 
             case CASE_LIBRARY_BUTTON_TAG:    /// 查看案例库详情页面.
-                CommonUtils.launchActivity(activity, CaseLibraryActivity.class);
+               // CommonUtils.launchActivity(activity, CaseLibraryActivity.class);
                 break;
         }
     }
