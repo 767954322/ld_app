@@ -22,7 +22,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
-import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
@@ -36,6 +35,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
@@ -46,7 +46,7 @@ import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.js
  * @author liuhea
  *         created at 16-10-24
  */
-public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener, BrandChangListener {
+public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener, BrandChangListener, RecommendExpandableAdapter.CallBack {
 
     private CustomHeaderExpandableListView mExpandListView;
     private AppCompatButton mBtnListSend;
@@ -56,7 +56,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
     private String mScfd;
     private List<RecommendSCFDBean> mRecommendSCFDList;
-
 
     public static void actionStartActivity(Context context, String asset_id) {
         Intent intent = new Intent(context, RecommendListDetailActivity.class);
@@ -88,6 +87,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mActivity = this;
+        mRecommendSCFDList = new ArrayList<>();
         getRecommendDraftDetail();
     }
 
@@ -141,10 +141,10 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     private void updateItemView(String scfd) {
         // 更新适配器
-        mRecommendSCFDList = new Gson()
+        List<RecommendSCFDBean> recommendscfd = new Gson()
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
-
+        mRecommendSCFDList.addAll(recommendscfd);
         if (null == mRecommendSCFDList) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
         } else {
@@ -156,7 +156,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             for (int i = 0; i < mRecommendSCFDList.size(); i++) {
                 mExpandListView.expandGroup(i);
             }
-
+            mRecommendExpandableAdapter.setCallBackListener(this);
             mRecommendExpandableAdapter.setBrandChangListener(this);
         }
     }
@@ -165,7 +165,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_list_send:
-                MyToast.show(mActivity, "发送");
+                Log.d("RecommendListDetailActi", "mRecommendSCFDList:" + mRecommendSCFDList);
                 break;
         }
     }
@@ -227,13 +227,28 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     @Override
+    public void onSubCategoryDeleteListener(int groupPosition) {
+        mRecommendSCFDList.remove(groupPosition);
+        mRecommendExpandableAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void callBackRecommendSCFDs(List<RecommendSCFDBean> recommendSCFDList) {
+        if (recommendSCFDList == null || recommendSCFDList.size() <= 0) {
+            return;
+        }
+//        mRecommendSCFDList.clear();
+//        mRecommendSCFDList.addAll(recommendSCFDList);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
 
             if (null != data) {
                 switch (requestCode) {
                     case 21: // 品牌变更．
-                        RecommendSCFDBean mRecommendSCFDBean = (RecommendSCFDBean)data.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+                        RecommendSCFDBean mRecommendSCFDBean = (RecommendSCFDBean) data.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
                         for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
                             if (recommendSCFDBean.getSub_category_3d_id().equals(mRecommendSCFDBean.getSub_category_3d_id())) {
                                 int post = mRecommendSCFDList.indexOf(recommendSCFDBean);

@@ -34,6 +34,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private CustomHeaderExpandableListView listView;
     private Activity mActivity;
+    private CallBack callBack;
     private BrandChangListener mBrandChangListener;
 
 
@@ -59,8 +60,8 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     @Override
-    public View getChildView(final int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition,
+                             boolean isLastChild, View convertView, final ViewGroup parent) {
         View view = null;
         if (convertView != null) {
             view = convertView;
@@ -79,6 +80,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mViewHolder.rlRecommendFooter = (RelativeLayout) view.findViewById(R.id.rl_recommend_footer);
             mViewHolder.tvBrandChange = (TextView) view.findViewById(R.id.tv_brand_change);
             mViewHolder.tvBrandAdd = (TextView) view.findViewById(R.id.tv_create_brand);
+            mViewHolder.tvCategoryDelete = (TextView) view.findViewById(R.id.tv_delete_brand);
 
             setOnTouchListenerForEditText(mViewHolder.etBrandNum, R.id.et_brand_num);
             setOnTouchListenerForEditText(mViewHolder.etBranDimension, R.id.et_brand_dimension);
@@ -152,21 +154,27 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 mViewHolder.spinnerApartment.setText(apartment);
             }
         }
+
+
+        final int currentParentPosition = groupPosition;
+        final int currentChildPosition = childPosition;
         mViewHolder.spinnerApartment.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 String currentApartmentName = apartmentList.get(position);
-                mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).setApartment(currentApartmentName);
+                mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(currentApartmentName);
+                if (callBack != null) {
+                    callBack.callBackRecommendSCFDs(mRecommendSCFDList);
+                }
             }
         });
 
-        final int currentPosition = groupPosition;
 
         mViewHolder.tvBrandChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (null != mBrandChangListener) {
-                    mBrandChangListener.onBrandChangListener(mRecommendSCFDList.get(currentPosition),recommendBrandsBean.getCode());
+                    mBrandChangListener.onBrandChangListener(mRecommendSCFDList.get(currentParentPosition), recommendBrandsBean.getCode());
                 }
             }
         });
@@ -175,11 +183,19 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             @Override
             public void onClick(View v) {
                 if (null != mBrandChangListener) {
-                    mBrandChangListener.onBrandAddListener(mRecommendSCFDList.get(currentPosition));
+                    mBrandChangListener.onBrandAddListener(mRecommendSCFDList.get(currentParentPosition));
                 }
             }
         });
 
+        mViewHolder.tvCategoryDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mBrandChangListener) {
+                    mBrandChangListener.onSubCategoryDeleteListener(currentParentPosition);
+                }
+            }
+        });
         return view;
     }
 
@@ -327,6 +343,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         RelativeLayout rlRecommendFooter;
         TextView tvBrandChange;
         TextView tvBrandAdd;
+        TextView tvCategoryDelete;
 
 
         ExpandListTextWatcher mTextWatcherNum;
@@ -367,6 +384,9 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         @Override
         public void afterTextChanged(Editable s) {
+            if (null == mRecommendSCFDList.get(parentPosition) || mRecommendSCFDList.get(parentPosition).getBrands() == null || mRecommendSCFDList.get(parentPosition).getBrands().size() <= 0) {
+                return;
+            }
             if (type == 0) {
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
             } else if (type == 1) {
@@ -375,8 +395,19 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setRemarks(s.toString());
             } else {
             }
-
+            if (null != callBack) {
+                callBack.callBackRecommendSCFDs(mRecommendSCFDList);
+            }
 
         }
+    }
+
+    public void setCallBackListener(CallBack callBack) {
+        this.callBack = callBack;
+    }
+
+    public interface CallBack {
+        public void callBackRecommendSCFDs(List<RecommendSCFDBean> recommendSCFDList);
+
     }
 }
