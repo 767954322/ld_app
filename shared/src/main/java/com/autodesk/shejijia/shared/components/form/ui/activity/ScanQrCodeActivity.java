@@ -66,7 +66,6 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
 
                 @Override
                 public void onError(String errorMsg) {
-                    Log.d("asdf", "错误信息了");
                     Intent intent = new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class);
                     intent.putExtra("error",errorMsg);
                     startActivity(intent);
