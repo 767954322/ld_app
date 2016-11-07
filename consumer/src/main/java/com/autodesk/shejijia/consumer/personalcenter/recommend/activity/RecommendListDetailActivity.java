@@ -17,11 +17,13 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
+import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
@@ -53,6 +55,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private LinearLayout mLlEmptyContentView;
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
     private String mScfd;
+    private List<RecommendSCFDBean> mRecommendSCFDList;
 
 
     public static void actionStartActivity(Context context, String asset_id) {
@@ -138,19 +141,19 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     private void updateItemView(String scfd) {
         // 更新适配器
-        List<RecommendSCFDBean> recommendSCFDList = new Gson()
+        mRecommendSCFDList = new Gson()
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
 
-        if (null == recommendSCFDList) {
+        if (null == mRecommendSCFDList) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
         } else {
             mLlEmptyContentView.setVisibility(View.GONE);
             mExpandListView.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
                     mExpandListView, false));
-            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, recommendSCFDList, mExpandListView);
+            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, mRecommendSCFDList, mExpandListView);
             mExpandListView.setAdapter(mRecommendExpandableAdapter);
-            for (int i = 0; i < recommendSCFDList.size(); i++) {
+            for (int i = 0; i < mRecommendSCFDList.size(); i++) {
                 mExpandListView.expandGroup(i);
             }
 
@@ -232,6 +235,18 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         break;
 
                     case 22:// 添加品牌．
+                        List<RecommendBrandsBean> brandAddList = (List<RecommendBrandsBean>) data.getSerializableExtra(JsonConstants.RECOMMENDBRANDBEAN);//接
+                        String sub_category_3d_id = data.getStringExtra(Constant.JsonLocationKey.SUB_CATEGORY_3D_ID);
+                        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
+                            if (recommendSCFDBean.getSub_category_3d_id().equals(sub_category_3d_id)) {
+                                int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
+                                mRecommendSCFDList.remove(recommendSCFDBean);
+                                recommendSCFDBean.getBrands().addAll(brandAddList);
+                                mRecommendSCFDList.add(post,recommendSCFDBean);
+                                break;
+                            }
+                        }
+                        mRecommendExpandableAdapter.notifyDataSetChanged();
 
                         break;
 
@@ -247,6 +262,4 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         }
     }
-
-
 }

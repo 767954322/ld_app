@@ -16,7 +16,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendB
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
-import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
@@ -67,7 +66,6 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
         setNavigationBar();
         addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,itemIds,R.layout.add_check_textview);
         addBrandListview.setAdapter(addBrandAdapter);
-//        getBrands(0,10);
         mPullToRefreshLayout.autoRefresh();
     }
 
@@ -108,8 +106,9 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
             RecommendBrandsBean rbb =  brandsBeanList.get((int)i);
             list.add(rbb);
         }
-
+        transmissionBean.setBrands(list);
         Intent intent = new Intent();
+        intent.putExtra(Constant.JsonLocationKey.SUB_CATEGORY_3D_ID,transmissionBean.getSub_category_3d_id());
         intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,(Serializable)list);//List<>list = (List<…<…>>)getIndent.getIntent().getSerializableExtra(key);//接
         setResult(RESULT_OK,intent);
         finish();

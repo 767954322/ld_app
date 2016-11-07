@@ -116,6 +116,8 @@ public class Constant {
         public static final String AREA_JSON = "area.json";
         public static final String SEARCH_WORKING_TIME = "search_working_time.json";
         public static final String SEARCH_PRICE = "search_price.json";
+        public static final String SUB_CATEGORY_3D_ID = "Sub_category_3d_id";
+
     }
 
     /**
