@@ -19,7 +19,6 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendS
 import com.autodesk.shejijia.shared.components.common.appglobal.MemberEntity;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.CustomProgress;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.MPNetworkUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -33,7 +32,6 @@ import com.qy.appframe.model.IModel;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -150,7 +148,7 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
         tvRecoConsumerMobile.setText(item.getConsumer_mobile());
         tvRecoItemAddress.setText(item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
         tvRecoItemDetailsAddress.setText(item.getCommunity_address());
-        tvCreateDate.setText(DateUtil.getStringDateByFormat(new Date(item.getDate_submitted()), "yyyy-MM-dd HH:mm"));
+        tvCreateDate.setText(item.getDate_submitted());
         String scfd = item.getScfd();
         List<RecommendSCFDBean> brand_lst = new Gson()
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {

@@ -15,7 +15,6 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
@@ -32,7 +31,6 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
@@ -135,16 +133,14 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             mLlEmptyContentView.setVisibility(View.GONE);
             mRecyclerViewList.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
                     mRecyclerViewList, false));
-            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, getTestData(), mRecyclerViewList);
+            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, recommendSCFDList, mRecyclerViewList);
             mRecyclerViewList.setAdapter(mRecommendExpandableAdapter);
-            for (int i = 0; i < getTestData().size(); i++) {
+            for (int i = 0; i < recommendSCFDList.size(); i++) {
                 mRecyclerViewList.expandGroup(i);
             }
-
 //        adapter = new PinnedHeaderExpandableAdapter(childrenData, groupData, getApplicationContext(), explistview);
 //         RecommendListEditParentAdapter recommendListEditAdapter = new RecommendListEditParentAdapter(this, recommendSCFDList);
         }
-
     }
 
     @Override
@@ -194,23 +190,5 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         setTitleForNavbar(recommendListDetailBean.getCommunity_name());
         setTitleForNavButton(ButtonType.RIGHT, "添加主材");
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
-    }
-
-    ArrayList getTestData() {
-        ArrayList list = new ArrayList<RecommendSCFDBean>();
-        for (int i = 0; i < 3; i++) {
-            RecommendSCFDBean recommendSCFDBean = new RecommendSCFDBean();
-            recommendSCFDBean.setSub_category_3d_name("分组" + i);
-            List<RecommendBrandsBean> brands = new ArrayList<RecommendBrandsBean>();
-            for (int j = 0; j < 5; j++) {
-                RecommendBrandsBean recommendBrandsBean = new RecommendBrandsBean();
-                recommendBrandsBean.setBrand_name("好友" + i + "-" + j);
-                brands.add(recommendBrandsBean);
-            }
-            recommendSCFDBean.setBrands(brands);
-            list.add(recommendSCFDBean);
-        }
-        return list;
-
     }
 }

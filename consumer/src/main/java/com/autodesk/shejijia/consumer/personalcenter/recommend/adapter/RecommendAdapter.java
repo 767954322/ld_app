@@ -14,13 +14,11 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendD
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.AlertView;
 import com.autodesk.shejijia.shared.components.common.uielements.alertview.OnItemClickListener;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,7 +50,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
         holder.setText(R.id.tv_reco_consumer_mobile, item.getConsumer_mobile());
         holder.setText(R.id.tv_reco_item_address, item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
         holder.setText(R.id.tv_reco_item_details_address, item.getCommunity_address());
-        holder.setText(R.id.tv_create_date, DateUtil.getStringDateByFormat(new Date(item.getDate_submitted()), "yyyy-MM-dd HH:mm"));
+        holder.setText(R.id.tv_create_date,item.getDate_submitted());
         holder.setOnClickListener(R.id.tv_edit_btn, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
