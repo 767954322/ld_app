@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:padding="@dimen/spacing_padding_normal2"
+    android:background="@color/con_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/spacing_margin_normal"
+            android:layout_gravity="start|top"
+            android:background="@drawable/ic_default_head"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_margin_double"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:layout_marginBottom="@dimen/spacing_margin_normal"
+                android:textColor="@color/white"
+                tools:text="王小明"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_large"
+                android:textColor="@color/white"
+                tools:text="客户经理"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</FrameLayout>

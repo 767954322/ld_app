@@ -4,7 +4,10 @@ package com.autodesk.shejijia.enterprise;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,16 +26,15 @@ import com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLogi
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.utility.SharedPreferencesUtils;
 
-public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener {
+public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implements OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
-    //RadioButton
     private RadioButton mTaskBtn;
     private RadioButton mIssueBtn;
     private RadioButton mSessionBtn;
-    //RadioGroup
     private RadioGroup mBottomGroup;
-    //topBar
     private Toolbar toolbar;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
     private TextView toolbarTitle;//self define
     private MemberEntity mMemberEntity;//用户信息
 
@@ -60,6 +62,8 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         mIssueBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_issue);
         mSessionBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_session);
         mBottomGroup = (RadioGroup) this.findViewById(R.id.rdoGrp_project_list);
+        mDrawerLayout = (DrawerLayout) this.findViewById(R.id.home_drawer_layout);
+        mNavigationView = (NavigationView) this.findViewById(R.id.home_navigation_view);
         //toolBar
         toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
         //self define toolbar title
@@ -77,6 +81,8 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
         //init RadioBtn Event
         mBottomGroup.setOnCheckedChangeListener(this);
         mTaskBtn.setChecked(true);
+        //init NavigationView Event
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @SuppressWarnings("deprecation")
@@ -116,18 +122,31 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
     }
 
     @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.personal_all_project:
+
+                break;
+            case R.id.personal_more:
+
+                break;
+            default:
+                break;
+
+        }
+        // Close the navigation drawer when an item is selected.
+        menuItem.setChecked(true);
+        mDrawerLayout.closeDrawers();
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = null;
-                if (mMemberEntity != null) {
-                    intent = new Intent(this, PersonalCenterActivity.class);
-                    startActivity(intent);
-                } else {
-                    intent = new Intent(this, RegisterOrLoginActivity.class);
-                    startActivity(intent);
-                }
+                // Open the navigation drawer when the home icon is selected from the toolbar.
+                mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             default:
                 break;
@@ -135,5 +154,6 @@ public class EnterpriseHomeActivity extends BaseEnterpriseHomeActivity implement
 
         return super.onOptionsItemSelected(item);
     }
+
 }
 
