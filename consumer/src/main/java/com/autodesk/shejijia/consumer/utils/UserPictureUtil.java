@@ -51,7 +51,9 @@ public class UserPictureUtil {
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 ConsumerEssentialInfoEntity mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), iv);
+                if (null != mConsumerEssentialInfoEntity) {
+                    ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), iv);
+                }
             }
 
             @Override

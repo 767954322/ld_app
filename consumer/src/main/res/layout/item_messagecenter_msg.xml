@@ -9,7 +9,6 @@
         android:id="@+id/item_relayout_left"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/font_20"
         android:background="@color/white">
 
         <CheckBox
@@ -17,8 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/ll_msg_tag"
@@ -37,40 +35,33 @@
                 android:textSize="@dimen/size_14"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_msg_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/size_20"
-                android:layout_marginTop="@dimen/font_10"
-                android:textColor="@color/black" />
 
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_msg_tag"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_1"
-            android:layout_below="@id/ll_msg_tag"
-            android:layout_marginLeft="@dimen/font_15"
-            android:layout_marginRight="@dimen/size_20"
-            android:layout_marginTop="@dimen/size_2"
-            android:background="@color/bg_d7" />
 
         <TextView
             android:id="@+id/tv_msg_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_msg_tag"
+            android:layout_below="@id/ll_msg_tag"
+            android:layout_marginLeft="@dimen/font_15"
+            android:layout_marginRight="@dimen/font_35"
+            android:layout_marginTop="@dimen/font_10"
+            android:layout_toRightOf="@+id/item_msg_checkout"
+            android:text="内容"
+            android:textSize="@dimen/size_14" />
+
+        <TextView
+            android:id="@+id/tv_msg_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_msg_content"
             android:layout_marginBottom="@dimen/font_15"
             android:layout_marginLeft="@dimen/font_15"
             android:layout_marginRight="@dimen/font_35"
             android:layout_marginTop="@dimen/font_10"
-            android:text="内容"
-            android:textSize="@dimen/size_14"
-            android:layout_toRightOf="@+id/item_msg_checkout"/>
-
+            android:layout_toRightOf="@+id/item_msg_checkout"
+            android:text="时间展示"
+            android:textSize="@dimen/size_14" />
 
     </RelativeLayout>
 
@@ -82,16 +73,15 @@
         android:background="@android:color/holo_red_dark">
 
         <TextView
+            android:id="@+id/tv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_delete"
             android:layout_centerInParent="true"
+            android:text="删除"
             android:textColor="@color/white"
             android:textSize="@dimen/size_17"
-            android:textStyle="bold"
-            android:text="删除"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
-
 
 </LinearLayout>

@@ -1,7 +1,7 @@
 package com.autodesk.shejijia.consumer.personalcenter.consumer.adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,24 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
-import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterDetailActivity;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBean;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBody;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.MessageCenterBodyNew;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
-import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -114,57 +111,51 @@ public class MessageCenterAdapter extends BaseAdapter {
             myHolder = (MyHolder) convertView.getTag();
         }
         final MessageCenterBean.MessagesBean messagesBean = mCasesEntities.get(position);
-
         String body = messagesBean.getBody();
-        String title = messagesBean.getTitle();
         String sent_time = messagesBean.getSent_time();
+        String timeMY = !TextUtils.isEmpty(sent_time) ? DateUtil.showDate(new Long(sent_time)) : "";
+        String title = "";
+        if (null != messagesBean.getCommand() && messagesBean.getCommand().equals("COMMAND_CONSTRUCTION_MESSAGE")) {
 
-        String timeMY = "";
-        if (StringUtils.isNumeric(sent_time)) {
-            Long aLong = Long.valueOf(sent_time);
-            timeMY = DateUtil.showDate(aLong);
-        }
-        title = TextUtils.isEmpty(title) ? "消息中心" : title;
+            if (!TextUtils.isEmpty(body)) {
+                MessageCenterBodyNew messageCenterBodyNew = GsonUtil.jsonToBean(body, MessageCenterBodyNew.class);
+                title = messageCenterBodyNew.getDisplay_message().getSummary();
+                StringBuffer sb_body = new StringBuffer();
+                sb_body.append("<body>");
+                if (null != messageCenterBodyNew.getDisplay_message() && null != messageCenterBodyNew.getDisplay_message().getDetail_items()) {
+                    int number = messageCenterBodyNew.getDisplay_message().getDetail_items().size();
+                    for (int i = 0; i < number; i++) {
+                        sb_body.append(messageCenterBodyNew.getDisplay_message().getDetail_items().get(i));
+                        if (i != number - 1)
+                            sb_body.append("<br>");
+                    }
+                }
+                sb_body.append("</body>");
+                myHolder.item_msg_content.setText(Html.fromHtml(sb_body.toString()));
+            }
 
-        if (title.length() > 12) {
-            title = title.substring(0, 12) + "...";
+        } else {
+
+            title = TextUtils.isEmpty(messagesBean.getTitle()) ? "消息中心" : messagesBean.getTitle();
+            if (title.length() > 12)
+                title = title.substring(0, 12) + "...";
+
+            String show_Body = "";
+            if (!TextUtils.isEmpty(body) && body.contains("&quot;")) {
+                MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
+                show_Body = ifIsDesiner ? messageCenterBody.getFor_designer().replace("&gt;", ">") : messageCenterBody.getFor_consumer().replace("&gt;", ">");
+            } else {
+                show_Body = body.replace("&gt;", ">");
+            }
+            myHolder.item_msg_content.setText(show_Body);
         }
+
         myHolder.tv_msg_title.setText(title);
         myHolder.tv_msg_date.setText(timeMY);
-
-        String show_Body = "";
-        if (!TextUtils.isEmpty(body) && body.contains("&quot;")) {
-            MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
-
-            Log.d("test", messageCenterBody.toString());
-            if (ifIsDesiner) {
-                show_Body = messageCenterBody.getFor_designer().replace("&gt;", ">");
-            } else {
-                show_Body = messageCenterBody.getFor_consumer().replace("&gt;", ">");
-            }
-        } else {
-            show_Body = body.replace("&gt;", ">");
-        }
-        myHolder.item_msg_content.setText(show_Body);
         // 设置添加消息左滑删除功能
-        LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        myHolder.item_left.setLayoutParams(lp1);
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(right_wid, LinearLayout.LayoutParams.MATCH_PARENT);
         myHolder.item_right.setLayoutParams(lp2);
 
-        final String finalShow_Body = show_Body;
-        myHolder.item_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                Intent intent = new Intent(mContext, MessageCenterDetailActivity.class);
-//                intent.putExtra("messagesBean", messagesBean);
-//                intent.putExtra("show_Body", finalShow_Body);
-//                mContext.startActivity(intent);
-
-            }
-        });
         final View finalConvertView = convertView;
         myHolder.item_right.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +175,18 @@ public class MessageCenterAdapter extends BaseAdapter {
         } else {
             myHolder.checkBox.setVisibility(View.VISIBLE);
         }
+
+        myHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCheckeds.contains(position)) {
+                    mCheckeds.remove(position);
+                } else {
+                    mCheckeds.add(position);
+                }
+            }
+        });
+
         //checkBox监听
 //        myHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -198,16 +201,16 @@ public class MessageCenterAdapter extends BaseAdapter {
 //            }
 //        });
 
-        myHolder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCheckeds.contains(position)) {
-                    mCheckeds.remove(position);
-                } else {
-                    mCheckeds.add(position);
-                }
-            }
-        });
+//        final String finalShow_Body = show_Body;
+//        myHolder.item_left.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mContext, MessageCenterDetailActivity.class);
+//                intent.putExtra("messagesBean", messagesBean);
+//                intent.putExtra("show_Body", finalShow_Body);
+//                mContext.startActivity(intent);
+//            }
+//        });
 
         return convertView;
     }
@@ -224,24 +227,31 @@ public class MessageCenterAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
-    class MyHolder {
-
-        private TextView tv_msg_date;
-        private TextView tv_msg_title;
-        private TextView item_msg_content;
-        private View item_left;
-
-        private CheckBox checkBox;
-        private View item_right;
-
-    }
-
     public void setDeleteMessageListener(DeleteMessage deleteMessage) {
         this.deleteMessage = deleteMessage;
     }
 
     public interface DeleteMessage {
-        public void deleteMsgs(List<Integer> listpositions, List<MessageCenterBean.MessagesBean> listMessagesBeans, View convertView);
+        void deleteMsgs(List<Integer> listpositions, List<MessageCenterBean.MessagesBean> listMessagesBeans, View convertView);
+    }
+
+    public void changeVisibility(boolean ifNeedVisibility, View view) {
+
+        if (ifNeedVisibility)
+            view.setVisibility(View.VISIBLE);
+        else
+            view.setVisibility(View.GONE);
+
+    }
+
+    class MyHolder {
+
+        private TextView item_msg_content;
+        private TextView tv_msg_title;
+        private TextView tv_msg_date;
+        private CheckBox checkBox;
+        private View item_right, item_left;
+
     }
 
 }

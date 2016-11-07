@@ -273,7 +273,9 @@ public class UserHome2DFragment extends BaseFragment implements UserHomeCaseAdap
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                mNickNameConsumer = mConsumerEssentialInfoEntity.getNick_name();
+                if(null != mConsumerEssentialInfoEntity){
+                    mNickNameConsumer = mConsumerEssentialInfoEntity.getNick_name();
+                }
                 mNickNameConsumer = TextUtils.isEmpty(mNickNameConsumer) ? UIUtils.getString(R.string.anonymity) : mNickNameConsumer;
             }
 

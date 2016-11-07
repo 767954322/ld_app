@@ -171,13 +171,19 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
 
-                nick_name = mConsumerEssentialInfoEntity.getNick_name();
-                mTvDesignerNickname.setText(nick_name);
-                if (mConsumerEssentialInfoEntity.getAvatar().isEmpty()) {
-                    mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
+                if (null != mConsumerEssentialInfoEntity) {
+                    nick_name = mConsumerEssentialInfoEntity.getNick_name();
+                    mTvDesignerNickname.setText(nick_name);
+                    if (mConsumerEssentialInfoEntity.getAvatar().isEmpty()) {
+                        mPolygonImageView.setImageDrawable(UIUtils.getDrawable(R.drawable.icon_default_avator));
+                    } else {
+                        ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), mPolygonImageView);
+                    }
                 } else {
-                    ImageUtils.displayAvatarImage(mConsumerEssentialInfoEntity.getAvatar(), mPolygonImageView);
+                    nick_name = "";
                 }
+
+
             }
 
             @Override
@@ -202,11 +208,13 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
             public void onResponse(JSONObject jsonObject) {
                 String auditInfo = GsonUtil.jsonToString(jsonObject);
                 RealName realName = GsonUtil.jsonToBean(auditInfo, RealName.class);
-                audit_status = realName.getAudit_status();
-                if ("2".equals(audit_status)) {
-                    mLlNoAttestation.setVisibility(View.GONE);
-                    mImgCertificateIcon.setVisibility(View.VISIBLE);
-                } /*else {
+
+                if (null != realName) {
+                    audit_status = realName.getAudit_status();
+                    if ("2".equals(audit_status)) {
+                        mLlNoAttestation.setVisibility(View.GONE);
+                        mImgCertificateIcon.setVisibility(View.VISIBLE);
+                    } /*else {
                     mLlNoAttestation.setVisibility(View.VISIBLE);
                     if (null == audit_status) {
                         mTvAuditStatusAgo.setText(UIUtils.getString(R.string.please_go_to_certification));
@@ -218,6 +226,8 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                         mTvAuditStatusAgo.setText(UIUtils.getString(R.string.authentication_failed));
                     }
                 }*/
+                }
+
             }
 
             @Override

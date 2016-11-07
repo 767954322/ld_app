@@ -54,7 +54,11 @@ public class GsonUtil {
 
     public static String jsonToString(org.json.JSONObject jsonObject) {
         try {
-            userInfo = new String(jsonObject.toString().getBytes(Constant.NetBundleKey.ISO_8859_1), Constant.NetBundleKey.UTF_8);
+            if (null != jsonObject) {
+                userInfo = new String(jsonObject.toString().getBytes(Constant.NetBundleKey.ISO_8859_1), Constant.NetBundleKey.UTF_8);
+            } else {
+                userInfo = "";
+            }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

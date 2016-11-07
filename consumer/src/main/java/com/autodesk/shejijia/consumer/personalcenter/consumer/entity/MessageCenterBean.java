@@ -25,7 +25,7 @@ public class MessageCenterBean implements Serializable {
         private String command;
         private String subject;
         private String title;
-        private String creadted_date;
+
         private String message_id;
         private String message_media_type;
         private String read_time;
@@ -39,27 +39,21 @@ public class MessageCenterBean implements Serializable {
         private String sender_screen_name;
         private String sent_time;
         private String thread_id;
-        private String total_msg_count;
-        private String unread_msg_count;
-        private List<?> entity;
+        //........新加字段..........
+        private String in_reply_to;
+//        private String creadted_date;
+//        private String total_msg_count;
+//        private String unread_msg_count;
+//        private List<?> entity;
 
-        /**
-         * 以下为兼容老接口字段
-         */
-        private String messageId;
-        private String messageMediaType;
-        private int recipientMemberId;
-        private String recipientProfileImage;
-        private String recipientScreenName;
-        private String senderBox;
-        private int senderMemberId;
-        private String senderProfileImage;
-        private String senderScreenName;
-        private String sentTime;
-        private String threadId;
-        private int totalMsgCount;
-        private int unreadMsgCount;
 
+        public String getIn_reply_to() {
+            return in_reply_to;
+        }
+
+        public void setIn_reply_to(String in_reply_to) {
+            this.in_reply_to = in_reply_to;
+        }
 
         public String getAttachment() {
             return attachment;
@@ -85,10 +79,6 @@ public class MessageCenterBean implements Serializable {
             this.command = command;
         }
 
-        public void setCreadted_date(String creadted_date) {
-            this.creadted_date = creadted_date;
-        }
-
         public String getSubject() {
             return subject;
         }
@@ -103,10 +93,6 @@ public class MessageCenterBean implements Serializable {
 
         public void setTitle(String title) {
             this.title = title;
-        }
-
-        public Object getCreadted_date() {
-            return creadted_date;
         }
 
         public String getMessage_id() {
@@ -141,6 +127,13 @@ public class MessageCenterBean implements Serializable {
             this.recipient_box = recipient_box;
         }
 
+        public String getRecipient_member_id() {
+            return recipient_member_id;
+        }
+
+        public void setRecipient_member_id(String recipient_member_id) {
+            this.recipient_member_id = recipient_member_id;
+        }
 
         public String getRecipient_profile_image() {
             return recipient_profile_image;
@@ -166,6 +159,13 @@ public class MessageCenterBean implements Serializable {
             this.sender_box = sender_box;
         }
 
+        public String getSender_member_id() {
+            return sender_member_id;
+        }
+
+        public void setSender_member_id(String sender_member_id) {
+            this.sender_member_id = sender_member_id;
+        }
 
         public String getSender_profile_image() {
             return sender_profile_image;
@@ -199,44 +199,29 @@ public class MessageCenterBean implements Serializable {
             this.thread_id = thread_id;
         }
 
-        public String getRecipient_member_id() {
-            return recipient_member_id;
-        }
-
-        public void setRecipient_member_id(String recipient_member_id) {
-            this.recipient_member_id = recipient_member_id;
-        }
-
-        public String getSender_member_id() {
-            return sender_member_id;
-        }
-
-        public void setSender_member_id(String sender_member_id) {
-            this.sender_member_id = sender_member_id;
-        }
-
-        public String getTotal_msg_count() {
-            return total_msg_count;
-        }
-
-        public void setTotal_msg_count(String total_msg_count) {
-            this.total_msg_count = total_msg_count;
-        }
-
-        public String getUnread_msg_count() {
-            return unread_msg_count;
-        }
-
-        public void setUnread_msg_count(String unread_msg_count) {
-            this.unread_msg_count = unread_msg_count;
-        }
-
-        public List<?> getEntity() {
-            return entity;
-        }
-
-        public void setEntity(List<?> entity) {
-            this.entity = entity;
+        @Override
+        public String toString() {
+            return "MessagesBean{" +
+                    "attachment='" + attachment + '\'' +
+                    ", body='" + body + '\'' +
+                    ", command='" + command + '\'' +
+                    ", subject='" + subject + '\'' +
+                    ", title='" + title + '\'' +
+                    ", message_id='" + message_id + '\'' +
+                    ", message_media_type='" + message_media_type + '\'' +
+                    ", read_time='" + read_time + '\'' +
+                    ", recipient_box='" + recipient_box + '\'' +
+                    ", recipient_member_id='" + recipient_member_id + '\'' +
+                    ", recipient_profile_image='" + recipient_profile_image + '\'' +
+                    ", recipient_screen_name='" + recipient_screen_name + '\'' +
+                    ", sender_box='" + sender_box + '\'' +
+                    ", sender_member_id='" + sender_member_id + '\'' +
+                    ", sender_profile_image='" + sender_profile_image + '\'' +
+                    ", sender_screen_name='" + sender_screen_name + '\'' +
+                    ", sent_time='" + sent_time + '\'' +
+                    ", thread_id='" + thread_id + '\'' +
+                    ", in_reply_to='" + in_reply_to + '\'' +
+                    '}';
         }
     }
 
@@ -272,4 +257,13 @@ public class MessageCenterBean implements Serializable {
         this.messages = messages;
     }
 
+    @Override
+    public String toString() {
+        return "MessageCenterBean{" +
+                "count=" + count +
+                ", limit=" + limit +
+                ", offset=" + offset +
+                ", messages=" + messages +
+                '}';
+    }
 }

@@ -279,7 +279,9 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
             public void onResponse(JSONObject jsonObject) {
                 String jsonString = GsonUtil.jsonToString(jsonObject);
                 mConsumerEssentialInfoEntity = GsonUtil.jsonToBean(jsonString, ConsumerEssentialInfoEntity.class);
-                mNickNameConsumer = mConsumerEssentialInfoEntity.getNick_name();
+                if (null != mConsumerEssentialInfoEntity) {
+                    mNickNameConsumer = mConsumerEssentialInfoEntity.getNick_name();
+                }
                 mNickNameConsumer = TextUtils.isEmpty(mNickNameConsumer) ? UIUtils.getString(R.string.anonymity) : mNickNameConsumer;
             }
 

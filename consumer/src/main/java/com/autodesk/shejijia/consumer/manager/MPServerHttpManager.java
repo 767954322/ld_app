@@ -1503,6 +1503,26 @@ public class MPServerHttpManager {
     }
 
     /**
+     * 获取消息中心数据
+     */
+    public void getNewsMessageCenterMessages(int offset, int limit, OkJsonRequest.OKResponseCallback callback) {
+//      String url = UrlConstants.URL_MESSAGE_CENTER + member_id + "/sysmessages?limit=" + limit + "&offset=" + offset;
+        String url = "http://192.168.71.70:8080/member-app/v2/api/member/" + "20730531" + "/sysmessages?limit=" + limit + "&offset=" + offset;
+        //member_id  以刘新乐为例，假数据。后期需要更改........................................................................................
+
+        OkJsonRequest okRequest = new OkJsonRequest(OkJsonRequest.Method.GET, url, null, callback) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> header = new HashMap<>();
+                header.put(Constant.NetBundleKey.X_TOKEN, addX_Token(xToken));
+                LogUtils.i("test", addX_Token(xToken));
+                return header;
+            }
+        };
+        queue.add(okRequest);
+    }
+
+    /**
      * 获取提现数据
      *
      * @param designer_id
