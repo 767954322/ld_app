@@ -26,7 +26,7 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class ViewCategoryActivity extends NavigationBarActivity {
+public class ViewCategoryActivity extends NavigationBarActivity implements BaseCommonRvAdapter.OnItemClickListener {
 
     private List<RecommendSCFDBean> mRecommendSCFDList;
 
@@ -81,24 +81,24 @@ public class ViewCategoryActivity extends NavigationBarActivity {
     @Override
     protected void initListener() {
         super.initListener();
-        mAdater.setOnItemClickListener(new BaseCommonRvAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                int selection = 0;
-                for (int i = 0; i < position; i++) {
-                    List<RecommendBrandsBean> brands = mRecommendSCFDList.get(i).getBrands();
-                    selection += brands.size() + 1;
-                }
-                Intent intent = new Intent(ViewCategoryActivity.this, RecommendListDetailActivity.class);
-                intent.putExtra(LOCATION, position == 0 ? position : selection);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
+        mAdater.setOnItemClickListener(this);
+    }
 
-            @Override
-            public boolean onItemLongClick(ViewGroup parent, View view, Object o, int position) {
-                return false;
-            }
-        });
+    @Override
+    public void onItemClick(ViewGroup parent, View view, Object o, int position) {
+        int selection = 0;
+        for (int i = 0; i < position; i++) {
+            List<RecommendBrandsBean> brands = mRecommendSCFDList.get(i).getBrands();
+            selection += brands.size() + 1;
+        }
+        Intent intent = new Intent(ViewCategoryActivity.this, RecommendListDetailActivity.class);
+        intent.putExtra(LOCATION, position == 0 ? position : selection);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public boolean onItemLongClick(ViewGroup parent, View view, Object o, int position) {
+        return false;
     }
 }
