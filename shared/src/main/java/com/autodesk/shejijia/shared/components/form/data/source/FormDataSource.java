@@ -16,6 +16,4 @@ public interface FormDataSource {
 
     void getRemoteFormItemDetails(@NonNull ResponseCallback<List> callBack, String[] fIds);
 
-    void updateRemoteFormItems(@NonNull ResponseCallback callBack, String projectId, String taskId, List<ContainedForm> forms);
-
 }

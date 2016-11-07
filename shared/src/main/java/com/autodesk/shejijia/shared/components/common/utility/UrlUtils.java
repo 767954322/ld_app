@@ -45,11 +45,8 @@ public final class UrlUtils {
 
     public static String bindFormGetUrl(String[] formIds){
         StringBuilder sbFormUrl = new StringBuilder(ConstructionConstants.BASE_URL);
-        sbFormUrl.append("/forms")
-                .append("/")
-                .append("id")
-                .append("\\?")
-                .append("ids=")
+        sbFormUrl.append("/forms/")
+                .append("ids?ids=")
                 .append(transArray2String(formIds))
                 .append("&meta_data=false");
         return sbFormUrl.toString();

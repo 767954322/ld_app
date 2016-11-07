@@ -201,7 +201,7 @@ public class ContainedForm implements Serializable {
         this.version = (Integer) map.get("version");
         this.category = (String) map.get("category");
         this.status = (Integer) map.get("status");
-        this.checkItemsVariability = (Boolean) map.get("check_items_variability");
+        this.checkItemsVariability = Boolean.getBoolean((String) map.get("check_items_variability"));
         this.typeDict = (HashMap) map.get("type_dict");
         this.statusOptions = CastUtils.cast(typeDict.get("status")) ;
         this.checkItems = new ArrayList<>();
@@ -248,6 +248,22 @@ public class ContainedForm implements Serializable {
             }
         }
         return null;
+    }
+
+    public Map getUpdateFormData(){
+        Map<String,Object> updateFormData = new HashMap<>();
+        updateFormData.put("template_id",this.formTemplateId);
+        updateFormData.put("form_instance_id",this.formInstanceId);
+        updateFormData.put("status",this.status);
+        List<Map> tempCheckItemList = new ArrayList<>();
+        for(CheckItem checkItem : this.checkItems){
+            Map<String,Object> miniCheckItem = new HashMap<>();
+            miniCheckItem.put("item_id",checkItem.getItemId());
+            miniCheckItem.put("value",checkItem.getFormFeedBack().combineUpdateData());
+            tempCheckItemList.add(miniCheckItem);
+        }
+        updateFormData.put("check_items",tempCheckItemList);
+        return updateFormData;
     }
 
 }

@@ -40,6 +40,46 @@ public class CheckItem implements Serializable {
     private List<String> checkOptions;
     private List<String> actionOptions;
 
+    public void setAcceptanceCriteria(List<Integer> acceptanceCriteria) {
+        this.acceptanceCriteria = acceptanceCriteria;
+    }
+
+    public void setCommentConditions(List<Integer> commentConditions) {
+        this.commentConditions = commentConditions;
+    }
+
+    public FormFeedBack getFormFeedBack() {
+        return formFeedBack;
+    }
+
+    public void setFormFeedBack(FormFeedBack formFeedBack) {
+        this.formFeedBack = formFeedBack;
+    }
+
+    public HashMap getItemTypeDict() {
+        return itemTypeDict;
+    }
+
+    public void setItemTypeDict(HashMap itemTypeDict) {
+        this.itemTypeDict = itemTypeDict;
+    }
+
+    public List<String> getCheckOptions() {
+        return checkOptions;
+    }
+
+    public void setCheckOptions(List<String> checkOptions) {
+        this.checkOptions = checkOptions;
+    }
+
+    public List<String> getActionOptions() {
+        return actionOptions;
+    }
+
+    public void setActionOptions(List<String> actionOptions) {
+        this.actionOptions = actionOptions;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -143,7 +183,7 @@ public class CheckItem implements Serializable {
         this.acceptanceCriteria = CastUtils.cast(map.get("acceptance_criteria"));
         this.actionVisibility = (Boolean) map.get("action_visibility");
         this.actionChangeability = (Boolean) map.get("action_changeability");
-        List<Map> values = CastUtils.cast(map.get("values"));
+        List<Map> values = CastUtils.cast(map.get("value"));
 
         if("hollowness".equals(itemType)){
             // TODO: 16/11/1

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 
 import org.json.JSONArray;
@@ -26,6 +28,7 @@ import java.util.Map;
  */
 
 public class FormJsonFileUtil {
+    private static final String FILE_SEPARATE = "/";
 
     public static String loadJSONFromAsset(Activity activity, String fileName) {
         String json = null;
@@ -187,6 +190,25 @@ public class FormJsonFileUtil {
             }
         }
         return result;
+    }
+
+    public static void getExactlyJSONFile(Context context,String path){
+        Map<String,String> fileMap = new HashMap<>();
+        try {
+            String[] fileList = context.getAssets().list(path);
+            if(fileList.length > 0){        //目录
+                for(String string:fileList){
+                    path = path + FILE_SEPARATE + string;
+                    Log.i("TAG", "getExactlyJSONFile: " + path);
+                    getExactlyJSONFile(context,path);
+                    path = path.substring(0,path.lastIndexOf(FILE_SEPARATE));
+                }
+            }else {
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List jsonArray2ModelList(JSONArray jsonArray,Class clazz){
