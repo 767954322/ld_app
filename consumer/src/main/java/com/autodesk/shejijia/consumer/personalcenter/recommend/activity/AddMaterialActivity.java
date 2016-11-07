@@ -160,7 +160,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         brandsBeanAndTag = (CheckedInformationBean) msg.obj;
                         backListTag = brandsBeanAndTag.getList();
                         updataCategoryTag();
-                        ToastUtil.showCustomToast(AddMaterialActivity.this, "" + brandsBeanAndTag.getRecommendBrandsBean().getName());
+                        ToastUtil.showCustomToast(AddMaterialActivity.this, "" + brandsBeanAndTag.getRecommendBrandsBean().getBrand_name());
                         putCheckedBrandsAddList(brandsBeanAndTag.getRecommendBrandsBean());
 
                         break;
@@ -674,9 +674,9 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
 
                 for (int k = 0; k < totalList.get(i).getCheckedBrandsInformationBean().size(); k++) {
 
-                    String subBrandsName = totalList.get(i).getCheckedBrandsInformationBean().get(k).getName();
+                    String subBrandsName = totalList.get(i).getCheckedBrandsInformationBean().get(k).getBrand_name();
 
-                    String listUnCheckedName = listUnChecked.getName();
+                    String listUnCheckedName = listUnChecked.getBrand_name();
                     if (subBrandsName.equals(listUnCheckedName)) {
 
                         totalList.get(i).getCheckedBrandsInformationBean().remove(k);
