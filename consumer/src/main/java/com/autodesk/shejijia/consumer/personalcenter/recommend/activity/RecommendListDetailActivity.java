@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -52,6 +53,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private String mAsset_id;
     private LinearLayout mLlEmptyContentView;
     private RecommendExpandableAdapter mRecommendExpandableAdapter;
+    private String mScfd;
 
 
     public static void actionStartActivity(Context context, String asset_id) {
@@ -99,7 +101,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-                ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this);
+                ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mScfd, groupPosition);
                 return true;
             }
         });
@@ -132,8 +134,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     private void updateUI(RecommendDetailsBean recommendListDetailBean) {
         setTitle(recommendListDetailBean);
 
-        String scfd = recommendListDetailBean.getScfd();
-        updateItemView(scfd);
+        mScfd = recommendListDetailBean.getScfd();
+        updateItemView(mScfd);
     }
 
     private void updateItemView(String scfd) {
@@ -203,5 +205,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         setTitleForNavbar(recommendListDetailBean.getCommunity_name());
         setTitleForNavButton(ButtonType.RIGHT, "添加主材");
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+            mRecyclerViewList.setSelection(intExtra);
+        }
     }
 }

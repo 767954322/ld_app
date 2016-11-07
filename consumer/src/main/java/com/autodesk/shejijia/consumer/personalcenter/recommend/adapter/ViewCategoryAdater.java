@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 
 import java.util.List;
 
@@ -14,17 +15,19 @@ import java.util.List;
  * @GitHub: https://github.com/meikoz
  */
 
-public class ViewCategoryAdater extends BaseCommonRvAdapter<String> {
+public class ViewCategoryAdater extends BaseCommonRvAdapter<RecommendSCFDBean> {
 
-    public ViewCategoryAdater(Context context, int layoutId, List<String> datas) {
+    private int mPosition;
+
+    public ViewCategoryAdater(Context context, int layoutId, List<RecommendSCFDBean> datas, int position) {
         super(context, layoutId, datas);
+        this.mPosition = position;
     }
 
     @Override
-    public void convert(ViewHolder holder, String s, int position) {
-        //TODO　判断是否是选中的类型
-//        view.setBackgroundResource(R.drawable.store_bg_btn_checked);
+    public void convert(ViewHolder holder, RecommendSCFDBean item, int position) {
         TextView tv_category_name = holder.getView(R.id.tv_category_name);
-        tv_category_name.setText(s);
+        tv_category_name.setBackgroundResource(mPosition == position ? R.drawable.store_bg_btn_checked : R.drawable.store_bg_btn);
+        tv_category_name.setText(item.getSub_category_3d_name());
     }
 }

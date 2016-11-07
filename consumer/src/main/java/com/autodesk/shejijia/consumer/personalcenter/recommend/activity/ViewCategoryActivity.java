@@ -1,19 +1,23 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.activity;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.adapter.BaseCommonRvAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,14 +28,20 @@ import java.util.List;
 
 public class ViewCategoryActivity extends NavigationBarActivity {
 
-    public static void jumpTo(Context context) {
+    private List<RecommendSCFDBean> mRecommendSCFDList;
+
+    public static void jumpTo(Activity context, String scfd, int position) {
         Intent intent = new Intent(context, ViewCategoryActivity.class);
-        context.startActivity(intent);
+        intent.putExtra("scfd", scfd);
+        intent.putExtra("position", position);
+        context.startActivityForResult(intent, 0);
     }
 
     private RecyclerView mRcv_category_view;
-    private List<String> categorys = new ArrayList<>();
+    private String mScfd;
+    private int mPosition;
     private ViewCategoryAdater mAdater;
+    public static String LOCATION;
 
     @Override
     protected int getLayoutResId() {
@@ -41,16 +51,22 @@ public class ViewCategoryActivity extends NavigationBarActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        categorys.add("瓷砖");
-        categorys.add("壁纸");
-        categorys.add("石材");
-        categorys.add("木郁闷");
-        categorys.add("天梯");
-        categorys.add("墙砖");
-        categorys.add("木郁闷");
-        categorys.add("天梯");
-        categorys.add("墙砖");
-        mAdater.notifyDataSetChanged();
+        if (!TextUtils.isEmpty(mScfd)) {
+            mRecommendSCFDList = new Gson()
+                    .fromJson(mScfd, new TypeToken<List<RecommendSCFDBean>>() {
+                    }.getType());
+            if (mRecommendSCFDList != null && mRecommendSCFDList.size() > 0) {
+                mAdater = new ViewCategoryAdater(this, R.layout.item_view_category, mRecommendSCFDList, mPosition);
+                mRcv_category_view.setAdapter(mAdater);
+            }
+        }
+    }
+
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        mScfd = getIntent().getStringExtra("scfd");
+        mPosition = getIntent().getIntExtra("position", 0);
     }
 
     @Override
@@ -59,9 +75,7 @@ public class ViewCategoryActivity extends NavigationBarActivity {
         setTitleForNavbar("查看品类");
         mRcv_category_view = (RecyclerView) findViewById(R.id.rcv_category_view);
         GridLayoutManager glm = new GridLayoutManager(this, 3);
-        mAdater = new ViewCategoryAdater(this, R.layout.item_view_category, categorys);
         mRcv_category_view.setLayoutManager(glm);
-        mRcv_category_view.setAdapter(mAdater);
     }
 
     @Override
@@ -70,8 +84,15 @@ public class ViewCategoryActivity extends NavigationBarActivity {
         mAdater.setOnItemClickListener(new BaseCommonRvAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ViewGroup parent, View view, Object o, int position) {
-                //TODO　点击定位功能
-
+                int selection = 0;
+                for (int i = 0; i < position; i++) {
+                    List<RecommendBrandsBean> brands = mRecommendSCFDList.get(i).getBrands();
+                    selection += brands.size() + 1;
+                }
+                Intent intent = new Intent(ViewCategoryActivity.this, RecommendListDetailActivity.class);
+                intent.putExtra(LOCATION, position == 0 ? position : selection);
+                setResult(RESULT_OK, intent);
+                finish();
             }
 
             @Override
