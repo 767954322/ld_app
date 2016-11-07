@@ -6,9 +6,8 @@ import android.support.annotation.NonNull;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
-import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
 import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
 import com.autodesk.shejijia.shared.components.form.data.source.FormRemoteDataSource;
@@ -40,12 +39,12 @@ public class FormRepository implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final LoadDataCallback<List> callBack, final String[] fIds) {
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, final String[] fIds) {
         if(mFormList == null || mFormList.size() == 0){
             mFormList = new ArrayList<>();
-            FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new LoadDataCallback<List>() {
+            FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new ResponseCallback<List>() {
                 @Override
-                public void onLoadSuccess(List data){
+                public void onSuccess(List data){
                     for(int i = 0 ; i < data.size() ; i++){
                         HashMap remoteMap = (HashMap) data.get(i);
                         String fileName = String.format("%s.json",remoteMap.get("form_template_id"));
@@ -54,18 +53,18 @@ public class FormRepository implements FormDataSource {
                         form.applyFormData(remoteMap);
                         mFormList.add(form);
                     }
-                    callBack.onLoadSuccess(mFormList);
+                    callBack.onSuccess(mFormList);
                 }
                 @Override
-                public void onLoadFailed(String errorMsg) {
-                    callBack.onLoadFailed(errorMsg);
+                public void onError(String errorMsg) {
+                    callBack.onError(errorMsg);
                 }
             },fIds);
         }
     }
 
     @Override
-    public void updateRemoteFormItems(@NonNull LoadDataCallback callBack, String projectId, String taskId, List<ContainedForm> forms) {
+    public void updateRemoteFormItems(@NonNull ResponseCallback callBack, String projectId, String taskId, List<ContainedForm> forms) {
 
 
     }
@@ -76,12 +75,12 @@ public class FormRepository implements FormDataSource {
 //            mFormList = new ArrayList<>();
 //            mFormRemoteDataSource.getRemoteFormItemDetails(new LoadDataCallBack<Map>() {
 //                @Override
-//                public void onLoadSuccess(Map data) {
+//                public void onSuccess(Map data) {
 //
 //                }
 //
 //                @Override
-//                public void onLoadFailed(String errorMsg) {
+//                public void onError(String errorMsg) {
 //
 //                }
 //            },fIds);
@@ -94,22 +93,22 @@ public class FormRepository implements FormDataSource {
      * @param requestTag
      * @param callback
      */
-    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<Project> callback) {
+    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
         if(null == mProject) {
-            ProjectRemoteDataSource.getInstance().getProjectTaskId(requestParams, requestTag, new LoadDataCallback<Project>() {
+            ProjectRemoteDataSource.getInstance().getProjectTaskId(requestParams, requestTag, new ResponseCallback<Project>() {
                 @Override
-                public void onLoadSuccess(Project data) {
-                    callback.onLoadSuccess(data);
+                public void onSuccess(Project data) {
+                    callback.onSuccess(data);
                 }
 
                 @Override
-                public void onLoadFailed(String errorMsg) {
-                    callback.onLoadFailed(errorMsg);
+                public void onError(String errorMsg) {
+                    callback.onError(errorMsg);
                 }
             });
 
         } else {
-            callback.onLoadSuccess(mProject);
+            callback.onSuccess(mProject);
         }
     }
 

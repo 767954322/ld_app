@@ -10,8 +10,8 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
-import com.autodesk.shejijia.shared.components.common.listener.UpdateDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
 
@@ -24,17 +24,17 @@ public interface ProjectDataSource {
     /*
     ＊获取项目列表
     * */
-    void getProjectList(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectList> callback);
+    void getProjectList(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectList> callback);
 
     /*
     * 获取项目详情－－含任务详情列表
     * */
-    void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectInfo> callback);
+    void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback);
 
     /*
     * 获取项目详情－－含任务id列表
     * */
-    void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<Project> callback);
+    void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
 
 
     void getPlanByProjectId(String pid, String requestTag, @NonNull LoadDataCallback<PlanInfo> callback);
@@ -42,7 +42,7 @@ public interface ProjectDataSource {
     /*
     * 星标项目
     * */
-    void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull UpdateDataCallback<Like> callback);
+    void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback);
 
 
 }

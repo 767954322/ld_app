@@ -15,10 +15,10 @@ import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDat
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
 import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
-import com.autodesk.shejijia.shared.components.common.listener.UpdateDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
 
@@ -42,22 +42,22 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
+    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList> callback) {
 
         if (mProjectList != null) {
-            callback.onLoadSuccess(mProjectList);
+            callback.onSuccess(mProjectList);
         } else {
 
-            ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, new LoadDataCallback<ProjectList>() {
+            ProjectRemoteDataSource.getInstance().getProjectList(requestParams, requestTag, new ResponseCallback<ProjectList>() {
                 @Override
-                public void onLoadSuccess(ProjectList data) {
+                public void onSuccess(ProjectList data) {
                     mProjectList = data;
-                    callback.onLoadSuccess(data);
+                    callback.onSuccess(data);
                 }
 
                 @Override
-                public void onLoadFailed(String errorMsg) {
-                    callback.onLoadFailed(errorMsg);
+                public void onError(String errorMsg) {
+                    callback.onError(errorMsg);
                 }
             });
         }
@@ -65,20 +65,21 @@ public final class ProjectRepository implements ProjectDataSource {
 
 
     @Override
-    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<ProjectInfo> callback) {
+    public void getProjectTaskData(Bundle requestParams, String requestTag, @NonNull ResponseCallback<ProjectInfo> callback) {
         ProjectRemoteDataSource.getInstance().getProjectTaskData(requestParams, requestTag, callback);
     }
 
     @Override
-    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull LoadDataCallback<Project> callback) {
+    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback) {
         ProjectRemoteDataSource.getInstance().getProjectTaskId(requestParams, requestTag, callback);
     }
 
     @Override
     public void getPlanByProjectId(String pid, String requestTag, @NonNull LoadDataCallback<PlanInfo> callback) {
         ProjectRemoteDataSource.getInstance().getPlanByProjectId(pid, requestTag, callback);
+	｝
 
-    public void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull UpdateDataCallback<Like> callback) {
+    public void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback) {
         ProjectRemoteDataSource.getInstance().onStarProject(requestParams, requestTag, jsonRequest, callback);
     }
 }

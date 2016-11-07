@@ -3,7 +3,7 @@ package com.autodesk.shejijia.shared.components.common.utility;
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.entity.ResponseError;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 /**
  * Created by t_aij on 16/11/1.
@@ -16,14 +16,14 @@ public class ResponseErrorUtil {
      * @param volleyError
      * @param callback
      */
-    public static void checkVolleyError(VolleyError volleyError, LoadDataCallback<?> callback) {
+    public static void checkVolleyError(VolleyError volleyError, ResponseCallback<?> callback) {
         NetworkResponse networkResponse = volleyError.networkResponse;
         if(null == networkResponse) {
-            callback.onLoadFailed("网络连接失败,请查看网络连接是否正常");
+            callback.onError("网络连接失败,请查看网络连接是否正常");
         } else {
             String data = new String(networkResponse.data);
             ResponseError responseError = GsonUtil.jsonToBean(data, ResponseError.class);
-            callback.onLoadFailed(responseError.getMessage());
+            callback.onError(responseError.getMessage());
         }
     }
 }

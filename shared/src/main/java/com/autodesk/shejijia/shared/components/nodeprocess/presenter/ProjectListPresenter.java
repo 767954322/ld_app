@@ -1,10 +1,8 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -12,10 +10,9 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
-import com.autodesk.shejijia.shared.components.common.listener.UpdateDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity;
@@ -108,9 +105,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
 
     private void loadProjectListData(Bundle requestParams) {
 
-        mProjectRepository.getProjectList(requestParams, ConstructionConstants.REQUEST_TAG_LOAD_PROJECTS, new LoadDataCallback<ProjectList>() {
+        mProjectRepository.getProjectList(requestParams, ConstructionConstants.REQUEST_TAG_LOAD_PROJECTS, new ResponseCallback<ProjectList>() {
             @Override
-            public void onLoadSuccess(ProjectList taskList) {
+            public void onSuccess(ProjectList taskList) {
                 mProjectListView.hideLoading();
                 if (taskList.getOffset() == 0) {
                     mProjectList = taskList.getData();
@@ -123,7 +120,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             }
 
             @Override
-            public void onLoadFailed(String errorMsg) {
+            public void onError(String errorMsg) {
                 mProjectListView.hideLoading();
                 mProjectListView.showNetError(errorMsg);
             }
@@ -161,9 +158,9 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             e.printStackTrace();
         }
 
-        mProjectRepository.onStarProject(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, requestJson, new UpdateDataCallback<Like>() {
+        mProjectRepository.onStarProject(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, requestJson, new ResponseCallback<Like>() {
             @Override
-            public void onUpdateSuccess(Like data) {
+            public void onSuccess(Like data) {
                 mProjectListView.hideLoading();
                 LogUtils.e("like", data.getLike() + "---" + data.getUid());
                 if (data != null) {
@@ -172,7 +169,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             }
 
             @Override
-            public void onUpdateFailed(String errorMsg) {
+            public void onError(String errorMsg) {
                 mProjectListView.hideLoading();
                 // TODO: 11/4/16 用ui提示错误 
             }

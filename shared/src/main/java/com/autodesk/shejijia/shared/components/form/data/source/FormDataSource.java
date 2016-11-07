@@ -3,7 +3,7 @@ package com.autodesk.shejijia.shared.components.form.data.source;
 import android.support.annotation.NonNull;
 
 import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import java.util.List;
 
 public interface FormDataSource {
 
-    void getRemoteFormItemDetails(@NonNull LoadDataCallback<List> callBack, String[] fIds);
+    void getRemoteFormItemDetails(@NonNull ResponseCallback<List> callBack, String[] fIds);
 
-    void updateRemoteFormItems(@NonNull LoadDataCallback callBack, String projectId, String taskId, List<ContainedForm> forms);
+    void updateRemoteFormItems(@NonNull ResponseCallback callBack, String projectId, String taskId, List<ContainedForm> forms);
 
 }

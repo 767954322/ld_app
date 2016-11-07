@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.autodesk.shejijia.shared.components.common.entity.Project;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.form.contract.ProjectIdCodeContract;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity;
@@ -41,9 +41,9 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
         Bundle params = new Bundle();
         params.putLong("pid",pid);
 
-        FormRepository.getInstance().getProjectTaskId(params, "", new LoadDataCallback<Project>() {
+        FormRepository.getInstance().getProjectTaskId(params, "", new ResponseCallback<Project>() {
             @Override
-            public void onLoadSuccess(Project data) {
+            public void onSuccess(Project data) {
                 Intent intent = new Intent(mContext,ProjectInfoActivity.class);
                 intent.putExtra("projectBean",data);
                 mContext.startActivity(intent);
@@ -51,7 +51,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
             }
 
             @Override
-            public void onLoadFailed(String errorMsg) {
+            public void onError(String errorMsg) {
                 mView.showNetError(errorMsg);
             }
         });

@@ -5,10 +5,10 @@ package com.autodesk.shejijia.shared.components.common.listener;
  *
  * 获取网络数据接口回调 －－ 对应get请求类型
  */
-public interface LoadDataCallback<T> {
+public interface ResponseCallback<T> {
 
-    void onLoadSuccess(T data);
+    void onSuccess(T data);
 
-    void onLoadFailed(String errorMsg);
+    void onError(String errorMsg);
 
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectDetailsContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
@@ -45,16 +45,16 @@ public class ProjectDetailsPresenter implements ProjectDetailsContract.Presenter
     }
 
     private void getProjectDetailsData(Bundle requestParams) {
-        mProjectRepository.getProjectTaskData(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new LoadDataCallback<ProjectInfo>() {
+        mProjectRepository.getProjectTaskData(requestParams, ConstructionConstants.REQUEST_TAG_GET_PROJECT_DETAILS, new ResponseCallback<ProjectInfo>() {
             @Override
-            public void onLoadSuccess(ProjectInfo data) {
+            public void onSuccess(ProjectInfo data) {
                 mProjectDetailsView.hideLoading();
                 LogUtils.d("project_details", data.toString());
                 // TODO: 11/1/16 调用view层方法，传递项目详情信息
             }
 
             @Override
-            public void onLoadFailed(String errorMsg) {
+            public void onError(String errorMsg) {
                 mProjectDetailsView.hideLoading();
                 mProjectDetailsView.showNetError(errorMsg);
             }

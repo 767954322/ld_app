@@ -8,14 +8,18 @@ import com.autodesk.shejijia.shared.components.common.entity.Project;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
-import com.autodesk.shejijia.shared.components.common.listener.UpdateDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
 
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
+
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.common.network.ConstructionHttpManager;
+
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
+
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.GsonUtil;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
@@ -42,7 +46,9 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
 
     @Override
-    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<ProjectList> callback) {
+
+    public void getProjectList(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<ProjectList> callback) {
+
         ConstructionHttpManager.getInstance().getUserProjectLists(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -50,36 +56,36 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                 LogUtils.d("ProjectList--", jsonObject + "");
                 String result = jsonObject.toString();
                 ProjectList projectList = GsonUtil.jsonToBean(result, ProjectList.class);
-                callback.onLoadSuccess(projectList);
+                callback.onSuccess(projectList);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callback.onLoadFailed(volleyError.getMessage());
+                callback.onError(volleyError.getMessage());
             }
         });
     }
 
     @Override
-    public void getProjectTaskData(final Bundle requestParams, final String requestTag, @NonNull final LoadDataCallback<ProjectInfo> callback) {
+    public void getProjectTaskData(final Bundle requestParams, final String requestTag, @NonNull final ResponseCallback<ProjectInfo> callback) {
         ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 LogUtils.d("ProjectDetails--taskDetailsList", jsonObject + "");
                 String result = jsonObject.toString();
                 ProjectInfo projectInfo = GsonUtil.jsonToBean(result, ProjectInfo.class);
-                callback.onLoadSuccess(projectInfo);
+                callback.onSuccess(projectInfo);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callback.onLoadFailed(volleyError.getMessage());
+                callback.onError(volleyError.getMessage());
             }
         });
     }
 
     @Override
-    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final LoadDataCallback<Project> callback) {
+    public void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull final ResponseCallback<Project> callback) {
         ConstructionHttpManager.getInstance().getProjectDetails(requestParams, requestTag, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -87,12 +93,12 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                 LogUtils.d("ProjectDetails--taskIdList", jsonObject + "");
                 String result = jsonObject.toString();
                 Project project = GsonUtil.jsonToBean(result, Project.class);
-                callback.onLoadSuccess(project);
+                callback.onSuccess(project);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callback.onLoadFailed(volleyError.getMessage());
+                callback.onError(volleyError.getMessage());
             }
         });
     }
@@ -121,7 +127,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
         });
     }
     
-    public void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final UpdateDataCallback<Like> callback) {
+
+    public void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Like> callback) {
         ConstructionHttpManager.getInstance().putStarProject(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
 
             @Override
@@ -129,14 +136,12 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
                 LogUtils.d("Project--star", jsonObject + "");
                 String result = jsonObject.toString();
                 Like like = GsonUtil.jsonToBean(result, Like.class);
-                callback.onUpdateSuccess(like);
-
+                callback.onSuccess(like);
             }
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
-                callback.onUpdateFailed(volleyError.getMessage());
+                callback.onError(volleyError.getMessage());
             }
 
         });

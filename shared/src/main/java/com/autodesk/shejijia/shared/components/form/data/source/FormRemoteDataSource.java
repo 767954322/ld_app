@@ -7,7 +7,7 @@ import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest
 import com.autodesk.shejijia.shared.components.form.common.network.FormServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
 import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONArray;
 
@@ -32,22 +32,22 @@ public class FormRemoteDataSource implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final LoadDataCallback<List> callBack, String[] fid) {
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, String[] fid) {
         FormServerHttpManager.getInstance().getFormItemDetails(fid, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callBack.onLoadFailed(volleyError.getMessage());
+                callBack.onError(volleyError.getMessage());
             }
             @Override
             public void onResponse(JSONArray jsonArray) {
                 List jsonMapList = FormJsonFileUtil.jsonArray2List(jsonArray);
-                callBack.onLoadSuccess(jsonMapList);
+                callBack.onSuccess(jsonMapList);
             }
         });
     }
 
     @Override
-    public void updateRemoteFormItems(@NonNull LoadDataCallback callBack, String projectId, String taskId, List<ContainedForm> forms) {
+    public void updateRemoteFormItems(@NonNull ResponseCallback callBack, String projectId, String taskId, List<ContainedForm> forms) {
 
     }
 
@@ -57,13 +57,13 @@ public class FormRemoteDataSource implements FormDataSource {
 //        FormServerHttpManager.getInstance().getFormWithIds(fIds, new OkJsonRequest.OKResponseCallback() {
 //            @Override
 //            public void onErrorResponse(VolleyError volleyError) {
-//                callBack.onLoadFailed(volleyError.getMessage());
+//                callBack.onError(volleyError.getMessage());
 //            }
 //
 //            @Override
 //            public void onResponse(JSONObject jsonObject) {
 //                Map map = FormJsonFileUtil.jsonObj2Map(jsonObject);
-//                callBack.onLoadSuccess(map);
+//                callBack.onSuccess(map);
 //            }
 //        });
 //    }
