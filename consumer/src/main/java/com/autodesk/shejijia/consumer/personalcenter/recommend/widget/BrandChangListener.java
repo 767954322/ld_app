@@ -9,9 +9,8 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendS
 public interface BrandChangListener {
     /**
      * 品牌变更回调
-     *
      */
-    void onBrandChangListener(RecommendSCFDBean recommendSCFDBean);
+    void onBrandChangListener(RecommendSCFDBean recommendSCFDBean, String brandCode);
 
     /**
      * 品牌增加

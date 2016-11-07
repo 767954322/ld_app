@@ -210,10 +210,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         setTextColorForRightNavButton(UIUtils.getColor(R.color.search_text_color));
     }
 
+
     @Override
-    public void onBrandChangListener(RecommendSCFDBean recommendSCFDBean) {
+    public void onBrandChangListener(RecommendSCFDBean recommendSCFDBean, String brandCode) {
         Intent intent = new Intent(mActivity, ChangeBrandActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, recommendSCFDBean);
+        intent.putExtra("brandCode", brandCode);
         mActivity.startActivityForResult(intent, 21);
     }
 
@@ -231,6 +233,16 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             if (null != data) {
                 switch (requestCode) {
                     case 21: // 品牌变更．
+                        RecommendSCFDBean mRecommendSCFDBean = (RecommendSCFDBean)data.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+                        for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
+                            if (recommendSCFDBean.getSub_category_3d_id().equals(mRecommendSCFDBean.getSub_category_3d_id())) {
+                                int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
+                                mRecommendSCFDList.remove(recommendSCFDBean);
+                                mRecommendSCFDList.add(post, mRecommendSCFDBean);
+                                break;
+                            }
+                        }
+                        mRecommendExpandableAdapter.notifyDataSetChanged();
 
                         break;
 
@@ -242,7 +254,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                 int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
                                 mRecommendSCFDList.remove(recommendSCFDBean);
                                 recommendSCFDBean.getBrands().addAll(brandAddList);
-                                mRecommendSCFDList.add(post,recommendSCFDBean);
+                                mRecommendSCFDList.add(post, recommendSCFDBean);
                                 break;
                             }
                         }

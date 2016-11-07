@@ -103,7 +103,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mViewHolder.rlRecommendFooter.setVisibility(View.GONE);
         }
 
-        RecommendBrandsBean recommendBrandsBean = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
+        final RecommendBrandsBean recommendBrandsBean = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
 
         // 数量,规格,备注．
         String amountAndUnit = recommendBrandsBean.getAmountAndUnit();
@@ -166,7 +166,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             @Override
             public void onClick(View v) {
                 if (null != mBrandChangListener) {
-                    mBrandChangListener.onBrandChangListener(mRecommendSCFDList.get(currentPosition));
+                    mBrandChangListener.onBrandChangListener(mRecommendSCFDList.get(currentPosition),recommendBrandsBean.getCode());
                 }
             }
         });
