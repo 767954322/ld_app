@@ -125,5 +125,10 @@
 
     <include
         layout="@layout/line_view"/>
+
+    <include layout="@layout/item_recommend_button_footer"></include>
+
+
+
 </LinearLayout>
 

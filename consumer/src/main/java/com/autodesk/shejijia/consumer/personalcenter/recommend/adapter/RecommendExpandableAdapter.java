@@ -19,6 +19,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendM
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.BrandChangListener;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
 import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UIUtils;
@@ -33,6 +34,8 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private CustomHeaderExpandableListView listView;
     private Activity mActivity;
+    private BrandChangListener mBrandChangListener;
+
 
     private int mTouchItemPosition = -1;
     private SparseIntArray groupStatusMap = new SparseIntArray();
@@ -56,7 +59,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition,
+    public View getChildView(final int groupPosition, int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         View view = null;
         if (convertView != null) {
@@ -73,10 +76,13 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mViewHolder.tvBrandName = (TextView) view.findViewById(R.id.tv_brand_name);
             mViewHolder.tvBrandMallName = (TextView) view.findViewById(R.id.tv_brand_mall_name);
             mViewHolder.spinnerApartment = (MaterialSpinner) view.findViewById(R.id.spinner_brand_apartment);
+            mViewHolder.rlRecommendFooter = (RelativeLayout) view.findViewById(R.id.rl_recommend_footer);
+            mViewHolder.tvBrandChange = (TextView) view.findViewById(R.id.tv_brand_change);
+            mViewHolder.tvBrandAdd = (TextView) view.findViewById(R.id.tv_create_brand);
 
-            setOnTouchListenerForEditText(mViewHolder.etBrandNum,R.id.et_brand_num);
-            setOnTouchListenerForEditText(mViewHolder.etBranDimension,R.id.et_brand_dimension);
-            setOnTouchListenerForEditText(mViewHolder.etBranRemarks,R.id.et_brand_remarks);
+            setOnTouchListenerForEditText(mViewHolder.etBrandNum, R.id.et_brand_num);
+            setOnTouchListenerForEditText(mViewHolder.etBranDimension, R.id.et_brand_dimension);
+            setOnTouchListenerForEditText(mViewHolder.etBranRemarks, R.id.et_brand_remarks);
 
             mViewHolder.mTextWatcherNum = new ExpandListTextWatcher(0);
             mViewHolder.mTextWatcherDimension = new ExpandListTextWatcher(1);
@@ -91,6 +97,12 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             view.setTag(mViewHolder);
         }
 
+        if (childPosition == mRecommendSCFDList.get(groupPosition).getBrands().size() - 1) {
+            mViewHolder.rlRecommendFooter.setVisibility(View.VISIBLE);
+        } else {
+            mViewHolder.rlRecommendFooter.setVisibility(View.GONE);
+        }
+
         RecommendBrandsBean recommendBrandsBean = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
 
         // 数量,规格,备注．
@@ -99,25 +111,24 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         String remarks = recommendBrandsBean.getRemarks();
 
         mViewHolder.etBrandNum.setText(amountAndUnit);
-        mViewHolder.etBrandNum.setTag(groupPosition * 100 + childPosition*10+1);
+        mViewHolder.etBrandNum.setTag(groupPosition * 100 + childPosition * 10 + 1);
 
         mViewHolder.etBranDimension.setText(dimension);
-        mViewHolder.etBranDimension.setTag(groupPosition * 100 + childPosition*10+2);
+        mViewHolder.etBranDimension.setTag(groupPosition * 100 + childPosition * 10 + 2);
 
         mViewHolder.etBranRemarks.setText(remarks);
-        mViewHolder.etBranRemarks.setTag(groupPosition * 100 + childPosition*10+3);
+        mViewHolder.etBranRemarks.setTag(groupPosition * 100 + childPosition * 10 + 3);
 
         if ((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 1)) {
             mViewHolder.etBrandNum.requestFocus();
             mViewHolder.etBrandNum.setSelection(mViewHolder.etBrandNum.getText().length());
-        } else  if ((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 2)) {
+        } else if ((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 2)) {
             mViewHolder.etBranDimension.requestFocus();
             mViewHolder.etBranDimension.setSelection(mViewHolder.etBranDimension.getText().length());
-        } else  if((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 3)) {
+        } else if ((mTouchItemPosition / 100 == groupPosition) && (mTouchItemPosition / 10 == childPosition) && (mTouchItemPosition % 10 == 3)) {
             mViewHolder.etBranRemarks.requestFocus();
             mViewHolder.etBranRemarks.setSelection(mViewHolder.etBranRemarks.getText().length());
-        }else{
-
+        } else {
             mViewHolder.etBrandNum.clearFocus();
             mViewHolder.etBranDimension.clearFocus();
             mViewHolder.etBranRemarks.clearFocus();
@@ -147,8 +158,35 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 String currentApartmentName = apartmentList.get(position);
             }
         });
+
+        final int currentPosition = groupPosition;
+
+        mViewHolder.tvBrandChange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mBrandChangListener) {
+                    mBrandChangListener.onBrandChangListener(mRecommendSCFDList.get(currentPosition));
+                }
+            }
+        });
+
+        mViewHolder.tvBrandAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mBrandChangListener) {
+                    mBrandChangListener.onBrandAddListener(mRecommendSCFDList.get(currentPosition));
+                }
+            }
+        });
+
         return view;
     }
+
+
+    public void setBrandChangListener(BrandChangListener brandChangListener) {
+        mBrandChangListener = brandChangListener;
+    }
+
     private boolean canVerticalScroll(EditText editText) {
         //滚动的距离
         int scrollY = editText.getScrollY();
@@ -165,27 +203,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         return (scrollY > 0) || (scrollY < scrollDifference - 1);
     }
 
-
-    static class ViewHolder {
-        EditText etBrandNum;
-        EditText etBranDimension;
-        EditText etBranRemarks;
-        TextView tvBrandName;
-        TextView tvBrandMallName;
-        MaterialSpinner spinnerApartment;
-
-
-        ExpandListTextWatcher mTextWatcherNum;
-        ExpandListTextWatcher mTextWatcherDimension;
-        ExpandListTextWatcher mTextWatcherRemarks;
-
-        //动态更新TextWathcer的position
-        public void updatePosition(int groupPosition, int position) {
-            mTextWatcherNum.updatePosition(groupPosition, position);
-            mTextWatcherDimension.updatePosition(groupPosition, position);
-            mTextWatcherRemarks.updatePosition(groupPosition, position);
-        }
-    }
 
     @Override
     public int getChildrenCount(int groupPosition) {
@@ -281,7 +298,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         }
     }
 
-    public void setOnTouchListenerForEditText(EditText editText,final int id) {
+    public void setOnTouchListenerForEditText(EditText editText, final int id) {
         editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -299,6 +316,29 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         });
     }
 
+    static class ViewHolder {
+        EditText etBrandNum;
+        EditText etBranDimension;
+        EditText etBranRemarks;
+        TextView tvBrandName;
+        TextView tvBrandMallName;
+        MaterialSpinner spinnerApartment;
+        RelativeLayout rlRecommendFooter;
+        TextView tvBrandChange;
+        TextView tvBrandAdd;
+
+
+        ExpandListTextWatcher mTextWatcherNum;
+        ExpandListTextWatcher mTextWatcherDimension;
+        ExpandListTextWatcher mTextWatcherRemarks;
+
+        //动态更新TextWathcer的position
+        public void updatePosition(int groupPosition, int position) {
+            mTextWatcherNum.updatePosition(groupPosition, position);
+            mTextWatcherDimension.updatePosition(groupPosition, position);
+            mTextWatcherRemarks.updatePosition(groupPosition, position);
+        }
+    }
 
     class ExpandListTextWatcher implements TextWatcher {
 
@@ -326,13 +366,13 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         @Override
         public void afterTextChanged(Editable s) {
-            if(type == 0){
+            if (type == 0) {
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
-            }else if(type == 1){
+            } else if (type == 1) {
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setDimension(s.toString());
-            }else  if(type == 2){
+            } else if (type == 2) {
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setRemarks(s.toString());
-            }else{
+            } else {
             }
 
 
