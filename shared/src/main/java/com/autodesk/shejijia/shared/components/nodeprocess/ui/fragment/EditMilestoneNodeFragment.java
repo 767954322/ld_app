@@ -2,11 +2,12 @@ package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
+import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
@@ -16,6 +17,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.W
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ import java.util.List;
 
 public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanContract.View {
 
-    private MaterialCalendarView widget;
+    private MaterialCalendarView mCalendarWidget;
     private MileStoneNodeDecorator mMileStoneDecorator;
     private DateSelectorDecorator mSelectorDecorator;
     private ActiveMileStoneDecorator mMileStoneActiveDecorator;
@@ -44,7 +46,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
             actionBar.setTitle(R.string.edit_plan_title_first_step);
         }
 
-        widget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
+        mCalendarWidget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
         setUpCalendarView();
     }
 
@@ -55,9 +57,32 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     @Override
     public void showTasks(List<Task> tasks) {
+        mCalendarWidget.setVisibility(View.VISIBLE);
         mMileStoneDecorator.setData(tasks);
         mMileStoneDayFormator.setData(tasks);
-        widget.invalidateDecorators();
+
+        Date startDate = DateUtil.isoStringToDate(tasks.get(0).getPlanningTime().getStart());
+        Date endDate = DateUtil.isoStringToDate(tasks.get(tasks.size() - 1).getPlanningTime().getCompletion());
+
+        int limitMonthOffset = 6;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        calendar.add(Calendar.MONTH, -limitMonthOffset);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
+        Date minDate = calendar.getTime();
+
+        calendar.setTime(endDate);
+        calendar.add(Calendar.MONTH, limitMonthOffset);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date maxDate = calendar.getTime();
+
+        mCalendarWidget.state()
+                .edit()
+                .setMinimumDate(minDate)
+                .setMaximumDate(maxDate)
+                .commit();
+        mCalendarWidget.setCurrentDate(startDate);
     }
 
     @Override
@@ -89,24 +114,11 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
         mSelectorDecorator = new DateSelectorDecorator(getActivity(), false);
         mMileStoneActiveDecorator = new ActiveMileStoneDecorator(getActivity());
-        widget.addDecorator(mSelectorDecorator);
-        widget.addDecorator(mMileStoneActiveDecorator);
-        widget.addDecorator(mMileStoneDecorator);
-        widget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
-        widget.setWeekDayFormatter(new WeekDayFormatter(getContext()));
-        widget.setDayFormatter(mMileStoneDayFormator);
-
-
-        //TODO setup date limit
-        Calendar instance1 = Calendar.getInstance();
-        instance1.set(instance1.get(Calendar.YEAR), Calendar.OCTOBER, 1);
-
-        Calendar instance2 = Calendar.getInstance();
-        instance2.set(instance2.get(Calendar.YEAR), Calendar.DECEMBER, 31);
-        widget.state()
-                .edit()
-                .setMinimumDate(instance1.getTime())
-                .setMaximumDate(instance2.getTime())
-                .commit();
+        mCalendarWidget.addDecorator(mSelectorDecorator);
+        mCalendarWidget.addDecorator(mMileStoneActiveDecorator);
+        mCalendarWidget.addDecorator(mMileStoneDecorator);
+        mCalendarWidget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
+        mCalendarWidget.setWeekDayFormatter(new WeekDayFormatter(getContext()));
+        mCalendarWidget.setDayFormatter(mMileStoneDayFormator);
     }
 }

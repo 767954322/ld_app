@@ -176,7 +176,11 @@ public class VerticalCalendarView extends MaterialCalendarView {
 
     @Override
     public void setCurrentDate(@Nullable CalendarDay day, boolean useSmoothScroll) {
-        // TODO
+        if (day == null) {
+            return;
+        }
+        int index = mListAdapter.getIndexForDay(day);
+        mListView.setSelection(index);
     }
 
     @Override

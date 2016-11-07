@@ -53,6 +53,7 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewGroup monthContainer;
         MonthView monthView;
+        CalendarDay calendarDay = getItem(position);
         //TODO Do optimize
 //        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
@@ -69,7 +70,10 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
 //        }
 
         TextView textView = (TextView) monthContainer.findViewById(R.id.item_title);
-        textView.setText("2016年" + (10 + position) + "月");  // TODO Get month title
+        textView.setText(calendarDay.getYear()
+                + mcv.getContext().getString(R.string.year)
+                + calendarDay.getMonth()
+                + mcv.getContext().getString(R.string.month));
 
 //        monthView.setData(getItem(position), mcv.getFirstDayOfWeek()); //TODO Do more optimize
         monthView.setContentDescription(mcv.getCalendarContentDescription());
@@ -127,7 +131,7 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
 
     @Override
     public int getIndexForDay(CalendarDay day) {
-        return 0;
+        return mAdapterHelper.getIndexForDay(day);
     }
 
     @Override
