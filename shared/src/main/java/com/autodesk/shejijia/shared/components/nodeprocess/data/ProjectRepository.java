@@ -3,21 +3,13 @@ package com.autodesk.shejijia.shared.components.nodeprocess.data;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
+import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
-
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
-import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
-import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
-import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.datamodel.ProjectDataSource;
-import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
@@ -75,9 +67,9 @@ public final class ProjectRepository implements ProjectDataSource {
     }
 
     @Override
-    public void getPlanByProjectId(String pid, String requestTag, @NonNull LoadDataCallback<PlanInfo> callback) {
+    public void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<PlanInfo> callback) {
         ProjectRemoteDataSource.getInstance().getPlanByProjectId(pid, requestTag, callback);
-	｝
+    }
 
     @Override
     public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback) {

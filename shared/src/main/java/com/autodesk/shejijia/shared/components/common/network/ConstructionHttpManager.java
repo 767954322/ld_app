@@ -6,17 +6,9 @@ import android.support.annotation.Nullable;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
-
-import com.autodesk.shejijia.shared.components.common.entity.Project;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
-
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
-
 import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.framework.AdskApplication;

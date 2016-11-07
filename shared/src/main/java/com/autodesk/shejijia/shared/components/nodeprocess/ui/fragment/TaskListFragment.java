@@ -1,8 +1,6 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
 
-import android.content.Intent;
-
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -24,13 +22,13 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ScreenUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.adapter.ProjectListAdapter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
-import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,7 +61,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
         mProjectListPresenter = new ProjectListPresenter(getActivity(), this);
         //refresh ProjectLists
         String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
-        mProjectListPresenter.initRequestParams(defaultSelectedDate, null, null);
+        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, null, null);
         mProjectListPresenter.refreshProjectList();
     }
 

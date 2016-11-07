@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.tools.CaptureQrActivity;
 import com.autodesk.shejijia.shared.components.form.data.FormRepository;
 import com.google.zxing.Result;
@@ -55,27 +55,27 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
             // TODO: 16/11/3 扫码得到projectId ,判断是否得到项目详情,如果得到然后再将项目详情传递过去,没有的话显示网络错误,错误信息
             Log.d("asdf", projectId);
             Bundle params = new Bundle();
-            params.putLong("pid",Long.valueOf(projectId));
+            params.putLong("pid", Long.valueOf(projectId));
 
-            FormRepository.getInstance().getProjectTaskId(params, null, new LoadDataCallback<Project>() {
+            FormRepository.getInstance().getProjectTaskId(params, null, new ResponseCallback<Project>() {
                 @Override
-                public void onLoadSuccess(Project data) {
-                    Intent intent = new Intent(ScanQrCodeActivity.this,ProjectInfoActivity.class);
-                    intent.putExtra("projectBean",data);
+                public void onSuccess(Project data) {
+                    Intent intent = new Intent(ScanQrCodeActivity.this, ProjectInfoActivity.class);
+                    intent.putExtra("projectBean", data);
                     startActivity(intent);
                     finish();
                 }
 
                 @Override
-                public void onLoadFailed(String errorMsg) {
-                    Log.d("asdf","错误信息了");
-                    startActivity(new Intent(ScanQrCodeActivity.this,ScanQrDialogActivity.class));
+                public void onError(String errorMsg) {
+                    Log.d("asdf", "错误信息了");
+                    startActivity(new Intent(ScanQrCodeActivity.this, ScanQrDialogActivity.class));
                 }
             });
 
 
         } else {
-            startActivity(new Intent(this,ScanQrDialogActivity.class));
+            startActivity(new Intent(this, ScanQrDialogActivity.class));
         }
 
 

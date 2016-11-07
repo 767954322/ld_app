@@ -2,8 +2,7 @@ package com.autodesk.shejijia.shared.components.nodeprocess.presenter;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
-import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 
@@ -40,15 +39,15 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
             return;
         }
 
-        mProjectRepository.getPlanByProjectId(mProjectId, REQUEST_TAG_FETCH_PLAN, new LoadDataCallback<PlanInfo>() {
+        mProjectRepository.getPlanByProjectId(mProjectId, REQUEST_TAG_FETCH_PLAN, new ResponseCallback<PlanInfo>() {
             @Override
-            public void onLoadSuccess(PlanInfo data) {
+            public void onSuccess(PlanInfo data) {
                 mPlan = data;
                 mView.showTasks(filterTasks());
             }
 
             @Override
-            public void onLoadFailed(String errorMsg) {
+            public void onError(String errorMsg) {
 
             }
         });
@@ -64,7 +63,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
 
     private List<Task> getMileStoneNodes() {
         List<Task> filteredTasks = new ArrayList<>();
-        for (Task task: mPlan.getTasks()) {
+        for (Task task : mPlan.getTasks()) {
             if (task.isMilestone()) {
                 filteredTasks.add(task);
             }

@@ -6,10 +6,8 @@ import android.support.annotation.NonNull;
 import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.Plan;
-import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
-
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
+import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
@@ -36,7 +34,7 @@ public interface ProjectDataSource {
     void getProjectTaskId(Bundle requestParams, String requestTag, @NonNull ResponseCallback<Project> callback);
 
 
-    void getPlanByProjectId(String pid, String requestTag, @NonNull LoadDataCallback<PlanInfo> callback);
+    void getPlanByProjectId(String pid, String requestTag, @NonNull ResponseCallback<PlanInfo> callback);
 
     /*
     * 星标项目
