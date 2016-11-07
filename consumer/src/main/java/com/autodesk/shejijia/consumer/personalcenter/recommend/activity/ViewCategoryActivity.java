@@ -34,7 +34,7 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
         Intent intent = new Intent(context, ViewCategoryActivity.class);
         intent.putExtra("scfd", scfd);
         intent.putExtra("position", position);
-        context.startActivityForResult(intent, 0);
+        context.startActivityForResult(intent, 23);
     }
 
     private RecyclerView mRcv_category_view;

@@ -59,7 +59,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     @Override
-    public View getChildView(final int groupPosition, int childPosition,
+    public View getChildView(final int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         View view = null;
         if (convertView != null) {
@@ -156,6 +156,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 String currentApartmentName = apartmentList.get(position);
+                mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).setApartment(currentApartmentName);
             }
         });
 

@@ -208,14 +208,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
-            mExpandListView.setSelection(intExtra);
-        }
-    }
-
-    @Override
     public void onBrandChangListener(RecommendSCFDBean recommendSCFDBean) {
         Intent intent = new Intent(mActivity, ChangeBrandActivity.class);
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, recommendSCFDBean);
@@ -228,4 +220,33 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, recommendSCFDBean);
         startActivityForResult(intent, 22);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+
+            if (null != data) {
+                switch (requestCode) {
+                    case 21: // 品牌变更．
+
+                        break;
+
+                    case 22:// 添加品牌．
+
+                        break;
+
+                    case 23:// 添加品牌．
+                        int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+                        mExpandListView.setSelection(intExtra);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+        }
+    }
+
+
 }
