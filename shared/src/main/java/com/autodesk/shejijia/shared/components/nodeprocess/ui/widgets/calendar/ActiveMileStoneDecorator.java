@@ -42,9 +42,6 @@ public class ActiveMileStoneDecorator implements DayViewDecorator {
         view.setBackgroundDrawable(new ColorDrawable(mContext.getResources().getColor(android.R.color.holo_blue_light)));
     }
 
-    /**
-     * We're changing the internals, so make sure to call {@linkplain MaterialCalendarView#invalidateDecorators()}
-     */
     public void setActiveTask(Task task) {
         this.mTask = task;
     }

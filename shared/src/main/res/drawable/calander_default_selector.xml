@@ -5,8 +5,8 @@
     <item android:state_checked="true"
         android:drawable="@android:color/holo_blue_light" />
 
-    <item android:state_pressed="true"
-        android:drawable="@android:color/holo_blue_light" />
+    <!--<item android:state_pressed="true"-->
+        <!--android:drawable="@android:color/holo_blue_light" />-->
 
     <item android:drawable="@android:color/transparent" />
 

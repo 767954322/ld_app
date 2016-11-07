@@ -40,23 +40,13 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     }
 
     @Override
-    public void showNetError(String msg) {
-
+    public void showActiveTask(Task task) {
+        // TODO
     }
 
     @Override
-    public void showError(String msg) {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
+    public void onTaskDateChange(Task task, Date oldDate, Date newDate) {
+        // TODO
     }
 
     @Override
@@ -81,6 +71,26 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     @Override
     protected void initData() {
         mPresenter.fetchPlan();
+    }
+
+    @Override
+    public void showNetError(String msg) {
+
+    }
+
+    @Override
+    public void showError(String msg) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 
     private static class TaskNodeAdapter extends RecyclerView.Adapter<TaskNodeViewHolder> {

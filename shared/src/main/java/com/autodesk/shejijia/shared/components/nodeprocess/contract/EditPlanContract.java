@@ -9,6 +9,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPre
 import com.autodesk.shejijia.shared.framework.BasePresenter;
 import com.autodesk.shejijia.shared.framework.BaseView;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public interface EditPlanContract {
     interface View extends BaseView {
         void showTasks(List<Task> tasks);
         void bindPresenter(Presenter presenter);
+        void showActiveTask(Task task);
+        void onTaskDateChange(Task task, Date oldDate, Date newDate);
     }
 
     interface Presenter extends BasePresenter {
@@ -31,7 +34,7 @@ public interface EditPlanContract {
         /**
          * update task planning time, the data will save in memory or local
          */
-        void updateTask();
+        void updateTask(Task task, Date newDate);
 
         /**
          * commit edited plan
@@ -49,5 +52,7 @@ public interface EditPlanContract {
          * @return
          */
         EditPlanPresenter.EditState getEditState();
+
+        void onDateSelected(Date date, boolean selected);
     }
 }

@@ -12,6 +12,7 @@ import com.autodesk.shejijia.shared.components.common.uielements.calanderview.Da
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.DayFormatter;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,4 +52,12 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
             this.dateTaskMap.put(dateString, task);
         }
     }
+
+    public void updateTask(Task task, Date oldDate, Date newDate) {
+        String key = DateUtil.getStringDateByFormat(oldDate, "yyyy-MM-dd");
+        this.dateTaskMap.remove(key);
+        String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd");
+        this.dateTaskMap.put(dateString, task);
+    }
+
 }

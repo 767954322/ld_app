@@ -1,12 +1,15 @@
 package com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
+import com.autodesk.shejijia.shared.components.common.uielements.calanderview.OnDateSelectedListener;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
@@ -24,7 +27,7 @@ import java.util.List;
  * Created by wenhulin on 11/2/16.
  */
 
-public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanContract.View {
+public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanContract.View, OnDateSelectedListener {
 
     private MaterialCalendarView mCalendarWidget;
     private MileStoneNodeDecorator mMileStoneDecorator;
@@ -46,8 +49,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
             actionBar.setTitle(R.string.edit_plan_title_first_step);
         }
 
-        mCalendarWidget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
-        setUpCalendarView();
+        initCalendarView();
     }
 
     @Override
@@ -91,6 +93,24 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     @Override
+    public void showActiveTask(Task task) {
+        mMileStoneActiveDecorator.setActiveTask(task);
+        mCalendarWidget.invalidateDecorators();
+    }
+
+    @Override
+    public void onTaskDateChange(Task task, Date oldDate, Date newDate) {
+        mMileStoneDecorator.updateTask(task, oldDate, newDate);
+        mMileStoneDayFormator.updateTask(task, oldDate, newDate);
+        mCalendarWidget.invalidateDecorators();
+    }
+
+    @Override
+    public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+        mPresenter.onDateSelected(date.getDate(), selected);
+    }
+
+    @Override
     public void showNetError(String msg) {
     }
 
@@ -109,7 +129,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
     }
 
-    private void setUpCalendarView() {
+    private void initCalendarView() {
+        mCalendarWidget = (MaterialCalendarView) rootView.findViewById(R.id.calendarView);
         mMileStoneDayFormator = new MileStoneDayFormatter();
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
         mSelectorDecorator = new DateSelectorDecorator(getActivity(), false);
@@ -120,5 +141,6 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mCalendarWidget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
         mCalendarWidget.setWeekDayFormatter(new WeekDayFormatter(getContext()));
         mCalendarWidget.setDayFormatter(mMileStoneDayFormator);
+        mCalendarWidget.setOnDateChangedListener(this);
     }
 }

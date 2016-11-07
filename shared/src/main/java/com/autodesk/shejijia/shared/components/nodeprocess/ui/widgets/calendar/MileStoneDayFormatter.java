@@ -6,6 +6,7 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.DayFormatter;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
+import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,5 +41,12 @@ public class MileStoneDayFormatter implements DayFormatter {
             String dateString = DateUtil.dateFormat(task.getPlanningTime().getStart(), "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd");
             this.dateTaskMap.put(dateString, task);
         }
+    }
+
+    public void updateTask(Task task, Date oldDate, Date newDate) {
+        String key = DateUtil.getStringDateByFormat(oldDate, "yyyy-MM-dd");
+        this.dateTaskMap.remove(key);
+        String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd");
+        this.dateTaskMap.put(dateString, task);
     }
 }

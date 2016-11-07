@@ -7,6 +7,7 @@ import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanCont
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,8 +19,11 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     private EditPlanContract.View mView;
     private EditState mEditState;
     private ProjectRepository mProjectRepository;
+
     private String mProjectId;
     private PlanInfo mPlan;
+    private Task mActiveTask;
+
 
     public EditPlanPresenter(String projectId) {
         mProjectId = projectId;
@@ -30,6 +34,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     public void bindView(EditPlanContract.View view) {
         mView = view;
         mView.bindPresenter(this);
+        mActiveTask = null;
     }
 
     @Override
@@ -53,22 +58,34 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         });
     }
 
-    private List<Task> filterTasks() {
-        if (mEditState.equals(EditState.EDIT_MILESTONE)) {
-            return getMileStoneNodes();
-        } else {
-            return mPlan.getTasks();
+    public void onDateSelected(Date date, boolean selected) {
+        switch (mEditState) {
+            case EDIT_MILESTONE:
+                Task newActiveTask = getMileStoneNode(date);
+                if (newActiveTask == null) {
+                    if (mActiveTask != null) {
+                        // Update active task date
+                        Date oldDate = DateUtil.isoStringToDate(mActiveTask.getPlanningTime().getStart());
+                        updateTaskDate(mActiveTask, date);
+                        mView.onTaskDateChange(mActiveTask, oldDate, date);
+                    }
+                } else {
+                    if (mActiveTask ==null || newActiveTask.getTaskId() != mActiveTask.getTaskId()) {
+                        // Update active task
+                        mActiveTask = newActiveTask;
+                        mView.showActiveTask(mActiveTask);
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 
-    private List<Task> getMileStoneNodes() {
-        List<Task> filteredTasks = new ArrayList<>();
-        for (Task task : mPlan.getTasks()) {
-            if (task.isMilestone()) {
-                filteredTasks.add(task);
-            }
-        }
-        return filteredTasks;
+    @Override
+    public void updateTask(Task task, Date newDate) {
+        String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+        task.getPlanningTime().setStart(dateString);
     }
 
     @Override
@@ -86,16 +103,47 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         return mEditState;
     }
 
-    @Override
-    public void updateTask() {
-        //TODO
-    }
-
     /**
      * Created by wenhulin on 11/3/16.
      */
     public static enum EditState {
         EDIT_MILESTONE,
         EDIT_TASK_NODE,
+    }
+
+    private List<Task> filterTasks() {
+        if (mEditState.equals(EditState.EDIT_MILESTONE)) {
+            return getMileStoneNodes();
+        } else {
+            return mPlan.getTasks();
+        }
+    }
+
+    private List<Task> getMileStoneNodes() {
+        List<Task> filteredTasks = new ArrayList<>();
+        for (Task task: mPlan.getTasks()) {
+            if (task.isMilestone()) {
+                filteredTasks.add(task);
+            }
+        }
+        return filteredTasks;
+    }
+
+    private Task getMileStoneNode(Date date) {
+        for (Task task: mPlan.getTasks()) {
+            if (task.isMilestone()) {
+                Date startDate = DateUtil.isoStringToDate(task.getPlanningTime().getStart());
+                if(DateUtil.isSameDay(startDate, date)) {
+                    return task;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private void updateTaskDate(Task task, Date newDate) {
+        String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+        task.getPlanningTime().setStart(dateString);
     }
 }

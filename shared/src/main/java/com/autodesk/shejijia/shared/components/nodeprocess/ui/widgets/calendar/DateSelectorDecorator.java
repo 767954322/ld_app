@@ -28,7 +28,6 @@ public class DateSelectorDecorator implements DayViewDecorator {
         } else {
             drawable = context.getResources().getDrawable(R.drawable.calander_default_selector);
         }
-
     }
 
     @Override
