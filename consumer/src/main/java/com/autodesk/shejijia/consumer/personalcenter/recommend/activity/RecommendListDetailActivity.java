@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
@@ -32,6 +33,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
@@ -151,8 +153,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             for (int i = 0; i < recommendSCFDList.size(); i++) {
                 mRecyclerViewList.expandGroup(i);
             }
-//        adapter = new PinnedHeaderExpandableAdapter(childrenData, groupData, getApplicationContext(), explistview);
-//         RecommendListEditParentAdapter recommendListEditAdapter = new RecommendListEditParentAdapter(this, recommendSCFDList);
         }
     }
 

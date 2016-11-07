@@ -1,6 +1,8 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.app.Activity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,14 +16,12 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListTextWatcher;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.TextWatcherCallback;
 
 import java.util.List;
 
-import static com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandViewUtils.canVerticalScroll;
+//import com.autodesk.shejijia.consumer.personalcenter.recommend.widget.ExpandListHeaderInterface;
 
-public class RecommendExpandableAdapter extends BaseExpandableListAdapter implements ExpandListHeaderInterface, TextWatcherCallback {
+public class RecommendExpandableAdapter extends BaseExpandableListAdapter implements ExpandListHeaderInterface {
 
     private ViewHolder mViewHolder;
     private LayoutInflater inflater;
@@ -50,7 +50,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
+    public View getChildView(int groupPosition,  int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
         View view = null;
         if (convertView != null) {
@@ -64,35 +64,16 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mViewHolder.mEditText = (EditText) view.findViewById(R.id.et_brand_num);
 
             setOnTouchListenerForEditText(mViewHolder.mEditText);
-//            mViewHolder.mEditText.setOnTouchListener(new OnTouchListener() {
-//
-//                @Override
-//                public boolean onTouch(View view1, MotionEvent event) {
-//                    //注意，此处必须使用getTag的方式，不能将position定义为final，写成mTouchItemPosition = position
-//                    mTouchItemPosition = (Integer) view1.getTag();
-//                    //触摸的是EditText并且当前EditText可以滚动则将事件交给EditText处理；否则将事件交由其父类处理
-//                    if ((view1.getId() == R.id.et_brand_num && canVerticalScroll((EditText) view1))) {
-//                        view1.getParent().requestDisallowInterceptTouchEvent(true);
-//                        if (event.getAction() == MotionEvent.ACTION_UP) {
-//                            view1.getParent().requestDisallowInterceptTouchEvent(false);
-//                        }
-//                    }
-//                    return false;
-//                }
-//            });
-
             // 让ViewHolder持有一个TextWathcer，动态更新position来防治数据错乱；不能将position定义成final直接使用，必须动态更新
             mViewHolder.mTextWatcher = new ExpandListTextWatcher();
-            mViewHolder.mTextWatcher.addListener(this);
-
             mViewHolder.mEditText.addTextChangedListener(mViewHolder.mTextWatcher);
-//            mViewHolder.mEditText.addTextChangedListener(mViewHolder.mTextWatcher);
-
             mViewHolder.updatePosition(groupPosition, childPosition);
+            // 让ViewHolder持有一个TextWathcer，动态更新position来防治数据错乱；不能将position定义成final直接使用，必须动态更新
+
             view.setTag(mViewHolder);
         }
-        String brand_name = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).getBrand_name();
-        mViewHolder.mEditText.setText(brand_name);
+        String amountAndUnit = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).getAmountAndUnit();
+        mViewHolder.mEditText.setText(amountAndUnit);
         mViewHolder.mEditText.setTag(groupPosition * 10 + childPosition);
 
         if ((mTouchItemPosition / 10 == groupPosition) && (mTouchItemPosition % 10 == childPosition)) {
@@ -104,9 +85,24 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         return view;
     }
+    private   boolean canVerticalScroll(EditText editText) {
+        //滚动的距离
+        int scrollY = editText.getScrollY();
+        //控件内容的总高度
+        int scrollRange = editText.getLayout().getHeight();
+        //控件实际显示的高度
+        int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() - editText.getCompoundPaddingBottom();
+        //控件内容总高度与实际显示高度的差值
+        int scrollDifference = scrollRange - scrollExtent;
+
+        if (scrollDifference == 0) {
+            return false;
+        }
+        return (scrollY > 0) || (scrollY < scrollDifference - 1);
+    }
 
 
-    static final class ViewHolder {
+    static  class ViewHolder {
         EditText mEditText;
         ExpandListTextWatcher mTextWatcher;
 
@@ -210,10 +206,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         }
     }
 
-    @Override
-    public void onCallBackData(int parentPosition, int ChildPosition, String data) {
-        mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setBrand_name(data);
-    }
+
     public  void  setOnTouchListenerForEditText(EditText editText) {
         editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -232,4 +225,29 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         });
     }
 
+
+      class ExpandListTextWatcher implements TextWatcher {
+
+        //由于TextWatcher的afterTextChanged中拿不到对应的position值，所以自己创建一个子类
+        private int ChildPosition;
+        private int parentPosition;
+
+        public void updatePosition(int groupPosition, int position) {
+            this.ChildPosition = position;
+            this.parentPosition = groupPosition;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setAmountAndUnit(s.toString());
+        }
+    }
 }
