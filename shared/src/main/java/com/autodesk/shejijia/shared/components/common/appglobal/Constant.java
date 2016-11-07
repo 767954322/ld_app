@@ -222,6 +222,7 @@ public class Constant {
         public static final String HOUSING_INDEX = "housingIdex";
         public static final String STYLE_INDEX = "styleIdex";
         public static final String CONTENT_BEAN = "contentBean";
+        public static final String CONTENT_3D_BEAN = "contentBean";
 
         public static final String YEAR_INDEX = "yearIndex";
         public static final String STYLEL_INDEX = "styleIndex";

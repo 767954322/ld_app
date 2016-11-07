@@ -91,6 +91,10 @@
         <item>全部</item>
     </string-array>
 
+
+    <string-array name="all3d">
+        <item>不限</item>
+    </string-array>
     <string-array name="mlivingroom">
         <item>一室</item>
         <item>两室</item>

@@ -275,6 +275,11 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".home.decorationlibrarys.activity.Filtrate3DActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".personalcenter.designer.activity.MyPropertyActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

@@ -92,7 +92,7 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
         mSignInNotificationReceiver = new SignInNotificationReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadCastInfo.LOGIN_ACTIVITY_FINISHED);
-        filter.addAction(BroadCastInfo.MPFITER_CASES);
+        filter.addAction(BroadCastInfo.MPFITER_3D_CASES);
         activity.registerReceiver(mSignInNotificationReceiver, filter);
     }
 
@@ -490,8 +490,10 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
 
         if (case3DLibraryListBean.getCases().size() > 0) {
             ll_default_view.setVisibility(View.GONE);
+            mPtrLayout.setVisibility(View.VISIBLE);
         } else {
             ll_default_view.setVisibility(View.VISIBLE);
+            mPtrLayout.setVisibility(View.GONE);
         }
         case3DBeanList.addAll(case3DLibraryListBean.getCases());
         if (case3DLibraryListBean.getCases().size() < LIMIT) {
@@ -531,9 +533,9 @@ public class UserHome3DFragment extends BaseFragment implements UserHome3DCaseAd
                 }
                 member_id = mMemberEntity.getAcs_member_id();
                 getConsumerInfoData(member_id);
-            } else if (action.equalsIgnoreCase(BroadCastInfo.MPFITER_CASES)) {
+            } else if (action.equalsIgnoreCase(BroadCastInfo.MPFITER_3D_CASES)) {
 
-                FiltrateContentBean filtrateContentBean = (FiltrateContentBean) intent.getSerializableExtra("FiltrateContentBean");
+                FiltrateContentBean filtrateContentBean = (FiltrateContentBean) intent.getSerializableExtra("Filtrate3dContentBean");
                 UserHome3DFragment.this.filtrateContentBean = filtrateContentBean;
 
                 getCaseLibraryData(filtrateContentBean == null ? BLANK : filtrateContentBean.getStyle(), BLANK, BLANK,

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.codecorationBase.coelite.entity.SixProductsPicturesBean;
+import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.Filtrate3DActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.FiltrateActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.Search3DActivity;
 import com.autodesk.shejijia.consumer.home.decorationlibrarys.activity.SearchActivity;
@@ -365,7 +366,6 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
                 // intent.putExtra("currentPosition", currentPosition);
                 startActivity(intent);
             }
-            // Toast.makeText(this, "currentPosition:" + currentPosition, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -572,12 +572,25 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
         Intent intent;
         switch (FLAG_CLICK) {
             case TAB_HOME_CASE:
-                intent = new Intent(this, FiltrateActivity.class);
-                intent.putExtra(Constant.CaseLibrarySearch.SEARCH_TYPE, 1);
-                intent.putExtra(Constant.CaseLibrarySearch.AREA_INDEX, filtrateContentBean == null ? 0 : filtrateContentBean.getAreaIndex());
-                intent.putExtra(Constant.CaseLibrarySearch.HOUSING_INDEX, filtrateContentBean == null ? 0 : filtrateContentBean.getHouseIndex());
-                intent.putExtra(Constant.CaseLibrarySearch.STYLE_INDEX, filtrateContentBean == null ? 0 : filtrateContentBean.getStyleIndex());
-                this.startActivityForResult(intent, CASE_CODE);
+                //传递标记    0 是2d案例的搜索    1 3d是的案例搜索
+                int currentPosition = this.getMaterialTabs().getCurrentPosition();
+                if (currentPosition == 0) {
+                    intent = new Intent(this, FiltrateActivity.class);
+                    intent.putExtra(Constant.CaseLibrarySearch.SEARCH_TYPE, 1);
+                    intent.putExtra(Constant.CaseLibrarySearch.AREA_INDEX, filtrateContentBean == null ? 0 : filtrateContentBean.getAreaIndex());
+                    intent.putExtra(Constant.CaseLibrarySearch.HOUSING_INDEX, filtrateContentBean == null ? 0 : filtrateContentBean.getHouseIndex());
+                    intent.putExtra(Constant.CaseLibrarySearch.STYLE_INDEX, filtrateContentBean == null ? 0 : filtrateContentBean.getStyleIndex());
+                    this.startActivityForResult(intent, CASE_CODE);
+                } else {
+                    intent = new Intent(this, Filtrate3DActivity.class);
+                    intent.putExtra(Constant.CaseLibrarySearch.SEARCH_TYPE, 1);
+                    intent.putExtra(Constant.CaseLibrarySearch.AREA_INDEX, filtrate3DContentBean == null ? 0 : filtrate3DContentBean.getAreaIndex());
+                    intent.putExtra(Constant.CaseLibrarySearch.HOUSING_INDEX, filtrate3DContentBean == null ? 0 : filtrate3DContentBean.getHouseIndex());
+                    intent.putExtra(Constant.CaseLibrarySearch.STYLE_INDEX, filtrate3DContentBean == null ? 0 : filtrate3DContentBean.getStyleIndex());
+                    this.startActivityForResult(intent, CASE_CODE);
+                }
+
+
                 break;
 
             case TAB_IM:
@@ -649,17 +662,19 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             }
         });
     }
+
     /**
      * 获取六大模块静态图片url，并添加到sixProductsPicturesBean
      */
     private void initStaticPic() {
-        MPServerHttpManager.getInstance().getSixProPictures(new OkJsonRequest.OKResponseCallback(){
+        MPServerHttpManager.getInstance().getSixProPictures(new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 String str = GsonUtil.jsonToString(jsonObject);
-                SixProductsPicturesBean sixProductsPicturesBean =GsonUtil.jsonToBean(str, SixProductsPicturesBean.class);
+                SixProductsPicturesBean sixProductsPicturesBean = GsonUtil.jsonToBean(str, SixProductsPicturesBean.class);
                 WkFlowStateMap.sixProductsPicturesBean = sixProductsPicturesBean;
             }
+
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 ApiStatusUtil.getInstance().apiStatuError(volleyError, MPConsumerHomeActivity.this);
@@ -808,6 +823,14 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
             intent.setAction(BroadCastInfo.MPFITER_CASES);
             intent.putExtra("FiltrateContentBean", filtrateContentBean);
             sendBroadcast(intent);
+        } else if (resultCode == Filtrate3DActivity.HC_RESULT_CODE && data != null) {
+            Bundle bundle = data.getExtras();
+            FiltrateContentBean filtrate3DContentBean = (FiltrateContentBean) bundle.getSerializable(Constant.CaseLibrarySearch.CONTENT_3D_BEAN);
+            this.filtrate3DContentBean = filtrate3DContentBean;
+            Intent intent = new Intent();
+            intent.setAction(BroadCastInfo.MPFITER_3D_CASES);
+            intent.putExtra("Filtrate3dContentBean", filtrate3DContentBean);
+            sendBroadcast(intent);
         }
     }
 
@@ -857,6 +880,7 @@ public class MPConsumerHomeActivity extends BaseHomeActivity implements View.OnC
     private UserHomeFragment mUserHomeFragment;
 
     private FiltrateContentBean filtrateContentBean;
+    private FiltrateContentBean filtrate3DContentBean;
 
     private BidHallFragment mBidHallFragment;
     private DesignerListFragment designerListFragment;
