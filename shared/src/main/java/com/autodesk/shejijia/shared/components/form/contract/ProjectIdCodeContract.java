@@ -21,7 +21,7 @@ public interface ProjectIdCodeContract {
 
 
     interface Presenter extends BasePresenter {
-        void ConfirmProject();  //确定登入
+        void confirmProject();  //确定登入
 
         void enterCode();   //进入扫码
     }

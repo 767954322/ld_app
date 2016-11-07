@@ -23,8 +23,8 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
     private TextView mRight;
     private RadioButton mOk;
     private RadioButton mNo;
-    private LinearLayout mIsNecessary;
-    private LinearLayout mIsAdditional;
+    private LinearLayout mNecessary;
+    private LinearLayout mAdditional;
     private Button mSelect;
 
     @Override
@@ -42,9 +42,9 @@ public class PrecheckActivity extends BaseActivity implements View.OnClickListen
         mOk = (RadioButton) findViewById(R.id.btn_ok);
         mNo = (RadioButton) findViewById(R.id.btn_no);
         //必要条件
-        mIsNecessary = (LinearLayout) findViewById(R.id.ll_is_necessary);
+        mNecessary = (LinearLayout) findViewById(R.id.ll_necessary);
         //辅助条件
-        mIsAdditional = (LinearLayout) findViewById(R.id.ll_is_additional);
+        mAdditional = (LinearLayout) findViewById(R.id.ll_additional);
         //确定按钮
         mSelect = (Button) findViewById(R.id.btn_select);
     }

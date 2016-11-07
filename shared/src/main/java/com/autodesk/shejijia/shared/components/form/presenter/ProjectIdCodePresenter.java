@@ -30,7 +30,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
 
 
     @Override
-    public void ConfirmProject() {
+    public void confirmProject() {
         String projectId = mView.getProjectId();
         if (TextUtils.isEmpty(projectId)) {
             mView.showError("项目编码不能为空,请重新输入");

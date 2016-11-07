@@ -65,7 +65,7 @@ public class ProjectIdCodeActivity extends BaseActivity implements View.OnClickL
             mPresenter.enterCode();
 
         } else if (i == R.id.btn_confirm) {// TODO: 16/10/18 根据登入状态,项目编码一步
-            mPresenter.ConfirmProject();
+            mPresenter.confirmProject();
 
         }
 
