@@ -46,7 +46,9 @@ import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.js
  * @author liuhea
  *         created at 16-10-24
  */
-public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener, BrandChangListener, RecommendExpandableAdapter.CallBack {
+public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener, BrandChangListener,
+        RecommendExpandableAdapter.CallBack,ExpandableListView.OnGroupClickListener {
+
 
     private CustomHeaderExpandableListView mExpandListView;
     private AppCompatButton mBtnListSend;
@@ -97,15 +99,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         mBtnListSend.setOnClickListener(this);
         mExpandListView.setGroupIndicator(null); //去掉箭头
         //点击不可收缩
-        mExpandListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                                        int groupPosition, long id) {
-                ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mScfd, groupPosition);
-                return true;
-            }
-        });
+        mExpandListView.setOnGroupClickListener(this);
     }
 
     /**
@@ -168,6 +162,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 Log.d("RecommendListDetailActi", "mRecommendSCFDList:" + mRecommendSCFDList);
                 break;
         }
+    }
+    @Override
+    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+        ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mScfd, groupPosition);
+        return true;
     }
 
     @Override
