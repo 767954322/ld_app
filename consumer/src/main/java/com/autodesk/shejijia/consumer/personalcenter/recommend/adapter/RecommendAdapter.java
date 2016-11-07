@@ -3,6 +3,7 @@ package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -50,7 +51,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
         holder.setText(R.id.tv_reco_consumer_mobile, item.getConsumer_mobile());
         holder.setText(R.id.tv_reco_item_address, item.getProvince_name() + item.getCity_name() + item.getDistrict_name());
         holder.setText(R.id.tv_reco_item_details_address, item.getCommunity_address());
-        holder.setText(R.id.tv_create_date,item.getDate_submitted());
+        holder.setText(R.id.tv_create_date, item.getDate_submitted());
         holder.setOnClickListener(R.id.tv_edit_btn, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +81,8 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
         new AlertView(null, content, "取消", null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
             @Override
             public void onItemClick(Object object, int position) {
-                revokeRecommend(item.getAsset_id(), object1);
+                if (position != -1)
+                    revokeRecommend(item.getAsset_id(), object1);
             }
         }).show();
     }
@@ -89,21 +91,13 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> {
         MPServerHttpManager.getInstance().revokeRecommend(id, object1, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                showLoadSuccessView("失败");
+                Toast.makeText(mContext, "失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(JSONObject object) {
-                showLoadSuccessView("操作成功");
+                Toast.makeText(mContext, "成功", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void showLoadSuccessView(String content) {
-        new AlertView(null, content, null, null, new String[]{UIUtils.getString(R.string.sure)}, mContext, AlertView.Style.Alert, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Object object, int position) {
-            }
-        }).show();
     }
 }
