@@ -13,6 +13,8 @@ import android.widget.ListView;
  */
 public class PullListView extends ListView implements Pullable
 {
+
+    private boolean isCanRefresh = true;
     ///构造方法.
     public PullListView(Context context)
     {
@@ -32,13 +34,14 @@ public class PullListView extends ListView implements Pullable
     @Override
     public boolean canPullDown()
     {
-        if (getCount() == 0)
-        {
-            // 没有item的时候也可以下拉刷新
-            return true;
-        } else // 滑到ListView的顶部了
-            return getFirstVisiblePosition() == 0
-                    && getChildAt(0).getTop() >= 0;
+//        if (getCount() == 0)
+//        {
+//            // 没有item的时候也可以下拉刷新
+//            return true;
+//        } else // 滑到ListView的顶部了
+//            return getFirstVisiblePosition() == 0
+//                    && getChildAt(0).getTop() >= 0;
+        return setIsCanRefresh();
     }
 
     @Override
@@ -59,4 +62,35 @@ public class PullListView extends ListView implements Pullable
         }
         return false;
     }
+    /**
+     增加可手动控制的刷新功能控制
+    * 修改人：xuehua.yao
+    */
+    public boolean setIsCanRefresh(){
+
+        if (isCanRefresh){
+
+
+            if (getCount() == 0)
+            {
+                // 没有item的时候也可以下拉刷新
+                return true;
+            } else // 滑到ListView的顶部了
+                return getFirstVisiblePosition() == 0
+                        && getChildAt(0).getTop() >= 0;
+        }else {
+            return false;
+        }
+    }
+
+    /**
+     设置外层调用。让刷新功能不可用
+     *修改人：xuehua.yao
+    */
+    public void setCanRefresh(boolean refresh){
+
+        this.isCanRefresh = refresh;
+    }
+
+
 }

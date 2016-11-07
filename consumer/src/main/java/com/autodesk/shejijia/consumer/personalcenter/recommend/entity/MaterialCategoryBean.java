@@ -1,12 +1,17 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by yaoxuehua on 16-10-26.
+ * @author yaoxuehua .
+ * @version v1.0 .
+ * @date 16-11-3 .
+ * @file MaterialCategoryBean.java .
+ * @brief 一二级品类信息BEAN.
  */
 
-public class MaterialCategoryBean {
+public class MaterialCategoryBean implements Serializable{
 
     /**
      * category_3d_id : 1df3e3a8-15b0-4647-bd69-e64350cab281
@@ -24,7 +29,7 @@ public class MaterialCategoryBean {
         this.categories_3d = categories_3d;
     }
 
-    public static class Categories3dBean {
+    public static class Categories3dBean implements Serializable{
         private String category_3d_id;
         private String category_3d_name;
         /**
@@ -58,7 +63,7 @@ public class MaterialCategoryBean {
             this.sub_category = sub_category;
         }
 
-        public static class SubCategoryBean {
+        public static class SubCategoryBean implements Serializable{
             private String sub_category_3d_id;
             private String sub_category_3d_name;
 

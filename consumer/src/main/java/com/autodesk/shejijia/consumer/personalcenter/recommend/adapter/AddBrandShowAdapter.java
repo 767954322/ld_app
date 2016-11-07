@@ -9,13 +9,18 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.CheckedInformationBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yaoxuehua on 16-10-26.
+ * @author yaoxuehua .
+ * @version v1.0 .
+ * @date 16-11-3 .
+ * @file AddBrandShowAdapter.java .
+ * @brief 展示品牌的适配器.
  */
 
 public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
@@ -25,29 +30,18 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
     private int layoutId;
     private Handler handler;
     private List<BtnStatusBean> list;
-    private int countNumber = 0;
 
-    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId, Handler handler) {
+    public AddBrandShowAdapter(Context context, List<RecommendBrandsBean> datas, int layoutId, Handler handler, List<BtnStatusBean> list) {
         super(context, datas, layoutId);
         this.handler = handler;
         this.context = context;
         this.datas = datas;
         this.layoutId = layoutId;
-        list = new ArrayList<>();
+        this.list = list;
     }
 
     @Override
     public void convert(final CommonViewHolder holder, final RecommendBrandsBean brandsBean) {
-
-        BtnStatusBean btnStatusBean;
-
-        if (countNumber < datas.size()) {
-            btnStatusBean = new BtnStatusBean();
-            btnStatusBean.setCountOffset(holder.getPosition());
-            btnStatusBean.setSingleClickOrDoubleBtnCount(2);
-            list.add(holder.getPosition(), btnStatusBean);
-            countNumber++;
-        }
 
 
         holder.setText(R.id.brand_name, brandsBean.getBrand_name());
@@ -78,33 +72,67 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
         private RecommendBrandsBean brandsBean;
 
 
-        public ItemImgListener(final CommonViewHolder holder, final RecommendBrandsBean brandsBean) {
+        public ItemImgListener(final CommonViewHolder holder, final RecommendBrandsBean brandBean) {
 
             this.holder = holder;
-            this.brandsBean = brandsBean;
+            this.brandsBean = brandBean;
         }
 
         @Override
         public void onClick(View v) {
 
+            //装在标志位以及需要品牌
+            CheckedInformationBean checkedInformationBean = new CheckedInformationBean();
+            //装在品牌
+            checkedInformationBean.setRecommendBrandsBean(brandsBean);
             Message message = Message.obtain();
-            message.obj = brandsBean;
-
+            BtnStatusBean btnStatusBeanCheckedCount;
             BtnStatusBean btnStatusBeanImg = list.get(holder.getPosition());
-            if (btnStatusBeanImg.getSingleClickOrDoubleBtnCount() == 2) {
+            int countNumber = 0;
+            boolean isCanSend = false;
+            for (int i = 0; i < list.size(); i++) {
+                btnStatusBeanCheckedCount = list.get(i);
+
+                if (btnStatusBeanCheckedCount.getSingleClickOrDoubleBtnCount() == 1) {
+
+                    countNumber++;
+                }
+            }
+
+            if (btnStatusBeanImg.getSingleClickOrDoubleBtnCount() == 2 && countNumber <= 5) {
 
                 message.what = 1;
                 v.setBackgroundResource(R.drawable.brand_checked);
                 btnStatusBeanImg.setSingleClickOrDoubleBtnCount(1);
+                isCanSend = true;
             } else {
 
-                message.what = 2;
-                v.setBackgroundResource(R.drawable.brand_unchecked);
-                btnStatusBeanImg.setSingleClickOrDoubleBtnCount(2);
-            }
-            list.set(holder.getPosition(), btnStatusBeanImg);
+                if (btnStatusBeanImg.getSingleClickOrDoubleBtnCount() == 1) {
 
-            handler.sendMessage(message);
+                    message.what = 2;
+                    v.setBackgroundResource(R.drawable.brand_unchecked);
+                    btnStatusBeanImg.setSingleClickOrDoubleBtnCount(2);
+                    isCanSend = true;
+                }
+            }
+
+            //装在标志位，并发送
+            if (isCanSend) {
+                list.set(holder.getPosition(), btnStatusBeanImg);
+                checkedInformationBean.setList(list);
+                message.obj = checkedInformationBean;
+                handler.sendMessage(message);
+                isCanSend = false;
+            }
         }
+    }
+
+    /**
+     * 改变Tag
+     */
+    public void changeListTag(List<BtnStatusBean> list, List<RecommendBrandsBean> datas) {
+
+        this.list = list;
+        this.datas = datas;
     }
 }

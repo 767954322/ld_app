@@ -28,6 +28,7 @@ import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyBidActi
 import com.autodesk.shejijia.consumer.personalcenter.designer.activity.MyPropertyActivity;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.DesignerInfoDetails;
 import com.autodesk.shejijia.consumer.personalcenter.designer.entity.RealName;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.AddMaterialActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DcRecommendActivity;
 import com.autodesk.shejijia.consumer.utils.ApiStatusUtil;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -305,7 +306,8 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
                 break;
 
             case R.id.ll_personal_designer_msg_center:/// 消息中心页面.
-                Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
+//                Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
+                Intent intent_messagecenter = new Intent(this, AddMaterialActivity.class);
                 startActivity(intent_messagecenter);
                 break;
 
