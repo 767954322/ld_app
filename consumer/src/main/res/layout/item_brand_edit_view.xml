@@ -11,8 +11,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_brand_name"
@@ -21,7 +20,6 @@
             android:paddingTop="14dp"
             android:text="品牌名称"
             android:textStyle="bold"/>
-
 
         <TextView
             android:id="@+id/tv_brand_change"
@@ -83,9 +81,9 @@
         <com.autodesk.shejijia.consumer.personalcenter.recommend.view.customspinner.MaterialSpinner
             android:id="@+id/spinner_brand_apartment"
             android:layout_width="@dimen/size_160"
-            android:textSize="@dimen/font_15"
             android:layout_height="@dimen/size_30"
             android:layout_gravity="start|center_vertical"
+            android:textSize="@dimen/font_15"
             app:ms_dropdown_height="wrap_content"
             app:ms_dropdown_max_height="@dimen/size_200"/>
     </LinearLayout>

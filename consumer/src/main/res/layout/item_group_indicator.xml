@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/white"
-              android:gravity="center_vertical"
-              android:orientation="horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white"
+                android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/tv_category_name"
@@ -16,13 +15,16 @@
         android:textColor="@color/color_blue_0084ff"
         android:textStyle="bold"/>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/groupIcon"-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:contentDescription="@null"-->
-        <!--android:src="@drawable/icon_unfold_normal"/>-->
+    <ImageView
+        android:id="@+id/groupIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/icon_unfold_normal"/>
+
+    <include layout="@layout/line_view"/>
     <!-- <TextView
          android:id="@+id/groupto"
          android:layout_width="match_parent"
@@ -30,4 +32,4 @@
          android:textColor="#000000"
          android:textSize="18sp"
          android:gravity="center_vertical|left"/>-->
-</LinearLayout>
+</RelativeLayout>

@@ -62,7 +62,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             view = createChildrenView();
             mViewHolder = new ViewHolder();
             mViewHolder.mEditText = (EditText) view.findViewById(R.id.et_brand_num);
-
+            mViewHolder.mBrandName = (TextView) view.findViewById(R.id.tv_brand_name);
             setOnTouchListenerForEditText(mViewHolder.mEditText);
             // 让ViewHolder持有一个TextWathcer，动态更新position来防治数据错乱；不能将position定义成final直接使用，必须动态更新
             mViewHolder.mTextWatcher = new ExpandListTextWatcher();
@@ -73,7 +73,9 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             view.setTag(mViewHolder);
         }
         String amountAndUnit = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).getAmountAndUnit();
+        String brandName = mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition).getBrand_name();
         mViewHolder.mEditText.setText(amountAndUnit);
+        mViewHolder.mBrandName.setText(brandName);
         mViewHolder.mEditText.setTag(groupPosition * 10 + childPosition);
 
         if ((mTouchItemPosition / 10 == groupPosition) && (mTouchItemPosition % 10 == childPosition)) {
@@ -104,6 +106,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     static  class ViewHolder {
         EditText mEditText;
+        TextView mBrandName;
         ExpandListTextWatcher mTextWatcher;
 
         //动态更新TextWathcer的position
