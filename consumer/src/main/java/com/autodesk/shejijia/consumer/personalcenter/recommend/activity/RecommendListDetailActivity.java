@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.ViewCategoryAdater;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
+
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.CustomHeaderExpandableListView;
@@ -34,7 +36,6 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.jsonToBean;
@@ -47,7 +48,7 @@ import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.js
  */
 public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener {
 
-    private CustomHeaderExpandableListView mRecyclerViewList;
+    private CustomHeaderExpandableListView mExpandListView;
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
     private String mAsset_id;
@@ -70,10 +71,16 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     @Override
     protected void initView() {
         super.initView();
-        mRecyclerViewList = (CustomHeaderExpandableListView) findViewById(R.id.rcy_recommend_detail);
-
+        mExpandListView = (CustomHeaderExpandableListView) findViewById(R.id.rcy_recommend_detail);
+        mExpandListView.addFooterView(getFooterView());
+//        mExpandListView.addView();
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
         mLlEmptyContentView = (LinearLayout) findViewById(R.id.empty_view);
+    }
+
+    private View getFooterView() {
+        View footerView = LayoutInflater.from(this).inflate(R.layout.item_recommend_button_footer, null);
+        return footerView;
     }
 
     @Override
@@ -94,9 +101,9 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     protected void initListener() {
         super.initListener();
         mBtnListSend.setOnClickListener(this);
-        mRecyclerViewList.setGroupIndicator(null); //去掉箭头
+        mExpandListView.setGroupIndicator(null); //去掉箭头
         //点击不可收缩
-        mRecyclerViewList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        mExpandListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
@@ -148,12 +155,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             mLlEmptyContentView.setVisibility(View.VISIBLE);
         } else {
             mLlEmptyContentView.setVisibility(View.GONE);
-            mRecyclerViewList.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
-                    mRecyclerViewList, false));
-            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, recommendSCFDList, mRecyclerViewList);
-            mRecyclerViewList.setAdapter(mRecommendExpandableAdapter);
+            mExpandListView.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
+                    mExpandListView, false));
+            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, recommendSCFDList, mExpandListView);
+            mExpandListView.setAdapter(mRecommendExpandableAdapter);
             for (int i = 0; i < recommendSCFDList.size(); i++) {
-                mRecyclerViewList.expandGroup(i);
+                mExpandListView.expandGroup(i);
             }
         }
     }
