@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.form.common.network.FormServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
-import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,30 +35,30 @@ public class FormRemoteDataSource implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final LoadDataCallback<List> callBack, String[] fid) {
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, String[] fid) {
         FormServerHttpManager.getInstance().getFormItemDetails(fid, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callBack.onLoadFailed(volleyError.getMessage());
+                callBack.onError(volleyError.getMessage());
             }
             @Override
             public void onResponse(JSONArray jsonArray) {
                 List jsonMapList = FormJsonFileUtil.jsonArray2List(jsonArray);
-                callBack.onLoadSuccess(jsonMapList);
+                callBack.onSuccess(jsonMapList);
             }
         });
     }
 
-    public void updateFormDataWithData(List<Map> forms, Bundle bundle, @NonNull final LoadDataCallback callBack) {
+    public void updateFormDataWithData(List<Map> forms, Bundle bundle, @NonNull final ResponseCallback callBack) {
         FormServerHttpManager.getInstance().updateForms(forms, bundle, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callBack.onLoadFailed(volleyError.getMessage());
+                callBack.onError(volleyError.getMessage());
             }
 
             @Override
             public void onResponse(JSONObject jsonObject) {
-                callBack.onLoadSuccess(jsonObject);
+                callBack.onSuccess(jsonObject);
             }
         });
     }

@@ -3,13 +3,15 @@ package com.autodesk.shejijia.shared.components.form.data;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.autodesk.shejijia.shared.components.common.datamodel.ProjectRemoteDataSource;
+import com.autodesk.shejijia.shared.components.common.entity.Project;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Form;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
+import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
 import com.autodesk.shejijia.shared.components.form.common.uitity.JsonAssetHelper;
 import com.autodesk.shejijia.shared.components.form.data.source.FormDataSource;
 import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
-import com.autodesk.shejijia.shared.components.common.listener.LoadDataCallback;
 import com.autodesk.shejijia.shared.components.form.data.source.FormRemoteDataSource;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
 
@@ -26,6 +28,7 @@ import java.util.Map;
 
 public class FormRepository implements FormDataSource {
 
+    private Project mProject;
     private static HashMap<String,String> json2Path;
     private List<ContainedForm> mFormList;
     private String projectID;
@@ -45,12 +48,12 @@ public class FormRepository implements FormDataSource {
     }
 
     @Override
-    public void getRemoteFormItemDetails(@NonNull final LoadDataCallback<List> callBack, final String[] fIds) {
+    public void getRemoteFormItemDetails(@NonNull final ResponseCallback<List> callBack, final String[] fIds) {
         if(mFormList == null || mFormList.size() == 0){
             mFormList = new ArrayList<>();
-            FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new LoadDataCallback<List>() {
+            FormRemoteDataSource.getInstance().getRemoteFormItemDetails(new ResponseCallback<List>() {
                 @Override
-                public void onLoadSuccess(List data){
+                public void onSuccess(List data){
                     for(int i = 0 ; i < data.size() ; i++){
                         HashMap remoteMap = (HashMap) data.get(i);
                         String fileName = String.format("%s.json",remoteMap.get("form_template_id"));
@@ -62,18 +65,18 @@ public class FormRepository implements FormDataSource {
                         form.applyFormData(remoteMap);
                         mFormList.add(form);
                     }
-                    callBack.onLoadSuccess(mFormList);
+                    callBack.onSuccess(mFormList);
                 }
                 @Override
-                public void onLoadFailed(String errorMsg) {
-                    callBack.onLoadFailed(errorMsg);
+                public void onError(String errorMsg) {
+                    callBack.onError(errorMsg);
                 }
             },fIds);
         }
     }
 
 
-    public void updateRemoteForms(List<ContainedForm> forms, Bundle bundle,  @NonNull final LoadDataCallback callBack) {
+    public void updateRemoteForms(List<ContainedForm> forms, Bundle bundle,  @NonNull final ResponseCallback callBack) {
         if(forms == null || forms.size() == 0){
             return;
         }
@@ -82,15 +85,15 @@ public class FormRepository implements FormDataSource {
         for(ContainedForm form : forms){
             tempFormList.add(form.getUpdateFormData());
         }
-        FormRemoteDataSource.getInstance().updateFormDataWithData(tempFormList,bundle, new LoadDataCallback() {
+        FormRemoteDataSource.getInstance().updateFormDataWithData(tempFormList,bundle, new ResponseCallback() {
             @Override
-            public void onLoadSuccess(Object data) {
-                callBack.onLoadSuccess(data);
+            public void onSuccess(Object data) {
+                callBack.onSuccess(data);
             }
 
             @Override
-            public void onLoadFailed(String errorMsg) {
-                callBack.onLoadFailed(errorMsg);
+            public void onError(String errorMsg) {
+                callBack.onError(errorMsg);
             }
         });
     }

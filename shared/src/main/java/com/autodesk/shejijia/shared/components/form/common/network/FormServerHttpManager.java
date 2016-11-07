@@ -1,14 +1,19 @@
 package com.autodesk.shejijia.shared.components.form.common.network;
 
+import android.os.Bundle;
+
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.autodesk.shejijia.shared.Config;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
 import com.autodesk.shejijia.shared.components.common.network.NetRequestManager;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
 import com.autodesk.shejijia.shared.components.common.utility.UrlUtils;
 import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
-import com.autodesk.shejijia.shared.components.form.common.entity.ContainedForm;
 import com.autodesk.shejijia.shared.framework.AdskApplication;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +48,7 @@ public class FormServerHttpManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> header = new HashMap<>();
+                header.put("Accept", "application/json");
                 header.put(Constant.NetBundleKey.CONTENT_TYPE, Constant.NetBundleKey.APPLICATON_JSON);
                 header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
@@ -59,8 +65,7 @@ public class FormServerHttpManager {
                 Map<String, String> header = new HashMap<>();
                 header.put("Accept", "application/json");
                 header.put("Content-type", "application/json;charset=UTF-8");
-//                header.put("Accept", Constant.NetBundleKey.APPLICATON_JSON);
-                header.put("X-Token", "587e1e6bd9c26875535868dec8e3045c");
+                header.put("X-Token", UserInfoUtils.getToken(AdskApplication.getInstance()));
                 return header;
             }
         };
