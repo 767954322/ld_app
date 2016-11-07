@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -15,13 +13,13 @@ import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanCont
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.EditPlanPresenter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditMilestoneNodeFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.EditTaskNodeFragment;
-import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.autodesk.shejijia.shared.framework.activity.ToolBarActivity;
 
 /**
  * Created by wenhulin on 11/2/16.
  */
 
-public class CreateOrEditPlanActivity extends BaseActivity {
+public class CreateOrEditPlanActivity extends ToolBarActivity {
     private final static String FRAGMENT_TAG_EDIT_MILESTONE = "edit_milestone";
     private final static String FRAGMENT_TAG_EDIT_TASKNODE = "edit_task_node";
 
@@ -37,8 +35,7 @@ public class CreateOrEditPlanActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        super.initView();
 
         mActionBtn = (Button) findViewById(R.id.actionButton);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
