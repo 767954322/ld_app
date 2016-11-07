@@ -11,7 +11,6 @@ import com.autodesk.shejijia.shared.components.common.entity.ProjectList;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.utility.LogUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.data.ProjectRepository;
@@ -146,7 +145,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
     }
 
     @Override
-    public void onStarLabelProject(List<ProjectInfo> projectList, final boolean like, int position) {
+    public void updateProjectLikesState(List<ProjectInfo> projectList, final boolean like, int position) {
         //init requestParams
         Bundle requestParamsBundle = new Bundle();
         requestParamsBundle.putLong("pid", projectList.get(position).getProjectId());
@@ -158,20 +157,23 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             e.printStackTrace();
         }
 
-        mProjectRepository.onStarProject(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, requestJson, new ResponseCallback<Like>() {
+        updateProjectLikes(requestParamsBundle, requestJson);
+    }
+
+    private void updateProjectLikes(Bundle requestParamsBundle, JSONObject requestJson) {
+        mProjectRepository.updateProjectLikes(requestParamsBundle, ConstructionConstants.REQUEST_TAG_STAR_PROJECTS, requestJson, new ResponseCallback<Like>() {
             @Override
             public void onSuccess(Like data) {
                 mProjectListView.hideLoading();
                 LogUtils.e("like", data.getLike() + "---" + data.getUid());
-                if (data != null) {
-                    // TODO: 11/4/16 更新ui 
-                }
+                // TODO: 11/4/16 更新ui
+
             }
 
             @Override
             public void onError(String errorMsg) {
                 mProjectListView.hideLoading();
-                // TODO: 11/4/16 用ui提示错误 
+                // TODO: 11/4/16 用ui提示错误
             }
         });
     }

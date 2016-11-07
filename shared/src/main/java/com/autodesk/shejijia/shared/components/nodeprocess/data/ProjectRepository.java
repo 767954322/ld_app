@@ -79,7 +79,8 @@ public final class ProjectRepository implements ProjectDataSource {
         ProjectRemoteDataSource.getInstance().getPlanByProjectId(pid, requestTag, callback);
 	｝
 
-    public void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback) {
-        ProjectRemoteDataSource.getInstance().onStarProject(requestParams, requestTag, jsonRequest, callback);
+    @Override
+    public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback) {
+        ProjectRemoteDataSource.getInstance().updateProjectLikes(requestParams, requestTag, jsonRequest, callback);
     }
 }

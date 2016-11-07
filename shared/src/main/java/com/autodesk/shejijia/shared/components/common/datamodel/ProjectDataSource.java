@@ -11,7 +11,6 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.PlanInfo;
 
 import com.autodesk.shejijia.shared.components.common.entity.microbean.Like;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
-import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 
 import org.json.JSONObject;
 
@@ -42,7 +41,7 @@ public interface ProjectDataSource {
     /*
     * 星标项目
     * */
-    void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback);
+    void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull ResponseCallback<Like> callback);
 
 
 }

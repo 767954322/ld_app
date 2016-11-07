@@ -185,7 +185,7 @@ public class ConstructionHttpManager {
     * 星标项目接口 (put请求类型)
     * callback 更新回调接口
     * */
-    public void putStarProject(@NonNull Bundle requestParams, @Nullable String requestTag,
+    public void putProjectLikes(@NonNull Bundle requestParams, @Nullable String requestTag,
                                @NonNull JSONObject jsonRequest, OkJsonRequest.OKResponseCallback callback) {
         LogUtils.e("like_body", jsonRequest.toString());
         String requestUrl = ConstructionConstants.BASE_URL + "/projects/" + requestParams.getLong("pid") + "/likes";

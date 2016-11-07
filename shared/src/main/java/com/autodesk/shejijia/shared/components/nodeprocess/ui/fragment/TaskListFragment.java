@@ -125,7 +125,7 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
 
     @Override
     public void onStarLabelClick(List<ProjectInfo> projectList, boolean like, int position) {
-        mProjectListPresenter.onStarLabelProject(projectList, like, position);
+        mProjectListPresenter.updateProjectLikesState(projectList, like, position);
     }
 
     @Override

@@ -73,6 +73,6 @@ public interface ProjectListContract {
         /*
         * 星标项目
         * */
-        void onStarLabelProject(List<ProjectInfo> projectList, boolean like, int position);
+        void updateProjectLikesState(List<ProjectInfo> projectList, boolean like, int position);
     }
 }

@@ -128,8 +128,8 @@ public final class ProjectRemoteDataSource implements ProjectDataSource {
     }
     
 
-    public void onStarProject(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Like> callback) {
-        ConstructionHttpManager.getInstance().putStarProject(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
+    public void updateProjectLikes(Bundle requestParams, String requestTag, JSONObject jsonRequest, @NonNull final ResponseCallback<Like> callback) {
+        ConstructionHttpManager.getInstance().putProjectLikes(requestParams, requestTag, jsonRequest, new OkJsonRequest.OKResponseCallback() {
 
             @Override
             public void onResponse(JSONObject jsonObject) {
