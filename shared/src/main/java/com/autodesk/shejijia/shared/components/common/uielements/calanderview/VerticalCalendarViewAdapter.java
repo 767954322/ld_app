@@ -12,6 +12,7 @@ import com.autodesk.shejijia.shared.R;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.DayFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.TitleFormatter;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.format.WeekDayFormatter;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.List;
 
@@ -54,8 +55,7 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
         ViewGroup monthContainer;
         MonthView monthView;
         CalendarDay calendarDay = getItem(position);
-        //TODO Do optimize
-//        if (convertView == null) {
+        if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mcv.getContext());
             monthContainer = (ViewGroup) inflater.inflate(R.layout.item_month, null);
             monthView = new MonthView(mcv, getItem(position), mcv.getFirstDayOfWeek(), false);
@@ -64,29 +64,29 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
                     mcv.getResources().getDimensionPixelSize(R.dimen.month_view_height));
             monthView.setLayoutParams(layoutParams);
             monthContainer.addView(monthView);
-//        } else {
-//            monthContainer = (ViewGroup) convertView;
-//            monthView = (MonthView) monthContainer.findViewById(R.id.mcv_month_view);
-//        }
+            monthView.setContentDescription(mcv.getCalendarContentDescription());
+            monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
+            monthView.setShowOtherDates(mAdapterHelper.getShowOtherDates());
+            monthView.setMinimumDate(mAdapterHelper.getMininumDate());
+            monthView.setMaximumDate(mAdapterHelper.getMaximumDate());
+            monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
+            monthView.setShowWeekDays(false);
+            monthView.setDateTextAppearance(mAdapterHelper.getDateTextAppearance());
+            monthView.setWeekDayFormatter(mAdapterHelper.getWeekDayFormatter());
+        } else {
+            monthContainer = (ViewGroup) convertView;
+            monthView = (MonthView) monthContainer.findViewById(R.id.mcv_month_view);
+            monthView.reuse(getItem(position), mcv.getFirstDayOfWeek());
+        }
 
         TextView textView = (TextView) monthContainer.findViewById(R.id.item_title);
-        textView.setText(calendarDay.getYear()
+        textView.setText(DateUtil.getStringDateByFormat(calendarDay.getDate(), "yyyy")
                 + mcv.getContext().getString(R.string.year)
-                + calendarDay.getMonth()
+                + DateUtil.getStringDateByFormat(calendarDay.getDate(), "M")
                 + mcv.getContext().getString(R.string.month));
 
-//        monthView.setData(getItem(position), mcv.getFirstDayOfWeek()); //TODO Do more optimize
-        monthView.setContentDescription(mcv.getCalendarContentDescription());
-        monthView.setSelectionEnabled(mAdapterHelper.getSelectionEnabled());
-        monthView.setShowOtherDates(mAdapterHelper.getShowOtherDates());
-        monthView.setMinimumDate(mAdapterHelper.getMininumDate());
-        monthView.setMaximumDate(mAdapterHelper.getMaximumDate());
         monthView.setSelectedDates(mAdapterHelper.getSelectedDates());
         monthView.setDayViewDecorators(mAdapterHelper.getDecoratorResult());
-        monthView.setDayFormatter(mAdapterHelper.getDayFormatter());
-        monthView.setShowWeekDays(false);
-        monthView.setDateTextAppearance(mAdapterHelper.getDateTextAppearance());
-        monthView.setWeekDayFormatter(mAdapterHelper.getWeekDayFormatter());
 
         return monthContainer;
     }
@@ -108,16 +108,6 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
     @Override
     public void setWeekDayTextAppearance(int resourceId) {
 
-    }
-
-    /**
-     * Set the currently selected page.
-     *
-     * @param item Item index to select
-     * @param smoothScroll True to smoothly scroll to the new item, false to transition immediately
-     */
-    public void setCurrentItem(int item, boolean smoothScroll) {
-        // TODO scroll to current month
     }
 
     public void setDecorators(List<DayViewDecorator> decorators) {
@@ -173,7 +163,6 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
 
     public void setDayFormatter(DayFormatter formatter) {
         mAdapterHelper.setDayFormatter(formatter);
-//        notifyDataSetChanged();
     }
 
     @Override

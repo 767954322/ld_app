@@ -11,7 +11,7 @@ import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.components.nodeprocess.contract.EditPlanContract;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.ActiveMileStoneDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.DateSelectorDecorator;
-import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormator;
+import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneDayFormatter;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.MileStoneNodeDecorator;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.widgets.calendar.WeekDayFormatter;
 import com.autodesk.shejijia.shared.framework.fragment.BaseFragment;
@@ -30,7 +30,7 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     private MileStoneNodeDecorator mMileStoneDecorator;
     private DateSelectorDecorator mSelectorDecorator;
     private ActiveMileStoneDecorator mMileStoneActiveDecorator;
-    private MileStoneDayFormator mMileStoneDayFormator;
+    private MileStoneDayFormatter mMileStoneDayFormator;
 
     private EditPlanContract.Presenter mPresenter;
 
@@ -110,13 +110,13 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
     }
 
     private void setUpCalendarView() {
-        mMileStoneDayFormator = new MileStoneDayFormator();
+        mMileStoneDayFormator = new MileStoneDayFormatter();
         mMileStoneDecorator = new MileStoneNodeDecorator(getActivity());
         mSelectorDecorator = new DateSelectorDecorator(getActivity(), false);
         mMileStoneActiveDecorator = new ActiveMileStoneDecorator(getActivity());
-        mCalendarWidget.addDecorator(mSelectorDecorator);
-        mCalendarWidget.addDecorator(mMileStoneActiveDecorator);
-        mCalendarWidget.addDecorator(mMileStoneDecorator);
+        mCalendarWidget.addDecorators(mSelectorDecorator,
+                mMileStoneActiveDecorator,
+                mMileStoneDecorator);
         mCalendarWidget.setSelectionMode(MaterialCalendarView.SELECTION_MODE_SINGLE);
         mCalendarWidget.setWeekDayFormatter(new WeekDayFormatter(getContext()));
         mCalendarWidget.setDayFormatter(mMileStoneDayFormator);

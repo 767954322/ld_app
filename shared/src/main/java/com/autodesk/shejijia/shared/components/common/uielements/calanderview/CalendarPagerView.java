@@ -66,6 +66,20 @@ abstract class CalendarPagerView extends ViewGroup implements View.OnClickListen
         buildDayViews(dayViews, resetAndGetWorkingCalendar());
     }
 
+    public void reuse(CalendarDay firstViewDay, int firstDayOfWeek) {
+        this.firstViewDay = firstViewDay;
+        this.firstDayOfWeek = firstDayOfWeek;
+
+        Calendar calendar = resetAndGetWorkingCalendar();
+        for (DayView dayView : dayViews) {
+            CalendarDay day = CalendarDay.from(calendar);
+            dayView.setDay(day);
+            calendar.add(DATE, 1);
+        }
+
+        updateUi();
+    }
+
     private void buildWeekDays(Calendar calendar) {
         if (!this.showWeekDates) {
             return;

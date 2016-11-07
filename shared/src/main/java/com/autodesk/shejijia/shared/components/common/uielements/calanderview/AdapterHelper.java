@@ -18,8 +18,6 @@ import java.util.List;
  */
 
 public class AdapterHelper<V extends CalendarPagerView> {
-    private final ArrayDeque<V> currentViews;
-
     protected final MaterialCalendarView mcv;
     private final CalendarDay today;
 
@@ -42,8 +40,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
     AdapterHelper(MaterialCalendarView mcv) {
         this.mcv = mcv;
         this.today = CalendarDay.today();
-        currentViews = new ArrayDeque<>();
-        currentViews.iterator();
         setRangeDates(null, null);
     }
 
@@ -60,9 +56,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
             if (facade.isDecorated()) {
                 decoratorResults.add(new DecoratorResult(decorator, facade));
             }
-        }
-        for (V pagerView : currentViews) {
-            pagerView.setDayViewDecorators(decoratorResults);
         }
     }
 
@@ -83,39 +76,8 @@ public class AdapterHelper<V extends CalendarPagerView> {
         return rangeIndex.indexOf(day);
     }
 
-    public Object initItem(V pagerView) {
-        pagerView.setContentDescription(mcv.getCalendarContentDescription());
-        pagerView.setAlpha(0);
-        pagerView.setSelectionEnabled(selectionEnabled);
-
-        pagerView.setWeekDayFormatter(weekDayFormatter);
-        pagerView.setDayFormatter(dayFormatter);
-        if (color != null) {
-            pagerView.setSelectionColor(color);
-        }
-        if (dateTextAppearance != null) {
-            pagerView.setDateTextAppearance(dateTextAppearance);
-        }
-        if (weekDayTextAppearance != null) {
-            pagerView.setWeekDayTextAppearance(weekDayTextAppearance);
-        }
-        pagerView.setShowOtherDates(showOtherDates);
-        pagerView.setMinimumDate(minDate);
-        pagerView.setMaximumDate(maxDate);
-        pagerView.setSelectedDates(selectedDates);
-
-        currentViews.add(pagerView);
-
-        pagerView.setDayViewDecorators(decoratorResults);
-
-        return pagerView;
-    }
-
     public void setSelectionEnabled(boolean enabled) {
         selectionEnabled = enabled;
-        for (V pagerView : currentViews) {
-            pagerView.setSelectionEnabled(selectionEnabled);
-        }
     }
 
     public boolean getSelectionEnabled() {
@@ -124,9 +86,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
 
     public void setSelectionColor(int color) {
         this.color = color;
-        for (V pagerView : currentViews) {
-            pagerView.setSelectionColor(color);
-        }
     }
 
     public void setDateTextAppearance(int taId) {
@@ -134,23 +93,14 @@ public class AdapterHelper<V extends CalendarPagerView> {
             return;
         }
         this.dateTextAppearance = taId;
-        for (V pagerView : currentViews) {
-            pagerView.setDateTextAppearance(taId);
-        }
     }
 
     public void setShowOtherDates(@MaterialCalendarView.ShowOtherDates int showFlags) {
         this.showOtherDates = showFlags;
-        for (V pagerView : currentViews) {
-            pagerView.setShowOtherDates(showFlags);
-        }
     }
 
     public void setWeekDayFormatter(WeekDayFormatter formatter) {
         this.weekDayFormatter = formatter;
-        for (V pagerView : currentViews) {
-            pagerView.setWeekDayFormatter(formatter);
-        }
     }
 
     public WeekDayFormatter getWeekDayFormatter() {
@@ -159,9 +109,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
 
     public void setDayFormatter(DayFormatter formatter) {
         this.dayFormatter = formatter;
-        for (V pagerView : currentViews) {
-            pagerView.setDayFormatter(formatter);
-        }
     }
 
     public DayFormatter getDayFormatter() {
@@ -178,9 +125,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
             return;
         }
         this.weekDayTextAppearance = taId;
-        for (V pagerView : currentViews) {
-            pagerView.setWeekDayTextAppearance(taId);
-        }
     }
 
     public DateRangeIndex getRangeIndex() {
@@ -208,9 +152,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
 
     public void invalidateSelectedDates() {
         validateSelectedDates();
-        for (V pagerView : currentViews) {
-            pagerView.setSelectedDates(selectedDates);
-        }
     }
 
     private void validateSelectedDates() {
@@ -245,10 +186,6 @@ public class AdapterHelper<V extends CalendarPagerView> {
     public void setRangeDates(CalendarDay min, CalendarDay max) {
         this.minDate = min;
         this.maxDate = max;
-        for (V pagerView : currentViews) {
-            pagerView.setMinimumDate(min);
-            pagerView.setMaximumDate(max);
-        }
 
         if (min == null) {
             min = CalendarDay.from(today.getYear() - 200, today.getMonth(), today.getDay());
