@@ -7,6 +7,7 @@ import com.android.volley.VolleyError;
 import com.autodesk.shejijia.shared.components.common.listener.ResponseCallback;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonArrayRequest;
 import com.autodesk.shejijia.shared.components.common.network.OkJsonRequest;
+import com.autodesk.shejijia.shared.components.common.utility.ResponseErrorUtil;
 import com.autodesk.shejijia.shared.components.form.common.network.FormServerHttpManager;
 import com.autodesk.shejijia.shared.components.common.utility.FormJsonFileUtil;
 
@@ -39,7 +40,7 @@ public class FormRemoteDataSource implements FormDataSource {
         FormServerHttpManager.getInstance().getFormItemDetails(fid, new OkJsonArrayRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callBack.onError(volleyError.getMessage());
+                ResponseErrorUtil.checkVolleyError(volleyError,callBack);
             }
             @Override
             public void onResponse(JSONArray jsonArray) {
@@ -53,7 +54,7 @@ public class FormRemoteDataSource implements FormDataSource {
         FormServerHttpManager.getInstance().updateForms(forms, bundle, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                callBack.onError(volleyError.getMessage());
+                ResponseErrorUtil.checkVolleyError(volleyError,callBack);
             }
 
             @Override
