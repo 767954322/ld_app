@@ -235,11 +235,11 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             public void onResponse(JSONObject jsonObject) {
 
                 materialCategoryBean = GsonUtil.jsonToBean(jsonObject.toString(), MaterialCategoryBean.class);
-                showOneCategory();
                 //默认加入二级品类第一次进入集合
                 listChecked = new ArrayList<>();//默认建立该品类下的品牌集合
                 //将清单传来的数据整合到总集合，并增加默认集合
                 setTotalListForListData();
+                showOneCategory();
                 //默认可选择品牌数量
                 showBrandRemainCount();
 
@@ -422,24 +422,25 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
          * 该品类的标志位
          */
         BtnStatusBean btnStatusBean;
+        List<BtnStatusBean> listTagFor = null;
         for (int i = 0; i < totalList.size(); i++) {
             String categoryName = totalList.get(i).getSubCategoryBean().getSub_category_3d_name();
             if (categoryName.equals(currentSubCategoryName)) {
                 totalList.get(i).setHavedBrandsInformationBean(haveDCheckedBrandsList);
-                listTag = totalList.get(i).getList();//获取总集合中该品类的Tag集合
-                listTag.clear();
+                listTagFor = totalList.get(i).getList();//获取总集合中该品类的Tag集合
+                listTagFor.clear();
                 for (int j = 0; j < list.size(); j++) {
 
                     btnStatusBean = new BtnStatusBean();
                     btnStatusBean.setCountOffset(j);
                     btnStatusBean.setSingleClickOrDoubleBtnCount(2);
-                    listTag.add(j, btnStatusBean);
+                    listTagFor.add(j, btnStatusBean);
                 }
             }
         }
         upDataTotalListTag(list);
         if (addBrandShowAdapter == null) {
-            addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this, list, R.layout.add_brand_item, getAdapterDataHandler, listTag);
+            addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this, list, R.layout.add_brand_item, getAdapterDataHandler, listTagFor);
             show_brand_listView.setAdapter(addBrandShowAdapter);
             show_brand_listView.setCanRefresh(false);
         }
@@ -785,6 +786,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             checkedInformationBean.setCheckedBrandsInformationBean(recommendBrandsBeenList);
             checkedInformationBean.setList(listFirstTag);
             totalList.add(checkedInformationBean);
+            currentSubCategoryName = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0).getSub_category_3d_name();
         }
     }
 
