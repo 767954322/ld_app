@@ -238,19 +238,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 showOneCategory();
                 //默认加入二级品类第一次进入集合
                 listChecked = new ArrayList<>();//默认建立该品类下的品牌集合
-                checkedInformationBean = new CheckedInformationBean();
-                MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0);
-                List<RecommendBrandsBean> recommendBrandsBeenList = new ArrayList<RecommendBrandsBean>();
-                List<BtnStatusBean> listFirstTag = new ArrayList<>();//增加标志位集合
-                //增加已经存在的该品类下的集合
-                List<RecommendBrandsBean> haveDCheckedBrandsList = new ArrayList<RecommendBrandsBean>();
-                checkedInformationBean.setHavedBrandsInformationBean(haveDCheckedBrandsList);
-                checkedInformationBean.setSubCategoryBean(subCategoryBean);
-                checkedInformationBean.setCheckedBrandsInformationBean(recommendBrandsBeenList);
-                checkedInformationBean.setList(listFirstTag);
-                totalList.add(checkedInformationBean);
-                currentSubCategoryName = checkedInformationBean.getSubCategoryBean().getSub_category_3d_name();
-
+                //将清单传来的数据整合到总集合，并增加默认集合
+                setTotalListForListData();
                 //默认可选择品牌数量
                 showBrandRemainCount();
 
@@ -489,7 +478,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             addBrandShowAdapter.changeListTag(list, datas);
         }
         addBrandShowAdapter.notifyDataSetChanged();
-
     }
 
     /**
@@ -554,7 +542,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             addBrandShowAdapter.notifyDataSetChanged();
             ToastUtil.showCustomToast(AddMaterialActivity.this, "fuyong");
         } else {
-
             //从未获取过该品类的品牌信息
             getMaterialCategoryBrandsInformation("", "", "", "", "", "", 0, 20);
             ToastUtil.showCustomToast(AddMaterialActivity.this, "xin");
@@ -595,15 +582,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             addBrandShowAdapter.changeListTag(listTag, listHaned);
         }
         addBrandShowAdapter.notifyDataSetChanged();
-
-    }
-
-    /**
-     * 获取大集合中已经存在的数据并展示
-     */
-
-    public void showHavedDatasForList() {
-
 
     }
 
@@ -681,7 +659,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 for (int k = 0; k < totalList.get(i).getCheckedBrandsInformationBean().size(); k++) {
 
                     String subBrandsName = totalList.get(i).getCheckedBrandsInformationBean().get(k).getBrand_name();
-
                     String listUnCheckedName = listUnChecked.getBrand_name();
                     if (subBrandsName.equals(listUnCheckedName)) {
 
@@ -746,7 +723,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         btnStatusBean = listTagForTotal.get(k);
                         for (int h = 0; h < listInformationSendList.size(); h++) {
                             sendBrandsName = listInformationSendList.get(h).getBrand_name();
-                            if (brandsName.equals(sendBrandsName)){
+                            if (brandsName.equals(sendBrandsName)) {
                                 btnStatusBean.setSingleClickOrDoubleBtnCount(1);
                             }
 
@@ -755,6 +732,59 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * 将清单中所有的数据品牌整合进入集合
+     */
+    public void setTotalListForListData() {
+
+        for (int i = 0; i < mRecommendSCFDList.size(); i++) {
+            checkedInformationBean = new CheckedInformationBean();
+            MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = new MaterialCategoryBean.Categories3dBean.SubCategoryBean();
+            List<RecommendBrandsBean> recommendBrandsBeenList = new ArrayList<RecommendBrandsBean>();
+            List<BtnStatusBean> listFirstTag = new ArrayList<>();//增加标志位集合
+            //增加已经存在的该品类下的集合
+            List<RecommendBrandsBean> haveDCheckedBrandsList = new ArrayList<RecommendBrandsBean>();
+            String categoryForListName = mRecommendSCFDList.get(i).getSub_category_3d_name();
+            String categoryId = mRecommendSCFDList.get(i).getSub_category_3d_id();
+            subCategoryBean.setSub_category_3d_name(categoryForListName);
+            subCategoryBean.setSub_category_3d_id(categoryId);
+            for (int j = 0; j < mRecommendSCFDList.get(i).getBrands().size(); j++) {
+
+                recommendBrandsBeenList.add(mRecommendSCFDList.get(i).getBrands().get(j));
+            }
+            checkedInformationBean.setHavedBrandsInformationBean(haveDCheckedBrandsList);
+            checkedInformationBean.setSubCategoryBean(subCategoryBean);
+            checkedInformationBean.setCheckedBrandsInformationBean(recommendBrandsBeenList);
+            checkedInformationBean.setList(listFirstTag);
+            totalList.add(checkedInformationBean);
+        }
+        boolean isHaveNumberOne = false;
+        for (int i = 0; i < totalList.size(); i++) {
+
+            String categoryName = totalList.get(i).getSubCategoryBean().getSub_category_3d_name();
+            if (categoryName.equals("背景墙")) {
+                isHaveNumberOne = true;
+                break;
+            } else {
+                isHaveNumberOne = false;
+            }
+        }
+        //如果集合中没有背景墙则加入集合中
+        if (!isHaveNumberOne) {
+            checkedInformationBean = new CheckedInformationBean();
+            MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0);
+            List<RecommendBrandsBean> recommendBrandsBeenList = new ArrayList<RecommendBrandsBean>();
+            List<BtnStatusBean> listFirstTag = new ArrayList<>();//增加标志位集合
+            //增加已经存在的该品类下的集合
+            List<RecommendBrandsBean> haveDCheckedBrandsList = new ArrayList<RecommendBrandsBean>();
+            checkedInformationBean.setHavedBrandsInformationBean(haveDCheckedBrandsList);
+            checkedInformationBean.setSubCategoryBean(subCategoryBean);
+            checkedInformationBean.setCheckedBrandsInformationBean(recommendBrandsBeenList);
+            checkedInformationBean.setList(listFirstTag);
+            totalList.add(checkedInformationBean);
         }
     }
 
