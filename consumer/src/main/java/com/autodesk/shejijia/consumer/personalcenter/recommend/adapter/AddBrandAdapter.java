@@ -1,11 +1,13 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
@@ -72,7 +74,9 @@ public class AddBrandAdapter extends CommonAdapter<RecommendBrandsBean> {
         if (brandName != null && brandName.length() > 0) {
             index = brandName.length();
         }
-        builder.setSpan(new AbsoluteSizeSpan(48), 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
+        builder.setSpan(new AbsoluteSizeSpan(15,true), 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置字体的大小
+        StyleSpan span = new StyleSpan(Typeface.BOLD_ITALIC);
+        builder.setSpan(span, 0, index, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.bg_66)), index, sb.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//字体的颜色
         CheckedTextView textView = holder.getView(R.id.ctv_select);
