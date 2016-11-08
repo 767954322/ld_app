@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
+import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.AddBrandShowAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.CheckedInformationBean;
@@ -82,6 +84,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
     private BtnStatusBean[] btnStatusBeanList;//记录最后一次，该品类下的选中的二级品类信息，
     private String currentOneCategoryName;//当前选中以及品类信息
     private String[] oneArr;
+    private List<RecommendSCFDBean> mRecommendSCFDList;//清单中已经拥有的品类和品牌集合
 
     @Override
     public void onClick(View v) {
@@ -136,6 +139,13 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
         all_material_btn.setOnClickListener(this);
         mPullToRefreshLayout.setOnRefreshListener(this);
         add_for_listing.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        Intent intent = getIntent();
+        mRecommendSCFDList = (List<RecommendSCFDBean>) intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
     }
 
     @Override
@@ -244,7 +254,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 //默认可选择品牌数量
                 showBrandRemainCount();
 
-                ToastUtil.showCustomToast(AddMaterialActivity.this, "" + checkedInformationBean.getSubCategoryBean().getSub_category_3d_name());
             }
         });
 
@@ -439,9 +448,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 }
             }
         }
-
+        upDataTotalListTag(list);
         if (addBrandShowAdapter == null) {
-
             addBrandShowAdapter = new AddBrandShowAdapter(AddMaterialActivity.this, list, R.layout.add_brand_item, getAdapterDataHandler, listTag);
             show_brand_listView.setAdapter(addBrandShowAdapter);
             show_brand_listView.setCanRefresh(false);
@@ -458,7 +466,6 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
              *增加本次数据的标志位，
              * 该品类的标志位
              */
-            int a = datas.size();
             BtnStatusBean btnStatusBean;
             for (int i = 0; i < totalList.size(); i++) {
                 String categoryName = totalList.get(i).getSubCategoryBean().getSub_category_3d_name();
@@ -473,6 +480,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                         btnStatusBean.setSingleClickOrDoubleBtnCount(2);
                         listTag.add(j, btnStatusBean);
                     }
+                    upDataTotalListTag(datas);
                     list = listTag;
                 }
             }
@@ -711,6 +719,41 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             if (catagoryName.equals(currentSubCategoryName)) {
 
                 totalList.get(i).setList(backListTag);
+            }
+        }
+    }
+
+    /**
+     * 根据清单传过来的数据来修改总集合中的标志位
+     */
+    public void upDataTotalListTag(List<RecommendBrandsBean> datas) {
+
+        for (int i = 0; i < totalList.size(); i++) {
+            String categoryName = totalList.get(i).getSubCategoryBean().getSub_category_3d_name();
+            for (int j = 0; j < mRecommendSCFDList.size(); j++) {
+
+                String categoryForList = mRecommendSCFDList.get(j).getSub_category_3d_name();
+                if (categoryForList.equals(categoryName)) {
+                    //取出来该品类的tag来做修改
+                    List<BtnStatusBean> listTagForTotal = totalList.get(i).getList();
+                    List<RecommendBrandsBean> listInformationSendList = mRecommendSCFDList.get(j).getBrands();
+                    List<RecommendBrandsBean> havedBrandsInformationBeanList = totalList.get(i).getHavedBrandsInformationBean();
+                    String brandsName, sendBrandsName;
+                    BtnStatusBean btnStatusBean;
+
+                    for (int k = 0; k < datas.size(); k++) {
+                        brandsName = havedBrandsInformationBeanList.get(k).getBrand_name();
+                        btnStatusBean = listTagForTotal.get(k);
+                        for (int h = 0; h < listInformationSendList.size(); h++) {
+                            sendBrandsName = listInformationSendList.get(h).getBrand_name();
+                            if (brandsName.equals(sendBrandsName)){
+                                btnStatusBean.setSingleClickOrDoubleBtnCount(1);
+                            }
+
+                        }
+
+                    }
+                }
             }
         }
     }
