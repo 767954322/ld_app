@@ -59,6 +59,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
         });
     }
 
+    @Override
     public void updateTask(Date selectedDate) {
         switch (mEditState) {
             case EDIT_MILESTONE:
@@ -81,11 +82,6 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
             default:
                 break;
         }
-    }
-
-    private void updateTask(Task task, Date newDate) {
-        String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
-        task.getPlanningTime().setStart(dateString);
     }
 
     @Override
@@ -143,7 +139,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     }
 
     private void updateTaskDate(Task task, Date newDate) {
-        String dateString = DateUtil.getStringDateByFormat(newDate, "yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String dateString = DateUtil.getStringDateByFormat(newDate, DateUtil.DATE_FORMAT_ISO_861);
         task.getPlanningTime().setStart(dateString);
     }
 }

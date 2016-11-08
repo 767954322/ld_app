@@ -48,7 +48,8 @@ public class MileStoneNodeDecorator implements DayViewDecorator {
     public void setData(List<Task> tasks) {
         this.dateTaskMap.clear();
         for (Task task : tasks) {
-            String dateString = DateUtil.dateFormat(task.getPlanningTime().getStart(), "yyyy-MM-dd'T'HH:mm:ss'Z'", "yyyy-MM-dd");
+            String dateString = DateUtil.dateFormat(task.getPlanningTime().getStart(),
+                    DateUtil.DATE_FORMAT_ISO_861, "yyyy-MM-dd");
             this.dateTaskMap.put(dateString, task);
         }
     }

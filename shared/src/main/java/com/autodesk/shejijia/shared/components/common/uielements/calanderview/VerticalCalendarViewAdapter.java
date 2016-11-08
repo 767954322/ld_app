@@ -79,6 +79,7 @@ public class VerticalCalendarViewAdapter extends BaseAdapter implements IAdapter
             monthView.reuse(getItem(position), mcv.getFirstDayOfWeek());
         }
 
+        // TODO do more optimize
         TextView textView = (TextView) monthContainer.findViewById(R.id.item_title);
         textView.setText(DateUtil.getStringDateByFormat(calendarDay.getDate(), "yyyy")
                 + mcv.getContext().getString(R.string.year)

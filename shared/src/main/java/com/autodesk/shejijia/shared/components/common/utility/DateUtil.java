@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 public class DateUtil {
 
     private static String TAG = "DateUtil";
+    public final static String DATE_FORMAT_ISO_861 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+
     public static String getTimeMY(String dateString) {
         // String dateString = "March 14, 2016 11:08:35";
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.US);
@@ -295,7 +297,7 @@ public class DateUtil {
      * @return Date object
      */
     public static Date isoStringToDate(String isoTimeString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_ISO_861);
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         Date date = null;
