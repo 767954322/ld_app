@@ -79,6 +79,24 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
+            android:name=".personalcenter.activity.ProjectListActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".personalcenter.activity.MoreActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".personalcenter.activity.AboutActivity"
+            android:alwaysRetainTaskState="true"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.ProjectDetailsActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

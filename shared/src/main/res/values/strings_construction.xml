@@ -80,4 +80,12 @@
     <string name="edit_plan_complete">完成</string>
     <string name="edit_plan_title_first_step">第一步: 调整验收节点时间</string>
     <string name="edit_plan_title_second_step">第二步: 调整子节点时间</string>
+
+    <!--角色名称-->
+    <string name="designer">设计师</string>
+    <string name="member">消费者</string>
+    <string name="clientmanager">客户经理</string>
+    <string name="materialstaff">材料员</string>
+    <string name="foreman">班长</string>
+    <string name="inspector">监理</string>
 </resources>

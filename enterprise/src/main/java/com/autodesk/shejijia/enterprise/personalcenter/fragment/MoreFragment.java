@@ -14,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.enterprise.personalcenter.activity.AboutActivity;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.enterprise.common.utils.LoginUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
@@ -65,18 +66,14 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_about_app:
-                getFragmentManager().beginTransaction()
-                        .add(R.id.main_content, AboutFragment.newInstance())
-                        .addToBackStack(AboutFragment.newInstance().getClass().getSimpleName())
-                        .commit();
+                startActivity(new Intent(mContext, AboutActivity.class));
                 break;
             case R.id.tv_clear_cache:
                 initBottomPopup();
                 break;
             case R.id.tv_logout_app:
                 LoginUtils.doLogout(mContext);
-                Intent intent = new Intent(mContext, RegisterOrLoginActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(mContext, RegisterOrLoginActivity.class));
                 mContext.finish();
                 break;
         }

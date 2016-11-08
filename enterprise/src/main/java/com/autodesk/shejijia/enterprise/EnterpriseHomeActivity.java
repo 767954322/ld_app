@@ -2,6 +2,7 @@ package com.autodesk.shejijia.enterprise;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,34 +14,42 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.autodesk.shejijia.enterprise.personalcenter.activity.MoreActivity;
+import com.autodesk.shejijia.enterprise.personalcenter.activity.ProjectListActivity;
 import com.autodesk.shejijia.enterprise.personalcenter.fragment.MoreFragment;
 import com.autodesk.shejijia.enterprise.personalcenter.fragment.ProjectListFragment;
+import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
 import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
+import com.autodesk.shejijia.shared.components.common.utility.UserInfoUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskListFragment;
 import com.autodesk.shejijia.shared.framework.activity.NavigationConstructionActivity;
 
-public class EnterpriseHomeActivity extends NavigationConstructionActivity implements OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
+public class EnterpriseHomeActivity extends NavigationConstructionActivity implements View.OnClickListener, OnCheckedChangeListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private RadioButton mTaskBtn;
     private RadioButton mIssueBtn;
     private RadioButton mSessionBtn;
     private RadioGroup mBottomGroup;
-    private CardView mBottomBar;
+    private ImageButton mHeadPicBtn;
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private TextView toolbarTitle;//self define
+    private TextView mUserNameView;
+    private TextView mUserRoleView;
     private int currentPosition;//左抽屉当前点击的位置
-    private String[] mTitles;
 
     @Override
     protected int getLayoutResId() {
@@ -49,24 +58,23 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        mTitles = new String[]{getString(R.string.personal_project), getString(R.string.personal_more)};
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void initView() {
-        //bottomBar
         mTaskBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_task);
         mIssueBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_issue);
         mSessionBtn = (RadioButton) this.findViewById(R.id.rdoBtn_project_session);
         mBottomGroup = (RadioGroup) this.findViewById(R.id.rdoGrp_project_list);
-        mBottomBar = (CardView) this.findViewById(R.id.home_bottom_bar);
         mDrawerLayout = (DrawerLayout) this.findViewById(R.id.home_drawer_layout);
         mNavigationView = (NavigationView) this.findViewById(R.id.home_navigation_view);
-        //toolBar
         toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
-        //self define toolbar title
         toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
+        View headerView = mNavigationView.getHeaderView(0);
+        mUserNameView = (TextView) headerView.findViewById(R.id.tv_user_name);
+        mUserRoleView = (TextView) headerView.findViewById(R.id.tv_user_role);
+        mHeadPicBtn = (ImageButton) headerView.findViewById(R.id.imgBtn_personal_headPic);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, 0, 0);
         toggle.syncState();
@@ -79,20 +87,27 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
         mTaskBtn.setChecked(true);
         //init NavigationView Event
         mNavigationView.setNavigationItemSelectedListener(this);
-        //添加 fragment 管理栈的监听
-        getSupportFragmentManager().addOnBackStackChangedListener(new BackPressStackListener(this));
+        mHeadPicBtn.setOnClickListener(this);
+        toolbarTitle.setOnClickListener(this);
+    }
 
-        toolbarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imgBtn_personal_headPic:
+
+                break;
+            case R.id.tv_toolbar_title:
                 // TODO: 10/25/16  get date from calendar and set data to taskListFragment
                 ToastUtils.showShort(EnterpriseHomeActivity.this, "title");
                 TaskListFragment taskListFragment = (TaskListFragment) getSupportFragmentManager().findFragmentByTag(makeTag(2));
                 if (taskListFragment != null) {
                     taskListFragment.refreshProjectListByDate("2016-10-25");
                 }
-            }
-        });
+                break;
+            default:
+                break;
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -101,15 +116,15 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
 
         switch (checkId) {
             case R.id.rdoBtn_project_task:
-                controlShowFragment(2);
+                controlShowFragment(0);
                 initToolbar(toolbar, toolbarTitle, true, true, getString(R.string.toolbar_task_title));
                 break;
             case R.id.rdoBtn_project_issue:
-                controlShowFragment(3);
+                controlShowFragment(1);
                 initToolbar(toolbar, toolbarTitle, true, false, getString(R.string.toolbar_question_title));
                 break;
             case R.id.rdoBtn_project_session:
-                controlShowFragment(4);
+                controlShowFragment(2);
                 initToolbar(toolbar, toolbarTitle, true, false, getString(R.string.toolbar_groupChat_title));
                 break;
         }
@@ -119,19 +134,16 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.personal_all_project:
-                controlShowFragment(0);
-                initToolbar(toolbar, toolbarTitle, true, false, mTitles[0]);
+                startActivity(new Intent(this, ProjectListActivity.class));
                 break;
             case R.id.personal_more:
-                controlShowFragment(1);
-                initToolbar(toolbar, toolbarTitle, true, false, mTitles[1]);
+                startActivity(new Intent(this, MoreActivity.class));
                 break;
             default:
                 break;
         }
         menuItem.setChecked(true);
         mDrawerLayout.closeDrawers();
-        mBottomBar.setVisibility(View.GONE);
         return true;
     }
 
@@ -140,6 +152,7 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
 
         switch (item.getItemId()) {
             case android.R.id.home:
+                initNavigationHeadState();
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             default:
@@ -172,9 +185,6 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
             transaction.show(currentFragment);
         } else {
             transaction.add(R.id.main_content, getFragment(position), makeTag(position));
-            if (position == 0 || position == 1) {
-                transaction.addToBackStack(makeTag(position));
-            }
         }
         transaction.commitAllowingStateLoss();
 
@@ -191,18 +201,12 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = ProjectListFragment.newInstance();
-                break;
-            case 1:
-                fragment = MoreFragment.newInstance();
-                break;
-            case 2:
                 fragment = TaskListFragment.newInstance();
                 break;
-            case 3:
+            case 1:
                 fragment = IssueListFragment.newInstance();
                 break;
-            case 4:
+            case 2:
                 fragment = GroupChatFragment.newInstance();
                 break;
             default:
@@ -211,21 +215,28 @@ public class EnterpriseHomeActivity extends NavigationConstructionActivity imple
         return fragment;
     }
 
-
-    private class BackPressStackListener implements FragmentManager.OnBackStackChangedListener {
-        private Activity mContext;
-
-        public BackPressStackListener(Activity context) {
-            this.mContext = context;
+    private void initNavigationHeadState() {
+        if (!TextUtils.isEmpty(UserInfoUtils.getNikeName(this))) {
+            mUserNameView.setText(UserInfoUtils.getNikeName(this));
         }
 
-        @Override
-        public void onBackStackChanged() {
-            int backStackCount = mContext.getFragmentManager().getBackStackEntryCount();
-            if (backStackCount == 3) {
-                mBottomBar.setVisibility(View.VISIBLE);
+        String memberType = UserInfoUtils.getMemberType(this);
+        if (!TextUtils.isEmpty(memberType)) {
+            if (memberType.equals("designer")) {
+                mUserRoleView.setText(getString(R.string.designer));
+            } else if (memberType.equals("member")) {
+                mUserRoleView.setText(getString(R.string.member));
+            } else if (memberType.equals("clientmanager")) {
+                mUserRoleView.setText(getString(R.string.clientmanager));
+            } else if (memberType.equals("materialstaff")) {
+                mUserRoleView.setText(getString(R.string.materialstaff));
+            } else if (memberType.equals("foreman")) {
+                mUserRoleView.setText(getString(R.string.foreman));
+            } else if (memberType.equals("inspector")) {
+                mUserRoleView.setText(getString(R.string.inspector));
             }
         }
     }
+
 }
 
