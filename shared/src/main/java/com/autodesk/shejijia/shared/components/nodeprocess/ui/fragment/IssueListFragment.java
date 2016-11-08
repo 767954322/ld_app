@@ -8,6 +8,10 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
  */
 public class IssueListFragment extends BaseConstructionFragment {
 
+    public static IssueListFragment newInstance() {
+        return new IssueListFragment();
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_task_list_view;

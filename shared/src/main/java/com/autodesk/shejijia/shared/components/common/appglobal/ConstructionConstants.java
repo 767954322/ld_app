@@ -22,15 +22,6 @@ public class ConstructionConstants {
     //服务器端url地址(问题列表):
     public static final String ISSUE_URL = Config.CONSTRUCTION_ISSUE_URL;
 
-    //项目列表页同级fragment的tag
-    public static final String TASK_LIST_FRAGMENT = "TaskListFragment";
-    public static final String ISSUE_LIST_FRAGMENT = "IssueListFragment";
-    public static final String GROUP_CHAT_FRAGMENT = "GroupChatFragment";
-
-    //我页流程式fragment对应的tag
-    public static final String PERSONAL_MORE_FRAGMENT = "MoreFragment";
-    public static final String PERSONAL_POJECTLIST_FRAGMENT = "ProjectListFragment";
-
     //下拉刷新,上拉加载更多事件标记
     public static final String REFRESH_EVENT = "refresh";
     public static final String LOAD_MORE_EVENT = "loadMore";

@@ -13,9 +13,7 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
  */
 @SuppressWarnings("ALL")
 public class AboutFragment extends BaseConstructionFragment {
-    private ImageButton mBackBtn;
-    @SuppressWarnings("FieldCanBeLocal")
-    private TextView mTopBarTitle;
+
 
     public static AboutFragment newInstance(){
         return new AboutFragment();
@@ -27,9 +25,7 @@ public class AboutFragment extends BaseConstructionFragment {
 
     @Override
     protected void initView() {
-        mBackBtn = (ImageButton)rootView.findViewById(R.id.imgBtn_back);
-        mTopBarTitle = (TextView)rootView.findViewById(R.id.tv_personal_title);
-        mTopBarTitle.setText(mContext.getString(R.string.personal_center_more_about));
+
     }
 
     @Override
@@ -37,12 +33,7 @@ public class AboutFragment extends BaseConstructionFragment {
 
     @Override
     protected void initListener() {
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mContext.getSupportFragmentManager().popBackStack();
-            }
-        });
+
     }
 
 }

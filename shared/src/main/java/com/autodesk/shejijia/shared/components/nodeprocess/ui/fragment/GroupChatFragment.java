@@ -8,6 +8,9 @@ import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
  */
 public class GroupChatFragment extends BaseConstructionFragment {
 
+    public static GroupChatFragment newInstance() {
+        return new GroupChatFragment();
+    }
 
     @Override
     protected int getLayoutResId() {

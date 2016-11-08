@@ -27,12 +27,16 @@
             <FrameLayout
                 android:id="@+id/main_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </FrameLayout>
+                android:layout_height="match_parent" />
 
         </android.support.design.widget.CoordinatorLayout>
 
-        <include layout="@layout/activity_enterprise_main_bottombar" />
+        <include
+            android:id="@+id/home_bottom_bar"
+            layout="@layout/activity_enterprise_main_bottombar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

@@ -6,8 +6,6 @@
     android:clickable="true"
     android:orientation="vertical">
 
-    <include layout="@layout/fragment_personal_center_topbar"/>
-
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/spacing_padding_double" />

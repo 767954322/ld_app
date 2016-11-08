@@ -45,6 +45,10 @@ public class TaskListFragment extends BaseConstructionFragment implements Projec
     private ProjectListContract.Presenter mProjectListPresenter;
     private PopupWindow mScreenPopup;
 
+    public static TaskListFragment newInstance() {
+        return new TaskListFragment();
+    }
+
     @Override
     protected int getLayoutResId() {
         return R.layout.fragment_task_list_view;

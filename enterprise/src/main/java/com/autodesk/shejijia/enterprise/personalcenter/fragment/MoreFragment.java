@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -24,11 +26,10 @@ import com.autodesk.shejijia.shared.components.common.utility.BackGroundUtils;
  */
 public class MoreFragment extends BaseConstructionFragment implements View.OnClickListener {
 
-    private TextView mMoreTitle;
+
     private TextView mClearCache;
     private TextView mAboutApp;
     private TextView mLogoutApp;
-    private ImageButton mBackBtn;
     private PopupWindow bottomPopUp;
 
     public static MoreFragment newInstance() {
@@ -42,13 +43,11 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
 
     @Override
     protected void initView() {
-        mBackBtn = (ImageButton) rootView.findViewById(R.id.imgBtn_back);
         mClearCache = (TextView) rootView.findViewById(R.id.tv_clear_cache);
         mAboutApp = (TextView) rootView.findViewById(R.id.tv_about_app);
         mLogoutApp = (TextView) rootView.findViewById(R.id.tv_logout_app);
-        mMoreTitle = (TextView) rootView.findViewById(R.id.tv_personal_title);
 
-        mMoreTitle.setText(getString(R.string.personal_center_more));
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -60,19 +59,14 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
         mClearCache.setOnClickListener(this);
         mAboutApp.setOnClickListener(this);
         mLogoutApp.setOnClickListener(this);
-        mBackBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.imgBtn_back:
-                mContext.getSupportFragmentManager().popBackStack();
-                break;
             case R.id.tv_about_app:
                 getFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_fragment_horizontal_enter, R.anim.slide_fragment_horizontal_exit, R.anim.slide_fragment_pop_enter, R.anim.slide_fragment_pop_exit)
-                        .add(R.id.fly_personal_center_container, AboutFragment.newInstance())
+                        .add(R.id.main_content, AboutFragment.newInstance())
                         .addToBackStack(AboutFragment.newInstance().getClass().getSimpleName())
                         .commit();
                 break;
@@ -141,4 +135,9 @@ public class MoreFragment extends BaseConstructionFragment implements View.OnCli
         bottomPopUp.showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
 }

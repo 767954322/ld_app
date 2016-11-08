@@ -3,11 +3,14 @@ package com.autodesk.shejijia.enterprise.personalcenter.fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.autodesk.shejijia.enterprise.R;
+import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 import com.autodesk.shejijia.shared.framework.fragment.BaseConstructionFragment;
 import com.autodesk.shejijia.shared.components.common.entity.ProjectInfo;
 import com.autodesk.shejijia.shared.components.common.appglobal.ConstructionConstants;
@@ -15,16 +18,15 @@ import com.autodesk.shejijia.shared.components.nodeprocess.contract.ProjectListC
 import com.autodesk.shejijia.shared.components.nodeprocess.presenter.ProjectListPresenter;
 import com.autodesk.shejijia.enterprise.personalcenter.adapter.ProjectListAdapter;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by t_xuz on 8/30/16.
  * 我页--全部项目列表页面
  */
-public class ProjectListFragment extends BaseConstructionFragment implements View.OnClickListener, ProjectListContract.View {
-    private TextView mTopBarTitle;
-    private ImageButton mScreenBtn;
-    private ImageButton mBackBtn;
+public class ProjectListFragment extends BaseConstructionFragment implements ProjectListContract.View {
+
     private RecyclerView mProjectListView;
     private ProjectListAdapter mProjectListAdapter;
     private ProjectListContract.Presenter mProjectListPresenter;
@@ -40,40 +42,21 @@ public class ProjectListFragment extends BaseConstructionFragment implements Vie
 
     @Override
     protected void initView() {
-        mTopBarTitle = (TextView) rootView.findViewById(R.id.tv_personal_title);
-        mScreenBtn = (ImageButton) rootView.findViewById(R.id.imgBtn_screen);
-        mBackBtn = (ImageButton) rootView.findViewById(R.id.imgBtn_back);
         mProjectListView = (RecyclerView) rootView.findViewById(R.id.rcy_project_list);
-        mTopBarTitle.setText(getString(R.string.personal_center_completed_project));
         //init recyclerView
         mProjectListView.setLayoutManager(new LinearLayoutManager(mContext));
         mProjectListView.setHasFixedSize(true);
         mProjectListView.setItemAnimator(new DefaultItemAnimator());
+
+        setHasOptionsMenu(true);
     }
 
     @Override
     protected void initData() {
         mProjectListPresenter = new ProjectListPresenter(mContext, this);
-        mProjectListPresenter.initFilterRequestParams("2016-10-20",null, ConstructionConstants.PROJECT_STATUS_COMPLETE);
+        String defaultSelectedDate = DateUtil.getStringDateByFormat(Calendar.getInstance().getTime(), "yyyy-MM-dd");
+        mProjectListPresenter.initFilterRequestParams(defaultSelectedDate, null, ConstructionConstants.PROJECT_STATUS_COMPLETE);
         mProjectListPresenter.refreshProjectList();
-    }
-
-    @Override
-    protected void initListener() {
-        mScreenBtn.setOnClickListener(this);
-        mBackBtn.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.imgBtn_back:
-                mContext.getSupportFragmentManager().popBackStack();
-                break;
-            case R.id.imgBtn_screen:
-
-                break;
-        }
     }
 
     @Override
@@ -90,4 +73,9 @@ public class ProjectListFragment extends BaseConstructionFragment implements Vie
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
 }

@@ -95,13 +95,6 @@
         <activity android:name="com.autodesk.shejijia.shared.components.nodeprocess.ui.activity.CreateOrEditPlanActivity"/>
 
         <activity
-            android:name=".personalcenter.activity.PersonalCenterActivity"
-            android:alwaysRetainTaskState="true"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity
             android:name="com.autodesk.shejijia.shared.components.common.tools.login.RegisterOrLoginActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="keyboardHidden|orientation"

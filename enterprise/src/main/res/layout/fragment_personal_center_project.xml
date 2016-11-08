@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/grey_white"
-    android:clickable="true"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <include layout="@layout/fragment_personal_center_topbar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_project_list"
+        android:layout_marginTop="@dimen/spacing_margin_normal"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 
