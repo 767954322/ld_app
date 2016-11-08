@@ -552,7 +552,7 @@
     <string name="essential_info">基本信息</string>
     <string name="photograph">拍照</string>
     <string name="savelocal">保存图片</string>
-    <string name="photo_album">从手机相册选择</string>
+    <string name="photo_album">从手机相册获取</string>
     <string name="information_on_the_cross">信息上传中...</string>
     <string name="autonym_sd_disabled">SD卡不可用！</string>
     <string name="head_on_the_cross">头像上传中...</string>
