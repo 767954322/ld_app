@@ -152,6 +152,18 @@ public class Constant {
     }
 
     /**
+     * 消费者个人中心fragment
+     */
+    public static class MessageCenterActivityKey {
+        public static final String NEEDS_ID = "needs_id";
+        public static final String DESINER_ID = "designer_id";
+        public static final String MESSAGE_TYPE = "message_type";
+        public static final String PROJECT_MSG = "PROJECT_MSG";
+        public static final String SYSTEM_MSG = "SYSTEM_MSG";
+
+    }
+
+    /**
      * 六大产品fragment消息KEY
      */
     public static class SixProductsFragmentKey {

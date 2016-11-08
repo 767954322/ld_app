@@ -56,6 +56,9 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     private RelativeLayout rl_msg_delete_msgs;
     private List<MessageCenterBean.MessagesBean> listMessagesBeans;
     private List<Integer> listpositions;
+    private String needs_id;
+    private String designer_id;
+    private String message_type;
 
     @Override
     protected int getLayoutResId() {
@@ -104,6 +107,14 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
 
         mListView.setAdapter(messageCenterAdapter);
         mPullToRefreshLayout.autoRefresh();
+    }
+
+    @Override
+    protected void initExtraBundle() {
+        super.initExtraBundle();
+        needs_id = getIntent().getStringExtra(Constant.MessageCenterActivityKey.NEEDS_ID);
+        designer_id = getIntent().getStringExtra(Constant.MessageCenterActivityKey.DESINER_ID);
+        message_type = getIntent().getStringExtra(Constant.MessageCenterActivityKey.MESSAGE_TYPE);
     }
 
     @Override
@@ -236,7 +247,7 @@ public class MessageCenterActivity extends NavigationBarActivity implements View
     //获取消息数据
     public void getMessageData(final String state) {
 
-        MPServerHttpManager.getInstance().getMessageCenterMessages(offset, limit, new OkJsonRequest.OKResponseCallback() {
+        MPServerHttpManager.getInstance().getNewsMessageCenterMessages(designer_id, needs_id, message_type, offset, limit, new OkJsonRequest.OKResponseCallback() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 MPNetworkUtils.logError(TAG, volleyError);

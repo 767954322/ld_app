@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -20,8 +21,10 @@ import com.autodesk.shejijia.consumer.bidhall.activity.BiddingHallDetailActivity
 import com.autodesk.shejijia.consumer.home.decorationdesigners.activity.SeekDesignerDetailActivity;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
+import com.autodesk.shejijia.consumer.personalcenter.consumer.activity.MessageCenterActivity;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.adapter.WkFlowStateAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.workflow.entity.TipWorkFlowTemplateBean;
+import com.autodesk.shejijia.consumer.personalcenter.workflow.popView.PopWindow;
 import com.autodesk.shejijia.consumer.uielements.DeliverySelector;
 import com.autodesk.shejijia.consumer.uielements.MyToast;
 import com.autodesk.shejijia.consumer.uielements.viewgraph.PolygonImageView;
@@ -75,20 +78,25 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         mPtrLayout = (PtrClassicFrameLayout) findViewById(R.id.ptr_layout);
         ibFlowChart = (ImageButton) findViewById(R.id.ib_flow_chart);
 
-        //右上角三个按钮设置；
-        right_contain = (LinearLayout) findViewById(R.id.right_contain);
-        View view = LayoutInflater.from(this).inflate(R.layout.addview_wkflow_state, null);
-        right_contain.addView(view);
-        right_contain.setVisibility(View.VISIBLE);
 
-        demandDetails = (ImageView) right_contain.findViewById(R.id.demand_details);
-        projectInformation = (ImageView) right_contain.findViewById(R.id.project_information);
+//        //右上角三个按钮设置；
+//        right_contain = (LinearLayout) findViewById(R.id.right_contain);
+//        View view = LayoutInflater.from(this).inflate(R.layout.addview_wkflow_state, null);
+//        right_contain.addView(view);
+//        right_contain.setVisibility(View.VISIBLE);
+//
+//        demandDetails = (ImageView) right_contain.findViewById(R.id.demand_details);
+//        projectInformation = (ImageView) right_contain.findViewById(R.id.project_information);
 
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        setImageForNavButton(ButtonType.SECONDARY, R.drawable.details);
+        setImageForNavButton(ButtonType.RIGHT, R.drawable.information);
+
         if (footerView == null) {
             footerView = LayoutInflater.from(context).inflate(R.layout.activity_flow_state_footer, null);
             mListView.addFooterView(footerView);
@@ -123,8 +131,8 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     @Override
     protected void initListener() {
         super.initListener();
-        projectInformation.setOnClickListener(this);
-        demandDetails.setOnClickListener(this);
+//        projectInformation.setOnClickListener(this);
+//        demandDetails.setOnClickListener(this);
         btnStopDemand.setOnClickListener(this);
         mListView.setOnItemClickListener(this);
 
@@ -144,6 +152,53 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     protected void leftNavButtonClicked(View view) {
         refreshWkFlowState();
         super.leftNavButtonClicked(view);
+    }
+
+    @Override
+    protected void rightNavButtonClicked(View view) {
+        super.rightNavButtonClicked(view);
+
+        if (popWindow == null)
+            popWindow = new PopWindow(this);
+        popWindow.setPopOnClickListener(new PopWindow.PopOnClickListener() {
+            @Override
+            public void onClickListener(View view) {
+                switch (view.getId()) {
+                    case R.id.rl_village_info:
+
+                        Intent intent = new Intent(WkFlowStateActivity.this, BiddingHallDetailActivity.class);
+                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
+                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, demand_type);
+                        intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, bid_status);
+                        startActivity(intent);
+
+                        break;
+                    case R.id.rl_design_document:
+
+                        Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
+                        maIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
+                        maIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
+                        startActivityForResult(maIntent, 10001);
+
+                        break;
+                    case R.id.rl_jump_construction:
+                        Toast.makeText(WkFlowStateActivity.this, "未开发", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+        popWindow.showPopupWindow(getNavigationButton(ButtonType.RIGHT));
+
+    }
+
+    @Override
+    protected void secondaryNavButtonClicked(View view) {
+        super.secondaryNavButtonClicked(view);
+        Intent intent = new Intent(WkFlowStateActivity.this, MessageCenterActivity.class);
+        intent.putExtra(Constant.MessageCenterActivityKey.NEEDS_ID, needs_id);
+        intent.putExtra(Constant.MessageCenterActivityKey.DESINER_ID, designer_id);
+        intent.putExtra(Constant.MessageCenterActivityKey.MESSAGE_TYPE, Constant.MessageCenterActivityKey.PROJECT_MSG);
+        startActivity(intent);
     }
 
     //监听标题栏三个按钮
@@ -178,32 +233,6 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
                 break;
             case R.id.btn_stop_demand:
                 isStopFlow();
-
-                break;
-            case R.id.demand_details:
-                /**
-                 * 需求详情 .
-                 */
-                Intent intent = new Intent(WkFlowStateActivity.this, BiddingHallDetailActivity.class);
-                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_NEEDS_ID, needs_id);
-                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_TYPE, demand_type);
-                intent.putExtra(Constant.DemandDetailBundleKey.DEMAND_BID_STATUS, bid_status);
-                startActivity(intent);
-
-                break;
-
-            case R.id.project_information:
-
-                /**
-                 * 点击右上角资料进行的操作
-                 *
-                 * @param view 右上角的控件
-                 */
-                //designer_id = bundle.getString(Constant.SeekDesignerDetailKey.DESIGNER_ID);
-                Intent maIntent = new Intent(WkFlowStateActivity.this, ProjectMaterialActivity.class);      /// 跳转项目资料界面 .
-                maIntent.putExtra(Constant.SeekDesignerDetailKey.DESIGNER_ID, designer_id);
-                maIntent.putExtra(Constant.SeekDesignerDetailKey.NEEDS_ID, needs_id);
-                startActivityForResult(maIntent, 10001);
 
                 break;
 
@@ -582,6 +611,14 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
         clearSelectPosition();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (null != popWindow) {
+            popWindow.dismiss();
+        }
+    }
+
     /**
      * 清空选择的交付物
      */
@@ -622,10 +659,11 @@ public class WkFlowStateActivity extends BaseWorkFlowActivity implements Adapter
     private TextView navTitleTextView;
     private ListViewFinal mListView;
     private PtrClassicFrameLayout mPtrLayout;
+    private PopWindow popWindow;
     private TipWorkFlowTemplateBean tipWorkFlowTemplateBean;
     private LinearLayout right_contain;
-    private ImageView demandDetails;
-    private ImageView projectInformation;
+    //    private ImageView demandDetails;
+//    private ImageView projectInformation;
     private ImageButton ibFlowChart;
     private LinearLayout ll_piv;
     //    private RelativeLayout rlStopContract;

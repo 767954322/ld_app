@@ -316,6 +316,7 @@ public class DesignerPersonalCenterActivity extends NavigationBarActivity implem
 
             case R.id.ll_personal_designer_msg_center:/// 消息中心页面.
                 Intent intent_messagecenter = new Intent(this, MessageCenterActivity.class);
+                intent_messagecenter.putExtra(Constant.MessageCenterActivityKey.MESSAGE_TYPE, Constant.MessageCenterActivityKey.SYSTEM_MSG);
                 startActivity(intent_messagecenter);
                 break;
 

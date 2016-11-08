@@ -381,7 +381,7 @@ public class NavigationBarActivity extends BaseActivity {
         }
     }
 
-    private View getNavigationButton(ButtonType type) {
+    protected View getNavigationButton(ButtonType type) {
 
         View view = null;
 
