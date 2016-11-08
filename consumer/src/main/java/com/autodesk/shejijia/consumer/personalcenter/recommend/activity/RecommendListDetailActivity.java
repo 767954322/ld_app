@@ -93,6 +93,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         super.initData(savedInstanceState);
         mActivity = this;
         mRecommendSCFDList = new ArrayList<>();
+        mExpandListView.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
+                mExpandListView, false));
+        mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, mRecommendSCFDList, mExpandListView);
+        mExpandListView.setAdapter(mRecommendExpandableAdapter);
+
         getRecommendDraftDetail();
     }
 
@@ -103,6 +108,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         mExpandListView.setGroupIndicator(null); //去掉箭头
         //点击不可收缩
         mExpandListView.setOnGroupClickListener(this);
+        mRecommendExpandableAdapter.setCallBackListener(this);
+        mRecommendExpandableAdapter.setBrandChangListener(this);
     }
 
     /**
@@ -142,19 +149,14 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
         mRecommendSCFDList.addAll(recommendscfd);
-        if (null == mRecommendSCFDList) {
+        if(mRecommendSCFDList.size() <= 0){
             mLlEmptyContentView.setVisibility(View.VISIBLE);
-        } else {
-            mLlEmptyContentView.setVisibility(View.GONE);
-            mExpandListView.setHeaderView(getLayoutInflater().inflate(R.layout.item_group_indicator,
-                    mExpandListView, false));
-            mRecommendExpandableAdapter = new RecommendExpandableAdapter(this, mRecommendSCFDList, mExpandListView);
-            mExpandListView.setAdapter(mRecommendExpandableAdapter);
-            for (int i = 0; i < mRecommendSCFDList.size(); i++) {
-                mExpandListView.expandGroup(i);
-            }
-            mRecommendExpandableAdapter.setCallBackListener(this);
-            mRecommendExpandableAdapter.setBrandChangListener(this);
+            return;
+        }
+        mLlEmptyContentView.setVisibility(View.GONE);
+        mRecommendExpandableAdapter.notifyDataSetChanged();
+        for (int i = 0; i < mRecommendSCFDList.size(); i++) {
+            mExpandListView.expandGroup(i);
         }
     }
 

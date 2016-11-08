@@ -51,12 +51,15 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
+        if(mRecommendSCFDList.size() > 0 && mRecommendSCFDList.get(groupPosition).getBrands() != null){
+            return mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
+        }
+        return null;
     }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childPosition;
     }
 
     @Override
@@ -223,12 +226,15 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mRecommendSCFDList.get(groupPosition).getBrands().size();
+        if(mRecommendSCFDList.size() > 0 && mRecommendSCFDList.get(groupPosition).getBrands() != null){
+            return mRecommendSCFDList.get(groupPosition).getBrands().size();
+        }
+        return 0;
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return mRecommendSCFDList.get(groupPosition);
+        return mRecommendSCFDList.size() > 0 ?null:mRecommendSCFDList.get(groupPosition);
     }
 
     @Override
@@ -238,7 +244,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
 
     @Override
