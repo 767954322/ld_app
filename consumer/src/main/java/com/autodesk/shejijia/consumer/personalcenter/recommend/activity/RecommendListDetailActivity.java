@@ -154,7 +154,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
 
-        if (null == recommendscfd || recommendscfd.size() <= 0 || mRecommendSCFDList.size() <= 0) {
+        if (null == recommendscfd) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
             return;
         }
