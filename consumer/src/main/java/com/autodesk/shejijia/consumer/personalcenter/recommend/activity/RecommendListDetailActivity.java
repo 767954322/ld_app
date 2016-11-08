@@ -18,6 +18,7 @@ import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.CheckedInformationBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -165,6 +166,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 break;
         }
     }
+
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
         ViewCategoryActivity.jumpTo(RecommendListDetailActivity.this, mScfd, groupPosition);
@@ -278,7 +280,44 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                     case 24: // 添加主材．
                         Bundle bundle = data.getExtras();
                         List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
-                        Log.d("RecommendListDetailActi", "checkedInformationBeanList:" + checkedInformationBeanList);
+//                        private List<RecommendBrandsBean> checkedBrandsInformationBean; // 选中的品牌信息Bean
+//                        private MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean;//二级品类信息bean
+
+//                        ArrayList<RecommendSCFDBean> recommendSCFDBeenTempList = new ArrayList<>();
+                        for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
+                            // [1]获取主材,对比之．
+                            // [2]对比主材及品牌
+                            //   [2.1]已有主材，在集合中添加．
+                            //   [2.2]未有主材，新建主材项．
+                            MaterialCategoryBean.Categories3dBean.SubCategoryBean materialSubCategoryBean = checkedInformationBean.getSubCategoryBean();
+                            String material_sub_category_3d_id1 = materialSubCategoryBean.getSub_category_3d_id();
+
+                            for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
+                                String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
+                                if (material_sub_category_3d_id1.equalsIgnoreCase(sub_category_3d_id2)) {
+                                    List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
+
+                                    int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
+                                    mRecommendSCFDList.remove(recommendSCFDBean);
+                                    ArrayList<RecommendBrandsBean> recommendBrandsBeans = new ArrayList<>();
+                                    recommendBrandsBeans.addAll(checkedBrandsInformationBean);
+                                    recommendSCFDBean.getBrands().addAll(recommendBrandsBeans);
+                                    mRecommendSCFDList.add(post, recommendSCFDBean);
+                                } else {
+
+                                    RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
+                                    List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
+                                    recommendSCFDBean1.setSub_category_3d_name(materialSubCategoryBean.getSub_category_3d_name());
+                                    recommendSCFDBean1.setSub_category_3d_id(materialSubCategoryBean.getSub_category_3d_id());
+                                    recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
+//                                    recommendSCFDBeenTempList.add(recommendSCFDBean1);
+                                }
+                            }
+                        }
+//                        mRecommendSCFDList.addAll(recommendSCFDBeenTempList);
+
+
+                        mRecommendExpandableAdapter.notifyDataSetChanged();
                         break;
 
                     default:
