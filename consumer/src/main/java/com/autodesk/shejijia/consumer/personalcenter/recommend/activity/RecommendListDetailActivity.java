@@ -153,10 +153,12 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         List<RecommendSCFDBean> recommendscfd = new Gson()
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
+
         if (null == recommendscfd || recommendscfd.size() <= 0 || mRecommendSCFDList.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
             return;
         }
+        mRecommendSCFDList.addAll(recommendscfd);
         mLlEmptyContentView.setVisibility(View.GONE);
         mRecommendExpandableAdapter.notifyDataSetChanged();
         for (int i = 0; i < mRecommendSCFDList.size(); i++) {
