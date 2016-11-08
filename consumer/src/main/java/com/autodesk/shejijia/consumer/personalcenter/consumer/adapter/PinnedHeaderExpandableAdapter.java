@@ -14,6 +14,7 @@ import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.DecorationN
 import com.autodesk.shejijia.consumer.utils.AppJsonFileReader;
 import com.autodesk.shejijia.consumer.uielements.PinnedHeaderExpandableListView;
 import com.autodesk.shejijia.consumer.base.utils.ConvertUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class PinnedHeaderExpandableAdapter extends BaseExpandableListAdapter imp
         tv_planning_budget.setText(mList.get(groupPosition).getDesign_budget());
 
 
-        if (mList.get(groupPosition).getDistrict_name().equals("none")) {
+        if (StringUtils.isEmpty(mList.get(groupPosition).getDistrict_name())) {
             proJectAddress = mList.get(groupPosition).getProvince_name() + " " + mList.get(groupPosition).getCity_name();
         } else {
             proJectAddress = mList.get(groupPosition).getProvince_name() + " " + mList.get(groupPosition).getCity_name() + " " + mList.get(groupPosition).getDistrict_name();
