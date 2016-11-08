@@ -24,7 +24,7 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
     public ProjectIdCodePresenter(Context context, ProjectIdCodeContract.View view) {
         mView = view;
         mContext = context;
-        mView.setNavigationBar();
+        mView.setToolbar();
     }
 
 
@@ -62,7 +62,6 @@ public class ProjectIdCodePresenter implements ProjectIdCodeContract.Presenter{
     public void enterCode() {
         // TODO: 16/10/25 进入扫码页面
         Intent intent = new Intent(mContext, ScanQrCodeActivity.class);
-        //这个方式必须是activity才可以调用,因为这是有返回值的
         mContext.startActivity(intent);
         mView.dismiss();
 

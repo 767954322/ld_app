@@ -9,9 +9,9 @@
     android:background="@color/form_background_grey"
     tools:context=".components.form.ui.activity.ProjectIdCodeActivity">
 
-   <include android:layout_width="match_parent"
-            android:layout_height="@dimen/form_navigationbar_height"
-            layout="@layout/form_navigation_bar"/>
+    <include android:layout_width="match_parent"
+             android:layout_height="?attr/actionBarSize"
+             layout="@layout/toolbar_home_topbar_view"/>
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -22,15 +22,15 @@
 
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:text="项目编码:"
+                  android:text="@string/project_id"
                   android:textSize="@dimen/font_normal"
                   android:textColor="@color/project_id_title"/>
 
         <EditText android:layout_width="0dp"
                   android:layout_weight="1"
                   android:layout_height="wrap_content"
-                  android:layout_marginLeft="@dimen/size_11"
-                  android:hint="请输入项目编号"
+                  android:layout_marginStart="@dimen/size_11"
+                  android:hint="@string/write_project_id"
                   android:textColor="@color/project_id_write"
                   android:textSize="@dimen/font_normal"
                   android:inputType="number"
@@ -41,10 +41,10 @@
 
     <Button android:layout_width="match_parent"
             android:layout_height="@dimen/size_45"
-            android:layout_marginLeft="@dimen/marginleft_parent"
-            android:layout_marginRight="@dimen/marginright_parent"
+            android:layout_marginStart="@dimen/marginleft_parent"
+            android:layout_marginEnd="@dimen/marginright_parent"
             android:layout_marginTop="@dimen/size_60"
-            android:text="确定"
+            android:text="@string/form_submit"
             android:textColor="@color/white"
             android:textSize="@dimen/textsize_18"
             android:background="@drawable/big_button_blue"

@@ -173,6 +173,28 @@
                 <category android:name="com.autodesk.shejijia.enterprise" />
             </intent-filter>
         </activity>
+        <!--form电子表格模块-->
+        <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ProjectIdCodeActivity"
+                  android:alwaysRetainTaskState="true"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait" />
+        <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrCodeActivity"
+                  android:alwaysRetainTaskState="true"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait" />
+        <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ProjectInfoActivity"
+                  android:alwaysRetainTaskState="true"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait" />
+        <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.PrecheckActivity"
+                  android:alwaysRetainTaskState="true"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait" />
+        <activity android:name="com.autodesk.shejijia.shared.components.form.ui.activity.ScanQrDialogActivity"
+                  android:theme="@style/ScanQrDialogStyle"
+                  android:alwaysRetainTaskState="true"
+                  android:configChanges="keyboardHidden|orientation"
+                  android:screenOrientation="portrait" />
 
 
         <service

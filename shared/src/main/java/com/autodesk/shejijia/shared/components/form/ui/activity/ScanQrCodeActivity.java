@@ -29,29 +29,31 @@ public class ScanQrCodeActivity extends CaptureQrActivity {
 
     private void setNavigationBar() {
         ImageButton imageButton = (ImageButton) findViewById(com.autodesk.shejijia.shared.R.id.nav_left_imageButton);
-        imageButton.setVisibility(View.GONE);
+        if (imageButton != null) {
+            imageButton.setVisibility(View.GONE);
+        }
 
         TextView rightText = (TextView) findViewById(R.id.nav_right_textView);
-        rightText.setVisibility(View.VISIBLE);
-        rightText.setText("输入编码");
-        rightText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ScanQrCodeActivity.this, ProjectIdCodeActivity.class));
-                finish();
-            }
-        });
+        if (rightText != null) {
+            rightText.setVisibility(View.VISIBLE);
+            rightText.setText("输入编码");
+            rightText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ScanQrCodeActivity.this, ProjectIdCodeActivity.class));
+                    finish();
+                }
+            });
+        }
 
     }
 
     @Override
     public void handleDecode(Result result, Bitmap barcode) {
-        // TODO: 16/11/1 处理返回的数据 以及对应的弹框显示
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
         String projectId = result.getText();
         if (!TextUtils.isEmpty(projectId) && projectId.matches("[0-9]+")) {
-            // TODO: 16/11/3 扫码得到projectId ,判断是否得到项目详情,如果得到然后再将项目详情传递过去,没有的话显示网络错误,错误信息
             Bundle params = new Bundle();
             params.putLong("pid", Long.valueOf(projectId));
 

@@ -18,12 +18,7 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
 
     public ProjectInfoPresenter(ProjectInfoContract.View view) {
         mView = view;
-    }
-
-
-    @Override
-    public void setNavigation() {
-        mView.setNavigation();
+        mView.setToolbar();
     }
 
     @Override
@@ -47,7 +42,7 @@ public class ProjectInfoPresenter implements ProjectInfoContract.Presenter {
         } else {
             mView.setAddress(provinceName + cityName + building.getDistrictName());
         }
-        mView.setCommunite(building.getCommunityName());
+        mView.setCommunity(building.getCommunityName());
     }
 
     @Override

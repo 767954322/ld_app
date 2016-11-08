@@ -7,84 +7,94 @@
     android:background="@color/form_background_grey"
     android:orientation="vertical">
 
-    <include layout="@layout/form_navigation_bar"
+    <include layout="@layout/toolbar_backbtn_topbar_view"
              android:layout_width="match_parent"
-             android:layout_height="@dimen/form_navigationbar_height"/>
+             android:layout_height="?attr/actionBarSize"/>
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="@dimen/size_42"
-              android:text="客户资料"
-              android:textSize="@dimen/textsize_14"
+              android:layout_marginStart="@dimen/marginleft_parent"
               android:gravity="center_vertical"
+              android:text="@string/project_info"
               android:textColor="@color/form_text_title"
-              android:layout_marginLeft="@dimen/marginleft_parent"/>
+              android:textSize="@dimen/textsize_14"/>
+
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:background="@color/white"
                   android:orientation="vertical"
-                  android:paddingLeft="@dimen/marginleft_parent"
-                  android:paddingRight="@dimen/marginright_parent">
-        <TextView android:layout_width="wrap_content"
+                  android:paddingStart="@dimen/marginleft_parent"
+                  android:paddingEnd="@dimen/marginright_parent">
+
+        <TextView android:id="@+id/tv_username"
+                  android:layout_width="wrap_content"
                   android:layout_height="@dimen/size_56"
                   android:gravity="center_vertical"
                   android:text="@string/form_username"
-                  android:textColor="@color/form_text_content"
-                  android:id="@+id/tv_username"/>
+                  android:textColor="@color/form_text_content"/>
+
         <View android:layout_width="match_parent"
               android:layout_height="1dp"
               android:background="@color/form_line_grey"/>
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="@dimen/size_56"
-                  android:textColor="@color/form_text_content"
-                  android:text="@string/form_telephone"
-                  android:id="@+id/tv_telephone"
-                  android:gravity="center_vertical"/>
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:background="@color/form_line_grey"/>
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="@dimen/size_56"
-                  android:textColor="@color/form_text_content"
-                  android:text="@string/form_address"
-                  android:id="@+id/tv_address"
-                  android:gravity="center_vertical"/>
-        <View android:layout_width="match_parent"
-              android:layout_height="1dp"
-              android:background="@color/form_line_grey"/>
-        <TextView android:layout_width="wrap_content"
+
+        <TextView android:id="@+id/tv_telephone"
+                  android:layout_width="wrap_content"
                   android:layout_height="@dimen/size_56"
                   android:gravity="center_vertical"
-                  android:text="@string/form_communite"
-                  android:id="@+id/tv_communite"
+                  android:text="@string/form_telephone"
+                  android:textColor="@color/form_text_content"/>
+
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/form_line_grey"/>
+
+        <TextView android:id="@+id/tv_address"
+                  android:layout_width="wrap_content"
+                  android:layout_height="@dimen/size_56"
+                  android:gravity="center_vertical"
+                  android:text="@string/form_address"
+                  android:textColor="@color/form_text_content"/>
+        <View android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/form_line_grey"/>
+
+        <TextView android:id="@+id/tv_community"
+                  android:layout_width="wrap_content"
+                  android:layout_height="@dimen/size_56"
+                  android:gravity="center_vertical"
+                  android:text="@string/form_community"
                   android:textColor="@color/form_text_content"/>
 
     </LinearLayout>
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:layout_marginLeft="@dimen/marginleft_parent"
-                  android:layout_marginRight="@dimen/marginright_parent"
-                  android:layout_marginTop="38dp">
-        <Button android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:text="取消"
-                android:typeface="sans"
-                android:textColor="@color/white"
-                android:background="@drawable/small_button_grey"
-                android:layout_marginRight="@dimen/size_12"
-                android:id="@+id/btn_cancel"/>
-        <Button android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:text="确定"
-                android:textColor="@color/white"
-                android:typeface="sans"
-                android:background="@drawable/small_button_blue"
-                android:layout_marginLeft="@dimen/size_12"
-                android:id="@+id/btn_confirm"/>
+                  android:layout_marginStart="@dimen/marginleft_parent"
+                  android:layout_marginEnd="@dimen/marginright_parent"
+                  android:layout_marginTop="38dp"
+                  android:orientation="horizontal">
 
+        <Button android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginEnd="@dimen/size_12"
+                android:layout_weight="1"
+                android:background="@drawable/small_button_grey"
+                android:text="@string/form_cancel"
+                android:textColor="@color/white"
+                style="?attr/buttonBarButtonStyle"
+                android:typeface="sans"/>
+
+        <Button android:id="@+id/btn_confirm"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="@dimen/size_12"
+                android:layout_weight="1"
+                android:background="@drawable/small_button_blue"
+                android:text="@string/form_submit"
+                android:textColor="@color/white"
+                style="?attr/buttonBarButtonStyle"
+                android:typeface="sans"/>
 
     </LinearLayout>
 

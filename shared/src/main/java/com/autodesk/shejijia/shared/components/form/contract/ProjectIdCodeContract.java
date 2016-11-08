@@ -6,11 +6,10 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 /**
  * Created by t_aij on 16/10/21.
  */
-
 public interface ProjectIdCodeContract {
 
     interface View extends BaseView {
-        void setNavigationBar();  //设置navigationBar
+        void setToolbar();  //设置navigationBar
 
         String getProjectId();   //获取到projectid
 

@@ -10,7 +10,8 @@ import com.autodesk.shejijia.shared.framework.BaseView;
 public interface PrecheckContract {
     interface View extends BaseView{
 
-        void setNavigationBar(); //设置navigationbar
+        void setToolbarTitle(String title);
+
         //显示必要条件
         //显示辅助条件
         //显示按钮

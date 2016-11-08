@@ -2,6 +2,8 @@ package com.autodesk.shejijia.shared.components.form.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,10 +22,11 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     private TextView mUsername;
     private TextView mTelephone;
     private TextView mAddress;
-    private TextView mCommunite;
+    private TextView mCommunity;
     private ProjectInfoPresenter mPresenter;
     private Project mProjectBean;
-    private TextView mCenter;
+    private Toolbar mToolbar;
+    private TextView mToolbarTitle;
 
     @Override
     protected int getLayoutResId() {
@@ -32,12 +35,13 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
 
     @Override
     protected void initView() {
-        mCenter = (TextView) findViewById(R.id.tv_center);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_topBar);
+        mToolbarTitle = (TextView) findViewById(R.id.tv_toolbar_title);
         //获取到页面的内容控件
         mUsername = (TextView) findViewById(R.id.tv_username);
         mTelephone = (TextView) findViewById(R.id.tv_telephone);
         mAddress = (TextView) findViewById(R.id.tv_address);
-        mCommunite = (TextView) findViewById(R.id.tv_communite);
+        mCommunity = (TextView) findViewById(R.id.tv_community);
 
     }
 
@@ -47,7 +51,6 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
         mProjectBean = (Project) intent.getSerializableExtra("projectBean");
 
         mPresenter = new ProjectInfoPresenter(this);
-        mPresenter.setNavigation();
         mPresenter.setCustomer(mProjectBean);
     }
 
@@ -63,39 +66,37 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
     }
 
     @Override
-    public void setNavigation() {
-        //设置navigationBar的显示
-        findViewById(R.id.rl_navigationbar).setBackgroundResource(R.color.form_bar_bg_blue);
-        mCenter.setText("设计家");
-        mCenter.setTextColor(UIUtils.getColor(R.color.form_text_bar_write));
-        findViewById(R.id.iv_left).setVisibility(View.GONE);
-        findViewById(R.id.tv_right).setVisibility(View.GONE);
+    public void setToolbar() {
+        mToolbar.setTitle("设计家");
+        mToolbar.setTitleTextColor(UIUtils.getColor(R.color.white));
+        mToolbar.setNavigationIcon(R.drawable.ic_close);
+        mToolbarTitle.setVisibility(View.GONE);
+        setSupportActionBar(mToolbar);
     }
 
     @Override
     public void setUsername(String username) {
-        mUsername.setText(mUsername.getText() + username);
+        mUsername.setText(UIUtils.getString(R.string.form_username) + username);
     }
 
     @Override
     public void setTelephone(String telephone) {
-        mTelephone.setText(mTelephone.getText() + telephone);
+        mTelephone.setText(UIUtils.getString(R.string.form_telephone)+ telephone);
     }
 
     @Override
     public void setAddress(String address) {
-        mAddress.setText(mAddress.getText() + address);
+        mAddress.setText(UIUtils.getString(R.string.form_address) + address);
     }
 
     @Override
-    public void setCommunite(String communite) {
-        mCommunite.setText(mCommunite.getText() + communite);
+    public void setCommunity(String community) {
+        mCommunity.setText(UIUtils.getString(R.string.form_community) + community);
     }
 
     @Override
     public void selectConfirm() {
         // TODO: 16/10/21 判断状态,选择进入的表格?
-//        Toast.makeText(this, "进入表格吧", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this,PrecheckActivity.class);
         startActivity(intent);
     }
@@ -117,6 +118,14 @@ public class ProjectInfoActivity extends BaseActivity implements ProjectInfoCont
             mPresenter.cancel();
 
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            mPresenter.cancel();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

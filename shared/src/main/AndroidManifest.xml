@@ -10,17 +10,6 @@
 
         <activity android:name="com.autodesk.shejijia.shared.framework.activity.NavigationBarActivity"/>
 
-        <activity android:name=".components.form.ui.activity.ProjectIdCodeActivity"/>
-        <activity android:name=".components.form.ui.activity.ScanQrCodeActivity"/>
-        <activity android:name=".components.form.ui.activity.ProjectInfoActivity"
-                android:launchMode="singleTask">
-
-        </activity>
-        <activity android:name=".components.form.ui.activity.PrecheckActivity"/>
-        <activity android:name=".components.form.ui.activity.ScanQrDialogActivity"
-            android:theme="@style/ScanQrDialogStyle">
-
-        </activity>
 
     </application>
 

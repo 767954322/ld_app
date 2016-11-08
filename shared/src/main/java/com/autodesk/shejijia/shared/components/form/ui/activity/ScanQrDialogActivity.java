@@ -34,13 +34,6 @@ public class ScanQrDialogActivity extends AppCompatActivity implements View.OnCl
         Intent intent = getIntent();
         mFormat = intent.getStringExtra("format");
         mError = intent.getStringExtra("error");
-
-
-    }
-
-    private void initData() {
-        mTitle.setText("提示");
-        mContent.setText(mError==null?mFormat:mError);
     }
 
     private void initView() {
@@ -49,6 +42,11 @@ public class ScanQrDialogActivity extends AppCompatActivity implements View.OnCl
 
         findViewById(R.id.btn_submit).setOnClickListener(this);
         findViewById(R.id.btn_cancel).setOnClickListener(this);
+    }
+
+    private void initData() {
+        mTitle.setText("提示");
+        mContent.setText(mError==null?mFormat:mError);
     }
 
     @Override
