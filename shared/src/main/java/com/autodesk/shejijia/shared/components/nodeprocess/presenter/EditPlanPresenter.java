@@ -67,7 +67,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
                 if (newActiveTask == null) {
                     if (mActiveTask != null) {
                         // Update active task date
-                        Date oldDate = DateUtil.isoStringToDate(mActiveTask.getPlanningTime().getStart());
+                        Date oldDate = DateUtil.iso8601ToDate(mActiveTask.getPlanningTime().getStart());
                         if(oldDate != null) {
                             updateTaskDate(mActiveTask, selectedDate);
                             mView.onTaskDateChange(mActiveTask, oldDate, selectedDate);
@@ -130,7 +130,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     private Task getMileStoneNode(Date date) {
         for (Task task: mPlan.getTasks()) {
             if (task.isMilestone()) {
-                Date startDate = DateUtil.isoStringToDate(task.getPlanningTime().getStart());
+                Date startDate = DateUtil.iso8601ToDate(task.getPlanningTime().getStart());
                 if(DateUtil.isSameDay(startDate, date)) {
                     return task;
                 }
@@ -141,7 +141,7 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
     }
 
     private void updateTaskDate(Task task, Date newDate) {
-        String dateString = DateUtil.getStringDateByFormat(newDate, DateUtil.DATE_FORMAT_ISO_861);
+        String dateString = DateUtil.dateToIso8601(newDate);
         task.getPlanningTime().setStart(dateString);
     }
 }

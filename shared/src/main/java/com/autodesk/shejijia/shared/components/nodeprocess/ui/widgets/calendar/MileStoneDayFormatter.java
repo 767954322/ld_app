@@ -39,7 +39,7 @@ public class MileStoneDayFormatter implements DayFormatter {
         this.dateTaskMap.clear();
         for (Task task : tasks) {
             // TODO Optimize date convert
-            Date date = DateUtil.isoStringToDate(task.getPlanningTime().getStart());
+            Date date = DateUtil.iso8601ToDate(task.getPlanningTime().getStart());
             if (date != null) {
                 String dateString = DateUtil.getStringDateByFormat(date, "yyyy-MM-dd");
                 this.dateTaskMap.put(dateString, task);

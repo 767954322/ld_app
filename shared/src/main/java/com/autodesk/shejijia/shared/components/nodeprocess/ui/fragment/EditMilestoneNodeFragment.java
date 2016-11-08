@@ -64,8 +64,8 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
         mMileStoneDayFormator.setData(tasks);
 
         // set date limit
-        Date startDate = DateUtil.isoStringToDate(tasks.get(0).getPlanningTime().getStart());
-        Date endDate = DateUtil.isoStringToDate(tasks.get(tasks.size() - 1).getPlanningTime().getCompletion());
+        Date startDate = DateUtil.iso8601ToDate(tasks.get(0).getPlanningTime().getStart());
+        Date endDate = DateUtil.iso8601ToDate(tasks.get(tasks.size() - 1).getPlanningTime().getCompletion());
 
         int limitMonthOffset = 6;
         Calendar calendar = Calendar.getInstance();

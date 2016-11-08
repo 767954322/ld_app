@@ -8,7 +8,6 @@ import com.autodesk.shejijia.shared.components.common.entity.microbean.Task;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.CalendarDay;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewDecorator;
 import com.autodesk.shejijia.shared.components.common.uielements.calanderview.DayViewFacade;
-import com.autodesk.shejijia.shared.components.common.uielements.calanderview.MaterialCalendarView;
 import com.autodesk.shejijia.shared.components.common.utility.DateUtil;
 
 import java.util.Date;
@@ -32,7 +31,7 @@ public class ActiveMileStoneDecorator implements DayViewDecorator {
             return false;
         }
 
-        Date date = DateUtil.isoStringToDate(mTask.getPlanningTime().getStart());
+        Date date = DateUtil.iso8601ToDate(mTask.getPlanningTime().getStart());
         return DateUtil.isSameDay(date, day.getDate());
     }
 

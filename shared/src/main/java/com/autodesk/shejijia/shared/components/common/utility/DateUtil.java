@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.autodesk.shejijia.shared.R;
 
+import org.joda.time.DateTime;
+import org.joda.time.Instant;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +28,6 @@ import java.util.concurrent.TimeUnit;
 public class DateUtil {
 
     private static String TAG = "DateUtil";
-    public final static String DATE_FORMAT_ISO_861 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
     public static String getTimeMY(String dateString) {
         // String dateString = "March 14, 2016 11:08:35";
@@ -292,22 +294,57 @@ public class DateUtil {
     }
 
     /**
-     *  Convert iso 8601 time string to Date object
-     * @param isoTimeString ISO 8601 Time format, e.g. "2016-06-15T10:45:00Z"
-     * @return Date object
+     * Parse iso 8601 format to date
+     * @param dateStr e.g. "2016-09-01T12:00:00Z", "2016-09-01", "2016-09-01T10:15:30", "2016-09-01T00:00:00.000+08:00”
+     * @return Date
      */
-    public static Date isoStringToDate(String isoTimeString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_ISO_861);
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
+    public static final Date iso8601ToDate(String dateStr) {
         Date date = null;
         try {
-            date = dateFormat.parse(isoTimeString);
-        } catch (Exception e) {
-            LogUtils.e(TAG, "e=" + e);
+            Instant instant = Instant.parse(dateStr);
+            date = instant.toDate();
+        } catch (IllegalArgumentException e) {
+            LogUtils.e(TAG, "e = "+ e);
         }
-
         return date;
+    }
+
+    /**
+     * Format date to iso 8601 string
+     * @param date
+     * @return e.g. "2016-09-01T12:00:00.000Z"
+     */
+    public static final String dateToIso8601(Date date) {
+        Instant instant = new Instant(date.getTime());
+        return instantToIso8601(instant);
+    }
+
+    /**
+     * Plus days
+     * @param iso8601DateStr
+     * @param days
+     * @return iso 8601 format string
+     */
+    public static String iso8601PlusDays(String iso8601DateStr, int days) {
+        Instant instant = iso8601ToInstant(iso8601DateStr);
+        return instantToIso8601(plusDays(instant, days));
+    }
+
+    private static final Instant iso8601ToInstant(String dateStr) {
+        return Instant.parse(dateStr);
+    }
+
+    private static String instantToIso8601(Instant instant) {
+        return instant.toString();
+    }
+
+    private static Instant plusDays(Instant instant, int days) {
+        DateTime dateTime = plusDays(instant.toDateTime(), days);
+        return dateTime.toInstant();
+    }
+
+    private static DateTime plusDays(DateTime dateTime, int days) {
+        return dateTime.plusDays(days);
     }
 
     /**

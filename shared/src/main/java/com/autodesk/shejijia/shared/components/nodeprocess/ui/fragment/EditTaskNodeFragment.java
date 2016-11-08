@@ -150,8 +150,8 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
 
         private String getDateString(Task task) {
             Time time = task.getPlanningTime();
-            Date startDate = DateUtil.isoStringToDate(time.getStart());
-            Date endDate = DateUtil.isoStringToDate(time.getCompletion());
+            Date startDate = DateUtil.iso8601ToDate(time.getStart());
+            Date endDate = DateUtil.iso8601ToDate(time.getCompletion());
             StringBuilder dateStingBuilder = new StringBuilder("");
             if (startDate != null && endDate != null && DateUtil.getDurationDays(startDate, endDate) <= 1) {
                 dateStingBuilder.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
@@ -166,10 +166,10 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
     }
 
     private static class TaskNodeViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mTvNodeName;
-        public final TextView mTvNodeTime;
+        final TextView mTvNodeName;
+        final TextView mTvNodeTime;
 
-        public TaskNodeViewHolder(View itemView) {
+        TaskNodeViewHolder(View itemView) {
             super(itemView);
             mTvNodeName = (TextView) itemView.findViewById(R.id.tv_node_name);
             mTvNodeTime = (TextView) itemView.findViewById(R.id.tv_node_time);
