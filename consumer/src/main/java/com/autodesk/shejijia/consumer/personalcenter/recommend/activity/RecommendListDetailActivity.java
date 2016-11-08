@@ -279,9 +279,17 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         mExpandListView.setSelection(intExtra);
                         break;
 
+
                     case 24: // 添加主材．
                         Bundle bundle = data.getExtras();
                         List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
+                        if (null == checkedInformationBeanList || checkedInformationBeanList.size() <= 0) {
+                            mRecommendSCFDList.clear();
+                            mLlEmptyContentView.setVisibility(View.VISIBLE);
+                            mRecommendExpandableAdapter.notifyDataSetChanged();
+                            break;
+                        }
+
                         ArrayList<RecommendSCFDBean> recommendSCFDListTemp = new ArrayList<>();
                         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
                             // [1]获取主材,对比之．
@@ -319,9 +327,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         }
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         break;
-
                     default:
                         break;
+                }
+            } else {
+                if (requestCode == 24) {
+                    mRecommendSCFDList.clear();
+                    mRecommendExpandableAdapter.notifyDataSetChanged();
                 }
             }
         }
