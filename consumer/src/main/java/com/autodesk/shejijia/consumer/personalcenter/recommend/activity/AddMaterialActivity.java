@@ -786,8 +786,8 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             checkedInformationBean.setCheckedBrandsInformationBean(recommendBrandsBeenList);
             checkedInformationBean.setList(listFirstTag);
             totalList.add(checkedInformationBean);
-            currentSubCategoryName = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0).getSub_category_3d_name();
         }
+        currentSubCategoryName = materialCategoryBean.getCategories_3d().get(countArrItem).getSub_category().get(0).getSub_category_3d_name();
     }
 
     /**
