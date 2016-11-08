@@ -5,29 +5,26 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.AddBrandShowAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.CheckedInformationBean;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.BtnStatusBean;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.MaterialCategoryBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.StoreInformationBean;
-import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewContainer;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddView;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicAddViewContainer;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.DynamicPopWindow;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullListView;
 import com.autodesk.shejijia.consumer.uielements.pulltorefresh.PullToRefreshLayout;
@@ -107,7 +104,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("totalList", (Serializable) totalList);
                 intent.putExtras(bundle);
-                setResult(102, intent);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
         }
@@ -663,6 +660,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             }
         }
     }
+
     /**
      * 将已经选择的品牌删除出集合
      */

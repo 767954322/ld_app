@@ -17,6 +17,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.manager.constants.JsonConstants;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendExpandableAdapter;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.CheckedInformationBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -35,6 +36,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +74,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     protected void initView() {
+
         super.initView();
         mExpandListView = (CustomHeaderExpandableListView) findViewById(R.id.rcy_recommend_detail);
         mBtnListSend = (AppCompatButton) findViewById(R.id.btn_list_send);
@@ -174,7 +177,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         super.rightNavButtonClicked(view);
         //TODO @xuehua.yao
         Intent intent = new Intent(RecommendListDetailActivity.this, AddMaterialActivity.class);
-        startActivity(intent);
+        intent.putExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN, (Serializable) mRecommendSCFDList);
+        startActivityForResult(intent, 24);
 
     }
 
@@ -276,16 +280,21 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
                         break;
 
-                    case 23:// 添加品牌．
+                    case 23:// 定位二级品类．
                         int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
                         mExpandListView.setSelection(intExtra);
+                        break;
+
+                    case 24: // 添加主材．
+                        Bundle bundle = data.getExtras();
+                        List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
+                        Log.d("RecommendListDetailActi", "checkedInformationBeanList:" + checkedInformationBeanList);
                         break;
 
                     default:
                         break;
                 }
             }
-
         }
     }
 }
