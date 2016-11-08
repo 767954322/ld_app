@@ -282,8 +282,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                     case 24: // 添加主材．
                         Bundle bundle = data.getExtras();
                         List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
-//                        private List<RecommendBrandsBean> checkedBrandsInformationBean; // 选中的品牌信息Bean
-//                        private MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean;//二级品类信息bean
                         ArrayList<RecommendSCFDBean> recommendSCFDListTemp = new ArrayList<>();
                         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
                             // [1]获取主材,对比之．
@@ -296,29 +294,29 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                             for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
                                 String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
                                 // 已有二级品类．
-                                if (material_sub_category_3d_id1.equalsIgnoreCase(sub_category_3d_id2)) {
+                                if (material_sub_category_3d_id1.equals(sub_category_3d_id2)) {
+                                    /**
+                                     * 原有二级品类，动态添加品牌，
+                                     * 即原有二级品类集合发生改变，先移除相应的二级品类，然后增加新的二级品类元素．
+                                     */
                                     List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
-
                                     int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
-                                    mRecommendSCFDList.remove(recommendSCFDBean);
-                                    ArrayList<RecommendBrandsBean> recommendBrandsBeans = new ArrayList<>();
-                                    recommendBrandsBeans.addAll(checkedBrandsInformationBean);
-                                    recommendSCFDBean.getBrands().addAll(recommendBrandsBeans);
-                                    mRecommendSCFDList.add(post, recommendSCFDBean);
+                                    mRecommendSCFDList.get(post).getBrands().addAll(checkedBrandsInformationBean);
                                 } else {
                                     // 新增二级品类．
                                     RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
+                                    MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
                                     List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
-                                    recommendSCFDBean1.setSub_category_3d_name(materialSubCategoryBean.getSub_category_3d_name());
-                                    recommendSCFDBean1.setSub_category_3d_id(materialSubCategoryBean.getSub_category_3d_id());
+                                    recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
+                                    recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
                                     recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
                                     recommendSCFDListTemp.add(recommendSCFDBean1);
                                 }
                             }
                         }
-                        if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
-                            mRecommendSCFDList.addAll(recommendSCFDListTemp);
-                        }
+//                        if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
+//                            mRecommendSCFDList.addAll(recommendSCFDListTemp);
+//                        }
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         break;
 
