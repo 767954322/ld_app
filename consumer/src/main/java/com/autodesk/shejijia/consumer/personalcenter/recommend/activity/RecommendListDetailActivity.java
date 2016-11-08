@@ -284,7 +284,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
 //                        private List<RecommendBrandsBean> checkedBrandsInformationBean; // 选中的品牌信息Bean
 //                        private MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean;//二级品类信息bean
-                        ArrayList<RecommendSCFDBean> recommendSCFDBeenTemp = new ArrayList<>();
+                        ArrayList<RecommendSCFDBean> recommendSCFDListTemp = new ArrayList<>();
                         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
                             // [1]获取主材,对比之．
                             // [2]对比主材及品牌
@@ -312,11 +312,11 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                     recommendSCFDBean1.setSub_category_3d_name(materialSubCategoryBean.getSub_category_3d_name());
                                     recommendSCFDBean1.setSub_category_3d_id(materialSubCategoryBean.getSub_category_3d_id());
                                     recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
-//                                    recommendSCFDBeenTempList.add(recommendSCFDBean1);
+                                    recommendSCFDListTemp.add(recommendSCFDBean1);
                                 }
                             }
                         }
-//                        mRecommendSCFDList.addAll(recommendSCFDBeenTempList);
+                        mRecommendSCFDList.addAll(recommendSCFDListTemp);
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         break;
 
