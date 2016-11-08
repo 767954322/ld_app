@@ -134,6 +134,13 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         MPServerHttpManager.getInstance().getRecommendDraftDetail(mAsset_id, callback);
     }
 
+    /**
+     * 保存推荐清单详情页面
+     */
+    private void saveRecommendDetail() {
+        Toast.makeText(mActivity, "保存", Toast.LENGTH_SHORT).show();
+    }
+
     private void updateUI(RecommendDetailsBean recommendListDetailBean) {
         setTitle(recommendListDetailBean);
 
@@ -192,16 +199,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                 @Override
                 public void onItemClick(Object object, int position) {
                     if (position != AlertView.CANCELPOSITION) {
-                        /** 确定　P11 主材推荐清单、品类、品牌保存到草稿箱　PUT
-                         /materials-recommend-app/v1/api/designers/{designer_id}/recommends
-
-                         request:
-                         {
-                         "asset_id":""
-                         "scfd":""
-                         }
-                         */
-                        Toast.makeText(mActivity, "保存", Toast.LENGTH_SHORT).show();
+                        saveRecommendDetail();
                     } else {
                         RecommendListDetailActivity.this.finish();
                     }
@@ -284,7 +282,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                         List<CheckedInformationBean> checkedInformationBeanList = (List<CheckedInformationBean>) bundle.get("totalList");
 //                        private List<RecommendBrandsBean> checkedBrandsInformationBean; // 选中的品牌信息Bean
 //                        private MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean;//二级品类信息bean
-
+                        ArrayList<RecommendSCFDBean> recommendSCFDBeenTemp = new ArrayList<>();
                         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
                             // [1]获取主材,对比之．
                             // [2]对比主材及品牌
@@ -317,8 +315,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                             }
                         }
 //                        mRecommendSCFDList.addAll(recommendSCFDBeenTempList);
-
-
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         break;
 
