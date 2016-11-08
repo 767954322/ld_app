@@ -48,7 +48,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        if(mRecommendSCFDList.size() > 0 && mRecommendSCFDList.get(groupPosition).getBrands() != null){
+        if (mRecommendSCFDList.size() > 0 && mRecommendSCFDList.get(groupPosition).getBrands() != null) {
             return mRecommendSCFDList.get(groupPosition).getBrands().get(childPosition);
         }
         return null;
@@ -81,6 +81,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             mViewHolder.tvBrandChange = (TextView) view.findViewById(R.id.tv_brand_change);
             mViewHolder.tvBrandAdd = (TextView) view.findViewById(R.id.tv_create_brand);
             mViewHolder.tvCategoryDelete = (TextView) view.findViewById(R.id.tv_delete_brand);
+            mViewHolder.tvBrandDelete = (TextView) view.findViewById(R.id.tv_brand_delete);
 
             setOnTouchListenerForEditText(mViewHolder.etBrandNum, R.id.et_brand_num);
             setOnTouchListenerForEditText(mViewHolder.etBranDimension, R.id.et_brand_dimension);
@@ -99,7 +100,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             view.setTag(mViewHolder);
         }
 
-        if (mRecommendSCFDList.size() >0 && childPosition == mRecommendSCFDList.get(groupPosition).getBrands().size() - 1) {
+        if (mRecommendSCFDList.size() > 0 && childPosition == mRecommendSCFDList.get(groupPosition).getBrands().size() - 1) {
             mViewHolder.rlRecommendFooter.setVisibility(View.VISIBLE);
         } else {
             mViewHolder.rlRecommendFooter.setVisibility(View.GONE);
@@ -193,6 +194,15 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 }
             }
         });
+
+        mViewHolder.tvBrandDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mBrandChangListener) {
+                    mBrandChangListener.onBrandDeleteListener(currentParentPosition, currentChildPosition);
+                }
+            }
+        });
         return view;
     }
 
@@ -220,7 +230,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        if(mRecommendSCFDList.size() > 0 && mRecommendSCFDList.get(groupPosition).getBrands() != null){
+        if (mRecommendSCFDList.size() > 0 && mRecommendSCFDList.get(groupPosition).getBrands() != null) {
             return mRecommendSCFDList.get(groupPosition).getBrands().size();
         }
         return 0;
@@ -228,7 +238,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public Object getGroup(int groupPosition) {
-        return mRecommendSCFDList.size() > 0 ?null:mRecommendSCFDList.get(groupPosition);
+        return mRecommendSCFDList.size() > 0 ? null : mRecommendSCFDList.get(groupPosition);
     }
 
     @Override
@@ -344,6 +354,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
         TextView tvBrandChange;
         TextView tvBrandAdd;
         TextView tvCategoryDelete;
+        TextView tvBrandDelete;
 
 
         ExpandListTextWatcher mTextWatcherNum;
@@ -384,7 +395,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (mRecommendSCFDList.size() <= 0 ||null == mRecommendSCFDList.get(parentPosition) || mRecommendSCFDList.get(parentPosition).getBrands() == null || mRecommendSCFDList.get(parentPosition).getBrands().size() <= 0) {
+            if (mRecommendSCFDList.size() <= 0 || null == mRecommendSCFDList.get(parentPosition) || mRecommendSCFDList.get(parentPosition).getBrands() == null || mRecommendSCFDList.get(parentPosition).getBrands().size() <= 0) {
                 return;
             }
             if (type == 0) {
