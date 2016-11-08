@@ -301,7 +301,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                      */
                                     List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
                                     int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
-                                    mRecommendSCFDList.get(post).getBrands().addAll(checkedBrandsInformationBean);
+                                    mRecommendSCFDList.get(post).setBrands(checkedBrandsInformationBean);
                                 } else {
                                     // 新增二级品类．
                                     RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
@@ -314,9 +314,9 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                 }
                             }
                         }
-//                        if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
-//                            mRecommendSCFDList.addAll(recommendSCFDListTemp);
-//                        }
+                        if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
+                            mRecommendSCFDList.addAll(recommendSCFDListTemp);
+                        }
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         break;
 
