@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.RecommendAdapter;
@@ -30,7 +31,7 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  * @GitHub: https://github.com/meikoz
  */
 
-public class CsRecommendActivity extends NavigationBarActivity implements RecommendView, OnLoadMoreListener, AdapterView.OnItemClickListener {
+public class CsRecommendActivity extends NavigationBarActivity implements RecommendView, OnLoadMoreListener, AdapterView.OnItemClickListener, RecommendAdapter.OnRevokeCallback {
 
     private LinearLayout mEmptyView;
     private RecommendLogicImpl mRecommendLogic;
@@ -63,6 +64,7 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
         super.initListener();
         mListView.setOnLoadMoreListener(this);
         mListView.setOnItemClickListener(this);
+        mAdapter.setOnRevokeCallback(this);
         mFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -118,5 +120,16 @@ public class CsRecommendActivity extends NavigationBarActivity implements Recomm
         CustomProgress.cancelDialog();
         mFrameLayout.onRefreshComplete();
         mListView.onLoadMoreComplete();
+    }
+
+    @Override
+    public void onRevokeSuccessFul() {
+        mRecommendLogic.onLoadRecommendListData(false, 0, LIMIT, 0);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRevokeFailer() {
+        Toast.makeText(this, "退回失败", Toast.LENGTH_SHORT).show();
     }
 }

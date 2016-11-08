@@ -42,6 +42,7 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     private CsRecommendDetailsAdapter mAdapter;
     private List<RecommendSCFDBean> brands = new ArrayList<>();
     private RecommendDetailsBean mEntity;
+    private String mScfd;
 
     public static void jumpTo(Context context, String asset_id, String community_name) {
         Intent intent = new Intent(context, CsRecommendDetailsActivity.class);
@@ -60,8 +61,6 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     @Override
     protected void initListener() {
         super.initListener();
-        mAdapter = new CsRecommendDetailsAdapter(this, brands, R.layout.item_cs_recommend_details);
-        mListview.setAdapter(mAdapter);
     }
 
     private void setTitleBarView() {
@@ -116,13 +115,14 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
     }
 
     private void updateView2Api(RecommendDetailsBean item) {
-        String scfd = item.getScfd();
+        mScfd = item.getScfd();
         List<RecommendSCFDBean> brand_lst = new Gson()
-                .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
+                .fromJson(mScfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
         if (brand_lst != null && brand_lst.size() > 0) {
             brands.addAll(brand_lst);
-            mAdapter.notifyDataSetChanged();
+            mAdapter = new CsRecommendDetailsAdapter(this, brands, R.layout.item_cs_recommend_details,mScfd);
+            mListview.setAdapter(mAdapter);
         }
     }
 }

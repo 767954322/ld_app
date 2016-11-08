@@ -1,5 +1,6 @@
 package com.autodesk.shejijia.consumer.personalcenter.recommend.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.StoreLocationActivity;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.ViewCategoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
@@ -27,15 +29,23 @@ import java.util.List;
 
 public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> implements View.OnClickListener {
     private LayoutInflater mInflater;
+    private String mScfd;
 
-    public CsRecommendDetailsAdapter(Context context, List<RecommendSCFDBean> datas, int layoutId) {
+    public CsRecommendDetailsAdapter(Context context, List<RecommendSCFDBean> datas, int layoutId, String scfd) {
         super(context, datas, layoutId);
         mInflater = LayoutInflater.from(context);
+        this.mScfd = scfd;
     }
 
     @Override
-    public void convert(CommonViewHolder holder, RecommendSCFDBean item) {
+    public void convert(final CommonViewHolder holder, RecommendSCFDBean item) {
         holder.setText(R.id.tv_category_name, item.getSub_category_3d_name());
+        holder.setOnClickListener(R.id.tv_category_name, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewCategoryActivity.jumpTo((Activity) mContext, mScfd, holder.getPosition());
+            }
+        });
         LinearLayout llBrandView = holder.getView(R.id.ll_brand_view);
         List<RecommendBrandsBean> brands = item.getBrands();
         llBrandView.removeAllViews();
@@ -63,7 +73,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
                 ImageUtils.loadImageIcon(mBrandLogo, bean.getLogo_url());
         }
         TextView storeLocation = (TextView) mItemView.findViewById(R.id.tv_store_location);
-        storeLocation.setVisibility(View.INVISIBLE);
+        storeLocation.setVisibility(View.VISIBLE);
         storeLocation.setOnClickListener(this);
         TextView tvBrandDimension = (TextView) mItemView.findViewById(R.id.tv_brand_dimension);
         TextView tvBrandApartment = (TextView) mItemView.findViewById(R.id.tv_brand_apartment);

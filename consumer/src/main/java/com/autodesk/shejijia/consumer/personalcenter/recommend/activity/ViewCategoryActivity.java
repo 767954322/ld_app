@@ -81,7 +81,8 @@ public class ViewCategoryActivity extends NavigationBarActivity implements BaseC
     @Override
     protected void initListener() {
         super.initListener();
-        mAdater.setOnItemClickListener(this);
+        if (mAdater != null)
+            mAdater.setOnItemClickListener(this);
     }
 
     @Override

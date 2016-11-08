@@ -13,6 +13,7 @@ import com.autodesk.shejijia.consumer.personalcenter.recommend.adapter.Recommend
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendDetailsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.view.RecommendView;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import cn.finalteam.loadingviewfinal.PtrFrameLayout;
  * @GitHub: https://github.com/meikoz
  */
 
-public class RecommendFragment extends CustomBaseFragment implements RecommendView, OnLoadMoreListener, AdapterView.OnItemClickListener {
+public class RecommendFragment extends CustomBaseFragment implements RecommendView, OnLoadMoreListener, AdapterView.OnItemClickListener, RecommendAdapter.OnRevokeCallback {
 
     private LinearLayout mEmptyView;
     private RecommendLogicImpl mRecommendLogic;
@@ -60,10 +61,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
-        if (isDesign)
-            DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "");
-        else
-            CsRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "", item.getCommunity_name());
+        DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "");
     }
 
     @Override
@@ -71,10 +69,11 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
         super.initListener();
         mListView.setOnLoadMoreListener(this);
         mListView.setOnItemClickListener(this);
+        mAdapter.setOnRevokeCallback(this);
         mFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
+                mRecommendLogic.onLoadRecommendListData(true, 0, LIMIT, mStatus);
                 mFrameLayout.onRefreshComplete();
             }
         });
@@ -96,7 +95,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     @Override
     public void loadMore() {
         OFFSET += mRecommends.size();
-        mRecommendLogic.onLoadRecommendListData(isDesign, OFFSET, LIMIT, mStatus);
+        mRecommendLogic.onLoadRecommendListData(true, OFFSET, LIMIT, mStatus);
     }
 
     private void updateViewFromApi(int offset, List<RecommendDetailsBean> items) {
@@ -120,7 +119,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
         isDesign = getArguments().getBoolean("isDesign", false);
         mStatus = getArguments().getInt("status");
         mRecommendLogic = new RecommendLogicImpl(this);
-        mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
+        mRecommendLogic.onLoadRecommendListData(true, 0, LIMIT, mStatus);
     }
 
     @Override
@@ -132,5 +131,17 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     public void onLoadFailer() {
         mFrameLayout.onRefreshComplete();
         mListView.onLoadMoreComplete();
+    }
+
+    @Override
+    public void onRevokeSuccessFul() {
+        ToastUtil.showCustomToast(getActivity(), "操作成功");
+        mRecommendLogic.onLoadRecommendListData(isDesign, 0, LIMIT, mStatus);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRevokeFailer() {
+        ToastUtil.showCustomToast(getActivity(), "操作失败");
     }
 }
