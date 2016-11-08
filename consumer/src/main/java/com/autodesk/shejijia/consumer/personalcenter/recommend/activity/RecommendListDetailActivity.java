@@ -146,8 +146,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         List<RecommendSCFDBean> recommendscfd = new Gson()
                 .fromJson(scfd, new TypeToken<List<RecommendSCFDBean>>() {
                 }.getType());
-        mRecommendSCFDList.addAll(recommendscfd);
-        if(mRecommendSCFDList.size() <= 0){
+        if (null == recommendscfd || recommendscfd.size() <= 0 || mRecommendSCFDList.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
             return;
         }
@@ -185,27 +184,30 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
     @Override
     protected void leftNavButtonClicked(View view) {
-        new AlertView(UIUtils.getString(R.string.tip), "当前订单还未发送，是否保存？",
-                null, null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Object object, int position) {
-                if (position != AlertView.CANCELPOSITION) {
-                    /** 确定　P11 主材推荐清单、品类、品牌保存到草稿箱　PUT
-                     /materials-recommend-app/v1/api/designers/{designer_id}/recommends
+        if (mRecommendSCFDList == null || mRecommendSCFDList.size() <= 0) {
+            finish();
+        } else {
+            new AlertView("", "当前清单还未发送，是否保存？",
+                    "取消", null, new String[]{UIUtils.getString(R.string.sure)}, RecommendListDetailActivity.this, AlertView.Style.Alert, new OnItemClickListener() {
+                @Override
+                public void onItemClick(Object object, int position) {
+                    if (position != AlertView.CANCELPOSITION) {
+                        /** 确定　P11 主材推荐清单、品类、品牌保存到草稿箱　PUT
+                         /materials-recommend-app/v1/api/designers/{designer_id}/recommends
 
-                     request:
-                     {
-                     "asset_id":""
-                     "scfd":""
-                     }
-                     */
-                    Toast.makeText(mActivity, "保存", Toast.LENGTH_SHORT).show();
-                } else {
-                    finish();
+                         request:
+                         {
+                         "asset_id":""
+                         "scfd":""
+                         }
+                         */
+                        Toast.makeText(mActivity, "保存", Toast.LENGTH_SHORT).show();
+                    } else {
+                        RecommendListDetailActivity.this.finish();
+                    }
                 }
-            }
-        }).show();
-        super.leftNavButtonClicked(view);
+            }).show();
+        }
     }
 
     private void setTitle(RecommendDetailsBean recommendListDetailBean) {
@@ -283,7 +285,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 //                        private List<RecommendBrandsBean> checkedBrandsInformationBean; // 选中的品牌信息Bean
 //                        private MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean;//二级品类信息bean
 
-//                        ArrayList<RecommendSCFDBean> recommendSCFDBeenTempList = new ArrayList<>();
                         for (CheckedInformationBean checkedInformationBean : checkedInformationBeanList) {
                             // [1]获取主材,对比之．
                             // [2]对比主材及品牌
@@ -294,6 +295,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
                             for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
                                 String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
+                                // 已有二级品类．
                                 if (material_sub_category_3d_id1.equalsIgnoreCase(sub_category_3d_id2)) {
                                     List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
 
@@ -304,7 +306,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                     recommendSCFDBean.getBrands().addAll(recommendBrandsBeans);
                                     mRecommendSCFDList.add(post, recommendSCFDBean);
                                 } else {
-
+                                    // 新增二级品类．
                                     RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
                                     List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
                                     recommendSCFDBean1.setSub_category_3d_name(materialSubCategoryBean.getSub_category_3d_name());
