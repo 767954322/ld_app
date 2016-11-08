@@ -68,8 +68,10 @@ public class EditPlanPresenter implements EditPlanContract.Presenter {
                     if (mActiveTask != null) {
                         // Update active task date
                         Date oldDate = DateUtil.isoStringToDate(mActiveTask.getPlanningTime().getStart());
-                        updateTaskDate(mActiveTask, selectedDate);
-                        mView.onTaskDateChange(mActiveTask, oldDate, selectedDate);
+                        if(oldDate != null) {
+                            updateTaskDate(mActiveTask, selectedDate);
+                            mView.onTaskDateChange(mActiveTask, oldDate, selectedDate);
+                        }
                     }
                 } else {
                     if (mActiveTask ==null || newActiveTask.getTaskId() != mActiveTask.getTaskId()) {

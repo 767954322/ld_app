@@ -69,12 +69,15 @@ public class EditMilestoneNodeFragment extends BaseFragment implements EditPlanC
 
         int limitMonthOffset = 6;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
+        Date today = calendar.getTime();
+        // TODO optimize date format fail case
+        calendar.setTime(startDate == null ? today : startDate);
         calendar.add(Calendar.MONTH, -limitMonthOffset);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1);
         Date minDate = calendar.getTime();
 
-        calendar.setTime(endDate);
+        // TODO optimize date format fail case
+        calendar.setTime(endDate == null ? today : endDate);
         calendar.add(Calendar.MONTH, limitMonthOffset);
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.getActualMaximum(Calendar.DAY_OF_MONTH));

@@ -152,15 +152,15 @@ public class EditTaskNodeFragment extends BaseFragment implements EditPlanContra
             Time time = task.getPlanningTime();
             Date startDate = DateUtil.isoStringToDate(time.getStart());
             Date endDate = DateUtil.isoStringToDate(time.getCompletion());
-            StringBuilder dateSting = new StringBuilder("");
+            StringBuilder dateStingBuilder = new StringBuilder("");
             if (startDate != null && endDate != null && DateUtil.getDurationDays(startDate, endDate) <= 1) {
-                dateSting.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
+                dateStingBuilder.append(DateUtil.getStringDateByFormat(startDate, "M.d"));
             } else {
-                dateSting.append(startDate == null ? "NA" : DateUtil.getStringDateByFormat(startDate, "M.d"))
+                dateStingBuilder.append(startDate == null ? "NA" : DateUtil.getStringDateByFormat(startDate, "M.d"))
                         .append("-")
                         .append(endDate == null ? "NA" : DateUtil.getStringDateByFormat(endDate, "M.d"));
             }
-            return dateSting.toString();
+            return dateStingBuilder.toString();
         }
 
     }
