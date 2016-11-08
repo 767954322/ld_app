@@ -18,7 +18,13 @@ public interface BrandChangListener {
     void onBrandAddListener(RecommendSCFDBean recommendSCFDBean);
 
     /**
+     * 删除品牌
+     */
+    void onBrandDeleteListener(int currentParentPosition, int childPosition);
+
+    /**
      * 删除品类
+     *
      * @param groupPosition
      */
     void onSubCategoryDeleteListener(int groupPosition);

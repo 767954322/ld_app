@@ -138,6 +138,24 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
      * 保存推荐清单详情页面
      */
     private void saveRecommendDetail() {
+        CustomProgress.showDefaultProgress(mActivity);
+        OkJsonRequest.OKResponseCallback callback = new OkJsonRequest.OKResponseCallback() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                CustomProgress.cancelDialog();
+                String jsonString = jsonObject.toString();
+                Log.d("RecommendListDetailAc", jsonString);
+                RecommendDetailsBean recommendListDetailBean = jsonToBean(jsonString, RecommendDetailsBean.class);
+                updateUI(recommendListDetailBean);
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                CustomProgress.cancelDialog();
+                MPNetworkUtils.logError(TAG, volleyError);
+            }
+        };
+        MPServerHttpManager.getInstance().getRecommendDraftDetail(mAsset_id, callback);
         Toast.makeText(mActivity, "保存", Toast.LENGTH_SHORT).show();
     }
 
@@ -233,9 +251,28 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     }
 
     @Override
+    public void onBrandDeleteListener(int currentParentPosition, int childPosition) {
+        mRecommendSCFDList.get(currentParentPosition).getBrands().remove(childPosition);
+        mRecommendExpandableAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onSubCategoryDeleteListener(int groupPosition) {
         mRecommendSCFDList.remove(groupPosition);
         mRecommendExpandableAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 获取添加主材后的更新
+     */
+    private RecommendSCFDBean getMaterialRecommendSCFDBean(CheckedInformationBean checkedInformationBean) {
+        RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
+        MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
+        List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
+        recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
+        recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
+        recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
+        return recommendSCFDBean1;
     }
 
     @Override
@@ -299,15 +336,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                             String material_sub_category_3d_id1 = materialSubCategoryBean.getSub_category_3d_id();
                             if (mRecommendSCFDList.size() <= 0) {
                                 // 新增二级品类．
-                                RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
-                                MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
-                                List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
-                                recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
-                                recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
-                                recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
-                                recommendSCFDListTemp.add(recommendSCFDBean1);
+                                recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
                             } else {
-
                                 for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
                                     String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
                                     // 已有二级品类．
@@ -321,13 +351,7 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                         mRecommendSCFDList.get(post).setBrands(checkedBrandsInformationBean);
                                     } else {
                                         // 新增二级品类．
-                                        RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
-                                        MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
-                                        List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
-                                        recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
-                                        recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
-                                        recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
-                                        recommendSCFDListTemp.add(recommendSCFDBean1);
+                                        recommendSCFDListTemp.add(getMaterialRecommendSCFDBean(checkedInformationBean));
                                     }
                                 }
                             }
@@ -348,4 +372,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
             }
         }
     }
+
+
 }
