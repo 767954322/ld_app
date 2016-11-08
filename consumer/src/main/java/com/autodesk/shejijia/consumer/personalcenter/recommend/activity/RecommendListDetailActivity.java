@@ -316,7 +316,9 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                                 }
                             }
                         }
-                        mRecommendSCFDList.addAll(recommendSCFDListTemp);
+                        if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
+                            mRecommendSCFDList.addAll(recommendSCFDListTemp);
+                        }
                         mRecommendExpandableAdapter.notifyDataSetChanged();
                         break;
 
