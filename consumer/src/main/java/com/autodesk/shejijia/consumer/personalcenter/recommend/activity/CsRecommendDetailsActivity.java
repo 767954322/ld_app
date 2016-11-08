@@ -121,8 +121,16 @@ public class CsRecommendDetailsActivity extends NavigationBarActivity {
                 }.getType());
         if (brand_lst != null && brand_lst.size() > 0) {
             brands.addAll(brand_lst);
-            mAdapter = new CsRecommendDetailsAdapter(this, brands, R.layout.item_cs_recommend_details,mScfd);
+            mAdapter = new CsRecommendDetailsAdapter(this, brands, R.layout.item_cs_recommend_details, mScfd);
             mListview.setAdapter(mAdapter);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+            mListview.setSelection(intExtra);
         }
     }
 }

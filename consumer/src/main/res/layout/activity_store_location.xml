@@ -3,22 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <cn.finalteam.loadingviewfinal.PtrClassicFrameLayout
-        android:id="@+id/ptr_layout"
+    <include layout="@layout/view_navigation_header"/>
+
+
+    <ListView
+        android:id="@+id/lv_mall_location"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        android:scrollbars="none"/>
 
-        <cn.finalteam.loadingviewfinal.ListViewFinal
-            android:id="@+id/lv_mall_location"
-            app:loadMoreMode="scroll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="#00000000"
-            android:divider="@null"
-            android:scrollbars="none"/>
-
-    </cn.finalteam.loadingviewfinal.PtrClassicFrameLayout>
 </LinearLayout>

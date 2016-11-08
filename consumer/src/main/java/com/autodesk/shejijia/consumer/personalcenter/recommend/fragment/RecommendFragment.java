@@ -61,7 +61,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
-        DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "");
+        DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "", item.getStatus().equals("canceled")||item.getStatus().equals("refused"));
     }
 
     @Override
@@ -70,6 +70,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
         mListView.setOnLoadMoreListener(this);
         mListView.setOnItemClickListener(this);
         mAdapter.setOnRevokeCallback(this);
+        mListView.setHasLoadMore(true);
         mFrameLayout.setOnRefreshListener(new OnDefaultRefreshListener() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -109,6 +110,7 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
             mRecommends.addAll(items);
             mAdapter.notifyDataSetChanged();
         } else {
+            mListView.onLoadMoreComplete();
             if (offset == 0)
                 mEmptyView.setVisibility(View.VISIBLE);
         }

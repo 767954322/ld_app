@@ -63,6 +63,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
     private void convertDesignerDataUI(CommonViewHolder holder, RecommendDetailsBean item) {
         String status = item.getSent_status();
         String revoke_state = item.getStatus();
+        //设计师　消费者退回的项目不应该被置灰　可以
         notifyUISetChanged(holder, revoke_state.equals("canceled") || revoke_state.equals("refused"));
         if (!TextUtils.isEmpty(status)) {
             boolean unsent = status.equals("unsent");

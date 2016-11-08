@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.autodesk.shejijia.consumer.R;
 import com.autodesk.shejijia.consumer.base.adapter.CommonAdapter;
 import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
+import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.DetailsViewCategoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.StoreLocationActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.activity.ViewCategoryActivity;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
@@ -44,7 +45,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         holder.setOnClickListener(R.id.tv_category_name, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewCategoryActivity.jumpTo((Activity) mContext, mScfd, holder.getPosition());
+                DetailsViewCategoryActivity.jumpTo((Activity) mContext, mScfd, holder.getPosition());
             }
         });
         LinearLayout llBrandView = holder.getView(R.id.ll_brand_view);
@@ -65,7 +66,7 @@ public class CsRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
 
     private void updateView2ItemData(boolean isFrom3D, View mItemView, RecommendBrandsBean bean) {
         TextView tvBrandName = (TextView) mItemView.findViewById(R.id.tv_brand_name);
-        if (!isFrom3D) {
+        if (isFrom3D) {
             TextView tvBrandNum = (TextView) mItemView.findViewById(R.id.tv_brand_num);
             tvBrandNum.setText(bean.getAmountAndUnit() + "个");
         } else {

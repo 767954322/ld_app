@@ -47,6 +47,7 @@ public class StoreLocationActivity extends NavigationBarActivity {
     @Override
     protected void initView() {
         super.initView();
+        setTitleForNavbar("店面地址");
         mMallListView = (ListView) findViewById(R.id.lv_mall_location);
         mAdapter = new StoreLocationAdapter(this, mStoreLocations, R.layout.item_store_location);
         mMallListView.setAdapter(mAdapter);

@@ -41,7 +41,7 @@ import java.util.List;
  * des:设计师清单详情
  */
 
-public class DcRecommendDetailsActivity extends NavigationBarActivity implements ResultSubscriber.OnResultListener {
+public class DcRecommendDetailsActivity extends NavigationBarActivity {
 
     private String mAsset_id;
     private ImageView ivRecoWfsico;
@@ -56,10 +56,12 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
     private DcRecommendDetailsAdapter mAdapter;
     private List<RecommendSCFDBean> brands = new ArrayList<>();
     private RecommendDetailsBean mEntity;
+    private boolean mCanceled;
 
-    public static void jumpTo(Context context, String asset_id) {
+    public static void jumpTo(Context context, String asset_id, boolean canceled) {
         Intent intent = new Intent(context, DcRecommendDetailsActivity.class);
         intent.putExtra("asset_id", asset_id);
+        intent.putExtra("canceled", canceled);
         context.startActivity(intent);
     }
 
@@ -83,13 +85,10 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
     @Override
     protected void initListener() {
         super.initListener();
-        mAdapter = new DcRecommendDetailsAdapter(this, brands, R.layout.item_recommend_details_brand);
-        mListview.setAdapter(mAdapter);
     }
 
     private void setTitleBarView() {
         setTitleForNavbar("清单详情");
-        setTitleForNavButton(ButtonType.RIGHT, "编辑");
         setTextColorForRightNavButton(UIUtils.getColor(R.color.color_blue_0084ff));
     }
 
@@ -103,6 +102,8 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
     protected void initExtraBundle() {
         super.initExtraBundle();
         mAsset_id = getIntent().getStringExtra("asset_id");
+        mCanceled = getIntent().getBooleanExtra("canceled", false);
+        setTitleForNavButton(ButtonType.RIGHT, mCanceled ? "" : "编辑");
     }
 
     @Override
@@ -156,30 +157,16 @@ public class DcRecommendDetailsActivity extends NavigationBarActivity implements
         if (brand_lst != null && brand_lst.size() > 0) {
             brands.clear();
             brands.addAll(brand_lst);
-            mAdapter.notifyDataSetChanged();
+            mAdapter = new DcRecommendDetailsAdapter(this, brands, R.layout.item_recommend_details_brand, scfd);
+            mListview.setAdapter(mAdapter);
         }
-
     }
 
     @Override
-    public void onStart(int i) {
-        CustomProgress.show(this, "", false, null);
-        Log.i("CsRecommendActivity", "onStart");
-    }
-
-    @Override
-    public void onError(int i, Throwable throwable) {
-        CustomProgress.cancelDialog();
-        Log.i("CsRecommendActivity", "onError");
-    }
-
-    @Override
-    public void onResult(IModel iModel, int i) {
-        CustomProgress.cancelDialog();
-        Log.i("CsRecommendActivity", "onResult");
-        if (i == 0) {
-            mEntity = ((RecommendDetailsBean) iModel);
-            updateView2Api(mEntity);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            int intExtra = data.getIntExtra(ViewCategoryActivity.LOCATION, 0);
+            mListview.setSelection(intExtra + 1);
         }
     }
 }
