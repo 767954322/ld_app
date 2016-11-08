@@ -13,5 +13,6 @@
     <!-- toolbar home button style-->
     <style name="ToolbarColoredBackArrow" parent="AppTheme">
         <item name="android:textColorSecondary">@color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 </resources>
