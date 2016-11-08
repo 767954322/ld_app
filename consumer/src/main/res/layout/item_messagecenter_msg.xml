@@ -32,8 +32,7 @@
                 android:layout_marginRight="@dimen/font_35"
                 android:layout_marginTop="@dimen/font_10"
                 android:text="@string/item_messagecenter_tital"
-                android:textSize="@dimen/size_14"
-                android:textStyle="bold" />
+                android:textSize="@dimen/size_14" />
 
 
         </RelativeLayout>

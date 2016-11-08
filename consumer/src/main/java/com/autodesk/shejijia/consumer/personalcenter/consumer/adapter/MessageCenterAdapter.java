@@ -115,43 +115,53 @@ public class MessageCenterAdapter extends BaseAdapter {
         String sent_time = messagesBean.getSent_time();
         String timeMY = !TextUtils.isEmpty(sent_time) ? DateUtil.showDate(new Long(sent_time)) : "";
         String title = "";
+        String show_Body = "";
+        myHolder.tv_msg_date.setText(timeMY);
+        /**
+         * 1.COMMAND_CONSTRUCTION_MESSAGE  施工消息
+         * 2.其他系统消息
+         * （目前只知道这两个）
+         */
         if (null != messagesBean.getCommand() && messagesBean.getCommand().equals("COMMAND_CONSTRUCTION_MESSAGE")) {
 
             if (!TextUtils.isEmpty(body)) {
+
                 MessageCenterBodyNew messageCenterBodyNew = GsonUtil.jsonToBean(body, MessageCenterBodyNew.class);
                 title = messageCenterBodyNew.getDisplay_message().getSummary();
-                StringBuffer sb_body = new StringBuffer();
-                sb_body.append("<body>");
+                //标题加粗 HTML排版
+                for (int i = 0; title.contains("*"); i++) {
+                    title = (i % 2 == 0) ? title.replaceFirst("\\*", "<b><tt>") : title.replaceFirst("\\*", "</b></tt>");
+                }
+                //内容Item HTML排版
                 if (null != messageCenterBodyNew.getDisplay_message() && null != messageCenterBodyNew.getDisplay_message().getDetail_items()) {
                     int number = messageCenterBodyNew.getDisplay_message().getDetail_items().size();
-                    for (int i = 0; i < number; i++) {
-                        sb_body.append(messageCenterBodyNew.getDisplay_message().getDetail_items().get(i));
-                        if (i != number - 1)
-                            sb_body.append("<br>");
+                    if (number > 0) {
+                        show_Body = getDetailItemBody(number, messageCenterBodyNew.getDisplay_message().getDetail_items());
                     }
                 }
-                sb_body.append("</body>");
-                myHolder.item_msg_content.setText(Html.fromHtml(sb_body.toString()));
+                //赋值
+                myHolder.item_msg_content.setText(Html.fromHtml(show_Body));
+                myHolder.tv_msg_title.setText(Html.fromHtml(title));
+
             }
 
         } else {
-
+            //标题
             title = TextUtils.isEmpty(messagesBean.getTitle()) ? "消息中心" : messagesBean.getTitle();
             if (title.length() > 12)
                 title = title.substring(0, 12) + "...";
-
-            String show_Body = "";
+            //设置内容
             if (!TextUtils.isEmpty(body) && body.contains("&quot;")) {
                 MessageCenterBody messageCenterBody = GsonUtil.jsonToBean(body.replaceAll("&quot;", "\""), MessageCenterBody.class);
                 show_Body = ifIsDesiner ? messageCenterBody.getFor_designer().replace("&gt;", ">") : messageCenterBody.getFor_consumer().replace("&gt;", ">");
             } else {
                 show_Body = body.replace("&gt;", ">");
             }
+            //赋值
             myHolder.item_msg_content.setText(show_Body);
+            myHolder.tv_msg_title.setText(title);
         }
 
-        myHolder.tv_msg_title.setText(title);
-        myHolder.tv_msg_date.setText(timeMY);
         // 设置添加消息左滑删除功能
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(right_wid, LinearLayout.LayoutParams.MATCH_PARENT);
         myHolder.item_right.setLayoutParams(lp2);
@@ -213,6 +223,22 @@ public class MessageCenterAdapter extends BaseAdapter {
 //        });
 
         return convertView;
+    }
+
+
+    public String getDetailItemBody(int number, List<String> detailItem) {
+        StringBuffer sb_body = new StringBuffer();
+        String str_body = "";
+        sb_body.append("<body>");
+        for (int i = 0; i < number; i++) {
+            sb_body.append(detailItem.get(i));
+            if (i != number - 1)
+                sb_body.append("<br>");
+
+        }
+        sb_body.append("</body>");
+        str_body = sb_body.toString();
+        return str_body;
     }
 
     public void addAll() {
