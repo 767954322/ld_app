@@ -26,9 +26,9 @@ import com.autodesk.shejijia.shared.components.common.utility.ToastUtils;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.GroupChatFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.IssueListFragment;
 import com.autodesk.shejijia.shared.components.nodeprocess.ui.fragment.TaskListFragment;
-import com.autodesk.shejijia.shared.framework.activity.BaseActivity;
+import com.autodesk.shejijia.shared.framework.activity.NavigationConstructionActivity;
 
-public class EnterpriseHomeActivity extends BaseActivity implements OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
+public class EnterpriseHomeActivity extends NavigationConstructionActivity implements OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
     private RadioButton mTaskBtn;
     private RadioButton mIssueBtn;
@@ -67,13 +67,8 @@ public class EnterpriseHomeActivity extends BaseActivity implements OnCheckedCha
         toolbar = (Toolbar) this.findViewById(R.id.toolbar_topBar);
         //self define toolbar title
         toolbarTitle = (TextView) toolbar.findViewById(R.id.tv_toolbar_title);
-        setSupportActionBar(toolbar);
-        // 显示导航按钮
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,0,0);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, 0, 0);
         toggle.syncState();
     }
 
@@ -107,7 +102,7 @@ public class EnterpriseHomeActivity extends BaseActivity implements OnCheckedCha
         switch (checkId) {
             case R.id.rdoBtn_project_task:
                 controlShowFragment(2);
-                initToolbar(toolbar, toolbarTitle, true, true, null);
+                initToolbar(toolbar, toolbarTitle, true, true, getString(R.string.toolbar_task_title));
                 break;
             case R.id.rdoBtn_project_issue:
                 controlShowFragment(3);
@@ -125,9 +120,11 @@ public class EnterpriseHomeActivity extends BaseActivity implements OnCheckedCha
         switch (menuItem.getItemId()) {
             case R.id.personal_all_project:
                 controlShowFragment(0);
+                initToolbar(toolbar, toolbarTitle, true, false, mTitles[0]);
                 break;
             case R.id.personal_more:
                 controlShowFragment(1);
+                initToolbar(toolbar, toolbarTitle, true, false, mTitles[1]);
                 break;
             default:
                 break;
@@ -175,21 +172,14 @@ public class EnterpriseHomeActivity extends BaseActivity implements OnCheckedCha
             transaction.show(currentFragment);
         } else {
             transaction.add(R.id.main_content, getFragment(position), makeTag(position));
-            transaction.addToBackStack(makeTag(position));
+            if (position == 0 || position == 1) {
+                transaction.addToBackStack(makeTag(position));
+            }
         }
         transaction.commitAllowingStateLoss();
 
         if (mDrawerLayout.isShown()) {
             mDrawerLayout.closeDrawers();
-        }
-        if (position == 0 || position == 1) {
-            toolbarTitle.setVisibility(View.GONE);
-            toolbar.setTitle(mTitles[position]);
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setHomeButtonEnabled(true);
-            }
-            toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         }
     }
 
@@ -221,21 +211,6 @@ public class EnterpriseHomeActivity extends BaseActivity implements OnCheckedCha
         return fragment;
     }
 
-    private void initToolbar(Toolbar toolbar, TextView toolbarTitle, boolean homeAsUpEnabled, boolean isSelfDefineTile, String title) {
-        if (!isSelfDefineTile) {
-            toolbar.setTitle(title);
-            toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-            toolbarTitle.setVisibility(View.GONE);
-        } else {
-            toolbar.setTitle("");
-            toolbarTitle.setVisibility(View.VISIBLE);
-            toolbarTitle.setText(R.string.toolbar_task_title);
-        }
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(homeAsUpEnabled);
-        }
-    }
 
     private class BackPressStackListener implements FragmentManager.OnBackStackChangedListener {
         private Activity mContext;

@@ -173,6 +173,7 @@ public class ProjectListPresenter implements ProjectListContract.Presenter {
             @Override
             public void onError(String errorMsg) {
                 mProjectListView.hideLoading();
+                LogUtils.e("like-error", errorMsg);
                 // TODO: 11/4/16 用ui提示错误
             }
         });
