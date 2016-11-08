@@ -241,7 +241,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-
             if (null != data) {
                 switch (requestCode) {
                     case 21: // 品牌变更．
@@ -298,42 +297,53 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
                             //   [2.2]未有主材，新建主材项．
                             MaterialCategoryBean.Categories3dBean.SubCategoryBean materialSubCategoryBean = checkedInformationBean.getSubCategoryBean();
                             String material_sub_category_3d_id1 = materialSubCategoryBean.getSub_category_3d_id();
+                            if (mRecommendSCFDList.size() <= 0) {
+                                // 新增二级品类．
+                                RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
+                                MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
+                                List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
+                                recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
+                                recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
+                                recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
+                                recommendSCFDListTemp.add(recommendSCFDBean1);
+                            } else {
 
-                            for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
-                                String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
-                                // 已有二级品类．
-                                if (material_sub_category_3d_id1.equals(sub_category_3d_id2)) {
-                                    /**
-                                     * 原有二级品类，动态添加品牌，
-                                     * 即原有二级品类集合发生改变，先移除相应的二级品类，然后增加新的二级品类元素．
-                                     */
-                                    List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
-                                    int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
-                                    mRecommendSCFDList.get(post).setBrands(checkedBrandsInformationBean);
-                                } else {
-                                    // 新增二级品类．
-                                    RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
-                                    MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
-                                    List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
-                                    recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
-                                    recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
-                                    recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
-                                    recommendSCFDListTemp.add(recommendSCFDBean1);
+                                for (RecommendSCFDBean recommendSCFDBean : mRecommendSCFDList) {
+                                    String sub_category_3d_id2 = recommendSCFDBean.getSub_category_3d_id();
+                                    // 已有二级品类．
+                                    if (material_sub_category_3d_id1.equals(sub_category_3d_id2)) {
+                                        /**
+                                         * 原有二级品类，动态添加品牌，
+                                         * 即原有二级品类集合发生改变，先移除相应的二级品类，然后增加新的二级品类元素．
+                                         */
+                                        List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
+                                        int post = mRecommendSCFDList.indexOf(recommendSCFDBean);
+                                        mRecommendSCFDList.get(post).setBrands(checkedBrandsInformationBean);
+                                    } else {
+                                        // 新增二级品类．
+                                        RecommendSCFDBean recommendSCFDBean1 = new RecommendSCFDBean();
+                                        MaterialCategoryBean.Categories3dBean.SubCategoryBean subCategoryBean = checkedInformationBean.getSubCategoryBean();
+                                        List<RecommendBrandsBean> checkedBrandsInformationBean = checkedInformationBean.getCheckedBrandsInformationBean();
+                                        recommendSCFDBean1.setSub_category_3d_name(subCategoryBean.getSub_category_3d_name());
+                                        recommendSCFDBean1.setSub_category_3d_id(subCategoryBean.getSub_category_3d_id());
+                                        recommendSCFDBean1.setBrands(checkedBrandsInformationBean);
+                                        recommendSCFDListTemp.add(recommendSCFDBean1);
+                                    }
                                 }
                             }
+
                         }
                         if (recommendSCFDListTemp != null && recommendSCFDListTemp.size() > 0) {
                             mRecommendSCFDList.addAll(recommendSCFDListTemp);
+                            mLlEmptyContentView.setVisibility(View.GONE);
                         }
                         mRecommendExpandableAdapter.notifyDataSetChanged();
+                        for (int i = 0; i < mRecommendSCFDList.size(); i++) {
+                            mExpandListView.expandGroup(i);
+                        }
                         break;
                     default:
                         break;
-                }
-            } else {
-                if (requestCode == 24) {
-                    mRecommendSCFDList.clear();
-                    mRecommendExpandableAdapter.notifyDataSetChanged();
                 }
             }
         }
