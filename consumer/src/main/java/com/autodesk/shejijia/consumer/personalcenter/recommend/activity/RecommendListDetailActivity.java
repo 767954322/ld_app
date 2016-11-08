@@ -49,9 +49,7 @@ import static com.autodesk.shejijia.shared.components.common.utility.GsonUtil.js
  *         created at 16-10-24
  */
 public class RecommendListDetailActivity extends NavigationBarActivity implements View.OnClickListener, BrandChangListener,
-        RecommendExpandableAdapter.CallBack,ExpandableListView.OnGroupClickListener {
-
-
+        ExpandableListView.OnGroupClickListener {
     private CustomHeaderExpandableListView mExpandListView;
     private AppCompatButton mBtnListSend;
     private Activity mActivity;
@@ -108,7 +106,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         mExpandListView.setGroupIndicator(null); //去掉箭头
         //点击不可收缩
         mExpandListView.setOnGroupClickListener(this);
-        mRecommendExpandableAdapter.setCallBackListener(this);
         mRecommendExpandableAdapter.setBrandChangListener(this);
     }
 
@@ -235,15 +232,6 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
     public void onSubCategoryDeleteListener(int groupPosition) {
         mRecommendSCFDList.remove(groupPosition);
         mRecommendExpandableAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void callBackRecommendSCFDs(List<RecommendSCFDBean> recommendSCFDList) {
-        if (recommendSCFDList == null || recommendSCFDList.size() <= 0) {
-            return;
-        }
-//        mRecommendSCFDList.clear();
-//        mRecommendSCFDList.addAll(recommendSCFDList);
     }
 
     @Override

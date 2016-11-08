@@ -34,10 +34,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
     private List<RecommendSCFDBean> mRecommendSCFDList;
     private CustomHeaderExpandableListView listView;
     private Activity mActivity;
-    private CallBack callBack;
     private BrandChangListener mBrandChangListener;
-
-
     private int mTouchItemPosition = -1;
     private SparseIntArray groupStatusMap = new SparseIntArray();
 
@@ -102,7 +99,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             view.setTag(mViewHolder);
         }
 
-        if (childPosition == mRecommendSCFDList.get(groupPosition).getBrands().size() - 1) {
+        if (mRecommendSCFDList.size() >0 && childPosition == mRecommendSCFDList.get(groupPosition).getBrands().size() - 1) {
             mViewHolder.rlRecommendFooter.setVisibility(View.VISIBLE);
         } else {
             mViewHolder.rlRecommendFooter.setVisibility(View.GONE);
@@ -166,9 +163,6 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
                 String currentApartmentName = apartmentList.get(position);
                 mRecommendSCFDList.get(currentParentPosition).getBrands().get(currentChildPosition).setApartment(currentApartmentName);
-                if (callBack != null) {
-                    callBack.callBackRecommendSCFDs(mRecommendSCFDList);
-                }
             }
         });
 
@@ -390,7 +384,7 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (null == mRecommendSCFDList.get(parentPosition) || mRecommendSCFDList.get(parentPosition).getBrands() == null || mRecommendSCFDList.get(parentPosition).getBrands().size() <= 0) {
+            if (mRecommendSCFDList.size() <= 0 ||null == mRecommendSCFDList.get(parentPosition) || mRecommendSCFDList.get(parentPosition).getBrands() == null || mRecommendSCFDList.get(parentPosition).getBrands().size() <= 0) {
                 return;
             }
             if (type == 0) {
@@ -401,19 +395,15 @@ public class RecommendExpandableAdapter extends BaseExpandableListAdapter implem
                 mRecommendSCFDList.get(parentPosition).getBrands().get(ChildPosition).setRemarks(s.toString());
             } else {
             }
-            if (null != callBack) {
-                callBack.callBackRecommendSCFDs(mRecommendSCFDList);
-            }
-
         }
     }
 
-    public void setCallBackListener(CallBack callBack) {
-        this.callBack = callBack;
-    }
-
-    public interface CallBack {
-        public void callBackRecommendSCFDs(List<RecommendSCFDBean> recommendSCFDList);
-
-    }
+//    public void setCallBackListener(CallBack callBack) {
+//        this.callBack = callBack;
+//    }
+//
+//    public interface CallBack {
+//        public void callBackRecommendSCFDs(List<RecommendSCFDBean> recommendSCFDList);
+//
+//    }
 }
