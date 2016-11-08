@@ -25,7 +25,7 @@ public class MemberAccountEntity implements Serializable {
     private String user_name;
     private String user_card_id;
     private String acs_member_id;
-    private boolean check_flag;
+    private Integer check_flag;
     private String user_mobile;
     private String user_email;
     private String consumer_zid;
@@ -62,20 +62,19 @@ public class MemberAccountEntity implements Serializable {
         this.user_card_id = user_card_id;
     }
 
+    public Integer getCheck_flag() {
+        return check_flag;
+    }
+
+    public void setCheck_flag(Integer check_flag) {
+        this.check_flag = check_flag;
+    }
     public String getAcs_member_id() {
         return acs_member_id;
     }
 
     public void setAcs_member_id(String acs_member_id) {
         this.acs_member_id = acs_member_id;
-    }
-
-    public boolean isCheck_flag() {
-        return check_flag;
-    }
-
-    public void setCheck_flag(boolean check_flag) {
-        this.check_flag = check_flag;
     }
 
     public String getUser_mobile() {

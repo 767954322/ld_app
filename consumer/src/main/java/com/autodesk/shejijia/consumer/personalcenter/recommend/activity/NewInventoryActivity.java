@@ -60,7 +60,6 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
     private String mCurrentProvince, mCurrentCity, mCurrentDistrict;
     private String mCurrentProvinceCode, mCurrentCityCode, mCurrentDistrictCode;
     private AlertView mBackAlertView;
-    private boolean check_flag;
     private String acs_member_id;
 
 
@@ -364,8 +363,8 @@ public class NewInventoryActivity extends NavigationBarActivity implements View.
                 CustomProgress.cancelDialog();
                 Log.d("NewInventoryActivity", jsonObject.toString());
                 MemberAccountEntity entity = GsonUtil.jsonToBean(jsonObject.toString(), MemberAccountEntity.class);
-                check_flag = entity.isCheck_flag();
-                if (!check_flag) {
+                Integer flag = entity.getCheck_flag();
+                if (flag==0) {
                     new AlertView(UIUtils.getString(R.string.tip), UIUtils.getString(R.string.new_inventory_member_account_not_exit),
                             null, null, new String[]{UIUtils.getString(R.string.sure)}, NewInventoryActivity.this, AlertView.Style.Alert, null).show();
                     return;

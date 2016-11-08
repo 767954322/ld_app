@@ -61,7 +61,8 @@ public class RecommendFragment extends CustomBaseFragment implements RecommendVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RecommendDetailsBean item = (RecommendDetailsBean) parent.getAdapter().getItem(position);
-        DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "", item.getStatus().equals("canceled")||item.getStatus().equals("refused"));
+        if (item != null)
+            DcRecommendDetailsActivity.jumpTo(getActivity(), item.getAsset_id() + "", item.getStatus().equals("canceled") || item.getStatus().equals("refused"));
     }
 
     @Override
