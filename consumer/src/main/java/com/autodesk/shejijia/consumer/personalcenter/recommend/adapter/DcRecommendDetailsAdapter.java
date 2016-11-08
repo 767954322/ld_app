@@ -13,7 +13,9 @@ import com.autodesk.shejijia.consumer.base.adapter.CommonViewHolder;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendBrandsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendMallsBean;
 import com.autodesk.shejijia.consumer.personalcenter.recommend.entity.RecommendSCFDBean;
+import com.autodesk.shejijia.consumer.utils.ToastUtil;
 import com.autodesk.shejijia.shared.components.common.utility.ImageUtils;
+import com.autodesk.shejijia.shared.components.common.utility.StringUtils;
 
 
 import java.util.List;
@@ -41,10 +43,10 @@ public class DcRecommendDetailsAdapter extends CommonAdapter<RecommendSCFDBean> 
         for (int i = 0; i < brands.size(); i++) {
             RecommendBrandsBean bean = brands.get(i);
             View mItemView;
-            if (bean.getSource().equals("1")) {
-                mItemView = mInflater.inflate(R.layout.item_brand_logo_view, null);
-            } else {
+            if (StringUtils.isEmpty(bean.getSource()) || bean.getSource().equals("1")) {
                 mItemView = mInflater.inflate(R.layout.item_brand_view, null);
+            } else {
+                mItemView = mInflater.inflate(R.layout.item_brand_logo_view, null);
             }
             updateView2ItemData(item.getSource().equals("1"), mItemView, bean);
             llBrandView.addView(mItemView);
