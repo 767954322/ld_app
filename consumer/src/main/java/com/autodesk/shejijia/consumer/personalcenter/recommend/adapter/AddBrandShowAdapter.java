@@ -53,6 +53,7 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
 
         holder.setText(R.id.store_show, storeName);
         holder.setOnClickListener(R.id.checked_img, new ItemImgListener(holder, brandsBean));
+        holder.setOnClickListener(R.id.rl_item,new ItemImgListener(holder,brandsBean));
         BtnStatusBean btnStatusBeanCompare = list.get(holder.getPosition());
 
         if (btnStatusBeanCompare.getSingleClickOrDoubleBtnCount() == 2) {
@@ -102,7 +103,7 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
             if (btnStatusBeanImg.getSingleClickOrDoubleBtnCount() == 2 && countNumber <= 5) {
 
                 message.what = 1;
-                v.setBackgroundResource(R.drawable.brand_checked);
+                v.findViewById(R.id.checked_img).setBackgroundResource(R.drawable.brand_checked);
                 btnStatusBeanImg.setSingleClickOrDoubleBtnCount(1);
                 isCanSend = true;
             } else {
@@ -110,7 +111,7 @@ public class AddBrandShowAdapter extends CommonAdapter<RecommendBrandsBean> {
                 if (btnStatusBeanImg.getSingleClickOrDoubleBtnCount() == 1) {
 
                     message.what = 2;
-                    v.setBackgroundResource(R.drawable.brand_unchecked);
+                    v.findViewById(R.id.checked_img).setBackgroundResource(R.drawable.brand_unchecked);
                     btnStatusBeanImg.setSingleClickOrDoubleBtnCount(2);
                     isCanSend = true;
                 }
