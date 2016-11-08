@@ -136,6 +136,7 @@
     <color name="bg_f3">#F3F3F3</color>
     <color name="bg_f9">#F9F9F9</color>
     <color name="bg_ff">#FFFFFF</color>
+    <color name="bg_5f">#e5f2ff</color>
     <color name="bg_0000">#00000000</color>
     <color name="bg_f000">#ff000000</color>
     <color name="bg_e000">#e0000000</color>

@@ -5,4 +5,5 @@
         android:width="@dimen/size_1"
         android:color="@color/bg_d5" />
     <corners android:radius="@dimen/size_5" />
+
 </shape>

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.autodesk.shejijia.consumer.R;
@@ -36,7 +37,7 @@ import java.util.Map;
  * @file FiltrateActivity  .
  * @brief 筛选页面 .
  */
-public class Filtrate3DActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener {
+public class Filtrate3DActivity extends NavigationBarActivity implements AdapterView.OnItemClickListener ,View.OnClickListener{
 
     @Override
     protected int getLayoutResId() {
@@ -49,6 +50,11 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
         sGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_style);
         hGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_house);
         aGridView = (NoScrollGridView) findViewById(R.id.gv_filtrate_area);
+
+
+        tvReset = (TextView) findViewById(R.id.tv_reset);
+        tvOk = (TextView) findViewById(R.id.tv_ok);
+
     }
 
     @Override
@@ -64,7 +70,8 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
         super.initData(savedInstanceState);
         setTitleForNavbar(UIUtils.getString(R.string.bid_filter));
 
-        setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
+       // setTitleForNavButton(ButtonType.RIGHT, UIUtils.getString(R.string.select_finish));
+        setVisibilityForNavButton(ButtonType.RIGHT,false);
         Resources rs = this.getResources();
         setTextColorForRightNavButton(rs.getColor(R.color.bg_0084ff));
 
@@ -93,6 +100,8 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
         sGridView.setOnItemClickListener(this);
         hGridView.setOnItemClickListener(this);
         aGridView.setOnItemClickListener(this);
+        tvOk.setOnClickListener(Filtrate3DActivity.this);
+        tvReset.setOnClickListener(Filtrate3DActivity.this);
     }
 
     @Override
@@ -112,14 +121,7 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
         }
     }
 
-    /**
-     * 筛选
-     *
-     * @param view 要点击的完成控件
-     */
-    @Override
-    protected void rightNavButtonClicked(View view) {
-//        super.rightNavButtonClicked(view);
+    protected void filtrate3DOK() {
         Map<String, String> room = AppJsonFileReader.getRoomHall(this);
         Map<String, String> area = AppJsonFileReader.getArea(this);
         Map<String, String> style = AppJsonFileReader.getStyle(this);
@@ -247,6 +249,8 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
         mAreaData = null;
     }
 
+    private TextView tvReset;
+    private TextView tvOk;
     /// 静态常量.
     public static final int CBF_RESULT_CODE = 0x91;
     public static final int HC_RESULT_CODE = 0x98;
@@ -272,4 +276,26 @@ public class Filtrate3DActivity extends NavigationBarActivity implements Adapter
     private List<String> mStyleData = new ArrayList<>();
     private List<String> mHouseData = new ArrayList<>();
     private List<String> mAreaData = new ArrayList<>();
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_ok:
+                filtrate3DOK();
+                break;
+            case R.id.tv_reset:
+                    mSAdapter.setSelection(0);
+                    mStyleIndex =0;
+                    mSAdapter.notifyDataSetChanged();
+                    mHAdapter.setSelection(0);
+                    mHouseIndex = 0;
+                    mHAdapter.notifyDataSetChanged();
+                    mAAdapter.setSelection(0);
+                    mAreaIndex = 0;
+                    mAAdapter.notifyDataSetChanged();
+                break;
+            default:
+
+        }
+    }
 }
