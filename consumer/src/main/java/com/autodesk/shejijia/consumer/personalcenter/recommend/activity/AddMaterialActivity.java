@@ -711,7 +711,7 @@ public class AddMaterialActivity extends NavigationBarActivity implements View.O
             for (int j = 0; j < mRecommendSCFDList.size(); j++) {
 
                 String categoryForList = mRecommendSCFDList.get(j).getSub_category_3d_name();
-                if (categoryForList.equals(categoryName)) {
+                if (categoryForList.equals(categoryName)&&categoryName.equals(currentSubCategoryName)) {
                     //取出来该品类的tag来做修改
                     List<BtnStatusBean> listTagForTotal = totalList.get(i).getList();
                     List<RecommendBrandsBean> listInformationSendList = mRecommendSCFDList.get(j).getBrands();
