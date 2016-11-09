@@ -33,7 +33,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     private PullListView addBrandListview;
     private PullToRefreshLayout mPullToRefreshLayout;
     private List<RecommendBrandsBean> brandsBeanList;
-    private RecommendSCFDBean transmissionBean;
+    private RecommendSCFDBean mRecommendSCFDBean;
     private AddBrandAdapter addBrandAdapter;
     private Boolean isRefresh = true;
     private TextView tvNumber;
@@ -56,7 +56,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
     protected void initExtraBundle() {
         super.initExtraBundle();
         Intent intent = getIntent();
-        transmissionBean = (RecommendSCFDBean)intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
+        mRecommendSCFDBean = (RecommendSCFDBean)intent.getSerializableExtra(JsonConstants.RECOMMENDBRANDSCFDBEAN);
     }
 
     @Override
@@ -66,7 +66,8 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
         setNavigationBar();
         addBrandAdapter = new AddBrandAdapter(this,brandsBeanList,itemIds,R.layout.add_check_textview);
         addBrandListview.setAdapter(addBrandAdapter);
-        mPullToRefreshLayout.autoRefresh();
+        getBrands(0,100);
+//        mPullToRefreshLayout.autoRefresh();
     }
 
     @Override
@@ -106,9 +107,9 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
             RecommendBrandsBean rbb =  brandsBeanList.get((int)i);
             list.add(rbb);
         }
-        transmissionBean.setBrands(list);
+        mRecommendSCFDBean.setBrands(list);
         Intent intent = new Intent();
-        intent.putExtra(Constant.JsonLocationKey.SUB_CATEGORY_3D_ID,transmissionBean.getSub_category_3d_id());
+        intent.putExtra(Constant.JsonLocationKey.SUB_CATEGORY_3D_ID,mRecommendSCFDBean.getSub_category_3d_id());
         intent.putExtra(JsonConstants.RECOMMENDBRANDBEAN,(Serializable)list);//List<>list = (List<…<…>>)getIndent.getIntent().getSerializableExtra(key);//接
         setResult(RESULT_OK,intent);
         finish();
@@ -116,7 +117,7 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
 
 
     private void setNavigationBar() {
-        setTitleForNavbar(transmissionBean.getSub_category_3d_name());
+        setTitleForNavbar(mRecommendSCFDBean.getSub_category_3d_name());
     }
 
 
@@ -125,10 +126,11 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
         String jsonString = jsonObject.toString();
         RecommendSCFDBean recommendSCFDBean =  GsonUtil.jsonToBean(jsonString,RecommendSCFDBean.class);
         brandsBeanList.clear();
-//        if(isRefresh){
-//            brandsBeanList.clear();
-//        }
-        filterBrand(recommendSCFDBean.getBrands());
+        List<RecommendBrandsBean> Brands = recommendSCFDBean.getBrands();
+        if(Brands == null){
+            return;
+        }
+        filterBrand(Brands);
     }
     @Override
     public void onErrorResponse(VolleyError volleyError) {
@@ -137,21 +139,25 @@ public class AddBrandActivity extends NavigationBarActivity implements PullToRef
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        isRefresh = true;
-        getBrands(0,30);
+        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+//        isRefresh = true;
+//        getBrands(0,30);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        isRefresh = false;
-        getBrands(addBrandListview.getCount(),30);
+        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+//        isRefresh = false;
+//        getBrands(addBrandListview.getCount(),30);
     }
     private  void getBrands(int offset, int limit){
-        MPServerHttpManager.getInstance().getCategoryBrandsInformation("","","","","","",offset,limit,this);
+        MPServerHttpManager.getInstance().getCategoryBrandsInformation(mRecommendSCFDBean.getCategory_3d_id(),
+                mRecommendSCFDBean.getCategory_3d_name(), mRecommendSCFDBean.getSub_category_3d_id(),
+                mRecommendSCFDBean.getSub_category_3d_name(), "", "", offset, limit, this);
     }
     private void filterBrand(List<RecommendBrandsBean> brandsBeans){
         for(RecommendBrandsBean brandsBean:brandsBeans){
-            for(RecommendBrandsBean tb:transmissionBean.getBrands()){
+            for(RecommendBrandsBean tb:mRecommendSCFDBean.getBrands()){
                 if(brandsBean.getCode().equals(tb.getCode())){
                     continue;
                 }

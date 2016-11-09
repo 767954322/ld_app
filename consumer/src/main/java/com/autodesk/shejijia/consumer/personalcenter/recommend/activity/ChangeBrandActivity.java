@@ -70,7 +70,8 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         updataBrandAdapter = new ChanageBrandAdapter(this, brandsBeanList, R.layout.select_check_textview);
         updataBrandListview.setAdapter(updataBrandAdapter);
         setNavigationBar();
-        mPullToRefreshLayout.autoRefresh();
+        getBrands(0,100);
+//        mPullToRefreshLayout.autoRefresh();
     }
 
 
@@ -83,7 +84,9 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
     }
 
     private void getBrands(int offset, int limit) {
-        MPServerHttpManager.getInstance().getCategoryBrandsInformation("", "", "", "", "", "", offset, limit, this);
+        MPServerHttpManager.getInstance().getCategoryBrandsInformation(mRecommendSCFDBean.getCategory_3d_id(),
+                mRecommendSCFDBean.getCategory_3d_name(), mRecommendSCFDBean.getSub_category_3d_id(),
+                mRecommendSCFDBean.getSub_category_3d_name(), "", "", offset, limit, this);
     }
 
     @Override
@@ -126,10 +129,11 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
         String jsonString = jsonObject.toString();
         RecommendSCFDBean recommendSCFDBean = GsonUtil.jsonToBean(jsonString, RecommendSCFDBean.class);
         brandsBeanList.clear();//接口有问题，待修改
-//        if(isRefresh){
-//            brandsBeanList.clear();
-//        }
-        filterBrand(recommendSCFDBean.getBrands());
+        List<RecommendBrandsBean> Brands = recommendSCFDBean.getBrands();
+        if(Brands == null){
+            return;
+        }
+        filterBrand(Brands);
 
     }
 
@@ -157,13 +161,15 @@ public class ChangeBrandActivity extends NavigationBarActivity implements PullTo
 
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-        isRefresh = true;
-        getBrands(0, 30);
+//        isRefresh = true;
+//        getBrands(0, 30);
+        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-        isRefresh = false;
-        getBrands(updataBrandListview.getCount(), 30);
+//        isRefresh = false;
+//        getBrands(updataBrandListview.getCount(), 30);
+        mPullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
     }
 }
