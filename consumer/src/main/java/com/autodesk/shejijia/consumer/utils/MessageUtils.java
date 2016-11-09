@@ -1,6 +1,7 @@
 package com.autodesk.shejijia.consumer.utils;
 
 import com.android.volley.VolleyError;
+import com.autodesk.shejijia.consumer.ConsumerApplication;
 import com.autodesk.shejijia.consumer.manager.MPServerHttpManager;
 import com.autodesk.shejijia.consumer.personalcenter.consumer.entity.ConsumerEssentialInfoEntity;
 import com.autodesk.shejijia.shared.components.common.appglobal.Constant;
@@ -38,6 +39,7 @@ public class MessageUtils {
 
                     if (null != mConsumerEssentialInfoEntity) {
                         String thread_id = mConsumerEssentialInfoEntity.getThread_id();
+                        ConsumerApplication.thread_id = thread_id;
                         getThreadDetailForThreadId(acs_member_id, thread_id);
                     }
 

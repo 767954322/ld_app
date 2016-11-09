@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 
-public class ConsumerApplication extends AdskApplication{
+public class ConsumerApplication extends AdskApplication {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -40,7 +40,7 @@ public class ConsumerApplication extends AdskApplication{
     }
 
     @Override
-    public void initData(){
+    public void initData() {
         super.initData();
         dataHelper = CityDataHelper.getInstance(this);
         InputStream in = this.getResources().openRawResource(com.autodesk.shejijia.shared.R.raw.province);
@@ -104,5 +104,6 @@ public class ConsumerApplication extends AdskApplication{
     /// MainThread Id .
     private static int mMainThreadId;
     private CityDataHelper dataHelper;
+    public static String thread_id = "";
 
 }
