@@ -67,7 +67,7 @@ public class RecommendAdapter extends CommonAdapter<RecommendDetailsBean> implem
         notifyUISetChanged(holder, revoke_state.equals("canceled") || revoke_state.equals("refused"));
         if (!TextUtils.isEmpty(status)) {
             boolean unsent = status.equals("unsent");
-            holder.setVisible(R.id.iv_reco_wfsico, unsent);
+            holder.setVisible(R.id.iv_reco_wfsico, isDesiner ? unsent : false);
         }
         //消费者显示退回　－　设计是显示删除和撤销
         holder.setText(R.id.tv_cancel_btn, isDesiner ? (status.equals("unsent") ? "删除" : "撤销") : "退回");

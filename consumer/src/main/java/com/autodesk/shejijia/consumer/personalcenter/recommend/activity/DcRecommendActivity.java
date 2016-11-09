@@ -62,13 +62,6 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
         mEmptyView = (LinearLayout) findViewById(R.id.empty_view);
         mTabVisibility = (RelativeLayout) findViewById(R.id.rlt_tab_view);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-
-        for (int i = 0; i < 3; i++) {
-            mFragments.add(RecommendFragment.newInstance(isDesign, i));
-        }
-        FragmentTabAdapter adapter = new FragmentTabAdapter(getSupportFragmentManager(), mFragments, tabs);
-        mViewPager.setAdapter(adapter);
-        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void setTitleBarView() {
@@ -86,6 +79,12 @@ public class DcRecommendActivity extends NavigationBarActivity implements Recomm
         CustomProgress.show(this, "", false, null);
         RecommendLogicImpl recommendLogic = new RecommendLogicImpl(this);
         recommendLogic.onLoadRecommendListData(isDesign, 0, 20, 0);
+        for (int i = 0; i < 3; i++) {
+            mFragments.add(RecommendFragment.newInstance(isDesign, i));
+        }
+        FragmentTabAdapter adapter = new FragmentTabAdapter(getSupportFragmentManager(), mFragments, tabs);
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
