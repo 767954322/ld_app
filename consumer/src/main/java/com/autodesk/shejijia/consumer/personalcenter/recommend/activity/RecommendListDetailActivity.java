@@ -202,8 +202,8 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
 
         if (null == recommendscfd || recommendscfd.size() <= 0) {
             mLlEmptyContentView.setVisibility(View.VISIBLE);
-            mBtnListSend.setClickable(false);
-            mBtnListSend.setBackgroundColor(UIUtils.getColor(R.color.gray));
+
+//            setEmptyListDefaultButtn();
             return;
         }
 
@@ -213,6 +213,22 @@ public class RecommendListDetailActivity extends NavigationBarActivity implement
         for (int i = 0; i < mRecommendSCFDList.size(); i++) {
             mExpandListView.expandGroup(i);
         }
+    }
+
+    /**
+     * 设置清单详情页面为空时候
+     */
+    private void setEmptyListDefaultButtn() {
+        mBtnListSend.setClickable(false);
+        mBtnListSend.setBackgroundColor(UIUtils.getColor(R.color.gray));
+    }
+
+    /**
+     * 设置清单详情页面有数据时可点击发送
+     */
+    private void setSendButtn() {
+        mBtnListSend.setClickable(true);
+        mBtnListSend.setBackgroundColor(UIUtils.getColor(R.color.bg_0084ff));
     }
 
     @Override
